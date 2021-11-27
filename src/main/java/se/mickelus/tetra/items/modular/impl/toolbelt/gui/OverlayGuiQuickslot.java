@@ -7,24 +7,32 @@ import net.minecraft.client.gui.FontRenderer;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
+import net.minecraft.util.HandSide;
+import se.mickelus.mgui.gui.GuiItem;
+import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mgui.gui.GuiStringOutline;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 
 public class OverlayGuiQuickslot extends GuiElement {
-
     public static final int height = 20;
 
     private ItemStack itemStack;
 
     private int slot;
 
-    private Minecraft mc;
-
     private KeyframeAnimation showAnimation;
 
-    private FontRenderer fontRenderer;
+    private KeyframeAnimation showLabel;
+    private KeyframeAnimation hideLabel;
+
+    private GuiItem guiItem;
+    private GuiString label;
+    private OverlayGuiQuickslotSide hitLeft;
+    private OverlayGuiQuickslotSide hitRight;
 
     public OverlayGuiQuickslot(int x, int y, ItemStack itemStack, int slot) {
         super(x, y, 200, height);
@@ -32,22 +40,32 @@ public class OverlayGuiQuickslot extends GuiElement {
         this.itemStack = itemStack;
         this.slot = slot;
 
-        mc = Minecraft.getInstance();
+        guiItem = new GuiItem(38, 1);
+        guiItem.setOpacity(0);
+        guiItem.setOpacityThreshold(0.2f);
+        guiItem.setItem(itemStack);
+        addChild(guiItem);
 
-        if (itemStack != null) {
-            fontRenderer = itemStack.getItem().getFontRenderer(itemStack);
-        }
+        label = new GuiStringOutline(61, 6, itemStack.getDisplayName().getString());
+        label.setColor(GuiColors.hover);
+        label.setOpacity(0);
+        addChild(label);
 
-        if (fontRenderer == null) {
-            fontRenderer = mc.fontRenderer;
-        }
+        hitLeft = new OverlayGuiQuickslotSide(0, 0, 46, height, false);
+        addChild(hitLeft);
+        hitRight = new OverlayGuiQuickslotSide(46, 0, 151, height, true);
+        addChild(hitRight);
 
         isVisible = false;
-        opacity = 0;
-        showAnimation = new KeyframeAnimation(80, this)
-            .applyTo(new Applier.Opacity(1), new Applier.TranslateY(y - 3, y))
-            .withDelay(slot * 100);
+        showAnimation = new KeyframeAnimation(80, guiItem)
+            .applyTo(new Applier.Opacity(1), new Applier.TranslateY(0, 1))
+            .withDelay(slot * 80);
 
+
+        showLabel = new KeyframeAnimation(100, label)
+                .applyTo(new Applier.TranslateX(label.getX() + 1), new Applier.Opacity(1));
+        hideLabel = new KeyframeAnimation(200, label)
+                .applyTo(new Applier.TranslateX(label.getX()), new Applier.Opacity(0));
     }
 
     @Override
@@ -67,32 +85,33 @@ public class OverlayGuiQuickslot extends GuiElement {
     @Override
     public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
-
-        if (hasFocus()) {
-            fontRenderer.drawStringWithShadow(itemStack.getDisplayName().getUnformattedComponentText(), x + refX + 63, y + refY + 4, GuiColors.hover);
-        }
-
-        drawItemStack(matrixStack, itemStack, x + refX + 38, y + refY + 1);
     }
 
-    private void drawItemStack(MatrixStack matrixStack, ItemStack itemStack, int x, int y) {
-        GlStateManager.enableDepthTest();
-        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        RenderHelper.enableStandardItemLighting();
-
-        RenderSystem.color4f(1, 1, 1, opacity);
-        mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
-        mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, null);
-        if (opacity < 1) {
-            GlStateManager.disableDepthTest();
-//            drawRect(matrixStack, x - 1, y - 1, x + 17, y + 17, 0, 1 - opacity);
-        }
-        RenderSystem.color4f(1, 1, 1, 1);
-        RenderHelper.disableStandardItemLighting();
+    @Override
+    protected void onFocus() {
+        super.onFocus();
+        hideLabel.stop();
+        showLabel.start();
+        hitLeft.animateIn();
+        hitRight.animateIn();
     }
 
+    @Override
+    protected void onBlur() {
+        super.onBlur();
+        showLabel.stop();
+        hideLabel.start();
+        hitLeft.animateOut();
+        hitRight.animateOut();
+    }
 
     public int getSlot() {
         return slot;
+    }
+
+    public Hand getHand() {
+        return (Minecraft.getInstance().player.getPrimaryHand() == HandSide.RIGHT) == hitRight.hasFocus()
+                ? Hand.MAIN_HAND
+                : Hand.OFF_HAND;
     }
 }

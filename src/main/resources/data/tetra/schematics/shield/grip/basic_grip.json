@@ -1,0 +1,22 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/grip"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 16,
+        "textureY": 48
+    },
+    "outcomes": [
+        {
+            "materials": [
+                "tetra:wood/", "tetra:metal/",
+                "tetra:bone/", "tetra:misc/blaze_rod", "tetra:misc/end_rod", "tetra:misc/forged_beam", "tetra:misc/stick"
+            ],
+            "moduleKey": "shield/basic_grip",
+            "moduleVariant": "basic_grip/"
+        }
+    ]
+}

@@ -4,17 +4,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
@@ -44,7 +40,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
     public static final VoxelShape boundingBox = makeCuboidShape(5, 0, 5, 11, 16, 11);
 
     public CoreExtractorPistonBlock() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesNotSolid);
 
         setRegistryName(unlocalizedName);
     }
@@ -59,7 +55,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
     public void init(PacketHandler packetHandler) {
         super.init(packetHandler);
 
-        PacketHandler.instance.registerPacket(CoreExtractorPistonUpdatePacket.class, CoreExtractorPistonUpdatePacket::new);
+        packetHandler.registerPacket(CoreExtractorPistonUpdatePacket.class, CoreExtractorPistonUpdatePacket::new);
     }
 
     @Override
@@ -97,11 +93,6 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
-    }
-
-    @Override
-    public boolean causesSuffocation(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return false;
     }
 
     @Override

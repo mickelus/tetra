@@ -6,7 +6,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
@@ -25,18 +24,17 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
@@ -47,7 +45,7 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
-public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBlockCapabilityInteractive {
+public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
     public static final String unlocalizedName = "forged_container";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ForgedContainerBlock instance;
@@ -60,25 +58,25 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     public static final BooleanProperty openProp = BooleanProperty.create("open");
 
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
-            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 5, 7, 2, 5,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 5, 7, 2, 5,
                     new PropertyMatcher().where(locked1Prop, equalTo(true)).where(flippedProp, equalTo(false)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 0, hand)),
-            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 11, 13, 2, 5,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 11, 13, 2, 5,
                     new PropertyMatcher().where(locked2Prop, equalTo(true)).where(flippedProp, equalTo(false)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 1, hand)),
-            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 17, 19, 2, 5,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 17, 19, 2, 5,
                     new PropertyMatcher().where(locked1Prop, equalTo(true)).where(flippedProp, equalTo(true)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 2, hand)),
-            new BlockInteraction(Capability.hammer, 3, Direction.SOUTH, 23, 25, 2, 5,
+            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 23, 25, 2, 5,
                     new PropertyMatcher().where(locked2Prop, equalTo(true)).where(flippedProp, equalTo(true)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 3, hand)),
-            new BlockInteraction(Capability.pry, 1, Direction.SOUTH, 1, 15, 3, 4,
+            new BlockInteraction(ToolTypes.pry, 1, Direction.SOUTH, 1, 15, 3, 4,
                     new PropertyMatcher()
                             .where(anyLockedProp, equalTo(false))
                             .where(openProp, equalTo(false))
                             .where(flippedProp, equalTo(false)),
                     ForgedContainerBlock::open),
-            new BlockInteraction(Capability.pry, 1, Direction.SOUTH, 15, 28, 3, 4,
+            new BlockInteraction(ToolTypes.pry, 1, Direction.SOUTH, 15, 28, 3, 4,
                     new PropertyMatcher()
                             .where(anyLockedProp, equalTo(false))
                             .where(openProp, equalTo(false))
@@ -86,17 +84,17 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
                     ForgedContainerBlock::open)
     };
 
-    private static VoxelShape shapeZ1 =     makeCuboidShape(1,   0, -15, 15, 12, 15);
-    private static VoxelShape shapeZ2 =     makeCuboidShape(1,   0, 1,   15, 12, 31);
-    private static VoxelShape shapeX1 =     makeCuboidShape(-15, 0, 1,   15, 12, 15);
-    private static VoxelShape shapeX2 =     makeCuboidShape(1,   0, 1,   31, 12, 15);
-    private static VoxelShape shapeZ1Open = makeCuboidShape(1,   0, -15, 15,  9, 15);
-    private static VoxelShape shapeZ2Open = makeCuboidShape(1,   0, 1,   15,  9, 31);
-    private static VoxelShape shapeX1Open = makeCuboidShape(-15, 0, 1,   15,  9, 15);
-    private static VoxelShape shapeX2Open = makeCuboidShape(1,   0, 1,   31,  9, 15);
+    private static final VoxelShape shapeZ1 =     makeCuboidShape(1,   0, -15, 15, 12, 15);
+    private static final VoxelShape shapeZ2 =     makeCuboidShape(1,   0, 1,   15, 12, 31);
+    private static final VoxelShape shapeX1 =     makeCuboidShape(-15, 0, 1,   15, 12, 15);
+    private static final VoxelShape shapeX2 =     makeCuboidShape(1,   0, 1,   31, 12, 15);
+    private static final VoxelShape shapeZ1Open = makeCuboidShape(1,   0, -15, 15,  9, 15);
+    private static final VoxelShape shapeZ2Open = makeCuboidShape(1,   0, 1,   15,  9, 31);
+    private static final VoxelShape shapeX1Open = makeCuboidShape(-15, 0, 1,   15,  9, 15);
+    private static final VoxelShape shapeX2Open = makeCuboidShape(1,   0, 1,   31,  9, 15);
 
     public ForgedContainerBlock() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesSolid);
 
         setRegistryName(unlocalizedName);
 
@@ -114,7 +112,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        ClientRegistry.bindTileEntityRenderer(ForgedContainerTile.type, ForgedContainerTESR::new);
+        ClientRegistry.bindTileEntityRenderer(ForgedContainerTile.type, ForgedContainerRenderer::new);
         ScreenManager.registerFactory(ForgedContainerContainer.type, ForgedContainerScreen::new);
     }
 
@@ -128,7 +126,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
-    private static boolean breakLock(World world, BlockPos pos, PlayerEntity player, int index, Hand hand) {
+    private static boolean breakLock(World world, BlockPos pos, @Nullable PlayerEntity player, int index, @Nullable Hand hand) {
         ForgedContainerTile te = (ForgedContainerTile) world.getTileEntity(pos);
         if (te != null) {
             te.getOrDelegate().breakLock(player, index, hand);
@@ -147,9 +145,9 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState state, Direction face, Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(state, state.get(facingProp), face, capabilities))
+                .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.get(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
@@ -177,22 +175,12 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IBloc
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
-            // only drop loot from open, master/unflipped chests
+            // only drop loot from open, primary/unflipped chests
             if (state.get(openProp) && !state.get(flippedProp)) {
-                TileEntityOptional.from(world, pos, ForgedContainerTile.class)
-                        .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
-                        .orElse(LazyOptional.empty())
-                        .ifPresent(cap -> {
-                            for (int i = 0; i < cap.getSlots(); i++) {
-                                ItemStack itemStack = cap.getStackInSlot(i);
-                                if (!itemStack.isEmpty()) {
-                                    InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack.copy());
-                                }
-                            }
-                        });
+                dropBlockInventory(this, world, pos, newState);
+            } else {
+                TileEntityOptional.from(world, pos, ForgedContainerTile.class).ifPresent(TileEntity::remove);
             }
-
-            TileEntityOptional.from(world, pos, ForgedContainerTile.class).ifPresent(TileEntity::remove);
         }
     }
 

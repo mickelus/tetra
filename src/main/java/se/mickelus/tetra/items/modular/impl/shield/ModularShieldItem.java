@@ -3,27 +3,30 @@ package se.mickelus.tetra.items.modular.impl.shield;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.BlockProgressOverlay;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.SchemaRegistry;
-import se.mickelus.tetra.module.schema.RemoveSchema;
-import se.mickelus.tetra.module.schema.RepairSchema;
+import se.mickelus.tetra.module.SchematicRegistry;
+import se.mickelus.tetra.module.schematic.RemoveSchematic;
+import se.mickelus.tetra.module.schematic.RepairSchematic;
+import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.properties.AttributeHelper;
+import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public class ModularShieldItem extends ItemModularHandheld {
@@ -41,6 +44,7 @@ public class ModularShieldItem extends ItemModularHandheld {
     public ModularShieldItem() {
         super(new Properties()
                 .maxStackSize(1)
+                .isImmuneToFire()
                 .setISTER(() -> ModularShieldISTER::new));
         setRegistryName(unlocalizedName);
 
@@ -49,28 +53,37 @@ public class ModularShieldItem extends ItemModularHandheld {
 
         requiredModules = new String[] {plateKey, gripKey };
 
-        speedBase = 0;
-
         updateConfig(ConfigHandler.honeShieldBase.get(), ConfigHandler.honeShieldIntegrityMultiplier.get());
 
-        SchemaRegistry.instance.registerSchema(new RepairSchema(this));
-        SchemaRegistry.instance.registerSchema(new ApplyBannerSchema());
-        RemoveSchema.registerRemoveSchemas(this);
+        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
+        SchematicRegistry.instance.registerSchematic(new ApplyBannerSchematic());
+        RemoveSchematic.registerRemoveSchematics(this);
 
         ItemUpgradeRegistry.instance.registerReplacementHook(this::copyBanner);
 
-        this.addPropertyOverride(new ResourceLocation("blocking"), (itemStack, world, entity) -> {
-            return entity != null && entity.isHandActive() && entity.getActiveItemStack() == itemStack ? 1.0F : 0.0F;
-        });
-
         DispenserBlock.registerDispenseBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+    }
+
+    @Override
+    public void init(PacketHandler packetHandler) {
+        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("shield/"));
+    }
+
+    @Override
+    public void clientInit() {
+        super.clientInit();
+
+        ItemModelsProperties.registerProperty(this, new ResourceLocation("blocking"),
+                (itemStack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == itemStack ? 1.0F : 0.0F);
+
+        MinecraftForge.EVENT_BUS.register(new BlockProgressOverlay(Minecraft.getInstance()));
     }
 
     private ItemStack copyBanner(ItemStack original, ItemStack replacement) {
         if (equals(replacement.getItem())) {
             Optional.ofNullable(original.getChildTag("BlockEntityTag"))
                     .ifPresent(tag -> {
-                        NBTHelper.getTag(replacement).put("BlockEntityTag", tag);
+                        replacement.getOrCreateTag().put("BlockEntityTag", tag);
 
                         CastOptional.cast(getModuleFromSlot(replacement, plateKey), ItemModuleMajor.class)
                                 .filter(module -> module.acceptsImprovement(bannerImprovementKey))
@@ -88,22 +101,21 @@ public class ModularShieldItem extends ItemModularHandheld {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
-        Multimap<String, AttributeModifier> modifiers = super.getAttributeModifiers(slot, itemStack);
-        modifiers.removeAll(SharedMonsterAttributes.ATTACK_SPEED.getName());
-        modifiers.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getName());
-        return modifiers;
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
+        if (slot == EquipmentSlotType.MAINHAND || slot == EquipmentSlotType.OFFHAND) {
+            return getAttributeModifiersCached(itemStack);
+        }
+
+        return AttributeHelper.emptyMap;
+    }
+
+    @Override
+    public double getAbilityBaseDamage(ItemStack itemStack) {
+        return getAttributeValue(itemStack, TetraAttributes.abilityDamage.get());
     }
 
     @Override
     public double getCooldownBase(ItemStack itemStack) {
-        return getSpeedModifier(itemStack);
-    }
-
-    @Override
-    public void clientInit() {
-        super.clientInit();
-
-        MinecraftForge.EVENT_BUS.register(new BlockProgressOverlay(Minecraft.getInstance()));
+        return getAttributeValue(itemStack, TetraAttributes.abilityCooldown.get());
     }
 }

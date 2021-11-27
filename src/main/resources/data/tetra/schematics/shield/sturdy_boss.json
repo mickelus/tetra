@@ -1,0 +1,33 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/boss"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "minor",
+    "glyph": {
+        "textureX": 96,
+        "textureY": 16
+    },
+    "translation": {
+        "secondaryAttributes": {
+            "tetra:ability_cooldown": -3
+        },
+        "primaryEffects": {
+            "bashing": [1, 2]
+        },
+        "secondaryEffects": {
+            "bashing": [2, 1]
+        },
+        "durability": 1,
+        "integrity": -2
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:metal/"],
+            "moduleKey": "shield/sturdy_boss",
+            "toolOffset": 1,
+            "moduleVariant": "sturdy_boss/"
+        }
+    ]
+}

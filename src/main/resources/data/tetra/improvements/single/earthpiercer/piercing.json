@@ -1,0 +1,33 @@
+[
+    {
+        "key": "head_hone/piercing",
+        "level": 1,
+        "effects": {
+            "piercing": 1
+        }
+    },
+    {
+        "key": "head_hone/piercing",
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "piercing": 2
+        }
+    },
+    {
+        "key": "head_hone/piercing",
+        "level": 3,
+        "integrity": -1,
+        "effects": {
+            "piercing": 3
+        }
+    },
+    {
+        "key": "head_hone/piercing",
+        "level": 4,
+        "integrity": -1,
+        "effects": {
+            "piercing": 4
+        }
+    }
+]

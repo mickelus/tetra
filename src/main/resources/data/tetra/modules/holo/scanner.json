@@ -1,0 +1,39 @@
+{
+    "replace": true,
+    "type": "tetra:multi_major_module",
+    "slots": [
+        "holo/attachment_0",
+        "holo/attachment_1"
+    ],
+    "slotSuffixes": [
+        "_0",
+        "_1"
+    ],
+    "improvements": [
+        "tetra:holo/scanner_adjustable"
+    ],
+    "tweakKey": "tetra:holo/scanner_adjustable",
+    "variants": [
+        {
+            "key": "scanner/scanner",
+            "integrity": -1,
+            "attributes": {
+                "tetra:ability_cooldown": 1.3
+            },
+            "effects": {
+                "scannerRange": 24,
+                "scannerHorizontalSpread":  20,
+                "scannerVerticalSpread": 3
+            },
+            "glyph": {
+                "textureX": 112,
+                "textureY": 48
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/holo/attachment/scanner/default"
+                }
+            ]
+        }
+    ]
+}

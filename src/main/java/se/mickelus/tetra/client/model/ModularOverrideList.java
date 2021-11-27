@@ -4,6 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -12,8 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.IModelConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.ModuleModel;
 
 import javax.annotation.Nullable;
@@ -36,12 +36,12 @@ public class ModularOverrideList extends ItemOverrideList {
     private ModularItemModel model;
     private IModelConfiguration owner;
     private ModelBakery bakery;
-    private Function<Material, TextureAtlasSprite> spriteGetter;
+    private Function<RenderMaterial, TextureAtlasSprite> spriteGetter;
     private IModelTransform modelTransform;
     private ResourceLocation modelLocation;
 
     public ModularOverrideList(ModularItemModel model, IModelConfiguration owner, ModelBakery bakery,
-            Function<Material, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ResourceLocation modelLocation) {
+            Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ResourceLocation modelLocation) {
         this.model = model;
         this.owner = owner;
         this.bakery = bakery;
@@ -57,11 +57,11 @@ public class ModularOverrideList extends ItemOverrideList {
 
     @Nullable
     @Override
-    public IBakedModel getModelWithOverrides(IBakedModel originalModel, ItemStack stack, @Nullable World world, @Nullable LivingEntity entity) {
-        CompoundNBT baseTag = NBTHelper.getTag(stack);
+    public IBakedModel getOverrideModel(IBakedModel originalModel, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
+        CompoundNBT baseTag = stack.getTag();
         IBakedModel result = originalModel;
 
-        if(!baseTag.isEmpty()) {
+        if(baseTag != null && !baseTag.isEmpty()) {
             CacheKey key = getCacheKey(stack, entity, originalModel);
 
             try {
@@ -75,7 +75,7 @@ public class ModularOverrideList extends ItemOverrideList {
     }
 
     protected IBakedModel getOverrideModel(ItemStack itemStack, @Nullable World world, @Nullable LivingEntity entity) {
-        ItemModular item  = (ItemModular) itemStack.getItem();
+        IModularItem item  = (IModularItem) itemStack.getItem();
 
         List<ModuleModel> models = item.getModels(itemStack, entity);
         String transformVariant = item.getTransformVariant(itemStack, entity);
@@ -84,7 +84,7 @@ public class ModularOverrideList extends ItemOverrideList {
     }
 
     protected CacheKey getCacheKey(ItemStack itemStack, LivingEntity entity, IBakedModel original) {
-        return new CacheKey(original, ((ItemModular) itemStack.getItem()).getModelCacheKey(itemStack, entity));
+        return new CacheKey(original, ((IModularItem) itemStack.getItem()).getModelCacheKey(itemStack, entity));
     }
 
     protected static class CacheKey {

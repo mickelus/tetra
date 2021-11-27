@@ -1,0 +1,52 @@
+{
+    "replace": true,
+    "slots": [
+        "bow/stave"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 144,
+        "textureY": 32
+    },
+    "translation": {
+        "primaryAttributes": {
+            "tetra:draw_speed": -3,
+            "tetra:draw_strength": 4
+        },
+        "tertiaryAttributes": {
+            "tetra:draw_speed": 1,
+            "tetra:draw_strength": 2
+        },
+        "primaryEffects": {
+            "overbowed": -1
+        },
+        "durability": 4,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:stick",
+                "count": 4
+            },
+            "moduleKey": "bow/long_stave",
+            "moduleVariant": "long_stave/stick"
+        },
+        {
+            "materials": ["tetra:wood/"],
+            "countFactor": 2,
+            "toolOffset": 1,
+            "moduleKey": "bow/long_stave",
+            "moduleVariant": "long_stave/"
+        },
+        {
+            "materials": ["tetra:metal/"],
+            "countFactor": 3,
+            "toolOffset": 3,
+            "moduleKey": "bow/long_stave",
+            "moduleVariant": "long_stave/"
+        }
+    ]
+}

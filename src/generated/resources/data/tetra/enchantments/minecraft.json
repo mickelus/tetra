@@ -180,5 +180,29 @@
   {
     "enchantment": "minecraft:infinity",
     "improvement": "enchantment/infinity"
+  },
+  {
+    "enchantment": "minecraft:multishot",
+    "improvement": "enchantment/multishot"
+  },
+  {
+    "enchantment": "minecraft:quick_charge",
+    "improvement": "enchantment/quick_charge"
+  },
+  {
+    "enchantment": "minecraft:quick_charge",
+    "improvement": "destabilized/quick_charge",
+    "extract": false,
+    "multiplier": -1.0
+  },
+  {
+    "enchantment": "minecraft:piercing",
+    "improvement": "enchantment/piercing"
+  },
+  {
+    "enchantment": "minecraft:piercing",
+    "improvement": "destabilized/piercing",
+    "extract": false,
+    "multiplier": -1.0
   }
 ]

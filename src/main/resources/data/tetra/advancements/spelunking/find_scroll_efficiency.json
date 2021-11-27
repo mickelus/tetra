@@ -1,0 +1,44 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:scroll_rolled",
+            "nbt": "{BlockEntityTag:{data:[{material:0,ribbon:\"2bffee\"}]}}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_efficiency.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_efficiency.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "hammer_efficiency": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{
+                    "item": "tetra:scroll_rolled",
+                    "nbt": "{BlockEntityTag:{data:[{key:\"hammer_efficiency\"}]}}"
+                }]
+            }
+        },
+        "axe_efficiency": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{
+                    "item": "tetra:scroll_rolled",
+                    "nbt": "{BlockEntityTag:{data:[{key:\"axe_efficiency\"}]}}"
+                }]
+            }
+        },
+        "cut_efficiency": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{
+                    "item": "tetra:scroll_rolled",
+                    "nbt": "{BlockEntityTag:{data:[{key:\"cut_efficiency\"}]}}"
+                }]
+            }
+        }
+    }
+}

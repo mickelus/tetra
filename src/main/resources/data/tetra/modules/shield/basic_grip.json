@@ -1,11 +1,14 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["shield/grip"],
+    "slots": [
+        "shield/grip"
+    ],
     "improvements": [
         "tetra:shield/grip/hone_damage_flat",
         "tetra:shield/grip/hone_speed_mult",
         "tetra:shield/grip/hone_durability",
+        "tetra:shield/grip/shared",
         "tetra:enchantment/mending",
         "tetra:enchantment/loyalty",
         "tetra:enchantment/knockback",
@@ -23,47 +26,36 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:shared/"
     ],
     "variants": [
         {
-            "key": "basic_grip/oak",
-            "durability": 20,
-            "integrity": 2,
-            "magicCapacity": 20,
-            "attackSpeed": 2,
-            "glyph": {
-                "tint": "oak_glyph",
-                "textureX": 16,
-                "textureY": 48
+            "materials": [
+                "tetra:wood/", "tetra:metal/",
+                "tetra:bone/", "tetra:misc/blaze_rod", "tetra:misc/end_rod", "tetra:misc/forged_beam", "tetra:misc/stick"
+            ],
+            "key": "basic_grip/",
+            "attributes": {
+                "tetra:ability_cooldown": 1
             },
-            "models": [
-                {
+            "durability": 49,
+            "extract": {
+                "secondaryAttributes": {
+                    "tetra:ability_cooldown": 0.3
+                },
+                "durability": 0.2,
+                "integrity": 1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 16,
+                    "textureY": 48
+                },
+                "availableTextures": ["default"],
+                "models": [{
                     "type": "shield_grip",
-                    "location": "tetra:items/module/shield/grip/basic_grip/default",
-                    "tint": "oak"
-                }
-            ]
-        },
-        {
-            "key": "basic_grip/iron",
-            "durability": 20,
-            "integrity": 5,
-            "magicCapacity": 84,
-            "attackSpeed": 2,
-            "glyph": {
-                "tint": "iron_glyph",
-                "textureX": 16,
-                "textureY": 48
-            },
-            "models": [
-                {
-                    "type": "shield_grip",
-                    "location": "tetra:items/module/shield/grip/basic_grip/default",
-                    "tint": "iron"
-                }
-            ]
+                    "location": "tetra:items/module/shield/grip/basic_grip/"
+                }]
+            }
         }
     ]
 }

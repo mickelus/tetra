@@ -1,0 +1,38 @@
+[
+    {
+        "key": "blade/tempered",
+        "level": 1,
+        "integrity": -1,
+        "effects": {
+            "armorPenetration": 2
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/heavy/improvements/tempered",
+            "tint": "inherit"
+        }]
+    },
+    {
+        "key": "blade/tempered",
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "armorPenetration": 3
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/heavy/improvements/tempered",
+            "tint": "inherit"
+        }]
+    },
+    {
+        "key": "blade/tempered",
+        "level": 3,
+        "integrity": -2,
+        "effects": {
+            "armorPenetration": 5
+        },
+        "models": [{
+            "location": "tetra:items/module/sword/blade/heavy/improvements/tempered",
+            "tint": "inherit"
+        }]
+    }
+]

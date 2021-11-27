@@ -1,0 +1,30 @@
+{
+    "key": "silver",
+    "category": "metal",
+    "primary": "4",
+    "secondary": "4.2",
+    "tertiary": "1",
+    "durability": "50",
+    "integrityCost": "2",
+    "integrityGain": "1",
+    "magicCapacity": "126",
+    "toolLevel": "1",
+    "toolEfficiency": "11",
+    "tints": {
+        "glyph": "silver_glyph",
+        "texture": "silver"
+    },
+    "textures": [
+        "shiny",
+        "metal"
+    ],
+    "material": {
+        "tag": "forge:ingots/silver"
+    },
+    "effects": {
+        "stabilizing": 10
+    },
+    "requiredTools": {
+        "hammer": 1
+    }
+}

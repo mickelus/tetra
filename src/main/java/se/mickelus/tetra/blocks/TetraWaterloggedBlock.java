@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
@@ -30,7 +30,7 @@ public class TetraWaterloggedBlock extends TetraBlock implements IWaterLoggable 
     }
 
     @Override
-    public IFluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 

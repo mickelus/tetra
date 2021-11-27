@@ -1,10 +1,7 @@
 package se.mickelus.tetra.data;
 
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
 import net.minecraft.client.resources.ReloadListener;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.profiler.IProfiler;
@@ -12,10 +9,12 @@ import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.forgespi.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.TetraMod;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -40,6 +39,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
 
         this.dataClass = dataClass;
 
+        rawData = Collections.emptyMap();
         dataMap = Collections.emptyMap();
 
         listeners = new LinkedList<>();
@@ -51,6 +51,10 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
         int i = this.directory.length() + 1;
 
         for(ResourceLocation fullLocation : resourceManager.getAllResourceLocations(directory, rl -> rl.endsWith(".json"))) {
+            if (!TetraMod.MOD_ID.equals(fullLocation.getNamespace())) {
+                continue;
+            }
+
             String path = fullLocation.getPath();
             ResourceLocation location = new ResourceLocation(fullLocation.getNamespace(), path.substring(i, path.length() - jsonExtLength));
 
@@ -66,16 +70,21 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
                 } else {
                     json = JSONUtils.fromJson(gson, reader, JsonElement.class);
                 }
+
                 if (json != null) {
-                    JsonElement duplicate = map.put(location, json);
-                    if (duplicate != null) {
-                        throw new IllegalStateException("Duplicate data file ignored with ID " + location);
+                    if (shouldLoad(json)) {
+                        JsonElement duplicate = map.put(location, json);
+                        if (duplicate != null) {
+                            throw new IllegalStateException("Duplicate data ignored with ID " + location);
+                        }
+                    } else {
+                        logger.debug("Skipping data '{}' due to condition", fullLocation);
                     }
                 } else {
-                    logger.error("Couldn't load data file {} from {} as it's null or empty", location, fullLocation);
+                    logger.error("Couldn't load data from '{}' as it's null or empty", fullLocation);
                 }
             } catch (IllegalArgumentException | IOException | JsonParseException jsonparseexception) {
-                logger.error("Couldn't parse data file {} from {}", location, fullLocation, jsonparseexception);
+                logger.error("Couldn't parse data '{}' from '{}'", location, fullLocation, jsonparseexception);
             }
         }
 
@@ -86,15 +95,16 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
     protected void apply(Map<ResourceLocation, JsonElement> splashList, IResourceManager resourceManager, IProfiler profiler) {
         rawData = splashList;
 
-        if (Environment.get().getDist().isDedicatedServer()) {
-            PacketHandler.sendToAllPlayers(new UpdateDataPacket(directory, rawData));
+        // PacketHandler dependencies get upset when called upon before the server has started properly
+        if (Environment.get().getDist().isDedicatedServer() && ServerLifecycleHooks.getCurrentServer() != null) {
+            TetraMod.packetHandler.sendToAllPlayers(new UpdateDataPacket(directory, rawData));
         }
 
-        parseData(splashList);
+        parseData(rawData);
     }
 
     public void sendToPlayer(ServerPlayerEntity player) {
-        PacketHandler.sendTo(new UpdateDataPacket(directory, rawData), player);
+        TetraMod.packetHandler.sendTo(new UpdateDataPacket(directory, rawData), player);
     }
 
     public void loadFromPacket(Map<ResourceLocation, String> data) {
@@ -126,6 +136,21 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
         listeners.forEach(Runnable::run);
     }
 
+    protected boolean shouldLoad(JsonElement json) {
+        if (json.isJsonArray()) {
+            JsonArray arr = json.getAsJsonArray();
+            if (arr.size() > 0)
+                json = arr.get(0);
+        }
+
+        if (!json.isJsonObject()) {
+            return true;
+        }
+
+        JsonObject jsonObject = json.getAsJsonObject();
+        return !jsonObject.has("conditions") || CraftingHelper.processConditions(JSONUtils.getJsonArray(jsonObject, "conditions"));
+    }
+
     protected void processData() {
 
     }
@@ -139,7 +164,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
     }
 
     /**
-     * Get the resource at the given location from the set of resources that this listener is managing.
+     * Get the resource at the given location from the set of resources that this listener is managing
      *
      * @param resourceLocation A resource location
      * @return An object matching the type of this listener, or null if none exists at the given location
@@ -153,6 +178,20 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
      */
     public Map<ResourceLocation, V> getData() {
         return dataMap;
+    }
+
+    /**
+     * Get all resources (if any) that are within the directory denoted by the provided resource location
+     *
+     * @param resourceLocation
+     * @return
+     */
+    public Collection<V> getDataIn(ResourceLocation resourceLocation) {
+        return getData().entrySet().stream()
+                .filter(entry -> resourceLocation.getNamespace().equals(entry.getKey().getNamespace())
+                        && entry.getKey().getPath().startsWith(resourceLocation.getPath()))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 
     /**

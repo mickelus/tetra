@@ -64,8 +64,7 @@ public class GuiBlockProgress extends GuiRoot {
         }
     }
 
-    @Override
-    public void draw() {
+    public void draw(MatrixStack matrixStack) {
         if (isVisible()) {
             MainWindow window = mc.getMainWindow();
             int width = window.getScaledWidth();
@@ -74,7 +73,7 @@ public class GuiBlockProgress extends GuiRoot {
             int mouseX = (int)(mc.mouseHelper.getMouseX() * window.getScaledWidth() / window.getWidth());
             int mouseY = (int)(mc.mouseHelper.getMouseY() * window.getScaledHeight() / window.getHeight());
 
-            this.drawChildren(new MatrixStack(), width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
+            this.drawChildren(matrixStack, width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
         }
     }
 }

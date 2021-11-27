@@ -1,0 +1,14 @@
+[
+  {
+    "key": "grip/blazing",
+    "effects": {
+      "fierySelf": [3, 0.1]
+    }
+  },
+  {
+    "key": "grip/ender_reverb",
+    "effects": {
+      "enderReverb": [4, 0.3]
+    }
+  }
+]

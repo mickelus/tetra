@@ -1,0 +1,27 @@
+{
+    "key": "shulker_shell",
+    "category": "scale",
+    "primary": "5",
+    "secondary": "0.4",
+    "tertiary": "1",
+    "durability": "200",
+    "integrityCost": "1",
+    "integrityGain": "4",
+    "magicCapacity": "90",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
+    "tints": {
+        "glyph": "shulker_glyph",
+        "texture": "shulker"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:shulker_shell"
+    },
+    "requiredTools": {
+        "cut": 3
+    }
+}

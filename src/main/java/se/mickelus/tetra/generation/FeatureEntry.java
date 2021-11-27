@@ -1,6 +1,9 @@
 package se.mickelus.tetra.generation;
 
 import net.minecraft.inventory.IInventory;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootTable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -8,29 +11,26 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.ISeedReader;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.WorldGenRegion;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.template.IntegrityProcessor;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
-import net.minecraft.world.gen.placement.ChanceRangeConfig;
 import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootTable;
-import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.RotationHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.generation.processing.ForgedContainerProcessor;
@@ -38,73 +38,135 @@ import se.mickelus.tetra.generation.processing.ForgedCrateProcessor;
 import se.mickelus.tetra.generation.processing.ForgedHammerProcessor;
 import se.mickelus.tetra.generation.processing.TransferUnitProcessor;
 import se.mickelus.tetra.util.ItemHandlerWrapper;
+import se.mickelus.tetra.util.RotationHelper;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
-import java.util.stream.StreamSupport;
+import java.util.stream.Collectors;
 
-public class FeatureEntry extends Feature<FeatureReference> {
+public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference> {
     public static final String key = "feature";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + key)
-    public static FeatureEntry instance;
+    public static FeatureEntry instance = new FeatureEntry();
+    public static ConfiguredFeature<?, ?> configuredInstance = instance.withConfiguration(NoFeatureConfig.field_236559_b_);
 
     private TemplateManager templateManager;
+    private Registry<Biome> biomeRegistry;
+
+    private List<FeatureParameters> entryPoints = Collections.emptyList();
 
     public FeatureEntry() {
-        super(FeatureReference::deserialize);
-
-        if (ConfigHandler.generateFeatures.get()) {
-            DataManager.featureData.onReload(this::addToBiomes);
-        }
+        super(NoFeatureConfig.field_236558_a_);
+//        super(FeatureReference.codec);
 
         setRegistryName(TetraMod.MOD_ID, key);
+
+        if (ConfigHandler.generateFeatures.get()) {
+            DataManager.featureData.onReload(this::setupEntryPoints);
+        }
+    }
+
+    private void setupEntryPoints() {
+        entryPoints = DataManager.featureData.getData().values().stream()
+                .filter(params -> params.biomes.length > 0)
+                .collect(Collectors.toList());
     }
 
     public void setup(MinecraftServer server) {
-        templateManager = new TemplateManager(server, server.getDataDirectory(), server.getDataFixer());
+        templateManager = server.getTemplateManager();
+        biomeRegistry = server.func_244267_aX().getRegistry(Registry.BIOME_KEY);
+    }
+
+    public void registerFeatures(BiomeLoadingEvent event) {
+        event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, configuredInstance);
+
+//        DataManager.featureData.getData().values().stream()
+//                .filter(params -> params.biomes.length > 0)
+//                .filter(params -> Arrays.stream(params.biomes).anyMatch(biomeName -> biomeName.equalsIgnoreCase(event.getCategory().getName())))
+//                .forEach(params -> event.getGeneration().withFeature(
+//                        GenerationStage.Decoration.UNDERGROUND_STRUCTURES,
+//                        withConfiguration(new FeatureReference(params.location))
+//                                .withPlacement(Placement.field_242907_l.configure(new TopSolidRangeConfig(params.minY, params.minY, params.maxY)))));
+//                                    .func_242732_c(density));
     }
 
     private void addToBiomes() {
-        for (Biome biome : ForgeRegistries.BIOMES) {
-            biome.getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES)
-                    .removeIf(configuredFeature -> configuredFeature.feature.equals(this));
-        }
+//        StreamSupport.stream(biomeRegistry.spliterator(), false)
+//                .forEach(biome -> {
+//                    DataManager.featureData.getData().values().stream()
+//                            .filter(params -> params.biomes.length > 0)
+//                            .filter(params -> Arrays.stream(params.biomes).anyMatch(biomeName -> biomeName.equalsIgnoreCase(biome.getCategory().getName())))
+//                            .forEach(params -> biome.getGenerationSettings().
+//                                    GenerationStage.Decoration.UNDERGROUND_STRUCTURES,
+//                                    withConfiguration(new FeatureReference(params.location))
+//                                            .withPlacement(Placement.field_242907_l.configure(new TopSolidRangeConfig(params.minY, params.minY, params.maxY)))));
+//                });
 
-        DataManager.featureData.getData().values().stream()
-                .filter(params -> params.biomes.length > 0)
-                .forEach(params -> {
-                    StreamSupport.stream(ForgeRegistries.BIOMES.spliterator(), false)
-                            .filter(biome -> {
-                                Set<BiomeDictionary.Type> types = BiomeDictionary.getTypes(biome);
-                                return types.stream().anyMatch(type ->
-                                        Arrays.stream(params.biomes).anyMatch(biomeName -> biomeName.equalsIgnoreCase(type.getName())));
-                            })
-                            .forEach(biome -> biome.addFeature(
-                                    GenerationStage.Decoration.UNDERGROUND_STRUCTURES,
-                                    FeatureEntry.instance.withConfiguration(new FeatureReference(params.location)).withPlacement(
-                                            Placement.CHANCE_RANGE.configure(
-                                                    new ChanceRangeConfig(1, params.minY, params.minY, params.maxY))
-                                    )
-                            ));
-        });
+//        if (EffectiveSide.get().isClient()) {
+//            return;
+//        }
+//
+//        for (Biome biome : ForgeRegistries.BIOMES) {
+//            biome.getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES)
+//                    .removeIf(configuredFeature -> CastOptional.cast(configuredFeature.config, DecoratedFeatureConfig.class)
+//                            .filter(config -> FeatureEntry.this.equals(config.feature.feature))
+//                            .isPresent());
+//        }
+//
+//        DataManager.featureData.getData().values().stream()
+//                .filter(params -> params.biomes.length > 0)
+//                .forEach(params -> {
+//                    StreamSupport.stream(ForgeRegistries.BIOMES.spliterator(), false)
+//                            .filter(biome -> {
+//                                Set<BiomeDictionary.Type> types = BiomeDictionary.getTypes(biome);
+//                                return types.stream().anyMatch(type ->
+//                                        Arrays.stream(params.biomes).anyMatch(biomeName -> biomeName.equalsIgnoreCase(type.getName())));
+//                            })
+//                            .forEach(biome -> biome.addFeature(
+//                                    GenerationStage.Decoration.UNDERGROUND_STRUCTURES,
+//                                    withConfiguration(new FeatureReference(params.location)).withPlacement(
+//                                            Placement.CHANCE_RANGE.configure(
+//                                                    new ChanceRangeConfig(1, params.minY, params.minY, params.maxY))
+//                                    )
+//                            ));
+//        });
     }
 
-    @Override
-    public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos,
-            FeatureReference ref) {
-        FeatureParameters params = DataManager.featureData.getData(ref.location);
-        ResourceLocation dimensionType = world.getDimension().getType().getRegistryName();
 
-        if (params != null && Arrays.asList(params.dimensions).contains(dimensionType) && rand.nextFloat() < params.probability) {
-            generateFeatureRoot(params, world, pos, rand);
-            return true;
+    @Override
+    public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig ref) {
+        Biome biome = world.getBiome(pos);
+        ResourceLocation dimensionType = world.getWorld().getDimensionKey().getLocation();
+
+        for (FeatureParameters params: entryPoints) {
+            if (Arrays.asList(params.dimensions).contains(dimensionType)
+                    && Arrays.stream(params.biomes).anyMatch(biomeName -> biomeName.equalsIgnoreCase(biome.getCategory().getName()))
+                    && rand.nextFloat() < params.probability) {
+                generateFeatureRoot(params, world, pos.up(params.minY + rand.nextInt(params.maxY - params.minY)), rand);
+                return true;
+            }
         }
 
         return false;
     }
 
-    public void generateFeatureRoot(FeatureParameters feature, IWorld world, BlockPos pos, Random random) {
+//    public boolean func_241855_a(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, FeatureReference ref) {
+//        FeatureParameters params = DataManager.featureData.getData(ref.location);
+//
+//        ResourceLocation dimensionType = world.getWorld().getDimensionKey().getLocation();
+//
+//        if (params != null
+//                && Arrays.asList(params.dimensions).contains(dimensionType)
+//                && rand.nextFloat() < params.probability) {
+//            generateFeatureRoot(params, world, pos, rand);
+//            return true;
+//        }
+//
+//        return false;
+//    }
+
+    public void generateFeatureRoot(FeatureParameters feature, ISeedReader world, BlockPos pos, Random random) {
         Rotation rotation = Rotation.NONE;
         Mirror mirror = Mirror.NONE;
 
@@ -116,7 +178,7 @@ public class FeatureEntry extends Feature<FeatureReference> {
         generateFeature(feature, world, pos, rotation, mirror, random, 0);
     }
 
-    private void generateFeature(FeatureParameters feature, IWorld world, BlockPos pos, Rotation rotation, Mirror mirror,
+    private void generateFeature(FeatureParameters feature, ISeedReader world, BlockPos pos, Rotation rotation, Mirror mirror,
             Random random, int depth) {
         final Template template = templateManager.getTemplate(feature.location);
         if (template != null) {
@@ -142,7 +204,8 @@ public class FeatureEntry extends Feature<FeatureReference> {
             settings.addProcessor(new ForgedHammerProcessor());
             settings.addProcessor(new TransferUnitProcessor());
 
-            boolean blocksAdded = template.addBlocksToWorld(world, pos, settings, 2);
+            // todo 1.16: new BlockPos param here, what does it do?
+            boolean blocksAdded = template.func_237146_a_(world, pos, pos, settings, random,2);
 
             if (blocksAdded) {
                 generateLoot(feature, world, pos, settings, random);
@@ -154,7 +217,7 @@ public class FeatureEntry extends Feature<FeatureReference> {
         }
     }
 
-    private void generateChildren(FeatureParameters feature, IWorld world, BlockPos pos, Rotation rotation, Mirror mirror,
+    private void generateChildren(FeatureParameters feature, ISeedReader world, BlockPos pos, Rotation rotation, Mirror mirror,
             Random random, int depth) {
         Arrays.stream(feature.children)
                 .filter(child -> child.chance == 1 || random.nextFloat() < child.chance)
@@ -193,21 +256,21 @@ public class FeatureEntry extends Feature<FeatureReference> {
 
     /**
      * Adds loot from to containers based on the loot field in the feature parameters.
-     * @param feature
-     * @param world
-     * @param pos
-     * @param settings
-     * @param random
+     * @param feature A feature reference
+     * @param world The world in which the feature is generating
+     * @param pos The base position of the feature
+     * @param settings Placement settings
+     * @param random Rand
      */
-    private void generateLoot(FeatureParameters feature, IWorld world, BlockPos pos, PlacementSettings settings, Random random) {
+    private void generateLoot(FeatureParameters feature, ISeedReader world, BlockPos pos, PlacementSettings settings, Random random) {
         Arrays.stream(feature.loot).forEach(loot ->
                 addLoot(loot.table, world, Template.transformedBlockPos(settings, loot.position).add(pos), random));
     }
 
-    private void addLoot(ResourceLocation lootLocation, IWorld world, BlockPos pos, Random random) {
+    private void addLoot(ResourceLocation lootLocation, ISeedReader world, BlockPos pos, Random random) {
         TileEntity tileEntity = world.getTileEntity(pos);
 
-        ServerWorld serverWorld = world instanceof WorldGenRegion ? ((WorldGenRegion) world).getWorld() : ((ServerWorld) world);
+        ServerWorld serverWorld = world instanceof WorldGenRegion ? world.getWorld() : ((ServerWorld) world);
 
         if (tileEntity instanceof LockableLootTileEntity) {
             ((LockableLootTileEntity) tileEntity).setLootTable(lootLocation, random.nextLong());

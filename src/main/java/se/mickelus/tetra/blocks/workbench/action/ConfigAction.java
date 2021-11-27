@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.workbench.action;
 
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.util.ResourceLocation;
-import se.mickelus.tetra.module.data.CapabilityData;
+import se.mickelus.tetra.module.data.ToolData;
 
 /**
  * ConfigActions are a variant of workbench actions which can be defined using configuration files.  Loot action is
@@ -21,24 +21,28 @@ public abstract class ConfigAction implements WorkbenchAction {
 
     /**
      * Defines if this action can be performed on a given itemstack, if the itemstack matches the predicate then
-     * the action is allowed (if the capability requirements are met)
+     * the action is allowed (if the tool requirements are met)
      */
     public ItemPredicate requirement;
 
     /**
-     * Defines which capabilities are required for this action, a map where the capability is the key and the value
-     * is the required level.
+     * Defines which tools are required for this action, a map where the tool is the key and the value is the required level.
      *
      * Json format:
      * {
-     *     "capabilityA": level,
-     *     "capabilityB": level
+     *     "toolA": level,
+     *     "toolB": level
      * }
      */
-    public CapabilityData requiredCapabilities = new CapabilityData();
+    public ToolData requiredTools = new ToolData();
 
     /**
      * The loot table that rewards will be picked from when the action is performed.
      */
     public ResourceLocation lootTable;
+
+    /**
+     * Denotes if this action should be available using in world interaction
+     */
+    public boolean inWorld = true;
 }

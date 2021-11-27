@@ -1,0 +1,44 @@
+{
+    "replace": true,
+    "localizationKey": "double/shared_head/hone_pickaxe_tier_1",
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "keySuffixes": [
+        "_left",
+        "_right"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 176
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "modules": [
+            [
+                "double/basic_pickaxe_right"
+            ],
+            [
+                "double/basic_pickaxe_left"
+            ]
+        ],
+        "improvements": {
+            "!head_hone/pickaxe_tier": -1,
+            "head_hone/pickaxe_efficiency": 5
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 3
+            },
+            "improvements": {
+                "head_hone/pickaxe_tier": 0
+            }
+        }
+    ]
+}

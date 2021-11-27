@@ -3,8 +3,8 @@
         "key": "enchantment/efficiency",
         "level": 1,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 2.50]
+        "tools": {
+            "axe": [0, 2.00]
         },
         "magicCapacity": -31.0
     },
@@ -12,8 +12,8 @@
         "key": "enchantment/efficiency",
         "level": 2,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 6.25]
+        "tools": {
+            "axe": [0, 5.00]
         },
         "magicCapacity": -41.0
     },
@@ -21,8 +21,8 @@
         "key": "enchantment/efficiency",
         "level": 3,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 12.50]
+        "tools": {
+            "axe": [0, 10.00]
         },
         "magicCapacity": -51.0
     },
@@ -30,8 +30,8 @@
         "key": "enchantment/efficiency",
         "level": 4,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 21.25]
+        "tools": {
+            "axe": [0, 17.00]
         },
         "magicCapacity": -61.0
     },
@@ -39,8 +39,8 @@
         "key": "enchantment/efficiency",
         "level": 5,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 32.50]
+        "tools": {
+            "axe": [0, 26.00]
         },
         "magicCapacity": -71.0
     },
@@ -48,8 +48,8 @@
         "key": "enchantment/efficiency",
         "level": 6,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 46.25]
+        "tools": {
+            "axe": [0, 37.00]
         },
         "magicCapacity": -81.0
     },
@@ -57,8 +57,8 @@
         "key": "enchantment/efficiency",
         "level": 7,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 62.50]
+        "tools": {
+            "axe": [0, 50.00]
         },
         "magicCapacity": -91.0
     },
@@ -66,8 +66,8 @@
         "key": "enchantment/efficiency",
         "level": 8,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 81.25]
+        "tools": {
+            "axe": [0, 65.00]
         },
         "magicCapacity": -101.0
     },
@@ -75,8 +75,8 @@
         "key": "enchantment/efficiency",
         "level": 9,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 102.50]
+        "tools": {
+            "axe": [0, 82.00]
         },
         "magicCapacity": -111.0
     },
@@ -84,8 +84,8 @@
         "key": "enchantment/efficiency",
         "level": 10,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 126.25]
+        "tools": {
+            "axe": [0, 101.00]
         },
         "magicCapacity": -121.0
     },
@@ -93,8 +93,8 @@
         "key": "enchantment/efficiency",
         "level": 11,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 152.50]
+        "tools": {
+            "axe": [0, 122.00]
         },
         "magicCapacity": -131.0
     },
@@ -102,8 +102,8 @@
         "key": "enchantment/efficiency",
         "level": 12,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 181.25]
+        "tools": {
+            "axe": [0, 145.00]
         },
         "magicCapacity": -141.0
     },
@@ -111,8 +111,8 @@
         "key": "enchantment/efficiency",
         "level": 13,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 212.50]
+        "tools": {
+            "axe": [0, 170.00]
         },
         "magicCapacity": -151.0
     },
@@ -120,8 +120,8 @@
         "key": "enchantment/efficiency",
         "level": 14,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 246.25]
+        "tools": {
+            "axe": [0, 197.00]
         },
         "magicCapacity": -161.0
     },
@@ -129,8 +129,8 @@
         "key": "enchantment/efficiency",
         "level": 15,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, 282.50]
+        "tools": {
+            "axe": [0, 226.00]
         },
         "magicCapacity": -171.0
     },
@@ -138,8 +138,8 @@
         "key": "destabilized/efficiency",
         "level": 1,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, -2.50]
+        "tools": {
+            "axe": [0, -2.00]
         },
         "glyph": {
             "tint": "ee5599"
@@ -149,8 +149,8 @@
         "key": "destabilized/efficiency",
         "level": 2,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, -6.25]
+        "tools": {
+            "axe": [0, -5.00]
         },
         "glyph": {
             "tint": "ee5599"
@@ -160,8 +160,8 @@
         "key": "destabilized/efficiency",
         "level": 3,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, -12.50]
+        "tools": {
+            "axe": [0, -10.00]
         },
         "glyph": {
             "tint": "ee5599"
@@ -171,8 +171,8 @@
         "key": "destabilized/efficiency",
         "level": 4,
         "enchantment": true,
-        "capabilities": {
-            "axe": [0, -21.25]
+        "tools": {
+            "axe": [0, -17.00]
         },
         "glyph": {
             "tint": "ee5599"

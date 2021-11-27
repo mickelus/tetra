@@ -33,7 +33,7 @@ public class ItemQuickLatch extends TetraItem {
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
         tooltip.add(Tooltips.reveal);
-        tooltip.add(new StringTextComponent(""));
+        tooltip.add(new StringTextComponent(" "));
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 

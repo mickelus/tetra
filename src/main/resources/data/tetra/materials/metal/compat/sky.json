@@ -1,0 +1,34 @@
+{
+    "conditions": [{
+        "type": "forge:mod_loaded",
+        "modid": "naturesaura"
+    }],
+    "key": "sky",
+    "category": "metal",
+    "primary": "6",
+    "secondary": "3",
+    "tertiary": "3.5",
+    "durability": "1500",
+    "integrityCost": "2",
+    "integrityGain": "6",
+    "magicCapacity": "72",
+    "toolLevel": "4",
+    "toolEfficiency": "8",
+    "tints": {
+        "glyph": "00d5c2",
+        "texture": "00b59f"
+    },
+    "textures": [
+        "metal",
+        "default"
+    ],
+    "material": {
+        "item": "naturesaura:sky_ingot"
+    },
+    "improvements": {
+        "naturesaura_aura_mending_innate": 1
+    },
+    "requiredTools": {
+        "hammer": 3
+    }
+}

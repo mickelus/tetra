@@ -18,8 +18,9 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.items.modular.ItemModular;
-import se.mickelus.tetra.module.data.ModuleVariantData;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.module.data.VariantData;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -39,17 +40,20 @@ public class ModuleDevCommand {
         BlockPos pos = new BlockPos(context.getSource().getPos());
         World world = context.getSource().getWorld();
 
-        ItemStack baseStack = ItemUpgradeRegistry.instance.getReplacement(
-                ItemArgument.getItem(context, "item").createStack(1, false));
+        ItemStack baseStack = ItemArgument.getItem(context, "item").createStack(1, false);
+
+        if (!(baseStack.getItem() instanceof IModularItem)) {
+            baseStack = ItemUpgradeRegistry.instance.getReplacement(baseStack);
+        }
 
         ItemModule module = ItemUpgradeRegistry.instance.getModule(StringArgumentType.getString(context, "module"));
 
-        ModuleVariantData[] data = module.getVariantData();
+        VariantData[] data = module.getVariantData();
 
         for (int i = 0; i < data.length; i++) {
             ItemStack itemStack = baseStack.copy();
             module.addModule(itemStack, data[i].key, context.getSource().asPlayer());
-            ItemModular.updateIdentifier(itemStack);
+            IModularItem.updateIdentifier(itemStack);
             plopFrame(world, pos.add(i / 5, i % 5, 0), itemStack, module.getName(itemStack));
         }
 

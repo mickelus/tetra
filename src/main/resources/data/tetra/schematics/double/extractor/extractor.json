@@ -1,0 +1,25 @@
+{
+    "replace": true,
+    "slots": ["double/head_right"],
+    "keySuffixes": ["_right"],
+    "materialSlotCount": 1,
+    "materialRevealSlot": 0,
+    "rarity": "temporary",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 144,
+        "textureY": 48
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "tetra:chthonic_extractor"
+            },
+            "requiredTools": {
+                "hammer": 4
+            },
+            "moduleKey": "double/extractor",
+            "moduleVariant": "extractor/extractor"
+        }
+    ]
+}

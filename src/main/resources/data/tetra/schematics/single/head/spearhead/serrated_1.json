@@ -1,0 +1,32 @@
+{
+    "replace": true,
+    "slots": [
+        "single/head"
+    ],
+    "materialSlotCount": 0,
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 208,
+        "textureY": 32
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "!spearhead/serrated": -1
+        },
+        "modules": [
+            ["single/spearhead"],
+            ["single/trident"]
+        ]
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 3
+            },
+            "improvements": {
+                "spearhead/serrated": 1
+            }
+        }
+    ]
+}

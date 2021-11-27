@@ -1,0 +1,29 @@
+{
+    "replace": true,
+    "slots": [
+        "single/handle"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 16
+    },
+    "translation": {
+        "secondaryAttributes": {
+            "generic.attack_speed": -1
+        },
+        "durability": 2,
+        "integrity": 3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "materials": [
+                "tetra:wood/", "tetra:metal/",
+                "tetra:bone/", "tetra:misc/blaze_rod", "tetra:misc/end_rod", "tetra:misc/forged_beam", "tetra:misc/stick"
+            ],
+            "moduleKey": "single/basic_handle",
+            "moduleVariant": "basic_handle/"
+        }
+    ]
+}

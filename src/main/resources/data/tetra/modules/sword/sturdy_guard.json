@@ -1,0 +1,35 @@
+{
+    "replace": true,
+    "slots": ["sword/guard"],
+    "type": "tetra:basic_module",
+    "renderLayer": "higher",
+    "variants": [
+        {
+            "materials": ["tetra:metal/", "tetra:scale/", "tetra:bone/"],
+            "key": "sturdy_guard/",
+            "integrity": -1,
+            "attributes": {
+                "generic.attack_speed": -0.1
+            },
+            "effects": {
+                "blocking": [1, 2.5]
+            },
+            "extract": {
+                "primaryEffects": {
+                    "blocking": 0.2
+                },
+                "secondaryEffects": {
+                    "blocking": [0, 0.1]
+                },
+                "durability": 0.2,
+                "integrity": -0.2,
+                "glyph": {
+                    "textureX": 147,
+                    "textureY": 16
+                },
+                "availableTextures": ["metal", "shiny", "crude"],
+                "models": [{ "location": "tetra:items/module/sword/guard/sturdy_guard/" }]
+            }
+        }
+    ]
+}

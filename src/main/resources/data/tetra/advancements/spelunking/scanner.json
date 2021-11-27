@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:holo",
+            "nbt": "{\"id\": \"spelunking/scanner\", \"holo/frame\": \"holo/frame\", \"holo/frame_material\": \"frame/ancient\", \"holo/attachment_0\": \"holo/scanner_0\", \"holo/scanner_0_material\": \"scanner/scanner\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.scanner.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.scanner.description"
+        }
+    },
+    "parent": "tetra:spelunking/ancient_ruins",
+    "criteria": {
+        "scanner": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "module": "holo/scanner"
+            }
+        }
+    }
+}

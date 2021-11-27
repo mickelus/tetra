@@ -1,0 +1,27 @@
+{
+    "replace": true,
+    "slots": [
+        "sword/blade"
+    ],
+    "repair": false,
+    "materialSlotCount": 1,
+    "materialRevealSlot": 0,
+    "rarity": "temporary",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 240,
+        "textureY": 32
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "tetra:stonecutter"
+            },
+            "requiredTools": {
+                "hammer": 1
+            },
+            "moduleKey": "sword/stonecutter",
+            "moduleVariant": "stonecutter/stonecutter"
+        }
+    ]
+}

@@ -6,21 +6,24 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.placement.CountRangeConfig;
-import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
+import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.network.PacketHandler;
 
 public class GeodeBlock extends TetraBlock {
@@ -30,6 +33,8 @@ public class GeodeBlock extends TetraBlock {
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static GeodeBlock instance;
 
+    private ConfiguredFeature configuredFeature;
+
     public GeodeBlock() {
         super(Properties.create(Material.ROCK)
         .sound(SoundType.STONE)
@@ -38,6 +43,17 @@ public class GeodeBlock extends TetraBlock {
         .hardnessAndResistance(1.5F, 6.0F));
 
         setRegistryName(unlocalizedName);
+
+        int density = ConfigHandler.geodeDensity.get();
+        if (density > 0) {
+            int size = 3;
+            int maxHeight = 32;
+            OreFeatureConfig config = new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, getDefaultState(), size);
+            configuredFeature = Feature.ORE.withConfiguration(config)
+                    .range(maxHeight)
+                    .square()
+                    .func_242732_c(density);
+        }
     }
 
     @Override
@@ -47,17 +63,14 @@ public class GeodeBlock extends TetraBlock {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        int density = ConfigHandler.geodeDensity.get();
-        if (density > 0) {
-            for (Biome biome : ForgeRegistries.BIOMES) {
-                biome.addFeature(
-                        GenerationStage.Decoration.UNDERGROUND_ORES,
-                        Feature.ORE.withConfiguration(new OreFeatureConfig(
-                                OreFeatureConfig.FillerBlockType.NATURAL_STONE, GeodeBlock.instance.getDefaultState(), 3))
-                                .withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(density, 0, 0, 32))
-                        )
-                );
-            }
+        if (configuredFeature != null) {
+            Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName), configuredFeature);
+        }
+    }
+
+    public static void registerFeature(BiomeGenerationSettingsBuilder builder) {
+        if (instance.configuredFeature != null) {
+            builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, instance.configuredFeature);
         }
     }
 }

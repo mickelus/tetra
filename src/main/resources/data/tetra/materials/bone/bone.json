@@ -1,0 +1,27 @@
+{
+    "key": "bone",
+    "category": "bone",
+    "primary": "5",
+    "secondary": "1.9",
+    "tertiary": "4.5",
+    "durability": "120",
+    "integrityCost": "1",
+    "integrityGain": "5",
+    "magicCapacity": "108",
+    "toolLevel": "2",
+    "toolEfficiency": "4.5",
+    "tints": {
+        "glyph": "bone_glyph",
+        "texture": "bone"
+    },
+    "textures": [
+        "bone",
+        "crude"
+    ],
+    "material": {
+        "item": "minecraft:bone"
+    },
+    "requiredTools": {
+        "hammer": 1
+    }
+}

@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 
 public enum SlotType {
     storage(ItemEffect.storageSlot),

@@ -15,15 +15,15 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.AnimationChain;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.mgui.gui.impl.GuiTabVerticalGroup;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.gui.VerticalTabGroupGui;
+import se.mickelus.tetra.gui.GuiTextures;
 
 import java.util.stream.IntStream;
 
 @OnlyIn(Dist.CLIENT)
 public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContainer> {
     private static final ResourceLocation containerTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/forged-container.png");
-    private static final ResourceLocation playerInventoryTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/player-inventory.png");
 
     private final ForgedContainerTile tileEntity;
     private final ForgedContainerContainer container;
@@ -32,7 +32,7 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
 
     private final AnimationChain slotTransition;
 
-    private final GuiTabVerticalGroup compartmentButtons;
+    private final VerticalTabGroupGui compartmentButtons;
 
     public ForgedContainerScreen(ForgedContainerContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title);
@@ -45,11 +45,11 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
 
         guiRoot = new GuiElement(0, 0, xSize, ySize);
         guiRoot.addChild(new GuiTexture(0, -13, 179, 128, containerTexture));
-        guiRoot.addChild(new GuiTexture(0, 103, 179, 106, playerInventoryTexture));
+        guiRoot.addChild(new GuiTexture(0, 103, 179, 106, GuiTextures.playerInventory));
 
-        compartmentButtons = new GuiTabVerticalGroup(10, 26, this::changeCompartment,
-                IntStream.range(1, ForgedContainerTile.compartmentCount + 1)
-                        .mapToObj(i -> I18n.format("tetra.forged_container.compartment", i))
+        compartmentButtons = new VerticalTabGroupGui(10, 26, this::changeCompartment, containerTexture, 0, 128,
+                IntStream.range(0, ForgedContainerTile.compartmentCount)
+                        .mapToObj(i -> I18n.format("tetra.forged_container.compartment_" + i))
                         .toArray(String[]::new));
         guiRoot.addChild(compartmentButtons);
 
@@ -69,17 +69,17 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
 
-        return guiRoot.onClick((int) mouseX, (int) mouseY);
+        return guiRoot.onMouseClick((int) mouseX, (int) mouseY, button);
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int state) {
-        super.mouseReleased(mouseX, mouseY, state);
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
 
-        guiRoot.mouseReleased((int) mouseX, (int) mouseY);
+        guiRoot.onMouseRelease((int) mouseX, (int) mouseY, button);
 
         return true;
     }
@@ -110,19 +110,23 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
     }
 
     @Override
-    public void render(final int mouseX, final int mouseY, final float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack, 0);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        renderHoveredTooltip(matrixStack, mouseX, mouseY);
 
-        drawGuiContainerForegroundLayer(mouseX, mouseY);
+        drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
     }
 
+
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
 
-        guiRoot.draw(new MatrixStack(), x, y, width, height, mouseX, mouseY, 1);
+        guiRoot.draw(matrixStack, x, y, width, height, mouseX, mouseY, 1);
     }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) { }
 }

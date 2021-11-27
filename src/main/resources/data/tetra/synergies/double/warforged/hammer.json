@@ -1,0 +1,75 @@
+[
+    {
+        "modules": ["double/basic_hammer_left"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "name": "double/warhammer",
+        "effects": {
+            "slam": [50, 1.4]
+        }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/adze_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityDefensive": [49, 5]
+        }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/basic_axe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOvercharge": [10, 1.5]
+        }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/basic_hammer_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityMomentum": [29, 0.6]
+        }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/basic_pickaxe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityCombo": 25
+        }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/claw_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityRevenge": 60
+        }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/hoe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOverextend": [15, 1.5]
+        }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/sickle_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityExhilaration": [5, 0.5]
+        }
+    },
+    {
+        "modules": ["double/basic_hammer_left", "double/extractor_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityEcho": 1
+        }
+    }
+]

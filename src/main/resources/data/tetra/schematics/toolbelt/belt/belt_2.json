@@ -1,0 +1,29 @@
+{
+    "replace": true,
+    "slots": [
+        "toolbelt/belt"
+    ],
+    "materialSlotCount": 1,
+    "requirement": {
+        "type": "tetra:modular_item",
+        "variants": {
+            "belt/leather": "toolbelt/belt"
+        }
+    },
+    "glyph": {
+        "textureY": 16
+    },
+    "displayType": "minor",
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:iron_ingot"
+            },
+            "requiredTools": {
+                "hammer": 4
+            },
+            "moduleKey": "toolbelt/belt",
+            "moduleVariant": "belt/buckled"
+        }
+    ]
+}

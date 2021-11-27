@@ -1,0 +1,62 @@
+[
+    {
+        "materials": ["tetra:skin/", "tetra:fabric/"],
+        "key": "hilt/wrap/",
+        "level": 0,
+        "durability": 3,
+        "group": "wrap",
+        "integrity": -1,
+        "attributes": {
+            "generic.attack_speed": 0.05,
+            "**generic.attack_damage": 0.1
+        },
+        "effects": {
+            "enderReverb": [-2, -0.07],
+            "fierySelf": [-1, -0.015]
+        },
+        "extract": {
+            "primaryAttributes": {
+                "generic.attack_speed": 0.01
+            },
+            "secondaryEffects": {
+                "fierySelf": [0, -0.025]
+            },
+            "tertiaryEffects": {
+                "enderReverb": [0, -0.039]
+            },
+            "durability": 0.1,
+            "availableTextures": ["wrap"],
+            "models": [{ "location": "tetra:items/module/sword/hilt/basic/improvements/" }]
+        }
+    },
+    {
+        "materials": ["tetra:fibre/"],
+        "key": "hilt/wrap/",
+        "level": 0,
+        "durability": 3,
+        "group": "wrap",
+        "integrity": -1,
+        "attributes": {
+            "generic.attack_speed": 0.05,
+            "**generic.attack_damage": 0.1
+        },
+        "effects": {
+            "enderReverb": [-2, -0.07],
+            "fierySelf": [-1, -0.015]
+        },
+        "extract": {
+            "primaryAttributes": {
+                "generic.attack_speed": 0.01
+            },
+            "secondaryEffects": {
+                "fierySelf": [0, -0.025]
+            },
+            "tertiaryEffects": {
+                "enderReverb": [0, -0.039]
+            },
+            "durability": 0.1,
+            "availableTextures": ["wrap_alt"],
+            "models": [{ "location": "tetra:items/module/sword/hilt/basic/improvements/" }]
+        }
+    }
+]

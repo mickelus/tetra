@@ -6,8 +6,19 @@
     "variants": [
         {
             "key": "sword_socket/diamond",
-            "durability": 412,
+            "category": "gem",
+            "durability": 512,
+            "durabilityMultiplier": 0.8,
             "integrity": -1,
+            "attributes": {
+                "**generic.attack_damage": 0.1
+            },
+            "tools": {
+                "axe": [0, 1],
+                "shovel": [0, 1],
+                "pickaxe": [0, 1],
+                "cut": [0, 1]
+            },
             "glyph": {
                 "tint": "diamond",
                 "textureX": 80,
@@ -20,6 +31,7 @@
         },
         {
             "key": "sword_socket/emerald",
+            "category": "gem",
             "durability": 48,
             "integrity": -1,
             "glyph": {
@@ -37,6 +49,7 @@
         },
         {
             "key": "sword_socket/lapis",
+            "category": "gem",
             "durability": 22,
             "integrity": -1,
             "glyph": {
@@ -54,6 +67,7 @@
         },
         {
             "key": "sword_socket/amber",
+            "category": "gem",
             "durability": 30,
             "integrity": -1,
             "glyph": {
@@ -66,13 +80,24 @@
                 "tint": "f29000"
             }],
             "effects": {
-                "earthbind": 1
+                "earthbind": 4
             }
         },
         {
             "key": "sword_socket/pristine_diamond",
-            "durability": 648,
+            "category": "gem",
+            "durability": 741,
+            "durabilityMultiplier": 0.8,
             "integrity": -1,
+            "attributes": {
+                "**generic.attack_damage": 0.2
+            },
+            "tools": {
+                "axe": [0, 4],
+                "shovel": [0, 4],
+                "pickaxe": [0, 4],
+                "cut": [0, 4]
+            },
             "glyph": {
                 "tint": "diamond",
                 "textureX": 80,
@@ -85,6 +110,7 @@
         },
         {
             "key": "sword_socket/pristine_emerald",
+            "category": "gem",
             "durability": 33,
             "integrity": -1,
             "glyph": {
@@ -102,6 +128,7 @@
         },
         {
             "key": "sword_socket/pristine_lapis",
+            "category": "gem",
             "durability": 15,
             "integrity": -1,
             "glyph": {
@@ -115,6 +142,22 @@
             }],
             "effects": {
                 "intuit": 2
+            }
+        },
+        {
+            "key": "sword_socket/mana_rune",
+            "integrity": -1,
+            "glyph": {
+                "tint": "c16bc8",
+                "textureX": 80,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/sword/guard/socket/pristine",
+                "tint": "9a3aa8"
+            }],
+            "effects": {
+                "manaRepair": [1, 0.0025]
             }
         }
     ]

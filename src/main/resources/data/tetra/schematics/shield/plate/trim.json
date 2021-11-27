@@ -1,0 +1,41 @@
+{
+    "replace": true,
+    "slots": ["shield/plate"],
+    "materialSlotCount": 1,
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 48,
+        "textureY": 240
+    },
+    "translation": {
+        "durability": 1
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:metal/"],
+            "countFactor": 2,
+            "improvements": {
+                "shield/trim/": 0
+            }
+        },
+        {
+            "materials": ["tetra:skin/"],
+            "countFactor": 4,
+            "improvements": {
+                "shield/trim/": 0
+            }
+        },
+        {
+            "material": {
+                "item": "tetra:metal_scrap",
+                "count": 8
+            },
+            "requiredTools": {
+                "hammer": 4
+            },
+            "improvements": {
+                "shield/trim/scrap": 0
+            }
+        }
+    ]
+}

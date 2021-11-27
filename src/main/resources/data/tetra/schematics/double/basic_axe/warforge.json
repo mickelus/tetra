@@ -1,0 +1,28 @@
+{
+    "replace": true,
+    "localizationKey": "double/warforge",
+    "locked": true,
+    "slots": ["double/head_left", "double/head_right"],
+    "keySuffixes": ["_left", "_right"],
+    "materialSlotCount": 0,
+    "rarity": "temporary",
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 128,
+        "textureY": 240
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "modules": [["double/basic_axe_right"], ["double/basic_axe_left"]]
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 4
+            },
+            "improvements": {
+                "double/warforged": 0
+            }
+        }
+    ]
+}

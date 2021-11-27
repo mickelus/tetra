@@ -1,0 +1,20 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "texture": "tetra:blocks/oak_rack",
+        "particle": "tetra:blocks/oak_rack"
+    },
+    "elements": [
+        {   "from": [ 0, 11, 14 ],
+            "to": [ 16, 14, 16 ],
+            "faces": {
+                "down":  { "uv": [ 0, 3, 16, 5 ], "texture": "#texture" },
+                "up":    { "uv": [ 0, 3, 16, 5 ], "texture": "#texture" },
+                "north": { "uv": [ 0, 0, 16, 3 ], "texture": "#texture" },
+                "south": { "uv": [ 0, 3, 16, 6 ], "texture": "#texture", "cullface": "south" },
+                "west":  { "uv": [ 0, 4,  2, 7 ], "texture": "#texture" },
+                "east":  { "uv": [ 2, 4,  4, 7 ], "texture": "#texture" }
+            }
+        }
+    ]
+}

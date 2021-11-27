@@ -2,7 +2,6 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
@@ -18,7 +17,7 @@ public class PotionsInventory extends ToolbeltInventory {
 
         predicate = ToolbeltInventory.potionPredicate;
 
-        readFromNBT(NBTHelper.getTag(stack));
+        readFromNBT(stack.getOrCreateTag());
     }
 
     @Override
@@ -35,7 +34,8 @@ public class PotionsInventory extends ToolbeltInventory {
         // attempt to merge the itemstack with itemstacks in the inventory
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack storedStack = getStackInSlot(i);
-            if (ItemStack.areItemStackTagsEqual(storedStack, itemStack)
+            if (ItemStack.areItemsEqual(storedStack, itemStack)
+                    && ItemStack.areItemStackTagsEqual(storedStack, itemStack)
                     && storedStack.getCount() < 64) {
 
                 int moveCount = Math.min(itemStack.getCount(), 64 - storedStack.getCount());

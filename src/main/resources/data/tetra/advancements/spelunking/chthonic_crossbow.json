@@ -1,0 +1,36 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:modular_crossbow",
+            "nbt": "{\"id\": \"chthonic_crossbow\", \"crossbow/stock\": \"crossbow/basic_stock\", \"crossbow/basic_stave_material\": \"basic_stave/stick\", \"crossbow/attachment_0\": \"crossbow/stirrup\", \"crossbow/string\": \"crossbow/basic_string\", \"crossbow/basic_string_material\": \"basic_string/string\", ChargedProjectiles: [{id: \"tetra:chthonic_extractor_used\", Count: 1b}], \"crossbow/stirrup_material\": \"stirrup/iron\", Charged: 1b, \"crossbow/basic_stock_material\": \"basic_stock/stick\", id: \"advancement-extractor-crossbow\", \"crossbow/stave\": \"crossbow/basic_stave\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.chthonic_crossbow.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.chthonic_crossbow.description"
+        }
+    },
+    "parent": "tetra:spelunking/chthonic_extractor",
+    "criteria": {
+        "unused": {
+            "trigger": "minecraft:shot_crossbow",
+            "conditions": {
+                "item": {
+                    "item": "tetra:modular_crossbow",
+                    "nbt": "{ChargedProjectiles: [{id: \"tetra:chthonic_extractor\"}]}"
+                }
+            }
+        },
+        "used": {
+            "trigger": "minecraft:shot_crossbow",
+            "conditions": {
+                "item": {
+                    "item": "tetra:modular_crossbow",
+                    "nbt": "{ChargedProjectiles: [{id: \"tetra:chthonic_extractor_used\"}]}"
+                }
+            }
+        }
+    },
+    "requirements": [["unused", "used"]]
+}

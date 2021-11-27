@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:forged_workbench"
+            "item": "tetra:modular_double",
+            "nbt": "{\"id\": \"upgrades/hammer_4\", \"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/blackstone\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/blackstone\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "frame": "goal",
         "title": {
@@ -13,25 +14,19 @@
     },
     "parent": "tetra:upgrades/hammer_3",
     "criteria": {
-        "craft": {
+        "head_left": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "capability": "hammer",
-                "capabilityLevel": 4
+                "slot": "double/head_left",
+                "variant": "basic_hammer/blackstone"
             }
         },
-        "improvement": {
-            "trigger": "tetra:craft_improvement",
+        "head_right": {
+            "trigger": "tetra:craft_module",
             "conditions": {
-                "capability": "hammer",
-                "capabilityLevel": 4
+                "slot": "double/head_right",
+                "variant": "basic_hammer/blackstone"
             }
         }
-    },
-    "requirements": [
-        [
-            "craft",
-            "improvement"
-        ]
-    ]
+    }
 }

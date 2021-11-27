@@ -15,7 +15,7 @@
         "crate1": {
             "trigger": "tetra:block_interaction",
             "conditions": {
-                "capability": "pry",
+                "tool": "pry",
                 "after": {
                     "block": "minecraft:air"
                 }
@@ -24,7 +24,7 @@
         "crate2": {
             "trigger": "tetra:block_interaction",
             "conditions": {
-                "capability": "hammer",
+                "tool": "hammer",
                 "after": {
                     "block": "minecraft:air"
                 }

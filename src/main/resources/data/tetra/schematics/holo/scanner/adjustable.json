@@ -1,0 +1,35 @@
+{
+    "replace": true,
+    "slots": [
+        "holo/attachment_0",
+        "holo/attachment_1"
+    ],
+    "keySuffixes": [
+        "_0",
+        "_1"
+    ],
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureX": 112,
+        "textureY": 48
+    },
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "modules": [
+            ["holo/scanner_0"],
+            ["holo/scanner_1"]
+        ]
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "tetra:forged_bolt",
+                "count": 2
+            },
+            "improvements": {
+                "scanner/adjustable": 0
+            }
+        }
+    ]
+}

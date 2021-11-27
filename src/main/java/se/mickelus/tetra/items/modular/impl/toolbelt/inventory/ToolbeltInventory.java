@@ -11,13 +11,12 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
-import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.ItemPredicateComposite;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -171,7 +170,7 @@ public class ToolbeltInventory implements IInventory {
             }
         }
 
-        writeToNBT(NBTHelper.getTag(toolbeltItemStack));
+        writeToNBT(toolbeltItemStack.getOrCreateTag());
     }
 
     @Override
@@ -217,7 +216,7 @@ public class ToolbeltInventory implements IInventory {
     }
 
     public boolean isItemValid(ItemStack itemStack) {
-        return predicate.test(itemStack);
+        return !ModularToolbeltItem.instance.equals(itemStack.getItem()) && predicate.test(itemStack);
     }
 
     public boolean storeItemInInventory(ItemStack itemStack) {
@@ -228,7 +227,8 @@ public class ToolbeltInventory implements IInventory {
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack storedStack = getStackInSlot(i);
-            if (ItemStack.areItemStackTagsEqual(itemStack, storedStack)
+            if (ItemStack.areItemsEqual(itemStack, storedStack)
+                    && ItemStack.areItemStackTagsEqual(itemStack, storedStack)
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());

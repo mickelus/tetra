@@ -10,7 +10,7 @@ import net.minecraft.data.IDataProvider;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -95,9 +95,9 @@ public class EnchantmentProvider implements IDataProvider {
 //        setupEnchantment(Enchantments.BINDING_CURSE);
 
         // crossbows
-//        setupEnchantment(Enchantments.MULTISHOT);
-//        setupEnchantment(Enchantments.QUICK_CHARGE);
-//        setupEnchantment(Enchantments.PIERCING);
+        setupEnchantment(Enchantments.MULTISHOT);
+        setupEnchantment(Enchantments.QUICK_CHARGE);
+        setupEnchantment(Enchantments.PIERCING);
 
         // fishing rods
 //        setupEnchantment(Enchantments.LUCK_OF_THE_SEA);

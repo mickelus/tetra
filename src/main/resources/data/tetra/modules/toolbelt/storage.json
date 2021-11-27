@@ -7,9 +7,9 @@
     "variants": [
         {
             "key": "storage/forged_mesh",
-            "integrity": -4,
+            "integrity": -3,
             "effects": {
-                "storageSlot": 7
+                "storageSlot": 13
             },
             "glyph": {
                 "tint": "383838",
@@ -18,9 +18,9 @@
         },
         {
             "key": "storage/leather",
-            "integrity": -5,
+            "integrity": -4,
             "effects": {
-                "storageSlot": 8
+                "storageSlot": 16
             },
             "glyph": {
                 "tint": "866526",
@@ -29,9 +29,9 @@
         },
         {
             "key": "storage/wool",
-            "integrity": -3,
+            "integrity": -1,
             "effects": {
-                "storageSlot": 4
+                "storageSlot": 6
             },
             "glyph": {
                 "tint": "fefefe",
@@ -42,7 +42,7 @@
             "key": "storage/hide",
             "integrity": 0,
             "effects": {
-                "storageSlot": 2
+                "storageSlot": 4
             },
             "glyph": {
                 "tint": "a88054",

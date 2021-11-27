@@ -14,18 +14,18 @@
         "key": "grip_hone/durability",
         "level": 3,
         "integrity": -1,
-        "durability": 75
+        "durability": 100
     },
     {
         "key": "grip_hone/durability",
         "level": 4,
         "integrity": -2,
-        "durability": 100
+        "durability": 175
     },
     {
         "key": "grip_hone/durability",
         "level": 5,
         "integrity": -2,
-        "durability": 125
+        "durability": 275
     }
 ]

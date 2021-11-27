@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:modular_double",
+            "nbt": "{\"id\": \"spelunking/hammer_remove\", \"double/head_left\": \"double/claw_left\",\"double/claw_left_material\": \"claw/iron\",\"double/head_right\": \"double/butt_right\",\"double/butt_right_material\": \"butt/iron\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.hammer_remove.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.hammer_remove.description"
+        }
+    },
+    "parent": "tetra:spelunking/hammer_fix",
+    "criteria": {
+        "module": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "tool": "pry",
+                "after": {
+                    "block": "tetra:hammer_base"
+                }
+            }
+        }
+    }
+}

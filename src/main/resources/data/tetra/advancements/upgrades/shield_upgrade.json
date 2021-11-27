@@ -1,0 +1,39 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:modular_shield",
+            "nbt": "{\"id\": \"upgrades/shield_upgrade\", \"shield/grip\": \"shield/basic_grip\",\"shield/basic_grip_material\": \"basic_grip/iron\", \"shield/plate\": \"shield/heater\", \"shield/heater_material\": \"heater/jungle\", \"shield/plate:shield/trim_gold\": 0}"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.shield_upgrade.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.shield_upgrade.description"
+        }
+    },
+    "parent": "tetra:upgrades/workbench",
+    "criteria": {
+        "module": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "after": {
+                    "item": "tetra:modular_shield"
+                }
+            }
+        },
+        "improvement": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "after": {
+                    "item": "tetra:modular_shield"
+                }
+            }
+        }
+    },
+    "requirements": [
+        [
+            "module",
+            "improvement"
+        ]
+    ]
+}

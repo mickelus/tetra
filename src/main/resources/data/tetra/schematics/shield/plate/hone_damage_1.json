@@ -1,0 +1,30 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/plate"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 32,
+        "textureY": 240
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "!plate_hone/damage": -1
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 2
+            },
+            "improvements": {
+                "plate_hone/damage": 1
+            }
+        }
+    ]
+}

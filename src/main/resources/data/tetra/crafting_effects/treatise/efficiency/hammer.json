@@ -1,0 +1,21 @@
+{
+    "replace": true,
+    "requirements": [
+        {
+            "type": "tetra:locked",
+            "key": "tetra:hammer_efficiency"
+        },
+        {
+            "type": "tetra:tool",
+            "tools": {
+                "hammer": 1
+            }
+        }
+    ],
+    "outcomes": [
+        {
+            "type": "tetra:material_reduction",
+            "probability": 0.25
+        }
+    ]
+}

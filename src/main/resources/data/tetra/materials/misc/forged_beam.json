@@ -1,0 +1,27 @@
+{
+    "key": "forged_beam",
+    "category": "misc",
+    "primary": "1",
+    "secondary": "4.2",
+    "tertiary": "1",
+    "durability": "950",
+    "integrityCost": "2",
+    "integrityGain": "8",
+    "magicCapacity": "84",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
+    "tints": {
+        "glyph": "forged_beam_glyph",
+        "texture": "forged_beam"
+    },
+    "textures": [
+        "metal",
+        "default"
+    ],
+    "material": {
+        "item": "tetra:forged_beam"
+    },
+    "requiredTools": {
+        "hammer": 1
+    }
+}

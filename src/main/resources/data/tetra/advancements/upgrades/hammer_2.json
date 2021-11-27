@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:modular_double",
-            "nbt": "{\"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/stone\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/stone\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
+            "nbt": "{\"id\": \"upgrades/hammer_2\", \"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/diorite\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/diorite\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "frame": "goal",
         "title": {
@@ -14,19 +14,65 @@
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {
-        "head_left": {
+        "diorite_left": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_left",
+                "variant": "basic_hammer/diorite"
+            }
+        },
+        "diorite_right": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_right",
+                "variant": "basic_hammer/diorite"
+            }
+        },
+        "andesite_left": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_left",
+                "variant": "basic_hammer/andesite"
+            }
+        },
+        "andesite_right": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_right",
+                "variant": "basic_hammer/andesite"
+            }
+        },
+        "granite_left": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_left",
+                "variant": "basic_hammer/granite"
+            }
+        },
+        "granite_right": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_right",
+                "variant": "basic_hammer/granite"
+            }
+        },
+        "stone_left": {
             "trigger": "tetra:craft_module",
             "conditions": {
                 "slot": "double/head_left",
                 "variant": "basic_hammer/stone"
             }
         },
-        "head_right": {
+        "stone_right": {
             "trigger": "tetra:craft_module",
             "conditions": {
                 "slot": "double/head_right",
                 "variant": "basic_hammer/stone"
             }
         }
-    }
+    },
+    "requirements": [
+        ["diorite_left", "andesite_left", "granite_left", "stone_left"],
+        ["diorite_right", "andesite_right", "granite_right", "stone_right"]
+    ]
 }

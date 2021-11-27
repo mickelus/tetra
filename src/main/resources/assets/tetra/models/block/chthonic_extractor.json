@@ -1,0 +1,45 @@
+{
+    "parent": "block/block",
+    "display": {
+        "head": {
+            "rotation": [ -60, 0, 0 ],
+            "translation": [ 0, 5, -9],
+            "scale":[ 1, 1, 1]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 0, 0],
+            "scale": [ 0.375, 0.375, 0.375 ]
+        }
+    },
+    "ambientocclusion": false,
+    "textures": {
+        "texture": "tetra:blocks/chthonic_extractor",
+        "particle": "tetra:blocks/chthonic_extractor"
+    },
+    "elements": [
+        {
+            "from": [ 6, 15, 6 ],
+            "to": [ 10, 16, 10 ],
+            "faces": {
+                "down":  { "uv": [ 2, 0, 6, 4 ], "texture": "#texture" },
+                "up":    { "uv": [ 2, 0, 6, 4 ], "texture": "#texture", "cullface": "up" },
+                "north": { "uv": [ 2, 0, 6, 1 ], "texture": "#texture" },
+                "south": { "uv": [ 2, 0, 6, 1 ], "texture": "#texture" },
+                "west":  { "uv": [ 2, 0, 6, 1 ], "texture": "#texture" },
+                "east":  { "uv": [ 2, 0, 6, 1 ], "texture": "#texture" }
+            }
+        },
+        {
+            "from": [ 7, 0, 7 ],
+            "to": [ 9, 15, 9 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 2, 2  ],  "texture": "#texture", "cullface": "down" },
+                "north": { "uv": [ 0, 0, 2, 15 ], "texture": "#texture" },
+                "south": { "uv": [ 0, 0, 2, 15 ], "texture": "#texture" },
+                "west":  { "uv": [ 0, 0, 2, 15 ], "texture": "#texture" },
+                "east":  { "uv": [ 0, 0, 2, 15 ], "texture": "#texture" }
+            }
+        }
+    ]
+}

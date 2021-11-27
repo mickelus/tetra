@@ -1,0 +1,20 @@
+{
+    "replace": false,
+    "values": [
+        "tetra:core_extractor",
+        "tetra:extractor_pipe",
+        "tetra:extractor_piston",
+        "tetra:forged_container",
+        "tetra:forged_crate",
+        "tetra:forged_pillar",
+        "tetra:forged_platform",
+        "tetra:forged_platform_slab",
+        "tetra:forged_vent",
+        "tetra:forged_wall",
+        "tetra:forged_workbench",
+        "tetra:hammer_base",
+        "tetra:hammer_head",
+        "tetra:transfer_unit",
+        "minecraft:ancient_debris"
+    ]
+}

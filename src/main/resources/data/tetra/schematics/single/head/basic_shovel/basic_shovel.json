@@ -1,0 +1,19 @@
+{
+    "replace": true,
+    "slots": [
+        "single/head"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 176,
+        "textureY": 32
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "moduleKey": "single/basic_shovel",
+            "moduleVariant": "basic_shovel/"
+        }
+    ]
+}

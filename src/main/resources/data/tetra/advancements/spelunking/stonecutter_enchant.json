@@ -1,0 +1,29 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:enchanted_book",
+            "nbt": "{\"id\": \"spelunking/stonecutter_enchant\", \"StoredEnchantments\": [{lvl: 1, id: \"minecraft:efficiency\"}]}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.stonecutter_enchant.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.stonecutter_enchant.description"
+        }
+    },
+    "parent": "tetra:spelunking/stonecutter",
+    "criteria": {
+        "improvement": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "after": {
+                    "type": "tetra:modular_item",
+                    "improvements": {
+                        "enchantment/efficiency": 1
+                    },
+                    "modules": [["sword/stonecutter"]]
+                }
+            }
+        }
+    }
+}

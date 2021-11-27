@@ -1,0 +1,25 @@
+{
+    "replace": true,
+    "slots": ["shield/plate"],
+    "materialSlotCount": 1,
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 80,
+        "textureY": 240
+    },
+    "translation": {
+        "primaryEffects": {
+            "throwable": 3
+        },
+        "durability": 1
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:metal/"],
+            "countFactor": 2,
+            "improvements": {
+                "shield/aerodynamic_trim/": 0
+            }
+        }
+    ]
+}

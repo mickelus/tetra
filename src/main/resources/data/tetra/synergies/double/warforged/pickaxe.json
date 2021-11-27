@@ -1,0 +1,75 @@
+[
+    {
+        "modules": ["double/basic_pickaxe_left"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "name": "double/war_pick",
+        "effects": {
+            "puncture": [8, 30]
+        }
+    },
+    {
+        "modules": ["double/basic_pickaxe_left", "double/adze_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityDefensive": [1, 5]
+        }
+    },
+    {
+        "modules": ["double/basic_pickaxe_left", "double/basic_axe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOvercharge": [1, 1]
+        }
+    },
+    {
+        "modules": ["double/basic_pickaxe_left", "double/basic_hammer_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityMomentum": [10, 0.05]
+        }
+    },
+    {
+        "modules": ["double/basic_pickaxe_left", "double/basic_pickaxe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityCombo": 10
+        }
+    },
+    {
+        "modules": ["double/basic_pickaxe_left", "double/claw_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityRevenge": 1
+        }
+    },
+    {
+        "modules": ["double/basic_pickaxe_left", "double/hoe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOverextend": [2, 1]
+        }
+    },
+    {
+        "modules": ["double/basic_pickaxe_left", "double/sickle_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityExhilaration": 30
+        }
+    },
+    {
+        "modules": ["double/basic_pickaxe_left", "double/extractor_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityEcho": 1
+        }
+    }
+]

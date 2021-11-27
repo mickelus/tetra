@@ -1,0 +1,32 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:modular_double",
+            "nbt": "{\"id\": \"upgrades/hammer_5\", \"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/obsidian\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/obsidian\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
+        },
+        "frame": "goal",
+        "title": {
+            "translate": "tetra.advancements.upgrades.hammer_5.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.hammer_5.description"
+        }
+    },
+    "parent": "tetra:upgrades/hammer_4",
+    "criteria": {
+        "head_left": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_left",
+                "variant": "basic_hammer/obsidian"
+            }
+        },
+        "head_right": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "slot": "double/head_right",
+                "variant": "basic_hammer/obsidian"
+            }
+        }
+    }
+}

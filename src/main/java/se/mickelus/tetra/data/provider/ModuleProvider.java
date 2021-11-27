@@ -8,17 +8,16 @@ import net.minecraft.data.IDataProvider;
 import net.minecraft.resources.IResource;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.ToolTypes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ModuleProvider implements IDataProvider {
     private static final Logger logger = LogManager.getLogger();
@@ -57,13 +56,13 @@ public class ModuleProvider implements IDataProvider {
 
         // data shared between all module variants of the same materials are defined here, e.g. the localized
         ModuleBuilder.Material platinum = new ModuleBuilder.Material("platinum", "platinum", 0xd6f6ff, 0xd6f6ff,
-                1, 66, "tag", "forge:ingots/platinum", 1, Capability.hammer, 4, metalReferences);
+                1, 66, "tag", "forge:ingots/platinum", 1, ToolTypes.hammer, 4, metalReferences);
 
         ModuleBuilder.Material ruby = new ModuleBuilder.Material("ruby", "ruby", 0xa349f2, 0xa349f2,
-                1, 60, "tag", "forge:gems/ruby", 1, Capability.hammer, 2, gemReferences, Pair.of("arrested", 0));
+                1, 60, "tag", "forge:gems/ruby", 1, ToolTypes.hammer, 2, gemReferences, Pair.of("arrested", 0));
 
         ModuleBuilder.Material enigmaticIron = new ModuleBuilder.Material("my_metal", "mystic metal", 0xddeeee, 0xeeaabb,
-                2, 88, "item", "mymod:my_metal", 1, Capability.hammer, 1, metalReferences);
+                2, 88, "item", "mymod:my_metal", 1, ToolTypes.hammer, 1, metalReferences);
 
 
         // Setup each module which should have additional variants generated here, using the materials defined above. The material is paired with an
@@ -74,7 +73,7 @@ public class ModuleProvider implements IDataProvider {
                 "basic_pickaxe", // this will be used to prefix variant keys, variant keys typically begin with the module name e.g. basic_pickaxe/iron
                 "%s pick", // %s will be replaced by the localization entry for each material to produce the names for all module variants
                 "basic_pickaxe/iron", // the generator will fall back to using the variant with this key if none of the references from the material matches any variant key
-                "double/basic_pickaxe/basic_pickaxe") // the path for the schema file, I've not been consistent in how I've structured this so double check that this is correct
+                "double/basic_pickaxe/basic_pickaxe") // the path for the schematic file, I've not been consistent in how I've structured this so double check that this is correct
                 .offsetDurability(-20, 0.5f) // pickaxes have two heads and the default handle has 20 durability so the durability of the module should be = (itemDurability - 20) * 0.5
                 .offsetSpeed(0, 0.5f) // same math goes for the speed, the flimsy handle has no impact on speed so the speed of the item should be split equally between the heads
                 .addVariant(platinum, "minecraft:iron_pickaxe")
@@ -101,7 +100,7 @@ public class ModuleProvider implements IDataProvider {
         setup();
 
         builders.forEach(builder -> saveModule(cache, builder.module, builder.getModuleJson()));
-        builders.forEach(builder -> saveSchema(cache, builder.schemaPath, builder.getSchemaJson()));
+        builders.forEach(builder -> saveSchematic(cache, builder.schematicPath, builder.getSchematicJson()));
 
         JsonObject localization = new JsonObject();
         builders.stream()
@@ -112,7 +111,7 @@ public class ModuleProvider implements IDataProvider {
         saveLocalization(cache, localization);
     }
 
-    private ModuleBuilder setupModule(String module, String prefix, String localization, String fallbackReference, String schemaPath) {
+    private ModuleBuilder setupModule(String module, String prefix, String localization, String fallbackReference, String schematicPath) {
         JsonObject referenceModule = null;
         try {
             IResource resource = existingFileHelper.getResource(new ResourceLocation("tetra", module), ResourcePackType.SERVER_DATA, ".json", "modules");
@@ -124,7 +123,7 @@ public class ModuleProvider implements IDataProvider {
         }
 
 
-        ModuleBuilder builder = new ModuleBuilder(module, prefix, localization, referenceModule, fallbackReference, schemaPath);
+        ModuleBuilder builder = new ModuleBuilder(module, prefix, localization, referenceModule, fallbackReference, schematicPath);
         builders.add(builder);
         return builder;
     }
@@ -138,12 +137,12 @@ public class ModuleProvider implements IDataProvider {
         }
     }
 
-    private void saveSchema(DirectoryCache cache, String schemaPath, JsonObject schemaData) {
-        Path outputPath = generator.getOutputFolder().resolve("data/tetra/schemas/" + schemaPath + ".json");
+    private void saveSchematic(DirectoryCache cache, String schematicPath, JsonObject schematicData) {
+        Path outputPath = generator.getOutputFolder().resolve("data/tetra/schematics/" + schematicPath + ".json");
         try {
-            IDataProvider.save(gson, cache, schemaData, outputPath);
+            IDataProvider.save(gson, cache, schematicData, outputPath);
         } catch (IOException e) {
-            logger.error("Couldn't save schema data to {}", outputPath, e);
+            logger.error("Couldn't save schematic data to {}", outputPath, e);
         }
     }
 

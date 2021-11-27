@@ -1,0 +1,36 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/plate"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 48,
+        "textureY": 48
+    },
+    "translation": {
+        "primaryAttributes": {
+            "tetra:ability_damage": 2,
+            "generic.armor_toughness": 3
+        },
+        "secondaryAttributes": {
+            "tetra:ability_damage": 1,
+            "tetra:ability_cooldown": -1,
+            "generic.armor_toughness": 2
+        },
+        "tertiaryAttributes": {
+            "generic.armor_toughness": 1
+        },
+        "durability": 3,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate"],
+            "moduleKey": "shield/buckler",
+            "moduleVariant": "buckler/"
+        }
+    ]
+}

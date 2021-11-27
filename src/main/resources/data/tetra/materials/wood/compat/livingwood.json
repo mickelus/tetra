@@ -1,0 +1,31 @@
+{
+    "conditions": [{
+        "type": "forge:mod_loaded",
+        "modid": "botania"
+    }],
+    "key": "livingwood",
+    "category": "wood",
+    "primary": "3",
+    "secondary": "1.7",
+    "tertiary": "6",
+    "durability": "70",
+    "integrityCost": "1",
+    "integrityGain": "4",
+    "magicCapacity": "120",
+    "toolLevel": "1",
+    "toolEfficiency": "2",
+    "tints": {
+        "glyph": "803413",
+        "texture": "2b1207"
+    },
+    "textures": ["crude"],
+    "material": {
+        "item": "botania:livingwood_planks"
+    },
+    "improvements": {
+        "mana_repair": 3
+    },
+    "requiredTools": {
+        "axe": 2
+    }
+}

@@ -10,10 +10,9 @@ import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.util.Filter;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
-public class MultiSlotModule extends ItemModuleMajor {
+public class MultiSlotModule extends ItemModule {
 
     protected String slotSuffix;
 
@@ -31,21 +30,6 @@ public class MultiSlotModule extends ItemModuleMajor {
 
         variantData = data.variants;
 
-        if (data.improvements.length > 0) {
-            improvements = Arrays.stream(data.improvements)
-                    .map(key -> DataManager.improvementData.getData(key))
-                    .filter(Objects::nonNull)
-                    .flatMap(Arrays::stream)
-                    .filter(Filter.distinct(improvement -> improvement.key + ":" + improvement.level))
-                    .toArray(ImprovementData[]::new);
-
-            settleMax = Arrays.stream(improvements)
-                    .filter(improvement -> improvement.key.equals(settleImprovement))
-                    .mapToInt(ImprovementData::getLevel)
-                    .max()
-                    .orElse(0);
-        }
-
         if (data.tweakKey != null) {
             TweakData[] tweaks = DataManager.tweakData.getData(data.tweakKey);
             if (tweaks != null) {
@@ -59,13 +43,6 @@ public class MultiSlotModule extends ItemModuleMajor {
     @Override
     public String getUnlocalizedName() {
         return unlocalizedName;
-    }
-
-    @Override
-    protected ModuleModel[] getImprovementModels(ItemStack itemStack, int tint) {
-        return Arrays.stream(super.getImprovementModels(itemStack, tint))
-                .map(model -> new ModuleModel(model.type, new ResourceLocation(TetraMod.MOD_ID, model.location.getPath() + slotSuffix), model.tint))
-                .toArray(ModuleModel[]::new);
     }
 
     @Override

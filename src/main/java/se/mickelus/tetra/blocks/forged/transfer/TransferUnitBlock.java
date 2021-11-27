@@ -1,6 +1,8 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.util.ITooltipFlag;
@@ -20,17 +22,18 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.capabilities.Capability;
+import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
-import se.mickelus.tetra.items.forged.ItemVentPlate;
+import se.mickelus.tetra.items.forged.InsulatedPlateItem;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
@@ -40,7 +43,7 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
-public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCapabilityInteractive {
+public class TransferUnitBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
     public static final DirectionProperty facingProp = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty plateProp = BooleanProperty.create("plate");
     public static final IntegerProperty cellProp = IntegerProperty.create("cell", 0, 2);
@@ -50,10 +53,10 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
 
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(Capability.pry, 1, Direction.SOUTH, 3, 11, 4, 6,
+            new BlockInteraction(ToolTypes.pry, 1, Direction.SOUTH, 3, 11, 4, 6,
                     new PropertyMatcher().where(plateProp, equalTo(true)),
                     TransferUnitBlock::removePlate),
-            new BlockInteraction(Capability.hammer, 1, Direction.SOUTH, 4, 10, 5, 9,
+            new BlockInteraction(ToolTypes.hammer, 1, Direction.SOUTH, 4, 10, 5, 9,
                     new PropertyMatcher().where(plateProp, equalTo(false)),
                     TransferUnitBlock::reconfigure),
     };
@@ -69,7 +72,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
     public static TransferUnitBlock instance;
 
     public TransferUnitBlock() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesNotSolid);
 
         setRegistryName(unlocalizedName);
 
@@ -89,7 +92,11 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
 
     public static boolean removePlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
         if (!world.isRemote) {
-            BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerWorld) world, blockState);
+            if (player != null) {
+                BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerWorld) world, blockState);
+            } else {
+                BlockInteraction.dropLoot(plateLootTable, (ServerWorld) world, pos, blockState);
+            }
         }
 
         world.playSound(player, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
@@ -105,7 +112,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
         return true;
     }
 
-    public static boolean reconfigure(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
+    public static boolean reconfigure(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace) {
         EnumTransferConfig config = EnumTransferConfig.getNextConfiguration(blockState.get(configProp));
 
         world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);
@@ -138,12 +145,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
     }
 
     public static void setReceiving(World world, BlockPos pos, BlockState blockState, boolean receiving) {
-        if (receiving) {
-            TransferUnitBlock.setSending(world, pos, blockState, false);
-            world.setBlockState(pos, blockState.with(transferProp, EnumTransferState.receiving), 3);
-        } else {
-            world.setBlockState(pos, blockState.with(transferProp, EnumTransferState.none), 3);
-        }
+        EnumTransferState newState = receiving ? EnumTransferState.receiving : EnumTransferState.none;
     }
 
     public static boolean isReceiving(BlockState blockState) {
@@ -151,12 +153,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
     }
 
     public static void setSending(World world, BlockPos pos, BlockState blockState, boolean sending) {
-        if (sending) {
-            TransferUnitBlock.setReceiving(world, pos, blockState, false);
-            world.setBlockState(pos, blockState.with(transferProp, EnumTransferState.sending), 3);
-        } else {
-            world.setBlockState(pos, blockState.with(transferProp, EnumTransferState.none), 3);
-        }
+        EnumTransferState newState = sending ? EnumTransferState.sending : EnumTransferState.none;
     }
 
     public static boolean isSending(BlockState blockState) {
@@ -177,9 +174,9 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(BlockState blockState, Direction face, Collection<Capability> capabilities) {
+    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(blockState, blockState.get(facingProp), face, capabilities))
+                .filter(interaction -> interaction.isPotentialInteraction(world, pos, blockState, blockState.get(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
@@ -224,7 +221,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
                 return ActionResultType.SUCCESS;
             }
         } else if (blockFacing.equals(hit.getFace().getOpposite()) // attach plate
-                && heldStack.getItem() instanceof ItemVentPlate
+                && heldStack.getItem() instanceof InsulatedPlateItem
                 && !state.get(plateProp)) {
 
             attachPlate(world, pos, state, player);
@@ -260,11 +257,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IBlockCa
             TileEntityOptional.from(world, pos, TransferUnitTile.class)
                     .ifPresent(TransferUnitTile::updateTransferState);
         }
-    }
-
-    @Override
-    public boolean causesSuffocation(BlockState state, IBlockReader world, BlockPos pos) {
-        return false;
     }
 
     @Override

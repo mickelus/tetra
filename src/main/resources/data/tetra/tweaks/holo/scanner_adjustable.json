@@ -1,0 +1,26 @@
+[
+    {
+        "improvement": "scanner/adjustable",
+        "key": "scanner/adjustable_range",
+        "steps": 6,
+        "properties": {
+            "effects": {
+                "scannerRange": 2
+            },
+            "attributes": {
+                "tetra:ability_cooldown": 0.05
+            }
+        }
+    },
+    {
+        "improvement": "scanner/adjustable",
+        "key": "scanner/adjustable_span",
+        "steps": 3,
+        "properties": {
+            "effects": {
+                "scannerHorizontalSpread": 1,
+                "scannerVerticalSpread": -1
+            }
+        }
+    }
+]

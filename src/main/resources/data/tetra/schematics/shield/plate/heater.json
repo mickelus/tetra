@@ -1,0 +1,40 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/plate"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 32,
+        "textureY": 48
+    },
+    "translation": {
+        "primaryAttributes": {
+            "tetra:ability_damage": 4
+        },
+        "secondaryAttributes": {
+            "tetra:ability_damage": 1,
+            "tetra:ability_cooldown": -2
+        },
+        "primaryEffects": {
+            "blocking": 2
+        },
+        "secondaryEffects": {
+            "blocking": -1
+        },
+        "tertiaryEffects": {
+            "blocking": 2
+        },
+        "durability": 4,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate"],
+            "moduleKey": "shield/heater",
+            "moduleVariant": "heater/"
+        }
+    ]
+}

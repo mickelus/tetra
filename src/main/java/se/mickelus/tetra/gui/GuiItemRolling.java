@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GuiItemRolling extends GuiElement {
     private boolean showTooltip = true;
-    private boolean showCount = true;
+    private GuiItem.CountMode countMode = GuiItem.CountMode.normal;
 
     private GuiItem[] items = new GuiItem[0];
 
@@ -23,14 +23,14 @@ public class GuiItemRolling extends GuiElement {
         return this;
     }
 
-    public GuiItemRolling setCount(boolean showCount) {
-        this.showCount = showCount;
+    public GuiItemRolling setCountVisibility(GuiItem.CountMode mode) {
+        this.countMode = mode;
         return this;
     }
 
     public GuiItemRolling setItems(ItemStack[] itemStacks) {
         items = Arrays.stream(itemStacks)
-                .map(itemStack -> new GuiItem(0, 0).setItem(itemStack).setCount(showCount))
+                .map(itemStack -> new GuiItem(0, 0).setItem(itemStack).setCountVisibility(countMode))
                 .toArray(GuiItem[]::new);
 
         return this;
@@ -40,7 +40,7 @@ public class GuiItemRolling extends GuiElement {
     protected void drawChildren(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (items.length > 0) {
             int offset = (int) (System.currentTimeMillis() / 1000) % items.length;
-            items[offset].draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+            items[offset].draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity * getOpacity());
         }
     }
 

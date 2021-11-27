@@ -1,0 +1,21 @@
+{
+    "replace": true,
+    "slots": ["shield/plate"],
+    "materialSlotCount": 1,
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 64,
+        "textureY": 240
+    },
+    "translation": {
+        "durability": 1
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:metal/"],
+            "improvements": {
+                "shield/studs/": 0
+            }
+        }
+    ]
+}

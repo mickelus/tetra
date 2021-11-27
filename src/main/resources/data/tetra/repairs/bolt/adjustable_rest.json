@@ -1,0 +1,11 @@
+{
+    "material": {
+        "item": "tetra:metal_scrap",
+        "count": 1
+    },
+    "requiredTools": {
+        "hammer": 5
+    },
+    "moduleKey": "bow/extended_rest",
+    "moduleVariant": "extended_rest/bolt"
+}

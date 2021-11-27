@@ -9,62 +9,63 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
-import net.minecraft.world.storage.loot.conditions.LootConditionManager;
-import net.minecraft.world.storage.loot.functions.ILootFunction;
-import net.minecraft.world.storage.loot.functions.LootFunctionManager;
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
-import net.minecraftforge.forgespi.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.workbench.action.ConfigActionImpl;
+import se.mickelus.tetra.craftingeffect.CraftingEffect;
+import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
+import se.mickelus.tetra.craftingeffect.outcome.CraftingEffectOutcome;
 import se.mickelus.tetra.data.deserializer.*;
 import se.mickelus.tetra.generation.FeatureParameters;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
-import se.mickelus.tetra.module.schema.Material;
-import se.mickelus.tetra.module.schema.RepairDefinition;
-import se.mickelus.tetra.module.schema.SchemaDefinition;
+import se.mickelus.tetra.module.schematic.OutcomeDefinition;
+import se.mickelus.tetra.module.schematic.OutcomeMaterial;
+import se.mickelus.tetra.module.schematic.RepairDefinition;
 
 import java.util.Arrays;
 import java.util.Map;
 
 public class DataManager {
 
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
 
     // todo: use the same naming for all deserializers?
     public static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(CapabilityData.class, new CapabilityData.Deserializer())
+            .registerTypeAdapter(ToolData.class, new ToolData.Deserializer())
             .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
             .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
             .registerTypeAdapter(ModuleModel.class, new ModuleModelDeserializer())
-            .registerTypeAdapter(Priority.class, new Priority.PriorityAdapter())
+            .registerTypeAdapter(Priority.class, new Priority.Deserializer())
             .registerTypeAdapter(ItemPredicate.class, new ItemPredicateDeserializer())
             .registerTypeAdapter(PropertyMatcher.class, new PropertyMatcherDeserializer())
-            .registerTypeAdapter(Material.class, new Material.MaterialDeserializer())
+            .registerTypeAdapter(OutcomeMaterial.class, new OutcomeMaterial.Deserializer())
             .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
             .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
             .registerTypeAdapter(Block.class, new BlockDeserializer())
+            .registerTypeAdapter(AttributesDeserializer.typeToken.getRawType(), new AttributesDeserializer())
+            .registerTypeAdapter(VariantData.class, new VariantData.Deserializer())
+            .registerTypeAdapter(ImprovementData.class, new ImprovementData.Deserializer())
+            .registerTypeAdapter(OutcomeDefinition.class, new OutcomeDefinition.Deserializer())
+            .registerTypeAdapter(MaterialColors.class, new MaterialColors.Deserializer())
+            .registerTypeAdapter(CraftingEffectCondition.class, new CraftingEffectCondition.Deserializer())
+            .registerTypeAdapter(CraftingEffectOutcome.class, new CraftingEffectOutcome.Deserializer())
             .registerTypeAdapter(Item.class, new ItemDeserializer())
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
-            .registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
-            .registerTypeAdapter(ILootFunction.class, new LootFunctionManager.Serializer())
-            .registerTypeAdapter(ILootCondition.class, new LootConditionManager.Serializer())
-            .registerTypeAdapter(LootContext.EntityTarget.class, new LootContext.EntityTarget.Serializer())
             .create();
 
     public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
-    public static DataStore<ImprovementData[]> improvementData = new DataStore<>(gson, "improvements", ImprovementData[].class);
+    public static DataStore<MaterialData> materialData = new MaterialStore(gson, "materials");
+    public static DataStore<ImprovementData[]> improvementData = new ImprovementStore(gson, "improvements");
     public static DataStore<ModuleData> moduleData = new ModuleStore(gson, "modules");
     public static DataStore<RepairDefinition> repairData = new DataStore<>(gson, "repairs", RepairDefinition.class);
     public static DataStore<EnchantmentMapping[]> enchantmentData = new DataStore<>(gson, "enchantments",
@@ -72,15 +73,16 @@ public class DataManager {
     public static DataStore<SynergyData[]> synergyData = new DataStore<>(gson, "synergies", SynergyData[].class);
     public static DataStore<ReplacementDefinition[]> replacementData = new DataStore<>(gson, "replacements",
             ReplacementDefinition[].class);
-    public static SchemaStore schemaData = new SchemaStore(gson, "schemas");
+    public static SchematicStore schematicData = new SchematicStore(gson, "schematics");
+    public static DataStore<CraftingEffect> craftingEffectData = new CraftingEffectStore(gson, "crafting_effects");
     public static DataStore<ItemPredicate[]> predicateData = new DataStore<>(gson, "predicatus", ItemPredicate[].class);
     public static DataStore<ConfigActionImpl[]> actionData = new DataStore<>(gson, "actions", ConfigActionImpl[].class);
     public static DataStore<DestabilizationEffect[]> destabilizationData = new DataStore<>(gson, "destabilization",
             DestabilizationEffect[].class);
     public static DataStore<FeatureParameters> featureData = new FeatureStore(gson, "structures");
 
-    private DataStore[] dataStores = new DataStore[] { tweakData, improvementData, moduleData, enchantmentData, synergyData,
-            replacementData, schemaData, repairData, predicateData, actionData, destabilizationData, featureData };
+    private final DataStore[] dataStores = new DataStore[] { tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
+            replacementData, schematicData, craftingEffectData, repairData, predicateData, actionData, destabilizationData, featureData };
 
     public static DataManager instance;
 
@@ -89,18 +91,20 @@ public class DataManager {
     }
 
     @SubscribeEvent
-    public void serverStarting(FMLServerAboutToStartEvent event) {
-        logger.info("Setting up data reload listeners");
+    public void addReloadListener(AddReloadListenerEvent event) {
+        logger.debug("Setting up datastore reload listeners");
+        Arrays.stream(dataStores).forEach(event::addListener);
+    }
 
-        for (DataStore dataStore : dataStores) {
-            event.getServer().getResourceManager().addReloadListener(dataStore);
-        }
+    @SubscribeEvent
+    public void tagsUpdated(TagsUpdatedEvent event) {
+        logger.debug("Reloaded tags");
     }
 
     @SubscribeEvent
     public void playerConnected(PlayerEvent.PlayerLoggedInEvent event) {
         // todo: stop this from sending to player in singleplayer (while still sending to others in lan worlds)
-        logger.info("Sending data to client: {}", event.getPlayer().getName().getFormattedText());
+        logger.info("Sending data to client: {}", event.getPlayer().getName().getUnformattedComponentText());
         for (DataStore dataStore : dataStores) {
             dataStore.sendToPlayer((ServerPlayerEntity) event.getPlayer());
         }
@@ -119,7 +123,9 @@ public class DataManager {
      * @return An array of synergy data
      */
     public SynergyData[] getSynergyData(String path) {
-        SynergyData[] data = synergyData.getData(new ResourceLocation(TetraMod.MOD_ID, path));
+        SynergyData[] data = synergyData.getDataIn(new ResourceLocation(TetraMod.MOD_ID, path)).stream()
+                .flatMap(Arrays::stream)
+                .toArray(SynergyData[]::new);
         for (SynergyData entry : data) {
             Arrays.sort(entry.moduleVariants);
             Arrays.sort(entry.modules);

@@ -2,9 +2,10 @@ package se.mickelus.tetra.network;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -25,18 +26,15 @@ public class PacketHandler {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String PROTOCOL_VERSION = "1";
-    public static final SimpleChannel channel = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(TetraMod.MOD_ID, "main"),
-            () -> PROTOCOL_VERSION,
-            PROTOCOL_VERSION::equals,
-            PROTOCOL_VERSION::equals
-            );
-    private ArrayList<Class<? extends AbstractPacket>> packets = new ArrayList<>();
+    private final SimpleChannel channel;
+    private final ArrayList<Class<? extends AbstractPacket>> packets = new ArrayList<>();
 
-    public static PacketHandler instance;
-
-    public PacketHandler() {
-        instance = this;
+    public PacketHandler(String namespace, String channelId) {
+        channel = NetworkRegistry.newSimpleChannel(
+                new ResourceLocation(namespace, channelId),
+                () -> PROTOCOL_VERSION,
+                PROTOCOL_VERSION::equals,
+                PROTOCOL_VERSION::equals);
     }
 
     /**
@@ -85,19 +83,19 @@ public class PacketHandler {
         return null;
     }
 
-    public static void sendTo(AbstractPacket message, ServerPlayerEntity player) {
+    public void sendTo(AbstractPacket message, ServerPlayerEntity player) {
         channel.sendTo(message, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
-    public static void sendToAllPlayers(AbstractPacket message) {
+    public void sendToAllPlayers(AbstractPacket message) {
         channel.send(PacketDistributor.ALL.noArg(), message);
     }
 
-    public static void sendToAllPlayersNear(AbstractPacket message, BlockPos pos, double r2, DimensionType dim) {
+    public void sendToAllPlayersNear(AbstractPacket message, BlockPos pos, double r2, RegistryKey<World> dim) {
         channel.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), r2, dim)), message);
     }
 
-    public static void sendToServer(AbstractPacket message) {
+    public void sendToServer(AbstractPacket message) {
         // crashes sometimes happen due to the connection being null
         if (Minecraft.getInstance().getConnection() != null) {
             channel.sendToServer(message);

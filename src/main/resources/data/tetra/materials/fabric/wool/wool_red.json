@@ -1,0 +1,29 @@
+{
+    "key": "wool_red",
+    "hidden": true,
+    "hiddenOutcomes": true,
+    "category": "fabric",
+    "primary": "1",
+    "secondary": "1",
+    "tertiary": "5",
+    "durability": "200",
+    "integrityCost": "1",
+    "integrityGain": "4",
+    "magicCapacity": "90",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
+    "tints": {
+        "glyph": "ee7777",
+        "texture": "c74646"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:red_wool"
+    },
+    "requiredTools": {
+        "cut": 1
+    }
+}

@@ -1,0 +1,75 @@
+[
+    {
+        "modules": ["double/basic_axe_left"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "name": "double/battleaxe",
+        "effects": {
+            "execute": [10, 5]
+        }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/adze_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityDefensive": [69, 50]
+        }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/basic_axe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOvercharge": 10
+        }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/basic_hammer_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityMomentum": 3
+        }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/basic_pickaxe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityCombo": 10
+        }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/claw_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityRevenge": 35
+        }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/hoe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOverextend": 6
+        }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/sickle_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityExhilaration": [9, 1]
+        }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/extractor_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityEcho": 1
+        }
+    }
+]

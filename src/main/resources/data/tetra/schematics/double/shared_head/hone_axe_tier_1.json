@@ -1,0 +1,41 @@
+{
+    "replace": true,
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "keySuffixes": [
+        "_left",
+        "_right"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 144
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "modules": [
+            ["double/adze_right"],
+            ["double/adze_left"],
+            ["double/basic_axe_right"],
+            ["double/basic_axe_left"]
+        ],
+        "improvements": {
+            "!head_hone/axe_tier": -1,
+            "head_hone/axe_efficiency": 5
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 3
+            },
+            "improvements": {
+                "head_hone/axe_tier": 0
+            }
+        }
+    ]
+}

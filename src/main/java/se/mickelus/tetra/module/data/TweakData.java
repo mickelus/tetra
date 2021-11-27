@@ -1,7 +1,11 @@
 package se.mickelus.tetra.module.data;
 
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.module.ItemEffect;
+import com.google.common.collect.Multimap;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraftforge.common.ToolType;
+import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.properties.AttributeHelper;
 
 public class TweakData {
     public String variant;
@@ -10,47 +14,30 @@ public class TweakData {
     public String key;
     public int steps;
 
-    private ModuleVariantData baseStats = new ModuleVariantData();
-    private ModuleVariantData stepStats;
+    private VariantData properties = new VariantData();
 
-
-    public float getDamage(int step) {
-        return baseStats.damage + step * stepStats.damage;
+    public ItemProperties getProperties(int step) {
+        return properties.multiply(step);
     }
 
-    public float getDamageMultiplier(int step) {
-        return baseStats.damageMultiplier + step * (stepStats.damageMultiplier - 1);
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(int step) {
+        return AttributeHelper.multiplyModifiers(properties.attributes, step);
     }
 
-    public float getAttackSpeed(int step) {
-        return baseStats.attackSpeed + step * stepStats.attackSpeed;
+    public ToolData getToolData(int step) {
+        return ToolData.multiply(properties.tools, step, step);
     }
 
-    public float getAttackSpeedMultiplier(int step) {
-        return baseStats.attackSpeedMultiplier + step * (stepStats.attackSpeedMultiplier -1);
+    public EffectData getEffectData(int step) {
+        return EffectData.multiply(properties.effects, step, step);
     }
 
-    public float getRange(int step) {
-        return baseStats.range + step * stepStats.range;
+
+    public int getEffectLevel(ItemEffect effect, int step) {
+        return step * properties.effects.getLevel(effect);
     }
 
-    public int getDurability(int step) {
-        return baseStats.durability + step * stepStats.durability;
-    }
-
-    public float getDurabilityMultiplier(int step) {
-        return baseStats.durabilityMultiplier + step * (stepStats.durabilityMultiplier - 1);
-    }
-
-    public float getEffectEfficiency(ItemEffect effect, int step) {
-        return baseStats.effects.getEfficiency(effect) + step * stepStats.effects.getEfficiency(effect);
-    }
-
-    public float getCapabilityEfficiency(Capability capability, int step) {
-        return baseStats.capabilities.getEfficiency(capability) + step * stepStats.capabilities.getEfficiency(capability);
-    }
-
-    public int getMagicCapacity(int step) {
-        return baseStats.magicCapacity + step * stepStats.magicCapacity;
+    public int getToolLevel(ToolType tool, int step) {
+        return step * properties.tools.getLevel(tool);
     }
 }

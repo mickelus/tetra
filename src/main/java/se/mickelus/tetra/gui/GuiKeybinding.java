@@ -3,22 +3,29 @@ package se.mickelus.tetra.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
 import net.minecraftforge.client.settings.KeyModifier;
+import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
 import se.mickelus.mgui.gui.GuiStringOutline;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 
 public class GuiKeybinding extends GuiElement {
 
     public GuiKeybinding(int x, int y, KeyBinding keyBinding) {
         this(x, y,
-                getLocalizedKey(keyBinding.getKey()),
+                keyBinding.getKey().func_237520_d_().getString(),
                 keyBinding.getKeyModifier() != KeyModifier.NONE ? keyBinding.getKeyModifier().toString() : null,
                 I18n.format(keyBinding.getKeyDescription()));
+    }
+
+    public GuiKeybinding(int x, int y, KeyBinding keyBinding, GuiAttachment attachment) {
+        this(x, y,
+                keyBinding.getKey().func_237520_d_().getString(),
+                keyBinding.getKeyModifier() != KeyModifier.NONE ? keyBinding.getKeyModifier().toString() : null,
+                I18n.format(keyBinding.getKeyDescription()),
+                attachment);
     }
 
     public GuiKeybinding(int x, int y, String key, @Nullable String modifier) {
@@ -30,57 +37,53 @@ public class GuiKeybinding extends GuiElement {
     }
 
     public GuiKeybinding(int x, int y, String key, @Nullable String modifier, @Nullable String description) {
-        super(x, y, 0, 0);
+        super(x, y, 0, 11);
+        if (modifier != null) {
+            GuiKey modifierKey = new GuiKey(0, 0, modifier);
+            addChild(modifierKey);
 
-        GuiKey guiKey = new GuiKey(0, 0, key);
-        addChild(guiKey);
+            GuiStringOutline joiner = new GuiStringOutline(modifierKey.getWidth() + 2, 2, "+", GuiColors.muted);
+            addChild(joiner);
 
-        if (description != null) {
-            addChild(new GuiStringOutline(3, 2, description));
+            width = modifierKey.getWidth() + 2 + joiner.getWidth() + 2;
         }
 
-        if (modifier != null) {
-            addChild(new GuiKey(guiKey.getX() - 7, 0, modifier));
-            addChild(new GuiStringOutline(guiKey.getX() - 6, 2, "+", GuiColors.muted));
+        GuiKey guiKey = new GuiKey(width, 0, key);
+        addChild(guiKey);
+        width += guiKey.getWidth();
+
+        if (description != null) {
+            width += 4;
+            GuiStringOutline descriptionElement = new GuiStringOutline(width, 2, description);
+            addChild(descriptionElement);
+            width += descriptionElement.getWidth();
         }
     }
 
-    // Based on {@KeyBinding.getLocalizedName} but skips the modifier, since we plop that in a separate box
-    private static String getLocalizedKey(InputMappings.Input keyCode) {
-        String s = keyCode.getTranslationKey();
-        int i = keyCode.getKeyCode();
-        String s1 = null;
-
-        switch(keyCode.getType()) {
-            case KEYSYM:
-                s1 = InputMappings.getKeynameFromKeycode(i);
-                break;
-            case SCANCODE:
-                s1 = InputMappings.getKeyNameFromScanCode(i);
-                break;
-            case MOUSE:
-                String s2 = I18n.format(s);
-                s1 = Objects.equals(s2, s) ? I18n.format(InputMappings.Type.MOUSE.name(), i + 1) : s2;
-        }
-
-        return s1 == null ? I18n.format(s) : s1;
+    public GuiKeybinding(int x, int y, String key, @Nullable String modifier, @Nullable String description, GuiAttachment attachment) {
+        this(x, y, key, modifier, description);
+        setAttachment(attachment);
     }
 
     private class GuiKey extends GuiElement {
 
         public GuiKey(int x, int y, String key) {
+            this(x, y, key, GuiAttachment.topLeft);
+        }
+
+        public GuiKey(int x, int y, String key, GuiAttachment attachment) {
             super(x, y, 0, 11);
 
-            width = Minecraft.getInstance().fontRenderer.getStringWidth(key);
+            setAttachment(attachment);
 
-            // need to add some extra padding for single character strings
+            // todo 1.16: does this break width for single character elements
             if (key.length() == 1) {
-                width += 5;
+                width = Minecraft.getInstance().fontRenderer.getStringWidth(key) + 5;
+            } else {
+                width = Minecraft.getInstance().fontRenderer.getStringWidth(key);
             }
 
-            this.x = x - width;
-
-            addChild(new GuiRect(0, 1, 1, height  - 2, GuiColors.muted));
+            addChild(new GuiRect(0, 1, 1, height - 2, GuiColors.muted));
             addChild(new GuiRect(width - 1, 1, 1, height - 2, GuiColors.muted));
 
             addChild(new GuiRect(1, 0, width - 2, 1, GuiColors.muted));

@@ -1,0 +1,30 @@
+{
+    "replace": true,
+    "type": "tetra:multi_major_module",
+    "slots": ["double/head_right"],
+    "slotSuffixes": ["_right"],
+    "improvements": [
+        "tetra:double/extractor/",
+        "tetra:double/shared_head/",
+        "tetra:double/shared/",
+        "tetra:shared/"
+    ],
+    "variants": [
+        {
+            "key": "extractor/extractor",
+            "integrity": -2,
+            "attributes": {
+                "generic.attack_speed": -1.9
+            },
+            "durability": 64,
+            "effects": {
+                "extractor": 2
+            },
+            "glyph": {
+                "textureX": 144,
+                "textureY": 48
+            },
+            "models": [{ "location":"tetra:items/module/double/head/extractor/extractor" }]
+        }
+    ]
+}

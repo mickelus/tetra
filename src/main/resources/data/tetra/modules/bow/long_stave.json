@@ -22,411 +22,61 @@
         "tetra:enchantment/cursed_misfortune",
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
-        "tetra:bow/stave/shared",
-        "tetra:bow/stave/shared_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:bow/straight_stave/",
+        "tetra:bow/shared_stave/",
+        "tetra:bow/shared/",
+        "tetra:shared/"
     ],
     "variants": [
         {
-            "key": "long_stave/stick",
-            "integrity": -2,
-            "durability": 181,
-            "magicCapacity": 90,
-            "damage": 15,
-            "attackSpeed": 2.4,
+            "materials": ["tetra:wood/", "tetra:misc/stick", "tetra:metal/"],
+            "key": "long_stave/",
+            "attributes": {
+                "tetra:draw_speed": 1.6,
+                "tetra:draw_strength": 1.5
+            },
             "effects": {
-                "overbowed": [
-                    40,
-                    0.5
+                "overbowed": 60
+            },
+            "durability": 171,
+            "extract": {
+                "primaryAttributes": {
+                    "tetra:draw_speed": 0.22,
+                    "tetra:draw_strength": 1.3
+                },
+                "tertiaryAttributes": {
+                    "tetra:draw_speed": -0.04,
+                    "tetra:draw_strength": 0.75
+                },
+                "primaryEffects": {
+                    "overbowed": -6
+                },
+                "durability": 1.05,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 144,
+                    "textureY": 32
+                },
+                "availableTextures": ["crude"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/bow/stave/long/"
+                    },
+                    {
+                        "type": "draw_0",
+                        "location": "tetra:items/module/bow/stave/long/0_"
+                    },
+                    {
+                        "type": "draw_1",
+                        "location": "tetra:items/module/bow/stave/long/1_"
+                    },
+                    {
+                        "type": "draw_2",
+                        "location": "tetra:items/module/bow/stave/long/2_"
+                    }
                 ]
-            },
-            "glyph": {
-                "tint": "stick_glyph",
-                "textureX": 144,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/stave/long/crude",
-                    "tint": "stick"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/stave/long/crude_0",
-                    "tint": "stick"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/stave/long/crude_1",
-                    "tint": "stick"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/stave/long/crude_2",
-                    "tint": "stick"
-                }
-            ]
-        },
-        {
-            "key": "long_stave/oak",
-            "integrity": -3,
-            "magicCapacity": 90,
-            "durability": 268,
-            "damage": 19,
-            "attackSpeed": 2.5,
-            "effects": {
-                "overbowed": [
-                    40,
-                    0.5
-                ]
-            },
-            "glyph": {
-                "tint": "oak_glyph",
-                "textureX": 144,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/stave/long/crude",
-                    "tint": "oak"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/stave/long/crude_0",
-                    "tint": "oak"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/stave/long/crude_1",
-                    "tint": "oak"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/stave/long/crude_2",
-                    "tint": "oak"
-                }
-            ]
-        },
-        {
-            "key": "long_stave/spruce",
-            "integrity": -3,
-            "magicCapacity": 90,
-            "durability": 245,
-            "damage": 19,
-            "attackSpeed": 2.2,
-            "effects": {
-                "overbowed": [
-                    40,
-                    0.5
-                ]
-            },
-            "glyph": {
-                "tint": "spruce_glyph",
-                "textureX": 144,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/stave/long/crude",
-                    "tint": "spruce"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/stave/long/crude_0",
-                    "tint": "spruce"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/stave/long/crude_1",
-                    "tint": "spruce"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/stave/long/crude_2",
-                    "tint": "spruce"
-                }
-            ]
-        },
-        {
-            "key": "long_stave/birch",
-            "integrity": -3,
-            "magicCapacity": 90,
-            "durability": 300,
-            "damage": 19,
-            "attackSpeed": 2.5,
-            "effects": {
-                "overbowed": [
-                    40,
-                    0.5
-                ]
-            },
-            "glyph": {
-                "tint": "birch_glyph",
-                "textureX": 144,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/stave/long/crude",
-                    "tint": "birch"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/stave/long/crude_0",
-                    "tint": "birch"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/stave/long/crude_1",
-                    "tint": "birch"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/stave/long/crude_2",
-                    "tint": "birch"
-                }
-            ]
-        },
-        {
-            "key": "long_stave/jungle",
-            "integrity": -3,
-            "magicCapacity": 102,
-            "durability": 268,
-            "damage": 19,
-            "attackSpeed": 2.5,
-            "effects": {
-                "overbowed": [
-                    40,
-                    0.5
-                ]
-            },
-            "glyph": {
-                "tint": "jungle_glyph",
-                "textureX": 144,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/stave/long/crude",
-                    "tint": "jungle"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/stave/long/crude_0",
-                    "tint": "jungle"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/stave/long/crude_1",
-                    "tint": "jungle"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/stave/long/crude_2",
-                    "tint": "jungle"
-                }
-            ]
-        },
-        {
-            "key": "long_stave/acacia",
-            "integrity": -3,
-            "magicCapacity": 90,
-            "durability": 281,
-            "damage": 22,
-            "attackSpeed": 2.875,
-            "effects": {
-                "overbowed": [
-                    40,
-                    0.5
-                ]
-            },
-            "glyph": {
-                "tint": "acacia_glyph",
-                "textureX": 144,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/stave/long/crude",
-                    "tint": "acacia"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/stave/long/crude_0",
-                    "tint": "acacia"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/stave/long/crude_1",
-                    "tint": "acacia"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/stave/long/crude_2",
-                    "tint": "acacia"
-                }
-            ]
-        },
-        {
-            "key": "long_stave/dark_oak",
-            "integrity": -3,
-            "magicCapacity": 102,
-            "durability": 244,
-            "damage": 21,
-            "attackSpeed": 2.5,
-            "effects": {
-                "overbowed": [
-                    40,
-                    0.5
-                ]
-            },
-            "glyph": {
-                "tint": "dark_oak_glyph",
-                "textureX": 144,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/stave/long/crude",
-                    "tint": "dark_oak"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/stave/long/crude_0",
-                    "tint": "dark_oak"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/stave/long/crude_1",
-                    "tint": "dark_oak"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/stave/long/crude_2",
-                    "tint": "dark_oak"
-                }
-            ]
-        },
-        {
-            "key": "long_stave/maple",
-            "integrity": -4,
-            "magicCapacity": 96,
-            "durability": 310,
-            "damage": 24,
-            "attackSpeed": 2.5,
-            "effects": {
-                "overbowed": [
-                    40,
-                    0.5
-                ]
-            },
-            "glyph": {
-                "tint": "maple_glyph",
-                "textureX": 144,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/stave/long/crude",
-                    "tint": "maple"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/stave/long/crude_0",
-                    "tint": "maple"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/stave/long/crude_1",
-                    "tint": "maple"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/stave/long/crude_2",
-                    "tint": "maple"
-                }
-            ]
-        },
-        {
-            "key": "long_stave/cherry",
-            "integrity": -4,
-            "magicCapacity": 78,
-            "durability": 320,
-            "damage": 25,
-            "attackSpeed": 2.65,
-            "effects": {
-                "overbowed": [
-                    40,
-                    0.5
-                ]
-            },
-            "glyph": {
-                "tint": "cherry_glyph",
-                "textureX": 144,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/stave/long/crude",
-                    "tint": "cherry"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/stave/long/crude_0",
-                    "tint": "cherry"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/stave/long/crude_1",
-                    "tint": "cherry"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/stave/long/crude_2",
-                    "tint": "cherry"
-                }
-            ]
-        },
-        {
-            "key": "long_stave/baobab",
-            "integrity": -6,
-            "magicCapacity": 78,
-            "durability": 490,
-            "damage": 28,
-            "attackSpeed": 2.65,
-            "effects": {
-                "overbowed": [
-                    40,
-                    0.5
-                ]
-            },
-            "glyph": {
-                "tint": "baobab_glyph",
-                "textureX": 144,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/stave/long/crude",
-                    "tint": "baobab"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/stave/long/crude_0",
-                    "tint": "baobab"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/stave/long/crude_1",
-                    "tint": "baobab"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/stave/long/crude_2",
-                    "tint": "baobab"
-                }
-            ]
+            }
         }
     ]
 }

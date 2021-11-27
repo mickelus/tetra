@@ -1,0 +1,114 @@
+{
+    "pools": [
+        {
+            "name": "forged/crate_content",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:forged_mesh",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:forged_beam",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:chthonic_extractor",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:forged_bolt",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:lubricant_dispenser",
+                    "weight": 3,
+                    "conditions": [
+                        {
+                            "condition": "tetra:random_chance_with_fortune",
+                            "chance": 0.33,
+                            "fortuneMultiplier": 0.05
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:combustion_chamber",
+                    "weight": 3,
+                    "conditions": [
+                        {
+                            "condition": "tetra:random_chance_with_fortune",
+                            "chance": 0.33,
+                            "fortuneMultiplier": 0.05
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:planar_stabilizer",
+                    "weight": 3,
+                    "conditions": [
+                        {
+                            "condition": "tetra:random_chance_with_fortune",
+                            "chance": 0.33,
+                            "fortuneMultiplier": 0.05
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:vent_plate",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:magmatic_cell",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_damage",
+                            "damage": {
+                                "min": 0,
+                                "max": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:metal_scrap",
+                    "weight": 10,
+                    "conditions": [
+                        {
+                            "condition": "tetra:random_chance_with_fortune",
+                            "chance": 0.5,
+                            "fortuneMultiplier": -0.1
+                        }
+                    ],
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 3
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment":"minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "replace": true,
+    "slots": [
+        "sword/hilt"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 32,
+        "textureY": 240
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "hilt_hone/damage": 2
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 3
+            },
+            "improvements": {
+                "hilt_hone/damage": 3
+            }
+        }
+    ]
+}

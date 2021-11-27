@@ -26,12 +26,10 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:sword/blade/stonecutter",
-        "tetra:sword/blade/shared",
-        "tetra:sword/blade/shared_compat",
-        "tetra:sword/blade/shared_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:sword/stonecutter/",
+        "tetra:sword/shared_blade/",
+        "tetra:sword/shared/",
+        "tetra:shared/"
     ],
     "variants": [
         {
@@ -39,13 +37,12 @@
             "durability": 771,
             "integrity": -3,
             "magicCapacity": 48,
-            "damage": 3,
-            "attackSpeed": -1.6,
-            "capabilities": {
-                "pickaxe": [
-                    3,
-                    5.5
-                ]
+            "attributes": {
+                "generic.attack_damage": 3,
+                "generic.attack_speed": -2.8
+            },
+            "tools": {
+                "pickaxe": [3, 8]
             },
             "effects": {
                 "strikingPickaxe": 1,

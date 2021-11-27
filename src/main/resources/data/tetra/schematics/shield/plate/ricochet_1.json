@@ -1,0 +1,40 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/plate"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 80,
+        "textureY": 240
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "!shield/ricochet": -1,
+            "shield/aerodynamic_trim_iron": 0,
+            "shield/aerodynamic_trim_gold": 0,
+            "shield/aerodynamic_trim_copper": 0,
+            "shield/aerodynamic_trim_tin": 0,
+            "shield/aerodynamic_trim_silver": 0,
+            "shield/aerodynamic_trim_nickel": 0,
+            "shield/aerodynamic_trim_lead": 0,
+            "shield/aerodynamic_trim_bronze": 0,
+            "shield/aerodynamic_trim_steel": 0,
+            "shield/aerodynamic_trim_electrum": 0
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 3
+            },
+            "improvements": {
+                "shield/ricochet": 1
+            }
+        }
+    ]
+}

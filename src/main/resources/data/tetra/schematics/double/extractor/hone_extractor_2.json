@@ -1,0 +1,29 @@
+{
+    "replace": true,
+    "slots": ["double/head_right"],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 144,
+        "textureY": 48
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "modules": [["double/extractor_right"]],
+        "improvements": {
+            "extractor_hone/potency": 1
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 5
+            },
+            "improvements": {
+                "extractor_hone/potency": 2
+            }
+        }
+    ]
+}

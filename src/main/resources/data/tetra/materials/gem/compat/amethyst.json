@@ -1,0 +1,27 @@
+{
+    "key": "amethyst",
+    "category": "gem",
+    "primary": "6",
+    "secondary": "2.9",
+    "tertiary": "0",
+    "durability": "1561",
+    "integrityCost": "2",
+    "integrityGain": "2",
+    "magicCapacity": 60,
+    "toolLevel": "3",
+    "toolEfficiency": "9",
+    "tints": {
+        "glyph": "af49f0",
+        "texture": "af49f0"
+    },
+    "textures": [
+        "shiny",
+        "crude"
+    ],
+    "material": {
+        "tag": "forge:gems/amethyst"
+    },
+    "requiredTools": {
+        "hammer": 3
+    }
+}

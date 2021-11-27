@@ -1,0 +1,23 @@
+{
+    "replace": true,
+    "requirements": [
+        {
+            "type": "tetra:craft_type",
+            "craft": "module"
+        },
+        {
+            "type": "tetra:material",
+            "material": {
+                "item": "minecraft:gilded_blackstone"
+            }
+        }
+    ],
+    "outcomes": [
+        {
+            "type": "tetra:apply_improvements",
+            "improvements": {
+                "gilded_material": 0
+            }
+        }
+    ]
+}

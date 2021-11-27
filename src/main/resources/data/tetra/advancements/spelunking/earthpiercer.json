@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:modular_single",
-            "nbt": "{\"single/head\": \"single/earthpiercer\",\"single/earthpiercer_material\": \"earthpiercer/earthpiercer\",\"single/handle\": \"single/basic_handle\",\"single/basic_handle_material\": \"basic_handle/stick\"}"
+            "nbt": "{\"id\": \"spelunking/earthpiercer\", \"single/head\": \"single/earthpiercer\",\"single/earthpiercer_material\": \"earthpiercer/earthpiercer\",\"single/handle\": \"single/basic_handle\",\"single/basic_handle_material\": \"basic_handle/stick\"}"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.earthpiercer.title"

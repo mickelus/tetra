@@ -28,7 +28,7 @@ public class ModuleData {
 
     public ResourceLocation tweakKey;
     public ResourceLocation[] improvements = new ResourceLocation[0];
-    public ModuleVariantData[] variants = new ModuleVariantData[0];
+    public VariantData[] variants = new VariantData[0];
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Non-configurable stuff below
@@ -62,8 +62,7 @@ public class ModuleData {
                 .toArray(ResourceLocation[]::new);
 
         to.variants = Stream.concat(Arrays.stream(to.variants), Arrays.stream(from.variants))
-                .filter(Filter.distinct(variant -> variant.key))
-                .toArray(ModuleVariantData[]::new);
+                .toArray(VariantData[]::new);
     }
 
     public ModuleData shallowCopy() {

@@ -1,0 +1,28 @@
+{
+    "key": "hide",
+    "category": "skin",
+    "primary": "5",
+    "secondary": "1.5",
+    "tertiary": "1",
+    "durability": "200",
+    "integrityCost": "1",
+    "integrityGain": "5",
+    "magicCapacity": "90",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
+    "tints": {
+        "glyph": "hide_glyph",
+        "texture": "hide"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:rabbit_hide",
+        "count": 2
+    },
+    "requiredTools": {
+        "cut": 2
+    }
+}

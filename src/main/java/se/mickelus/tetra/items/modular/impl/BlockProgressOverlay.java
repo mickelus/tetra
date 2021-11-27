@@ -1,5 +1,7 @@
 package se.mickelus.tetra.items.modular.impl;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -38,6 +40,6 @@ public class BlockProgressOverlay {
                         .map(item -> item.getBlockProgress(activeStack, mc.player))
                         .orElse(0f));
 
-        gui.draw();
+        gui.draw(event.getMatrixStack());
     }
 }

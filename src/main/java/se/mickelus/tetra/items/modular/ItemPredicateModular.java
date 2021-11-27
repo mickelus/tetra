@@ -45,7 +45,7 @@ public class ItemPredicateModular extends ItemPredicate {
     }
 
     public boolean test(ItemStack itemStack, String slot) {
-        if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular) {
+        if (!itemStack.isEmpty() && itemStack.getItem() instanceof IModularItem) {
             if (modules.length > 0 && !hasAnyModule(itemStack, slot)) {
                 return false;
             }
@@ -63,7 +63,7 @@ public class ItemPredicateModular extends ItemPredicate {
     }
 
     private boolean hasAnyModule(ItemStack itemStack, String slot) {
-        ItemModular item = (ItemModular) itemStack.getItem();
+        IModularItem item = (IModularItem) itemStack.getItem();
 
         // if it's a slot specific check and there are single module requirement, assume the requirement is to be matched against the checked slot
         if (slot != null) {
@@ -99,7 +99,7 @@ public class ItemPredicateModular extends ItemPredicate {
     }
 
     private boolean hasAnyVariant(ItemStack itemStack, String slot) {
-        ItemModular item = (ItemModular) itemStack.getItem();
+        IModularItem item = (IModularItem) itemStack.getItem();
 
         for (Map.Entry<String, String> variant : variants.entrySet()) {
             String currentSlot = variant.getValue();
@@ -118,7 +118,7 @@ public class ItemPredicateModular extends ItemPredicate {
 
 
     private boolean checkImprovements(ItemStack itemStack, String slot) {
-        ItemModular item = (ItemModular) itemStack.getItem();
+        IModularItem item = (IModularItem) itemStack.getItem();
 
         if (slot != null) {
             return CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)

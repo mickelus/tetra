@@ -1,0 +1,33 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/boss"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "minor",
+    "glyph": {
+        "textureX": 104,
+        "textureY": 16
+    },
+    "translation": {
+        "secondaryAttributes": {
+            "tetra:ability_cooldown": -1
+        },
+        "primaryEffects": {
+            "blockingReflect": [0, 1]
+        },
+        "secondaryEffects": {
+            "blockingReflect": -3
+        },
+        "durability": 1,
+        "integrity": -3
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:metal/", "tetra:bone/"],
+            "moduleKey": "shield/spike",
+            "toolOffset": 1,
+            "moduleVariant": "spike/"
+        }
+    ]
+}

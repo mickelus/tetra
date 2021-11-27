@@ -3,9 +3,9 @@
         "variant": "double_binding/bolt",
         "key": "double_tweak/binding_bolt",
         "steps": 10,
-        "stepStats": {
+        "properties": {
             "durabilityMultiplier": 0.952,
-            "capabilities": {
+            "tools": {
                 "hammer": [0, 0.93],
                 "axe": [0, 0.93],
                 "pickaxe": [0, 0.93],

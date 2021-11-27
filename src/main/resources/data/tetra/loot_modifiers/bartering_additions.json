@@ -1,0 +1,14 @@
+{
+    "conditions": [
+        {
+            "condition": "forge:loot_table_id",
+            "loot_table_id": "minecraft:gameplay/piglin_bartering"
+        },
+        {
+            "condition": "minecraft:random_chance",
+            "chance": 0.08
+        }
+    ],
+    "type": "tetra:replace_table",
+    "table": "tetra:bastion_scrolls"
+}

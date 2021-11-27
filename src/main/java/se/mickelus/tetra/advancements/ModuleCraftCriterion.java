@@ -1,40 +1,52 @@
 package se.mickelus.tetra.advancements;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.data.DataManager;
+import net.minecraft.loot.ConditionArrayParser;
+import net.minecraftforge.common.ToolType;
+import se.mickelus.tetra.util.JsonOptional;
 
 public class ModuleCraftCriterion extends CriterionInstance {
-    private ItemPredicate before = null;
-    private ItemPredicate after = null;
+    private final ItemPredicate before;
+    private final ItemPredicate after;
 
-    private String schema = null;
+    private final String schematic;
 
-    private String slot = null;
-    private String module = null;
-    private String variant = null;
+    private final String slot;
+    private final String module;
+    private final String variant;
 
-    private Capability capability = null;
-    private int capabilityLevel = -1;
+    private final ToolType toolType;
+    private final MinMaxBounds.IntBound toolLevel;
 
     public static final GenericTrigger<ModuleCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_module", ModuleCraftCriterion::deserialize);
 
-    public ModuleCraftCriterion() {
-        super(trigger.getId());
+    public ModuleCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String module, String variant, ToolType toolType, MinMaxBounds.IntBound toolLevel) {
+        super(trigger.getId(), playerCondition);
+        this.before = before;
+        this.after = after;
+        this.schematic = schematic;
+        this.slot = slot;
+        this.module = module;
+        this.variant = variant;
+        this.toolType = toolType;
+        this.toolLevel = toolLevel;
     }
 
-    public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schema, String slot, String module,
-            String variant, Capability capability, int capabilityLevel) {
-        trigger.fulfillCriterion(player.getAdvancements(), criterion -> criterion.test(before, after, schema, slot, module, variant, capability,
-                capabilityLevel));
+    public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schematic, String slot, String module,
+            String variant, ToolType toolType, int toolLevel) {
+        trigger.fulfillCriterion(player, criterion -> criterion.test(before, after, schematic, slot, module, variant, toolType,
+                toolLevel));
     }
 
-    public boolean test(ItemStack before, ItemStack after, String schema, String slot, String module, String variant,
-            Capability capability, int capabilityLevel) {
+    public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String module, String variant,
+            ToolType toolType, int toolLevel) {
         if (this.before != null && !this.before.test(before)) {
             return false;
         }
@@ -43,7 +55,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
             return false;
         }
 
-        if (this.schema != null && !this.schema.equals(schema)) {
+        if (this.schematic != null && !this.schematic.equals(schematic)) {
             return false;
         }
 
@@ -59,18 +71,43 @@ public class ModuleCraftCriterion extends CriterionInstance {
             return false;
         }
 
-        if (this.capability != null && !this.capability.equals(capability)) {
+        if (this.toolType != null && !this.toolType.equals(toolType)) {
             return false;
         }
 
-        if (this.capabilityLevel != -1 && this.capabilityLevel != capabilityLevel) {
+        if (!this.toolLevel.test(toolLevel)) {
             return false;
         }
 
         return true;
     }
 
-    private static ModuleCraftCriterion deserialize(JsonObject json) {
-        return DataManager.instance.gson.fromJson(json, ModuleCraftCriterion.class);
+    private static ModuleCraftCriterion deserialize(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+        return new ModuleCraftCriterion(entityPredicate,
+                JsonOptional.field(json, "before")
+                        .map(ItemPredicate::deserialize)
+                        .orElse(null),
+                JsonOptional.field(json, "after")
+                        .map(ItemPredicate::deserialize)
+                        .orElse(null),
+                JsonOptional.field(json, "schematic")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "slot")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "module")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "variant")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "tool")
+                        .map(JsonElement::getAsString)
+                        .map(ToolType::get)
+                        .orElse(null),
+                JsonOptional.field(json, "toolLevel")
+                        .map(MinMaxBounds.IntBound::fromJson)
+                        .orElse(MinMaxBounds.IntBound.UNBOUNDED));
     }
 }

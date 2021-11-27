@@ -1,0 +1,14 @@
+{
+    "type": "minecraft:entity",
+    "pools": [
+        {
+            "rolls": 2,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "tetra:dragon_sinew"
+                }
+            ]
+        }
+    ]
+}

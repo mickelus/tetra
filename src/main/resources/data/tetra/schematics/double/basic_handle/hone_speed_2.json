@@ -1,0 +1,30 @@
+{
+    "replace": true,
+    "slots": [
+        "double/handle"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 16,
+        "textureY": 240
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "handle_hone/speed": 1
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 2
+            },
+            "improvements": {
+                "handle_hone/speed": 2
+            }
+        }
+    ]
+}

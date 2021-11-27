@@ -1,0 +1,32 @@
+{
+    "replace": true,
+    "slots": [
+        "sword/guard"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "minor",
+    "glyph": {
+        "textureX": 40,
+        "textureY": 16
+    },
+    "translation": {
+        "primaryAttributes": {
+            "generic.armor": 2
+        },
+        "tertiaryAttributes": {
+            "generic.armor": 1
+        },
+        "secondaryAttributes": {
+            "generic.attack_speed": -1
+        },
+        "durability": 2,
+        "integrity": -1
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:scale/", "tetra:bone/", "tetra:misc/vent_plate"],
+            "moduleKey": "sword/wide_guard",
+            "moduleVariant": "wide_guard/"
+        }
+    ]
+}

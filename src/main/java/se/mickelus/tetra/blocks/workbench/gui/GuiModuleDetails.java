@@ -7,10 +7,8 @@ import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.RepairRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
-import se.mickelus.tetra.module.schema.RepairDefinition;
 
 import java.util.Arrays;
 
@@ -76,7 +74,7 @@ public class GuiModuleDetails extends GuiElement {
         glyph.clearChildren();
         if (module != null) {
             title.setString(module.getName(itemStack));
-            description.setString(module.getDescription(itemStack));
+            description.setString(TextFormatting.GRAY + module.getDescription(itemStack).replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString()));
 
             GlyphData glyphData = module.getVariantData(itemStack).glyph;
 

@@ -10,11 +10,10 @@ import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.forgespi.Environment;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.TetraMod;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -39,6 +38,10 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
         int i = this.directory.length() + 1;
 
         for(ResourceLocation fullLocation : resourceManager.getAllResourceLocations(directory, rl -> rl.endsWith(".json"))) {
+            if (!TetraMod.MOD_ID.equals(fullLocation.getNamespace())) {
+                continue;
+            }
+
             String path = fullLocation.getPath();
             ResourceLocation location = new ResourceLocation(fullLocation.getNamespace(), path.substring(i, path.length() - jsonExtLength));
 
@@ -51,37 +54,33 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
                             Reader reader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8));
                     ) {
                         JsonObject json = JSONUtils.fromJson(gson, reader, JsonObject.class);
+
                         if (json != null) {
-                            allResources.add(json);
+                            if (shouldLoad(json)) {
+                                allResources.add(json);
+                            } else {
+                                logger.debug("Skipping data '{}' from '{}' due to condition", fullLocation, resource.getPackName());
+                            }
                         } else {
-                            logger.error("Couldn't load data from {} in data pack {} as it's empty or null",
+                            logger.error("Couldn't load data from '{}' in data pack '{}' as it's empty or null",
                                     fullLocation, resource.getPackName());
                         }
                     } catch (RuntimeException | IOException e) {
-                        logger.error("Couldn't load data from {} in data pack {}", fullLocation, resource.getPackName(), e);
+                        logger.error("Couldn't load data from '{}' in data pack '{}'", fullLocation, resource.getPackName(), e);
                     } finally {
                         IOUtils.closeQuietly(resource);
                     }
                 }
             } catch (IOException e) {
-                logger.error("Couldn't load data from {}", fullLocation, e);
+                logger.error("Couldn't load data from '{}'", fullLocation, e);
             }
 
-            map.put(location, allResources);
+            if (allResources.size() > 0) {
+                map.put(location, allResources);
+            }
         }
 
         return map;
-    }
-
-    @Override
-    protected void apply(Map<ResourceLocation, JsonElement> splashList, IResourceManager resourceManager, IProfiler profiler) {
-        rawData = splashList;
-
-        if (Environment.get().getDist().isDedicatedServer()) {
-            PacketHandler.sendToAllPlayers(new UpdateDataPacket(directory, rawData));
-        }
-
-        parseData(splashList);
     }
 
     @Override

@@ -14,24 +14,35 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchActionPacket;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.module.schematic.RepairSchematic;
+import se.mickelus.tetra.properties.IToolProvider;
+import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.SchematicRegistry;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -52,12 +63,12 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     private static final String inventoryKey = "inv";
     private static final String currentSlotKey = "current_slot";
-    private static final String schemaKey = "schema";
+    private static final String schematicKey = "schematic";
 
     public static final int inventorySlots = 4;
 
     private ItemStack previousTarget = ItemStack.EMPTY;
-    private UpgradeSchema currentSchema;
+    private UpgradeSchematic currentSchematic;
     private String currentSlot;
 
     private Map<String, Runnable> changeListeners;
@@ -75,6 +86,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             actions = ArrayUtils.addAll(WorkbenchTile.defaultActions, configActions);
         });
     }
+
+    private ActionInteraction interaction;
 
     public WorkbenchTile() {
         super(type);
@@ -104,19 +117,24 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             protected void onContentsChanged(int slot) {
                 ItemStack itemStack = getStackInSlot(slot);
                 if (slot == 0 && (itemStack.isEmpty() || !ItemStack.areItemStacksEqual(getTargetItemStack(), itemStack))) {
-                    currentSchema = null;
+                    currentSchematic = null;
                     currentSlot = null;
 
                     emptyMaterialSlots();
                 }
 
+                if (slot == 0) {
+                    interaction = ActionInteraction.create(WorkbenchTile.this);
+                }
+
                 markDirty();
+                world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
             }
 
             @Override
             public int getSlots() {
-                if (currentSchema != null) {
-                    return currentSchema.getNumMaterialSlots() + 1;
+                if (currentSchematic != null) {
+                    return currentSchematic.getNumMaterialSlots() + 1;
                 }
                 return 1;
             }
@@ -126,13 +144,13 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     public WorkbenchAction[] getAvailableActions(PlayerEntity player) {
         ItemStack itemStack = getTargetItemStack();
         return Arrays.stream(actions)
-                .filter(action -> action.canPerformOn(player, itemStack))
+                .filter(action -> action.canPerformOn(player, this, itemStack))
                 .toArray(WorkbenchAction[]::new);
     }
 
     public void performAction(PlayerEntity player, String actionKey) {
         if (world.isRemote) {
-            PacketHandler.sendToServer(new WorkbenchActionPacket(pos, actionKey));
+            TetraMod.packetHandler.sendToServer(new WorkbenchActionPacket(pos, actionKey));
             return;
         }
 
@@ -142,72 +160,115 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         Arrays.stream(actions)
                 .filter(action -> action.getKey().equals(actionKey))
                 .findFirst()
-                .filter(action -> action.canPerformOn(player, targetStack))
-                .filter(action -> checkActionCapabilities(player, action, targetStack))
+                .filter(action -> action.canPerformOn(player, this, targetStack))
+                .filter(action -> checkActionTools(player, action, targetStack))
                 .ifPresent(action -> {
-
-                    // applies action capability effects in the following order: inventory, toolbelt, nearby blocks
-                    for (Capability capability : action.getRequiredCapabilitiesFor(targetStack)) {
-                        int requiredLevel = action.getCapabilityLevel(targetStack, capability);
-                        ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(capability, requiredLevel, player);
+                    action.getRequiredTools(targetStack).forEach((requiredTool, requiredLevel) -> {
+                        // consume player inventory
+                        ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(requiredTool, requiredLevel, player);
                         if (!providingStack.isEmpty()) {
-                            if (providingStack.getItem() instanceof ItemModular) {
-                                ((ItemModular) providingStack.getItem()).onActionConsumeCapability(providingStack,
-                                        targetStack, player, capability, requiredLevel,true);
+                            if (providingStack.getItem() instanceof IToolProvider) {
+                                ((IToolProvider) providingStack.getItem()).onActionConsume(providingStack,
+                                        targetStack, player, requiredTool, requiredLevel,true);
                             }
                         } else {
-                            ItemStack toolbeltResult = CapabilityHelper.consumeActionCapabilityToolbelt(player, targetStack, capability, requiredLevel, true);
+                            // consume toolbelt inventory
+                            ItemStack toolbeltResult = PropertyHelper.consumeActionToolToolbelt(player, targetStack, requiredTool, requiredLevel,
+                                    true);
 
+                            // consume blocks
                             if (toolbeltResult == null) {
                                 CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                        .ifPresent(block -> block.onActionConsumeCapability(world, getPos(), blockState, targetStack,
-                                                player, true));
+                                        .ifPresent(block -> block.onActionConsumeTool(world, getPos(), blockState, targetStack, player,
+                                                requiredTool, requiredLevel, true));
                             }
-
                         }
-                    }
+                    });
 
                     action.perform(player, targetStack, this);
+                    markDirty();
+                    world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
                 });
     }
 
-    private boolean checkActionCapabilities(PlayerEntity player, WorkbenchAction action, ItemStack itemStack) {
-        return Arrays.stream(action.getRequiredCapabilitiesFor(itemStack))
-                .allMatch(capability ->
-                        CapabilityHelper.getCombinedCapabilityLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), capability)
-                        >= action.getCapabilityLevel(itemStack, capability));
+    /**
+     * Perform an action that's not triggered by a player
+     * @param actionKey
+     */
+    public void performAction(String actionKey) {
+        BlockState blockState = world.getBlockState(getPos());
+        ItemStack targetStack = getTargetItemStack();
+
+        Arrays.stream(actions)
+                .filter(action -> action.getKey().equals(actionKey))
+                .findFirst()
+                .filter(action -> action.canPerformOn(null, this, targetStack))
+                .filter(action -> checkActionTools(action, targetStack))
+                .ifPresent(action -> {
+                    action.getRequiredTools(targetStack).forEach((requiredTool, requiredLevel) -> {
+                            CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
+                                    .ifPresent(block -> block.onActionConsumeTool(world, getPos(), blockState, targetStack, null,
+                                            requiredTool, requiredLevel, true));
+                    });
+
+                    action.perform(null, targetStack, this);
+                    markDirty();
+                    world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+                });
     }
 
-    public UpgradeSchema getCurrentSchema() {
-        return currentSchema;
+    private boolean checkActionTools(PlayerEntity player, WorkbenchAction action, ItemStack itemStack) {
+        return action.getRequiredTools(itemStack).entrySet().stream()
+                .allMatch(requirement ->
+                        PropertyHelper.getCombinedToolLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), requirement.getKey())
+                        >= requirement.getValue());
     }
 
-    public void setCurrentSchema(UpgradeSchema schema, String currentSlot) {
+    private boolean checkActionTools(WorkbenchAction action, ItemStack itemStack) {
+        return action.getRequiredTools(itemStack).entrySet().stream()
+                .allMatch(requirement ->
+                        PropertyHelper.getBlockToolLevel(getWorld(), getPos(), world.getBlockState(getPos()), requirement.getKey())
+                                >= requirement.getValue());
+    }
 
-        this.currentSchema = schema;
+    public BlockInteraction[] getInteractions() {
+        if (interaction != null) {
+            return new BlockInteraction[] { interaction };
+        }
+
+        return new BlockInteraction[0];
+    }
+
+    public UpgradeSchematic getCurrentSchematic() {
+        return currentSchematic;
+    }
+
+    public void setCurrentSchematic(UpgradeSchematic schematic, String currentSlot) {
+
+        this.currentSchematic = schematic;
         this.currentSlot = currentSlot;
 
         changeListeners.values().forEach(Runnable::run);
         sync();
     }
 
-    public void clearSchema() {
-        setCurrentSchema(null, null);
+    public void clearSchematic() {
+        setCurrentSchematic(null, null);
     }
 
     /**
      * Intended for updating the TE when receiving update packets on the server.
-     * @param currentSchema A schema, or null if it should be unset
+     * @param currentSchematic A schematic, or null if it should be unset
      * @param currentSlot A slot key, or null if it should be unset
      * @param player
      */
-    public void update(UpgradeSchema currentSchema, String currentSlot, PlayerEntity player) {
+    public void update(UpgradeSchematic currentSchematic, String currentSlot, PlayerEntity player) {
         // todo: inventory change hack, better solution?
-        if (currentSchema == null && player != null) {
+        if (currentSchematic == null && player != null) {
             emptyMaterialSlots(player);
         }
 
-        this.currentSchema = currentSchema;
+        this.currentSchematic = currentSchematic;
         this.currentSlot = currentSlot;
 
         sync();
@@ -218,7 +279,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     private void sync() {
         if (world.isRemote) {
-            PacketHandler.sendToServer(new WorkbenchPacketUpdate(pos, currentSchema, currentSlot));
+            TetraMod.packetHandler.sendToServer(new WorkbenchPacketUpdate(pos, currentSchematic, currentSlot));
         } else {
             world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
             markDirty();
@@ -239,6 +300,14 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 .orElse(ItemStack.EMPTY);
     }
 
+    public boolean isTargetPlaceholder() {
+        return handler
+                .map(handler -> handler.getStackInSlot(0))
+                .map(stack -> ItemUpgradeRegistry.instance.getReplacement(stack))
+                .map(placeholder -> !placeholder.isEmpty())
+                .orElse(false);
+    }
+
     public ItemStack[] getMaterials() {
         return handler.map(handler -> {
             ItemStack[] result = new ItemStack[inventorySlots - 1];
@@ -252,7 +321,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     public void initiateCrafting(PlayerEntity player) {
         if (world.isRemote) {
-            PacketHandler.sendToServer(new WorkbenchPacketCraft(pos));
+            TetraMod.packetHandler.sendToServer(new WorkbenchPacketCraft(pos));
         }
 
         craft(player);
@@ -263,45 +332,53 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     public void craft(PlayerEntity player) {
         ItemStack targetStack = getTargetItemStack();
         ItemStack upgradedStack = targetStack;
+        IModularItem item = CastOptional.cast(upgradedStack.getItem(), IModularItem.class).orElse(null);
 
-        BlockState blockState = world.getBlockState(getPos());
+        BlockState blockState = getBlockState();
 
-        int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(player, getWorld(), getPos(), blockState);
+        Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, getWorld(), getPos(), blockState);
 
         ItemStack[] materials = getMaterials();
         ItemStack[] materialsAltered = Arrays.stream(getMaterials()).map(ItemStack::copy).toArray(ItemStack[]::new);
 
-        if (currentSchema != null && currentSchema.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableCapabilities)) {
-            float severity = currentSchema.getSeverity(targetStack, materialsAltered, currentSlot);
-            upgradedStack = currentSchema.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
+        if (item != null && currentSchematic != null && currentSchematic.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableTools)) {
+            float severity = currentSchematic.getSeverity(targetStack, materialsAltered, currentSlot);
+            boolean willReplace = currentSchematic.willReplace(targetStack, materialsAltered, currentSlot);
 
-            if (upgradedStack.getItem() instanceof ItemModular) {
-                ((ItemModular) upgradedStack.getItem()).assemble(upgradedStack, world, severity);
+            // store durability and honing factor so that it can be restored after the schematic is applied
+            double durabilityFactor = upgradedStack.isDamageable() ? upgradedStack.getDamage() * 1d / upgradedStack.getMaxDamage() : 0;
+            double honingFactor = MathHelper.clamp(item.getHoningProgress(upgradedStack) * 1d / item.getHoningLimit(upgradedStack), 0, 1);
+
+            Map<ToolType, Integer> tools = currentSchematic.getRequiredToolLevels(targetStack, materials);
+
+            upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
+
+            upgradedStack = applyCraftingBonusEffects(upgradedStack, currentSlot, willReplace, player, materials, materialsAltered, tools, world, pos, blockState, true);
+
+            for (Map.Entry<ToolType, Integer> entry : tools.entrySet()) {
+                upgradedStack = consumeCraftingToolEffects(upgradedStack, currentSlot, willReplace, entry.getKey(), entry.getValue(), player, world, pos, blockState, true);
             }
 
-            // applies crafting capability effects in the following order: inventory, toolbelt, nearby blocks
-            for (Capability capability : currentSchema.getRequiredCapabilities(targetStack, materials)) {
-                int requiredLevel = currentSchema.getRequiredCapabilityLevel(targetStack, materials, capability);
-                ItemStack providingStack = CapabilityHelper.getPlayerProvidingItemStack(capability, requiredLevel, player);
-                if (!providingStack.isEmpty()) {
-                    if (providingStack.getItem() instanceof ItemModular) {
-                        upgradedStack = ((ItemModular) providingStack.getItem()).onCraftConsumeCapability(providingStack,
-                                upgradedStack, player, capability, requiredLevel,true);
-                    }
+            item.assemble(upgradedStack, world, severity);
+
+            // remove or restore honing progression
+            if (currentSchematic.isHoning()) {
+                IModularItem.removeHoneable(upgradedStack);
+            } else if (ConfigHandler.moduleProgression.get() && !IModularItem.isHoneable(upgradedStack)) {
+                item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningLimit(upgradedStack)));
+            }
+
+            // restore durability damage
+            // todo: hacky check if repair schematic
+            if (upgradedStack.isDamageable() && !(currentSchematic instanceof RepairSchematic) ) {
+                if (durabilityFactor > 0 && willReplace && currentSlot.equals(item.getRepairSlot(upgradedStack))) {
+                    item.repair(upgradedStack);
                 } else {
-                    ItemStack toolbeltResult = CapabilityHelper.consumeCraftCapabilityToolbelt(player, upgradedStack, capability, requiredLevel, true);
-                    if (toolbeltResult != null) {
-                        upgradedStack = toolbeltResult;
-                    } else {
-                        ItemStack consumeTarget = upgradedStack; // needs to be effectively final to be used in lambda
-                        upgradedStack = CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                .map(block -> block.onCraftConsumeCapability(world, getPos(), blockState, consumeTarget, player, true))
-                                .orElse(upgradedStack);
-                    }
+                    upgradedStack.setDamage((int) Math.ceil(durabilityFactor * upgradedStack.getMaxDamage()));
                 }
             }
 
-            int xpCost = currentSchema.getExperienceCost(targetStack, materials, currentSlot);
+            int xpCost = currentSchematic.getExperienceCost(targetStack, materials, currentSlot);
             if (!player.isCreative() && xpCost > 0) {
                 player.addExperienceLevel(-xpCost);
             }
@@ -317,12 +394,58 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             handler.setStackInSlot(0, tempStack);
         });
 
-        clearSchema();
+        clearSchematic();
+    }
+
+    /**
+     * applies crafting tool effects in the following order: inventory, toolbelt, nearby blocks
+     */
+    public static ItemStack consumeCraftingToolEffects(ItemStack upgradedStack, String slot, boolean isReplacing, ToolType tool, int level,
+            PlayerEntity player, World world, BlockPos pos, BlockState blockState, boolean consumeResources) {
+        ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(tool, level, player);
+        if (!providingStack.isEmpty()) {
+            if (providingStack.getItem() instanceof IToolProvider) {
+                upgradedStack = ((IToolProvider) providingStack.getItem()).onCraftConsume(providingStack,
+                        upgradedStack, player, tool, level,consumeResources);
+            }
+        } else {
+            ItemStack toolbeltResult = PropertyHelper.consumeCraftToolToolbelt(player, upgradedStack, tool, level, consumeResources);
+            if (toolbeltResult != null) {
+                upgradedStack = toolbeltResult;
+            } else {
+                ItemStack consumeTarget = upgradedStack; // needs to be effectively final to be used in lambda
+                upgradedStack = CastOptional.cast(blockState.getBlock(), AbstractWorkbenchBlock.class)
+                        .map(block -> block.onCraftConsumeTool(world, pos, blockState, consumeTarget, slot, isReplacing, player, tool, level, consumeResources))
+                        .orElse(upgradedStack);
+            }
+        }
+
+        return upgradedStack;
+    }
+
+    public static ItemStack applyCraftingBonusEffects(ItemStack upgradedStack, String slot, boolean isReplacing, PlayerEntity player,
+            ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ToolType, Integer> tools, World world, BlockPos pos, BlockState blockState,
+            boolean consumeResources) {
+        ItemStack result = upgradedStack.copy();
+        ResourceLocation[] unlockedEffects = CastOptional.cast(blockState.getBlock(), AbstractWorkbenchBlock.class)
+                .map(block -> block.getCraftingEffects(world, pos, blockState))
+                .orElse(new ResourceLocation[0]);
+        Arrays.stream(CraftingEffectRegistry.getEffects(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, pos, blockState))
+                .forEach(craftingEffect -> craftingEffect.applyOutcomes(result, slot, isReplacing, player, preMaterials, postMaterials, tools, world,
+                        pos, blockState, consumeResources));
+
+        return result;
+    }
+
+    public ResourceLocation[] getUnlockedSchematics() {
+        return CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
+                .map(block -> block.getSchematics(world, pos, getBlockState()))
+                .orElse(new ResourceLocation[0]);
     }
 
     public void applyTweaks(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
         if (world.isRemote) {
-            PacketHandler.sendToServer(new WorkbenchPacketTweak(pos, slot, tweaks));
+            TetraMod.packetHandler.sendToServer(new WorkbenchPacketTweak(pos, slot, tweaks));
         }
 
         tweak(player, slot, tweaks);
@@ -333,7 +456,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     public void tweak(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
         handler.ifPresent(handler -> {
             ItemStack tweakedStack = getTargetItemStack().copy();
-            CastOptional.cast(tweakedStack.getItem(), ItemModular.class)
+            CastOptional.cast(tweakedStack.getItem(), IModularItem.class)
                     .ifPresent(item -> item.tweak(tweakedStack, slot, tweaks));
 
             handler.setStackInSlot(0, tweakedStack);
@@ -372,21 +495,23 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(pkt.getNbtCompound());
+        read(getBlockState(), pkt.getNbtCompound());
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState blockState, CompoundNBT compound) {
+        super.read(blockState, compound);
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
 
-        String schemaKey = compound.getString(WorkbenchTile.schemaKey);
-        currentSchema = ItemUpgradeRegistry.instance.getSchema(schemaKey);
+        String schematicKey = compound.getString(WorkbenchTile.schematicKey);
+        currentSchematic = SchematicRegistry.getSchematic(schematicKey);
 
         if (compound.contains(currentSlotKey)) {
             currentSlot = compound.getString(currentSlotKey);
         }
+
+        interaction = ActionInteraction.create(this);
 
         // todo : due to the null check perhaps this is not the right place to do this
         if (world != null && world.isRemote) {
@@ -400,8 +525,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
         handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
 
-        if (currentSchema != null) {
-            compound.putString(schemaKey, currentSchema.getKey());
+        if (currentSchematic != null) {
+            compound.putString(schematicKey, currentSchematic.getKey());
         }
 
         if (currentSlot != null) {
@@ -421,6 +546,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 transferStackToPlayer(player, i);
             }
             markDirty();
+            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
         });
     }
 

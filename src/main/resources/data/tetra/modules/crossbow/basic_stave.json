@@ -1,0 +1,45 @@
+{
+    "replace": true,
+    "slots": ["crossbow/stave"],
+    "type": "tetra:basic_major_module",
+    "improvements": [
+        "tetra:crossbow/stave/",
+        "tetra:crossbow/shared/",
+        "tetra:shared/"
+    ],
+    "variants": [
+        {
+            "materials": ["tetra:wood/", "tetra:misc/stick", "tetra:metal/"],
+            "key": "basic_stave/",
+            "attributes": {
+                "tetra:draw_speed": 1,
+                "tetra:draw_strength": 0.5
+            },
+            "durability": 97,
+            "extract": {
+                "primaryAttributes": {
+                    "tetra:draw_speed": 0.2,
+                    "tetra:draw_strength": 1.2
+                },
+                "tertiaryAttributes": {
+                    "tetra:draw_speed": -0.1,
+                    "tetra:draw_strength": 0.9
+                },
+                "durability": 0.6,
+                "integrity": -1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 128,
+                    "textureY": 32
+                },
+                "availableTextures": ["default"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/crossbow/stave/basic/",
+                        "type": "static"
+                    }
+                ]
+            }
+        }
+    ]
+}

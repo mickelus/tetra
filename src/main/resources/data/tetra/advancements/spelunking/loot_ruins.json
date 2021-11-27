@@ -10,7 +10,7 @@
             "translate": "tetra.advancements.spelunking.loot_ruins.description"
         }
     },
-    "parent": "tetra:spelunking/hammer_config",
+    "parent": "tetra:spelunking/hammer_power",
     "criteria": {
         "platform": {
             "trigger": "minecraft:inventory_changed",

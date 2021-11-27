@@ -38,7 +38,10 @@ public class SeepingBedrockBlock extends TetraBlock {
     }
 
     public static boolean isActive(World world, BlockPos pos) {
-        BlockState blockState = world.getBlockState(pos);
+        return isActive(world.getBlockState(pos));
+    }
+
+    public static boolean isActive(BlockState blockState) {
         return instance.equals(blockState.getBlock()) && blockState.get(activeProp) > 0;
     }
 

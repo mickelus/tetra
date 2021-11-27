@@ -1,0 +1,22 @@
+{
+    "parent": "tetra:recipes/root",
+    "rewards": {
+        "recipes": [
+            "tetra:hammer/acacia",
+            "tetra:hammer/birch",
+            "tetra:hammer/dark_oak",
+            "tetra:hammer/jungle",
+            "tetra:hammer/oak",
+            "tetra:hammer/spruce",
+            "tetra:rack"
+        ]
+    },
+    "criteria": {
+        "got_wood": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{ "tag": "minecraft:planks" }]
+            }
+        }
+    }
+}

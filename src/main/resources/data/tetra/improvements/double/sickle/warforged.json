@@ -1,0 +1,16 @@
+[
+    {
+        "key": "double/warforged",
+        "integrity": -2,
+        "attributes": {
+            "generic.attack_damage": 3
+        },
+        "effects": {
+            "sweeping": [3, 2]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/head/sickle/warforged",
+            "tint": "inherit"
+        }]
+    }
+]

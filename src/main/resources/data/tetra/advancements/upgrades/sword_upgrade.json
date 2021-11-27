@@ -2,7 +2,7 @@
     "display": {
         "icon": {
             "item": "tetra:modular_sword",
-            "nbt": "{\"sword/blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/iron\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
+            "nbt": "{\"id\": \"upgrades/sword_upgrade\", \"sword/blade\": \"sword/short_blade\",\"sword/short_blade_material\": \"short_blade/iron\",\"sword/hilt\": \"sword/basic_hilt\",\"sword/basic_hilt_material\": \"basic_hilt/stick\"}"
         },
         "title": {
             "translate": "tetra.advancements.upgrades.sword_upgrade.title"

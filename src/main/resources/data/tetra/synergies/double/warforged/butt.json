@@ -1,0 +1,18 @@
+[
+    {
+        "modules": ["double/butt_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "tools": {
+            "axe": -1,
+            "shovel": -1,
+            "pickaxe": -1,
+            "hoe": -1,
+            "cut": -1,
+            "hammer": -1
+        },
+        "effects": {
+            "abilitySpeed": 20
+        }
+    }
+]

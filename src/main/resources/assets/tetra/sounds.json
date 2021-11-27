@@ -1,0 +1,7 @@
+{
+    "scanner": {
+        "category": "player",
+        "subtitle": "tetra.subtitle.scanner",
+        "sounds": [ "tetra:scanner" ]
+    }
+}

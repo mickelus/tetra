@@ -1,0 +1,34 @@
+{
+    "conditions": [{
+        "type": "forge:mod_loaded",
+        "modid": "naturesaura"
+    }],
+    "key": "infused_iron",
+    "category": "metal",
+    "primary": "5",
+    "secondary": "3.8",
+    "tertiary": "3",
+    "durability": "250",
+    "integrityCost": "2",
+    "integrityGain": "5",
+    "magicCapacity": "96",
+    "toolLevel": "3",
+    "toolEfficiency": "6",
+    "tints": {
+        "glyph": "299831",
+        "texture": "187d1d"
+    },
+    "textures": [
+        "metal",
+        "default"
+    ],
+    "material": {
+        "item": "naturesaura:infused_iron"
+    },
+    "improvements": {
+        "naturesaura_aura_mending_innate": 1
+    },
+    "requiredTools": {
+        "hammer": 2
+    }
+}

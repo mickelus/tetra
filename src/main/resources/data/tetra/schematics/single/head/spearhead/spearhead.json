@@ -1,0 +1,31 @@
+{
+    "replace": true,
+    "slots": [
+        "single/head"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 208,
+        "textureY": 32
+    },
+    "translation": {
+        "primaryAttributes": {
+            "generic.attack_damage": 4
+        },
+        "secondaryAttributes": {
+            "generic.attack_speed": -1,
+            "generic.attack_damage": 1
+        },
+        "durability": 3,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
+            "moduleKey": "single/spearhead",
+            "moduleVariant": "spearhead/"
+        }
+    ]
+}

@@ -8,12 +8,10 @@
         "tetra:enchantment/efficiency_pickaxe",
         "tetra:enchantment/silk_touch",
         "tetra:enchantment/fortune",
+        "tetra:enchantment/piercing",
         "tetra:enchantment/vanishing_curse",
         "tetra:enchantment/apotheosis_depth_miner",
-        "tetra:enchantment/cyclic_excavate",
         "tetra:enchantment/enchantable_ore_eater",
-        "tetra:enchantment/enchantable_excavator",
-        "tetra:enchantment/ensorcellation_excavating",
         "tetra:enchantment/ensorcellation_soulbound",
         "tetra:enchantment/ma-enchants_reinforced_tip",
         "tetra:enchantment/ma-enchants_stone_mending",
@@ -26,13 +24,10 @@
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
         "tetra:enchantment/cursed_encumbrance",
-        "tetra:single/earthpiercer",
-        "tetra:single/earthpiercer_compat",
-        "tetra:single/earthpiercer_hone",
-        "tetra:single/shared_head_compat",
-        "tetra:single/shared_head_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:single/earthpiercer/",
+        "tetra:single/shared_head/",
+        "tetra:single/shared/",
+        "tetra:shared/"
     ],
     "variants": [
         {
@@ -40,23 +35,22 @@
             "durability": 771,
             "integrity": -3,
             "magicCapacity": 48,
-            "damage": 2,
-            "attackSpeed": -0.4,
-            "capabilities": {
-                "pickaxe": [
-                    3,
-                    1
-                ]
+            "attributes": {
+                "generic.attack_damage": 2,
+                "generic.attack_speed": -1.95
+            },
+            "tools": {
+                "pickaxe": [3, 5]
+            },
+            "effects": {
+                "piercing": 2,
+                "piercingHarvest": 1
             },
             "glyph": {
                 "textureX": 224,
                 "textureY": 32
             },
-            "models": [
-                {
-                    "location": "tetra:items/module/single/head/earthpiercer/default"
-                }
-            ]
+            "models": [{ "location": "tetra:items/module/single/head/earthpiercer/default" }]
         }
     ]
 }

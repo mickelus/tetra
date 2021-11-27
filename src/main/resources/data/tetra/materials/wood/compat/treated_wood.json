@@ -1,0 +1,30 @@
+{
+    "key": "treated_wood",
+    "category": "wood",
+    "primary": "4",
+    "secondary": "2",
+    "tertiary": "6.5",
+    "durability": "70",
+    "integrityCost": "2",
+    "integrityGain": "5",
+    "magicCapacity": "82",
+    "toolLevel": "2",
+    "toolEfficiency": "3",
+    "tints": {
+        "glyph": "643927",
+        "texture": "643927"
+    },
+    "textures": [
+        "crude",
+        "wooden"
+    ],
+    "material": {
+        "tag": "forge:treated_wood"
+    },
+    "improvements": {
+        "workable": 1
+    },
+    "requiredTools": {
+        "axe": 3
+    }
+}

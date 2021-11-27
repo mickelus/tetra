@@ -2,20 +2,18 @@ package se.mickelus.tetra.module;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
 
 import java.util.*;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ItemUpgradeRegistry {
@@ -39,27 +37,6 @@ public class ItemUpgradeRegistry {
         });
     }
 
-    public UpgradeSchema[] getAvailableSchemas(PlayerEntity player, ItemStack itemStack) {
-        return SchemaRegistry.instance.getAllSchemas().stream()
-                .filter(upgradeSchema -> playerHasSchema(player, itemStack, upgradeSchema))
-                .filter(upgradeSchema -> upgradeSchema.isApplicableForItem(itemStack))
-                .toArray(UpgradeSchema[]::new);
-    }
-
-    public UpgradeSchema[] getSchemas(String slot) {
-        return SchemaRegistry.instance.getAllSchemas().stream()
-                .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(slot, ItemStack.EMPTY))
-                .toArray(UpgradeSchema[]::new);
-    }
-
-    public UpgradeSchema getSchema(String key) {
-        return SchemaRegistry.instance.getSchema(new ResourceLocation(TetraMod.MOD_ID, key));
-    }
-
-    public boolean playerHasSchema(PlayerEntity player, ItemStack targetStack, UpgradeSchema schema) {
-        return schema.isVisibleForPlayer(player, targetStack);
-    }
-
     /**
      * Register a hook that will be run for every item that is converted into a tetra item
      * @param hook Bi-function where the first itemstack is the original itemstack and the second is the replacement stack, the returned value will
@@ -71,7 +48,7 @@ public class ItemUpgradeRegistry {
 
     /**
      * Attempts to get a modular itemstack to replace the given non-modular itemstack.
-     * Make sure to call {@link ItemModular#updateIdentifier} on the new item afterwards to make rendering cheaper.
+     * Make sure to call {@link IModularItem#updateIdentifier} on the new item afterwards to make rendering cheaper.
      * @param itemStack A non-modular itemstack
      * @return The modular counterpart to the given item, or an empty itemstack if there is none
      */
@@ -93,32 +70,57 @@ public class ItemUpgradeRegistry {
     }
 
     private void transferEnchantments(ItemStack sourceStack, ItemStack modularStack) {
-        if (modularStack.getItem() instanceof ItemModular) {
-            ItemModular item = (ItemModular) modularStack.getItem();
+        if (modularStack.getItem() instanceof IModularItem) {
+            IModularItem item = (IModularItem) modularStack.getItem();
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(sourceStack);
             for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-                for (EnchantmentMapping mapping: ItemUpgradeRegistry.instance.getEnchantmentMappings(entry.getKey())) {
-                    ItemModuleMajor[] modules = Arrays.stream(item.getMajorModules(modularStack))
-                            .filter(module -> module.acceptsImprovement(mapping.improvement))
-                            .toArray(ItemModuleMajor[]::new);
-                    if (modules.length > 0) {
-                        float level = 1f * entry.getValue() / modules.length / mapping.multiplier;
+                applyEnchantment(item, modularStack, entry.getKey(), entry.getValue());
+            }
+        }
+    }
+
+    public static void applyEnchantment(IModularItem item, ItemStack itemStack, Enchantment enchantment, int enchantmentLevel) {
+            for (EnchantmentMapping mapping: ItemUpgradeRegistry.instance.getEnchantmentMappings(enchantment)) {
+                ItemModuleMajor[] modules = Arrays.stream(item.getMajorModules(itemStack))
+                        .filter(module -> module.acceptsImprovement(mapping.improvement))
+                        .toArray(ItemModuleMajor[]::new);
+                if (modules.length > 0) {
+
+                    // since efficiency doesn't stack on double headed items it should be fully applied to a single module instead of being split
+                    if (Enchantments.EFFICIENCY.equals(enchantment)) {
+                        float level = 1f * enchantmentLevel / mapping.multiplier;
+                        for (ItemModuleMajor module : modules) {
+                            if (module.acceptsImprovementLevel(mapping.improvement, (int) level)) {
+                                module.addImprovement(itemStack, mapping.improvement, (int) level);
+                                break;
+                            }
+                        }
+                    } else {
+                        float level = 1f * enchantmentLevel / modules.length / mapping.multiplier;
 
                         for (int i = 0; i < modules.length; i++) {
                             if (i == 0) {
                                 if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) Math.ceil(level))) {
-                                    modules[i].addImprovement(modularStack, mapping.improvement, (int) Math.ceil(level));
+                                    modules[i].addImprovement(itemStack, mapping.improvement, (int) Math.ceil(level));
                                 }
                             } else {
                                 if (modules[i].acceptsImprovementLevel(mapping.improvement, (int) level)) {
-                                    modules[i].addImprovement(modularStack, mapping.improvement, (int) level);
+                                    modules[i].addImprovement(itemStack, mapping.improvement, (int) level);
                                 }
                             }
                         }
+
                     }
                 }
             }
-        }
+    }
+
+    public EnchantmentMapping[] getEnchantmentMappings() {
+        return DataManager.enchantmentData.getData().values().stream()
+                .flatMap(Arrays::stream)
+                .filter(mapping -> mapping.enchantment != null)
+                .filter(mapping -> mapping.apply)
+                .toArray(EnchantmentMapping[]::new);
     }
 
     public EnchantmentMapping[] getEnchantmentMappings(String improvement) {

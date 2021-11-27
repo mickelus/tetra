@@ -1,0 +1,26 @@
+{
+    "replace": true,
+    "slots": [
+        "sword/blade"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "blade/serrated": 2
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 4
+            },
+            "improvements": {
+                "blade/serrated": 3
+            }
+        }
+    ]
+}

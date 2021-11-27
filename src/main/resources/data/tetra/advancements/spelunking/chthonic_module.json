@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:modular_double",
+            "nbt": "{\"id\": \"spelunking/chthonic_module\", \"double/head_left\": \"double/basic_pickaxe_left\",\"double/basic_pickaxe_left_material\": \"basic_pickaxe/netherite\",\"double/head_right\": \"double/extractor_right\",\"double/extractor_right_material\": \"extractor/extractor\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.chthonic_module.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.chthonic_module.description"
+        }
+    },
+    "parent": "tetra:spelunking/chthonic_extractor",
+    "criteria": {
+        "sword": {
+            "trigger": "tetra:craft_module",
+            "conditions": {
+                "module": "extractor/extractor"
+            }
+        }
+    }
+}

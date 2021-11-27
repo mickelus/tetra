@@ -37,38 +37,44 @@ public class ToolbeltContainer extends Container {
         int numQuiverSlots = quiverInventory.getSizeInventory();
         int offset = 0;
 
-        for (int i = 0; i < numPotionSlots; i++) {
-            addSlot(new PotionSlot(potionsInventory, i, (int)(-8.5 * numPotionSlots + 17 * i + 90), 61 - offset * 30));
-        }
-        if (numPotionSlots > 0) {
-            offset++;
+        if (numStorageSlots > 0) {
+            int cols = Math.min(numStorageSlots, StorageInventory.getColumns(numStorageSlots));
+            int rows = 1 + (numStorageSlots - 1) / cols;
+
+            for (int i = 0; i < numStorageSlots; i++) {
+                addSlot(new PredicateSlot(storageInventory, i, (int)(-8.5 * cols + 17 * (i % cols) + 90), 108 - offset - (i / cols) * 17, storageInventory::isItemValid));
+            }
+            offset += rows * 17 + 13;
         }
 
         for (int i = 0; i < numQuiverSlots; i++) {
-            addSlot(new PredicateSlot(quiverInventory, i, (int)(-8.5 * numQuiverSlots + 17 * i + 90), 61 - offset * 30, quiverInventory::isItemValid));
+            addSlot(new PredicateSlot(quiverInventory, i, (int)(-8.5 * numQuiverSlots + 17 * i + 90), 108 - offset, quiverInventory::isItemValid));
         }
         if (numQuiverSlots > 0) {
-            offset++;
+            offset += 30;
+        }
+
+        for (int i = 0; i < numPotionSlots; i++) {
+            addSlot(new PotionSlot(potionsInventory, i, (int)(-8.5 * numPotionSlots + 17 * i + 90), 108 - offset));
+        }
+        if (numPotionSlots > 0) {
+            offset += 30;
         }
 
         for (int i = 0; i < numQuickslots; i++) {
-            addSlot(new PredicateSlot(quickslotInventory, i, (int)(-8.5 * numQuickslots + 17 * i + 90), 61 - offset * 30, quickslotInventory::isItemValid));
+            addSlot(new PredicateSlot(quickslotInventory, i, (int)(-8.5 * numQuickslots + 17 * i + 90), 108 - offset, quickslotInventory::isItemValid));
         }
         if (numQuickslots > 0) {
-            offset++;
-        }
-
-        for (int i = 0; i < numStorageSlots; i++) {
-            addSlot(new PredicateSlot(storageInventory, i, (int)(-8.5 * numStorageSlots + 17 * i + 90), 61 - offset * 30, storageInventory::isItemValid));
+            offset += 30;
         }
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 Slot slot;
                 if (itemStackToolbelt.isItemEqual(playerInventory.getStackInSlot(i * 9 + j + 9))) {
-                    slot = new DisabledSlot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 116);
+                    slot = new DisabledSlot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 142);
                 } else {
-                    slot = new Slot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 116);
+                    slot = new Slot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 142);
                 }
                 addSlot(slot);
             }
@@ -77,9 +83,9 @@ public class ToolbeltContainer extends Container {
         for (int i = 0; i < 9; i++) {
             Slot slot;
             if (itemStackToolbelt.isItemEqualIgnoreDurability(playerInventory.getStackInSlot(i))) {
-                slot = new DisabledSlot(playerInventory, i, i * 17 + 12, 171);
+                slot = new DisabledSlot(playerInventory, i, i * 17 + 12, 197);
             } else {
-                slot = new Slot(playerInventory, i, i * 17 + 12, 171);
+                slot = new Slot(playerInventory, i, i * 17 + 12, 197);
             }
             addSlot(slot);
         }
@@ -90,6 +96,10 @@ public class ToolbeltContainer extends Container {
         ItemStack itemStack = inv.player.getHeldItemMainhand();
         if (!ModularToolbeltItem.instance.equals(itemStack.getItem())) {
             itemStack = inv.player.getHeldItemOffhand();
+        }
+
+        if (!ModularToolbeltItem.instance.equals(itemStack.getItem())) {
+            itemStack = ToolbeltHelper.findToolbelt(inv.player);
         }
 
         return new ToolbeltContainer(windowId, inv, itemStack, inv.player);
@@ -109,7 +119,7 @@ public class ToolbeltContainer extends Container {
             Slot slot = this.inventorySlots.get(i);
             if (slot.isItemValid(incomingStack)) {
                 ItemStack slotStack = slot.getStack();
-                if (ItemStack.areItemStackTagsEqual(slotStack, incomingStack)) {
+                if (ItemStack.areItemsEqual(slotStack, incomingStack) && ItemStack.areItemStackTagsEqual(slotStack, incomingStack)) {
                     if (slotStack.getCount() + incomingStack.getCount() < slot.getItemStackLimit(slotStack)) {
                         slotStack.grow(incomingStack.getCount());
                         incomingStack.setCount(0);
@@ -153,7 +163,8 @@ public class ToolbeltContainer extends Container {
                     if (slot.getStack().isEmpty()) {
                         slot.putStack(player.inventory.getItemStack());
                         player.inventory.setItemStack(ItemStack.EMPTY);
-                    } else if (ItemStack.areItemStackTagsEqual(slot.getStack(), player.inventory.getItemStack())) {
+                    } else if (ItemStack.areItemsEqual(slot.getStack(), player.inventory.getItemStack())
+                            && ItemStack.areItemStackTagsEqual(slot.getStack(), player.inventory.getItemStack())) {
                         int moveAmount = Math.min(player.inventory.getItemStack().getCount(), slot.getSlotStackLimit() - slot.getStack().getCount());
                         slot.getStack().grow(moveAmount);
                         player.inventory.getItemStack().shrink(moveAmount);

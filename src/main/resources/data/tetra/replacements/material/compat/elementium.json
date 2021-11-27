@@ -1,0 +1,72 @@
+[
+    {
+        "conditions": [{
+            "type": "forge:mod_loaded",
+            "modid": "botania"
+        }],
+        "predicate": {
+            "item": "botania:elementium_pickaxe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/elementium"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/elementium"],
+            "double/handle": ["double/basic_handle", "basic_handle/dreamwood"]
+        },
+        "improvements": {
+            "double/head_left:mana_repair": 3,
+            "double/head_right:mana_repair": 3,
+            "double/handle:mana_repair": 3
+        }
+
+    },
+    {
+        "predicate": {
+            "item": "botania:elementium_axe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/elementium"],
+            "double/head_right": ["double/butt_right", "butt/elementium"],
+            "double/handle": ["double/basic_handle", "basic_handle/dreamwood"]
+        },
+        "improvements": {
+            "double/head_left:mana_repair": 3,
+            "double/head_right:mana_repair": 3,
+            "double/handle:mana_repair": 3
+        }
+
+    },
+    {
+        "predicate": {
+            "item": "botania:elementium_shovel"
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/elementium"],
+            "single/handle": ["single/basic_handle", "basic_handle/dreamwood"]
+        },
+        "improvements": {
+            "single/head:mana_repair": 3,
+            "single/handle:mana_repair": 3
+        }
+
+    },
+    {
+        "predicate": {
+            "item": "botania:elementium_sword"
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/elementium"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/dreamwood"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/elementium"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/elementium"]
+        },
+        "improvements": {
+            "sword/blade:mana_repair": 3,
+            "sword/hilt:mana_repair": 3
+        }
+
+    }
+]

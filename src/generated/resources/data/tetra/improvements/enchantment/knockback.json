@@ -3,43 +3,43 @@
     "key": "enchantment/knockback",
     "level": 1,
     "enchantment": true,
-    "magicCapacity": -7.0
+    "magicCapacity": -33.0
   },
   {
     "key": "enchantment/knockback",
     "level": 2,
     "enchantment": true,
-    "magicCapacity": -27.0
+    "magicCapacity": -48.0
   },
   {
     "key": "enchantment/knockback",
     "level": 3,
     "enchantment": true,
-    "magicCapacity": -47.0
+    "magicCapacity": -63.0
   },
   {
     "key": "enchantment/knockback",
     "level": 4,
     "enchantment": true,
-    "magicCapacity": -67.0
+    "magicCapacity": -78.0
   },
   {
     "key": "enchantment/knockback",
     "level": 5,
     "enchantment": true,
-    "magicCapacity": -87.0
+    "magicCapacity": -93.0
   },
   {
     "key": "enchantment/knockback",
     "level": 6,
     "enchantment": true,
-    "magicCapacity": -107.0
+    "magicCapacity": -108.0
   },
   {
     "key": "enchantment/knockback",
     "level": 7,
     "enchantment": true,
-    "magicCapacity": -127.0
+    "magicCapacity": -123.0
   },
   {
     "key": "destabilized/knockback",

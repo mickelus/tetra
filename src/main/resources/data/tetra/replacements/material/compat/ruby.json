@@ -1,0 +1,62 @@
+[
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["ruby_sword", "sword_ruby"]
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/ruby"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/ruby"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/ruby"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["ruby_shovel", "shovel_ruby"]
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/ruby"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["ruby_pickaxe", "pickaxe_ruby"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/ruby"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/ruby"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["ruby_hoe", "hoe_ruby"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/ruby"],
+            "double/head_right": ["double/butt_right", "butt/ruby"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["ruby_axe", "axe_ruby"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/ruby"],
+            "double/head_right": ["double/butt_right", "butt/ruby"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    }
+]

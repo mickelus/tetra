@@ -1,16 +1,14 @@
 package se.mickelus.tetra.client.model;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.BakedModelWrapper;
 import net.minecraftforge.client.model.IModelConfiguration;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -22,7 +20,7 @@ public class BakedWrapper implements IBakedModel {
     private ItemOverrideList itemOverrideList;
 
     public BakedWrapper(ModularItemModel model, IModelConfiguration owner, ModelBakery bakery,
-            Function<Material, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ResourceLocation modelLocation,
+            Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ResourceLocation modelLocation,
             ItemOverrideList itemOverrideList) {
 
         particleAtlas = spriteGetter.apply(owner.resolveTexture("particle"));
@@ -45,7 +43,7 @@ public class BakedWrapper implements IBakedModel {
     }
 
     @Override
-    public boolean func_230044_c_() {
+    public boolean isSideLit() {
         return false;
     }
 

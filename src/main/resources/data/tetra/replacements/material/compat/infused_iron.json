@@ -1,0 +1,84 @@
+[
+    {
+        "conditions": [{
+            "type": "forge:mod_loaded",
+            "modid": "naturesaura"
+        }],
+        "predicate": {
+            "item": "naturesaura:infused_iron_pickaxe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/infused_iron"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/infused_iron"],
+            "double/handle": ["double/basic_handle", "basic_handle/ancient_wood"]
+        },
+        "improvements": {
+            "double/head_left:naturesaura_aura_mending_innate": 1,
+            "double/head_right:naturesaura_aura_mending_innate": 1,
+            "double/handle:naturesaura_aura_mending_innate": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "naturesaura:infused_iron_axe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/infused_iron"],
+            "double/head_right": ["double/butt_right", "butt/infused_iron"],
+            "double/handle": ["double/basic_handle", "basic_handle/ancient_wood"]
+        },
+        "improvements": {
+            "double/head_left:naturesaura_aura_mending_innate": 1,
+            "double/head_right:naturesaura_aura_mending_innate": 1,
+            "double/handle:naturesaura_aura_mending_innate": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "naturesaura:infused_iron_hoe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/infused_iron"],
+            "double/head_right": ["double/butt_right", "butt/infused_iron"],
+            "double/handle": ["double/basic_handle", "basic_handle/ancient_wood"]
+        },
+        "improvements": {
+            "double/head_left:naturesaura_aura_mending_innate": 1,
+            "double/head_right:naturesaura_aura_mending_innate": 1,
+            "double/handle:naturesaura_aura_mending_innate": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "naturesaura:infused_iron_shovel"
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/infused_iron"],
+            "single/handle": ["single/basic_handle", "basic_handle/ancient_wood"]
+        },
+        "improvements": {
+            "single/head:naturesaura_aura_mending_innate": 1,
+            "single/handle:naturesaura_aura_mending_innate": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "naturesaura:infused_iron_sword"
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/infused_iron"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/ancient_wood"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/infused_iron"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/infused_iron"]
+        },
+        "improvements": {
+            "sword/blade:naturesaura_aura_mending_innate": 1,
+            "sword/hilt:naturesaura_aura_mending_innate": 1
+        }
+    }
+]

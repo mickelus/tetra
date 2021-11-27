@@ -1,0 +1,75 @@
+[
+    {
+        "modules": ["double/adze_left"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "name": "double/battleadze",
+        "effects": {
+            "lunge": 110
+        }
+    },
+    {
+        "modules": ["double/adze_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityDefensive": 1
+        }
+    },
+    {
+        "modules": ["double/adze_left", "double/basic_axe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOvercharge": [10, 15]
+        }
+    },
+    {
+        "modules": ["double/adze_left", "double/basic_hammer_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityMomentum": [10, 0.5]
+        }
+    },
+    {
+        "modules": ["double/adze_left", "double/basic_pickaxe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityCombo": [25, 10]
+        }
+    },
+    {
+        "modules": ["double/adze_left", "double/claw_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityRevenge": 1
+        }
+    },
+    {
+        "modules": ["double/adze_left", "double/hoe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOverextend": [20, 0.5]
+        }
+    },
+    {
+        "modules": ["double/adze_left", "double/sickle_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityExhilaration": [20, 0.8]
+        }
+    },
+    {
+        "modules": ["double/adze_left", "double/extractor_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityEcho": [2, 1.2]
+        }
+    }
+]

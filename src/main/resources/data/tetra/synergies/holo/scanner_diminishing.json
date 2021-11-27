@@ -1,0 +1,13 @@
+[
+    {
+        "modules": ["holo/scanner", "holo/scanner"],
+        "attributes": {
+            "tetra:ability_cooldown": 0.4
+        },
+        "effects": {
+            "scannerRange": -14,
+            "scannerHorizontalSpread":  -12,
+            "scannerVerticalSpread": -2
+        }
+    }
+]

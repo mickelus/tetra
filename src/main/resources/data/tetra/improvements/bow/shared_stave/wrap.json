@@ -1,0 +1,35 @@
+[
+    {
+        "materials": ["tetra:skin/", "tetra:fibre/", "tetra:fabric/"],
+        "key": "stave/wrap/",
+        "level": 0,
+        "durability": 3,
+        "group": "wrap",
+        "integrity": -1,
+        "attributes": {
+            "tetra:draw_speed": -0.1,
+            "**tetra:draw_strength": 0.05
+        },
+        "effects": {
+            "enderReverb": [-2, -0.07],
+            "fierySelf": [-1, -0.03]
+        },
+        "extract": {
+            "primaryAttributes": {
+                "tetra:draw_speed": -0.01
+            },
+            "secondaryEffects": {
+                "fierySelf": [0, -0.025]
+            },
+            "tertiaryEffects": {
+                "enderReverb": [0, -0.039]
+            },
+            "durability": 0.1,
+            "availableTextures": ["wrap"],
+            "models": [{
+                "type": "static",
+                "location": "tetra:items/module/bow/stave/improvements/"
+            }]
+        }
+    }
+]

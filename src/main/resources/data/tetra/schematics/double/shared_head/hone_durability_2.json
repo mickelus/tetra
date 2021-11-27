@@ -1,0 +1,34 @@
+{
+    "replace": true,
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "keySuffixes": [
+        "_left",
+        "_right"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureY": 240
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "head_hone/durability": 1
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 2
+            },
+            "improvements": {
+                "head_hone/durability": 2
+            }
+        }
+    ]
+}

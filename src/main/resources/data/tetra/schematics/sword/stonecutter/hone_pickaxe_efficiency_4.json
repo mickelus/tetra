@@ -1,0 +1,31 @@
+{
+    "replace": true,
+    "localizationKey": "double/shared_head/hone_pickaxe_efficiency_4",
+    "slots": [
+        "sword/blade"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 176
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "modules": [["sword/stonecutter"]],
+        "improvements": {
+            "stonecutter_hone/efficiency": 3
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 5
+            },
+            "improvements": {
+                "stonecutter_hone/efficiency": 4
+            }
+        }
+    ]
+}

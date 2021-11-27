@@ -10,14 +10,15 @@ import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.Collections;
 import java.util.List;
 
 public class GuiIntegrityBar extends GuiElement {
 
-    private static final int segmentWidth = 8;
+    private int segmentWidth = 8;
     private static final int segmentHeight = 2;
     private static final int segmentOffset = 6;
 
@@ -47,21 +48,27 @@ public class GuiIntegrityBar extends GuiElement {
     }
 
     public void setItemStack(ItemStack itemStack, ItemStack previewStack) {
-        boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof ItemModular;
+        boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof IModularItem;
         setVisible(shouldShow);
         if (shouldShow) {
             if (!previewStack.isEmpty()) {
-                integrityGain = ItemModular.getIntegrityGain(previewStack);
-                integrityCost = ItemModular.getIntegrityCost(previewStack);
+                integrityGain = IModularItem.getIntegrityGain(previewStack);
+                integrityCost = IModularItem.getIntegrityCost(previewStack);
             } else {
-                integrityGain = ItemModular.getIntegrityGain(itemStack);
-                integrityCost = ItemModular.getIntegrityCost(itemStack);
+                integrityGain = IModularItem.getIntegrityGain(itemStack);
+                integrityCost = IModularItem.getIntegrityCost(itemStack);
             }
 
-            if (integrityGain + integrityCost < 0) {
-                label.setString(TextFormatting.RED + I18n.format("tetra.stats.integrity_usage", -integrityCost, integrityGain));
+            if (integrityGain - integrityCost < 0) {
+                label.setString(TextFormatting.RED + I18n.format("tetra.stats.integrity_usage", integrityCost, integrityGain));
             } else {
-                label.setString(I18n.format("tetra.stats.integrity_usage", -integrityCost, integrityGain));
+                label.setString(I18n.format("tetra.stats.integrity_usage", integrityCost, integrityGain));
+            }
+
+            if (integrityGain > 7) {
+                segmentWidth = Math.max(64 / integrityGain - 1, 1);
+            } else {
+                segmentWidth = 8;
             }
 
             width = integrityGain * ( segmentWidth + 1);
@@ -89,7 +96,7 @@ public class GuiIntegrityBar extends GuiElement {
     public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
-        for (int i = 0; i < -integrityCost; i++) {
+        for (int i = 0; i < integrityCost; i++) {
             if (i < integrityGain) {
                 drawSegment(matrixStack, refX + x + i * (segmentWidth + 1),refY + y + segmentOffset,  costColor,
                         opacity * getOpacity());
@@ -99,7 +106,7 @@ public class GuiIntegrityBar extends GuiElement {
             }
         }
 
-        for (int i = -integrityCost; i < integrityGain; i++) {
+        for (int i = integrityCost; i < integrityGain; i++) {
             drawSegment(matrixStack, refX + x + i * (segmentWidth + 1),refY + y + segmentOffset, gainColor,
                     opacity * getOpacity());
         }

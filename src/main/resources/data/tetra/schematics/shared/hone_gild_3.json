@@ -1,0 +1,64 @@
+{
+    "replace": true,
+    "localizationKey": "shared/hone_gild_3",
+    "locked": true,
+    "slots": [
+        "double/handle",
+        "double/head_left",
+        "double/head_right",
+        "single/handle",
+        "single/head",
+        "sword/blade",
+        "sword/hilt",
+        "bow/stave",
+        "bow/string",
+        "shield/plate",
+        "shield/grip",
+        "crossbow/stave",
+        "crossbow/stock"
+    ],
+    "keySuffixes": [
+        "_double_handle",
+        "_double_head_left",
+        "_double_head_right",
+        "_single_handle",
+        "_single_head",
+        "_sword_blade",
+        "_sword_hilt",
+        "_bow_stave",
+        "_bow_string",
+        "_shield_plate",
+        "_shield_grip",
+        "_crossbow_stave",
+        "_crossbow_stock"
+    ],
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 112,
+        "textureY": 240
+    },
+    "materialSlotCount": 1,
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "hone_gild": 2
+        }
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:gold_nugget",
+                "count": 5
+            },
+            "requiredTools": {
+                "hammer": 3
+            },
+            "experienceCost": 5,
+            "improvements": {
+                "hone_gild": 3
+            }
+        }
+    ]
+}

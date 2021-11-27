@@ -10,18 +10,26 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -36,56 +44,79 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
+import se.mickelus.tetra.blocks.forged.chthonic.*;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerContainer;
-import se.mickelus.tetra.blocks.forged.container.ForgedContainerTESR;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerRenderer;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 import se.mickelus.tetra.blocks.forged.extractor.*;
-import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
-import se.mickelus.tetra.blocks.forged.hammer.HammerBaseTile;
-import se.mickelus.tetra.blocks.forged.hammer.HammerHeadBlock;
-import se.mickelus.tetra.blocks.forged.hammer.HammerHeadTile;
+import se.mickelus.tetra.blocks.forged.hammer.*;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
 import se.mickelus.tetra.blocks.geode.*;
+import se.mickelus.tetra.blocks.rack.RackBlock;
+import se.mickelus.tetra.blocks.rack.RackTile;
+import se.mickelus.tetra.blocks.scroll.*;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
+import se.mickelus.tetra.client.model.ModularModelLoader;
+import se.mickelus.tetra.compat.curios.CuriosCompat;
+import se.mickelus.tetra.crafting.ScrollIngredient;
+import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
+import se.mickelus.tetra.craftingeffect.condition.CraftTypeCondition;
+import se.mickelus.tetra.craftingeffect.condition.LockedCondition;
+import se.mickelus.tetra.craftingeffect.condition.MaterialCondition;
+import se.mickelus.tetra.craftingeffect.condition.ToolCondition;
+import se.mickelus.tetra.craftingeffect.outcome.ApplyImprovementOutcome;
+import se.mickelus.tetra.craftingeffect.outcome.MaterialReductionOutcome;
+import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
-import se.mickelus.tetra.data.provider.BlockstateProvider;
-import se.mickelus.tetra.data.provider.EnchantmentProvider;
 import se.mickelus.tetra.data.provider.ModuleProvider;
-import se.mickelus.tetra.effects.BleedingEffect;
-import se.mickelus.tetra.effects.EarthboundEffect;
-import se.mickelus.tetra.effects.StunEffect;
+import se.mickelus.tetra.effect.ItemEffectHandler;
+import se.mickelus.tetra.effect.LungeEchoPacket;
+import se.mickelus.tetra.effect.revenge.AddRevengePacket;
+import se.mickelus.tetra.effect.TruesweepPacket;
+import se.mickelus.tetra.effect.howling.HowlingPacket;
+import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
+import se.mickelus.tetra.effect.potion.*;
+import se.mickelus.tetra.effect.revenge.RemoveRevengePacket;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.generation.TGenCommand;
-import se.mickelus.tetra.items.*;
+import se.mickelus.tetra.items.ITetraItem;
+import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
-import se.mickelus.tetra.items.modular.*;
 import se.mickelus.tetra.items.forged.*;
-import se.mickelus.tetra.items.journal.ItemJournal;
+import se.mickelus.tetra.items.loot.DragonSinewItem;
+import se.mickelus.tetra.items.modular.*;
+import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
+import se.mickelus.tetra.items.modular.impl.bow.ProjectileMotionPacket;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
+import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
+import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.SuspendPotionEffect;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
+import se.mickelus.tetra.loot.ReplaceTableModifier;
+import se.mickelus.tetra.loot.ScrollDataFunction;
 import se.mickelus.tetra.module.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
-import se.mickelus.tetra.module.schema.BookEnchantSchema;
-import se.mickelus.tetra.module.schema.CleanseSchema;
+import se.mickelus.tetra.module.schematic.BookEnchantSchematic;
+import se.mickelus.tetra.module.schematic.CleanseSchematic;
 import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
-import se.mickelus.tetra.IntegrationHelper;
+import se.mickelus.tetra.trades.TradeHandler;
 
 import java.util.Arrays;
 
@@ -103,34 +134,57 @@ public class TetraMod {
     private static Item[] items;
     private static Block[] blocks;
 
+    public static PacketHandler packetHandler;
+
     public TetraMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(IntegrationHelper::enqueueIMC);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(CuriosCompat::enqueueIMC);
+        TetraAttributes.registry.register(FMLJavaModLoadingContext.get().getModEventBus());
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
+        MinecraftForge.EVENT_BUS.register(new TradeHandler());
         MinecraftForge.EVENT_BUS.register(new DataManager());
         MinecraftForge.EVENT_BUS.register(TetraMod.proxy);
-        MinecraftForge.EVENT_BUS.register(BlockLookTrigger.instance);
         MinecraftForge.EVENT_BUS.register(new VibrationDebuffer());
+        MinecraftForge.EVENT_BUS.register(ServerScheduler.class);
+        MinecraftForge.EVENT_BUS.register(ClientScheduler.class);
+
+        if (ConfigHandler.enableLookTrigger.get()) {
+            MinecraftForge.EVENT_BUS.register(BlockLookTrigger.instance);
+        }
 
         ConfigHandler.setup();
 
         ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
+        ItemPredicate.register(new ResourceLocation("tetra:material"), MaterialItemPredicate::new);
+        ItemPredicate.register(new ResourceLocation("tetra:loose"), LooseItemPredicate::new);
 
-        LootConditionManager.registerCondition(new FortuneBonusCondition.Serializer());
+        Registry.register(Registry.LOOT_CONDITION_TYPE, FortuneBonusCondition.identifier, FortuneBonusCondition.type);
+        Registry.register(Registry.LOOT_FUNCTION_TYPE, ScrollDataFunction.identifier, ScrollDataFunction.type);
+
+        new CraftingEffectRegistry();
+        CraftingEffectRegistry.registerConditionType("tetra:craft_type", CraftTypeCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:locked", LockedCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:material", MaterialCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:tool", ToolCondition.class);
+
+        CraftingEffectRegistry.registerEffectType("tetra:apply_improvements", ApplyImprovementOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:remove_improvements", RemoveImprovementOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:material_reduction", MaterialReductionOutcome.class);
 
         new RepairRegistry();
 
-        SchemaRegistry schemaRegistry = new SchemaRegistry();
-        schemaRegistry.registerSchema(new BookEnchantSchema());
+        SchematicRegistry schematicRegistry = new SchematicRegistry();
+        schematicRegistry.registerSchematic(new BookEnchantSchematic());
 
         new ItemUpgradeRegistry();
 
         ModuleRegistry moduleRegistry = new ModuleRegistry();
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_module"), BasicModule::new);
+        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "multi_module"), MultiSlotModule::new);
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_major_module"), BasicMajorModule::new);
-        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "multi_major_module"), MultiSlotModule::new);
+        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "multi_major_module"), MultiSlotMajorModule::new);
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "toolbelt_module"), ToolbeltModule::new);
 
         new TetraItemGroup();
@@ -141,7 +195,9 @@ public class TetraMod {
         CriteriaTriggers.register(ModuleCraftCriterion.trigger);
         CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
 
-        blocks = new Block[]{
+        ScrollBlock scrollRolled = new RolledScrollBlock();
+
+        blocks = new Block[] {
                 new BasicWorkbenchBlock(),
                 new GeodeBlock(),
                 new HammerHeadBlock(),
@@ -150,15 +206,22 @@ public class TetraMod {
                 new BlockForgedPillar(),
                 new BlockForgedPlatform(),
                 new BlockForgedPlatformSlab(),
-                new BlockForgedVent(),
+                new ForgedVentBlock(),
                 new ForgedWorkbenchBlock(),
                 new ForgedContainerBlock(),
-                new BlockForgedCrate(),
+                new ForgedCrateBlock(),
                 new TransferUnitBlock(),
                 new CoreExtractorBaseBlock(),
                 new CoreExtractorPistonBlock(),
                 new CoreExtractorPipeBlock(),
-                new SeepingBedrockBlock()
+                new SeepingBedrockBlock(),
+                new RackBlock(),
+                new ChthonicExtractorBlock(),
+                new FracturedBedrockBlock(),
+                new DepletedBedrockBlock(),
+                scrollRolled,
+                new WallScrollBlock(),
+                new OpenScrollBlock()
         };
 
         items = new Item[] {
@@ -175,13 +238,23 @@ public class TetraMod {
                 new ItemMesh(),
                 new ItemQuickLatch(),
                 new ItemMetalScrap(),
-                new ItemVentPlate(),
-                new ItemJournal(),
-                new EarthpiercerItem()
+                new InsulatedPlateItem(),
+                new CombustionChamberItem(),
+                new PlanarStabilizerItem(),
+                new LubricantDispenser(),
+                new ModularHolosphereItem(),
+                new EarthpiercerItem(),
+                new DragonSinewItem(),
+                new ScrollItem(scrollRolled)
+//                new ReverberatingPearlItem()
         };
 
         if (ConfigHandler.enableBow.get()) {
             items = ArrayUtils.addAll(items, new ModularBowItem());
+        }
+
+        if (ConfigHandler.enableCrossbow.get()) {
+            items = ArrayUtils.addAll(items, new ModularCrossbowItem());
         }
 
         if (ConfigHandler.enableSingle.get()) {
@@ -215,7 +288,7 @@ public class TetraMod {
                         .map(block -> (ITetraBlock) block).toArray(ITetraBlock[]::new));
 
 
-        PacketHandler packetHandler = new PacketHandler();
+        packetHandler = new PacketHandler(MOD_ID, "main");
 
         Arrays.stream(items)
                 .filter(item -> item instanceof ITetraItem)
@@ -230,13 +303,22 @@ public class TetraMod {
         packetHandler.registerPacket(SettlePacket.class, SettlePacket::new);
         packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
         packetHandler.registerPacket(SecondaryAbilityPacket.class, SecondaryAbilityPacket::new);
+        packetHandler.registerPacket(ChargedAbilityPacket.class, ChargedAbilityPacket::new);
+        packetHandler.registerPacket(TruesweepPacket.class, TruesweepPacket::new);
+        packetHandler.registerPacket(HowlingPacket.class, HowlingPacket::new);
+        packetHandler.registerPacket(ProjectileMotionPacket.class, ProjectileMotionPacket::new);
+        packetHandler.registerPacket(AddRevengePacket.class, AddRevengePacket::new);
+        packetHandler.registerPacket(RemoveRevengePacket.class, RemoveRevengePacket::new);
+        packetHandler.registerPacket(LungeEchoPacket.class, LungeEchoPacket::new);
 
         WorkbenchTile.init(packetHandler);
 
         proxy.postInit();
 
         DestabilizationEffect.init();
-        SchemaRegistry.instance.registerSchema(new CleanseSchema());
+        SchematicRegistry.instance.registerSchematic(new CleanseSchematic());
+
+        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(MOD_ID, FeatureEntry.key), FeatureEntry.configuredInstance);
     }
 
     @SubscribeEvent
@@ -246,8 +328,8 @@ public class TetraMod {
 
     @SubscribeEvent
     public void serverStarting(FMLServerStartingEvent event) {
-        ModuleDevCommand.register(event.getCommandDispatcher());
-        TGenCommand.register(event.getCommandDispatcher());
+        ModuleDevCommand.register(event.getServer().getCommandManager().getDispatcher());
+        TGenCommand.register(event.getServer().getCommandManager().getDispatcher());
     }
 
     @SubscribeEvent
@@ -261,8 +343,16 @@ public class TetraMod {
                     .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
                     .forEach(event::addSprite);
 
-            event.addSprite(ForgedContainerTESR.material.getTextureLocation());
+            event.addSprite(ForgedContainerRenderer.material.getTextureLocation());
+            event.addSprite(HammerBaseRenderer.material.getTextureLocation());
+            event.addSprite(ScrollRenderer.material.getTextureLocation());
         }
+    }
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void modelRegistryReady(ModelRegistryEvent event) {
+        ModelLoaderRegistry.registerLoader(new ResourceLocation(TetraMod.MOD_ID, "modular_loader"), new ModularModelLoader());
     }
 
     @SubscribeEvent
@@ -275,18 +365,49 @@ public class TetraMod {
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void onBiomeLoading(BiomeLoadingEvent event) {
+        GeodeBlock.registerFeature(event.getGeneration());
+
+        if (ConfigHandler.generateFeatures.get()) {
+            FeatureEntry.instance.registerFeatures(event);
+        }
+    }
+
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
         public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
-            event.getRegistry().register(new FeatureEntry());
+            event.getRegistry().register(FeatureEntry.instance);
+        }
+
+        @SubscribeEvent
+        public static void registerModifierSerializers(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
+            event.getRegistry().register(new ReplaceTableModifier.Serializer().setRegistryName(new ResourceLocation(MOD_ID,"replace_table")));
+        }
+
+        @SubscribeEvent
+        public static void registerRecipeSerializers(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
+            CraftingHelper.register(new ResourceLocation(MOD_ID, "scroll"), ScrollIngredient.Serializer.INSTANCE);
         }
 
         @SubscribeEvent
         public static void registerEffects(final RegistryEvent.Register<Effect> event) {
-            event.getRegistry().register(new BleedingEffect());
-            event.getRegistry().register(new EarthboundEffect());
-            event.getRegistry().register(new StunEffect());
+            event.getRegistry().register(new BleedingPotionEffect());
+            event.getRegistry().register(new EarthboundPotionEffect());
+            event.getRegistry().register(new StunPotionEffect());
+            event.getRegistry().register(new HowlingPotionEffect());
+            event.getRegistry().register(new SeveredPotionEffect());
+            event.getRegistry().register(new PuncturedPotionEffect());
+            event.getRegistry().register(new PriedPotionEffect());
+            event.getRegistry().register(new ExhaustedPotionEffect());
+            event.getRegistry().register(new SteeledPotionEffect());
+            event.getRegistry().register(new SmallStrengthPotionEffect());
+            event.getRegistry().register(new UnwaveringPotionEffect());
+            event.getRegistry().register(new SmallHealthPotionEffect());
+            event.getRegistry().register(new SmallAbsorbPotionEffect());
+            event.getRegistry().register(new SuspendPotionEffect());
+//            event.getRegistry().register(new MiningSpeedPotionEffect());
         }
 
         @SubscribeEvent
@@ -358,6 +479,23 @@ public class TetraMod {
             event.getRegistry().register(TileEntityType.Builder.create(ForgedContainerTile::new, ForgedContainerBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(ChthonicExtractorTile::new, ChthonicExtractorBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, ChthonicExtractorBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(FracturedBedrockTile::new, FracturedBedrockBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, FracturedBedrockBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(RackTile::new, RackBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, RackBlock.unlocalizedName));
+
+            event.getRegistry().register(TileEntityType.Builder.create(ScrollTile::new,
+                    OpenScrollBlock.instance, WallScrollBlock.instance, RolledScrollBlock.instance)
+                    .build(null)
+                    .setRegistryName(MOD_ID, ScrollTile.unlocalizedName));
         }
 
         @SubscribeEvent
@@ -368,6 +506,14 @@ public class TetraMod {
                             .size(0.5F, 0.5F)
                             .build(ThrownModularItemEntity.unlocalizedName)
                             .setRegistryName(MOD_ID, ThrownModularItemEntity.unlocalizedName)
+            );
+
+            event.getRegistry().registerAll(
+                    EntityType.Builder.<ExtractorProjectileEntity>create(ExtractorProjectileEntity::new, EntityClassification.MISC)
+                            .setCustomClientFactory(ExtractorProjectileEntity::new)
+                            .size(0.5F, 0.5F)
+                            .build(ExtractorProjectileEntity.unlocalizedName)
+                            .setRegistryName(MOD_ID, ExtractorProjectileEntity.unlocalizedName)
             );
         }
     }

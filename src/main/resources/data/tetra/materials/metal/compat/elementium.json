@@ -1,0 +1,34 @@
+{
+    "conditions": [{
+        "type": "forge:mod_loaded",
+        "modid": "botania"
+    }],
+    "key": "elementium",
+    "category": "metal",
+    "primary": "5",
+    "secondary": "4",
+    "tertiary": "2",
+    "durability": "720",
+    "integrityCost": "2",
+    "integrityGain": "5",
+    "magicCapacity": "120",
+    "toolLevel": "4",
+    "toolEfficiency": "6.2",
+    "tints": {
+        "glyph": "f279bc",
+        "texture": "f2357e"
+    },
+    "textures": [
+        "shiny",
+        "metal"
+    ],
+    "material": {
+        "item": "botania:elementium_ingot"
+    },
+    "improvements": {
+        "mana_repair": 3
+    },
+    "requiredTools": {
+        "hammer": 3
+    }
+}

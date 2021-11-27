@@ -1,8 +1,6 @@
 {
     "replace": true,
-    "slots": [
-        "bow/string"
-    ],
+    "slots": ["bow/string"],
     "type": "tetra:basic_major_module",
     "improvements": [
         "tetra:enchantment/infinity",
@@ -23,170 +21,50 @@
         "tetra:enchantment/cursed_misfortune",
         "tetra:enchantment/cursed_fading",
         "tetra:enchantment/cursed_obedience",
-        "tetra:bow/string/shared",
-        "tetra:bow/string/shared_hone",
-        "tetra:destabilization_improvements"
+        "tetra:bow/basic_string/",
+        "tetra:bow/shared_string/",
+        "tetra:bow/shared/",
+        "tetra:shared/"
     ],
     "variants": [
         {
-            "key": "basic_string/string",
-            "durability": 150,
-            "integrity": 2,
-            "magicCapacity": 90,
-            "glyph": {
-                "tint": "string_glyph",
-                "textureX": 112,
-                "textureY": 32
+            "materials": ["tetra:fibre/", "tetra:skin/"],
+            "key": "basic_string/",
+            "integrity": 1,
+            "durability": 70,
+            "attributes": {
+                "tetra:draw_speed": -0.05
             },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/string/basic/default",
-                    "tint": "string"
+            "extract": {
+                "secondaryAttributes": {
+                    "tetra:draw_speed": 0.07
                 },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/string/basic/default_0",
-                    "tint": "string"
+                "durability": 0.5,
+                "integrity": 1,
+                "magicCapacity": 1,
+                "glyph": {
+                    "textureX": 112,
+                    "textureY": 32
                 },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/string/basic/default_1",
-                    "tint": "string"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/string/basic/default_2",
-                    "tint": "string"
-                }
-            ]
-        },
-        {
-            "key": "basic_string/vine",
-            "durability": 162,
-            "integrity": 4,
-            "magicCapacity": 66,
-            "glyph": {
-                "tint": "vine_glyph",
-                "textureX": 112,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/string/basic/default",
-                    "tint": "vine"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/string/basic/default_0",
-                    "tint": "vine"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/string/basic/default_1",
-                    "tint": "vine"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/string/basic/default_2",
-                    "tint": "vine"
-                }
-            ]
-        },
-        {
-            "key": "basic_string/hide",
-            "durability": -30,
-            "integrity": 5,
-            "magicCapacity": 66,
-            "glyph": {
-                "tint": "hide_glyph",
-                "textureX": 112,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/string/basic/default",
-                    "tint": "hide"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/string/basic/default_0",
-                    "tint": "hide"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/string/basic/default_1",
-                    "tint": "hide"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/string/basic/default_2",
-                    "tint": "hide"
-                }
-            ]
-        },
-        {
-            "key": "basic_string/leather",
-            "durability": 180,
-            "integrity": 5,
-            "magicCapacity": 72,
-            "glyph": {
-                "tint": "leather_glyph",
-                "textureX": 112,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/string/basic/default",
-                    "tint": "leather"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/string/basic/default_0",
-                    "tint": "leather"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/string/basic/default_1",
-                    "tint": "leather"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/string/basic/default_2",
-                    "tint": "leather"
-                }
-            ]
-        },
-        {
-            "key": "basic_string/phantom",
-            "durability": 120,
-            "integrity": 6,
-            "magicCapacity": 66,
-            "glyph": {
-                "tint": "phantom_glyph",
-                "textureX": 112,
-                "textureY": 32
-            },
-            "models": [
-                {
-                    "location": "tetra:items/module/bow/string/basic/default",
-                    "tint": "phantom"
-                },
-                {
-                    "type": "draw_0",
-                    "location": "tetra:items/module/bow/string/basic/default_0",
-                    "tint": "phantom"
-                },
-                {
-                    "type": "draw_1",
-                    "location": "tetra:items/module/bow/string/basic/default_1",
-                    "tint": "phantom"
-                },
-                {
-                    "type": "draw_2",
-                    "location": "tetra:items/module/bow/string/basic/default_2",
-                    "tint": "phantom"
-                }
-            ]
+                "availableTextures": ["default"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/bow/string/basic/"
+                    },
+                    {
+                        "type": "draw_0",
+                        "location": "tetra:items/module/bow/string/basic/0_"
+                    },
+                    {
+                        "type": "draw_1",
+                        "location": "tetra:items/module/bow/string/basic/1_"
+                    },
+                    {
+                        "type": "draw_2",
+                        "location": "tetra:items/module/bow/string/basic/2_"
+                    }
+                ]
+            }
         }
     ]
 }

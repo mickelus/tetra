@@ -2,23 +2,30 @@ package se.mickelus.tetra.module;
 
 import java.util.*;
 
+import com.google.common.collect.Multimap;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.ToolType;
+import org.apache.commons.lang3.StringUtils;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.NBTHelper;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.capabilities.ICapabilityProvider;
-import se.mickelus.tetra.module.data.ModuleVariantData;
-import se.mickelus.tetra.module.data.ModuleModel;
-import se.mickelus.tetra.module.data.TweakData;
-import se.mickelus.tetra.module.schema.RepairDefinition;
+import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.module.data.*;
+import se.mickelus.tetra.properties.AttributeHelper;
+import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.tetra.properties.IToolProvider;
+import se.mickelus.tetra.module.schematic.RepairDefinition;
 
-public abstract class ItemModule implements ICapabilityProvider {
+public abstract class ItemModule implements IToolProvider {
 
-    protected ModuleVariantData[] variantData = new ModuleVariantData[0];
+    protected VariantData[] variantData = new VariantData[0];
 
     protected TweakData[] tweaks = new TweakData[0];
 
@@ -27,6 +34,8 @@ public abstract class ItemModule implements ICapabilityProvider {
     protected final String variantTagKey;
 
     protected Priority renderLayer = Priority.BASE;
+
+    public static final float repairLevelFactor = 10;
 
     public ItemModule(String slotKey, String moduleKey) {
         this.slotTagKey = slotKey;
@@ -47,14 +56,14 @@ public abstract class ItemModule implements ICapabilityProvider {
     }
 
     public void addModule(ItemStack targetStack, String variantKey, PlayerEntity player) {
-        CompoundNBT tag = NBTHelper.getTag(targetStack);
+        CompoundNBT tag = targetStack.getOrCreateTag();
 
         tag.putString(slotTagKey, moduleKey);
         tag.putString(this.variantTagKey, variantKey);
     }
 
     public ItemStack[] removeModule(ItemStack targetStack) {
-        CompoundNBT tag = NBTHelper.getTag(targetStack);
+        CompoundNBT tag = targetStack.getOrCreateTag();
 
         tag.remove(slotTagKey);
         tag.remove(variantTagKey);
@@ -64,29 +73,54 @@ public abstract class ItemModule implements ICapabilityProvider {
 
     public void postRemove(ItemStack targetStack, PlayerEntity player) { }
 
-    public ModuleVariantData[] getVariantData() {
+    public VariantData[] getVariantData() {
         return variantData;
     }
 
-    public ModuleVariantData getVariantData(ItemStack itemStack) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-        String variantKey = tag.getString(variantTagKey);
-
-        return getVariantData(variantKey);
+    public VariantData getVariantData(ItemStack itemStack) {
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.getString(variantTagKey))
+                .map(key -> getVariantData(key))
+                .orElseGet(this::getDefaultData);
     }
 
-    public ModuleVariantData getVariantData(String variantKey) {
+    public VariantData getVariantData(String variantKey) {
         return Arrays.stream(variantData)
                 .filter(moduleData -> moduleData.key.equals(variantKey))
-                .findAny().orElseGet(this::getDefaultData);
+                .findAny()
+                .orElseGet(this::getDefaultData);
     }
 
-    public ModuleVariantData getDefaultData() {
-        return variantData.length > 0 ? variantData[0] : new ModuleVariantData();
+    public ItemProperties getProperties(ItemStack itemStack) {
+        // merging identity here to flip integrity usage over, so that usage/available accumulates properly
+        return Arrays.stream(getTweaks(itemStack))
+                .map(tweak -> tweak.getProperties(getTweakStep(itemStack, tweak)))
+                .reduce(ItemProperties.merge(new ItemProperties(), getVariantData(itemStack)), ItemProperties::merge);
+    }
+
+    public VariantData getDefaultData() {
+        return variantData.length > 0 ? variantData[0] : new VariantData();
+    }
+
+    public static String getName(String moduleKey, String variantKey) {
+        if (I18n.hasKey("tetra.variant." + variantKey)) {
+            return I18n.format("tetra.variant." + variantKey);
+        }
+
+        if (I18n.hasKey("tetra.module." + moduleKey + ".material_name")) {
+            String variant = variantKey.substring(variantKey.indexOf('/') + 1);
+            if (I18n.hasKey("tetra.material." + variant + ".prefix")) {
+                return StringUtils.capitalize(I18n.format("tetra.module." + moduleKey + ".material_name",
+                        I18n.format("tetra.material." + variant + ".prefix")).toLowerCase());
+            }
+        }
+
+        return I18n.format("tetra.variant." + variantKey);
     }
 
     public String getName(ItemStack itemStack) {
-        return I18n.format("tetra.variant." + getVariantData(itemStack).key);
+        String key = getVariantData(itemStack).key;
+        return getName(getUnlocalizedName(), key);
     }
 
     public String getDescription(ItemStack itemStack) {
@@ -116,14 +150,24 @@ public abstract class ItemModule implements ICapabilityProvider {
     }
 
     public String getItemPrefix(ItemStack itemStack) {
-        String variantPrefixKey = "tetra.variant." + getVariantData(itemStack).key + ".prefix";
+        String key = getVariantData(itemStack).key;
+        String variantPrefixKey = "tetra.variant." + key + ".prefix";
         if (I18n.hasKey(variantPrefixKey)) {
             return I18n.format(variantPrefixKey);
         }
 
         String modulePrefixKey = "tetra.module." + getUnlocalizedName() + ".prefix";
         if (I18n.hasKey(modulePrefixKey)) {
-            return I18n.format(modulePrefixKey);
+            String prefix = I18n.format(modulePrefixKey);
+
+            // for when module should derive the prefix from the material, slight hack
+            if (prefix.startsWith("Format error:")) {
+                String variant = key.substring(key.indexOf('/') + 1);
+                return StringUtils.capitalize(
+                        I18n.format(modulePrefixKey, I18n.format("tetra.material." + variant + ".prefix").toLowerCase()));
+            }
+
+            return prefix;
         }
         return null;
     }
@@ -141,11 +185,7 @@ public abstract class ItemModule implements ICapabilityProvider {
      * @return Integrity gained from this module, excluding internal costs
      */
     public int getIntegrityGain(ItemStack itemStack) {
-        int integrity = getVariantData(itemStack).integrity;
-        if (integrity > 0 ) {
-            return integrity;
-        }
-        return 0;
+        return Math.max(getProperties(itemStack).integrity, 0);
     }
 
     /**
@@ -156,11 +196,7 @@ public abstract class ItemModule implements ICapabilityProvider {
      * @return Integrity cost of this module, excluding internal gains
      */
     public int getIntegrityCost(ItemStack itemStack) {
-        int integrity = getVariantData(itemStack).integrity;
-        if (integrity < 0 ) {
-            return integrity;
-        }
-        return 0;
+        return Math.max(getProperties(itemStack).integrityUsage, 0);
     }
 
     public int getMagicCapacity(ItemStack itemStack) {
@@ -170,7 +206,11 @@ public abstract class ItemModule implements ICapabilityProvider {
     public int getMagicCapacityGain(ItemStack itemStack) {
         int magicCapacity = getVariantData(itemStack).magicCapacity;
         if (magicCapacity > 0 ) {
-            return Math.round(magicCapacity * ConfigHandler.magicCapacityMultiplier.get().floatValue());
+            float stabilityMultiplier = CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                    .map(item -> item.getStabilityModifier(itemStack))
+                    .orElse(1f);
+
+            return Math.round(magicCapacity * ConfigHandler.magicCapacityMultiplier.get().floatValue() * stabilityMultiplier);
         }
         return 0;
     }
@@ -183,16 +223,20 @@ public abstract class ItemModule implements ICapabilityProvider {
         return 0;
     }
 
+    public float getDestabilizationChance(ItemStack itemStack, float probabilityMultiplier) {
+        return getDestabilizationChance(-getMagicCapacity(itemStack), getMagicCapacityGain(itemStack), probabilityMultiplier);
+    }
+
+    public float getDestabilizationChance(int instability, int capacity, float probabilityMultiplier) {
+        return Math.max(probabilityMultiplier *  instability / capacity, 0);
+    }
+
     public int getDurability(ItemStack itemStack) {
-        return Arrays.stream(getTweaks(itemStack))
-                .mapToInt(tweak -> tweak.getDurability(getTweakStep(itemStack, tweak)))
-                .sum() + getVariantData(itemStack).durability;
+        return getProperties(itemStack).durability;
     }
 
     public float getDurabilityMultiplier(ItemStack itemStack) {
-        return Arrays.stream(getTweaks(itemStack))
-                .map(tweak -> tweak.getDurabilityMultiplier(getTweakStep(itemStack, tweak)))
-                .reduce(getVariantData(itemStack).durabilityMultiplier, (a, b) -> a * b);
+        return getProperties(itemStack).durabilityMultiplier;
     }
 
     public Collection<RepairDefinition> getRepairDefinitions(ItemStack itemStack) {
@@ -201,35 +245,56 @@ public abstract class ItemModule implements ICapabilityProvider {
 
     public RepairDefinition getRepairDefinition(ItemStack itemStack, ItemStack materialStack) {
         return RepairRegistry.instance.getDefinitions(getVariantData(itemStack).key).stream()
-                .filter(definition -> definition.material.predicate.test(materialStack))
+                .filter(definition -> definition.material.isValid())
+                .filter(definition -> definition.material.getPredicate().test(materialStack))
                 .findFirst()
                 .orElse(null);
     }
 
-    public Collection<Capability> getRepairRequiredCapabilities(ItemStack itemStack, ItemStack materialStack) {
+    public Collection<ToolType> getRepairRequiredTools(ItemStack itemStack, ItemStack materialStack) {
         return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
-                .map(definition -> definition.requiredCapabilities.getValues())
-                .orElse(Collections.emptySet());
+                .map(definition -> definition.requiredTools.getValues())
+                .orElseGet(Collections::emptySet);
     }
 
-    public int getRepairRequiredCapabilityLevel(ItemStack itemStack, ItemStack materialStack, Capability capability) {
+    public Map<ToolType, Integer> getRepairRequiredToolLevels(ItemStack itemStack, ItemStack materialStack) {
         return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
-                .map(definition -> definition.requiredCapabilities.getLevel(capability))
+                .map(definition -> definition.requiredTools.getLevelMap())
+                .orElseGet(Collections::emptyMap);
+    }
+
+    public int getRepairRequiredToolLevel(ItemStack itemStack, ItemStack materialStack, ToolType tool) {
+        return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
+                .map(definition -> definition.requiredTools.getLevel(tool))
+                .orElse(0);
+    }
+
+    public int getRepairExperienceCost(ItemStack itemStack) {
+        return Optional.of(getDestabilizationChance(itemStack, 1))
+                .map(capacity -> capacity * repairLevelFactor)
+                .map(MathHelper::ceil)
+                .map(capacity -> Math.max(0, capacity))
                 .orElse(0);
     }
 
     public boolean isTweakable(ItemStack itemStack) {
-        String variant = NBTHelper.getTag(itemStack).getString(this.variantTagKey);
-        return Arrays.stream(tweaks)
-                .anyMatch(data -> variant.equals(data.variant));
+        if (itemStack.hasTag()) {
+            String variant = itemStack.getTag().getString(variantTagKey);
+            return Arrays.stream(tweaks)
+                    .anyMatch(data -> variant.equals(data.variant));
+        }
+
+        return false;
     }
 
     public TweakData[] getTweaks(ItemStack itemStack) {
-        CompoundNBT tag = NBTHelper.getTag(itemStack);
-        String variant = tag.getString(this.variantTagKey);
-        return Arrays.stream(tweaks)
-                .filter(tweak -> variant.equals(tweak.variant))
-                .toArray(TweakData[]::new);
+        if (itemStack.hasTag()) {
+            String variant = itemStack.getTag().getString(variantTagKey);
+            return Arrays.stream(tweaks)
+                    .filter(tweak -> variant.equals(tweak.variant))
+                    .toArray(TweakData[]::new);
+        }
+        return new TweakData[0];
     }
 
     public boolean hasTweak(ItemStack itemStack, String tweakKey) {
@@ -239,41 +304,56 @@ public abstract class ItemModule implements ICapabilityProvider {
     }
 
     public int getTweakStep(ItemStack itemStack, TweakData tweak) {
-        return Math.max(Math.min(NBTHelper.getTag(itemStack).getInt(slotTagKey + ":" + tweak.key), tweak.steps), -tweak.steps);
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.getInt(slotTagKey + ":" + tweak.key))
+                .map(step -> MathHelper.clamp(step, -tweak.steps,  tweak.steps))
+                .orElse(0);
     }
 
     public void setTweakStep(ItemStack itemStack, String tweakKey, int step) {
-        NBTHelper.getTag(itemStack).putInt(slotTagKey + ":" + tweakKey, step);
+        itemStack.getOrCreateTag().putInt(slotTagKey + ":" + tweakKey, step);
+    }
+
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack itemStack) {
+        return Arrays.stream(getTweaks(itemStack))
+                .map(tweak -> tweak.getAttributeModifiers(getTweakStep(itemStack, tweak)))
+                .filter(Objects::nonNull)
+                .reduce(getVariantData(itemStack).attributes, AttributeHelper::merge);
     }
 
     public double getDamageModifier(ItemStack itemStack) {
-        return Arrays.stream(getTweaks(itemStack))
-                .mapToDouble(tweak -> tweak.getDamage(getTweakStep(itemStack, tweak)))
-                .sum() + getVariantData(itemStack).damage;
+        return Optional.ofNullable(getAttributeModifiers(itemStack))
+                .map(modifiers -> modifiers.get(Attributes.ATTACK_DAMAGE))
+                .map(AttributeHelper::getAdditionAmount)
+                .orElse(0d);
     }
 
     public double getDamageMultiplierModifier(ItemStack itemStack) {
-        return Arrays.stream(getTweaks(itemStack))
-                .map(tweak -> tweak.getDamageMultiplier(getTweakStep(itemStack, tweak)))
-                .reduce(getVariantData(itemStack).damageMultiplier, (a, b) -> a * b);
+        return Optional.ofNullable(getAttributeModifiers(itemStack))
+                .map(modifiers -> modifiers.get(Attributes.ATTACK_DAMAGE))
+                .map(AttributeHelper::getMultiplyAmount)
+                .orElse(1d);
     }
 
     public double getSpeedModifier(ItemStack itemStack) {
-        return Arrays.stream(getTweaks(itemStack))
-                .mapToDouble(tweak -> tweak.getAttackSpeed(getTweakStep(itemStack, tweak)))
-                .sum() + getVariantData(itemStack).attackSpeed;
+        return Optional.ofNullable(getAttributeModifiers(itemStack))
+                .map(modifiers -> modifiers.get(Attributes.ATTACK_SPEED))
+                .map(AttributeHelper::getAdditionAmount)
+                .orElse(0d);
     }
 
     public double getSpeedMultiplierModifier(ItemStack itemStack) {
-        return Arrays.stream(getTweaks(itemStack))
-                .map(tweak -> tweak.getAttackSpeedMultiplier(getTweakStep(itemStack, tweak)))
-                .reduce(getVariantData(itemStack).attackSpeedMultiplier, (a, b) -> a * b);
+        return Optional.ofNullable(getAttributeModifiers(itemStack))
+                .map(modifiers -> modifiers.get(Attributes.ATTACK_SPEED))
+                .map(AttributeHelper::getMultiplyAmount)
+                .orElse(1d);
     }
 
     public double getRangeModifier(ItemStack itemStack) {
-        return Arrays.stream(getTweaks(itemStack))
-                .mapToDouble(tweak -> tweak.getRange(getTweakStep(itemStack, tweak)))
-                .sum() + getVariantData(itemStack).range;
+        return Optional.ofNullable(getAttributeModifiers(itemStack))
+                .map(modifiers -> modifiers.get(ForgeMod.REACH_DISTANCE.get()))
+                .map(AttributeHelper::getAdditionAmount)
+                .orElse(0d);
     }
 
     public ModuleModel[] getModels(ItemStack itemStack) {
@@ -284,36 +364,68 @@ public abstract class ItemModule implements ICapabilityProvider {
         return renderLayer;
     }
 
-    public void hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {}
-
     public int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
-        return getVariantData(itemStack).effects.getLevel(effect);
+        return Optional.ofNullable(getEffectData(itemStack))
+                .map(data -> data.getLevel(effect))
+                .orElse(0);
     }
 
     public float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
-        return (float) Arrays.stream(getTweaks(itemStack))
-                .mapToDouble(tweak -> tweak.getEffectEfficiency(effect, getTweakStep(itemStack, tweak)))
-                .sum() + getVariantData(itemStack).effects.getEfficiency(effect);
+        return Optional.ofNullable(getEffectData(itemStack))
+                .map(data -> data.getEfficiency(effect))
+                .orElse(0f);
     }
 
     public Collection<ItemEffect> getEffects(ItemStack itemStack) {
-        return getVariantData(itemStack).effects.getValues();
+        return Optional.ofNullable(getEffectData(itemStack))
+                .map(TierData::getValues)
+                .orElseGet(Collections::emptySet);
+    }
+
+    public EffectData getEffectData(ItemStack itemStack) {
+        return Arrays.stream(getTweaks(itemStack))
+                .map(tweak -> tweak.getEffectData(getTweakStep(itemStack, tweak)))
+                .filter(Objects::nonNull)
+                .reduce(getVariantData(itemStack).effects, EffectData::merge);
     }
 
     @Override
-    public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
-        return getVariantData(itemStack).capabilities.getLevel(capability);
+    public boolean canProvideTools(ItemStack itemStack) {
+        return true;
     }
 
     @Override
-    public float getCapabilityEfficiency(ItemStack itemStack, Capability capability) {
-        return (float) Arrays.stream(getTweaks(itemStack))
-                .mapToDouble(tweak -> tweak.getCapabilityEfficiency(capability, getTweakStep(itemStack, tweak)))
-                .sum() + getVariantData(itemStack).capabilities.getEfficiency(capability);
+    public int getToolLevel(ItemStack itemStack, ToolType tool) {
+        return Optional.ofNullable(getToolData(itemStack))
+                .map(data -> data.getLevel(tool))
+                .orElse(0);
     }
 
     @Override
-    public Set<Capability> getCapabilities(ItemStack itemStack) {
-        return getVariantData(itemStack).capabilities.getValues();
+    public float getToolEfficiency(ItemStack itemStack, ToolType tool) {
+        return Optional.ofNullable(getToolData(itemStack))
+                .map(data -> data.getEfficiency(tool))
+                .orElse(0f);
+    }
+
+    @Override
+    public Set<ToolType> getTools(ItemStack itemStack) {
+        return Optional.ofNullable(getToolData(itemStack))
+                .map(TierData::getValues)
+                .orElseGet(Collections::emptySet);
+    }
+
+    @Override
+    public Map<ToolType, Integer> getToolLevels(ItemStack itemStack) {
+        return Optional.ofNullable(getToolData(itemStack))
+                .map(TierData::getLevelMap)
+                .orElseGet(Collections::emptyMap);
+    }
+
+    public ToolData getToolData(ItemStack itemStack) {
+        return Arrays.stream(getTweaks(itemStack))
+                .map(tweak -> tweak.getToolData(getTweakStep(itemStack, tweak)))
+                .filter(Objects::nonNull)
+                .reduce(getVariantData(itemStack).tools, ToolData::merge);
     }
 }

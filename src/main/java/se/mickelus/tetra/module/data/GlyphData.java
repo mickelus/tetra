@@ -5,7 +5,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
 
 /**
- * Used to describe glyphs for modules and schemas in the UI.
+ * Used to describe glyphs for modules and schematics in the UI.
  *
  * Example json:
  * {
@@ -46,16 +46,19 @@ public class GlyphData {
         this.textureY = textureY;
     }
 
-    public GlyphData(String texture, int textureX, int textureY) {
-        textureLocation = new ResourceLocation(TetraMod.MOD_ID, texture);
-        this.textureX = textureX;
-        this.textureY = textureY;
-    }
-
     public GlyphData(ResourceLocation textureLocation, int textureX, int textureY) {
         this.textureLocation = textureLocation;
         this.textureX = textureX;
         this.textureY = textureY;
+    }
+
+    public GlyphData(String texture, int textureX, int textureY) {
+        this(new ResourceLocation(TetraMod.MOD_ID, texture), textureX, textureY);
+    }
+
+    public GlyphData(ResourceLocation textureLocation, int textureX, int textureY, int tint) {
+        this(textureLocation, textureX, textureY);
+        this.tint = tint;
     }
 
     @Override

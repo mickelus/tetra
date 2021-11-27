@@ -31,7 +31,7 @@ public class GuiSliderSegmented extends GuiClickable {
         addChild(new GuiRect(1, 4, 1, 3, GuiColors.muted).setAttachment(GuiAttachment.topRight));
 
         for (int i = 0; i < valueSteps; i++) {
-            if ((i - valueSteps - 1) % 3 == 0) {
+            if (((valueSteps - 1) / 2 - i) % 3 == 0) {
                 addChild(new GuiRect(i * width / (valueSteps - 1) - 1, 7, 3, 1, 0));
                 addChild(new GuiRect(i * width / (valueSteps - 1), 4, 1, 4, GuiColors.muted));
             } else {
@@ -65,8 +65,8 @@ public class GuiSliderSegmented extends GuiClickable {
     }
 
     @Override
-    public boolean onClick(int x, int y) {
-        if (super.onClick(x, y)) {
+    public boolean onMouseClick(int x, int y, int button) {
+        if (super.onMouseClick(x, y, button)) {
             isDragging = true;
             return true;
         }
@@ -74,7 +74,7 @@ public class GuiSliderSegmented extends GuiClickable {
     }
 
     @Override
-    public void mouseReleased(int x, int y) {
+    public void onMouseRelease(int x, int y, int button) {
         isDragging = false;
     }
 

@@ -1,0 +1,75 @@
+[
+    {
+        "modules": ["double/hoe_left"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "name": "double/guisarme",
+        "effects": {
+            "overpower": [130, 30]
+        }
+    },
+    {
+        "modules": ["double/hoe_left", "double/adze_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityDefensive": [59, 30]
+        }
+    },
+    {
+        "modules": ["double/hoe_left", "double/basic_axe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOvercharge": [15, 1]
+        }
+    },
+    {
+        "modules": ["double/hoe_left", "double/basic_hammer_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityMomentum": [30, 0.07]
+        }
+    },
+    {
+        "modules": ["double/hoe_left", "double/basic_pickaxe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityCombo": [8, 15]
+        }
+    },
+    {
+        "modules": ["double/hoe_left", "double/claw_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityRevenge": 15
+        }
+    },
+    {
+        "modules": ["double/hoe_left", "double/hoe_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityOverextend": 1
+        }
+    },
+    {
+        "modules": ["double/hoe_left", "double/sickle_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityExhilaration": 1
+        }
+    },
+    {
+        "modules": ["double/hoe_left", "double/extractor_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityEcho": 60
+        }
+    }
+]

@@ -1,9 +1,8 @@
 package se.mickelus.tetra.items.cell;
 
-import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -16,6 +15,9 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
@@ -36,8 +38,11 @@ public class ItemCellMagmatic extends TetraItem {
                 .group(TetraItemGroup.instance));
 
         setRegistryName(unlocalizedName);
+    }
 
-        this.addPropertyOverride(new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity) -> getCharge(itemStack) > 0 ? 1 : 0);
+    @Override
+    public void clientInit() {
+        ItemModelsProperties.registerProperty(this, new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity) -> getCharge(itemStack) > 0 ? 1 : 0);
     }
 
     @Override
@@ -47,17 +52,17 @@ public class ItemCellMagmatic extends TetraItem {
         TextComponent chargeLine = new TranslationTextComponent("item.tetra.magmatic_cell.charge");
 
         if (charge == maxCharge) {
-            chargeLine.appendSibling(new TranslationTextComponent("item.tetra.magmatic_cell.charge_full"));
+            chargeLine.append(new TranslationTextComponent("item.tetra.magmatic_cell.charge_full"));
         } else if (charge > maxCharge * 0.4) {
-            chargeLine.appendSibling(new TranslationTextComponent("item.tetra.magmatic_cell.charge_good"));
+            chargeLine.append(new TranslationTextComponent("item.tetra.magmatic_cell.charge_good"));
         } else if (charge > 0) {
-            chargeLine.appendSibling(new TranslationTextComponent("item.tetra.magmatic_cell.charge_low"));
+            chargeLine.append(new TranslationTextComponent("item.tetra.magmatic_cell.charge_low"));
         } else {
-            chargeLine.appendSibling(new TranslationTextComponent("item.tetra.magmatic_cell.charge_empty"));
+            chargeLine.append(new TranslationTextComponent("item.tetra.magmatic_cell.charge_empty"));
         }
 
         tooltip.add(chargeLine);
-        tooltip.add(new StringTextComponent(""));
+        tooltip.add(new StringTextComponent(" "));
         tooltip.add(locationTooltip);
     }
 

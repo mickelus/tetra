@@ -1,0 +1,23 @@
+{
+    "replace": true,
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "keySuffixes": [
+        "_left",
+        "_right"
+    ],
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureY": 32
+    },
+    "displayType": "major",
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "moduleKey": "double/adze",
+            "moduleVariant": "adze/"
+        }
+    ]
+}

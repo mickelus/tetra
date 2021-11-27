@@ -3,10 +3,12 @@
         "variant": "single_binding/bolt",
         "key": "single_tweak/binding_bolt",
         "steps": 10,
-        "stepStats": {
+        "properties": {
             "durabilityMultiplier": 0.952,
-            "damageMultiplier": 1.03,
-            "capabilities": {
+            "attributes": {
+                "**generic.attack_damage": 0.03
+            },
+            "tools": {
                 "axe": [0, 0.93],
                 "pickaxe": [0, 0.93],
                 "shovel": [0, 0.93],

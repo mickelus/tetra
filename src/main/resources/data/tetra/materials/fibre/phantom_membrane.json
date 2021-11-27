@@ -1,0 +1,27 @@
+{
+    "key": "phantom_membrane",
+    "category": "fibre",
+    "primary": "5",
+    "secondary": "1.4",
+    "tertiary": "3",
+    "durability": "1150",
+    "integrityCost": "2",
+    "integrityGain": "6",
+    "magicCapacity": "84",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
+    "tints": {
+        "glyph": "phantom_glyph",
+        "texture": "phantom"
+    },
+    "textures": [
+        "metal",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:phantom_membrane"
+    },
+    "requiredTools": {
+        "cut": 1
+    }
+}

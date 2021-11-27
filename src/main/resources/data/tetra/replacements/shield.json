@@ -5,12 +5,12 @@
         },
         "item": "tetra:modular_shield",
         "modules": {
-            "shield/plate": ["shield/tower", "tower/wooden"],
+            "shield/plate": ["shield/tower", "tower/oak"],
             "shield/grip": ["shield/basic_grip", "basic_grip/iron"]
         },
         "improvements": {
-            "shield/plate:shield/studs_iron": 0,
-            "shield/plate:shield/trim_iron": 0
+            "shield/plate:shield/studs/iron": 0,
+            "shield/plate:shield/trim/iron": 0
         }
     }
 ]

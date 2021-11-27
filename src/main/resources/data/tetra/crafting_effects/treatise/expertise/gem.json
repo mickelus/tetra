@@ -1,0 +1,28 @@
+{
+    "replace": true,
+    "requirements": [
+        {
+            "type": "tetra:locked",
+            "key": "tetra:gem_expertise"
+        },
+        {
+            "type": "tetra:craft_type",
+            "craft": "module"
+        },
+        {
+            "type": "tetra:material",
+            "material": {
+                "type": "tetra:material",
+                "category": "gem"
+            }
+        }
+    ],
+    "outcomes": [
+        {
+            "type": "tetra:apply_improvements",
+            "improvements": {
+                "quality": 1
+            }
+        }
+    ]
+}

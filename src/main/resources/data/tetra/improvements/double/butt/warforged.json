@@ -1,0 +1,13 @@
+[
+    {
+        "key": "double/warforged",
+        "integrity": -2,
+        "attributes": {
+            "**generic.attack_speed": 0.7
+        },
+        "models": [{
+            "location": "tetra:items/module/double/head/butt/warforged",
+            "tint": "inherit"
+        }]
+    }
+]

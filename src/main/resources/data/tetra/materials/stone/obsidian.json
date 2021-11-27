@@ -1,0 +1,31 @@
+{
+    "key": "obsidian",
+    "category": "stone",
+    "primary": "6",
+    "secondary": "5.5",
+    "tertiary": "0",
+    "durability": "580",
+    "integrityCost": "3",
+    "integrityGain": "1",
+    "magicCapacity": "90",
+    "toolLevel": "4",
+    "toolEfficiency": "9",
+    "tints": {
+        "glyph": "obsidian_glyph",
+        "texture": "obsidian"
+    },
+    "textures": [
+        "grainy",
+        "crude",
+        "default"
+    ],
+    "material": {
+        "tag": "forge:obsidian"
+    },
+    "improvements": {
+        "arrested": 0
+    },
+    "requiredTools": {
+        "hammer": 5
+    }
+}

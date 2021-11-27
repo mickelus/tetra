@@ -1,0 +1,27 @@
+{
+    "key": "cherry",
+    "category": "wood",
+    "primary": "4.5",
+    "secondary": "2",
+    "tertiary": "7.5",
+    "durability": "70",
+    "integrityCost": "2",
+    "integrityGain": "6",
+    "magicCapacity": "72",
+    "toolLevel": "2",
+    "toolEfficiency": "4",
+    "tints": {
+        "glyph": "cherry_glyph",
+        "texture": "cherry"
+    },
+    "textures": [
+        "crude",
+        "wooden"
+    ],
+    "material": {
+        "tag": "forge:planks/cherry"
+    },
+    "requiredTools": {
+        "axe": 3
+    }
+}

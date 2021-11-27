@@ -1,0 +1,62 @@
+[
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["copper_sword", "sword_copper"]
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/copper"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/copper"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/copper"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["copper_shovel", "shovel_copper"]
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/copper"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["copper_pickaxe", "pickaxe_copper"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/copper"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/copper"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["copper_hoe", "hoe_copper"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/copper"],
+            "double/head_right": ["double/butt_right", "butt/copper"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["copper_axe", "axe_copper"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/copper"],
+            "double/head_right": ["double/butt_right", "butt/copper"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    }
+]

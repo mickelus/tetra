@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import se.mickelus.mgui.gui.GuiRoot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
@@ -95,5 +96,24 @@ public class OverlayGuiToolbelt extends GuiRoot {
         }
 
         return -1;
+    }
+
+    public Hand getFocusHand() {
+        Hand quickslotHand = quickslotGroup.getHand();
+        if (quickslotHand != null) {
+            return quickslotHand;
+        }
+
+        Hand potionHand = potionGroup.getHand();
+        if (potionHand != null) {
+            return potionHand;
+        }
+
+        Hand quiverHand = quiverGroup.getHand();
+        if (quiverHand != null) {
+            return quiverHand;
+        }
+
+        return Hand.OFF_HAND;
     }
 }

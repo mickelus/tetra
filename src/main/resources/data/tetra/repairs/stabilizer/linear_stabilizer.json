@@ -1,0 +1,11 @@
+{
+    "material": {
+        "item": "tetra:metal_scrap",
+        "count": 4
+    },
+    "requiredTools": {
+        "hammer": 5
+    },
+    "moduleKey": "bow/stabilizer",
+    "moduleVariant": "stabilizer/linear"
+}

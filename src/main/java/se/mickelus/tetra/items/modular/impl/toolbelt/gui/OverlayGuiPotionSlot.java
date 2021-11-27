@@ -1,25 +1,21 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiTextures;
 
 public class OverlayGuiPotionSlot extends GuiElement {
-
-    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toolbelt-inventory.png");
-
     private ItemStack itemStack;
 
     private int slot;
@@ -51,7 +47,7 @@ public class OverlayGuiPotionSlot extends GuiElement {
             fontRenderer = mc.fontRenderer;
         }
 
-        backdrop  = new GuiTexture(0, 0, 23, 23, 32, 28, texture);
+        backdrop  = new GuiTexture(0, 0, 23, 23, 32, 28, GuiTextures.toolbelt);
         addChild(backdrop);
 
         isVisible = false;

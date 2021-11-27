@@ -1,0 +1,75 @@
+[
+    {
+        "predicate": {
+            "item": "minecraft:diamond_sword"
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/diamond"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/diamond"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/diamond"]
+        },
+        "improvements": {
+            "sword/blade:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:diamond_shovel"
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/diamond"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "single/head:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:diamond_pickaxe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/diamond"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/diamond"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:diamond_hoe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/diamond"],
+            "double/head_right": ["double/butt_right", "butt/diamond"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:diamond_axe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/diamond"],
+            "double/head_right": ["double/butt_right", "butt/diamond"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
+        }
+    }
+]

@@ -6,19 +6,20 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url = 'https://files.minecraftforge.net/maven' }
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+        maven { url = "https://plugins.gradle.org/m2/" }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
-apply plugin: 'net.minecraftforge.gradle'
 
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: "com.wynprice.cursemaven"
@@ -35,8 +36,8 @@ repositories {
     mavenLocal()
     maven { url = "https://maven.theillusivec4.top/" }
     maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven/"
+        name = 'patchouli/botania'
+        url = 'http://maven.blamejared.com/'
     }
 }
 
@@ -44,12 +45,14 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 minecraft {
     mappings channel: 'snapshot', version: "${mcp_mappings}"
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
             workingDirectory project.file('run')
+
+            arg "-mixin.config=tetra.mixins.json"
+
             property 'forge.logging.markers', '' //'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
@@ -62,6 +65,9 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+
+            arg "-mixin.config=tetra.mixins.json"
+
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
@@ -88,6 +94,10 @@ minecraft {
     }
 }
 
+mixin {
+    add sourceSets.main, "tetra.refmap.json"
+}
+
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
     exclude '.cache', 'temp'
@@ -99,10 +109,14 @@ dependencies {
     if (findProject(':mgui') != null) {
         compile project(':mgui')
     } else {
-        compile fg.deobf("curse.maven:mgui:2928277")
+        compile fg.deobf("curse.maven:mgui:3456505")
     }
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+
+    compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
+//    runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
+//    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
 //    compile fg.deobf("curse.maven:apotheosis:2906078")
 //    compile fg.deobf("curse.maven:apotheosis-placebo:2870411")
@@ -123,24 +137,8 @@ dependencies {
 //    
 //    compile fg.deobf("curse.maven:cursed:2913022")
 //    compile fg.deobf("curse.maven:cursed-bookshelf:2935828")
-
-    // Real examples
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // These dependencies get remapped to your current MCP mappings
-    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
 }
 
-// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes([
@@ -148,18 +146,15 @@ jar {
             "Specification-Vendor": "mickelus",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
+            "Implementation-Version": "${tetra_version}",
             "Implementation-Vendor" :"tetra",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "tetra.mixins.json"
         ])
     }
 }
 
-// Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar') 
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
+jar.finalizedBy('reobfJar')
 
 publishing {
     publications {
@@ -176,25 +171,28 @@ publishing {
 
 processResources {
     doLast {
+        if (project.hasProperty("minify")) {
+            def jsonMinifyStart = System.currentTimeMillis()
+            def jsonMinified = 0
+            def jsonBytesSaved = 0
 
-        def jsonMinifyStart = System.currentTimeMillis()
-        def jsonMinified = 0
-        def jsonBytesSaved = 0
+            fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
 
-        fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
-
-            File file = it
-            jsonMinified++
-            def oldLength = file.length()
-            try {
+                File file = it
+                jsonMinified++
+                def oldLength = file.length()
+                try {
+                    file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
+                } catch(JsonException e) {
+                    throw new JsonException("Failed to parse json in " + file.path)
+                }
                 file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-            } catch(JsonException e) {
-                throw new JsonException("Failed to parse json in " + file.path)
+                jsonBytesSaved += oldLength - file.length()
             }
-            file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-            jsonBytesSaved += oldLength - file.length()
-        }
 
-        println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
+            println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
+        } else {
+            println('Skipping json minification')
+        }
     }
 }

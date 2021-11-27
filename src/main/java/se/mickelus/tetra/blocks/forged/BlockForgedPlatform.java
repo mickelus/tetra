@@ -18,7 +18,7 @@ public class BlockForgedPlatform extends TetraBlock {
     public static BlockForgedPlatform instance;
 
     public BlockForgedPlatform() {
-        super(ForgedBlockCommon.properties);
+        super(ForgedBlockCommon.propertiesSolid);
 
         hasItem = true;
 

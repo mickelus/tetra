@@ -1,0 +1,56 @@
+{
+    "replace": true,
+    "slots": ["bow/riser"],
+    "type": "tetra:basic_module",
+    "variants": [
+        {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/"],
+            "key": "sights/",
+            "effects": {
+                "zoom": 15
+            },
+            "integrity": -1,
+            "durability": 10,
+            "extract": {
+                "primaryEffects": {
+                    "zoom": 4.9
+                },
+                "durability": 0.2,
+                "glyph": {
+                    "textureX": 120,
+                    "textureY": 16
+                },
+                "availableTextures": ["default"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/bow/riser/sight/",
+                        "type": "static"
+                    }
+                ]
+            }
+        },
+        {
+            "materials": ["tetra:misc/stick"],
+            "key": "sights/",
+            "effects": {
+                "zoom": 20
+            },
+            "integrity": -1,
+            "durability": 10,
+            "extract": {
+                "durability": 0.2,
+                "glyph": {
+                    "textureX": 120,
+                    "textureY": 16
+                },
+                "availableTextures": ["default"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/bow/riser/sight/",
+                        "type": "static"
+                    }
+                ]
+            }
+        }
+    ]
+}

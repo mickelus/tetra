@@ -1,0 +1,29 @@
+{
+    "key": "wool_orange",
+    "hidden": true,
+    "hiddenOutcomes": true,
+    "category": "fabric",
+    "primary": "1",
+    "secondary": "1",
+    "tertiary": "5",
+    "durability": "200",
+    "integrityCost": "1",
+    "integrityGain": "4",
+    "magicCapacity": "90",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
+    "tints": {
+        "glyph": "eeb277",
+        "texture": "cc8547"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:orange_wool"
+    },
+    "requiredTools": {
+        "cut": 1
+    }
+}

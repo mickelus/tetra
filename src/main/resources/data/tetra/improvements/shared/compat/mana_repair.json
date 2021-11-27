@@ -1,0 +1,42 @@
+[
+    {
+        "key": "mana_repair",
+        "level": 1,
+        "textured": false,
+        "effects": {
+            "manaRepair": [1, 0.0025]
+        }
+    },
+    {
+        "key": "mana_repair",
+        "level": 2,
+        "textured": false,
+        "effects": {
+            "manaRepair": [1, 0.005]
+        }
+    },
+    {
+        "key": "mana_repair",
+        "level": 3,
+        "textured": false,
+        "effects": {
+            "manaRepair": [1, 0.0075]
+        }
+    },
+    {
+        "key": "mana_repair",
+        "level": 4,
+        "textured": false,
+        "effects": {
+            "manaRepair": [1, 0.01]
+        }
+    },
+    {
+        "key": "mana_repair",
+        "level": 5,
+        "textured": false,
+        "effects": {
+            "manaRepair": [1, 0.0125]
+        }
+    }
+]

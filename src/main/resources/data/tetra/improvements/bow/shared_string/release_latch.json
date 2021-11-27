@@ -1,0 +1,29 @@
+[
+    {
+        "key": "bowstring/release_latch",
+        "integrity": -1,
+        "attributes": {
+            "tetra:draw_speed": -0.1
+        },
+        "effects": {
+            "releaseLatch": 1
+        },
+        "models": [
+            {
+                "location": "tetra:items/module/bow/string/improvements/latch"
+            },
+            {
+                "type": "draw_0",
+                "location": "tetra:items/module/bow/string/improvements/latch_0"
+            },
+            {
+                "type": "draw_1",
+                "location": "tetra:items/module/bow/string/improvements/latch_1"
+            },
+            {
+                "type": "draw_2",
+                "location": "tetra:items/module/bow/string/improvements/latch_2"
+            }
+        ]
+    }
+]

@@ -8,23 +8,23 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.IntegrationHelper;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.tetra.blocks.salvage.IBlockCapabilityInteractive;
-import se.mickelus.tetra.capabilities.ICapabilityProvider;
+import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
+import se.mickelus.tetra.compat.curios.CuriosCompat;
+import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
-import top.theillusivec4.curios.api.CuriosAPI;
+import top.theillusivec4.curios.api.CuriosApi;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class ToolbeltHelper {
     public static void equipItemFromToolbelt(PlayerEntity player, ToolbeltSlotType slotType, int index, Hand hand) {
@@ -123,8 +123,8 @@ public class ToolbeltHelper {
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
     public static ItemStack findToolbelt(PlayerEntity player) {
-        if (IntegrationHelper.isCuriosLoaded) {
-            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosAPI.getCurioEquipped(ModularToolbeltItem.instance, player);
+        if (CuriosCompat.isLoaded) {
+            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance, player);
             if (maybeToolbelt.isPresent()) {
                 return maybeToolbelt.get().right;
             }
@@ -140,6 +140,27 @@ public class ToolbeltHelper {
             }
         }
         return ItemStack.EMPTY;
+    }
+
+    public static List<ItemStack> getToolbeltItems(PlayerEntity player) {
+        return Optional.of(ToolbeltHelper.findToolbelt(player))
+                .filter(toolbeltStack -> !toolbeltStack.isEmpty())
+                .map(toolbeltStack -> {
+                    QuickslotInventory quickslots = new QuickslotInventory(toolbeltStack);
+                    StorageInventory storage = new StorageInventory(toolbeltStack);
+                    List<ItemStack> result = new ArrayList<>(quickslots.getSizeInventory() + storage.getSizeInventory());
+
+                    for (int i = 0; i < quickslots.getSizeInventory(); i++) {
+                        result.add(i, quickslots.getStackInSlot(i));
+                    }
+
+                    for (int i = 0; i < storage.getSizeInventory(); i++) {
+                        result.add(quickslots.getSizeInventory() + i, storage.getStackInSlot(i));
+                    }
+
+                    return result;
+                })
+                .orElse(Collections.emptyList());
     }
 
     public static void emptyOverflowSlots(ItemStack itemStack, PlayerEntity player) {
@@ -158,15 +179,20 @@ public class ToolbeltHelper {
      */
     public static int getQuickAccessSlotIndex(PlayerEntity player, RayTraceResult traceResult, BlockState blockState) {
         ItemStack toolbeltStack = ToolbeltHelper.findToolbelt(player);
+
+        if (toolbeltStack.isEmpty()) {
+            return -1;
+        }
+
         QuickslotInventory inventory = new QuickslotInventory(toolbeltStack);
         List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
 
         if (traceResult instanceof BlockRayTraceResult) {
             BlockRayTraceResult trace = (BlockRayTraceResult) traceResult;
-            Vec3d hitVector = trace.getHitVec();
+            Vector3d hitVector = trace.getHitVec();
             BlockPos blockPos = trace.getPos();
 
-            BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IBlockCapabilityInteractive.class)
+            BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IInteractiveBlock.class)
                     .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, blockPos, trace.getFace(),
                             (float) hitVector.x - blockPos.getX(),
                             (float) hitVector.y - blockPos.getY(),
@@ -177,14 +203,27 @@ public class ToolbeltHelper {
                 ItemStack itemStack = inventory.getStackInSlot(i);
                 if (effects.get(i).contains(ItemEffect.quickAccess) && !itemStack.isEmpty()) {
                     ToolType requiredTool = blockState.getHarvestTool();
-                    if (requiredTool != null && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) > -1) {
+                    ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(blockState);
+                    if (requiredTool != null
+                            && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) >= blockState.getHarvestLevel()
+                            || effectiveTool != null && itemStack.getItem().getToolTypes(itemStack).contains(effectiveTool)) {
                         return i;
                     }
 
+                    if (ItemModularHandheld.canDenail(blockState)) {
+                        boolean itemCanDenail = CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                                .map(item -> item.getEffectLevel(itemStack, ItemEffect.denailing) > 0)
+                                .orElse(false);
+                        if (itemCanDenail) {
+                            return i;
+                        }
+                    }
+
+
                     if (blockInteraction != null) {
-                        if (itemStack.getItem() instanceof ICapabilityProvider) {
-                            ICapabilityProvider providerItem = ((ICapabilityProvider) itemStack.getItem());
-                            if (providerItem.getCapabilityLevel(itemStack, blockInteraction.requiredCapability) >= blockInteraction.requiredLevel) {
+                        if (itemStack.getItem() instanceof IToolProvider) {
+                            IToolProvider providerItem = ((IToolProvider) itemStack.getItem());
+                            if (providerItem.getToolLevel(itemStack, blockInteraction.requiredTool) >= blockInteraction.requiredLevel) {
                                 return i;
                             }
                         }

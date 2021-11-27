@@ -1,0 +1,27 @@
+{
+    "key": "maple",
+    "category": "wood",
+    "primary": "4.5",
+    "secondary": "2",
+    "tertiary": "7.5",
+    "durability": "70",
+    "integrityCost": "2",
+    "integrityGain": "5",
+    "magicCapacity": "96",
+    "toolLevel": "2",
+    "toolEfficiency": "4",
+    "tints": {
+        "glyph": "maple_glyph",
+        "texture": "maple"
+    },
+    "textures": [
+        "crude",
+        "wooden"
+    ],
+    "material": {
+        "tag": "forge:planks/maple"
+    },
+    "requiredTools": {
+        "axe": 3
+    }
+}

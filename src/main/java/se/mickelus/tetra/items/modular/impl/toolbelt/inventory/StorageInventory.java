@@ -1,10 +1,9 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
 import net.minecraft.item.ItemStack;
-import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
-import se.mickelus.tetra.module.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffect;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,18 +11,22 @@ import java.util.List;
 public class StorageInventory extends ToolbeltInventory {
 
     private static final String inventoryKey = "storageInventory";
-    public static int maxSize = 30; // 24;
+    public static int maxSize = 36; // 24;
 
     public StorageInventory(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.storage);
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.storage);
 
-        readFromNBT(NBTHelper.getTag(stack));
+        readFromNBT(stack.getOrCreateTag());
     }
 
     @Override
     public boolean storeItemInInventory(ItemStack itemStack) {
+        if (!isItemValid(itemStack)) {
+            return false;
+        }
+
         List<Collection<ItemEffect>> effects = getSlotEffects();
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getSizeInventory(); i++) {
@@ -51,5 +54,15 @@ public class StorageInventory extends ToolbeltInventory {
             }
         }
         return false;
+    }
+
+    public static int getColumns(int slotCount) {
+        for (int i = 12; i >= 5; i--) {
+            if (slotCount % i == 0) {
+                return i;
+            }
+
+        }
+        return 9;
     }
 }

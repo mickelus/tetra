@@ -1,0 +1,63 @@
+{
+    "replace": true,
+    "slots": [
+        "toolbelt/slot1",
+        "toolbelt/slot2",
+        "toolbelt/slot3"
+    ],
+    "keySuffixes": [
+        "_slot1",
+        "_slot2",
+        "_slot3"
+    ],
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureX": 208
+    },
+    "displayType": "major",
+    "outcomes": [
+        {
+            "material": {
+                "item": "tetra:forged_mesh",
+                "count": 1
+            },
+            "requiredTools": {
+                "hammer": 4
+            },
+            "moduleKey": "toolbelt/potion_storage",
+            "moduleVariant": "potion_storage/forged_mesh"
+        },
+        {
+            "material": {
+                "item": "minecraft:leather",
+                "count": 2
+            },
+            "requiredTools": {
+                "cut": 3
+            },
+            "moduleKey": "toolbelt/potion_storage",
+            "moduleVariant": "potion_storage/leather"
+        },
+        {
+            "material": {
+                "tag": "minecraft:wool"
+            },
+            "requiredTools": {
+                "cut": 1
+            },
+            "moduleKey": "toolbelt/potion_storage",
+            "moduleVariant": "potion_storage/wool"
+        },
+        {
+            "material": {
+                "item": "minecraft:rabbit_hide",
+                "count": 5
+            },
+            "requiredTools": {
+                "cut": 2
+            },
+            "moduleKey": "toolbelt/potion_storage",
+            "moduleVariant": "potion_storage/hide"
+        }
+    ]
+}

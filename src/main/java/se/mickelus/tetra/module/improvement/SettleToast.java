@@ -13,9 +13,9 @@ import net.minecraft.util.SoundEvents;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.schema.SchemaRarity;
+import se.mickelus.tetra.module.schematic.SchematicRarity;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class SettleToast implements IToast {
     public SettleToast(ItemStack itemStack, String slot) {
         this.itemStack = itemStack;
 
-        ItemModule itemModule = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+        ItemModule itemModule = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .orElse(null);
 
@@ -47,13 +47,14 @@ public class SettleToast implements IToast {
                 .orElse(slot);
     }
 
-    public Visibility draw(ToastGui toastGui, long delta) {
+    @Override
+    public Visibility func_230444_a_(MatrixStack matrixStack, ToastGui toastGui, long delta) {
 
 
         if (itemStack != null) {
             toastGui.getMinecraft().getTextureManager().bindTexture(texture);
             RenderSystem.color3f(1.0F, 1.0F, 1.0F);
-            toastGui.blit(0, 0, 0, 0, 160, 32);
+            toastGui.blit(matrixStack, 0, 0, 0, 0, 160, 32);
 
             if (!this.hasPlayedSound && delta > 0L) {
                 this.hasPlayedSound = true;
@@ -63,12 +64,12 @@ public class SettleToast implements IToast {
             }
 
             if (glyph != null) {
-                toastGui.blit(20, 14, 160, 0, 15, 15);
+                toastGui.blit(matrixStack, 20, 14, 160, 0, 15, 15);
                 glyph.draw(new MatrixStack(), 19, 14, 260, 43, -1, -1, 1);
             }
 
-            toastGui.getMinecraft().fontRenderer.drawString(I18n.format(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchemaRarity.hone.tint);
-            toastGui.getMinecraft().fontRenderer.drawString(toastGui.getMinecraft().fontRenderer.trimStringToWidth(moduleName, 118), 37, 18, GuiColors.muted);
+            toastGui.getMinecraft().fontRenderer.drawString(matrixStack, I18n.format(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchematicRarity.hone.tint);
+            toastGui.getMinecraft().fontRenderer.drawString(matrixStack, toastGui.getMinecraft().fontRenderer.func_238412_a_(moduleName, 118), 37, 18, GuiColors.muted);
 
 
             RenderHelper.enableStandardItemLighting();

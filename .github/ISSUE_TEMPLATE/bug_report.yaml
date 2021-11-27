@@ -1,0 +1,67 @@
+name: 🐛 Bug Report
+description: Something is not working as expected
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please try the latest version of tetra and check if the issue persist before submitting a report, thanks you for putting effort into your bug reports.
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behaviour
+      description: Describe what happened and when this happened
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: Describe what you expected to happen
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Step by step instructions on how to reproduce the observed behaviour
+      placeholder: |
+        1. Place a vanilla pickaxe in a workbench
+        2. Select [module] and [schematic]
+        3. Place [item] in the material slot
+        4. Note [issue] with [something]
+    validations:
+      required: true
+  - type: input
+    id: crashlog
+    attributes:
+      label: Crashlog
+      description: If this was a crash, grab [minecraft instance]/logs/debug.log, upload it as a [gist](https://gist.github.com/) and paste the link here
+      placeholder: https://gist.github.com/mickelus/e23d75f
+  - type: input
+    id: tetra-version
+    attributes:
+      label: Tetra version
+      placeholder: 3.0.0
+    validations:
+      required: true
+  - type: input
+    id: mgui-version
+    attributes:
+      label: mGui version
+      placeholder: 2.0.0
+    validations:
+      required: true
+  - type: input
+    id: forge-version
+    attributes:
+      label: Forge version
+      placeholder: 1.16.5 - 36.1.32
+    validations:
+      required: true
+  - type: textarea
+    id: other-mods
+    attributes:
+      label: Other mods
+      description: List any other mods present when the bug was encountered, include the mod versions

@@ -1,0 +1,30 @@
+{
+    "key": "electrum",
+    "category": "metal",
+    "primary": "5",
+    "secondary": "4.6",
+    "tertiary": "1",
+    "durability": "58",
+    "integrityCost": "2",
+    "integrityGain": "1",
+    "magicCapacity": "144",
+    "toolLevel": "2",
+    "toolEfficiency": "13",
+    "tints": {
+        "glyph": "electrum_glyph",
+        "texture": "electrum"
+    },
+    "textures": [
+        "shiny",
+        "metal"
+    ],
+    "material": {
+        "tag": "forge:ingots/electrum"
+    },
+    "effects": {
+        "stabilizing": 15
+    },
+    "requiredTools": {
+        "hammer": 1
+    }
+}

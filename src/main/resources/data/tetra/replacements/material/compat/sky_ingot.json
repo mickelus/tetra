@@ -1,0 +1,84 @@
+[
+    {
+        "conditions": [{
+            "type": "forge:mod_loaded",
+            "modid": "naturesaura"
+        }],
+        "predicate": {
+            "item": "naturesaura:sky_pickaxe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/sky"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/sky"],
+            "double/handle": ["double/basic_handle", "basic_handle/ancient_wood"]
+        },
+        "improvements": {
+            "double/head_left:naturesaura_aura_mending_innate": 1,
+            "double/head_right:naturesaura_aura_mending_innate": 1,
+            "double/handle:naturesaura_aura_mending_innate": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "naturesaura:sky_axe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/sky"],
+            "double/head_right": ["double/butt_right", "butt/sky"],
+            "double/handle": ["double/basic_handle", "basic_handle/ancient_wood"]
+        },
+        "improvements": {
+            "double/head_left:naturesaura_aura_mending_innate": 1,
+            "double/head_right:naturesaura_aura_mending_innate": 1,
+            "double/handle:naturesaura_aura_mending_innate": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "naturesaura:sky_hoe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/sky"],
+            "double/head_right": ["double/butt_right", "butt/sky"],
+            "double/handle": ["double/basic_handle", "basic_handle/ancient_wood"]
+        },
+        "improvements": {
+            "double/head_left:naturesaura_aura_mending_innate": 1,
+            "double/head_right:naturesaura_aura_mending_innate": 1,
+            "double/handle:naturesaura_aura_mending_innate": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "naturesaura:sky_shovel"
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/sky"],
+            "single/handle": ["single/basic_handle", "basic_handle/ancient_wood"]
+        },
+        "improvements": {
+            "single/head:naturesaura_aura_mending_innate": 1,
+            "single/handle:naturesaura_aura_mending_innate": 1
+        }
+    },
+    {
+        "predicate": {
+            "item": "naturesaura:sky_sword"
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/sky"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/ancient_wood"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/sky"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/sky"]
+        },
+        "improvements": {
+            "sword/blade:naturesaura_aura_mending_innate": 1,
+            "sword/hilt:naturesaura_aura_mending_innate": 1
+        }
+    }
+]

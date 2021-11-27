@@ -7,8 +7,6 @@
             "chance": 0.5,
             "features": [
                 "tetra:forged_container",
-                "tetra:forged_crate_1x1x1",
-                "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_2x1x2",
                 "tetra:forged_crate_2x1x1"
             ]
@@ -19,9 +17,6 @@
             "chance": 0.5,
             "features": [
                 "tetra:forged_container",
-                "tetra:forged_transfer_unit",
-                "tetra:forged_crate_1x1x1",
-                "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_2x1x2",
                 "tetra:forged_crate_2x1x1"
             ]
@@ -29,11 +24,9 @@
         {
             "offset": [3, 1, 8],
             "facing": "NORTH",
-            "chance": 0.5,
             "features": [
                 "tetra:forged_container",
                 "tetra:forged_transfer_unit",
-                "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_2x1x2",
                 "tetra:forged_crate_2x1x1"
@@ -41,30 +34,28 @@
         },
         {
             "features": ["tetra:forged_vent"],
-            "chance": 0.3,
+            "chance": 0.5,
             "offset": [5, 3, 5]
         },
         {
             "offset": [1, 1, 3],
             "facing": "EAST",
-            "chance": 0.1,
+            "chance": 0.5,
             "features": [
-                "tetra:forged_crate_1x1x1",
+                "tetra:forged_container",
                 "tetra:forged_crate_1x1x1",
                 "tetra:forged_crate_2x1x2",
-                "tetra:forged_crate_2x1x1",
                 "tetra:forged_crate_3x1x1",
-                "tetra:forged_crate_3x1x2",
                 "tetra:forged_crate_3x2x2"
             ]
         },
         {
             "offset": [2, 1, 1],
             "facing": "SOUTH",
-            "chance": 0.1,
+            "chance": 0.5,
             "features": [
-                "tetra:forged_crate_1x1x1",
-                "tetra:forged_crate_1x1x1",
+                "tetra:forged_container",
+                "tetra:forged_transfer_unit",
                 "tetra:forged_crate_2x1x2",
                 "tetra:forged_crate_2x1x1"
             ]

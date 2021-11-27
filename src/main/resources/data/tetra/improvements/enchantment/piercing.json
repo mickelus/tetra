@@ -1,0 +1,116 @@
+[
+  {
+    "key": "enchantment/piercing",
+    "level": 1,
+    "effects": {
+      "piercing": 1
+    },
+    "enchantment": true,
+    "magicCapacity": -25.0
+  },
+  {
+    "key": "enchantment/piercing",
+    "level": 2,
+    "effects": {
+      "piercing": 2
+    },
+    "enchantment": true,
+    "magicCapacity": -30.0
+  },
+  {
+    "key": "enchantment/piercing",
+    "level": 3,
+    "effects": {
+      "piercing": 3
+    },
+    "enchantment": true,
+    "magicCapacity": -35.0
+  },
+  {
+    "key": "enchantment/piercing",
+    "level": 4,
+    "effects": {
+      "piercing": 4
+    },
+    "enchantment": true,
+    "magicCapacity": -40.0
+  },
+  {
+    "key": "enchantment/piercing",
+    "level": 5,
+    "effects": {
+      "piercing": 5
+    },
+    "enchantment": true,
+    "magicCapacity": -45.0
+  },
+  {
+    "key": "enchantment/piercing",
+    "level": 6,
+    "effects": {
+      "piercing": 6
+    },
+    "enchantment": true,
+    "magicCapacity": -50.0
+  },
+  {
+    "key": "enchantment/piercing",
+    "level": 7,
+    "effects": {
+      "piercing": 7
+    },
+    "enchantment": true,
+    "magicCapacity": -55.0
+  },
+  {
+    "key": "enchantment/piercing",
+    "level": 8,
+    "effects": {
+      "piercing": 8
+    },
+    "enchantment": true,
+    "magicCapacity": -60.0
+  },
+  {
+    "key": "enchantment/piercing",
+    "level": 9,
+    "effects": {
+      "piercing": 9
+    },
+    "enchantment": true,
+    "magicCapacity": -65.0
+  },
+  {
+    "key": "destabilized/piercing",
+    "level": 1,
+    "effects": {
+      "piercing": -1
+    },
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/piercing",
+    "level": 2,
+    "effects": {
+      "piercing": -2
+    },
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  },
+  {
+    "key": "destabilized/piercing",
+    "level": 3,
+    "effects": {
+      "piercing": -3
+    },
+    "enchantment": true,
+    "glyph": {
+      "tint": "ee5599"
+    }
+  }
+]

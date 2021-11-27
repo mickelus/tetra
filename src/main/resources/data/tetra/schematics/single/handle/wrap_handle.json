@@ -1,0 +1,30 @@
+{
+    "replace": true,
+    "slots": ["single/handle"],
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureX": 16
+    },
+    "displayType": "improvement",
+    "translation": {
+        "primaryAttributes": {
+            "generic.attack_speed": 1
+        },
+        "secondaryEffects": {
+            "fierySelf": -1
+        },
+        "tertiaryEffects": {
+            "enderReverb": -1
+        },
+        "durability": 1
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:fibre/", "tetra:skin/", "tetra:fabric/"],
+            "countFactor": 1.5,
+            "improvements": {
+                "single_handle/wrap/": 0
+            }
+        }
+    ]
+}

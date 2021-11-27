@@ -1,0 +1,30 @@
+[
+    {
+        "modules": ["double/basic_hammer", "double/basic_axe"],
+        "name": "double/axe_hammer"
+    },
+    {
+        "modules": ["double/basic_axe", "double/basic_pickaxe"],
+        "name": "double/axe_pickaxe"
+    },
+    {
+        "modules": ["double/basic_hammer", "double/basic_pickaxe"],
+        "name": "double/hammer_pickaxe"
+    },
+    {
+        "modules": ["double/adze", "double/basic_pickaxe"],
+        "name": "double/adze_pickaxe"
+    },
+    {
+        "modules": ["double/adze", "double/basic_axe"],
+        "name": "double/adze_axe"
+    },
+    {
+        "modules": ["double/claw", "double/basic_hammer"],
+        "name": "double/claw_hammer"
+    },
+    {
+        "modules": ["double/claw", "double/basic_axe"],
+        "name": "double/claw_axe"
+    }
+]

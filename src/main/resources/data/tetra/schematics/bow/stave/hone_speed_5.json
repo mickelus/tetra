@@ -1,0 +1,30 @@
+{
+    "replace": true,
+    "slots": [
+        "bow/stave"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 16,
+        "textureY": 240
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "stave_hone/speed": 4
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "axe": 3
+            },
+            "improvements": {
+                "stave_hone/speed": 5
+            }
+        }
+    ]
+}

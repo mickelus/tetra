@@ -1,0 +1,31 @@
+{
+    "conditions": [{
+        "type": "forge:mod_loaded",
+        "modid": "botania"
+    }],
+    "key": "dreamwood",
+    "category": "wood",
+    "primary": "4",
+    "secondary": "2.5",
+    "tertiary": "7.5",
+    "durability": "150",
+    "integrityCost": "2",
+    "integrityGain": "5",
+    "magicCapacity": "120",
+    "toolLevel": "2",
+    "toolEfficiency": "4",
+    "tints": {
+        "glyph": "adbbbf",
+        "texture": "808a8c"
+    },
+    "textures": ["crude"],
+    "material": {
+        "item": "botania:dreamwood_planks"
+    },
+    "improvements": {
+        "mana_repair": 3
+    },
+    "requiredTools": {
+        "axe": 2
+    }
+}

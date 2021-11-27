@@ -1,0 +1,34 @@
+{
+    "replace": true,
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "keySuffixes": [
+        "_left",
+        "_right"
+    ],
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureX": 176
+    },
+    "displayType": "major",
+    "translation": {
+        "primaryAttributes": {
+            "generic.attack_damage": 3
+        },
+        "tools": {
+            "pickaxe": [3, 2]
+        },
+        "durability": 2,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "moduleKey": "double/basic_pickaxe",
+            "moduleVariant": "basic_pickaxe/"
+        }
+    ]
+}

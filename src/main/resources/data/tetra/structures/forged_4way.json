@@ -1,26 +1,30 @@
 {
-    "biomes": ["cold", "snowy"],
+    "biomes": ["taiga", "extreme_hills", "icy"],
     "origin": [3, 0, 3],
-    "probability": 0.005,
+    "probability": 0.025,
     "minY": 7,
     "maxY": 22,
     "integrityMin": 0.95,
     "children": [
         {
+            "chance": 0.4,
+            "offset": [3, 1, 3],
+            "facing": "NORTH",
+            "features": [
+                "tetra:forged_shaft",
+                "tetra:collapse_gravel"
+            ]
+        },
+        {
             "offset": [3, 1, 3],
             "facing": "WEST",
             "features": [
                 "tetra:forged_hammer",
+                "tetra:forged_hammer",
+                "tetra:forged_hammer",
                 "tetra:forged_hammer_benchless",
                 "tetra:forged_container",
-                "tetra:forged_crate_1x1x1",
-                "tetra:forged_crate_1x1x1",
-                "tetra:forged_crate_3x1x1",
-                "tetra:forged_crate_3x1x2",
-                "tetra:forged_crate_3x2x2",
-                "tetra:forged_workbench",
-                "tetra:forged_shaft",
-                "tetra:collapse_gravel"
+                "tetra:forged_workbench"
             ]
         },
         {

@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north":  { "model": "tetra:block/rack" },
+        "facing=south":  { "model": "tetra:block/rack", "y": 180 },
+        "facing=west":  { "model": "tetra:block/rack", "y": -90 },
+        "facing=east":  { "model": "tetra:block/rack", "y": 90 }
+    }
+}

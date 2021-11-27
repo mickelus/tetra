@@ -8,5 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public interface InteractionOutcome {
+
+    public static final InteractionOutcome EMPTY = (world, pos, blockState, player, hand, hitFace) -> false;
+
     public boolean apply(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace);
 }

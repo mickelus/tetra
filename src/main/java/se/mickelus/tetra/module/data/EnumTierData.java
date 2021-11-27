@@ -6,33 +6,33 @@ import java.util.Set;
 
 public class EnumTierData<T extends Enum> {
 
-    public Map<T, Integer> valueMap;
+    public Map<T, Integer> levelMap;
     public Map<T, Float> efficiencyMap;
 
     public EnumTierData() {
-        valueMap = new HashMap<>();
+        levelMap = new HashMap<>();
         efficiencyMap = new HashMap<>();
     }
 
-    public boolean contains(T capability) {
-        return valueMap.containsKey(capability);
+    public boolean contains(T key) {
+        return levelMap.containsKey(key);
     }
 
-    public int getLevel(T capability) {
-        if (contains(capability)) {
-            return valueMap.get(capability);
+    public int getLevel(T key) {
+        if (contains(key)) {
+            return levelMap.get(key);
         }
         return 0;
     }
 
-    public float getEfficiency(T capability) {
-        if (efficiencyMap.containsKey(capability)) {
-            return efficiencyMap.get(capability);
+    public float getEfficiency(T key) {
+        if (efficiencyMap.containsKey(key)) {
+            return efficiencyMap.get(key);
         }
         return 0;
     }
 
     public Set<T> getValues() {
-        return valueMap.keySet();
+        return levelMap.keySet();
     }
 }

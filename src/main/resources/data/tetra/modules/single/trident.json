@@ -19,14 +19,10 @@
         "tetra:enchantment/ensorcellation_soulbound",
         "tetra:enchantment/ma-enchants_lifesteal",
         "tetra:enchantment/ma-enchants_curse_death",
-        "tetra:single/spearhead",
-        "tetra:single/serrated",
-        "tetra:single/tempered",
-        "tetra:single/spearhead_hone",
-        "tetra:single/shared_head_compat",
-        "tetra:single/shared_head_hone",
-        "tetra:settling_improvements",
-        "tetra:destabilization_improvements"
+        "tetra:single/spearhead/",
+        "tetra:single/shared_head/",
+        "tetra:single/shared/",
+        "tetra:shared/"
     ],
     "variants": [
         {
@@ -34,8 +30,10 @@
             "durability": 64,
             "integrity": -1,
             "magicCapacity": 90,
-            "damage": 8,
-            "attackSpeed": 0.2,
+            "attributes": {
+                "generic.attack_damage": 8,
+                "generic.attack_speed": -1.25
+            },
             "glyph": {
                 "textureX": 192,
                 "textureY": 32

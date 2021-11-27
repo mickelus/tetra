@@ -1,0 +1,34 @@
+{
+    "replace": true,
+    "slots": ["bow/riser"],
+    "materialSlotCount": 1,
+    "displayType": "minor",
+    "glyph": {
+        "textureX": 112,
+        "textureY": 16
+    },
+    "translation": {
+        "tertiaryEffects": {
+            "velocity": 3
+        },
+        "durability": 1
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/"],
+            "moduleKey": "bow/stabilizer",
+            "moduleVariant": "stabilizer/"
+        },
+        {
+            "material": {
+                "item": "tetra:planar_stabilizer",
+                "count": 2
+            },
+            "requiredTools": {
+                "hammer": 5
+            },
+            "moduleKey": "bow/stabilizer",
+            "moduleVariant": "stabilizer/linear"
+        }
+    ]
+}

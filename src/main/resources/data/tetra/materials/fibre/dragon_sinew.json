@@ -1,0 +1,26 @@
+{
+    "key": "dragon_sinew",
+    "category": "fibre",
+    "primary": "1",
+    "secondary": "1.5",
+    "tertiary": "4",
+    "durability": "1150",
+    "integrityCost": "2",
+    "integrityGain": "8",
+    "magicCapacity": "84",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
+    "tints": {
+        "glyph": "dragon_glyph",
+        "texture": "dragon"
+    },
+    "textures": [
+        "default"
+    ],
+    "material": {
+        "item": "tetra:dragon_sinew"
+    },
+    "requiredTools": {
+        "cut": 3
+    }
+}

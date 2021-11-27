@@ -1,0 +1,36 @@
+[
+    {
+        "key": "hone_gild",
+        "level": 1,
+        "textured": false,
+        "magicCapacity": 12
+    },
+    {
+        "key": "hone_gild",
+        "level": 2,
+        "integrity": -1,
+        "textured": false,
+        "magicCapacity": 24
+    },
+    {
+        "key": "hone_gild",
+        "level": 3,
+        "integrity": -1,
+        "textured": false,
+        "magicCapacity": 36
+    },
+    {
+        "key": "hone_gild",
+        "level": 4,
+        "integrity": -2,
+        "textured": false,
+        "magicCapacity": 48
+    },
+    {
+        "key": "hone_gild",
+        "level": 5,
+        "integrity": -2,
+        "textured": false,
+        "magicCapacity": 60
+    }
+]

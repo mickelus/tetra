@@ -1,0 +1,33 @@
+{
+    "replace": true,
+    "slots": [
+        "shield/plate"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureY": 48
+    },
+    "translation": {
+        "primaryAttributes": {
+            "tetra:ability_damage": 3
+        },
+        "secondaryAttributes": {
+            "tetra:ability_damage": 2,
+            "tetra:ability_cooldown": -3
+        },
+        "tertiaryAttributes": {
+            "tetra:ability_cooldown": 1
+        },
+        "durability": 4,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate"],
+            "moduleKey": "shield/tower",
+            "moduleVariant": "tower/"
+        }
+    ]
+}

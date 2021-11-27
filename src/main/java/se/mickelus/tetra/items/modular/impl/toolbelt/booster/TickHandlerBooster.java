@@ -6,24 +6,25 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.NBTHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 
 public class TickHandlerBooster {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        ItemStack itemStack = ToolbeltHelper.findToolbelt(event.player);
-        int level = UtilBooster.getBoosterLevel(itemStack);
-        if (level > 0) {
-            tickItem(event.player, itemStack, level);
+        if (TickEvent.Phase.START == event.phase) {
+            ItemStack itemStack = ToolbeltHelper.findToolbelt(event.player);
+            int level = UtilBooster.getBoosterLevel(itemStack);
+            if (level > 0) {
+                tickItem(event.player, itemStack, level);
+            }
         }
     }
 
     public void tickItem(PlayerEntity player, ItemStack stack, int level) {
-        CompoundNBT tag = NBTHelper.getTag(stack);
+        CompoundNBT tag = stack.getOrCreateTag();
         boolean charged = tag.getBoolean(UtilBooster.chargedKey);
-        if (!player.isInWater() && UtilBooster.isActive(tag) && UtilBooster.hasFuel(tag, charged)) {
+        if (!player.isInWater() && player.getRidingEntity() == null && UtilBooster.isActive(tag) && UtilBooster.hasFuel(tag, charged)) {
             if (charged) {
                 UtilBooster.boostPlayerCharged(player, tag, level);
             } else {

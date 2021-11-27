@@ -1,0 +1,33 @@
+{
+    "replace": true,
+    "slots": ["bow/riser"],
+    "materialSlotCount": 1,
+    "displayType": "minor",
+    "glyph": {
+        "textureX": 128,
+        "textureY": 16
+    },
+    "translation": {
+        "primaryEffects": {
+            "multishot": 3
+        },
+        "tertiaryEffects": {
+            "multishot": [0, -3]
+        },
+        "durability": 1
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/stick"],
+            "moduleKey": "bow/extended_rest",
+            "moduleVariant": "extended_rest/"
+        },
+        {
+            "material": {
+                "item": "tetra:forged_bolt"
+            },
+            "moduleKey": "bow/extended_rest",
+            "moduleVariant": "extended_rest/bolt"
+        }
+    ]
+}

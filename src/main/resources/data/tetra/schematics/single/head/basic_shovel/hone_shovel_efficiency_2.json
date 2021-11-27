@@ -1,0 +1,32 @@
+{
+    "replace": true,
+    "localizationKey": "double/shared_head/hone_shovel_efficiency_2",
+    "slots": [
+        "single/head"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 176,
+        "textureY": 32
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "modules": [["single/basic_shovel"]],
+        "improvements": {
+            "head_hone/shovel_efficiency": 1
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 2
+            },
+            "improvements": {
+                "head_hone/shovel_efficiency": 2
+            }
+        }
+    ]
+}

@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.forged;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.event.TickEvent;
@@ -17,7 +18,9 @@ public class VibrationDebuffer {
     }
 
     private boolean hasApplicableItem(PlayerEntity player) {
-        return EarthpiercerItem.instance.equals(player.getHeldItemMainhand().getItem()) || EarthpiercerItem.instance.equals(player.getHeldItemOffhand().getItem())
-                || StonecutterItem.instance.equals(player.getHeldItemMainhand().getItem()) || StonecutterItem.instance.equals(player.getHeldItemOffhand().getItem());
+        Item mainHandItem = player.getHeldItemMainhand().getItem();
+        Item offHandItem = player.getHeldItemOffhand().getItem();
+        return EarthpiercerItem.instance.equals(mainHandItem) || EarthpiercerItem.instance.equals(offHandItem)
+                || StonecutterItem.instance != null && (StonecutterItem.instance.equals(mainHandItem) || StonecutterItem.instance.equals(offHandItem));
     }
 }

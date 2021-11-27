@@ -36,5 +36,19 @@
             "translation": [ 1.13, 3.2, 1.13 ],
             "scale": [ 0.68, 0.68, 0.68 ]
         }
+    },
+    "variants": {
+        "raised": {
+            "firstperson_righthand": {
+                "rotation": [ 0, -90, -90 ],
+                "translation": [ 6, 5.5, 1.13 ],
+                "scale": [ 0.68, 0.68, 0.68 ]
+            },
+            "firstperson_lefthand": {
+                "rotation": [ 0, 90, 90 ],
+                "translation": [ 6, 5.5, 1.13 ],
+                "scale": [ 0.68, 0.68, 0.68 ]
+            }
+        }
     }
 }

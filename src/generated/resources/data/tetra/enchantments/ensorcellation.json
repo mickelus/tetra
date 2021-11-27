@@ -44,16 +44,6 @@
     "improvement": "enchantment/ensorcellation_air_affinity"
   },
   {
-    "enchantment": "ensorcellation:exp_boost",
-    "improvement": "enchantment/ensorcellation_exp_boost"
-  },
-  {
-    "enchantment": "ensorcellation:exp_boost",
-    "improvement": "destabilized/ensorcellation_exp_boost",
-    "extract": false,
-    "multiplier": -1.0
-  },
-  {
     "enchantment": "ensorcellation:gourmand",
     "improvement": "enchantment/ensorcellation_gourmand"
   },

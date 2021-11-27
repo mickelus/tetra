@@ -1,0 +1,51 @@
+{
+    "replace": true,
+    "slots": [
+        "bow/stave"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 160,
+        "textureY": 32
+    },
+    "translation": {
+        "primaryAttributes": {
+            "tetra:draw_speed": -1,
+            "tetra:draw_strength": 3
+        },
+        "tertiaryAttributes": {
+            "tetra:draw_speed": 1,
+            "tetra:draw_strength": 1
+        },
+        "durability": 2,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:stick",
+                "count": 3
+            },
+            "requiredTools": {
+                "axe": 3
+            },
+            "moduleKey": "bow/recurve_stave",
+            "moduleVariant": "recurve_stave/stick"
+        },
+        {
+            "materials": ["tetra:wood/"],
+            "toolOffset": 1,
+            "toolFactor": 1.1,
+            "moduleKey": "bow/recurve_stave",
+            "moduleVariant": "recurve_stave/"
+        },
+        {
+            "materials": ["tetra:metal/"],
+            "toolOffset": 3,
+            "moduleKey": "bow/recurve_stave",
+            "moduleVariant": "recurve_stave/"
+        }
+    ]
+}

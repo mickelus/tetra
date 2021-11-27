@@ -1,0 +1,24 @@
+{
+    "replace": true,
+    "slots": [
+        "sword/blade"
+    ],
+    "materialSlotCount": 0,
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "!blade/tempered": -1
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 3
+            },
+            "improvements": {
+                "blade/tempered": 1
+            }
+        }
+    ]
+}

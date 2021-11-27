@@ -7,19 +7,18 @@ import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import se.mickelus.tetra.capabilities.Capability;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,7 +31,7 @@ public class ModuleBuilder {
 
     public String localization;
 
-    public String schemaPath;
+    public String schematicPath;
 
     public JsonObject referenceModule;
     public String fallbackReference;
@@ -46,19 +45,19 @@ public class ModuleBuilder {
     private int integrityOffset = 0;
 
     private float countMultiplier = 1;
-    private int capabilityOffset = 0;
+    private int toolOffset = 0;
 
     private ArrayList<Variant> variants = new ArrayList<>();
 
     private Map<ToolType, BlockState> harvestMap;
 
-    public ModuleBuilder(String module, String prefix, String localization, JsonObject referenceModule, String fallbackReference, String schemaPath) {
+    public ModuleBuilder(String module, String prefix, String localization, JsonObject referenceModule, String fallbackReference, String schematicPath) {
         this.module = module;
         this.prefix = prefix;
 
         this.localization = localization;
 
-        this.schemaPath = schemaPath;
+        this.schematicPath = schematicPath;
 
         this.referenceModule = referenceModule;
         this.fallbackReference = fallbackReference;
@@ -69,9 +68,9 @@ public class ModuleBuilder {
         harvestMap.put(ToolType.SHOVEL, Blocks.DIRT.getDefaultState());
     }
 
-    public ModuleBuilder offsetOutcome(int countMultiplier, int capabilityOffset) {
+    public ModuleBuilder offsetOutcome(int countMultiplier, int toolOffset) {
         this.countMultiplier = countMultiplier;
-        this.capabilityOffset = capabilityOffset;
+        this.toolOffset = toolOffset;
 
         return this;
     }
@@ -174,21 +173,21 @@ public class ModuleBuilder {
 
         if (item != null) {
             ItemStack itemStack = new ItemStack(item);
-            Multimap<String, AttributeModifier> attributes = itemStack.getAttributeModifiers(EquipmentSlotType.MAINHAND);
+            Multimap<Attribute, AttributeModifier> attributes = itemStack.getAttributeModifiers(EquipmentSlotType.MAINHAND);
 
             if (result.has("durability")) {
                 result.addProperty("durability", (int) (( itemStack.getMaxDamage() + durabilityOffset) * durabilityMultiplier));
             }
 
             if (result.has("damage")) {
-                double damage = attributes.get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()).stream()
+                double damage = attributes.get(Attributes.ATTACK_DAMAGE).stream()
                         .filter(modifier -> AttributeModifier.Operation.ADDITION.equals(modifier.getOperation()))
                         .mapToDouble(AttributeModifier::getAmount)
                         .sum();
                 result.addProperty("damage", damage);
             }
 
-            double attackSpeed = attributes.get(SharedMonsterAttributes.ATTACK_SPEED.getName()).stream()
+            double attackSpeed = attributes.get(Attributes.ATTACK_SPEED).stream()
                     .filter(modifier -> AttributeModifier.Operation.ADDITION.equals(modifier.getOperation()))
                     .mapToDouble(AttributeModifier::getAmount)
                     .sum();
@@ -197,11 +196,11 @@ public class ModuleBuilder {
                 result.addProperty("attackSpeed", ( attackSpeed + 2.4 + speedOffset ) * speedMultiplier);
             }
 
-            if (result.has("capabilities")) {
-                JsonObject capabilitiesJson = result.getAsJsonObject("capabilities");
+            if (result.has("tools")) {
+                JsonObject toolsJson = result.getAsJsonObject("tools");
                 Set<ToolType> toolTypes = itemStack.getToolTypes();
 
-                if (capabilitiesJson.size() == toolTypes.size()) {
+                if (toolsJson.size() == toolTypes.size()) {
                     toolTypes.forEach(toolType -> {
                         BlockState blockState = harvestMap.get(toolType);
 
@@ -209,7 +208,7 @@ public class ModuleBuilder {
                         value.add(itemStack.getHarvestLevel(toolType, null, blockState));
                         value.add(blockState != null ? item.getDestroySpeed(itemStack, blockState) / ( attackSpeed + 4 ): 0);
 
-                        capabilitiesJson.add(toolType.getName(), value);
+                        toolsJson.add(toolType.getName(), value);
                     });
                 } else {
                     long averageLevel = Math.round(toolTypes.stream()
@@ -226,8 +225,8 @@ public class ModuleBuilder {
                     value.add(averageLevel);
                     value.add(averageEfficiency);
 
-                    for (Map.Entry<String, JsonElement> entry : capabilitiesJson.entrySet()) {
-                        capabilitiesJson.add(entry.getKey(), value);
+                    for (Map.Entry<String, JsonElement> entry : toolsJson.entrySet()) {
+                        toolsJson.add(entry.getKey(), value);
                     }
                 }
             }
@@ -236,7 +235,7 @@ public class ModuleBuilder {
         return result;
     }
 
-    public JsonObject getSchemaJson() {
+    public JsonObject getSchematicJson() {
         JsonObject result = new JsonObject();
         JsonArray outcomesJson = new JsonArray();
 
@@ -263,10 +262,10 @@ public class ModuleBuilder {
         }
 
 
-        if (material.capability != null && material.capabilityLevel + capabilityOffset > 0) {
-            JsonObject requiredCapabilities = new JsonObject();
-            outcome.add("requiredCapabilities", requiredCapabilities);
-            requiredCapabilities.addProperty(material.capability.toString(), material.capabilityLevel + capabilityOffset);
+        if (material.toolType != null && material.toolLevel + toolOffset > 0) {
+            JsonObject requiredTools = new JsonObject();
+            outcome.add("requiredTools", requiredTools);
+            requiredTools.addProperty(material.toolType.toString(), material.toolLevel + toolOffset);
         }
 
         outcome.addProperty("moduleKey", module);
@@ -325,14 +324,14 @@ public class ModuleBuilder {
         String type;
         String itemId;
         int count;
-        Capability capability;
-        int capabilityLevel;
+        ToolType toolType;
+        int toolLevel;
         Pair<String, Integer>[] improvements = new Pair[0];
 
         String[] references = new String[0];
 
         public Material(String key, String localization, int tint, int materialTint, int integrity, int magicCapacity, String type,
-                String itemId, int count, Capability capability, int capabilityLevel, String[] references) {
+                String itemId, int count, ToolType toolType, int toolLevel, String[] references) {
             this.key = key;
             this.localization = localization;
             this.tint = tint;
@@ -343,15 +342,15 @@ public class ModuleBuilder {
             this.type = type;
             this.itemId = itemId;
             this.count = count;
-            this.capability = capability;
-            this.capabilityLevel = capabilityLevel;
+            this.toolType = toolType;
+            this.toolLevel = toolLevel;
 
             this.references = references;
         }
 
         public Material(String key, String localization, int tint, int materialTint, int integrity, int magicCapacity, String type,
-                String itemId, int count, Capability capability, int capabilityLevel, String[] references, Pair<String, Integer> ... improvements) {
-            this(key, localization, tint, materialTint, integrity, magicCapacity, type, itemId, count, capability, capabilityLevel, references);
+                String itemId, int count, ToolType toolType, int toolLevel, String[] references, Pair<String, Integer> ... improvements) {
+            this(key, localization, tint, materialTint, integrity, magicCapacity, type, itemId, count, toolType, toolLevel, references);
 
             this.improvements = improvements;
         }

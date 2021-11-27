@@ -4,6 +4,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
+import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,14 +25,12 @@ public class GuiModuleImprovement extends GuiElement {
         tooltipLines = new ArrayList<>();
 
         if (level < 0) {
-            tooltipLines.add(TextFormatting.DARK_RED + "-" + I18n.format("tetra.improvement." + improvement + ".name", ""));
-        } else if (level == 0) {
-            tooltipLines.add(I18n.format("tetra.improvement." + improvement + ".name"));
+            tooltipLines.add(TextFormatting.DARK_RED + "-" + IModularItem.getImprovementName(improvement, 0));
         } else {
-            tooltipLines.add(I18n.format("tetra.improvement." + improvement + ".name") + " " + I18n.format("enchantment.level." + level));
+            tooltipLines.add(IModularItem.getImprovementName(improvement, level));
         }
 
-        Arrays.stream(I18n.format("tetra.improvement." + improvement + ".description").split("\\\\n"))
+        Arrays.stream(IModularItem.getImprovementDescription(improvement).split("\\\\n"))
                 .map(line -> line.replace(TextFormatting.RESET.toString(), TextFormatting.DARK_GRAY.toString()))
                 .map(line -> TextFormatting.DARK_GRAY + line)
                 .forEachOrdered(tooltipLines::add);

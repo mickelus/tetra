@@ -2,14 +2,18 @@ package se.mickelus.tetra.blocks.workbench.action;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.capabilities.Capability;
-import se.mickelus.tetra.items.modular.ItemModular;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.RepairSchema;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.module.SchematicRegistry;
+import se.mickelus.tetra.module.schematic.RepairSchematic;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 public class RepairAction implements WorkbenchAction {
 
@@ -21,35 +25,40 @@ public class RepairAction implements WorkbenchAction {
     }
 
     @Override
-    public boolean canPerformOn(PlayerEntity player, ItemStack itemStack) {
-        if (itemStack.getItem() instanceof ItemModular) {
-            UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(player, itemStack);
-            return Arrays.stream(schemas)
-                    .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(null, itemStack))
-                    .anyMatch(upgradeSchema -> upgradeSchema instanceof RepairSchema);
+    public boolean canPerformOn(@Nullable PlayerEntity player, WorkbenchTile tile, ItemStack itemStack) {
+        if (player != null && itemStack.getItem() instanceof IModularItem) {
+            UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, tile, itemStack);
+            return Arrays.stream(schematics)
+                    .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(null, itemStack))
+                    .anyMatch(upgradeSchematic -> upgradeSchematic instanceof RepairSchematic);
         }
 
         return false;
     }
 
     @Override
-    public Capability[] getRequiredCapabilitiesFor(ItemStack itemStack) {
-        return new Capability[0];
+    public Collection<ToolType> getRequiredToolTypes(ItemStack itemStack) {
+        return Collections.emptySet();
     }
 
     @Override
-    public int getCapabilityLevel(ItemStack itemStack, Capability capability) {
+    public int getRequiredToolLevel(ItemStack itemStack, ToolType toolType) {
         return 0;
     }
 
     @Override
+    public Map<ToolType, Integer> getRequiredTools(ItemStack itemStack) {
+        return Collections.emptyMap();
+    }
+
+    @Override
     public void perform(PlayerEntity player, ItemStack itemStack, WorkbenchTile workbench) {
-        UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(player, itemStack);
-        Arrays.stream(schemas)
-                .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(null, itemStack))
-                .filter(upgradeSchema -> upgradeSchema instanceof RepairSchema)
+        UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, workbench, itemStack);
+        Arrays.stream(schematics)
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(null, itemStack))
+                .filter(upgradeSchematic -> upgradeSchematic instanceof RepairSchematic)
                 .findFirst()
-                .map(upgradeSchema -> (RepairSchema) upgradeSchema)
-                .ifPresent(repairSchema -> workbench.setCurrentSchema(repairSchema, repairSchema.getSlot(itemStack)));
+                .map(upgradeSchematic -> (RepairSchematic) upgradeSchematic)
+                .ifPresent(repairSchematic -> workbench.setCurrentSchematic(repairSchematic, repairSchematic.getSlot(itemStack)));
     }
 }

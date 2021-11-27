@@ -6,9 +6,20 @@
     "variants": [
         {
             "key": "double_socket/diamond",
+            "category": "gem",
             "durability": 512,
             "durabilityMultiplier": 0.8,
             "integrity": -1,
+            "attributes": {
+                "**generic.attack_damage": 0.1
+            },
+            "tools": {
+                "axe": [0, 2],
+                "shovel": [0, 2],
+                "pickaxe": [0, 2],
+                "hoe": [0, 2],
+                "cut": [0, 2]
+            },
             "glyph": {
                 "tint": "diamond",
                 "textureX": 80,
@@ -17,16 +28,11 @@
             "models": [{
                 "location": "tetra:items/module/double/binding/socket/default",
                 "tint": "diamond"
-            }],
-            "capabilities": {
-                "axe": [0, 1],
-                "shovel": [0, 1],
-                "pickaxe": [0, 1],
-                "cut": [0, 1]
-            }
+            }]
         },
         {
             "key": "double_socket/emerald",
+            "category": "gem",
             "durability": 48,
             "integrity": -1,
             "glyph": {
@@ -44,6 +50,7 @@
         },
         {
             "key": "double_socket/lapis",
+            "category": "gem",
             "durability": 22,
             "integrity": -1,
             "glyph": {
@@ -61,6 +68,7 @@
         },
         {
             "key": "double_socket/amber",
+            "category": "gem",
             "durability": 30,
             "integrity": -1,
             "glyph": {
@@ -73,14 +81,25 @@
                 "tint": "f29000"
             }],
             "effects": {
-                "earthbind": 1
+                "earthbind": 4
             }
         },
         {
             "key": "double_socket/pristine_diamond",
+            "category": "gem",
             "durability": 741,
             "durabilityMultiplier": 0.8,
             "integrity": -1,
+            "attributes": {
+                "**generic.attack_damage": 0.2
+            },
+            "tools": {
+                "axe": [0, 4],
+                "shovel": [0, 4],
+                "pickaxe": [0, 4],
+                "hoe": [0, 4],
+                "cut": [0, 4]
+            },
             "glyph": {
                 "tint": "diamond",
                 "textureX": 80,
@@ -89,16 +108,11 @@
             "models": [{
                 "location": "tetra:items/module/double/binding/socket/pristine",
                 "tint": "diamond"
-            }],
-            "capabilities": {
-                "axe": [0, 2],
-                "shovel": [0, 2],
-                "pickaxe": [0, 2],
-                "cut": [0, 2]
-            }
+            }]
         },
         {
             "key": "double_socket/pristine_emerald",
+            "category": "gem",
             "durability": 25,
             "integrity": -1,
             "glyph": {
@@ -116,6 +130,7 @@
         },
         {
             "key": "double_socket/pristine_lapis",
+            "category": "gem",
             "durability": 18,
             "integrity": -1,
             "glyph": {
@@ -129,6 +144,22 @@
             }],
             "effects": {
                 "intuit": 2
+            }
+        },
+        {
+            "key": "double_socket/mana_rune",
+            "integrity": -1,
+            "glyph": {
+                "tint": "c16bc8",
+                "textureX": 80,
+                "textureY": 16
+            },
+            "models": [{
+                "location": "tetra:items/module/double/binding/socket/pristine",
+                "tint": "9a3aa8"
+            }],
+            "effects": {
+                "manaRepair": [1, 0.0025]
             }
         }
     ]

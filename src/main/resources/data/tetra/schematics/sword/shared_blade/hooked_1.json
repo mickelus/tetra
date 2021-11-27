@@ -1,0 +1,28 @@
+{
+    "replace": true,
+    "slots": [
+        "sword/blade"
+    ],
+    "materialSlotCount": 0,
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:modular_item",
+        "improvements": {
+            "!blade/hooked": -1
+        },
+        "modules": [
+            ["sword/short_blade"],
+            ["sword/basic_blade"]
+        ]
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 3
+            },
+            "improvements": {
+                "blade/hooked": 1
+            }
+        }
+    ]
+}

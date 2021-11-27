@@ -1,0 +1,13 @@
+[
+    {
+        "key": "double/warforged",
+        "integrity": -2,
+        "effects": {
+            "skewering": [5, 3]
+        },
+        "models": [{
+            "location": "tetra:items/module/double/head/basic_pickaxe/warforged",
+            "tint": "inherit"
+        }]
+    }
+]

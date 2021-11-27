@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:modular_double",
+            "nbt": "{\"id\": \"spelunking/hammer_unjam\", \"double/head_left\": \"double/basic_hammer_left\",\"double/basic_hammer_left_material\": \"basic_hammer/blackstone\",\"double/head_right\": \"double/basic_hammer_right\",\"double/basic_hammer_right_material\": \"basic_hammer/blackstone\",\"double/handle\": \"double/basic_handle\",\"double/basic_handle_material\": \"basic_handle/stick\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.hammer_unjam.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.hammer_unjam.description"
+        }
+    },
+    "parent": "tetra:spelunking/hammer_jam",
+    "criteria": {
+        "crit1": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "tool": "hammer",
+                "after": {
+                    "block": "tetra:hammer_head"
+                }
+            }
+        }
+    }
+}

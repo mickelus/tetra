@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:chthonic_extractor"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.chthonic_extractor.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.chthonic_extractor.description"
+        }
+    },
+    "parent": "tetra:spelunking/containers",
+    "criteria": {
+        "earthpiercer": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "tetra:chthonic_extractor"
+                    }
+                ]
+            }
+        }
+    }
+}

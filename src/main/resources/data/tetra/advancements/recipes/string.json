@@ -1,0 +1,14 @@
+{
+    "parent": "tetra:recipes/root",
+    "rewards": {
+        "recipes": ["tetra:toolbelt_modular"]
+    },
+    "criteria": {
+        "got_string": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{ "item": "minecraft:string" }]
+            }
+        }
+    }
+}

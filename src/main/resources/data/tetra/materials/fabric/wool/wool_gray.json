@@ -1,0 +1,29 @@
+{
+    "key": "wool_gray",
+    "hidden": true,
+    "hiddenOutcomes": true,
+    "category": "fabric",
+    "primary": "1",
+    "secondary": "1",
+    "tertiary": "5",
+    "durability": "200",
+    "integrityCost": "1",
+    "integrityGain": "4",
+    "magicCapacity": "90",
+    "toolLevel": "0",
+    "toolEfficiency": "0",
+    "tints": {
+        "glyph": "a0a0a0",
+        "texture": "7d7d7d"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "item": "minecraft:gray_wool"
+    },
+    "requiredTools": {
+        "cut": 1
+    }
+}

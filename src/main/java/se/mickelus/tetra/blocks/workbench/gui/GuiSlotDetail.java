@@ -1,9 +1,11 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiButton;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
@@ -12,64 +14,75 @@ import se.mickelus.mgui.gui.animation.AnimationChain;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.capabilities.CapabilityHelper;
+import se.mickelus.tetra.gui.VerticalTabGroupGui;
+import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.ItemModular;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.schema.UpgradeSchema;
+import se.mickelus.tetra.module.SchematicRegistry;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 public class GuiSlotDetail extends GuiElement {
+    private static final char[] keybindings = new char[] { 'a', 's', 'd'};
+    private static final String[] labels = new String[] {
+            "tetra.workbench.slot_detail.details_tab",
+            "tetra.workbench.slot_detail.craft_tab",
+            "tetra.workbench.slot_detail.tweak_tab"
+    };
 
     private int tab = 1;
 
-    private GuiSlotTabGroup tabGroup;
+    private VerticalTabGroupGui tabGroup;
 
     private GuiModuleDetails moduleDetails;
 
-    private GuiElement schemaGroup;
-    private GuiSchemaList schemaList;
-    private GuiSchemaDetail schemaDetail;
+    private GuiElement schematicGroup;
+    private GuiSchematicList schematicList;
+    private GuiSchematicDetail schematicDetail;
 
     private GuiTweakControls tweakControls;
 
-    private Consumer<UpgradeSchema> selectSchemaHandler;
+    private Consumer<UpgradeSchematic> selectSchematicHandler;
 
     private final AnimationChain slotTransition;
 
-    public GuiSlotDetail(int x, int y, Consumer<UpgradeSchema> selectSchemaHandler, Runnable closeHandler,
+    public GuiSlotDetail(int x, int y, Consumer<UpgradeSchematic> selectSchematicHandler, Runnable closeHandler,
             Runnable craftHandler, Consumer<Map<String, Integer>> previewTweak, Consumer<Map<String, Integer>> applyTweak) {
         super(x, y, 224, 67);
 
-        this.selectSchemaHandler = selectSchemaHandler;
+        this.selectSchematicHandler = selectSchematicHandler;
 
         addChild(new GuiTexture(0, 0, width, height, 0, 68, GuiTextures.workbench));
 
         addChild(new GuiRect(1, 6, 2, 49, 0));
 
-        tabGroup = new GuiSlotTabGroup(1, 6, this::changeTab);
+        tabGroup = new VerticalTabGroupGui(1, 6, this::changeTab, GuiTextures.workbench, 128, 32,
+                IntStream.range(0, 3)
+                        .mapToObj(i -> I18n.format(labels[i]))
+                        .toArray(String[]::new));
         tabGroup.setHasContent(1, true);
         addChild(tabGroup);
 
         moduleDetails = new GuiModuleDetails(0, 0);
         addChild(moduleDetails);
 
-        schemaGroup = new GuiElement(0, 0, width, height);
-        addChild(schemaGroup);
+        schematicGroup = new GuiElement(0, 0, width, height);
+        addChild(schematicGroup);
 
-        schemaList = new GuiSchemaList(0, 0, selectSchemaHandler);
-        schemaList.setVisible(false);
-        schemaGroup.addChild(schemaList);
+        schematicList = new GuiSchematicList(0, 0, selectSchematicHandler);
+        schematicList.setVisible(false);
+        schematicGroup.addChild(schematicList);
 
-        schemaDetail = new GuiSchemaDetail(0, 0, () -> selectSchemaHandler.accept(null), craftHandler);
-        schemaDetail.setVisible(false);
-        schemaGroup.addChild(schemaDetail);
+        schematicDetail = new GuiSchematicDetail(0, 0, () -> selectSchematicHandler.accept(null), craftHandler);
+        schematicDetail.setVisible(false);
+        schematicGroup.addChild(schematicDetail);
 
 
         tweakControls = new GuiTweakControls(0, 0, previewTweak, applyTweak);
@@ -89,7 +102,7 @@ public class GuiSlotDetail extends GuiElement {
     }
 
     private void changeTab(int index) {
-        selectSchemaHandler.accept(null);
+        selectSchematicHandler.accept(null);
         tab = index;
 
         updateTabVisibility();
@@ -100,31 +113,28 @@ public class GuiSlotDetail extends GuiElement {
 
     private void updateTabVisibility() {
         moduleDetails.setVisible(tab == 0);
-        schemaGroup.setVisible(tab == 1);
+        schematicGroup.setVisible(tab == 1);
         tweakControls.setVisible(tab == 2);
     }
 
-    public void onTileEntityChange(PlayerEntity player, WorkbenchTile tileEntity, ItemStack itemStack, String selectedSlot, UpgradeSchema currentSchema) {
-        ItemModule module = CastOptional.cast(itemStack.getItem(), ItemModular.class)
+    public void onTileEntityChange(PlayerEntity player, WorkbenchTile tileEntity, ItemStack itemStack, String selectedSlot, UpgradeSchematic currentSchematic) {
+        ItemModule module = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, selectedSlot))
                 .orElse(null);
 
-        if (currentSchema == null) {
-            updateSchemaList(player, tileEntity, selectedSlot);
+        if (currentSchematic == null) {
+            updateSchematicList(player, tileEntity, selectedSlot);
         } else {
             World world = tileEntity.getWorld();
             BlockPos pos = tileEntity.getPos();
-            int[] availableCapabilities = CapabilityHelper.getCombinedCapabilityLevels(player, world, pos,
-                    world.getBlockState(pos));
+            Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, world, pos, world.getBlockState(pos));
             ItemStack[] materials = tileEntity.getMaterials();
 
+            ItemStack previewStack = currentSchematic.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player);
 
-            schemaDetail.update(currentSchema, itemStack, selectedSlot, materials, availableCapabilities,
-                    player.isCreative() ? Integer.MAX_VALUE : player.experienceLevel);
-            schemaDetail.updateMagicCapacity(currentSchema, selectedSlot, itemStack,
-                    currentSchema.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player));
-            schemaDetail.toggleButton(currentSchema.canApplyUpgrade(player, itemStack, materials,
-                    selectedSlot, availableCapabilities));
+            schematicDetail.update(currentSchematic, itemStack, selectedSlot, materials, availableTools, player);
+            schematicDetail.updateMagicCapacity(currentSchematic, selectedSlot, itemStack, previewStack);
+            schematicDetail.updateButton(currentSchematic, player, itemStack, previewStack, materials, selectedSlot, availableTools);
 
             tab = 1;
         }
@@ -135,37 +145,35 @@ public class GuiSlotDetail extends GuiElement {
         tweakControls.update(module, itemStack);
         tabGroup.setHasContent(2, module != null && module.isTweakable(itemStack));
 
-        schemaDetail.setVisible(currentSchema != null);
-        schemaList.setVisible(currentSchema == null);
+        schematicDetail.setVisible(currentSchematic != null);
+        schematicList.setVisible(currentSchematic == null);
 
         updateTabVisibility();
         tabGroup.setActive(tab);
     }
 
-    public void update(PlayerEntity player, WorkbenchTile tileEntity, int[] availableCapabilities) {
-        schemaDetail.updateAvailableCapabilities(availableCapabilities);
+    public void update(PlayerEntity player, WorkbenchTile tileEntity, Map<ToolType, Integer> availableTools) {
+        schematicDetail.updateAvailableTools(availableTools);
 
-        schemaDetail.toggleButton(
-                tileEntity.getCurrentSchema().canApplyUpgrade(
-                        player,
-                        tileEntity.getTargetItemStack(),
-                        tileEntity.getMaterials(),
-                        tileEntity.getCurrentSlot(),
-                        availableCapabilities));
+        ItemStack currentStack = tileEntity.getTargetItemStack().copy();
+        UpgradeSchematic currentSchematic = tileEntity.getCurrentSchematic();
+        ItemStack previewStack = currentSchematic.applyUpgrade(currentStack, tileEntity.getMaterials(), false, tileEntity.getCurrentSlot(), player);
+        schematicDetail.updateButton(tileEntity.getCurrentSchematic(), player, currentStack, previewStack, tileEntity.getMaterials(),
+                tileEntity.getCurrentSlot(), availableTools);
     }
 
-    public void updatePreview(UpgradeSchema schema, String slot, ItemStack itemStack, ItemStack previewStack) {
-        schemaDetail.updateMagicCapacity(schema, slot, itemStack, previewStack);
+    public void updatePreview(UpgradeSchematic schematic, String slot, ItemStack itemStack, ItemStack previewStack) {
+        schematicDetail.updateMagicCapacity(schematic, slot, itemStack, previewStack);
     }
 
-    private void updateSchemaList(PlayerEntity player, WorkbenchTile tileEntity, String selectedSlot) {
+    private void updateSchematicList(PlayerEntity player, WorkbenchTile tileEntity, String selectedSlot) {
         ItemStack targetStack = tileEntity.getTargetItemStack();
-        UpgradeSchema[] schemas = ItemUpgradeRegistry.instance.getAvailableSchemas(player, targetStack);
-        schemas = Arrays.stream(schemas)
-                .filter(upgradeSchema -> upgradeSchema.isApplicableForSlot(selectedSlot, targetStack))
-                .sorted(Comparator.comparing(UpgradeSchema::getRarity).thenComparing(UpgradeSchema::getType).thenComparing(UpgradeSchema::getKey))
-                .toArray(UpgradeSchema[]::new);
-        schemaList.setSchemas(schemas);
+        UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, tileEntity, targetStack);
+        schematics = Arrays.stream(schematics)
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(selectedSlot, targetStack))
+                .sorted(Comparator.comparing(UpgradeSchematic::getRarity).thenComparing(UpgradeSchematic::getType).thenComparing(UpgradeSchematic::getKey))
+                .toArray(UpgradeSchematic[]::new);
+        schematicList.setSchematics(schematics);
     }
 
     public void keyTyped(char typedChar) {

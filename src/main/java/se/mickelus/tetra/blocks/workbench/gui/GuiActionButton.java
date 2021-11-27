@@ -3,13 +3,15 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
-import se.mickelus.tetra.capabilities.Capability;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class GuiActionButton extends GuiElement {
@@ -17,7 +19,7 @@ public class GuiActionButton extends GuiElement {
     private WorkbenchAction action;
     private ItemStack targetStack;
 
-    private GuiCapabilityRequirement capabilityIndicator;
+    private ToolRequirementGui toolIndicator;
 
     private GuiClickable iconClickable;
     private GuiClickable labelClickable;
@@ -93,9 +95,11 @@ public class GuiActionButton extends GuiElement {
         iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench));
         addChild(iconClickable);
 
-        Capability[] capabilities = action.getRequiredCapabilitiesFor(targetStack);
-        capabilityIndicator = new GuiCapabilityRequirement(6, 7, capabilities.length > 0 ? capabilities[0] : Capability.hammer);
-        iconClickable.addChild(capabilityIndicator);
+        ToolType requiredTool = action.getRequiredToolTypes(targetStack).stream()
+                .findFirst()
+                .orElse(ToolTypes.hammer);
+        toolIndicator = new ToolRequirementGui(6, 7, requiredTool);
+        iconClickable.addChild(toolIndicator);
     }
 
     private void setBorderColors(int color) {
@@ -105,13 +109,15 @@ public class GuiActionButton extends GuiElement {
         borderBottom.setColor(color);
     }
 
-    public void update(int[] availableCapabilities) {
-        Capability[] capabilities = action.getRequiredCapabilitiesFor(targetStack);
-
-        if (capabilities.length > 0) {
-            capabilityIndicator.updateRequirement(action.getCapabilityLevel(targetStack, capabilities[0]),
-                    availableCapabilities[capabilities[0].ordinal()]);
-
+    public void update(Map<ToolType, Integer> availableTools) {
+        Map<ToolType, Integer> requiredTools = action.getRequiredTools(targetStack);
+        if (!requiredTools.isEmpty()) {
+            toolIndicator.setTooltipVisibility(true);
+            requiredTools.entrySet().stream()
+                    .findFirst()
+                    .ifPresent(entry -> toolIndicator.updateRequirement(entry.getValue(), availableTools.getOrDefault(entry.getKey(), 0)));
+        } else {
+            toolIndicator.setTooltipVisibility(false);
         }
     }
 }

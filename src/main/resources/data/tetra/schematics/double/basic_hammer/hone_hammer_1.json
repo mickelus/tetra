@@ -1,0 +1,45 @@
+{
+    "replace": true,
+    "localizationKey": "double/shared_head/hone_hammer_tier_1",
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "keySuffixes": [
+        "_left",
+        "_right"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 64
+    },
+    "requirement": {
+        "type": "tetra:modular_item",
+        "modules": [
+            [
+                "double/basic_hammer_right"
+            ],
+            [
+                "double/basic_hammer_left"
+            ]
+        ],
+        "improvements": {
+            "!head_hone/hammer_tier": -1,
+            "head_hone/durability": 3,
+            "head_hone/speed": 3
+        }
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer": 3
+            },
+            "improvements": {
+                "head_hone/hammer_tier": 0
+            }
+        }
+    ]
+}

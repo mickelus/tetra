@@ -1,0 +1,39 @@
+{
+    "replace": true,
+    "slots": ["crossbow/stock"],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 128,
+        "textureY": 48
+    },
+    "translation": {
+        "secondaryAttributes": {
+            "tetra:draw_speed": -2
+        },
+        "durability": 3,
+        "integrity": 2,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "material": {
+                "item": "minecraft:stick",
+                "count": 2
+            },
+            "moduleKey": "crossbow/basic_stock",
+            "moduleVariant": "basic_stock/stick"
+        },
+        {
+            "materials": ["tetra:wood/"],
+            "moduleKey": "crossbow/basic_stock",
+            "moduleVariant": "basic_stock/"
+        },
+        {
+            "materials": ["tetra:metal/"],
+            "toolOffset": 2,
+            "moduleKey": "crossbow/basic_stock",
+            "moduleVariant": "basic_stock/"
+        }
+    ]
+}

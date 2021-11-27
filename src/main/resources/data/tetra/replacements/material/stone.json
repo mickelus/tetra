@@ -1,0 +1,57 @@
+[
+    {
+        "predicate": {
+            "item": "minecraft:stone_sword"
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/stone"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/stone"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/stone"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:stone_shovel"
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/stone"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:stone_pickaxe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/stone"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/stone"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:stone_hoe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/stone"],
+            "double/head_right": ["double/butt_right", "butt/stone"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "item": "minecraft:stone_axe"
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/stone"],
+            "double/head_right": ["double/butt_right", "butt/stone"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    }
+]

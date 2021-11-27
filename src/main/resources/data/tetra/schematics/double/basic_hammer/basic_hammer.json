@@ -1,0 +1,85 @@
+{
+    "replace": true,
+    "slots": [
+        "double/head_left",
+        "double/head_right"
+    ],
+    "keySuffixes": [
+        "_left",
+        "_right"
+    ],
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureX": 64
+    },
+    "displayType": "major",
+    "applicableMaterials": ["#wood", "#stone", "!iron", "!blackstone", "!obsidian", "!netherite"],
+    "translation": {
+        "primaryAttributes": {
+            "generic.attack_damage": 2
+        },
+        "secondaryAttributes": {
+            "generic.attack_damage": 3,
+            "generic.attack_speed": -1
+        },
+        "tools": {
+            "hammer": [0, 2]
+        },
+        "durability": 2,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "materials": [
+                "tetra:wood/",
+                "tetra:stone/stone",
+                "tetra:stone/diorite",
+                "tetra:stone/andesite",
+                "tetra:stone/granite"
+            ],
+            "toolFactor": 0,
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/"
+        },
+        {
+            "materials": [
+                "tetra:metal/iron"
+            ],
+            "countFactor": 2,
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/"
+        },
+        {
+            "materials": [
+                "tetra:stone/blackstone"
+            ],
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/"
+        },
+        {
+            "material": {
+                "tag": "forge:obsidian"
+            },
+            "requiredTools": {
+                "hammer": 6
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/obsidian",
+            "improvements": {
+                "arrested": 0
+            }
+        },
+        {
+            "material": {
+                "item": "minecraft:netherite_ingot",
+                "count": 2
+            },
+            "requiredTools": {
+                "hammer": 7
+            },
+            "moduleKey": "double/basic_hammer",
+            "moduleVariant": "basic_hammer/netherite"
+        }
+    ]
+}

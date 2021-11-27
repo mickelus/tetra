@@ -5,7 +5,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.TetraMod;
 
 public class JumpHandlerBooster {
 
@@ -23,20 +23,18 @@ public class JumpHandlerBooster {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (mc.isGameFocused()) {
-            if (jumpKey.isKeyDown() && mc.player.onGround && mc.player.isCrouching()) {
+            if (jumpKey.isKeyDown() && mc.player.isOnGround() && mc.player.isCrouching()) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(true, true);
-                PacketHandler.sendToServer(packet);
-            } else if (jumpKey.isKeyDown() && !wasJumpKeyDown && !mc.player.onGround) {
+                TetraMod.packetHandler.sendToServer(packet);
+            } else if (jumpKey.isKeyDown() && !wasJumpKeyDown && !mc.player.isOnGround()) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(true);
-                PacketHandler.sendToServer(packet);
+                TetraMod.packetHandler.sendToServer(packet);
             } else if (!jumpKey.isKeyDown() && wasJumpKeyDown) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(false);
-                PacketHandler.sendToServer(packet);
+                TetraMod.packetHandler.sendToServer(packet);
             }
 
             wasJumpKeyDown = jumpKey.isKeyDown();
         }
     }
-
-
 }

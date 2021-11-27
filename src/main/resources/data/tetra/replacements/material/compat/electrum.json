@@ -1,0 +1,62 @@
+[
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["electrum_sword", "sword_electrum"]
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/electrum"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/electrum"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/electrum"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["electrum_shovel", "shovel_electrum"]
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/electrum"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["electrum_pickaxe", "pickaxe_electrum"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/electrum"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/electrum"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["electrum_hoe", "hoe_electrum"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/electrum"],
+            "double/head_right": ["double/butt_right", "butt/electrum"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["electrum_axe", "axe_electrum"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/electrum"],
+            "double/head_right": ["double/butt_right", "butt/electrum"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    }
+]

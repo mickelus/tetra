@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
@@ -82,7 +83,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
 
         int focus = getFocus();
         if (focus != -1) {
-            focusSlot.setString(inventory.getStackInSlot(focus).getDisplayName().getFormattedText());
+            focusSlot.setString(inventory.getStackInSlot(focus).getDisplayName().getString());
         } else {
             focusSlot.setString("");
         }
@@ -96,5 +97,9 @@ public class OverlayGuiPotionGroup extends GuiElement {
             }
         }
         return -1;
+    }
+
+    public Hand getHand() {
+        return null;
     }
 }

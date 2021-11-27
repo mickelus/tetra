@@ -4,7 +4,7 @@
         "requirement": {
             "item": "tetra:forged_bolt"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 3
         },
         "lootTable": "tetra:actions/bolt_salvage"
@@ -14,7 +14,7 @@
         "requirement": {
             "item": "tetra:forged_beam"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 4
         },
         "lootTable": "tetra:actions/beam_salvage"
@@ -24,7 +24,7 @@
         "requirement": {
             "item": "tetra:forged_mesh"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 3
         },
         "lootTable": "tetra:actions/mesh_salvage"
@@ -34,7 +34,7 @@
         "requirement": {
             "item": "tetra:vent_plate"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 3
         },
         "lootTable": "tetra:actions/vent_plate_salvage"
@@ -44,7 +44,7 @@
         "requirement": {
             "item": "tetra:metal_scrap"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 3
         },
         "lootTable": "tetra:actions/metal_scrap_salvage"
@@ -54,7 +54,7 @@
         "requirement": {
             "item": "tetra:quick_latch"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 3
         },
         "lootTable": "tetra:actions/quick_latch_salvage_hammer"
@@ -64,7 +64,7 @@
         "requirement": {
             "item": "tetra:quick_latch"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "pry": 1
         },
         "lootTable": "tetra:actions/quick_latch_salvage_pry"
@@ -74,7 +74,7 @@
         "requirement": {
             "item": "tetra:stonecutter"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 5
         },
         "lootTable": "tetra:actions/stonecutter_salvage"
@@ -84,7 +84,7 @@
         "requirement": {
             "item": "tetra:earthpiercer"
         },
-        "requiredCapabilities": {
+        "requiredTools": {
             "hammer": 5
         },
         "lootTable": "tetra:actions/earthpiercer_salvage"

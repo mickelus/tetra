@@ -1,0 +1,25 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:bedrock"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.chthonic_hammer.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.chthonic_hammer.description"
+        }
+    },
+    "parent": "tetra:spelunking/chthonic_extractor",
+    "criteria": {
+        "module": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "tool": "hammer",
+                "after": {
+                    "block": "tetra:chthonic_extractor"
+                }
+            }
+        }
+    }
+}

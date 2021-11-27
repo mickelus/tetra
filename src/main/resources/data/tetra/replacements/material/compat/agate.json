@@ -1,0 +1,62 @@
+[
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["agate_sword", "sword_agate"]
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/agate"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/agate"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/agate"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["agate_shovel", "shovel_agate"]
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/agate"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["agate_pickaxe", "pickaxe_agate"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/agate"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/agate"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["agate_hoe", "hoe_agate"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/agate"],
+            "double/head_right": ["double/butt_right", "butt/agate"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["agate_axe", "axe_agate"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/agate"],
+            "double/head_right": ["double/butt_right", "butt/agate"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        }
+    }
+]

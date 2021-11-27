@@ -1,0 +1,80 @@
+[
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["emerald_sword", "sword_emerald"]
+        },
+        "item": "tetra:modular_sword",
+        "modules": {
+            "sword/blade": ["sword/basic_blade", "basic_blade/emerald"],
+            "sword/hilt": ["sword/basic_hilt", "basic_hilt/stick"],
+            "sword/pommel": ["sword/decorative_pommel", "decorative_pommel/emerald"],
+            "sword/guard": ["sword/makeshift_guard", "makeshift_guard/emerald"]
+        },
+        "improvements": {
+            "sword/blade:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["emerald_shovel", "shovel_emerald"]
+        },
+        "item": "tetra:modular_single",
+        "modules": {
+            "single/head": ["single/basic_shovel", "basic_shovel/emerald"],
+            "single/handle": ["single/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "single/head:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["emerald_pickaxe", "pickaxe_emerald"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_pickaxe_left", "basic_pickaxe/emerald"],
+            "double/head_right": ["double/basic_pickaxe_right", "basic_pickaxe/emerald"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["emerald_hoe", "hoe_emerald"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/hoe_left", "hoe/emerald"],
+            "double/head_right": ["double/butt_right", "butt/emerald"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
+        }
+    },
+    {
+        "predicate": {
+            "type": "tetra:loose",
+            "keys": ["emerald_axe", "axe_emerald"]
+        },
+        "item": "tetra:modular_double",
+        "modules": {
+            "double/head_left": ["double/basic_axe_left", "basic_axe/emerald"],
+            "double/head_right": ["double/butt_right", "butt/emerald"],
+            "double/handle": ["double/basic_handle", "basic_handle/stick"]
+        },
+        "improvements": {
+            "double/head_left:arrested": 0,
+            "double/head_right:arrested": 0
+        }
+    }
+]
