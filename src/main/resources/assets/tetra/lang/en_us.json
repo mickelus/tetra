@@ -3089,7 +3089,7 @@
   "tetra.improvement.destabilized/apotheosis_magic_protection.name": "§5Destabilized: Occult Aversion",
   "tetra.improvement.destabilized/apotheosis_magic_protection.description": "Reduces the effect of the Occult Aversion enchantment",
   "tetra.improvement.enchantment/apotheosis_true_infinity.name": "Endless Quiver",
-  "tetra.improvement.enchantment/apotheosis_true_infinity.description": "firing no longer consumes ammunition, including special ammunition!",
+  "tetra.improvement.enchantment/apotheosis_true_infinity.description": "Makes all arrows infinite.",
   "tetra.improvement.enchantment/cyclic_excavate.name": "Excavate",
   "tetra.improvement.enchantment/cyclic_excavate.description": "Harvests the whole vein of connected matching blocks, not including diagonals",
   "tetra.improvement.destabilized/cyclic_excavate.name": "§5Destabilized: Excavate",
