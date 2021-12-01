@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -96,7 +96,7 @@ public class CleanseSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolAction, Integer> availableTools) {
+    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
         return isMaterialsValid(itemStack, slot, materials)
                 && (player.isCreative() || player.experienceLevel >= getExperienceCost(itemStack, materials, slot));
     }
@@ -126,12 +126,12 @@ public class CleanseSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean checkTools(ItemStack targetStack, ItemStack[] materials, Map<ToolAction, Integer> availableTools) {
+    public boolean checkTools(ItemStack targetStack, ItemStack[] materials, Map<ToolType, Integer> availableTools) {
         return true;
     }
 
     @Override
-    public Map<ToolAction, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
+    public Map<ToolType, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
         return Collections.emptyMap();
     }
 

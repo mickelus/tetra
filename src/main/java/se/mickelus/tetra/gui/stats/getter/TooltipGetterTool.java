@@ -3,7 +3,7 @@ package se.mickelus.tetra.gui.stats.getter;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
@@ -14,7 +14,7 @@ public class TooltipGetterTool implements ITooltipGetter {
     private final String localizationKey;
 
 
-    public TooltipGetterTool(ToolAction tool) {
+    public TooltipGetterTool(ToolType tool) {
         localizationKey = "tetra.stats." + tool.getName() + ".tooltip";
 
         levelGetter = new StatGetterToolLevel(tool);

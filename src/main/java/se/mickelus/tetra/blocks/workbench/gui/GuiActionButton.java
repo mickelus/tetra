@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
@@ -96,7 +96,7 @@ public class GuiActionButton extends GuiElement {
         iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench));
         addChild(iconClickable);
 
-        ToolAction requiredTool = action.getRequiredToolTypes(targetStack).stream()
+        ToolType requiredTool = action.getRequiredToolTypes(targetStack).stream()
                 .findFirst()
                 .orElse(ToolTypes.hammer);
         toolIndicator = new ToolRequirementGui(6, 7, requiredTool);
@@ -110,8 +110,8 @@ public class GuiActionButton extends GuiElement {
         borderBottom.setColor(color);
     }
 
-    public void update(Map<ToolAction, Integer> availableTools) {
-        Map<ToolAction, Integer> requiredTools = action.getRequiredTools(targetStack);
+    public void update(Map<ToolType, Integer> availableTools) {
+        Map<ToolType, Integer> requiredTools = action.getRequiredTools(targetStack);
         if (!requiredTools.isEmpty()) {
             toolIndicator.setTooltipVisibility(true);
             requiredTools.entrySet().stream()

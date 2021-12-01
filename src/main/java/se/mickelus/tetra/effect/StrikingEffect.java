@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -86,20 +86,20 @@ public class StrikingEffect {
 
     public static boolean causeEffect(Player breakingPlayer, ItemStack itemStack, ItemModularHandheld item, Level world, BlockPos pos, BlockState blockState) {
         int strikingLevel = 0;
-        ToolAction tool = null;
+        ToolType tool = null;
 
         // essentially checks if the item is effective in for each tool type, and checks if it can strike for that type
-        if (ItemModularHandheld.isToolEffective(ToolAction.AXE, blockState)) {
+        if (ItemModularHandheld.isToolEffective(ToolType.AXE, blockState)) {
             strikingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.strikingAxe);
             if (strikingLevel > 0) {
-                tool = ToolAction.AXE;
+                tool = ToolType.AXE;
             }
         }
 
-        if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolAction.PICKAXE, blockState)) {
+        if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolType.PICKAXE, blockState)) {
             strikingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.strikingPickaxe);
             if (strikingLevel > 0) {
-                tool = ToolAction.PICKAXE;
+                tool = ToolType.PICKAXE;
             }
         }
 
@@ -110,17 +110,17 @@ public class StrikingEffect {
             }
         }
 
-        if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolAction.SHOVEL, blockState)) {
+        if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolType.SHOVEL, blockState)) {
             strikingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.strikingShovel);
             if (strikingLevel > 0) {
-                tool = ToolAction.SHOVEL;
+                tool = ToolType.SHOVEL;
             }
         }
 
-        if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolAction.HOE, blockState)) {
+        if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolType.HOE, blockState)) {
             strikingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.strikingHoe);
             if (strikingLevel > 0) {
-                tool = ToolAction.HOE;
+                tool = ToolType.HOE;
             }
         }
 
@@ -174,7 +174,7 @@ public class StrikingEffect {
      *             match this
      * @param sweepingLevel the level of the sweeping effect on the toolStack
      */
-    private static void breakBlocksAround(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos originPos, ToolAction tool,
+    private static void breakBlocksAround(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos originPos, ToolType tool,
             int sweepingLevel) {
         if (world.isClientSide) {
             return;
@@ -242,7 +242,7 @@ public class StrikingEffect {
         }
     }
 
-    private static void enqueueBlockBreak(Level world, Player player, ItemStack itemStack, BlockPos pos, BlockState blockState, ToolAction tool,
+    private static void enqueueBlockBreak(Level world, Player player, ItemStack itemStack, BlockPos pos, BlockState blockState, ToolType tool,
             int toolLevel, int delay) {
         ServerScheduler.schedule(delay, () -> {
             if (((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))

@@ -5,7 +5,6 @@ import com.google.common.collect.Maps;
 import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -35,8 +34,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
@@ -78,7 +78,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
 
     @Override
     public void clientInit() {
-        BlockEntityRenderers.register(RackTile.type, RackTESR::new);
+        ClientRegistry.bindTileEntityRenderer(RackTile.type, RackTESR::new);
     }
 
     @Override
@@ -181,7 +181,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
     }
 
     @Override
-    public Collection<ToolAction> getTools(Level world, BlockPos pos, BlockState blockState) {
+    public Collection<ToolType> getTools(Level world, BlockPos pos, BlockState blockState) {
         return Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
@@ -191,7 +191,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
     }
 
     @Override
-    public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolType) {
+    public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolType toolType) {
         return Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
@@ -202,7 +202,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
 
     @Override
     public ItemStack onCraftConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
-            Player player, ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
+            Player player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
 
 
         Optional<Container> optional = Optional.ofNullable(world.getBlockEntity(pos))
@@ -229,7 +229,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
 
     @Override
     public ItemStack onActionConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
-            ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
+            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         Optional<ItemHandlerWrapper> optional = Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
@@ -283,6 +283,6 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
     @org.jetbrains.annotations.Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return new RackTile(p_153215_, p_153216_);
+        return new RackTile();
     }
 }

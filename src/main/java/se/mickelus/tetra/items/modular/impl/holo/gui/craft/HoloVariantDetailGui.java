@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiItem;
@@ -41,7 +41,7 @@ public class HoloVariantDetailGui extends GuiElement {
 
     private HoloStatsGui stats;
 
-    private Map<ToolAction, Integer> availableToolLevels;
+    private Map<ToolType, Integer> availableToolLevels;
 
     private Runnable populateImprovements;
     private HoloImprovementButton improvementButton;

@@ -117,8 +117,8 @@ import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
 import se.mickelus.tetra.trades.TradeHandler;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)

@@ -47,7 +47,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
@@ -213,12 +213,12 @@ public class ItemModularHandheld extends ModularItem {
         boolean canChannel = getUseDuration(itemStack) > 0;
         if (!canChannel || player.isCrouching()) {
             ToolData toolData = getToolData(itemStack);
-            Collection<ToolAction> tools = toolData.getValues().stream()
+            Collection<ToolType> tools = toolData.getValues().stream()
                     .filter(tool -> toolData.getLevel(tool) > 0)
-                    .sorted(player.isCrouching() ? Comparator.comparing(ToolAction::getName).reversed() : Comparator.comparing(ToolAction::getName))
+                    .sorted(player.isCrouching() ? Comparator.comparing(ToolType::getName).reversed() : Comparator.comparing(ToolType::getName))
                     .collect(Collectors.toList());
 
-            for (ToolAction tool: tools) {
+            for (ToolType tool: tools) {
                 BlockState block = blockState.getToolModifiedState(world, pos, context.getPlayer(), context.getItemInHand(), tool);
                 if (block != null) {
                     SoundEvent sound = Optional.ofNullable(getUseSound(tool))
@@ -249,10 +249,10 @@ public class ItemModularHandheld extends ModularItem {
         return super.useOn(context);
     }
 
-    private SoundEvent getUseSound(ToolAction tool) {
-        if      (tool == ToolAction.AXE)    return SoundEvents.AXE_STRIP;
-        else if (tool == ToolAction.HOE)    return SoundEvents.HOE_TILL;
-        else if (tool == ToolAction.SHOVEL) return SoundEvents.SHOVEL_FLATTEN;
+    private SoundEvent getUseSound(ToolType tool) {
+        if      (tool == ToolType.AXE)    return SoundEvents.AXE_STRIP;
+        else if (tool == ToolType.HOE)    return SoundEvents.HOE_TILL;
+        else if (tool == ToolType.SHOVEL) return SoundEvents.SHOVEL_FLATTEN;
         return null;
     }
 
@@ -798,7 +798,7 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     @Override
-    public Set<ToolAction> getToolTypes(ItemStack stack) {
+    public Set<ToolType> getToolTypes(ItemStack stack) {
         if (!isBroken(stack)) {
             return getTools(stack);
         }
@@ -806,7 +806,7 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     @Override
-    public int getHarvestLevel(ItemStack stack, ToolAction tool, @Nullable Player player, @Nullable BlockState blockState) {
+    public int getHarvestLevel(ItemStack stack, ToolType tool, @Nullable Player player, @Nullable BlockState blockState) {
         if (!isBroken(stack)) {
             int toolTier = getToolLevel(stack, tool);
             if (toolTier > 0) {
@@ -822,7 +822,7 @@ public class ItemModularHandheld extends ModularItem {
             return true;
         }
 
-        ToolAction requiredTool = state.getHarvestTool();
+        ToolType requiredTool = state.getHarvestTool();
         if (requiredTool == null) {
             requiredTool = getEffectiveTool(state);
         }
@@ -833,7 +833,7 @@ public class ItemModularHandheld extends ModularItem {
     @Override
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
         if (!isBroken(itemStack)) {
-            ToolAction tool = getEffectiveTool(blockState);
+            ToolType tool = getEffectiveTool(blockState);
             float speed = (float) (getAttributeValue(itemStack, Attributes.ATTACK_SPEED, 4) * 0.5 + 0.5);
 
             if (tool != null) {
@@ -865,7 +865,7 @@ public class ItemModularHandheld extends ModularItem {
         return 1;
     }
 
-    public static boolean isToolEffective(ToolAction toolType, BlockState blockState) {
+    public static boolean isToolEffective(ToolType toolType, BlockState blockState) {
         if (ToolTypes.cut.equals(toolType)
                 && (cuttingHarvestBlocks.contains(blockState.getBlock())
                     || cuttingDestroyMaterials.contains(blockState.getMaterial())
@@ -873,23 +873,23 @@ public class ItemModularHandheld extends ModularItem {
             return true;
         }
 
-        if (ToolAction.HOE.equals(toolType) && hoeBonusMaterials.contains(blockState.getMaterial())) {
+        if (ToolType.HOE.equals(toolType) && hoeBonusMaterials.contains(blockState.getMaterial())) {
             return true;
         }
 
-        if (ToolAction.AXE.equals(toolType) && axeMaterials.contains(blockState.getMaterial())) {
+        if (ToolType.AXE.equals(toolType) && axeMaterials.contains(blockState.getMaterial())) {
             return true;
         }
 
-        if (ToolAction.PICKAXE.equals(toolType) && pickaxeMaterials.contains(blockState.getMaterial())) {
+        if (ToolType.PICKAXE.equals(toolType) && pickaxeMaterials.contains(blockState.getMaterial())) {
             return true;
         }
 
         return toolType.equals(blockState.getHarvestTool());
     }
 
-    public static ToolAction getEffectiveTool(BlockState blockState) {
-        ToolAction tool = blockState.getHarvestTool();
+    public static ToolType getEffectiveTool(BlockState blockState) {
+        ToolType tool = blockState.getHarvestTool();
 
         if (tool != null) {
             return tool;
@@ -902,11 +902,11 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         if (axeMaterials.contains(blockState.getMaterial())) {
-            return ToolAction.AXE;
+            return ToolType.AXE;
         }
 
         if (pickaxeMaterials.contains(blockState.getMaterial())) {
-            return ToolAction.PICKAXE;
+            return ToolType.PICKAXE;
         }
 
         return null;
@@ -914,7 +914,7 @@ public class ItemModularHandheld extends ModularItem {
 
     @Override
     public ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, Player player,
-            ToolAction tool, int toolLevel, boolean consumeResources) {
+            ToolType tool, int toolLevel, boolean consumeResources) {
         if (consumeResources) {
             applyDamage(toolLevel, providerStack, player);
 
@@ -926,7 +926,7 @@ public class ItemModularHandheld extends ModularItem {
 
     @Override
     public ItemStack onActionConsume(ItemStack providerStack, ItemStack targetStack, Player player,
-            ToolAction tool, int toolLevel, boolean consumeResources) {
+            ToolType tool, int toolLevel, boolean consumeResources) {
         if (consumeResources) {
             applyDamage(toolLevel, providerStack, player);
 

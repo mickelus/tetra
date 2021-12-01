@@ -25,9 +25,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.util.CastOptional;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.List;
+
+
+import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ModularShieldISTER extends BlockEntityWithoutLevelRenderer {

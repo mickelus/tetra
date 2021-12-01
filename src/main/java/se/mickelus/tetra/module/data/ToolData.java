@@ -1,7 +1,7 @@
 package se.mickelus.tetra.module.data;
 
 import com.google.gson.*;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 @ParametersAreNonnullByDefault
-public class ToolData extends TierData<ToolAction> {
+public class ToolData extends TierData<ToolType> {
     public static class Deserializer implements JsonDeserializer<ToolData> {
         @Override
         public ToolData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -20,7 +20,7 @@ public class ToolData extends TierData<ToolAction> {
 
             jsonObject.entrySet().forEach(entry -> {
                 JsonElement entryValue = entry.getValue();
-                ToolAction toolType = ToolAction.get(entry.getKey());
+                ToolType toolType = ToolType.get(entry.getKey());
                 if (entryValue.isJsonArray()) {
                     JsonArray entryArray = entryValue.getAsJsonArray();
                     if (entryArray.size() == 2) {

@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.util.CastOptional;
@@ -18,7 +18,7 @@ public class RemoveImprovementOutcome implements CraftingEffectOutcome {
 
     @Override
     public boolean apply(ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
-            Map<ToolAction, Integer> tools, Level world, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials) {
+            Map<ToolType, Integer> tools, Level world, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials) {
         return CastOptional.cast(upgradedStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(upgradedStack, slot))
                 .flatMap(module -> CastOptional.cast(module, ItemModuleMajor.class))

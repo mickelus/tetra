@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
@@ -92,12 +92,12 @@ public class HoloStatsGui extends GuiElement {
             GuiStats.stability,
             GuiStats.workable,
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.hammer, true),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolAction.AXE, true),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolAction.PICKAXE, true),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolAction.SHOVEL, true),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.AXE, true),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.PICKAXE, true),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.SHOVEL, true),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.cut, true),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.pry, true),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolAction.HOE, true)
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.HOE, true)
     ));
 
     private GuiElement barGroup;

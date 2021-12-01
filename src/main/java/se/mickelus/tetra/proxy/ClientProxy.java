@@ -2,11 +2,11 @@ package se.mickelus.tetra.proxy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.ITetraBlock;
@@ -40,18 +40,18 @@ public class ClientProxy implements IProxy {
         Arrays.stream(items).forEach(ITetraItem::clientInit);
         Arrays.stream(blocks).forEach(ITetraBlock::clientInit);
 
-        EntityRenderers.register(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
 
         // these are registered here as there are multiple instances of workbench blocks
-        BlockEntityRenderers.register(WorkbenchTile.type, WorkbenchTESR::new);
+        ClientRegistry.bindTileEntityRenderer(WorkbenchTile.type, WorkbenchTESR::new);
         MenuScreens.register(WorkbenchTile.containerType, WorkbenchScreen::new);
-        BlockEntityRenderers.register(ScrollTile.type, ScrollRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(ScrollTile.type, ScrollRenderer::new);
 
         MinecraftForge.EVENT_BUS.register(new HowlingOverlay(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new AbilityOverlays(Minecraft.getInstance()));
 
         if (ConfigHandler.development.get()) {
-            BlockEntityRenderers.register(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureTESR::new);
+            ClientRegistry.bindTileEntityRenderer(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureTESR::new);
         }
 
         BotaniaCompat.clientInit();

@@ -20,10 +20,12 @@ import se.mickelus.tetra.items.modular.impl.holo.gui.scan.HoloScanRootGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.system.HoloSystemRootGui;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+
+import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class HoloGui extends Screen {

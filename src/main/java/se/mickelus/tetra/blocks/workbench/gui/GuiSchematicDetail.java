@@ -5,7 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiItemRolling;
@@ -103,7 +103,7 @@ public class GuiSchematicDetail extends GuiElement {
         addChild(craftButton);
     }
 
-    public void update(UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, Map<ToolAction, Integer> availableTools,
+    public void update(UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, Map<ToolType, Integer> availableTools,
             Player player) {
         this.schematic = schematic;
 
@@ -202,12 +202,12 @@ public class GuiSchematicDetail extends GuiElement {
         }
     }
 
-    public void updateAvailableTools(Map<ToolAction, Integer> availableTools) {
+    public void updateAvailableTools(Map<ToolType, Integer> availableTools) {
         toolRequirementList.updateAvailableTools(availableTools);
     }
 
     public void updateButton(UpgradeSchematic schematic, Player player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
-            Map<ToolAction, Integer> availableTools) {
+            Map<ToolType, Integer> availableTools) {
         craftButton.update(schematic, player, itemStack, previewStack, materials, slot, availableTools);
     }
 

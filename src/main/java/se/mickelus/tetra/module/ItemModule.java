@@ -10,7 +10,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.StringUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -251,19 +251,19 @@ public abstract class ItemModule implements IToolProvider {
                 .orElse(null);
     }
 
-    public Collection<ToolAction> getRepairRequiredTools(ItemStack itemStack, ItemStack materialStack) {
+    public Collection<ToolType> getRepairRequiredTools(ItemStack itemStack, ItemStack materialStack) {
         return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
                 .map(definition -> definition.requiredTools.getValues())
                 .orElseGet(Collections::emptySet);
     }
 
-    public Map<ToolAction, Integer> getRepairRequiredToolLevels(ItemStack itemStack, ItemStack materialStack) {
+    public Map<ToolType, Integer> getRepairRequiredToolLevels(ItemStack itemStack, ItemStack materialStack) {
         return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
                 .map(definition -> definition.requiredTools.getLevelMap())
                 .orElseGet(Collections::emptyMap);
     }
 
-    public int getRepairRequiredToolLevel(ItemStack itemStack, ItemStack materialStack, ToolAction tool) {
+    public int getRepairRequiredToolLevel(ItemStack itemStack, ItemStack materialStack, ToolType tool) {
         return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
                 .map(definition -> definition.requiredTools.getLevel(tool))
                 .orElse(0);
@@ -395,28 +395,28 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     @Override
-    public int getToolLevel(ItemStack itemStack, ToolAction tool) {
+    public int getToolLevel(ItemStack itemStack, ToolType tool) {
         return Optional.ofNullable(getToolData(itemStack))
                 .map(data -> data.getLevel(tool))
                 .orElse(0);
     }
 
     @Override
-    public float getToolEfficiency(ItemStack itemStack, ToolAction tool) {
+    public float getToolEfficiency(ItemStack itemStack, ToolType tool) {
         return Optional.ofNullable(getToolData(itemStack))
                 .map(data -> data.getEfficiency(tool))
                 .orElse(0f);
     }
 
     @Override
-    public Set<ToolAction> getTools(ItemStack itemStack) {
+    public Set<ToolType> getTools(ItemStack itemStack) {
         return Optional.ofNullable(getToolData(itemStack))
                 .map(TierData::getValues)
                 .orElseGet(Collections::emptySet);
     }
 
     @Override
-    public Map<ToolAction, Integer> getToolLevels(ItemStack itemStack) {
+    public Map<ToolType, Integer> getToolLevels(ItemStack itemStack) {
         return Optional.ofNullable(getToolData(itemStack))
                 .map(TierData::getLevelMap)
                 .orElseGet(Collections::emptyMap);

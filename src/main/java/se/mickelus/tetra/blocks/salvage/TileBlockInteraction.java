@@ -5,7 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -16,7 +16,7 @@ public class TileBlockInteraction<T extends BlockEntity> extends BlockInteractio
     private final Function<T, Boolean> predicate;
     private final Class<T> tileEntityClass;
 
-    public TileBlockInteraction(ToolAction requiredTool, int requiredLevel, Direction face, float minX, float maxX, float minY, float maxY,
+    public TileBlockInteraction(ToolType requiredTool, int requiredLevel, Direction face, float minX, float maxX, float minY, float maxY,
             Class<T> tileEntityClass, Function<T, Boolean> predicate, InteractionOutcome outcome) {
         super(requiredTool, requiredLevel, face, minX, maxX, minY, maxY, outcome);
 

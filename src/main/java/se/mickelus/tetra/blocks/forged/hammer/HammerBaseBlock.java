@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -30,7 +29,8 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
@@ -88,7 +88,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        BlockEntityRenderers.register(HammerBaseTile.type, HammerBaseRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(HammerBaseTile.type, HammerBaseRenderer::new);
     }
 
     @Override
@@ -141,7 +141,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     }
 
     public ItemStack applyCraftEffects(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
-            Player player, ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
+            Player player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         if (consumeResources) {
             consumeFuel(world, pos);
         }
@@ -163,7 +163,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     }
 
     public ItemStack applyActionEffects(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
-            ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
+            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         if (consumeResources) {
             consumeFuel(world, pos);
         }
@@ -274,7 +274,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, final BlockState state, final Direction face, final Collection<ToolAction> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, final BlockState state, final Direction face, final Collection<ToolType> tools) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.getValue(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);

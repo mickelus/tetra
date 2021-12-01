@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.salvage;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
@@ -18,13 +18,13 @@ public class InteractiveToolGui extends GuiElement {
     private KeyframeAnimation show;
     private KeyframeAnimation hide;
 
-    private ToolAction toolType;
+    private ToolType toolType;
     private int toolLevel;
 
     private Player player;
     private int currentSlot;
 
-    public InteractiveToolGui(int x, int y, ToolAction toolType, int toolLevel, Player player) {
+    public InteractiveToolGui(int x, int y, ToolType toolType, int toolLevel, Player player) {
         super(x, y, 16, 16);
         opacity = 0;
 

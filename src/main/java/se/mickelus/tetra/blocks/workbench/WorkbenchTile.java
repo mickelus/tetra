@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -336,7 +336,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
 
         BlockState blockState = getBlockState();
 
-        Map<ToolAction, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, getLevel(), getBlockPos(), blockState);
+        Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, getLevel(), getBlockPos(), blockState);
 
         ItemStack[] materials = getMaterials();
         ItemStack[] materialsAltered = Arrays.stream(getMaterials()).map(ItemStack::copy).toArray(ItemStack[]::new);
@@ -349,13 +349,13 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
             double durabilityFactor = upgradedStack.isDamageableItem() ? upgradedStack.getDamageValue() * 1d / upgradedStack.getMaxDamage() : 0;
             double honingFactor = Mth.clamp(item.getHoningProgress(upgradedStack) * 1d / item.getHoningLimit(upgradedStack), 0, 1);
 
-            Map<ToolAction, Integer> tools = currentSchematic.getRequiredToolLevels(targetStack, materials);
+            Map<ToolType, Integer> tools = currentSchematic.getRequiredToolLevels(targetStack, materials);
 
             upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
             upgradedStack = applyCraftingBonusEffects(upgradedStack, currentSlot, willReplace, player, materials, materialsAltered, tools, level, worldPosition, blockState, true);
 
-            for (Map.Entry<ToolAction, Integer> entry : tools.entrySet()) {
+            for (Map.Entry<ToolType, Integer> entry : tools.entrySet()) {
                 upgradedStack = consumeCraftingToolEffects(upgradedStack, currentSlot, willReplace, entry.getKey(), entry.getValue(), player, level, worldPosition, blockState, true);
             }
 
@@ -400,7 +400,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     /**
      * applies crafting tool effects in the following order: inventory, toolbelt, nearby blocks
      */
-    public static ItemStack consumeCraftingToolEffects(ItemStack upgradedStack, String slot, boolean isReplacing, ToolAction tool, int level,
+    public static ItemStack consumeCraftingToolEffects(ItemStack upgradedStack, String slot, boolean isReplacing, ToolType tool, int level,
             Player player, Level world, BlockPos pos, BlockState blockState, boolean consumeResources) {
         ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(tool, level, player);
         if (!providingStack.isEmpty()) {
@@ -424,7 +424,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     }
 
     public static ItemStack applyCraftingBonusEffects(ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
-            ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ToolAction, Integer> tools, Level world, BlockPos pos, BlockState blockState,
+            ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ToolType, Integer> tools, Level world, BlockPos pos, BlockState blockState,
             boolean consumeResources) {
         ItemStack result = upgradedStack.copy();
         ResourceLocation[] unlockedEffects = CastOptional.cast(blockState.getBlock(), AbstractWorkbenchBlock.class)
