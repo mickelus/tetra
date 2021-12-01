@@ -8,14 +8,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
-
-// todo 1.15: ripped out
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
@@ -30,8 +29,7 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
 
     private static final float openDuration = 300;
 
-    public ForgedContainerRenderer(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    public ForgedContainerRenderer(BlockEntityRendererProvider.Context context) {
 
         lid = new ModelPart(128, 64, 0, 0);
         lid.addBox(0, -3, -14, 30, 3, 14, 0);

@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.InteractionOutcome;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
@@ -22,7 +22,7 @@ public class ActionInteraction extends BlockInteraction {
 
     private String actionKey;
 
-    public ActionInteraction(ToolType requiredType, int requiredLevel, String actionKey) {
+    public ActionInteraction(ToolAction requiredType, int requiredLevel, String actionKey) {
         super(requiredType, requiredLevel, Direction.UP, 5, 11, 5, 11, InteractionOutcome.EMPTY);
 
         this.actionKey = actionKey;
@@ -37,7 +37,7 @@ public class ActionInteraction extends BlockInteraction {
                 .filter(action -> action.getRequiredTools(targetStack).entrySet().size() == 1)
                 .findFirst()
                 .map(action -> {
-                    Map.Entry<ToolType, Integer> requirementPair = action.getRequiredTools(targetStack).entrySet().stream().findFirst().get();
+                    Map.Entry<ToolAction, Integer> requirementPair = action.getRequiredTools(targetStack).entrySet().stream().findFirst().get();
                     return new ActionInteraction(requirementPair.getKey(), requirementPair.getValue(), action.getKey());
                 })
                 .orElse(null);

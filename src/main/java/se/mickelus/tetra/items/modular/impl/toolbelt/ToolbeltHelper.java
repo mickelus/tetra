@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -203,8 +203,8 @@ public class ToolbeltHelper {
             for (int i = 0; i < inventory.getContainerSize(); i++) {
                 ItemStack itemStack = inventory.getItem(i);
                 if (effects.get(i).contains(ItemEffect.quickAccess) && !itemStack.isEmpty()) {
-                    ToolType requiredTool = blockState.getHarvestTool();
-                    ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(blockState);
+                    ToolAction requiredTool = blockState.getHarvestTool();
+                    ToolAction effectiveTool = ItemModularHandheld.getEffectiveTool(blockState);
                     if (requiredTool != null
                             && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) >= blockState.getHarvestLevel()
                             || effectiveTool != null && itemStack.getItem().getToolTypes(itemStack).contains(effectiveTool)) {

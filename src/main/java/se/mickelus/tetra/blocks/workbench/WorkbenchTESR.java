@@ -8,13 +8,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
-
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
@@ -23,7 +23,7 @@ public class WorkbenchTESR implements BlockEntityRenderer<WorkbenchTile> {
 
     private ItemRenderer itemRenderer;
 
-    public WorkbenchTESR(BlockEntityRenderDispatcher dispatcher) {
+    public WorkbenchTESR(BlockEntityRendererProvider.Context context) {
         itemRenderer = Minecraft.getInstance().getItemRenderer();
     }
 

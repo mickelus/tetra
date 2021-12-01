@@ -28,7 +28,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
@@ -110,7 +110,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     private static boolean attemptBreak(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand,
-            ItemStack itemStack, ToolType toolType, int min, int multiplier) {
+            ItemStack itemStack, ToolAction toolType, int min, int multiplier) {
 
         if (player == null) {
             return false;
@@ -143,7 +143,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ToolAction> tools) {
             return interactions;
     }
 

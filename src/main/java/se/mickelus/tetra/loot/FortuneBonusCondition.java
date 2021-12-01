@@ -11,7 +11,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.properties.IToolProvider;
@@ -26,7 +26,7 @@ public class FortuneBonusCondition implements LootItemCondition {
     private float chance;
     private float fortuneMultiplier;
 
-    private ToolType requiredTool;
+    private ToolAction requiredTool;
     private int requiredToolLevel = -1;
 
     @Override

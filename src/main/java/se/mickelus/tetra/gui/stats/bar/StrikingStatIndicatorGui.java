@@ -3,7 +3,7 @@ package se.mickelus.tetra.gui.stats.bar;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiColors;
@@ -18,22 +18,22 @@ public class StrikingStatIndicatorGui extends GuiStatIndicator {
     GuiStatIndicator sweeping;
     GuiStatIndicator current;
 
-    public StrikingStatIndicatorGui(ToolType toolType) {
+    public StrikingStatIndicatorGui(ToolAction toolType) {
         super(0, 0, "", 0, null, null);
 
-        if (toolType == ToolType.AXE) {
+        if (toolType == ToolAction.AXE) {
             striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
                     new StatGetterEffectLevel(ItemEffect.strikingAxe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolType.PICKAXE) {
+        } else if (toolType == ToolAction.PICKAXE) {
             striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
                     new StatGetterEffectLevel(ItemEffect.strikingPickaxe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
         } else if (toolType == ToolTypes.cut) {
             striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
                     new StatGetterEffectLevel(ItemEffect.strikingCut, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolType.SHOVEL) {
+        } else if (toolType == ToolAction.SHOVEL) {
             striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
                     new StatGetterEffectLevel(ItemEffect.strikingShovel, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolType.HOE) {
+        } else if (toolType == ToolAction.HOE) {
             striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
                     new StatGetterEffectLevel(ItemEffect.strikingHoe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
         }

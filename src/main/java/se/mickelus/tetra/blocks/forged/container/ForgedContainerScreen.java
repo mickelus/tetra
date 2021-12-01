@@ -19,10 +19,8 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.VerticalTabGroupGui;
 
-import java.util.stream.IntStream;
-
-
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.stream.IntStream;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContainerContainer> {

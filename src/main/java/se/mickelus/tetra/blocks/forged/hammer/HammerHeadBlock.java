@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -26,8 +27,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
@@ -74,7 +74,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        ClientRegistry.bindTileEntityRenderer(HammerHeadTile.type, HammerHeadTESR::new);
+        BlockEntityRenderers.register(HammerHeadTile.type, HammerHeadTESR::new);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     @Override
-    public Collection<ToolType> getTools(Level world, BlockPos pos, BlockState blockState) {
+    public Collection<ToolAction> getTools(Level world, BlockPos pos, BlockState blockState) {
         if (isFunctional(world, pos)) {
             return Collections.singletonList(ToolTypes.hammer);
         }
@@ -121,7 +121,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     @Override
-    public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolType toolType) {
+    public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolType) {
         if (ToolTypes.hammer.equals(toolType) && isFunctional(world, pos)) {
             BlockPos basePos = pos.above();
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
@@ -132,7 +132,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
 
     @Override
     public ItemStack onCraftConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing, Player player,
-            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
+            ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
         BlockPos basePos = pos.above();
         BlockState baseState = world.getBlockState(basePos);
         ItemStack upgradedStack = CastOptional.cast(baseState.getBlock(), HammerBaseBlock.class)
@@ -159,7 +159,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
 
     @Override
     public ItemStack onActionConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
-            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
+            ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
         BlockPos basePos = pos.above();
         BlockState baseState = world.getBlockState(basePos);
         ItemStack upgradedStack = CastOptional.cast(baseState.getBlock(), HammerBaseBlock.class)
@@ -198,7 +198,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolAction> tools) {
         if (isJammed(world, pos) && face.getAxis().getPlane() == Direction.Plane.HORIZONTAL) {
             return interactions;
         }

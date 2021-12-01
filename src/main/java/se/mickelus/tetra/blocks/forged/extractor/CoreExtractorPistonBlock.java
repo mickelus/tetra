@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -19,7 +20,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
@@ -27,7 +27,6 @@ import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 @ParametersAreNonnullByDefault
@@ -50,7 +49,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements E
     @Override
     @OnlyIn(Dist.CLIENT)
     public void clientInit() {
-        ClientRegistry.bindTileEntityRenderer(CoreExtractorPistonTile.type, CoreExtractorPistonTESR::new);
+        BlockEntityRenderers.register(CoreExtractorPistonTile.type, CoreExtractorPistonTESR::new);
     }
 
     @Override

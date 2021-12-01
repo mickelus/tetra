@@ -6,7 +6,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -201,7 +201,7 @@ public class HoloMaterialTranslation extends GuiElement {
     }
 
 
-    private String extractToolLevel(ToolType tool, ToolData toolData) {
+    private String extractToolLevel(ToolAction tool, ToolData toolData) {
         int level = toolData.getLevel(tool);
         if (level != 0) {
             return getStatLine("tetra.tool." + tool.getName(), level, "tetra.stats.tier_suffix");
@@ -210,7 +210,7 @@ public class HoloMaterialTranslation extends GuiElement {
         return null;
     }
 
-    private String extractToolEfficiency(ToolType tool, ToolData toolData) {
+    private String extractToolEfficiency(ToolAction tool, ToolData toolData) {
         int efficiency = (int) toolData.getEfficiency(tool);
         if (efficiency != 0) {
             return getStatLine("tetra.tool." + tool.getName(), efficiency, "tetra.stats.efficiency_suffix");

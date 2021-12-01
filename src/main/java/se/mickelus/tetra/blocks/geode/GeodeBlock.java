@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
@@ -38,7 +38,7 @@ public class GeodeBlock extends TetraBlock {
     public GeodeBlock() {
         super(Properties.of(Material.STONE)
         .sound(SoundType.STONE)
-        .harvestTool(ToolType.PICKAXE)
+        .harvestTool(ToolAction.PICKAXE)
         .harvestLevel(0)
         .strength(1.5F, 6.0F));
 

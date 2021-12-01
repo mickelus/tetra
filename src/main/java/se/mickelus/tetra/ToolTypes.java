@@ -1,11 +1,11 @@
 package se.mickelus.tetra;
 
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class ToolTypes {
-    public static final ToolType cut = ToolType.get("cut");
-    public static final ToolType hammer = ToolType.get("hammer");
-    public static final ToolType pry = ToolType.get("pry");
+    public static final ToolAction cut = ToolAction.get("cut");
+    public static final ToolAction hammer = ToolAction.get("hammer");
+    public static final ToolAction pry = ToolAction.get("pry");
 }

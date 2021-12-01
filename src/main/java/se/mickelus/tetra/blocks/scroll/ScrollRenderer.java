@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.Material;
@@ -44,9 +45,9 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
     private static final int availableMaterials = 3;
 
     ModelPart transparent;
-    private BlockEntityRenderDispatcher dispatcher;
+    private BlockEntityRendererProvider.Context dispatcher;
 
-    public ScrollRenderer(BlockEntityRenderDispatcher dispatcher) {
+    public ScrollRenderer(BlockEntityRendererProvider.Context dispatcher) {
         this.dispatcher = dispatcher;
 
         rolledModel = new ModelPart[availableMaterials];
@@ -254,7 +255,7 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
 
         matrixStack.scale(-0.0125f, -0.0125f, 0.0125f);
         Matrix4f matrix4f = matrixStack.last().pose();
-        Font fontrenderer = dispatcher.font;
+        Font fontrenderer = dispatcher.getFont();
         float x = -fontrenderer.width(label) / 2f;
         fontrenderer.drawInBatch(label, x + 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
         fontrenderer.drawInBatch(label, x - 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);

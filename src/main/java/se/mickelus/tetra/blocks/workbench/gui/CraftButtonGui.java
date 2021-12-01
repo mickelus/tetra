@@ -4,7 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiClickable;
 import se.mickelus.mgui.gui.GuiStringOutline;
@@ -49,7 +49,7 @@ public class CraftButtonGui extends GuiClickable {
     }
 
     public void update(UpgradeSchematic schematic, Player player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
-            Map<ToolType, Integer> availableTools) {
+            Map<ToolAction, Integer> availableTools) {
         enabled = schematic.canApplyUpgrade(player, itemStack, materials, slot, availableTools);
         tooltip = null;
 

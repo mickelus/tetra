@@ -17,12 +17,10 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
-import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ScrollScreen extends Screen {
