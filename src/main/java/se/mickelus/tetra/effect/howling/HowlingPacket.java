@@ -1,8 +1,8 @@
 package se.mickelus.tetra.effect.howling;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.network.AbstractPacket;

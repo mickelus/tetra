@@ -3,23 +3,16 @@ package se.mickelus.tetra.effect.potion;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import se.mickelus.tetra.effect.EffectHelper;
-import se.mickelus.tetra.util.ParticleHelper;
-
-import java.util.Random;
 
 public class ExhaustedPotionEffect extends MobEffect {
     public static ExhaustedPotionEffect instance;

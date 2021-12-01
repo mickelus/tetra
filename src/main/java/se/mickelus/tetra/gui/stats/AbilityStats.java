@@ -4,6 +4,7 @@ import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBar;
 import se.mickelus.tetra.gui.stats.bar.GuiStatIndicator;
 import se.mickelus.tetra.gui.stats.getter.*;
+
 import static se.mickelus.tetra.gui.stats.StatsHelper.*;
 
 public class AbilityStats {

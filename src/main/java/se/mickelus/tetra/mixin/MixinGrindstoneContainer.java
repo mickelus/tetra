@@ -2,16 +2,11 @@ package se.mickelus.tetra.mixin;
 
 import net.minecraft.world.inventory.GrindstoneMenu;
 import net.minecraft.world.item.ItemStack;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import se.mickelus.tetra.items.modular.IModularItem;
-
-import java.util.Arrays;
-import java.util.Objects;
 
 @Mixin(GrindstoneMenu.class)
 public class MixinGrindstoneContainer {

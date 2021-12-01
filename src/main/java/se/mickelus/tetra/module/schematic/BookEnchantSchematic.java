@@ -1,14 +1,13 @@
 package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -16,12 +15,14 @@ import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
+import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.util.CastOptional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class BookEnchantSchematic implements UpgradeSchematic {

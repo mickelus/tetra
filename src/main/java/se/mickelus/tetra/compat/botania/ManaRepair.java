@@ -1,22 +1,19 @@
 package se.mickelus.tetra.compat.botania;
 
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchStatsGui;
-import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
-import se.mickelus.tetra.gui.stats.bar.GuiStatBar;
 import se.mickelus.tetra.gui.stats.StatsHelper;
+import se.mickelus.tetra.gui.stats.bar.GuiStatBar;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.LabelGetterBasic;
 import se.mickelus.tetra.gui.stats.getter.TooltipGetterInteger;
 import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloStatsGui;
-import se.mickelus.tetra.util.CastOptional;
-import vazkii.botania.api.mana.ManaItemHandler;
+// import vazkii.botania.api.mana.ManaItemHandler;
 
 public class ManaRepair {
     public static ItemEffect effect = ItemEffect.get("manaRepair");
@@ -33,6 +30,7 @@ public class ManaRepair {
     }
 
     public static void itemInventoryTick(ItemStack itemStack, Level world, Entity entity) {
+        /*
         if (!world.isClientSide && world.getGameTime() % 20 == 0 && BotaniaCompat.isLoaded) {
             int manaRepairLevel = EffectHelper.getEffectLevel(itemStack, effect);
             if (manaRepairLevel > 0 && itemStack.getDamageValue() > 0) {
@@ -41,5 +39,6 @@ public class ManaRepair {
                         .ifPresent(player -> itemStack.setDamageValue(itemStack.getDamageValue() - 1));
             }
         }
+         */
     }
 }

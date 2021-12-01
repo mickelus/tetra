@@ -1,21 +1,17 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.item.ItemStack;
+import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiItem;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringOutline;
-import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiColors;
 
 public class OverlayGuiQuickslot extends GuiElement {
     public static final int height = 20;

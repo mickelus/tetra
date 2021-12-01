@@ -2,21 +2,18 @@ package se.mickelus.tetra.advancements;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.world.level.block.state.BlockState;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.util.JsonOptional;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

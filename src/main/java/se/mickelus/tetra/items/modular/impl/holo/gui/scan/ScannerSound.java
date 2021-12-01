@@ -7,8 +7,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraSounds;
 
-import net.minecraft.client.resources.sounds.SoundInstance.Attenuation;
-
 @OnlyIn(Dist.CLIENT)
 public class ScannerSound extends AbstractTickableSoundInstance {
     private int activeCounter;

@@ -2,7 +2,6 @@ package se.mickelus.tetra.module.data;
 
 import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.module.Priority;
-import se.mickelus.tetra.util.Filter;
 
 import java.util.Arrays;
 import java.util.Objects;

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui.stats.getter;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.ChatFormatting;
 import se.mickelus.tetra.Tooltips;
 
 public interface ITooltipGetter {

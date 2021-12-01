@@ -1,16 +1,15 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 public class CoreExtractorPistonTile extends BlockEntity implements TickableBlockEntity {

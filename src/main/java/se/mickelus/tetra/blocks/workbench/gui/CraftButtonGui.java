@@ -1,9 +1,9 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiClickable;

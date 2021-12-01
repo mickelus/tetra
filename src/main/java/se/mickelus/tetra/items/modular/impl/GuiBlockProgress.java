@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import se.mickelus.mgui.gui.GuiAttachment;
@@ -11,7 +11,6 @@ import se.mickelus.mgui.gui.GuiRoot;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 
 public class GuiBlockProgress extends GuiRoot {
 

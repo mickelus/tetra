@@ -1,8 +1,8 @@
 package se.mickelus.tetra.effect.revenge;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.network.FriendlyByteBuf;
 import se.mickelus.tetra.network.AbstractPacket;
 
 public class RemoveRevengePacket extends AbstractPacket {

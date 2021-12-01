@@ -2,24 +2,25 @@ package se.mickelus.tetra.module;
 
 
 import com.google.common.collect.Multimap;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.module.data.*;
-import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.items.modular.ItemColors;
+import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.SettlePacket;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.CastOptional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
 
 public abstract class ItemModuleMajor extends ItemModule {
 

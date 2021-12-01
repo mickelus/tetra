@@ -1,20 +1,20 @@
 package se.mickelus.tetra.properties;
 
 import com.google.common.collect.Sets;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.ITetraBlock;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
-import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.InventoryStream;

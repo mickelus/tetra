@@ -1,7 +1,7 @@
 package se.mickelus.tetra.generation;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * A loot entry used in a generation feature. During feature generation the inventory at the given position will have

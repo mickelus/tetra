@@ -1,6 +1,9 @@
 package se.mickelus.tetra.gui;
 
-import se.mickelus.mgui.gui.*;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiClickable;
+import se.mickelus.mgui.gui.GuiRect;
+import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.animation.AnimationChain;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;

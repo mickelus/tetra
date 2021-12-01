@@ -1,9 +1,9 @@
 package se.mickelus.tetra.gui.stats.getter;
 
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 
 public class TooltipGetterArthropod implements ITooltipGetter {
 

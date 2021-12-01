@@ -7,7 +7,8 @@ import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.tetra.gui.stats.getter.*;
+import se.mickelus.tetra.gui.stats.getter.StatGetterEffectLevel;
+import se.mickelus.tetra.gui.stats.getter.TooltipGetterNone;
 
 import java.util.Optional;
 

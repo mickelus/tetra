@@ -1,13 +1,11 @@
 package se.mickelus.tetra.items.modular;
 
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.InteractionHand;
 import se.mickelus.tetra.network.AbstractPacket;
-import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Optional;
 

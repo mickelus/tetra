@@ -6,7 +6,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.items.modular.impl.bow.GuiRangedProgress;
-import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 
 public class CrossbowOverlay {
     public static CrossbowOverlay instance;

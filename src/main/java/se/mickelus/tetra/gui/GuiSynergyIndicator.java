@@ -1,11 +1,9 @@
 package se.mickelus.tetra.gui;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.ChatFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.items.modular.IModularItem;

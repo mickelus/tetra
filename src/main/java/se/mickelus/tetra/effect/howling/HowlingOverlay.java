@@ -1,7 +1,5 @@
 package se.mickelus.tetra.effect.howling;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;

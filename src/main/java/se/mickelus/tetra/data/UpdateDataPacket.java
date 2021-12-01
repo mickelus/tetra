@@ -1,9 +1,9 @@
 package se.mickelus.tetra.data;
 
 import com.google.gson.JsonElement;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.AbstractPacket;
 
 import java.util.HashMap;

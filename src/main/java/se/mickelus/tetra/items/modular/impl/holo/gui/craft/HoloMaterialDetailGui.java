@@ -7,10 +7,10 @@ import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.stats.getter.LabelGetterBasic;
-import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.module.data.TierData;
 

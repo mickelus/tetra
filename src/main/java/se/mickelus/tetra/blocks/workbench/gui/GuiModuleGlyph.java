@@ -1,8 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.module.data.GlyphData;

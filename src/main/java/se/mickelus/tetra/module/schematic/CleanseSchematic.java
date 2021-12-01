@@ -4,7 +4,6 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.ArrayUtils;
@@ -16,7 +15,6 @@ import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Stream;

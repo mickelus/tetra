@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
-import net.minecraft.world.item.Item;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.Item;
 import se.mickelus.tetra.items.forged.CombustionChamberItem;
 import se.mickelus.tetra.items.forged.InsulatedPlateItem;
 import se.mickelus.tetra.items.forged.LubricantDispenser;

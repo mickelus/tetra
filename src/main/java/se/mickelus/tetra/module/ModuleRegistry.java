@@ -6,7 +6,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.module.data.MaterialVariantData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.VariantData;

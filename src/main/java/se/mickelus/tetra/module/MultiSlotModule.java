@@ -1,16 +1,14 @@
 package se.mickelus.tetra.module;
 
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
-import se.mickelus.tetra.util.Filter;
 
-import java.util.*;
+import java.util.Arrays;
 
 public class MultiSlotModule extends ItemModule {
 

@@ -4,9 +4,9 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.module.data.GlyphData;
 
 
 public abstract class BasicSchematic extends BaseSchematic {

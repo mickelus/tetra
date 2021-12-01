@@ -3,8 +3,8 @@ package se.mickelus.tetra.gui.stats.getter;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.properties.TetraAttributes;
 
 public class TooltipGetterVelocity implements ITooltipGetter {

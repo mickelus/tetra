@@ -1,33 +1,21 @@
 package se.mickelus.tetra.blocks.scroll.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiText;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.gui.GuiSpinner;
-import se.mickelus.tetra.items.modular.impl.holo.HoloPage;
-import se.mickelus.tetra.items.modular.impl.holo.gui.HoloHeaderGui;
-import se.mickelus.tetra.items.modular.impl.holo.gui.HoloRootBaseGui;
-import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloCraftRootGui;
-import se.mickelus.tetra.items.modular.impl.holo.gui.scan.HoloScanRootGui;
-import se.mickelus.tetra.items.modular.impl.holo.gui.system.HoloSystemRootGui;
 
 import java.util.Arrays;
 import java.util.List;

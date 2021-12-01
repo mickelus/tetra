@@ -1,15 +1,14 @@
 package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.Mth;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;

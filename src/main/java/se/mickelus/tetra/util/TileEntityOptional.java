@@ -2,7 +2,6 @@ package se.mickelus.tetra.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.World;
 
 import java.util.Optional;
 

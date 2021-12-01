@@ -4,10 +4,10 @@ import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
 import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
-import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 
 import java.util.Collection;

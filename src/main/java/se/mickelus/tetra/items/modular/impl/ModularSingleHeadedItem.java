@@ -17,9 +17,6 @@ import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
 
-
-import net.minecraft.world.item.Item.Properties;
-
 public class ModularSingleHeadedItem extends ItemModularHandheld {
 
     public final static String headKey = "single/head";

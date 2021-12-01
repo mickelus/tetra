@@ -1,15 +1,15 @@
 package se.mickelus.tetra.module.improvement;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
-import com.mojang.blaze3d.platform.Lighting;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
@@ -19,9 +19,6 @@ import se.mickelus.tetra.module.schematic.SchematicRarity;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Optional;
-
-
-import net.minecraft.client.gui.components.toasts.Toast.Visibility;
 
 public class SettleToast implements Toast {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/toasts.png");

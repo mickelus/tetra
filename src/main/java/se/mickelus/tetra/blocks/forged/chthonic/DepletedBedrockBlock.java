@@ -5,8 +5,6 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class DepletedBedrockBlock extends TetraBlock {
     public static final String unlocalizedName = "depleted_bedrock";
 

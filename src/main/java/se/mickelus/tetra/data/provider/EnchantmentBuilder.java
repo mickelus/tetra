@@ -2,10 +2,10 @@ package se.mickelus.tetra.data.provider;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.minecraft.ChatFormatting;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.ChatFormatting;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 

@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.resources.I18n;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
 import se.mickelus.tetra.items.modular.IModularItem;

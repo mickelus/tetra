@@ -2,7 +2,6 @@ package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
 import se.mickelus.tetra.craftingeffect.CraftingEffect;
-import se.mickelus.tetra.module.data.MaterialData;
 
 public class CraftingEffectStore extends MergingDataStore<CraftingEffect, CraftingEffect[]> {
 

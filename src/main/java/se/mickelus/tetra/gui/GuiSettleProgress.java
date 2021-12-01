@@ -1,13 +1,13 @@
 package se.mickelus.tetra.gui;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.ChatFormatting;
-import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringSmall;
+import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.gui.stats.bar.GuiBar;
 import se.mickelus.tetra.module.ItemModuleMajor;
 

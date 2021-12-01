@@ -1,7 +1,7 @@
 package se.mickelus.tetra.network;
 
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 
 import java.io.IOException;
 

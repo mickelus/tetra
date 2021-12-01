@@ -1,21 +1,19 @@
 package se.mickelus.tetra.blocks;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.FluidState;
+import staticnet.minecraft.world.level.material.Fluidsrties.BlockStateProperties.WATERLOGGED;
 
 import javax.annotation.Nullable;
 
 import static net.minecraft.fluid.Fluids.WATER;
-import staticnet.minecraft.world.level.material.Fluidsrties.BlockStateProperties.WATERLOGGED;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class TetraWaterloggedBlock extends TetraBlock implements SimpleWaterloggedBlock {
     public TetraWaterloggedBlock(Properties properties) {

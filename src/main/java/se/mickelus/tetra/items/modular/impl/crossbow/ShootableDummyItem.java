@@ -1,13 +1,10 @@
 package se.mickelus.tetra.items.modular.impl.crossbow;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 
 import java.util.function.Predicate;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class ShootableDummyItem extends ProjectileWeaponItem {
 

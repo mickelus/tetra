@@ -1,7 +1,8 @@
 package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.resources.ResourceLocation;
-import se.mickelus.tetra.module.data.*;
+import se.mickelus.tetra.module.data.MaterialData;
+import se.mickelus.tetra.module.data.ToolData;
 
 import java.util.Collection;
 import java.util.Map;

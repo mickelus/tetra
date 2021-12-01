@@ -1,8 +1,10 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.ChatFormatting;
-import se.mickelus.mgui.gui.*;
+import net.minecraft.client.resources.language.I18n;
+import se.mickelus.mgui.gui.GuiButton;
+import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mgui.gui.GuiText;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.function.Consumer;

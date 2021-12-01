@@ -1,22 +1,22 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.Constants;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.ItemPredicateComposite;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
-import se.mickelus.tetra.effect.ItemEffect;
 
 import java.util.Arrays;
 import java.util.Collection;

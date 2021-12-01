@@ -1,6 +1,5 @@
 package se.mickelus.tetra.properties;
 
-import com.google.common.cache.Cache;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
@@ -8,9 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.module.data.ToolData;
 
-import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Stream;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 
 public interface IToolProvider {
     Logger logger = LogManager.getLogger();

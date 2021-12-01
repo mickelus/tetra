@@ -1,7 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.Screen;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;

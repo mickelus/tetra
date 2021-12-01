@@ -2,10 +2,10 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
@@ -17,7 +17,10 @@ import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 public class HoloMaterialTranslation extends GuiElement {
     private final List<String> emptyTooltipImprovement = Collections.singletonList(I18n.get("tetra.holo.craft.empty_translation_improvement"));

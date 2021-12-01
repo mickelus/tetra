@@ -1,13 +1,12 @@
 package se.mickelus.tetra.gui;
 
 import net.minecraft.resources.ResourceLocation;
-import se.mickelus.mgui.gui.*;
+import se.mickelus.mgui.gui.GuiAttachment;
+import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.mgui.gui.animation.AnimationChain;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.mgui.gui.impl.GuiColors;
-import se.mickelus.tetra.gui.VerticalTabButtonGui;
-import se.mickelus.tetra.gui.GuiTextures;
 
 public class VerticalTabIconButtonGui extends VerticalTabButtonGui {
     private GuiTexture icon;

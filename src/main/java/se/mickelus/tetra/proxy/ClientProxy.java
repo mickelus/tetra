@@ -19,7 +19,6 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
-import se.mickelus.tetra.effect.gui.ComboPointGui;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
 import se.mickelus.tetra.generation.ExtendedStructureTESR;
 import se.mickelus.tetra.items.ITetraItem;

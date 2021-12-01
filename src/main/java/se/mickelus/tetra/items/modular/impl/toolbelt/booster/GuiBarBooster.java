@@ -1,7 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.VisibilityFilter;
 

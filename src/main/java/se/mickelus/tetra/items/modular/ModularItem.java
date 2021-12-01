@@ -2,31 +2,30 @@ package se.mickelus.tetra.items.modular;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.*;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
+import com.google.common.collect.Multimap;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.compat.botania.ManaRepair;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.module.data.*;
-import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.items.TetraItem;
+import se.mickelus.tetra.module.data.EffectData;
+import se.mickelus.tetra.module.data.ItemProperties;
+import se.mickelus.tetra.module.data.SynergyData;
+import se.mickelus.tetra.module.data.ToolData;
+import se.mickelus.tetra.properties.IToolProvider;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,8 +34,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-
-import net.minecraft.world.item.Item.Properties;
 
 public abstract class ModularItem extends TetraItem implements IModularItem, IToolProvider {
     private static final Logger logger = LogManager.getLogger();

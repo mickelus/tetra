@@ -1,10 +1,9 @@
 package se.mickelus.tetra.module.schematic;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;

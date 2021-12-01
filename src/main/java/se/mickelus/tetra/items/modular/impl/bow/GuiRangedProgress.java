@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import se.mickelus.mgui.gui.GuiAttachment;

@@ -1,9 +1,9 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.ServerScheduler;
 
 import java.util.Random;

@@ -1,15 +1,15 @@
 package se.mickelus.tetra.blocks.forged.container;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.core.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -19,7 +19,6 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mgui.gui.ToggleableSlot;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.network.PacketHandler;
 
 import java.util.Arrays;
 

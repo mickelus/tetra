@@ -5,10 +5,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.stats.getter.*;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
 
 public class GuiStatBarTool extends GuiStatBar {

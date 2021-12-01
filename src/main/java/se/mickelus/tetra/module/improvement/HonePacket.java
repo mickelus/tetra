@@ -1,9 +1,8 @@
 package se.mickelus.tetra.module.improvement;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import se.mickelus.tetra.network.AbstractPacket;
 
 public class HonePacket extends AbstractPacket {

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.network;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 
 public abstract class BlockPosPacket extends AbstractPacket {
 

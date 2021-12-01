@@ -1,4 +1,5 @@
 package se.mickelus.tetra.blocks.workbench.gui;
+
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
@@ -6,9 +7,6 @@ import se.mickelus.mgui.gui.GuiStringOutline;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.gui.GuiTextures;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class GuiTool extends GuiElement {
     public static final int width = 16;

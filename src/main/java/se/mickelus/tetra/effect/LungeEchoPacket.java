@@ -1,9 +1,7 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.Hand;
+import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.AbstractPacket;
 
 public class LungeEchoPacket extends AbstractPacket {

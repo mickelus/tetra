@@ -1,8 +1,8 @@
 package se.mickelus.tetra.generation;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
 
 /**
  * Used to specify where and which features can be generated as a part of another feature.

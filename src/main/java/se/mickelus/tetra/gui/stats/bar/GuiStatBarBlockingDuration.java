@@ -3,9 +3,9 @@ package se.mickelus.tetra.gui.stats.bar;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.stats.getter.*;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.effect.ItemEffect;
 
 public class GuiStatBarBlockingDuration extends GuiStatBar {
     private static final IStatGetter durationGetter = new StatGetterEffectLevel(ItemEffect.blocking, 1);

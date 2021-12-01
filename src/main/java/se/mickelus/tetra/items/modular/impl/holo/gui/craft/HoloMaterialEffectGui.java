@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;

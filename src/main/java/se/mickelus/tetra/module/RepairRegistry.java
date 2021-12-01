@@ -4,8 +4,8 @@ import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.module.schematic.SchematicDefinition;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
+import se.mickelus.tetra.module.schematic.SchematicDefinition;
 
 import java.util.*;
 import java.util.stream.Collectors;

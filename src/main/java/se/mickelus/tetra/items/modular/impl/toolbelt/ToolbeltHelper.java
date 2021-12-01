@@ -1,26 +1,26 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
-import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.properties.IToolProvider;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
+import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.util.CastOptional;
 import top.theillusivec4.curios.api.CuriosApi;
 

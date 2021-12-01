@@ -1,16 +1,10 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.item.ItemStack;
-import org.apache.commons.lang3.StringUtils;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
-import se.mickelus.tetra.util.CastOptional;
 
 import java.util.List;
 import java.util.function.Consumer;

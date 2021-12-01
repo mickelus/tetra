@@ -1,10 +1,7 @@
 package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
-import se.mickelus.tetra.module.schematic.OutcomeDefinition;
 import se.mickelus.tetra.module.schematic.SchematicDefinition;
-
-import java.util.*;
 
 public class SchematicStore extends MergingDataStore<SchematicDefinition, SchematicDefinition[]> {
 

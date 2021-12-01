@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.settings.KeyModifier;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;

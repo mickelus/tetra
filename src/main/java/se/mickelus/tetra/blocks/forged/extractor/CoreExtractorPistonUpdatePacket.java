@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.BlockPosPacket;
 import se.mickelus.tetra.util.TileEntityOptional;
 

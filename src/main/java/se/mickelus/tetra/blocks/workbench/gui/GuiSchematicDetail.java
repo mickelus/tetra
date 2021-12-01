@@ -1,13 +1,16 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.*;
-import se.mickelus.tetra.gui.*;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiItemRolling;
+import se.mickelus.tetra.gui.GuiMagicUsage;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialApplicable;
 import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialTranslation;
 import se.mickelus.tetra.module.data.GlyphData;

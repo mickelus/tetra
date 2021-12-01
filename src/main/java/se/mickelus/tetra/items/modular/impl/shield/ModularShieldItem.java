@@ -1,15 +1,15 @@
 package se.mickelus.tetra.items.modular.impl.shield;
 
 import com.google.common.collect.Multimap;
-import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
@@ -28,8 +28,6 @@ import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Optional;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class ModularShieldItem extends ItemModularHandheld {
     public final static String plateKey = "shield/plate";

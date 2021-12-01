@@ -1,7 +1,7 @@
 package se.mickelus.tetra.generation;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Used to specify additional details for feature generation, containing information about where and how a feature is to

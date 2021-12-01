@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.network.AbstractPacket;
 

@@ -1,16 +1,14 @@
 package se.mickelus.tetra.module;
 
-import java.util.*;
-
 import com.google.common.collect.Multimap;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Mth;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.StringUtils;
@@ -18,10 +16,12 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.*;
-import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.tetra.util.CastOptional;
-import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
+import se.mickelus.tetra.properties.AttributeHelper;
+import se.mickelus.tetra.properties.IToolProvider;
+import se.mickelus.tetra.util.CastOptional;
+
+import java.util.*;
 
 public abstract class ItemModule implements IToolProvider {
 

@@ -1,13 +1,12 @@
 package se.mickelus.tetra.items.modular;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import se.mickelus.tetra.network.AbstractPacket;
 import se.mickelus.tetra.network.BlockPosPacket;
 
 import java.util.Optional;

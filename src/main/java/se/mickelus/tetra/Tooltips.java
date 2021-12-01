@@ -1,8 +1,7 @@
 package se.mickelus.tetra;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.util.text.Style;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public class Tooltips {

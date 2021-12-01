@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.BlockPosPacket;
 
 public class WorkbenchPacketCraft extends BlockPosPacket {

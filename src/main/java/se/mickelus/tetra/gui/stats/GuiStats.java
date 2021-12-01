@@ -1,9 +1,9 @@
 package se.mickelus.tetra.gui.stats;
 
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
-import se.mickelus.tetra.effect.*;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBar;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBarBlockingDuration;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBarIntegrity;

@@ -2,9 +2,7 @@ package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
 import se.mickelus.tetra.module.data.ImprovementData;
-import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.module.data.MaterialImprovementData;
-import se.mickelus.tetra.module.data.MaterialVariantData;
 
 import java.util.*;
 import java.util.stream.Collectors;

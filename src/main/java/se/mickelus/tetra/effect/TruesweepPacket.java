@@ -1,8 +1,8 @@
 package se.mickelus.tetra.effect;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
 import se.mickelus.tetra.network.AbstractPacket;
 
 public class TruesweepPacket extends AbstractPacket {
