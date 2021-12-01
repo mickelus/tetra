@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[34,)"
+loaderVersion="[38,)"
 issueTrackerURL="https://github.com/mickelus/tetra/issues/new?template=bug_report.md"
 license="MIT"
 
@@ -14,13 +14,13 @@ credits="red1854th: korean localization, Jeffku0107: chinese localization, Arvid
 [[dependencies.tetra]] #optional
     modId="forge"
     mandatory=true
-    versionRange="[34,)"
+    versionRange="[38,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.tetra]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.3,]"
+    versionRange="[1.18,1.18.1)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.tetra]]
@@ -38,6 +38,6 @@ credits="red1854th: korean localization, Jeffku0107: chinese localization, Arvid
 [[dependencies.tetra]]
     modId="botania"
     mandatory=false
-    versionRange="[1.16,)"
+    versionRange="[1.18,)"
     ordering="AFTER"
     side="BOTH"

@@ -111,15 +111,19 @@ sourceSets.main.resources {
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
+    implementation files("mgui-1.18-3.3.0-deobf.jar")
+    /*
     if (findProject(':mgui') != null) {
         implementation project(':mgui')
     } else {
         implementation fg.deobf("curse.maven:mgui-351914:3456505")
-    }
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+    }*/
 
-    compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
+//    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+//    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+
+//    compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
+
 //    runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 //    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
