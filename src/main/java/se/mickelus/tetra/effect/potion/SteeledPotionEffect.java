@@ -13,6 +13,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.effect.EffectHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class SteeledPotionEffect extends MobEffect {
     public static SteeledPotionEffect instance;
 

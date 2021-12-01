@@ -5,6 +5,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.effect.ItemEffect;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class TooltipGetterSweeping implements ITooltipGetter {
 
     private final IStatGetter levelGetter;

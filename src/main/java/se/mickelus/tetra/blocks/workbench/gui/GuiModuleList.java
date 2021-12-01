@@ -8,10 +8,11 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class GuiModuleList extends GuiElement {
     private final Consumer<String> slotClickHandler;
     private final BiConsumer<String, String> hoverHandler;

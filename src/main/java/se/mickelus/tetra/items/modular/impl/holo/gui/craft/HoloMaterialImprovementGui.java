@@ -8,8 +8,9 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class HoloMaterialImprovementGui extends GuiElement {
     protected GuiTexture backdrop;
 

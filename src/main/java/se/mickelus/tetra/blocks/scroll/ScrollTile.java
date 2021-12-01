@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.scroll;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -15,9 +16,10 @@ import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
-
+@ParametersAreNonnullByDefault
 public class ScrollTile extends BlockEntity {
     public static final String unlocalizedName = "scroll";
 
@@ -27,8 +29,8 @@ public class ScrollTile extends BlockEntity {
     private static final String scrollsKey = "scrolls";
     private ScrollData[] scrolls = new ScrollData[0];
 
-    public ScrollTile() {
-        super(type);
+    public ScrollTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
     }
 
     public ScrollData[] getScrolls() {
@@ -83,7 +85,7 @@ public class ScrollTile extends BlockEntity {
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override

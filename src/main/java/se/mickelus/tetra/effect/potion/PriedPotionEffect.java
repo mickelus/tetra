@@ -16,6 +16,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.util.ParticleHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class PriedPotionEffect extends MobEffect {
     public static PriedPotionEffect instance;
 

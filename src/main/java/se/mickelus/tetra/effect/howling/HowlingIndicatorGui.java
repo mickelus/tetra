@@ -5,6 +5,8 @@ import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class HowlingIndicatorGui extends GuiTexture {
     private final KeyframeAnimation animation;
 

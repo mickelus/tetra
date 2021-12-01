@@ -3,9 +3,9 @@ package se.mickelus.tetra.gui.stats.getter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
-
-// todo: doesn't really work for bars since improvement & slot getters only reference the base item
+@ParametersAreNonnullByDefault
 public class StatGetterSum implements IStatGetter {
     private IStatGetter[] statGetters;
     private double offset = 0;

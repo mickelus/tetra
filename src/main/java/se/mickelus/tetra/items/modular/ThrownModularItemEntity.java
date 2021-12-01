@@ -13,7 +13,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.math.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -33,9 +32,9 @@ import net.minecraft.world.phys.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.CritEffect;
@@ -47,8 +46,9 @@ import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Comparator;
-
+@ParametersAreNonnullByDefault
 public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
     public static final String unlocalizedName = "thrown_modular_item";
 
@@ -102,7 +102,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         super(type, x, y, z, worldIn);
     }
 
-    public ThrownModularItemEntity(FMLPlayMessages.SpawnEntity packet, Level worldIn) {
+    public ThrownModularItemEntity(PlayMessages.SpawnEntity packet, Level worldIn) {
         super(type, worldIn);
     }
 

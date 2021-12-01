@@ -14,8 +14,9 @@ import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloItemsGui extends GuiElement {
 
     private final HoloSeparatorsGui separators;

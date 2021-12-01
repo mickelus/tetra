@@ -3,6 +3,8 @@ package se.mickelus.tetra.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import se.mickelus.mgui.gui.GuiElement;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiSpinner extends GuiElement {
     public GuiSpinner(int x, int y) {
         super(x, y, 5, 5);

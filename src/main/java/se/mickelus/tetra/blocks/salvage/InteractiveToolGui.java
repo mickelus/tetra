@@ -10,6 +10,8 @@ import se.mickelus.mgui.gui.impl.GuiColors;
 import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
 import se.mickelus.tetra.properties.PropertyHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class InteractiveToolGui extends GuiElement {
     private GuiTool toolIcon;
 
@@ -40,7 +42,7 @@ public class InteractiveToolGui extends GuiElement {
                 .applyTo(new Applier.Opacity(1, 0));
 
         updateTint();
-        currentSlot = player.inventory.selected;
+        currentSlot = player.getInventory().selected;
     }
 
     public void updateFadeTime() {
@@ -73,9 +75,9 @@ public class InteractiveToolGui extends GuiElement {
 
     @Override
     public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        if (player.inventory.selected != currentSlot) {
+        if (player.getInventory().selected != currentSlot) {
             updateTint();
-            currentSlot = player.inventory.selected;
+            currentSlot = player.getInventory().selected;
         }
 
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);

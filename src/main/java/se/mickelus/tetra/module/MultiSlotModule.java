@@ -8,8 +8,9 @@ import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
-
+@ParametersAreNonnullByDefault
 public class MultiSlotModule extends ItemModule {
 
     protected String slotSuffix;

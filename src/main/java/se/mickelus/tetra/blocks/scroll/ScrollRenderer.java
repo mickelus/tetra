@@ -27,7 +27,9 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.rack.RackBlock;
 import se.mickelus.tetra.util.RotationHelper;
 
-public class ScrollRenderer extends BlockEntityRenderer<ScrollTile> {
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
+public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
     public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/scroll"));
 
     private ModelPart[] rolledModel;
@@ -42,9 +44,10 @@ public class ScrollRenderer extends BlockEntityRenderer<ScrollTile> {
     private static final int availableMaterials = 3;
 
     ModelPart transparent;
+    private BlockEntityRenderDispatcher dispatcher;
 
     public ScrollRenderer(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+        this.dispatcher = dispatcher;
 
         rolledModel = new ModelPart[availableMaterials];
         wallModel = new ModelPart[availableMaterials];
@@ -251,7 +254,7 @@ public class ScrollRenderer extends BlockEntityRenderer<ScrollTile> {
 
         matrixStack.scale(-0.0125f, -0.0125f, 0.0125f);
         Matrix4f matrix4f = matrixStack.last().pose();
-        Font fontrenderer = renderer.font;
+        Font fontrenderer = dispatcher.font;
         float x = -fontrenderer.width(label) / 2f;
         fontrenderer.drawInBatch(label, x + 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
         fontrenderer.drawInBatch(label, x - 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);

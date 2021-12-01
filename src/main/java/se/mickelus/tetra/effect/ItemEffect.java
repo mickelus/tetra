@@ -1,19 +1,9 @@
 package se.mickelus.tetra.effect;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-/**
- * Item effects are used by modules to apply various effects when the item is used in different ways, or to alter
- * how the item can be used. Item effects have a level, and some also makes use of an efficiency value.
- *
- * In json config files the effects are expressed as an object. Example with bleeding level 2 and
- * sweeping level 1 with efficiency 3.4:
- * {
- *     "bleeding": 2,
- *     "sweeping": [1, 3.4]
- * }
- */
+@ParametersAreNonnullByDefault
 public class ItemEffect {
     private static final Map<String, ItemEffect> effectMap = new ConcurrentHashMap<>();
 

@@ -11,11 +11,12 @@ import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.VariantData;
 import se.mickelus.tetra.util.Filter;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class ModuleRegistry {
     private static final Logger logger = LogManager.getLogger();
 

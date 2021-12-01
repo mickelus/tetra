@@ -24,8 +24,9 @@ import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.util.CastOptional;
 import top.theillusivec4.curios.api.CuriosApi;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
-
+@ParametersAreNonnullByDefault
 public class ToolbeltHelper {
     public static void equipItemFromToolbelt(Player player, ToolbeltSlotType slotType, int index, InteractionHand hand) {
         ToolbeltInventory inventory = null;
@@ -61,7 +62,7 @@ public class ToolbeltHelper {
 
         if (!heldItemStack.isEmpty()) {
             if (!storeItemInToolbelt(toolbeltStack, heldItemStack)) {
-                if (!player.inventory.add(heldItemStack)) {
+                if (!player.getInventory().add(heldItemStack)) {
                     inventory.storeItemInInventory(player.getItemInHand(hand));
                     player.setItemInHand(hand, heldItemStack);
                     player.displayClientMessage(new TranslatableComponent("tetra.toolbelt.blocked"), true);
@@ -132,7 +133,7 @@ public class ToolbeltHelper {
                 return ItemStack.EMPTY;
             }
         }
-        Inventory inventoryPlayer = player.inventory;
+        Inventory inventoryPlayer = player.getInventory();
         for (int i = 0; i < inventoryPlayer.items.size(); ++i) {
             ItemStack itemStack = inventoryPlayer.getItem(i);
             if (ModularToolbeltItem.instance.equals(itemStack.getItem())) {

@@ -9,6 +9,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ModularShieldModel extends Model {
     private final ModelPart towerPlate;

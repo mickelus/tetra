@@ -17,7 +17,8 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import se.mickelus.mgui.gui.ToggleableSlot;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
-
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class WorkbenchContainer extends AbstractContainerMenu {
     private WorkbenchTile workbench;
 

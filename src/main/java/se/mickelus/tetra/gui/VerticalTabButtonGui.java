@@ -9,6 +9,8 @@ import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.mgui.gui.impl.GuiColors;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class VerticalTabButtonGui extends GuiClickable {
 
     protected boolean hasContent = false;

@@ -10,10 +10,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ScannerDebugRenderer {
     private final ScannerOverlayGui overlayGui;
 
@@ -22,13 +25,13 @@ public class ScannerDebugRenderer {
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onRenderWorld(RenderWorldLastEvent event) {
+    public void onRenderWorld(RenderLevelLastEvent event) {
         Player player = Minecraft.getInstance().player;
 
         if (player != null && player.isCreative()) {
-            PoseStack matrixStack = event.getMatrixStack();
+            PoseStack matrixStack = event.getPoseStack();
             VertexConsumer vertexBuilder = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
-            Vec3 eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTicks());
+            Vec3 eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTick());
 
             GlStateManager._lineWidth(3);
             if (overlayGui.upHighlight != null) drawDebugBox(overlayGui.upHighlight, eyePos, matrixStack, vertexBuilder, 1, 0, 0, 0.5f);

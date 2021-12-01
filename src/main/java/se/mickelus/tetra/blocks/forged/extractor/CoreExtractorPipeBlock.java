@@ -22,8 +22,9 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class CoreExtractorPipeBlock extends TetraBlock {
     public static final DirectionProperty facingProp = BlockStateProperties.FACING;
     public static final BooleanProperty poweredProp = BooleanProperty.create("powered");

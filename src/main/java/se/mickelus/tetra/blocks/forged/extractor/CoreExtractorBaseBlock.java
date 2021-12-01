@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -28,14 +27,15 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.util.TileEntityOptional;
-import staticnet.minecraft.world.level.material.Fluidsrties.BlockStateProperties.WATERLOGGED;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-import static net.minecraft.fluid.Fluids.WATER;
-
-public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
+import static net.minecraft.world.level.material.Fluids.WATER;
+@ParametersAreNonnullByDefault
+public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements EntityBlock {
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
 
     private static final VoxelShape capShape = box(3, 14, 3, 13, 16, 13);
@@ -93,20 +93,9 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return new CoreExtractorBaseTile();
-    }
-
-    @Override
     public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
         if (Direction.UP.equals(facing) && !CoreExtractorPistonBlock.instance.equals(facingState.getBlock())) {
-            return state.getValue(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
+            return state.getValue(WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
         }
 
         return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
@@ -139,5 +128,11 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(facingProp)));
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new CoreExtractorBaseTile(p_153215_, p_153216_);
     }
 }

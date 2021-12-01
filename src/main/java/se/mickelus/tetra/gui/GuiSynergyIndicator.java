@@ -11,9 +11,10 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class GuiSynergyIndicator extends GuiElement {
     private static final int activeCoord = 176;
     private static final int inactiveCoord = 186;

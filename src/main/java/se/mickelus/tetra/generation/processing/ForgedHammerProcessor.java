@@ -14,8 +14,9 @@ import se.mickelus.tetra.blocks.forged.hammer.HammerEffect;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class ForgedHammerProcessor extends StructureProcessor {
     public ForgedHammerProcessor() { }
 

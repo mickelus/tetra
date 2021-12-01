@@ -8,8 +8,9 @@ import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.data.MaterialData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloMaterialItemGui extends GuiClickable {
     protected GuiTexture backdrop;
 

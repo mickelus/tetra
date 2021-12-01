@@ -6,6 +6,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class MiningSpeedPotionEffect extends MobEffect {
     public static MiningSpeedPotionEffect instance;
     public MiningSpeedPotionEffect() {

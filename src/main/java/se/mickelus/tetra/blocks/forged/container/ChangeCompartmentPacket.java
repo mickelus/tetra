@@ -5,6 +5,8 @@ import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.AbstractPacket;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ChangeCompartmentPacket extends AbstractPacket {
 
     private int compartmentIndex;

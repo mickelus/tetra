@@ -21,11 +21,12 @@ import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-
+@ParametersAreNonnullByDefault
 public class OverpowerEffect extends ChargedAbilityEffect {
     private static Cache<Integer, DelayData> delayCache = CacheBuilder.newBuilder()
             .maximumSize(20)

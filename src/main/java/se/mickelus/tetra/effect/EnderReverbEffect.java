@@ -10,8 +10,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class EnderReverbEffect {
     public static void perform(LivingEntity entity, ItemStack itemStack, double multiplier) {
         if (!entity.level.isClientSide) {

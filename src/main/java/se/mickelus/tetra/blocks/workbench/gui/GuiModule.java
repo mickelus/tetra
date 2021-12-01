@@ -13,9 +13,10 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.VariantData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class GuiModule extends GuiClickable {
 
     protected String slotKey = null;

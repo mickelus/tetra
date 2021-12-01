@@ -5,10 +5,11 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class GuiModuleImprovement extends GuiElement {
 
     private final List<String> tooltipLines;

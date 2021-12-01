@@ -3,6 +3,8 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class HoloSeparatorsGui extends GuiElement {
     public HoloSeparatorsGui(int x, int y, int width, int height) {
         super(x, y, width, height);

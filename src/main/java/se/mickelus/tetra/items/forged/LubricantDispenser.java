@@ -16,8 +16,9 @@ import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class LubricantDispenser extends TetraItem {
     private static final String unlocalizedName = "lubricant_dispenser";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)

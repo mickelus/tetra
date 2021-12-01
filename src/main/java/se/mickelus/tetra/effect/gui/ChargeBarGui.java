@@ -14,8 +14,9 @@ import se.mickelus.tetra.gui.InvertColorGui;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-
+@ParametersAreNonnullByDefault
 public class ChargeBarGui extends GuiElement {
     private GuiElement container;
     private GuiElement overchargeContainer;

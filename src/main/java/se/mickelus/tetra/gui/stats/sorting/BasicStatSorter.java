@@ -7,9 +7,10 @@ import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.StatFormat;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Comparator;
 import java.util.function.Function;
-
+@ParametersAreNonnullByDefault
 public class BasicStatSorter implements IStatSorter {
     private IStatGetter getter;
     private String name;

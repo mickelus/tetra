@@ -16,6 +16,8 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.properties.IToolProvider;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class FortuneBonusCondition implements LootItemCondition {
 
     public static final ResourceLocation identifier = new ResourceLocation(TetraMod.MOD_ID, "random_chance_with_fortune");

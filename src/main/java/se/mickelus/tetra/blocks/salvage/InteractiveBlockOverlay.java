@@ -9,9 +9,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.event.DrawHighlightEvent;
+import net.minecraftforge.client.event.DrawSelectionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class InteractiveBlockOverlay {
 
     private Minecraft mc;
@@ -35,9 +37,9 @@ public class InteractiveBlockOverlay {
     }
 
     @SubscribeEvent
-    public void renderOverlay(DrawHighlightEvent event) {
+    public void renderOverlay(DrawSelectionEvent.HighlightBlock event) {
         if (event.getTarget().getType().equals(HitResult.Type.BLOCK)) {
-            BlockHitResult rayTrace = (BlockHitResult) event.getTarget();
+            BlockHitResult rayTrace = event.getTarget();
 
             Level world = Minecraft.getInstance().level;
             VoxelShape shape = world.getBlockState(rayTrace.getBlockPos()).getShape(Minecraft.getInstance().level, rayTrace.getBlockPos(), CollisionContext.of(mc.player));
@@ -59,7 +61,7 @@ public class InteractiveBlockOverlay {
                     isDirty = false;
                 }
 
-                gui.draw(event.getMatrix(), event.getInfo().getPosition(), rayTrace, shape);
+                gui.draw(event.getPoseStack(), event.getCamera().getPosition(), rayTrace, shape);
             }
         }
     }

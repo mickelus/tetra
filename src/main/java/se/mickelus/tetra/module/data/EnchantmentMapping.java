@@ -3,6 +3,8 @@ package se.mickelus.tetra.module.data;
 import com.google.gson.JsonObject;
 import net.minecraft.world.item.enchantment.Enchantment;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class EnchantmentMapping {
     /**
      * Use the resource location for the enchantment in json files

@@ -6,8 +6,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.ServerScheduler;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class EchoHelper {
     public static void echo(Player attacker, int delay, Runnable callback) {
         Vec3 origin = attacker.position();

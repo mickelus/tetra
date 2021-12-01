@@ -6,6 +6,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class RangedProgressOverlay {
     public static RangedProgressOverlay instance;
 
@@ -23,9 +25,12 @@ public class RangedProgressOverlay {
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
+        /*
         if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
             return;
         }
+        FIXME: still needed? if so, search for ported way
+         */
 
         ItemStack activeStack = mc.player.getUseItem();
 

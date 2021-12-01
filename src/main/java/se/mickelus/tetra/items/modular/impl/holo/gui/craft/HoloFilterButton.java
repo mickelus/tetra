@@ -11,10 +11,11 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloFilterButton extends GuiElement {
     private final List<String> tooltip = Collections.singletonList(I18n.get("tetra.holo.craft.variants_filter"));
     private boolean inputFocused = false;

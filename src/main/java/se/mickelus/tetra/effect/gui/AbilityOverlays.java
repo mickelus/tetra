@@ -7,6 +7,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.mgui.gui.GuiRoot;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class AbilityOverlays extends GuiRoot {
     public static AbilityOverlays instance;
 
@@ -31,9 +33,12 @@ public class AbilityOverlays extends GuiRoot {
 
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
+        /*
         if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
             return;
         }
+        FIXME: still required? then need to search for replacement
+         */
 
         chargeBar.update(mc.player);
         comboPoints.update(mc.player);

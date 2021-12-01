@@ -23,11 +23,12 @@ import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.properties.PropertyHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class HoloVariantDetailGui extends GuiElement {
 
     private final GuiHorizontalLayoutGroup header;

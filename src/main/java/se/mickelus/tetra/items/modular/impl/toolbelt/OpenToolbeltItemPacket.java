@@ -5,9 +5,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import se.mickelus.tetra.network.AbstractPacket;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class OpenToolbeltItemPacket extends AbstractPacket {
 
     public OpenToolbeltItemPacket() { }

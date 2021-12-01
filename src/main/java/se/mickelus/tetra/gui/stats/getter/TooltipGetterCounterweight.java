@@ -7,6 +7,8 @@ import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class TooltipGetterCounterweight implements ITooltipGetter {
     private static final IStatGetter levelGetter = new StatGetterEffectLevel(ItemEffect.counterweight, 1);
 

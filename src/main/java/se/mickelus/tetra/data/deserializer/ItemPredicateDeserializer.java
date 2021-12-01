@@ -8,8 +8,9 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
-
+@ParametersAreNonnullByDefault
 public class ItemPredicateDeserializer implements JsonDeserializer<ItemPredicate> {
     private static final Logger logger = LogManager.getLogger();
     @Override

@@ -15,10 +15,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -33,12 +34,13 @@ import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.stream.Stream;
-
-public class HammerBaseTile extends BlockEntity implements TickableBlockEntity {
+@ParametersAreNonnullByDefault
+public class HammerBaseTile extends BlockEntity implements BlockEntityTicker<HammerBaseTile> {
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.unlocalizedName)
     public static BlockEntityType<HammerBaseTile> type;
@@ -55,8 +57,8 @@ public class HammerBaseTile extends BlockEntity implements TickableBlockEntity {
     private static final String redstoneKey = "rs";
     private int redstonePower = 0;
 
-    public HammerBaseTile() {
-        super(type);
+    public HammerBaseTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
         slots = new ItemStack[2];
     }
 
@@ -193,7 +195,7 @@ public class HammerBaseTile extends BlockEntity implements TickableBlockEntity {
     }
 
     @Override
-    public void tick() {
+    public void tick(Level level, BlockPos pos, BlockState state, HammerBaseTile self) {
         if (redstonePower > 0 && level.getGameTime() % tickrate() == 0 && level.hasNeighborSignal(worldPosition) && isFunctional()) {
             BlockPos targetPos = worldPosition.below(2);
             BlockState targetState = level.getBlockState(targetPos);
@@ -358,7 +360,7 @@ public class HammerBaseTile extends BlockEntity implements TickableBlockEntity {
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(this.worldPosition, 0, this.getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -368,12 +370,12 @@ public class HammerBaseTile extends BlockEntity implements TickableBlockEntity {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(getBlockState(), pkt.getTag());
+        this.load(pkt.getTag());
     }
 
     @Override
-    public void load(BlockState blockState, CompoundTag compound) {
-        super.load(blockState, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
 
         slots = new ItemStack[2];
         if (compound.contains(slotsKey)) {

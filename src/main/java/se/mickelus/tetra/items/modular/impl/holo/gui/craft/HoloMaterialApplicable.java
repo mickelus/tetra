@@ -22,12 +22,13 @@ import se.mickelus.tetra.module.schematic.SchematicRarity;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class HoloMaterialApplicable extends GuiElement {
     private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_applicable_materials"));
     private List<String> tooltip;

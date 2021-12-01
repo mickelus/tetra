@@ -14,12 +14,12 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Stream;
-
-
+@ParametersAreNonnullByDefault
 public class RemoveSchematic extends BaseSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String nameSuffix = ".name";

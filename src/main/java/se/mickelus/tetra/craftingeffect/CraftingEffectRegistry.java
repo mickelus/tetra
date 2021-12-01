@@ -11,9 +11,10 @@ import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.craftingeffect.outcome.CraftingEffectOutcome;
 import se.mickelus.tetra.data.DataManager;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class CraftingEffectRegistry {
     protected Map<String, Class<? extends CraftingEffectCondition>> conditionTypes = new HashMap<>();
     Map<String, Class<? extends CraftingEffectOutcome>> effectTypes = new HashMap<>();

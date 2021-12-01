@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,9 +28,10 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
-
-public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
+@ParametersAreNonnullByDefault
+public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements EntityBlock {
     public static final String unlocalizedName = "extractor_piston";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -96,19 +98,14 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return new CoreExtractorPistonTile();
-    }
-
-    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(hackProp);
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new CoreExtractorPistonTile(p_153215_, p_153216_);
     }
 }

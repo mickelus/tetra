@@ -25,19 +25,18 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
-import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -119,9 +118,12 @@ import se.mickelus.tetra.proxy.ServerProxy;
 import se.mickelus.tetra.trades.TradeHandler;
 
 import java.util.Arrays;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)
+
+@ParametersAreNonnullByDefault
 public class TetraMod {
     private static final Logger logger = LogManager.getLogger();
 
@@ -322,12 +324,12 @@ public class TetraMod {
     }
 
     @SubscribeEvent
-    public void serverStarting(FMLServerAboutToStartEvent event) {
+    public void serverStarting(ServerAboutToStartEvent event) {
         FeatureEntry.instance.setup(event.getServer());
     }
 
     @SubscribeEvent
-    public void serverStarting(FMLServerStartingEvent event) {
+    public void serverStarting(ServerStartingEvent event) {
         ModuleDevCommand.register(event.getServer().getCommands().getDispatcher());
         TGenCommand.register(event.getServer().getCommands().getDispatcher());
     }

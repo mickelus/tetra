@@ -7,8 +7,9 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
-
+@ParametersAreNonnullByDefault
 public class OutcomePreview {
     public String moduleKey;
     public String variantName;

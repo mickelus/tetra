@@ -7,9 +7,10 @@ import se.mickelus.mgui.gui.GuiStringOutline;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class GuiExperience extends GuiElement {
     private static final int positiveColor = 0xc8ff8f;
     private static final int negativeColor = 0x8c605d;

@@ -18,8 +18,9 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-
+@ParametersAreNonnullByDefault
 public class SettleToast implements Toast {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/toasts.png");
 

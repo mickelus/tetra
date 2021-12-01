@@ -42,11 +42,11 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-
+@ParametersAreNonnullByDefault
 public class ModularDoubleHeadedItem extends ItemModularHandheld {
     private static final Logger logger = LogManager.getLogger();
 

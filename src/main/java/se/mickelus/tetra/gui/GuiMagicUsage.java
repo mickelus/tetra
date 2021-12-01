@@ -13,9 +13,10 @@ import se.mickelus.tetra.gui.stats.bar.GuiBar;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class GuiMagicUsage extends GuiElement {
     protected GuiString valueString;
     protected GuiBar bar;

@@ -17,11 +17,12 @@ import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
+@ParametersAreNonnullByDefault
 public class HoloMaterialTranslation extends GuiElement {
     private final List<String> emptyTooltipImprovement = Collections.singletonList(I18n.get("tetra.holo.craft.empty_translation_improvement"));
     private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_translation_module"));

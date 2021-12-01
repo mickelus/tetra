@@ -10,6 +10,8 @@ import se.mickelus.tetra.effect.ComboPoints;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.InvertColorGui;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ComboPointGui extends GuiElement {
     private GuiElement container;
     private Point[] points;

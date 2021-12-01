@@ -50,9 +50,10 @@ import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class ModularBowItem extends ModularItem {
     public final static String staveKey = "bow/stave";
     public final static String stringKey = "bow/string";
@@ -187,7 +188,7 @@ public class ModularBowItem extends ModularItem {
                     ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
                             .orElse((ArrowItem) Items.ARROW);
 
-                    boolean infiniteAmmo = player.abilities.instabuild || ammoItem.isInfinite(ammoStack, itemStack, player);
+                    boolean infiniteAmmo = player.getAbilities().instabuild || ammoItem.isInfinite(ammoStack, itemStack, player);
                     int count = Mth.clamp(getEffectLevel(itemStack, ItemEffect.multishot), 1, infiniteAmmo ? 64 : ammoStack.getCount());
 
                     if (!world.isClientSide) {
@@ -199,9 +200,9 @@ public class ModularBowItem extends ModularItem {
                         int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing);
 
                         for (int i = 0; i < count; i++) {
-                            double yaw = player.yRot - spread * (count - 1) / 2f + spread * i;
+                            double yaw = player.getYRot() - spread * (count - 1) / 2f + spread * i;
                             AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player);
-                            projectile.shootFromRotation(player, player.xRot, (float) yaw, 0.0F, projectileVelocity * 3.0F, 1.0F);
+                            projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 3.0F, 1.0F);
 
                             if (drawProgress >= 20) {
                                 projectile.setCritArrow(true);
@@ -235,7 +236,7 @@ public class ModularBowItem extends ModularItem {
                                 projectile.setNoGravity(true);
                             }
 
-                            if (infiniteAmmo || player.abilities.instabuild
+                            if (infiniteAmmo || player.getAbilities().instabuild
                                     && (ammoStack.getItem() == Items.SPECTRAL_ARROW || ammoStack.getItem() == Items.TIPPED_ARROW)) {
                                 projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                             }
@@ -278,12 +279,12 @@ public class ModularBowItem extends ModularItem {
                     world.playSound(null, player.getX(), player.getY(), player.getZ(),
                             SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS,
                             0.8F + projectileVelocity * 0.2f,
-                            1.9f + random.nextFloat() * 0.2F - pitchBase * 0.8F);
+                            1.9f + world.random.nextFloat() * 0.2F - pitchBase * 0.8F);
 
-                    if (!infiniteAmmo && !player.abilities.instabuild) {
+                    if (!infiniteAmmo && !player.getAbilities().instabuild) {
                         ammoStack.shrink(count);
                         if (ammoStack.isEmpty()) {
-                            player.inventory.removeItem(ammoStack);
+                            player.getInventory().removeItem(ammoStack);
                         }
                     }
 
@@ -294,7 +295,7 @@ public class ModularBowItem extends ModularItem {
     }
 
     private boolean isInfinite(Player player, ItemStack bowStack, ItemStack ammoStack) {
-        return player.abilities.instabuild
+        return player.getAbilities().instabuild
                 || (ammoStack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) > 0)
                 || CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
                 .map(item -> item.isInfinite(ammoStack, bowStack, player))
@@ -394,7 +395,7 @@ public class ModularBowItem extends ModularItem {
         InteractionResultHolder<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
         if (ret != null) return ret;
 
-        if (!hasAmmo && !player.abilities.instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) <= 0) {
+        if (!hasAmmo && !player.getAbilities().instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) <= 0) {
             return InteractionResultHolder.fail(bowStack);
         } else {
             player.startUsingItem(hand);

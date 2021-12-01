@@ -4,6 +4,8 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.codecs.PrimitiveCodec;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class HexCodec implements PrimitiveCodec<Integer> {
     public static final HexCodec instance = new HexCodec();
 

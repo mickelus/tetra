@@ -2,21 +2,9 @@ package se.mickelus.tetra.module.data;
 
 import com.google.gson.*;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
-
-/**
- * Data for improvements are mostly the same as module data but introduces a few additional fields.
- *
- * Example json:
- * {
- *     "key": "enchantment/smite",
- *     "level": 2,
- *     "enchantment": true,
- *     "effects": {
- *         "bleeding": 2
- *     }
- * }
- */
+@ParametersAreNonnullByDefault
 public class ImprovementData extends VariantData {
 
     /**

@@ -21,13 +21,15 @@ import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
+
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class RackTESR extends BlockEntityRenderer<RackTile> {
+public class RackTESR implements BlockEntityRenderer<RackTile> {
 
     private ItemRenderer itemRenderer;
 
     public RackTESR(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
         itemRenderer = Minecraft.getInstance().getItemRenderer();
     }
 
@@ -58,7 +60,7 @@ public class RackTESR extends BlockEntityRenderer<RackTile> {
             int combinedLight, int combinedOverlay) {
         if (itemStack != null && !itemStack.isEmpty()) {
 
-            BakedModel model = itemRenderer.getModel(itemStack, world, null);
+            BakedModel model = itemRenderer.getModel(itemStack, world, null, combinedLight);
 
             matrixStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
@@ -79,7 +81,7 @@ public class RackTESR extends BlockEntityRenderer<RackTile> {
             }
 
             Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemTransforms.TransformType.FIXED, combinedLight, combinedOverlay,
-                    matrixStack, buffer);
+                    matrixStack, buffer, 0); // FIXME: what does last int do? wasnt there on 1.16
 
         }
     }

@@ -7,13 +7,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
+@ParametersAreNonnullByDefault
 public class ItemHandlerStream {
     public static Stream<ItemStack> of(BlockGetter world, BlockPos pos) {
         return of(world.getBlockEntity(pos));

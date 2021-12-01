@@ -16,8 +16,9 @@ import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class ItemMetalScrap extends TetraItem {
     private static final String unlocalizedName = "metal_scrap";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)

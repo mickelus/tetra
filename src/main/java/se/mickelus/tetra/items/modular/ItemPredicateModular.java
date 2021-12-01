@@ -9,9 +9,9 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
-
-
+@ParametersAreNonnullByDefault
 public class ItemPredicateModular extends ItemPredicate {
 
     private String[][] modules = new String[0][0];

@@ -16,7 +16,8 @@ import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
-
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ModularBladedItem extends ItemModularHandheld {
 
     public final static String bladeKey = "sword/blade";

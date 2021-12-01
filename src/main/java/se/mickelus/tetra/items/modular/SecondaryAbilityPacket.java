@@ -7,8 +7,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.AbstractPacket;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-
+@ParametersAreNonnullByDefault
 public class SecondaryAbilityPacket extends AbstractPacket {
 
     private int targetId = -1;

@@ -20,11 +20,12 @@ import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.InventoryStream;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class PropertyHelper {
 
     public static int getItemToolLevel(ItemStack itemStack, ToolType tool) {
@@ -46,7 +47,7 @@ public class PropertyHelper {
     }
 
     public static int getPlayerEffectLevel(Player player, ItemEffect effect) {
-        return Stream.concat(player.inventory.offhand.stream(), player.inventory.items.stream())
+        return Stream.concat(player.getInventory().offhand.stream(), player.getInventory().items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
@@ -56,7 +57,7 @@ public class PropertyHelper {
     }
 
     public static double getPlayerEffectEfficiency(Player player, ItemEffect effect) {
-        return Stream.concat(player.inventory.offhand.stream(), player.inventory.items.stream())
+        return Stream.concat(player.getInventory().offhand.stream(), player.getInventory().items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
@@ -66,7 +67,7 @@ public class PropertyHelper {
     }
 
     public static int getPlayerToolLevel(Player player, ToolType tool) {
-        return Stream.concat(player.inventory.offhand.stream(), player.inventory.items.stream())
+        return Stream.concat(player.getInventory().offhand.stream(), player.getInventory().items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
@@ -76,7 +77,7 @@ public class PropertyHelper {
     }
 
     public static Set<ToolType> getPlayerTools(Player player) {
-        return Stream.concat(player.inventory.offhand.stream(), player.inventory.items.stream())
+        return Stream.concat(player.getInventory().offhand.stream(), player.getInventory().items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
@@ -85,7 +86,7 @@ public class PropertyHelper {
     }
 
     public static Map<ToolType, Integer> getPlayerToolLevels(Player player) {
-        return Stream.concat(player.inventory.offhand.stream(), player.inventory.items.stream())
+        return Stream.concat(player.getInventory().offhand.stream(), player.getInventory().items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
@@ -156,7 +157,7 @@ public class PropertyHelper {
 
     public static ItemStack getPlayerProvidingItemStack(ToolType tool, int level, Entity entity) {
         return CastOptional.cast(entity, Player.class)
-                .map(player -> Stream.concat(Stream.of(player.getMainHandItem(), player.getOffhandItem()), player.inventory.items.stream()))
+                .map(player -> Stream.concat(Stream.of(player.getMainHandItem(), player.getOffhandItem()), player.getInventory().items.stream()))
                 .orElse(Stream.empty())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
@@ -327,7 +328,7 @@ public class PropertyHelper {
 
     public static Map<ToolType, Integer> getCombinedToolLevels(Player player, Level world, BlockPos pos, BlockState blockStateIn) {
         return Stream.of(
-                getInventoryToolLevels(player.inventory),
+                getInventoryToolLevels(player.getInventory()),
                 getToolbeltToolLevels(player),
                 getBlockToolLevels(world, pos, blockStateIn))
                 .map(Map::entrySet)

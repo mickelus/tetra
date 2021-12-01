@@ -1,9 +1,10 @@
 package se.mickelus.tetra.module.data;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
+@ParametersAreNonnullByDefault
 public class EnumTierData<T extends Enum> {
 
     public Map<T, Integer> levelMap;

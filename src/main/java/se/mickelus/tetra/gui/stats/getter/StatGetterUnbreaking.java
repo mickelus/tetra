@@ -8,6 +8,8 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class StatGetterUnbreaking implements IStatGetter {
 
     public StatGetterUnbreaking() { }

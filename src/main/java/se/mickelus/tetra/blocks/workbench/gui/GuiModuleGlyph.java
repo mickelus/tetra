@@ -5,6 +5,8 @@ import net.minecraft.resources.ResourceLocation;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.module.data.GlyphData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiModuleGlyph extends GuiTexture {
 
     boolean shift = true;

@@ -1,6 +1,7 @@
 package se.mickelus.tetra.effect.potion;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -16,8 +17,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.effect.EffectHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class SeveredPotionEffect extends MobEffect {
     public static SeveredPotionEffect instance;
     public SeveredPotionEffect() {
@@ -34,7 +36,7 @@ public class SeveredPotionEffect extends MobEffect {
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.getCommandSenderWorld().isClientSide) {
             Random rand = entity.getRandom();
-            ((ServerLevel) entity.level).sendParticles(new DustParticleOptions(0.5f, 0, 0, 0.5f),
+            ((ServerLevel) entity.level).sendParticles(new DustParticleOptions(new Vector3f(0.5f, 0, 0), 0.5f),
                     entity.getX() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
                     entity.getY() + entity.getBbHeight() * (0.2 + rand.nextGaussian() * 0.4),
                     entity.getZ() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),

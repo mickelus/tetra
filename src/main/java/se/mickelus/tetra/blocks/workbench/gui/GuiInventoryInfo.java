@@ -6,6 +6,8 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiInventoryInfo extends GuiElement {
     private Inventory inventory;
     private ItemStack targetStack;
@@ -17,7 +19,7 @@ public class GuiInventoryInfo extends GuiElement {
     public GuiInventoryInfo(int x, int y, Player player) {
         super(x, y, 224, 72);
 
-        this.inventory = player.inventory;
+        this.inventory = player.getInventory();
 
         highlights = new GuiInventoryHighlight[36];
 

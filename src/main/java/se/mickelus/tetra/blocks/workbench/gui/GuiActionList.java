@@ -10,10 +10,11 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class GuiActionList extends GuiElement {
 
     private GuiActionButton[] actionButtons;

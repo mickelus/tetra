@@ -14,11 +14,12 @@ import net.minecraftforge.client.model.IModelConfiguration;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-
+@ParametersAreNonnullByDefault
 public class BakedWrapper implements BakedModel {
 
     private TextureAtlasSprite particleAtlas;

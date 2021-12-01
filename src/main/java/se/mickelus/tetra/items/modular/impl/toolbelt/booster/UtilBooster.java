@@ -19,6 +19,8 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class UtilBooster {
 
     public static final String activeKey = "booster.active";
@@ -129,7 +131,7 @@ public class UtilBooster {
                     player.moveRelative(0.05f, new Vec3(player.xxa, player.yya, player.zza));
 
                     if (player.level.isClientSide) {
-                        Vec3 direction = getAbsoluteMotion(-player.xxa, -player.zza, player.yRot);
+                        Vec3 direction = getAbsoluteMotion(-player.xxa, -player.zza, player.getYRot());
                         for (int i = 0; i < 8; i++) {
                             player.getCommandSenderWorld().addParticle(ParticleTypes.SMOKE,
                                     player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),

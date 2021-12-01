@@ -13,9 +13,10 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.util.RotationHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumMap;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class WallScrollBlock extends ScrollBlock {
     public static final String identifier = "scroll_wall";
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)

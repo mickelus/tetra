@@ -1,12 +1,14 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
@@ -14,9 +16,10 @@ import se.mickelus.tetra.blocks.IHeatTransfer;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-
-public class CoreExtractorBaseTile extends BlockEntity implements TickableBlockEntity, IHeatTransfer {
+@ParametersAreNonnullByDefault
+public class CoreExtractorBaseTile extends BlockEntity implements BlockEntityTicker<CoreExtractorBaseTile>, IHeatTransfer {
     @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.unlocalizedName)
     public static BlockEntityType<CoreExtractorBaseTile> type;
 
@@ -30,8 +33,8 @@ public class CoreExtractorBaseTile extends BlockEntity implements TickableBlockE
     private int currentCharge = 0;
     private float efficiency;
 
-    public CoreExtractorBaseTile() {
-        super(type);
+    public CoreExtractorBaseTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
     }
 
     public boolean canRefill() {
@@ -122,7 +125,7 @@ public class CoreExtractorBaseTile extends BlockEntity implements TickableBlockE
     }
 
     @Override
-    public void tick() {
+    public void tick(Level p_155253_, BlockPos p_155254_, BlockState p_155255_, CoreExtractorBaseTile p_155256_) {
         if (!level.isClientSide) {
             if (isSending) {
                 if (level.getGameTime() % 5 == 0) {
@@ -207,8 +210,8 @@ public class CoreExtractorBaseTile extends BlockEntity implements TickableBlockE
     }
 
     @Override
-    public void load(BlockState blockState, CompoundTag compound) {
-        super.load(blockState, compound);
+    public void load(CompoundTag compound) {
+        super.load( compound);
 
         if (compound.contains(chargeKey)) {
             currentCharge = compound.getInt(chargeKey);
@@ -229,7 +232,7 @@ public class CoreExtractorBaseTile extends BlockEntity implements TickableBlockE
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -239,7 +242,7 @@ public class CoreExtractorBaseTile extends BlockEntity implements TickableBlockE
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
-        this.load(getBlockState(), packet.getTag());
+        this.load(packet.getTag());
 //        BlockState state = getBlockState();
 
 //        world.notifyBlockUpdate(pos, state, state,3);

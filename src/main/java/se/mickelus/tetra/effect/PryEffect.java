@@ -17,9 +17,10 @@ import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.ParticleHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class PryEffect {
     public static final double flatCooldown = 2;
     public static final double cooldownSpeedMultiplier = 3;

@@ -4,8 +4,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.gui.stats.getter.StatGetterEffectEfficiency;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-
+@ParametersAreNonnullByDefault
 public class ManaRepairStatGetter extends StatGetterEffectEfficiency {
     public ManaRepairStatGetter() {
         super(ManaRepair.effect, 1);

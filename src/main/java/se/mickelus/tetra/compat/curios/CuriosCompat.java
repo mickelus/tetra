@@ -2,8 +2,9 @@ package se.mickelus.tetra.compat.curios;
 
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-// import top.theillusivec4.curios.api.SlotTypeMessage;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class CuriosCompat {
     public static final String modId = "curios";
     public static final Boolean isLoaded = ModList.get().isLoaded(modId);

@@ -4,18 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
-/**
- * Used to specify where and which features can be generated as a part of another feature.
- * Example json:
- * {
- *     "offset": [3, 2, 6],
- *     "facing": "SOUTH",
- *     "features": [
- *         "tetra:forged_hallway_1",
- *         "tetra:forged_wall_1"
- *     ]
- * }
- */
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class FeatureChild {
     /**
      * The position offset relative to the parent at which this child feature should be generated.

@@ -7,8 +7,9 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.LinkedList;
-
+@ParametersAreNonnullByDefault
 public class HoloCraftRootGui extends HoloRootBaseGui {
 
     public static final char backBinding = 'q';

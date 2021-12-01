@@ -32,13 +32,14 @@ import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.RotationHelper;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class BlockInteraction {
     public ToolType requiredTool;
     public int requiredLevel;
@@ -303,7 +304,7 @@ public class BlockInteraction {
 
     public static void dropLoot(ResourceLocation lootTable, @Nullable Player player, @Nullable InteractionHand hand, ServerLevel world, BlockState blockState) {
         getLoot(lootTable, player, hand, world, blockState).forEach(itemStack -> {
-            if (!player.inventory.add(itemStack)) {
+            if (!player.getInventory().add(itemStack)) {
                 player.drop(itemStack, false);
             }
         });

@@ -20,9 +20,10 @@ import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.properties.PropertyHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class ConfigActionImpl extends ConfigAction {
 
     private static final LootContextParamSet lootParameters = new LootContextParamSet.Builder()
@@ -82,7 +83,7 @@ public class ConfigActionImpl extends ConfigAction {
                     .create(lootParameters);
 
             table.getRandomItems(context).forEach(itemStack -> {
-                if (!player.inventory.add(itemStack)) {
+                if (!player.getInventory().add(itemStack)) {
                     player.drop(itemStack, false);
                 }
             });

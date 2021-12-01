@@ -5,9 +5,10 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.gui.GuiColors;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class ToolRequirementGui extends GuiTool {
 
     private int requiredLevel;

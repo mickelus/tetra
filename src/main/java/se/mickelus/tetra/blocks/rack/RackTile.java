@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.rack;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -21,7 +22,8 @@ import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class RackTile extends BlockEntity {
     public static final String unlocalizedName = "rack";
 
@@ -38,8 +40,8 @@ public class RackTile extends BlockEntity {
         }
     });
 
-    public RackTile() {
-        super(type);
+    public RackTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
     }
 
     @Nonnull
@@ -61,7 +63,7 @@ public class RackTile extends BlockEntity {
                 playerEntity.playSound(SoundEvents.WOOD_PLACE, 0.5f, 0.7f);
             } else {
                 ItemStack extractedStack = handler.extractItem(slot, handler.getSlotLimit(slot), false);
-                if (playerEntity.inventory.add(extractedStack)) {
+                if (playerEntity.getInventory().add(extractedStack)) {
                     playerEntity.playSound(SoundEvents.ITEM_PICKUP, 0.5f, 1);
                 } else {
                     playerEntity.drop(extractedStack, false);
@@ -78,7 +80,7 @@ public class RackTile extends BlockEntity {
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -88,12 +90,12 @@ public class RackTile extends BlockEntity {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(getBlockState(), pkt.getTag());
+        load(pkt.getTag());
     }
 
     @Override
-    public void load(BlockState blockState, CompoundTag compound) {
-        super.load(blockState, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
     }

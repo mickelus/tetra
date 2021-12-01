@@ -16,7 +16,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.Mth;
-import net.minecraft.util.math.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -62,9 +61,10 @@ import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class ItemModularHandheld extends ModularItem {
 
     /**
@@ -405,13 +405,13 @@ public class ItemModularHandheld extends ModularItem {
 
             ThrownModularItemEntity projectileEntity = new ThrownModularItemEntity(world, player, stack);
 
-            if (player.abilities.instabuild) {
+            if (player.getAbilities().instabuild) {
                 projectileEntity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             } else {
-                player.inventory.removeItem(stack);
+                player.getInventory().removeItem(stack);
             }
 
-            projectileEntity.shootFromRotation(player, player.xRot, player.yRot, 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
+            projectileEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
             world.addFreshEntity(projectileEntity);
 
             if (this instanceof ModularSingleHeadedItem) {
@@ -427,8 +427,8 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public void causeRiptideEffect(Player player, int riptideLevel) {
-        float yaw = player.yRot;
-        float pitch = player.xRot;
+        float yaw = player.getYRot();
+        float pitch = player.getXRot();
         float x = -Mth.sin(yaw * ((float)Math.PI / 180F)) * Mth.cos(pitch * ((float)Math.PI / 180F));
         float y = -Mth.sin(pitch * ((float)Math.PI / 180F));
         float z = Mth.cos(yaw * ((float)Math.PI / 180F)) * Mth.cos(pitch * ((float)Math.PI / 180F));

@@ -5,8 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.entity.*;
-import net.minecraft.loot.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -15,7 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.util.math.*;
+import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -26,9 +24,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -37,7 +36,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.spawner.WorldEntitySpawner;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.logging.log4j.LogManager;
@@ -47,10 +45,11 @@ import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
 import java.util.Set;
-
-public class FracturedBedrockTile extends BlockEntity implements TickableBlockEntity {
+@ParametersAreNonnullByDefault
+public class FracturedBedrockTile extends BlockEntity implements BlockEntityTicker<FracturedBedrockTile> {
     @ObjectHolder(TetraMod.MOD_ID + ":" + FracturedBedrockBlock.unlocalizedName)
     public static BlockEntityType<FracturedBedrockTile> type;
 
@@ -79,8 +78,8 @@ public class FracturedBedrockTile extends BlockEntity implements TickableBlockEn
 
     private MobSpawnSettings spawnInfo;
 
-    public FracturedBedrockTile() {
-        super(type);
+    public FracturedBedrockTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
     }
 
     public void updateLuck(boolean wasSeeping) {
@@ -88,7 +87,7 @@ public class FracturedBedrockTile extends BlockEntity implements TickableBlockEn
             spawnInfo = level.getBiome(worldPosition).getMobSettings();
         }
 
-        boolean spawnBonus = spawnInfo.getMobs(MobCategory.MONSTER).stream()
+        boolean spawnBonus = spawnInfo.getMobs(MobCategory.MONSTER).unwrap().stream()
                 .map(spawner -> spawner.type)
                 .anyMatch(type -> EntityType.HUSK.equals(type) || EntityType.STRAY.equals(type) || EntityType.WITCH.equals(type));
         if (spawnBonus) {
@@ -183,7 +182,7 @@ public class FracturedBedrockTile extends BlockEntity implements TickableBlockEn
     }
 
     private BlockPos raytrace(Vec3 origin, Vec3 target) {
-        return BlockGetter.traverseBlocks(new ClipContext(origin, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null), (ctx, blockPos) -> {
+        return BlockGetter.< ClipContext, BlockPos >traverseBlocks(new ClipContext(origin, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null), (ctx, blockPos) -> {
             BlockState blockState = level.getBlockState(blockPos);
             Block block = blockState.getBlock();
 
@@ -205,7 +204,7 @@ public class FracturedBedrockTile extends BlockEntity implements TickableBlockEn
                 return movePos.move(Direction.UP).immutable();
             }
 
-            if (!blockState.isAir(level, movePos)) {
+            if (!blockState.isAir()) {
                 return movePos.immutable();
             }
         }
@@ -214,12 +213,12 @@ public class FracturedBedrockTile extends BlockEntity implements TickableBlockEn
     }
 
     public static boolean breakBlock(Level world, BlockPos pos, BlockState blockState) {
-        if (world instanceof ServerLevel
-                && !blockState.isAir(world, pos)
+        if (world instanceof ServerLevel serverLevel
+                && !blockState.isAir()
                 && breakMaterials.contains(blockState.getMaterial())
                 && blockState.getDestroySpeed(world, pos) > -1) {
-            BlockEntity tile = blockState.hasTileEntity() ? world.getBlockEntity(pos) : null;
-            LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world)
+            BlockEntity tile = blockState.getBlock() instanceof EntityBlock ? world.getBlockEntity(pos) : null;
+            LootContext.Builder lootBuilder = new LootContext.Builder(serverLevel)
                     .withRandom(world.random)
                     .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
                     .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
@@ -269,13 +268,11 @@ public class FracturedBedrockTile extends BlockEntity implements TickableBlockEn
             return;
         }
 
-        List<MobSpawnSettings.SpawnerData> spawners = spawnInfo.getMobs(MobCategory.MONSTER);
-
-        if (WeighedRandom.getTotalWeight(spawners) == 0) {
+        WeightedRandomList<MobSpawnSettings.SpawnerData> spawners = spawnInfo.getMobs(MobCategory.MONSTER);
+        Optional<MobSpawnSettings.SpawnerData> optionalSpawnerData = spawners.getRandom(level.getRandom());
+        if (!optionalSpawnerData.isPresent())
             return;
-        }
-
-        MobSpawnSettings.SpawnerData mob = WeighedRandom.getRandomItem(level.getRandom(), spawners);
+        MobSpawnSettings.SpawnerData mob = optionalSpawnerData.get();
 
         ServerLevel serverWorld = (ServerLevel) level;
         if (mob.type.canSummon()
@@ -313,7 +310,7 @@ public class FracturedBedrockTile extends BlockEntity implements TickableBlockEn
     }
 
     @Override
-    public void tick() {
+    public void tick(Level p_155253_, BlockPos p_155254_, BlockState p_155255_, FracturedBedrockTile p_155256_) {
         if (!level.isClientSide && activity > 0 && level.getGameTime() % getRate() == 0) {
             int intensity = getIntensity();
             Vec3 origin = Vec3.atCenterOf(getBlockPos());
@@ -362,8 +359,8 @@ public class FracturedBedrockTile extends BlockEntity implements TickableBlockEn
     }
 
     @Override
-    public void load(BlockState blockState, CompoundTag compound) {
-        super.load(blockState, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
 
         if (compound.contains(activityKey)) {
             activity = compound.getInt(activityKey);
@@ -392,7 +389,7 @@ public class FracturedBedrockTile extends BlockEntity implements TickableBlockEn
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -401,7 +398,12 @@ public class FracturedBedrockTile extends BlockEntity implements TickableBlockEn
     }
 
     @Override
+    public void deserializeNBT(CompoundTag nbt) {
+        super.deserializeNBT(nbt);
+    }
+
+    @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
-        this.load(getBlockState(), packet.getTag());
+        this.load(packet.getTag());
     }
 }

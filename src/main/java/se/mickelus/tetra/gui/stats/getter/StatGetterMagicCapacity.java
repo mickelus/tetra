@@ -5,10 +5,11 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class StatGetterMagicCapacity implements IStatGetter {
 
     public StatGetterMagicCapacity() { }

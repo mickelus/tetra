@@ -3,8 +3,9 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import se.mickelus.tetra.gui.stats.getter.LabelGetterBasic;
 import se.mickelus.tetra.module.data.MaterialData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class HoloMaterialIntegrityStatGui extends HoloMaterialStatGui {
 
     public HoloMaterialIntegrityStatGui(int x, int y) {

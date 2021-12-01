@@ -6,30 +6,9 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import se.mickelus.tetra.module.Priority;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
-
-/**
- * ModuleVariantData contain stats and information for a variant of an item module.
- * Example json:
- * {
- *     "key": "heavy_blade/oak_log",
- *     "durability": 100,
- *     "integrity": -2,
- *     "damage": 3,
- *     "attackSpeed": -0.4,
- *     "glyph": {
- *         "tint": "9d804e",
- *         "textureX": 48
- *     },
- *     "effects": {
- *         "sweeping": 3
- *     },
- *     "tools": {
- *         "cut": [1, 3.443],
- *         "hammer": 2
- *     }
- * }
- */
+@ParametersAreNonnullByDefault
 public class VariantData extends ItemProperties {
     /**
      * The key for the module variant. This is used for referencing the module and should be unique. In schematic

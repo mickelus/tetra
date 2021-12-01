@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -45,16 +44,17 @@ import se.mickelus.tetra.blocks.salvage.TileBlockInteraction;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.util.TileEntityOptional;
-import staticnet.minecraft.world.level.material.Fluidsrties.BlockStateProperties.WATERLOGGED;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static net.minecraft.fluid.Fluids.WATER;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
+import static net.minecraft.world.level.material.Fluids.WATER;
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
-
-public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
+@ParametersAreNonnullByDefault
+public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, EntityBlock {
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
 
     public static final String qualityImprovementKey = "quality";
@@ -128,7 +128,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
                 .orElse(null);
 
         if (moduleStack != null && !world.isClientSide) {
-            if (player != null && player.inventory.add(moduleStack)) {
+            if (player != null && player.getInventory().add(moduleStack)) {
                 player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
             } else {
                 popResource(world, pos.relative(hitFace), moduleStack);
@@ -202,7 +202,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
             int slotIndex = blockFacing.equals(facing)? 0 : 1;
             if (te.hasCellInSlot(slotIndex)) {
                 ItemStack cell = te.removeCellFromSlot(slotIndex);
-                if (player.inventory.add(cell)) {
+                if (player.getInventory().add(cell)) {
                     player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
                 } else {
                     popResource(world, pos.relative(facing), cell);
@@ -281,17 +281,6 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
     }
 
     @Override
-    public boolean hasTileEntity(final BlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createTileEntity(final BlockState state, final BlockGetter world) {
-        return new HammerBaseTile();
-    }
-
-    @Override
     public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
         TileEntityOptional.from(world, currentPos, HammerBaseTile.class).ifPresent(HammerBaseTile::updateRedstonePower);
         if (Direction.DOWN.equals(facing) && !HammerHeadBlock.instance.equals(facingState.getBlock())) {
@@ -332,5 +321,11 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(facingProp)));
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new HammerBaseTile(p_153215_, p_153216_);
     }
 }

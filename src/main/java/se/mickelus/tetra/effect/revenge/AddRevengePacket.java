@@ -5,6 +5,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.AbstractPacket;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class AddRevengePacket extends AbstractPacket {
     private int entityId = -1;
 

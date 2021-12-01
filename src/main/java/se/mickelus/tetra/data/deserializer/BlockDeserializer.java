@@ -8,8 +8,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
-
+@ParametersAreNonnullByDefault
 public class BlockDeserializer implements JsonDeserializer<Block> {
     @Override
     public Block deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

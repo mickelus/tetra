@@ -5,6 +5,8 @@ import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiButtonOutlined extends GuiClickable {
 
     private GuiTexture borderLeft;

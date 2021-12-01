@@ -33,9 +33,10 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
+@ParametersAreNonnullByDefault
 public class LungeEffect extends ChargedAbilityEffect {
     private static Cache<Integer, LungeData> activeCache = CacheBuilder.newBuilder()
             .maximumSize(20)
@@ -213,7 +214,7 @@ public class LungeEffect extends ChargedAbilityEffect {
         BlockPos pos = new BlockPos(target.getX(), target.getY() - 0.2, target.getZ());
         BlockState blockState = target.level.getBlockState(pos);
 
-        if (!blockState.isAir(target.level, pos)) {
+        if (!blockState.isAir()) {
             ((ServerLevel)target.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState), target.getX(), target.getY(),
                     target.getZ(), (int) (bonus * 8) + 20, 0.0D, 0.0D, 0.0D, 0.15);
         }

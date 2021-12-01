@@ -21,12 +21,13 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.ModuleModel;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-
+@ParametersAreNonnullByDefault
 public class ModularOverrideList extends ItemOverrides {
     private static final Logger logger = LogManager.getLogger();
 
@@ -60,7 +61,7 @@ public class ModularOverrideList extends ItemOverrides {
 
     @Nullable
     @Override
-    public BakedModel resolve(BakedModel originalModel, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity) {
+    public BakedModel resolve(BakedModel originalModel, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int i) { // fixme: figure out las int
         CompoundTag baseTag = stack.getTag();
         BakedModel result = originalModel;
 

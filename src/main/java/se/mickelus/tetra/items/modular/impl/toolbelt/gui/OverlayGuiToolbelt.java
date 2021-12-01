@@ -11,6 +11,8 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventor
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class OverlayGuiToolbelt extends GuiRoot {
 
     private OverlayGuiQuickslotGroup quickslotGroup;

@@ -3,8 +3,9 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
-
+@ParametersAreNonnullByDefault
 public class OutcomeStack {
     UpgradeSchematic schematic;
     OutcomePreview preview;

@@ -13,10 +13,11 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class RepairSchematic extends BaseSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String nameSuffix = ".name";

@@ -6,11 +6,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.properties.AttributeHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class MaterialData {
     public boolean replace = false;
 

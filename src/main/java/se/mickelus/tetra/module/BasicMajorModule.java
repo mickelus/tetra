@@ -7,8 +7,9 @@ import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.TweakData;
 import se.mickelus.tetra.util.Filter;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
-
+@ParametersAreNonnullByDefault
 public class BasicMajorModule extends ItemModuleMajor {
 
     public BasicMajorModule(ResourceLocation identifier, ModuleData data) {

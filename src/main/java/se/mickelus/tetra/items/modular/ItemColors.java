@@ -1,8 +1,9 @@
 package se.mickelus.tetra.items.modular;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class ItemColors {
     private static Map<String, Integer> colors = new HashMap<>();
 

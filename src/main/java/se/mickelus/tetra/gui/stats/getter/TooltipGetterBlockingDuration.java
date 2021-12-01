@@ -6,6 +6,8 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class  TooltipGetterBlockingDuration implements ITooltipGetter {
     private IStatGetter durationGetter;
     private IStatGetter cooldownGetter;

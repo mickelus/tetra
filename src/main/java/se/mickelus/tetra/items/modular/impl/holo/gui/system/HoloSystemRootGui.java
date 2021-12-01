@@ -5,6 +5,8 @@ import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloRootBaseGui;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class HoloSystemRootGui extends HoloRootBaseGui {
 
     public HoloSystemRootGui(int x, int y) {

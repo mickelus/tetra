@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
@@ -41,9 +41,10 @@ import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     public final static String unlocalizedName = "modular_toolbelt";
 

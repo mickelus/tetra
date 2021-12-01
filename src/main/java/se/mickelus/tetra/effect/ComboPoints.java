@@ -8,10 +8,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class ComboPoints {
     private static Cache<Integer, Integer> cache = CacheBuilder.newBuilder()
             .maximumSize(100)

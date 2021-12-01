@@ -7,8 +7,9 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiText;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class GuiSchematicList extends GuiElement {
     private static int pageLength = 8;
 

@@ -2,6 +2,8 @@ package se.mickelus.tetra.gui.stats.getter;
 
 import net.minecraft.ChatFormatting;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class LabelGetterBasic implements ILabelGetter {
     protected static final String increaseColorFont = ChatFormatting.GREEN.toString();
     protected static final String decreaseColorFont = ChatFormatting.RED.toString();

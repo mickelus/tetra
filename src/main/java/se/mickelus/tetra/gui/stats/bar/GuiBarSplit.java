@@ -7,6 +7,8 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
 import se.mickelus.tetra.gui.GuiColors;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiBarSplit extends GuiBar {
 
     private GuiBar negativeBar;

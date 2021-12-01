@@ -6,6 +6,8 @@ import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
 import se.mickelus.tetra.network.AbstractPacket;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class EquipToolbeltItemPacket extends AbstractPacket {
 
     private ToolbeltSlotType slotType;

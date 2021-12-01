@@ -2,10 +2,12 @@ package se.mickelus.tetra.properties;
 
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.tetra.TetraMod;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class TetraAttributes {
     public static final DeferredRegister<Attribute> registry = DeferredRegister.create(Attribute.class, TetraMod.MOD_ID);
 

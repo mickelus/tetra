@@ -15,13 +15,15 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
+
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class WorkbenchTESR extends BlockEntityRenderer<WorkbenchTile> {
+public class WorkbenchTESR implements BlockEntityRenderer<WorkbenchTile> {
 
     private ItemRenderer itemRenderer;
 
     public WorkbenchTESR(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
         itemRenderer = Minecraft.getInstance().getItemRenderer();
     }
 
@@ -31,7 +33,7 @@ public class WorkbenchTESR extends BlockEntityRenderer<WorkbenchTile> {
         if (itemStack != null && !itemStack.isEmpty()) {
             matrixStack.pushPose();
 
-            BakedModel model = itemRenderer.getModel(itemStack, workbenchTile.getLevel(), null);
+            BakedModel model = itemRenderer.getModel(itemStack, workbenchTile.getLevel(), null, combinedLight); // fixme: figure out the last int
             if (itemStack.getItem() instanceof ModularShieldItem) {
                 matrixStack.translate(0.375, 0.9125, 0.5);
                 matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
@@ -47,7 +49,7 @@ public class WorkbenchTESR extends BlockEntityRenderer<WorkbenchTile> {
 
             Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemTransforms.TransformType.FIXED,
                     LevelRenderer.getLightColor(workbenchTile.getLevel(), workbenchTile.getBlockPos().above()),
-                    combinedOverlay, matrixStack, buffer);
+                    combinedOverlay, matrixStack, buffer, 0); // FIXME: figure out the last int
 
             matrixStack.popPose();
         }

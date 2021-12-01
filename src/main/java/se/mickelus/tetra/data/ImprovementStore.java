@@ -4,10 +4,11 @@ import com.google.gson.Gson;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.MaterialImprovementData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class ImprovementStore extends DataStore<ImprovementData[]> {
 
     public ImprovementStore(Gson gson, String directory) {

@@ -17,6 +17,8 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ReachEntityFix {
 //    @OnlyIn(Dist.CLIENT)
 //    @SubscribeEvent(priority = EventPriority.LOWEST)

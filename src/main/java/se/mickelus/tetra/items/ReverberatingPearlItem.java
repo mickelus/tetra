@@ -12,8 +12,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.Tooltips;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class ReverberatingPearlItem extends TetraItem {
     private static final String unlocalizedName = "reverberating_pearl";
 //    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)

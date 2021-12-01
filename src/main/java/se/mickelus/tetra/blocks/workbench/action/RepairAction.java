@@ -10,11 +10,12 @@ import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class RepairAction implements WorkbenchAction {
 
     public static final String key = "repair_action";

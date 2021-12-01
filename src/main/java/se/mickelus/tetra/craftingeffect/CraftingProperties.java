@@ -1,5 +1,7 @@
 package se.mickelus.tetra.craftingeffect;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class CraftingProperties {
     public int stabilityOffset = 0;
     public float stabilityMultiplier = 1;

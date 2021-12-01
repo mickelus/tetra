@@ -11,6 +11,8 @@ import se.mickelus.tetra.gui.stats.getter.*;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiStatBarTool extends GuiStatBar {
     private static final int efficiencyMax = 50;
 

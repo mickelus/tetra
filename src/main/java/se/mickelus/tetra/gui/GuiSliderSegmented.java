@@ -6,8 +6,9 @@ import se.mickelus.mgui.gui.GuiClickable;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class GuiSliderSegmented extends GuiClickable {
 
     private boolean isDragging = false;

@@ -11,6 +11,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class TetraBlock extends Block implements ITetraBlock {
 
     protected boolean hasItem = false;

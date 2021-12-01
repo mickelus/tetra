@@ -10,8 +10,9 @@ import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 import se.mickelus.tetra.blocks.scroll.ScrollItem;
 import se.mickelus.tetra.items.forged.*;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class TradeHandler {
     @SubscribeEvent
     public void setupWandererTrades(WandererTradesEvent event) {

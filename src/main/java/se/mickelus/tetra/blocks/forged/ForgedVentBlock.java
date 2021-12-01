@@ -35,13 +35,14 @@ import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
-
+@ParametersAreNonnullByDefault
 public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
     static final String unlocalizedName = "forged_vent";
 

@@ -8,10 +8,11 @@ import se.mickelus.tetra.gui.stats.getter.StatGetterIntegrity;
 import se.mickelus.tetra.gui.stats.getter.StatGetterToolEfficiency;
 import se.mickelus.tetra.gui.stats.getter.StatGetterToolLevel;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class StatSorters {
 
     public static final IStatSorter none = new NaturalSorter();

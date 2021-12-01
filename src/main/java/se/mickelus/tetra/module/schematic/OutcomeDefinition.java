@@ -3,29 +3,11 @@ package se.mickelus.tetra.module.schematic;
 import com.google.gson.*;
 import se.mickelus.tetra.module.data.ToolData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * Used to define outcomes of a schematic, which combination of materials and tools yield which variation of a module or improvement.
- * Example json:
- * {
- *     "material": {
- *         "item": "minecraft:oak_planks",
- *         "count": 2
- *     },
- *     "requiredTools": {
- *         "axe": 1,
- *         "hammer": 4
- *     },
- *     "moduleKey": "sword/basic_blade",
- *     "moduleVariant": "basic_blade/acacia",
- *     "improvements": {
- *         "enchantment/looting": 2
- *     }
- * }
- */
+@ParametersAreNonnullByDefault
 public class OutcomeDefinition {
 
     /**

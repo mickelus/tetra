@@ -1,5 +1,7 @@
 package se.mickelus.tetra.module.data;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ItemProperties {
     /**
      * The durability that the module provides, this is what vanilla calls item damage. A higher value makes the item

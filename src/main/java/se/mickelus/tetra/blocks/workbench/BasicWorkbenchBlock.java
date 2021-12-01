@@ -23,8 +23,9 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
     public static final String unlocalizedName = "basic_workbench";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)

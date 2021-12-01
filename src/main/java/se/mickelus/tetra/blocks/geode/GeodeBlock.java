@@ -24,6 +24,8 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.network.PacketHandler;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GeodeBlock extends TetraBlock {
 
     public static final String unlocalizedName = "block_geode";
@@ -55,8 +57,8 @@ public class GeodeBlock extends TetraBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
-        return Blocks.STONE.getPickBlock(state, target, world, pos, player);
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+        return Blocks.STONE.getCloneItemStack(state, target, world, pos, player);
     }
 
     @Override

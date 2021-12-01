@@ -7,9 +7,10 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class HoloImprovementButton extends GuiClickable {
     GuiString label;
     List<KeyframeAnimation> hoverAnimations;

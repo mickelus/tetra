@@ -9,8 +9,9 @@ import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloVariantMajorItemGui extends HoloVariantItemGui {
 
     public HoloVariantMajorItemGui(int x, int y, OutcomePreview outcome, @Nullable String label,

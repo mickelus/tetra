@@ -3,13 +3,14 @@ package se.mickelus.tetra.module.data;
 import com.google.gson.*;
 import net.minecraftforge.common.ToolType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class ToolData extends TierData<ToolType> {
     public static class Deserializer implements JsonDeserializer<ToolData> {
         @Override

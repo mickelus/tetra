@@ -7,6 +7,8 @@ import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.network.AbstractPacket;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class HowlingPacket extends AbstractPacket {
     public HowlingPacket() { }
 

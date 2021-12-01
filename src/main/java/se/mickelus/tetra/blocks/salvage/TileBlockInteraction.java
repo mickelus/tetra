@@ -8,8 +8,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.util.TileEntityOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Function;
-
+@ParametersAreNonnullByDefault
 public class TileBlockInteraction<T extends BlockEntity> extends BlockInteraction {
 
     private final Function<T, Boolean> predicate;

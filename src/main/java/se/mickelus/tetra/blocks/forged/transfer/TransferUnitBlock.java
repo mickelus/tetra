@@ -10,7 +10,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.state.*;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -20,10 +19,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -49,13 +45,14 @@ import se.mickelus.tetra.items.forged.InsulatedPlateItem;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
-
-public class TransferUnitBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
+@ParametersAreNonnullByDefault
+public class TransferUnitBlock extends TetraWaterloggedBlock implements IInteractiveBlock, EntityBlock {
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty plateProp = BooleanProperty.create("plate");
     public static final IntegerProperty cellProp = IntegerProperty.create("cell", 0, 2);
@@ -205,7 +202,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         if (hit.getDirection().equals(Direction.UP)) {
             if (tile.hasCell()) { // remove cell
                 ItemStack cell = tile.removeCell();
-                if (player.inventory.add(cell)) {
+                if (player.getInventory().add(cell)) {
                     player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
                 } else {
                     popResource(world, pos.above(), cell);
@@ -295,17 +292,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         builder.add(facingProp, configProp, plateProp, cellProp, transferProp);
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return new TransferUnitTile();
-    }
-
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -327,5 +313,11 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(facingProp)));
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new TransferUnitTile(p_153215_, p_153216_);
     }
 }

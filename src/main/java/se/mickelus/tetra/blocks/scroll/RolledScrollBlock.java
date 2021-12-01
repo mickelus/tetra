@@ -15,9 +15,10 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.util.RotationHelper;
 import se.mickelus.tetra.util.TileEntityOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumMap;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class RolledScrollBlock extends ScrollBlock {
     public static final String identifier = "scroll_rolled";
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)

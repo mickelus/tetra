@@ -6,6 +6,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class BleedingPotionEffect extends MobEffect {
     public static BleedingPotionEffect instance;
     public BleedingPotionEffect() {

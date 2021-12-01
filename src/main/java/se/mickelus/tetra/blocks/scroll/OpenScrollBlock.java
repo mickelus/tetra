@@ -13,6 +13,8 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.util.RotationHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class OpenScrollBlock extends ScrollBlock {
 
     public static final String identifier = "scroll_open";

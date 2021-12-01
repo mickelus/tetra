@@ -30,10 +30,11 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class ScannerOverlayGui extends GuiRoot {
     private static final ResourceLocation tag = new ResourceLocation("tetra:scannable");
 

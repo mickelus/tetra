@@ -2,8 +2,8 @@ package se.mickelus.tetra.blocks.rack;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
-import net.minecraft.block.*;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -49,9 +49,10 @@ import se.mickelus.tetra.util.ItemHandlerWrapper;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
-
-public class RackBlock extends TetraWaterloggedBlock {
+@ParametersAreNonnullByDefault
+public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
     public static final String unlocalizedName = "rack";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static RackBlock instance;
@@ -84,17 +85,6 @@ public class RackBlock extends TetraWaterloggedBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(facingProp);
-    }
-
-    @Override
-    public boolean hasTileEntity(final BlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createTileEntity(final BlockState state, final BlockGetter world) {
-        return new RackTile();
     }
 
     @Override
@@ -286,7 +276,13 @@ public class RackBlock extends TetraWaterloggedBlock {
                 particlePos = particlePos.add(Vec3.atLowerCornerOf(facing.getCounterClockWise().getNormal()).scale(0.25));
             }
 
-            ((ServerLevel) world).sendParticles(new DustParticleOptions(0.0f, 0.66f, 0.66f, 1f), particlePos.x(), particlePos.y(), particlePos.z(), 2, 0, 0, 0, 0f);
+            ((ServerLevel) world).sendParticles(new DustParticleOptions(new Vector3f(0.0f, 0.66f, 0.66f), 1f), particlePos.x(), particlePos.y(), particlePos.z(), 2, 0, 0, 0, 0f);
         }
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new RackTile();
     }
 }

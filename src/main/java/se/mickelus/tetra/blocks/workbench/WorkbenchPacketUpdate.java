@@ -7,8 +7,9 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.network.AbstractPacket;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
-
+@ParametersAreNonnullByDefault
 public class WorkbenchPacketUpdate extends AbstractPacket {
 
     private BlockPos pos;

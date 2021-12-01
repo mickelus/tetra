@@ -5,6 +5,8 @@ import se.mickelus.tetra.gui.stats.getter.StatFormat;
 import se.mickelus.tetra.gui.stats.getter.StatGetterMultiply;
 import se.mickelus.tetra.gui.stats.getter.StatGetterSum;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class StatsHelper {
     public static final int barLength = 59;
 

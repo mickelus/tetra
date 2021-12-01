@@ -12,8 +12,10 @@ import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import se.mickelus.tetra.blocks.forged.ForgedVentBlock;
 
-import static se.mickelus.tetra.TetraMod.MOD_ID;
+import javax.annotation.ParametersAreNonnullByDefault;
 
+import static se.mickelus.tetra.TetraMod.MOD_ID;
+@ParametersAreNonnullByDefault
 public class BlockstateProvider extends BlockStateProvider {
     public BlockstateProvider(DataGenerator gen, String modid, ExistingFileHelper exFileHelper) {
         super(gen, modid, exFileHelper);

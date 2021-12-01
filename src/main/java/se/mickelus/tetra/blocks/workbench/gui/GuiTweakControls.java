@@ -10,10 +10,11 @@ import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.TweakData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class GuiTweakControls extends GuiElement {
 
     private GuiString untweakableLabel;

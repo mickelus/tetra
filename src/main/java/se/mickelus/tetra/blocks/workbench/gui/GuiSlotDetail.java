@@ -23,12 +23,13 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
-
+@ParametersAreNonnullByDefault
 public class GuiSlotDetail extends GuiElement {
     private static final char[] keybindings = new char[] { 'a', 's', 'd'};
     private static final String[] labels = new String[] {

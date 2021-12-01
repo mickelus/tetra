@@ -5,6 +5,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import se.mickelus.mgui.gui.GuiElement;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class InvertColorGui extends GuiElement {
 
     public InvertColorGui(int x, int y) {

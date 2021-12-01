@@ -12,10 +12,11 @@ import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.SchematicType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloVariantGroupGui extends GuiElement {
 
     private final GuiElement variantsContainer;

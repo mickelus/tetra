@@ -7,6 +7,8 @@ import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.properties.AttributeHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class TweakData {
     public String variant;
     public String improvement;

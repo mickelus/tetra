@@ -6,9 +6,9 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.MaterialData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Comparator;
-
-
+@ParametersAreNonnullByDefault
 public class MaterialItemPredicate extends ItemPredicate {
 
     private String category;

@@ -5,9 +5,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Comparator;
 import java.util.function.Function;
-
+@ParametersAreNonnullByDefault
 public class NaturalSorter implements IStatSorter {
     @Override
     public String getName() {

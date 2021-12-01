@@ -13,10 +13,11 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class HauntedEffect {
     public static void perform(LivingEntity entity, ItemStack itemStack, double multiplier) {
         if (!entity.level.isClientSide) {
@@ -27,7 +28,7 @@ public class HauntedEffect {
 
                     Vex vex = EntityType.VEX.create(entity.level);
                     vex.setLimitedLife(effectLevel * 20);
-                    vex.moveTo(entity.getX(), entity.getY() + 1, entity.getZ(), entity.yRot, 0.0F);
+                    vex.moveTo(entity.getX(), entity.getY() + 1, entity.getZ(), entity.getYRot(), 0.0F);
                     vex.setItemInHand(InteractionHand.MAIN_HAND, itemStack.copy());
                     vex.setDropChance(EquipmentSlot.MAINHAND, 0);
                     vex.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 2000 + effectLevel * 20));

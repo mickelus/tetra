@@ -4,6 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.BlockPosPacket;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class WorkbenchPacketCraft extends BlockPosPacket {
 
     public WorkbenchPacketCraft() {}

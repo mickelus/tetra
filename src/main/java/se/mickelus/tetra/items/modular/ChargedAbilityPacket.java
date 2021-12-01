@@ -9,8 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.network.BlockPosPacket;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-
+@ParametersAreNonnullByDefault
 public class ChargedAbilityPacket extends BlockPosPacket {
 
     private int targetId = -1;

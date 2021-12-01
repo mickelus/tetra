@@ -7,7 +7,6 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.util.math.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -31,6 +30,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
@@ -50,11 +50,12 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class ItemEffectHandler {
 
     public static ItemEffectHandler instance;
@@ -180,8 +181,8 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
-    public void onProjectileImpact(ProjectileImpactEvent.Arrow event) {
-        HowlingEffect.deflectProjectile(event, event.getArrow(), event.getRayTraceResult());
+    public void onProjectileImpact(ProjectileImpactEvent event) {
+        HowlingEffect.deflectProjectile(event, event.getProjectile(), event.getRayTraceResult());
     }
 
     @SubscribeEvent
@@ -360,7 +361,7 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
-    public void onEnderTeleport(EnderTeleportEvent event) {
+    public void onEnderTeleport(EntityTeleportEvent event) {
         if (!event.getEntity().getCommandSenderWorld().isClientSide) {
             AABB aabb = new AABB(
                     event.getTargetX() - 24, event.getTargetY() - 24, event.getTargetZ() - 24,

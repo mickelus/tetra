@@ -18,10 +18,11 @@ import net.minecraftforge.eventbus.api.Event;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
+@ParametersAreNonnullByDefault
 public class CritEffect {
     private static final Cache<UUID, BlockPos> critBlockCache = CacheBuilder.newBuilder()
             .maximumSize(50)

@@ -14,11 +14,12 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ImprovementData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class GuiModuleMajor extends GuiModule {
 
     private GuiStringSmall slotString;

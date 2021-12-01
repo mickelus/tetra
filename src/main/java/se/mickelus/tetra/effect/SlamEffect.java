@@ -28,10 +28,11 @@ import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class SlamEffect extends ChargedAbilityEffect {
 
     public static final SlamEffect instance = new SlamEffect();

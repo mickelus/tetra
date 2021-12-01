@@ -7,6 +7,8 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class StatGetterDurability implements IStatGetter {
 
     public StatGetterDurability() { }

@@ -18,11 +18,12 @@ import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-
+@ParametersAreNonnullByDefault
 public class ReapEffect extends ChargedAbilityEffect {
 
     public static final ReapEffect instance = new ReapEffect();

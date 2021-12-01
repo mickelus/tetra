@@ -3,10 +3,11 @@ package se.mickelus.tetra.module.data;
 import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.module.Priority;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class ModuleData {
     /**
      * The slots that this module can go into. Has to contain at least one value.

@@ -15,8 +15,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
 
+
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class HammerBaseRenderer extends BlockEntityRenderer<HammerBaseTile> {
+public class HammerBaseRenderer implements BlockEntityRenderer<HammerBaseTile> {
     public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_hammer/base_sheet"));
 
     private final ModelPart unpowered;
@@ -32,7 +35,6 @@ public class HammerBaseRenderer extends BlockEntityRenderer<HammerBaseTile> {
     private final ModelPart cellBpowered;
 
     public HammerBaseRenderer(BlockEntityRenderDispatcher rendererDispatcher) {
-        super(rendererDispatcher);
 
         unpowered = new ModelPart(128, 64, 0, 0);
         unpowered.addBox(0, 0, 0, 16, 16, 16, 0);

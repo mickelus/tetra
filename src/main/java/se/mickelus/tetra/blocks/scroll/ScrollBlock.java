@@ -11,10 +11,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -29,8 +26,9 @@ import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
-
-public class ScrollBlock extends TetraBlock {
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
+public class ScrollBlock extends TetraBlock implements EntityBlock {
 
     private Arrangement arrangement;
 
@@ -127,17 +125,6 @@ public class ScrollBlock extends TetraBlock {
     }
 
     @Override
-    public boolean hasTileEntity(final BlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createTileEntity(final BlockState state, final BlockGetter world) {
-        return new ScrollTile();
-    }
-
-    @Override
     public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         super.playerWillDestroy(world, pos, state, player);
 
@@ -158,6 +145,12 @@ public class ScrollBlock extends TetraBlock {
                         world.addFreshEntity(entity);
                     }
                 });
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new ScrollTile(p_153215_, p_153216_);
     }
 
     public enum Arrangement {

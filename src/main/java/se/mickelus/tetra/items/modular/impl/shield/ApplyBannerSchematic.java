@@ -19,10 +19,11 @@ import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
-
+@ParametersAreNonnullByDefault
 public class ApplyBannerSchematic implements UpgradeSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String key = "shield/plate/banner";

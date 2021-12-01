@@ -6,8 +6,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import net.minecraft.resources.ResourceLocation;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
-
+@ParametersAreNonnullByDefault
 public class ResourceLocationDeserializer implements JsonDeserializer<ResourceLocation> {
 
     public static ResourceLocation deserialize(JsonElement json) throws JsonParseException {

@@ -5,6 +5,8 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.TweakData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class BasicModule extends ItemModule {
 
     public BasicModule(ResourceLocation identifier, ModuleData data) {

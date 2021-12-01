@@ -3,6 +3,8 @@ package se.mickelus.tetra.data;
 import com.google.gson.Gson;
 import se.mickelus.tetra.module.data.MaterialData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class MaterialStore extends MergingDataStore<MaterialData, MaterialData[]> {
 
     public MaterialStore(Gson gson, String directory) {

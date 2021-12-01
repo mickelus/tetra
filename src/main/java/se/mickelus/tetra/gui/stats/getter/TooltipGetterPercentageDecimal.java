@@ -4,6 +4,8 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class TooltipGetterPercentageDecimal implements ITooltipGetter {
 
     protected IStatGetter statGetter;

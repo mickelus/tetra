@@ -10,8 +10,9 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.ITetraBlock;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class BlockForgedPillar extends RotatedPillarBlock implements ITetraBlock {
     private static final String unlocalizedName = "forged_pillar";
 

@@ -7,8 +7,9 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class ParticleHelper {
     public static void spawnArmorParticles(ServerLevel world, LivingEntity entity) {
         spawnArmorParticles(world, entity, EquipmentSlot.values()[2 + entity.getRandom().nextInt(4)]);

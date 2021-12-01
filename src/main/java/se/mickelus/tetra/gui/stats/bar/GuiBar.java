@@ -5,6 +5,8 @@ import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiColors;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiBar extends GuiElement {
 
     protected static final int increaseColorBar = 0x8855ff55;

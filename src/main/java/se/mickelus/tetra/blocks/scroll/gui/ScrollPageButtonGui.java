@@ -6,6 +6,8 @@ import se.mickelus.mgui.gui.GuiClickable;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.TetraMod;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ScrollPageButtonGui extends GuiClickable {
     GuiTexture regularTexture;
     GuiTexture hoverTexture;

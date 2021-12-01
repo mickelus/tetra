@@ -26,8 +26,9 @@ import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.ThrownModularItemRenderer;
 import se.mickelus.tetra.properties.ReachEntityFix;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
-
+@ParametersAreNonnullByDefault
 public class ClientProxy implements IProxy {
 
     @Override

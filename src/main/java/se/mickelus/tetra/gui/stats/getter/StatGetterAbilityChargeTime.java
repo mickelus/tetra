@@ -6,7 +6,8 @@ import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
-// todo: doesn't really work for bars since improvement & slot getters only reference the base item
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class StatGetterAbilityChargeTime implements IStatGetter {
     private ChargedAbilityEffect ability;
 

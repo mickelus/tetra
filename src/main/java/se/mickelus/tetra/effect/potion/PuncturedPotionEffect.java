@@ -19,8 +19,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.effect.EffectHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class PuncturedPotionEffect extends MobEffect {
     public static PuncturedPotionEffect instance;
 

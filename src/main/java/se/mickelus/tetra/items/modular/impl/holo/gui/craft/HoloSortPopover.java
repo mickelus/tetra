@@ -9,8 +9,9 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiKeybinding;
 import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloSortPopover extends GuiElement {
     private Consumer<IStatSorter> onSelect;
 

@@ -9,6 +9,8 @@ import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class PryChargedEffect extends ChargedAbilityEffect {
 
     public static final PryChargedEffect instance = new PryChargedEffect();

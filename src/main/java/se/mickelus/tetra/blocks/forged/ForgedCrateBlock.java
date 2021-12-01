@@ -1,6 +1,5 @@
 package se.mickelus.tetra.blocks.forged;
 
-import net.minecraft.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -40,14 +39,16 @@ import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.util.CastOptional;
-import staticnet.minecraft.world.level.material.Fluidsrties.BlockStateProperties.WATERLOGGED;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.List;
 
-import static net.minecraft.fluid.Fluids.WATER;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
+import static net.minecraft.world.level.material.Fluids.WATER;
 
+@ParametersAreNonnullByDefault
 public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInteractiveBlock, SimpleWaterloggedBlock {
     static final String unlocalizedName = "forged_crate";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)

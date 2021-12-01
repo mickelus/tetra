@@ -12,10 +12,11 @@ import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 import se.mickelus.tetra.gui.stats.sorting.StatSorters;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloSortButton extends GuiElement {
     private final List<String> tooltip = Collections.singletonList(I18n.get("tetra.holo.craft.variants_sort"));
 

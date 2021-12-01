@@ -13,6 +13,8 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class OverlayGuiQuiverSlot extends GuiElement {
     private ItemStack itemStack;
 
@@ -37,7 +39,7 @@ public class OverlayGuiQuiverSlot extends GuiElement {
         mc = Minecraft.getInstance();
 
         if (itemStack != null) {
-            fontRenderer = itemStack.getItem().getFontRenderer(itemStack);
+            fontRenderer = null; // itemStack.getItem().getFontRenderer(itemStack);
         }
 
         if (fontRenderer == null) {
@@ -97,16 +99,17 @@ public class OverlayGuiQuiverSlot extends GuiElement {
     }
 
     private void drawItemStack(ItemStack itemStack, int x, int y) {
-        RenderSystem.pushMatrix();
+        PoseStack renderSystemStack = RenderSystem.getModelViewStack();
+        renderSystemStack.pushPose();
         RenderSystem.enableDepthTest();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        Lighting.turnBackOn();
+        // Lighting.turnBackOn();
 
         mc.getItemRenderer().renderAndDecorateItem(itemStack, x, y);
         mc.getItemRenderer().renderGuiItemDecorations(fontRenderer, itemStack, x, y, "");
-        Lighting.turnOff();
+      //  Lighting.turnOff();
         RenderSystem.disableDepthTest();
-        RenderSystem.popMatrix();
+        renderSystemStack.popPose();
     }
 
 

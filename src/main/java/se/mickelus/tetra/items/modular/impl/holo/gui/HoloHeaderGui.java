@@ -9,11 +9,12 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.items.modular.impl.holo.HoloPage;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloHeaderGui extends GuiElement {
 
     private final GuiButton[] buttons;

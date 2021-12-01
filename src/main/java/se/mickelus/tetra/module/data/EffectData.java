@@ -3,13 +3,14 @@ package se.mickelus.tetra.module.data;
 import com.google.gson.*;
 import se.mickelus.tetra.effect.ItemEffect;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class EffectData extends TierData<ItemEffect> {
 
     public static EffectData overwrite(EffectData a, EffectData b) {

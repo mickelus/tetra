@@ -8,6 +8,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.util.JsonOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ModuleCraftCriterion extends AbstractCriterionTriggerInstance {
     private final ItemPredicate before;
     private final ItemPredicate after;

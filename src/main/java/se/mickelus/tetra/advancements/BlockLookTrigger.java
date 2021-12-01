@@ -18,9 +18,10 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
+@ParametersAreNonnullByDefault
 public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> {
     private Cache<UUID, BlockState> stateCache;
 

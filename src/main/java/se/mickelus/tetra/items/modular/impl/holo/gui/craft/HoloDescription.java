@@ -9,10 +9,11 @@ import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class HoloDescription extends GuiElement {
     private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_description"));
     private List<String> tooltip;

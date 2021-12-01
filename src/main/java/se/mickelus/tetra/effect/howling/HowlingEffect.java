@@ -13,9 +13,10 @@ import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class HowlingEffect {
     public static void sendPacket() {
         TetraMod.packetHandler.sendToServer(new HowlingPacket());

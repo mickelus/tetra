@@ -5,8 +5,10 @@ import se.mickelus.tetra.gui.stats.bar.GuiStatBar;
 import se.mickelus.tetra.gui.stats.bar.GuiStatIndicator;
 import se.mickelus.tetra.gui.stats.getter.*;
 
-import static se.mickelus.tetra.gui.stats.StatsHelper.*;
+import javax.annotation.ParametersAreNonnullByDefault;
 
+import static se.mickelus.tetra.gui.stats.StatsHelper.*;
+@ParametersAreNonnullByDefault
 public class AbilityStats {
     public static final IStatGetter abilitySpeedGetter = new StatGetterEffectLevel(ItemEffect.abilitySpeed, 1);
     public static GuiStatIndicator abilitySpeedIndicator = new GuiStatIndicator(0, 0, "tetra.stats.ability_speed_bonus", 8,

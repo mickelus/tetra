@@ -10,7 +10,8 @@ import se.mickelus.mgui.gui.GuiRect;
 import se.mickelus.mgui.gui.GuiStringOutline;
 
 import javax.annotation.Nullable;
-
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiKeybinding extends GuiElement {
 
     public GuiKeybinding(int x, int y, KeyMapping keyBinding) {

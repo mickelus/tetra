@@ -5,6 +5,8 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class PotionsInventory extends ToolbeltInventory {
 
     private static final String inventoryKey = "potionsInventory";

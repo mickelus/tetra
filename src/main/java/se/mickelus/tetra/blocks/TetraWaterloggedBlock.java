@@ -9,12 +9,14 @@ import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
-import staticnet.minecraft.world.level.material.Fluidsrties.BlockStateProperties.WATERLOGGED;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
-import static net.minecraft.fluid.Fluids.WATER;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
+import static net.minecraft.world.level.material.Fluids.WATER;
 
+@ParametersAreNonnullByDefault
 public class TetraWaterloggedBlock extends TetraBlock implements SimpleWaterloggedBlock {
     public TetraWaterloggedBlock(Properties properties) {
         super(properties);

@@ -35,6 +35,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer> {
     private Player viewingPlayer;

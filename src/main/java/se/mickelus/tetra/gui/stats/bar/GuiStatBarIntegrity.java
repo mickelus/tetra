@@ -10,9 +10,10 @@ import se.mickelus.tetra.gui.stats.getter.*;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class GuiStatBarIntegrity extends GuiStatBase {
     protected double max = 9;
 

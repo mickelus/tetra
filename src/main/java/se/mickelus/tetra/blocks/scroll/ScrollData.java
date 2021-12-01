@@ -10,17 +10,18 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.Constants;
 import se.mickelus.tetra.util.HexCodec;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class ScrollData {
     public String key;
     public String details;
@@ -66,7 +67,7 @@ public class ScrollData {
 
     public static int readMaterialFast(ItemStack itemStack) {
         return Optional.ofNullable(itemStack.getTagElement("BlockEntityTag"))
-                .map(tag -> tag.getList("data", Constants.NBT.TAG_COMPOUND))
+                .map(tag -> tag.getList("data", Tag.TAG_COMPOUND))
                 .filter(list -> list.size() > 0)
                 .map(list -> list.getCompound(0))
                 .map(tag -> tag.getInt("material"))
@@ -75,7 +76,7 @@ public class ScrollData {
 
     public static int readRibbonFast(ItemStack itemStack) {
         return Optional.ofNullable(itemStack.getTagElement("BlockEntityTag"))
-                .map(tag -> tag.getList("data", Constants.NBT.TAG_COMPOUND))
+                .map(tag -> tag.getList("data", Tag.TAG_COMPOUND))
                 .filter(list -> list.size() > 0)
                 .map(list -> list.getCompound(0))
                 .map(tag -> tag.getString("ribbon"))
@@ -96,7 +97,7 @@ public class ScrollData {
     }
 
     public static ScrollData[] read(CompoundTag tag) {
-        return tag.getList("data", Constants.NBT.TAG_COMPOUND).stream()
+        return tag.getList("data", Tag.TAG_COMPOUND).stream()
                 .map(nbt -> ScrollData.codec.decode(NbtOps.INSTANCE, nbt))
                 .map(DataResult::result)
                 .filter(Optional::isPresent)

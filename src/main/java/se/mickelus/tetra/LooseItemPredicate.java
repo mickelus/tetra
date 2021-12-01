@@ -5,9 +5,9 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.stream.StreamSupport;
-
-
+@ParametersAreNonnullByDefault
 public class LooseItemPredicate extends ItemPredicate {
 
     private String[] keys;

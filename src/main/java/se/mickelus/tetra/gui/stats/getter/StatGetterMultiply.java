@@ -3,8 +3,9 @@ package se.mickelus.tetra.gui.stats.getter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
-
+@ParametersAreNonnullByDefault
 public class StatGetterMultiply implements IStatGetter {
     private IStatGetter[] statGetters;
 

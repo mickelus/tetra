@@ -5,9 +5,10 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class GuiItemRolling extends GuiElement {
     private boolean showTooltip = true;
     private GuiItem.CountMode countMode = GuiItem.CountMode.normal;

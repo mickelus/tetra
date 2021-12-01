@@ -4,6 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.VisibilityFilter;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiBarBooster extends GuiElement {
 
     private final int indicatorCount = 20;

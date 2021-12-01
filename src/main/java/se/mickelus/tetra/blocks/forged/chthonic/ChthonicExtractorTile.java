@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -9,6 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ChthonicExtractorTile extends BlockEntity {
     @ObjectHolder(TetraMod.MOD_ID + ":" + ChthonicExtractorBlock.unlocalizedName)
     public static BlockEntityType<ChthonicExtractorTile> type;
@@ -16,8 +19,8 @@ public class ChthonicExtractorTile extends BlockEntity {
     private static final String damageKey = "dmg";
     private int damage = 0;
 
-    public ChthonicExtractorTile() {
-        super(type);
+    public ChthonicExtractorTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
     }
 
     public int getDamage() {
@@ -42,8 +45,8 @@ public class ChthonicExtractorTile extends BlockEntity {
 
 
     @Override
-    public void load(BlockState blockState, CompoundTag compound) {
-        super.load(blockState, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
 
         if (compound.contains(damageKey)) {
             damage = compound.getInt(damageKey);

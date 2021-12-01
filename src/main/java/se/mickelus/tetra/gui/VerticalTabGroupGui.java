@@ -3,8 +3,9 @@ package se.mickelus.tetra.gui;
 import net.minecraft.resources.ResourceLocation;
 import se.mickelus.mgui.gui.GuiElement;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class VerticalTabGroupGui extends GuiElement {
 
     private static final char[] keybindings = new char[] {'a', 's', 'd', 'f', 'g'};

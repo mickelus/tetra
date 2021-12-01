@@ -6,9 +6,10 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloImprovementVariantGui extends GuiClickable {
 
     private final GuiTexture backdrop;

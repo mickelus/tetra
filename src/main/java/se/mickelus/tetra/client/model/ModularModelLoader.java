@@ -10,10 +10,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.DataManager;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class ModularModelLoader implements IModelLoader<ModularItemModel> {
 
     private static final Logger logger = LogManager.getLogger();

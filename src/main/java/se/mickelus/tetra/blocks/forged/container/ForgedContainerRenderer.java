@@ -16,8 +16,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
 
 // todo 1.15: ripped out
+
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class ForgedContainerRenderer extends BlockEntityRenderer<ForgedContainerTile> {
+public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContainerTile> {
     public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_container/forged_container"));
 
     public ModelPart lid;

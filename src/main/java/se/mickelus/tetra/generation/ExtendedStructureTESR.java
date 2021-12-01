@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.StructureBlockRenderer;
 import net.minecraft.client.renderer.debug.DebugRenderer;
 import net.minecraft.core.BlockPos;
@@ -23,11 +24,17 @@ import se.mickelus.tetra.data.DataManager;
 import java.util.Arrays;
 import java.util.Optional;
 
+
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ExtendedStructureTESR extends StructureBlockRenderer {
 
-    public ExtendedStructureTESR(BlockEntityRenderDispatcher dispatcher) {
+    private BlockEntityRendererProvider.Context dispatcher;
+
+    public ExtendedStructureTESR(BlockEntityRendererProvider.Context dispatcher) {
         super(dispatcher);
+        this.dispatcher = dispatcher;
     }
 
     @Override
@@ -136,7 +143,7 @@ public class ExtendedStructureTESR extends StructureBlockRenderer {
         Matrix4f matrix4f = matrixStackIn.last().pose();
         float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
         int j = (int) (f1 * 255.0F) << 24;
-        Font fontrenderer = renderer.font;
+        Font fontrenderer = dispatcher.getFont();
         float f2 = (float) (-fontrenderer.width(label) / 2);
         fontrenderer.draw(matrixStackIn, label, f2, 0, 553648127);
         fontrenderer.drawInBatch(label, f2, 0, -1, true, matrix4f, bufferIn, false, j, packedLightIn, false);

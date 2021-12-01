@@ -10,8 +10,9 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class ApplyImprovementOutcome implements CraftingEffectOutcome {
     Map<String, Integer> improvements;
 

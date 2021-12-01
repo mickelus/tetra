@@ -26,17 +26,9 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.deserializer.ItemPredicateDeserializer;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
-
-/**
- * Materials define a required item in a schematic outcome. It's parsed (and mostly it behaves) as if it was an
- * item predicate. Count is stored separately and has to be smaller than size of a provided itemstack for it to match.
- * Example json:
- * {
- *     "item": "minecraft:oak_planks",
- *     "count": 2
- * }
- */
+@ParametersAreNonnullByDefault
 public class OutcomeMaterial {
     private static final Logger logger = LogManager.getLogger();
 

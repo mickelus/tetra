@@ -9,6 +9,8 @@ import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.TetraMod;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class InteractiveOutlineGui extends GuiElement {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/block-interaction.png");
 

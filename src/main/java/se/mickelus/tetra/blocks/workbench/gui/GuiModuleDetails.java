@@ -10,8 +10,9 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.RepairRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
-
+@ParametersAreNonnullByDefault
 public class GuiModuleDetails extends GuiElement {
 
     private GuiElement glyph;

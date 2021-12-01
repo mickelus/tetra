@@ -13,13 +13,14 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.EmptyModelData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class CoreExtractorPistonTESR extends BlockEntityRenderer<CoreExtractorPistonTile> {
+public class CoreExtractorPistonTESR implements BlockEntityRenderer<CoreExtractorPistonTile> {
     private static BlockRenderDispatcher blockRenderer;
 
     public CoreExtractorPistonTESR(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
-
         blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }
 

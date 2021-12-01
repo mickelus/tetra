@@ -9,11 +9,12 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.MaterialData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class HoloMaterialListGui extends GuiElement {
     private GuiHorizontalScrollable groupsScroll;
     private GuiHorizontalLayoutGroup groups;

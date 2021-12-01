@@ -6,6 +6,8 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.module.MultiSlotMajorModule;
 import se.mickelus.tetra.module.data.ModuleData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ToolbeltModule extends MultiSlotMajorModule {
     public ToolbeltModule(ResourceLocation identifier, ModuleData data) {
         super(identifier, data);

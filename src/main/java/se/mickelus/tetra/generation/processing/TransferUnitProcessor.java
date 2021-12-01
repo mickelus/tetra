@@ -15,8 +15,9 @@ import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class TransferUnitProcessor extends StructureProcessor {
     public TransferUnitProcessor() {}
 

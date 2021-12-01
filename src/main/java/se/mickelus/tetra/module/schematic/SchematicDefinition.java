@@ -4,49 +4,11 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.MaterialMultiplier;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
-
-/**
- * Schematics define how players craft new modules, and which materials yield which module variant.
- * Example json:
- * {
- *     "key": "basic_blade_schematic",
- *     "slots": ["sword/blade"],
- *     "materialSlotCount": 1,
- *     "displayType": "major",
- *     "outcomes": [
- *         {
- *             "material": {
- *                 "item": "minecraft:oak_planks",
- *                 "count": 2
- *             },
- *             "requiredTools": {
- *                 "axe": 1,
- *                 "hammer": 4
- *             },
- *             "moduleKey": "sword/basic_blade",
- *             "moduleVariant": "basic_blade/acacia"
- *         },
- *         {
- *             "material": {
- *                 "type": "minecraft:tag",
- *                 "name": "forge:ingots/steeleaf",
- *                 "count": 2
- *             },
- *             "requiredTools": {
- *                 "hammer": 2
- *             },
- *             "moduleKey": "sword/basic_blade",
- *             "moduleVariant": "basic_blade/steeleaf",
- *             "improvements": {
- *                 "enchantment/looting": 2
- *             }
- *         }
- *     ]
- * }
- */
+@ParametersAreNonnullByDefault
 public class SchematicDefinition {
 
     /**

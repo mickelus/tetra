@@ -8,8 +8,9 @@ import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Predicate;
-
+@ParametersAreNonnullByDefault
 public class GenericTrigger<T extends AbstractCriterionTriggerInstance> extends SimpleCriterionTrigger<T> {
     private ResourceLocation id;
 

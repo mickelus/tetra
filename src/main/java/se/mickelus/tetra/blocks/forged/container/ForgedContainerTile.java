@@ -34,10 +34,11 @@ import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class ForgedContainerTile extends BlockEntity implements MenuProvider {
     @ObjectHolder(TetraMod.MOD_ID + ":" + ForgedContainerBlock.unlocalizedName)
     public static BlockEntityType<ForgedContainerTile> type;
@@ -60,8 +61,8 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
 
     private LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(compartmentSize * compartmentCount));
 
-    public ForgedContainerTile() {
-        super(type);
+    public ForgedContainerTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
 
         lockIntegrity = new int[lockCount];
     }
@@ -216,7 +217,7 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -226,12 +227,12 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(getBlockState(), pkt.getTag());
+        load(pkt.getTag());
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
 

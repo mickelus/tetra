@@ -27,8 +27,9 @@ import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-
+@ParametersAreNonnullByDefault
 public class ModularShieldItem extends ItemModularHandheld {
     public final static String plateKey = "shield/plate";
     public final static String gripKey = "shield/grip";
@@ -74,7 +75,7 @@ public class ModularShieldItem extends ItemModularHandheld {
         super.clientInit();
 
         ItemProperties.register(this, new ResourceLocation("blocking"),
-                (itemStack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == itemStack ? 1.0F : 0.0F);
+                (itemStack, world, entity, i) -> entity != null && entity.isUsingItem() && entity.getUseItem() == itemStack ? 1.0F : 0.0F);
 
         MinecraftForge.EVENT_BUS.register(new BlockProgressOverlay(Minecraft.getInstance()));
     }

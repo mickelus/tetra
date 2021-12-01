@@ -47,10 +47,11 @@ import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class WorkbenchTile extends BlockEntity implements MenuProvider {
     public static final String unlocalizedName = "workbench";
 
@@ -88,8 +89,8 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
 
     private ActionInteraction interaction;
 
-    public WorkbenchTile() {
-        super(type);
+    public WorkbenchTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
         changeListeners = new HashMap<>();
     }
 
@@ -484,7 +485,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -494,12 +495,12 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(getBlockState(), pkt.getTag());
+        load(pkt.getTag());
     }
 
     @Override
-    public void load(BlockState blockState, CompoundTag compound) {
-        super.load(blockState, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
 
@@ -575,7 +576,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
         handler.ifPresent(handler -> {
             ItemStack itemStack = handler.extractItem(index, handler.getSlotLimit(index), false);
             if (!itemStack.isEmpty()) {
-                if (!player.inventory.add(itemStack)) {
+                if (!player.getInventory().add(itemStack)) {
                     player.drop(itemStack, false);
                 }
             }

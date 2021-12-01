@@ -10,17 +10,18 @@ import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.forgespi.Environment;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class DataStore<V> extends SimplePreparableReloadListener<Map<ResourceLocation, JsonElement>> {
     private static final Logger logger = LogManager.getLogger();
     protected static final int jsonExtLength = ".json".length();

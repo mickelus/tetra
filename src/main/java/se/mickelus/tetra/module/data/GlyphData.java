@@ -4,16 +4,8 @@ import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
 
-/**
- * Used to describe glyphs for modules and schematics in the UI.
- *
- * Example json:
- * {
- *     "tint": "9d804e",
- *     "textureY": 32,
- *     "textureX": 48
- * }
- */
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GlyphData {
 
     /**

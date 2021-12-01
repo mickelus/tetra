@@ -14,11 +14,12 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class CleanseSchematic implements UpgradeSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String key = "cleanse";

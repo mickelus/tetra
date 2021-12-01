@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -8,9 +9,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
@@ -20,9 +22,10 @@ import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-
-public class TransferUnitTile extends BlockEntity implements TickableBlockEntity, IHeatTransfer {
+@ParametersAreNonnullByDefault
+public class TransferUnitTile extends BlockEntity implements BlockEntityTicker<TransferUnitTile>, IHeatTransfer {
     @ObjectHolder(TetraMod.MOD_ID + ":" + TransferUnitBlock.unlocalizedName)
     public static BlockEntityType<TransferUnitTile> type;
 
@@ -31,8 +34,8 @@ public class TransferUnitTile extends BlockEntity implements TickableBlockEntity
     private static final int baseAmount = 8;
     private float efficiency = 1;
 
-    public TransferUnitTile() {
-        super(type);
+    public TransferUnitTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
         cell = ItemStack.EMPTY;
     }
 
@@ -161,7 +164,7 @@ public class TransferUnitTile extends BlockEntity implements TickableBlockEntity
     }
 
     @Override
-    public void tick() {
+    public void tick(Level p_155253_, BlockPos p_155254_, BlockState p_155255_, TransferUnitTile p_155256_) {
         if (!level.isClientSide
                 && level.getGameTime() % 5 == 0
                 && TransferUnitBlock.isSending(getBlockState())) {
@@ -250,8 +253,8 @@ public class TransferUnitTile extends BlockEntity implements TickableBlockEntity
     }
 
     @Override
-    public void load(BlockState blockState, CompoundTag compound) {
-        super.load(blockState, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
 
         if (compound.contains("cell")) {
             cell = ItemStack.of(compound.getCompound("cell"));
@@ -280,7 +283,7 @@ public class TransferUnitTile extends BlockEntity implements TickableBlockEntity
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -290,6 +293,6 @@ public class TransferUnitTile extends BlockEntity implements TickableBlockEntity
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
-        this.load(getBlockState(), packet.getTag());
+        this.load(packet.getTag());
     }
 }

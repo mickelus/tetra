@@ -8,6 +8,8 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class StatGetterToolLevel implements IStatGetter {
 
     private ToolType tool;

@@ -6,10 +6,11 @@ import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.BlockPosPacket;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class WorkbenchPacketTweak extends BlockPosPacket {
 
     String slot;

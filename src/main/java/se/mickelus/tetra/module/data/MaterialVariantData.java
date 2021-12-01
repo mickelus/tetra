@@ -3,11 +3,12 @@ package se.mickelus.tetra.module.data;
 import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.properties.AttributeHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class MaterialVariantData extends VariantData {
 
     public ResourceLocation[] materials = {};

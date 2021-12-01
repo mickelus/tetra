@@ -1,5 +1,7 @@
 package se.mickelus.tetra.gui;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiColors {
     public static final int normal = 0xffffff;
     public static final int add = 0xaaffaa;

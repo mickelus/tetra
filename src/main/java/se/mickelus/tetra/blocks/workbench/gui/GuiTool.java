@@ -8,6 +8,8 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiTool extends GuiElement {
     public static final int width = 16;
     protected ToolType toolType;

@@ -13,10 +13,11 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.schematic.*;
 import se.mickelus.tetra.util.Filter;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class SchematicRegistry {
     private static final Logger logger = LogManager.getLogger();
 

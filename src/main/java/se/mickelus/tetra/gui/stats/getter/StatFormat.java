@@ -1,7 +1,8 @@
 package se.mickelus.tetra.gui.stats.getter;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.text.DecimalFormat;
-
+@ParametersAreNonnullByDefault
 public class StatFormat {
 
     public static final StatFormat noDecimal = new StatFormat("%.0f");

@@ -4,6 +4,8 @@ import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class MaterialMultiplier {
     public Multimap<Attribute, AttributeModifier> primaryAttributes;
     public Multimap<Attribute, AttributeModifier> secondaryAttributes;

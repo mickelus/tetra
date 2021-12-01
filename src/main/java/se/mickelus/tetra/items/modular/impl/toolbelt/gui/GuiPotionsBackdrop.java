@@ -9,8 +9,9 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
-
+@ParametersAreNonnullByDefault
 public class GuiPotionsBackdrop extends GuiElement {
     public GuiPotionsBackdrop(int x, int y, int numSlots, Collection<Collection<ItemEffect>> inventoryEffects) {
         super(x, y, numSlots * 17 - 9, 28);

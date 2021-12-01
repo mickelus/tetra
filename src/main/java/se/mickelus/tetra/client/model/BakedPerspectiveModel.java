@@ -12,6 +12,8 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraftforge.client.model.BakedItemModel;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class BakedPerspectiveModel extends BakedItemModel {
     private ItemTransforms cameraTransforms;
     public BakedPerspectiveModel(ImmutableList<BakedQuad> quads, TextureAtlasSprite particle,

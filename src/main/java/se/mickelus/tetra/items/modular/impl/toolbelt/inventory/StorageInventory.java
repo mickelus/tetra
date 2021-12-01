@@ -5,9 +5,10 @@ import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class StorageInventory extends ToolbeltInventory {
 
     private static final String inventoryKey = "storageInventory";

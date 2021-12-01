@@ -9,8 +9,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.module.data.ToolData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class ToolCondition implements CraftingEffectCondition {
     ToolData tools;
 

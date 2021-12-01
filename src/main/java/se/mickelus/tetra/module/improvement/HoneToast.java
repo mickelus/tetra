@@ -1,7 +1,5 @@
 package se.mickelus.tetra.module.improvement;
 
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
@@ -14,6 +12,8 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class HoneToast implements Toast {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/toasts.png");
 
@@ -27,8 +27,8 @@ public class HoneToast implements Toast {
     @Override
     public Visibility render(PoseStack matrixStack, ToastComponent toastGui, long delta) {
         if (itemStack != null) {
-            toastGui.getMinecraft().getTextureManager().bind(texture);
-            RenderSystem.color3f(1.0F, 1.0F, 1.0F);
+            toastGui.getMinecraft().getTextureManager().bindForSetup(texture);
+            // RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             toastGui.blit(matrixStack, 0, 0, 0, 0, 160, 32);
 
             String itemName = toastGui.getMinecraft().font.plainSubstrByWidth(itemStack.getHoverName().getString(), 125);
@@ -41,8 +41,8 @@ public class HoneToast implements Toast {
                         .play(SimpleSoundInstance.forUI(SoundEvents.PLAYER_LEVELUP, 0.6F, 0.7F));
             }
 
-            Lighting.turnBackOn();
-            toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(null, itemStack, 8, 8);
+            // Lighting.turnBackOn();
+            toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(itemStack, 8, 8);
 
             return delta > 5000 ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
         }

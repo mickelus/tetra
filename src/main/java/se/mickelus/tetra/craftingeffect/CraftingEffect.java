@@ -10,10 +10,11 @@ import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.craftingeffect.outcome.CraftingEffectOutcome;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class CraftingEffect {
     public boolean replace = false;
     CraftingEffectCondition[] requirements = new CraftingEffectCondition[0];

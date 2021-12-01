@@ -17,9 +17,10 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import se.mickelus.tetra.data.DataManager;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
-
+@ParametersAreNonnullByDefault
 public class TGenCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("tgen")
@@ -46,7 +47,7 @@ public class TGenCommand {
 
     private static int generateAtPos(CommandContext<CommandSourceStack> context) throws CommandSyntaxException{
         generate(ResourceLocationArgument.getId(context, "feature"), context.getSource().getLevel(),
-                BlockPosArgument.getOrLoadBlockPos(context, "pos"), context.getSource().getLevel().getSeed());
+                BlockPosArgument.getLoadedBlockPos(context, "pos"), context.getSource().getLevel().getSeed());
 
         return 1;
     }

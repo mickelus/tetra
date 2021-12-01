@@ -8,8 +8,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Function;
-
+@ParametersAreNonnullByDefault
 public class TileEntityOutcome<T extends BlockEntity> implements InteractionOutcome {
 
     Class<T> tileEntityClass;

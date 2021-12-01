@@ -5,7 +5,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -52,9 +51,10 @@ import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class ModularCrossbowItem extends ModularItem {
     public final static String staveKey = "crossbow/stave";
     public final static String stockKey = "crossbow/stock";
@@ -230,16 +230,15 @@ public class ModularCrossbowItem extends ModularItem {
                 setLoaded(itemStack, true);
                 SoundSource soundcategory = entity instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE;
                 world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CROSSBOW_LOADING_END, soundcategory,
-                        1.0f, 1.0f / (random.nextFloat() * 0.5f + 1.0f) + 0.2f);
+                        1.0f, 1.0f / (world.random.nextFloat() * 0.5f + 1.0f) + 0.2f);
             }
         }
 
     }
 
     protected void fireProjectiles(ItemStack itemStack, Level world, LivingEntity entity) {
-        if (entity instanceof Player && !world.isClientSide) {
+        if (entity instanceof Player player && !world.isClientSide) {
             ItemStack advancementCopy = itemStack.copy();
-            Player player = (Player) entity;
             int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot), 1);
             List<ItemStack> list = takeProjectiles(itemStack, count);
 
@@ -248,7 +247,7 @@ public class ModularCrossbowItem extends ModularItem {
 
                 for (int i = 0; i < list.size(); i++) {
                     ItemStack ammoStack = list.get(i);
-                    double yaw = player.yRot - spread * (count - 1) / 2f + spread * i;
+                    double yaw = player.getYRot() - spread * (count - 1) / 2f + spread * i;
                     fireProjectile(world, itemStack, ammoStack, player, yaw);
                 }
 
@@ -276,17 +275,17 @@ public class ModularCrossbowItem extends ModularItem {
         if (ChthonicExtractorBlock.item.equals(ammoStack.getItem()) || ChthonicExtractorBlock.usedItem.equals(ammoStack.getItem())) {
             ExtractorProjectileEntity projectileEntity = new ExtractorProjectileEntity(world, player, ammoStack);
 
-            if (player.abilities.instabuild) {
+            if (player.getAbilities().instabuild) {
                 projectileEntity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             }
 
-            projectileEntity.shootFromRotation(player, player.xRot, (float) yaw, 0.0F, projectileVelocity, 1.0F);
+            projectileEntity.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity, 1.0F);
             world.addFreshEntity(projectileEntity);
         } else if (ammoStack.getItem() instanceof FireworkRocketItem) {
             FireworkRocketEntity projectile = new FireworkRocketEntity(world, ammoStack, player, player.getX(),
                     player.getEyeY() - 0.15, player.getZ(), true);
 
-            projectile.shootFromRotation(player, player.xRot, (float) yaw, 0.0F, projectileVelocity * 1.6F, 1.0F);
+            projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 1.6F, 1.0F);
             world.addFreshEntity(projectile);
         } else {
             ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class).orElse((ArrowItem) Items.ARROW);
@@ -310,11 +309,11 @@ public class ModularCrossbowItem extends ModularItem {
                 projectile.setPierceLevel((byte) piercingLevel);
             }
 
-            if (player.abilities.instabuild) {
+            if (player.getAbilities().instabuild) {
                 projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             }
 
-            projectile.shootFromRotation(player, player.xRot, (float) yaw, 0.0F, projectileVelocity * 3.15F, 1.0F);
+            projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 3.15F, 1.0F);
             world.addFreshEntity(projectile);
         }
     }
@@ -355,7 +354,7 @@ public class ModularCrossbowItem extends ModularItem {
     private boolean reload(LivingEntity entity, ItemStack crossbowStack) {
         int count = Math.max(getEffectLevel(crossbowStack, ItemEffect.multishot), 1);
         boolean infinite = CastOptional.cast(entity, Player.class)
-                .map(player -> player.abilities.instabuild)
+                .map(player -> player.getAbilities().instabuild)
                 .orElse(false);
 
         // todo: this has to be improved
@@ -388,8 +387,8 @@ public class ModularCrossbowItem extends ModularItem {
             ItemStack itemstack;
             if (!flag && !p_220023_4_ && !p_220023_3_) {
                 itemstack = ammoStack.split(1);
-                if (ammoStack.isEmpty() && entity instanceof Player) {
-                    ((Player)entity).inventory.removeItem(ammoStack);
+                if (ammoStack.isEmpty() && entity instanceof Player player) {
+                    player.getInventory().removeItem(ammoStack);
                 }
             } else {
                 itemstack = ammoStack.copy();

@@ -4,8 +4,9 @@ import com.google.gson.*;
 import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.module.data.GlyphData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
-
+@ParametersAreNonnullByDefault
 public class GlyphDeserializer implements JsonDeserializer<GlyphData> {
 
     @Override

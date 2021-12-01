@@ -14,9 +14,10 @@ import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class ActionInteraction extends BlockInteraction {
 
     private String actionKey;

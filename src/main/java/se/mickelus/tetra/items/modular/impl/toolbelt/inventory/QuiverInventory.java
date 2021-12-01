@@ -4,8 +4,9 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
-
+@ParametersAreNonnullByDefault
 public class QuiverInventory extends ToolbeltInventory {
 
     private static final String inventoryKey = "quiverInventory";

@@ -11,6 +11,8 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class RevengeGui extends GuiElement {
     private GuiTexture indicatorLeft;
 

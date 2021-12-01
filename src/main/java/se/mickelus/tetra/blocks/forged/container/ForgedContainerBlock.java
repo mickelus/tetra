@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import net.minecraft.block.*;
+
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,9 +28,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
@@ -43,13 +41,14 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
-
-public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
+@ParametersAreNonnullByDefault
+public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInteractiveBlock, EntityBlock {
     public static final String unlocalizedName = "forged_container";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ForgedContainerBlock instance;
@@ -252,17 +251,6 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
         builder.add(facingProp, flippedProp, locked1Prop, locked2Prop, anyLockedProp, openProp);
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return new ForgedContainerTile();
-    }
-
     @Nullable
     @Override
     public BlockState getStateForPlacement(final BlockPlaceContext context) {
@@ -318,5 +306,11 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(facingProp)));
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new ForgedContainerTile(p_153215_, p_153216_);
     }
 }

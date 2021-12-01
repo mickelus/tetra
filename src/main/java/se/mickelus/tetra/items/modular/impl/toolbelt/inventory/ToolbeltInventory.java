@@ -4,13 +4,13 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.Constants;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -18,11 +18,12 @@ import se.mickelus.tetra.items.ItemPredicateComposite;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-
+@ParametersAreNonnullByDefault
 public class ToolbeltInventory implements Container {
     protected static final String slotKey = "slot";
 
@@ -76,7 +77,7 @@ public class ToolbeltInventory implements Container {
 
 
     public void readFromNBT(CompoundTag compound) {
-        ListTag items = compound.getList(inventoryKey, Constants.NBT.TAG_COMPOUND);
+        ListTag items = compound.getList(inventoryKey, Tag.TAG_COMPOUND);
 
         for (int i = 0; i < items.size(); i++) {
             CompoundTag itemTag = items.getCompound(i);
@@ -209,7 +210,7 @@ public class ToolbeltInventory implements Container {
 
     protected void moveStackToPlayer(ItemStack itemStack, Player player) {
         if (!itemStack.isEmpty()) {
-            if (!player.inventory.add(itemStack)) {
+            if (!player.getInventory().add(itemStack)) {
                 player.drop(itemStack, false);
             }
         }

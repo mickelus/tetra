@@ -4,6 +4,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class Tooltips {
     public static final Component reveal = new TranslatableComponent("item.tetra.tooltip_reveal").withStyle(ChatFormatting.GRAY);
 

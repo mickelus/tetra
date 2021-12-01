@@ -5,8 +5,9 @@ import net.minecraftforge.fml.ModList;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ImprovementData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
-
+@ParametersAreNonnullByDefault
 public class DestabilizationEffect {
 
     private static DestabilizationEffect[] effects = new DestabilizationEffect[0];

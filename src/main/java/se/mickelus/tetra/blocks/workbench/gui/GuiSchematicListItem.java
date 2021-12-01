@@ -11,9 +11,10 @@ import se.mickelus.tetra.module.schematic.SchematicRarity;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class GuiSchematicListItem extends GuiClickable {
 
     private GuiTexture border;

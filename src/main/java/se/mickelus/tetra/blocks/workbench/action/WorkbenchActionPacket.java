@@ -6,8 +6,9 @@ import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.network.BlockPosPacket;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
-
+@ParametersAreNonnullByDefault
 public class WorkbenchActionPacket extends BlockPosPacket {
 
     private String actionKey;

@@ -8,8 +8,9 @@ import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloSlotMajorGui extends GuiClickable {
     private final GuiTexture backdrop;
     private final GuiString slotString;

@@ -40,9 +40,10 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class ScrollItem extends BlockItem {
     static final String identifier = "scroll_rolled";
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
@@ -94,7 +95,7 @@ public class ScrollItem extends BlockItem {
     public static void clientPostInit() {
         Minecraft.getInstance().getItemColors().register(new ScrollItemColor(), instance);
         ItemProperties.register(instance, new ResourceLocation(TetraMod.MOD_ID, "scroll_mat"),
-                (itemStack, world, livingEntity) -> ScrollData.readMaterialFast(itemStack));
+                (itemStack, world, livingEntity, i) -> ScrollData.readMaterialFast(itemStack));
     }
 
     @Override
@@ -278,7 +279,7 @@ public class ScrollItem extends BlockItem {
                     .orElse(false);
 
             if (success) {
-                if (player == null || !player.abilities.instabuild) {
+                if (player == null || !player.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
                 return InteractionResult.sidedSuccess(world.isClientSide);

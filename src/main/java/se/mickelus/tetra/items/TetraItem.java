@@ -3,6 +3,8 @@ package se.mickelus.tetra.items;
 import net.minecraft.world.item.Item;
 import se.mickelus.tetra.network.PacketHandler;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class TetraItem extends Item implements ITetraItem {
 
     public TetraItem(Properties properties) {

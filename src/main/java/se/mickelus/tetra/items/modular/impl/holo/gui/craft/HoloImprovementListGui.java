@@ -9,10 +9,11 @@ import se.mickelus.mgui.gui.impl.GuiHorizontalScrollable;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloImprovementListGui extends GuiElement {
     private final List<HoloImprovementGui> improvements;
     private final GuiHorizontalScrollable container;

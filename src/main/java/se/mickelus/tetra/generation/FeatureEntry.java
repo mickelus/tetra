@@ -37,12 +37,13 @@ import se.mickelus.tetra.generation.processing.TransferUnitProcessor;
 import se.mickelus.tetra.util.ItemHandlerWrapper;
 import se.mickelus.tetra.util.RotationHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class FeatureEntry extends Feature<NoneFeatureConfiguration> { //<FeatureReference> {
     public static final String key = "feature";
     public static FeatureEntry instance = new FeatureEntry();

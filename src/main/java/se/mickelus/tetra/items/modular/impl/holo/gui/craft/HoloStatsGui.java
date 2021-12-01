@@ -14,11 +14,11 @@ import se.mickelus.tetra.gui.stats.bar.GuiStatBarTool;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBase;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-
+@ParametersAreNonnullByDefault
 public class HoloStatsGui extends GuiElement {
 
     private static final List<GuiStatBase> bars = new ArrayList<>(Arrays.asList(

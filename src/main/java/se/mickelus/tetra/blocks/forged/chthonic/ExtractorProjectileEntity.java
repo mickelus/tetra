@@ -11,7 +11,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.math.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -33,15 +32,17 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.RotationHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ExtractorProjectileEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
     public static final String unlocalizedName = "extractor_projectile";
 
@@ -83,7 +84,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
         setPierceLevel(Byte.MAX_VALUE);
     }
 
-    public ExtractorProjectileEntity(FMLPlayMessages.SpawnEntity packet, Level worldIn) {
+    public ExtractorProjectileEntity(PlayMessages.SpawnEntity packet, Level worldIn) {
         super(type, worldIn);
         setBaseDamage(0.5);
         setKnockback(3);
@@ -162,7 +163,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
                 && isAlive()
                 && !shooter.blockActionRestricted(world, pos, gameType)
                 && FracturedBedrockTile.breakMaterials.contains(blockState.getMaterial())
-                && blockState.getBlock().removedByPlayer(blockState, world, pos, shooter, true, world.getFluidState(pos))
+                && blockState.getBlock().onDestroyedByPlayer(blockState, world, pos, shooter, true, world.getFluidState(pos))
                 && ForgeHooks.onBlockBreakEvent(world, gameType, shooter, pos) != -1) {
 
             blockState.getBlock().playerDestroy(world, shooter, pos, blockState, tileEntity, ItemStack.EMPTY);
@@ -293,7 +294,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
             } else if (player.getOffhandItem().isEmpty()) {
                 player.setItemInHand(InteractionHand.OFF_HAND, itemStack);
                 success = true;
-            } else if (player.inventory.add(itemStack)) {
+            } else if (player.getInventory().add(itemStack)) {
                 success = true;
             }
 

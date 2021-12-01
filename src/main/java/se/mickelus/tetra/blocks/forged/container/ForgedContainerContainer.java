@@ -20,9 +20,9 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mgui.gui.ToggleableSlot;
 import se.mickelus.tetra.TetraMod;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
-
-
+@ParametersAreNonnullByDefault
 public class ForgedContainerContainer extends AbstractContainerMenu {
     @ObjectHolder(TetraMod.MOD_ID + ":" + ForgedContainerBlock.unlocalizedName)
     public static MenuType<ForgedContainerContainer> type;

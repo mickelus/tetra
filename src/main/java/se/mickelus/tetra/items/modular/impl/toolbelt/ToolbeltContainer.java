@@ -12,7 +12,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.mgui.gui.DisabledSlot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 
-
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ToolbeltContainer extends AbstractContainerMenu {
     private ItemStack itemStackToolbelt;
     private QuickslotInventory quickslotInventory;
@@ -156,22 +157,22 @@ public class ToolbeltContainer extends AbstractContainerMenu {
     public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
         if (clickTypeIn == ClickType.PICKUP && 0 <= slotId && slotId < potionsInventory.getContainerSize()) {
             Slot slot = getSlot(slotId);
-            if (player.inventory.getCarried().isEmpty()) {
-                player.inventory.setCarried(slot.remove(64));
+            if (player.getInventory().getSelected().isEmpty()) {
+                player.getInventory().setCarried(slot.remove(64));
             } else {
-                if (slot.mayPlace(player.inventory.getCarried())) {
+                if (slot.mayPlace(player.getInventory().getSelected())) {
                     if (slot.getItem().isEmpty()) {
-                        slot.set(player.inventory.getCarried());
-                        player.inventory.setCarried(ItemStack.EMPTY);
-                    } else if (ItemStack.isSame(slot.getItem(), player.inventory.getCarried())
-                            && ItemStack.tagMatches(slot.getItem(), player.inventory.getCarried())) {
-                        int moveAmount = Math.min(player.inventory.getCarried().getCount(), slot.getMaxStackSize() - slot.getItem().getCount());
+                        slot.set(player.getInventory().getSelected());
+                        player.getInventory().setCarried(ItemStack.EMPTY);
+                    } else if (ItemStack.isSame(slot.getItem(), player.getInventory().getSelected())
+                            && ItemStack.tagMatches(slot.getItem(), player.getInventory().getSelected())) {
+                        int moveAmount = Math.min(player.getInventory().getSelected().getCount(), slot.getMaxStackSize() - slot.getItem().getCount());
                         slot.getItem().grow(moveAmount);
-                        player.inventory.getCarried().shrink(moveAmount);
+                        player.getInventory().getSelected().shrink(moveAmount);
                     } else if (slot.getItem().getCount() <= slot.getItem().getMaxStackSize()) {
                         ItemStack tempStack = slot.getItem();
-                        slot.set(player.inventory.getCarried());
-                        player.inventory.setCarried(tempStack);
+                        slot.set(player.getInventory().getSelected());
+                        player.getInventory().setCarried(tempStack);
                     }
                 }
             }

@@ -3,6 +3,8 @@ package se.mickelus.tetra.module.schematic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class InvalidSchematicException extends Exception {
     private static Logger logger = LogManager.getLogger();
 

@@ -8,11 +8,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import se.mickelus.mgui.gui.hud.GuiRootHud;
 import se.mickelus.tetra.properties.PropertyHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class InteractiveBlockOverlayGui extends GuiRootHud {
 
 

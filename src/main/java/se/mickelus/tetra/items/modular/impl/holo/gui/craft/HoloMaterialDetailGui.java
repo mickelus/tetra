@@ -14,12 +14,13 @@ import se.mickelus.tetra.gui.stats.getter.LabelGetterBasic;
 import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.module.data.TierData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class HoloMaterialDetailGui extends GuiElement {
 
     private GuiElement content;

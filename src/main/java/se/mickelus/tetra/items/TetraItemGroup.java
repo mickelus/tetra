@@ -4,6 +4,8 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.blocks.geode.GeodeItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class TetraItemGroup extends CreativeModeTab {
 
     public static TetraItemGroup instance;

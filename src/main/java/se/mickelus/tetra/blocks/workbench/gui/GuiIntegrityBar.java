@@ -12,9 +12,10 @@ import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class GuiIntegrityBar extends GuiElement {
 
     private int segmentWidth = 8;

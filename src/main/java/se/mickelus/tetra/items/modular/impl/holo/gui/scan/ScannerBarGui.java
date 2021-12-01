@@ -8,6 +8,8 @@ import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ScannerBarGui extends GuiElement {
     private AnimationChain[] upAnimations;
     private AnimationChain[] upHighlightAnimations;

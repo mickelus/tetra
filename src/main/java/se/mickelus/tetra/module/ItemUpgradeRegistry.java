@@ -12,10 +12,11 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class ItemUpgradeRegistry {
     private static final Logger logger = LogManager.getLogger();
 

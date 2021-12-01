@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -10,7 +11,8 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.Nullable;
-
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class HammerHeadTile extends BlockEntity {
     @ObjectHolder(TetraMod.MOD_ID + ":" + HammerHeadBlock.unlocalizedName)
     public static BlockEntityType<HammerHeadTile> type;
@@ -21,8 +23,8 @@ public class HammerHeadTile extends BlockEntity {
     private boolean jammed;
     private static final String jamKey = "jam";
 
-    public HammerHeadTile() {
-        super(type);
+    public HammerHeadTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
     }
 
     public void activate() {
@@ -56,7 +58,7 @@ public class HammerHeadTile extends BlockEntity {
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(this.worldPosition, 0, this.getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -66,12 +68,12 @@ public class HammerHeadTile extends BlockEntity {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(getBlockState(), pkt.getTag());
+        this.load(pkt.getTag());
     }
 
     @Override
-    public void load(BlockState blockState, CompoundTag compound) {
-        super.load(blockState, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.jammed = compound.contains(jamKey) && compound.getBoolean(jamKey);
     }
 

@@ -16,6 +16,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,14 +40,15 @@ import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
-
-public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
+@ParametersAreNonnullByDefault
+public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteractiveBlock, EntityBlock {
     static final BlockInteraction[] interactions = new BlockInteraction[] {
             new TileBlockInteraction<>(ToolTypes.hammer, 4, Direction.EAST, 1, 11, 7, 11,
                     HammerHeadTile.class, HammerHeadTile::isJammed,
@@ -191,17 +193,6 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createTileEntity(final BlockState state, final BlockGetter world) {
-        return new HammerHeadTile();
-    }
-
-    @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
@@ -212,5 +203,11 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
             return interactions;
         }
         return new BlockInteraction[0];
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new HammerHeadTile(p_153215_, p_153216_);
     }
 }

@@ -12,8 +12,9 @@ import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class ForgedContainerProcessor extends StructureProcessor {
     public ForgedContainerProcessor() {}
 

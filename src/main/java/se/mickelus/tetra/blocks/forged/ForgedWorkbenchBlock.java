@@ -19,13 +19,15 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
-import staticnet.minecraft.world.level.material.Fluidsrties.BlockStateProperties.WATERLOGGED;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-import static net.minecraft.fluid.Fluids.WATER;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
+import static net.minecraft.world.level.material.Fluids.WATER;
 
+@ParametersAreNonnullByDefault
 public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements SimpleWaterloggedBlock {
     public static final String unlocalizedName = "forged_workbench";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)

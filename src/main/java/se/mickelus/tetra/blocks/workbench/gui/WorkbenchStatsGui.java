@@ -16,11 +16,11 @@ import se.mickelus.tetra.gui.stats.bar.GuiStatBarTool;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBase;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-
+@ParametersAreNonnullByDefault
 public class WorkbenchStatsGui extends GuiElement {
 
     private static final List<GuiStatBase> bars = new LinkedList<>(Arrays.asList(

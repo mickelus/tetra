@@ -11,9 +11,10 @@ import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class GuiActionButton extends GuiElement {
 
     private WorkbenchAction action;

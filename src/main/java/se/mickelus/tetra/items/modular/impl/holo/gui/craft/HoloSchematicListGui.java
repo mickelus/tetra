@@ -12,9 +12,10 @@ import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.Filter;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloSchematicListGui extends GuiElement {
 
     private Consumer<UpgradeSchematic> onSchematicSelect;

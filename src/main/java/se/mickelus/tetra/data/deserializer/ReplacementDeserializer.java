@@ -13,9 +13,10 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.ReplacementDefinition;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefinition> {
 
     @Override

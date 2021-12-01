@@ -3,6 +3,8 @@ package se.mickelus.tetra.data;
 import com.google.gson.Gson;
 import se.mickelus.tetra.module.schematic.SchematicDefinition;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class SchematicStore extends MergingDataStore<SchematicDefinition, SchematicDefinition[]> {
 
     public SchematicStore(Gson gson, String directory) {

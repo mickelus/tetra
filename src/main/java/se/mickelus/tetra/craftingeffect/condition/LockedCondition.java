@@ -8,9 +8,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class LockedCondition implements CraftingEffectCondition {
     ResourceLocation key;
 

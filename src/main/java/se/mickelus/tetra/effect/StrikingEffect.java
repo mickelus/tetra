@@ -19,13 +19,14 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.RotationHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class StrikingEffect {
     private static final Cache<UUID, Integer> strikeCache = CacheBuilder.newBuilder()
             .maximumSize(100)
@@ -206,7 +207,7 @@ public class StrikingEffect {
 
         List<BlockPos> positions = Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
                 .map(pos -> (alternate ? new BlockPos(-pos.getX(), pos.getY(), pos.getZ()) : pos))
-                .map(pos -> RotationHelper.rotatePitch(pos, breakingPlayer.xRot))
+                .map(pos -> RotationHelper.rotatePitch(pos, breakingPlayer.getXRot()))
                 .map(pos -> RotationHelper.rotateDirection(pos, facing))
                 .map(originPos::offset)
                 .collect(Collectors.toList());

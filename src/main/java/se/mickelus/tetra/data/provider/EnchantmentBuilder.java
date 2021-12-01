@@ -9,8 +9,9 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
-
+@ParametersAreNonnullByDefault
 public class EnchantmentBuilder {
     private Enchantment enchantment;
     private float destabilizationProbability = 0.04f;

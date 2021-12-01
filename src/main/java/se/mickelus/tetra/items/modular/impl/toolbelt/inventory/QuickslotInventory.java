@@ -3,11 +3,13 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.Constants;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class QuickslotInventory extends ToolbeltInventory {
 
     public static final int maxSize = 12;
@@ -31,7 +33,7 @@ public class QuickslotInventory extends ToolbeltInventory {
     @Override
     public void readFromNBT(CompoundTag tagCompound) {
         super.readFromNBT(tagCompound);
-        ListTag shadows = tagCompound.getList(shadowsKey, Constants.NBT.TAG_COMPOUND);
+        ListTag shadows = tagCompound.getList(shadowsKey, Tag.TAG_COMPOUND);
 
         for (int i = 0; i < shadows.size(); i++) {
             CompoundTag item = shadows.getCompound(i);

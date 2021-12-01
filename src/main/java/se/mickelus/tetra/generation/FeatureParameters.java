@@ -3,38 +3,8 @@ package se.mickelus.tetra.generation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
-/**
- * Used to specify additional details for feature generation, containing information about where and how a feature is to
- * be generated. All json files in the structures resource folder are deserialized into this class. The name of the
- * structure template defaults to the same name as the json file.
- *
- * Example json:
- * {
- *     "biomes": ["cold", "snowy"],
- *     "origin": [3, 0, 3],
- *     "probability": 0.05,
- *     "minY": 7,
- *     "maxY": 22,
- *     "integrityMin": 0.95,
- *     "children": [
- *         {
- *             "offset": [3, 1, 3],
- *             "facing": "WEST",
- *             "features": ["tetra:forged_hammer", "tetra:collapse_gravel"]
- *         },
- *         {
- *             "offset": [3, 2, 0],
- *             "features": ["tetra:forged_hallway_1", "tetra:forged_collapse_1"]
- *         }
- *     ],
- *     "loot": [
- *         {
- *             "position": [0, 0, 0],
- *             "table": "tetra:forged/chest_large"
- *         }
- *     ]
- * }
- */
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class FeatureParameters {
 
     /**

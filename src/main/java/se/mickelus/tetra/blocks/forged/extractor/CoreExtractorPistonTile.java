@@ -1,18 +1,23 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.util.TileEntityOptional;
 
-public class CoreExtractorPistonTile extends BlockEntity implements TickableBlockEntity {
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
+public class CoreExtractorPistonTile extends BlockEntity implements BlockEntityTicker<CoreExtractorPistonTile> {
     @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorPistonBlock.unlocalizedName)
     public static BlockEntityType<CoreExtractorPistonTile> type;
 
@@ -21,8 +26,8 @@ public class CoreExtractorPistonTile extends BlockEntity implements TickableBloc
 
     private long endTime = Long.MAX_VALUE;
 
-    public CoreExtractorPistonTile() {
-        super(type);
+    public CoreExtractorPistonTile(BlockPos p_155268_, BlockState p_155269_) {
+        super(type, p_155268_, p_155269_);
     }
 
 
@@ -52,7 +57,7 @@ public class CoreExtractorPistonTile extends BlockEntity implements TickableBloc
     }
 
     @Override
-    public void tick() {
+    public void tick(Level p_155253_, BlockPos p_155254_, BlockState p_155255_, CoreExtractorPistonTile p_155256_) {
         if (endTime < level.getGameTime()) {
             endTime = Long.MAX_VALUE;
             if (!level.isClientSide) {

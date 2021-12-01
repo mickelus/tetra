@@ -8,10 +8,11 @@ import se.mickelus.mgui.gui.GuiStringSmall;
 import se.mickelus.tetra.gui.GuiSliderSegmented;
 import se.mickelus.tetra.module.data.TweakData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class GuiTweakSlider extends GuiElement {
 
     private GuiString labelString;

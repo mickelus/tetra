@@ -18,8 +18,9 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-
+@ParametersAreNonnullByDefault
 public class SeepingBedrockBlock extends TetraBlock {
     public static final IntegerProperty activeProp = IntegerProperty.create("active", 0, 1);
 

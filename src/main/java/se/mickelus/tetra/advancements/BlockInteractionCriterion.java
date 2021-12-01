@@ -11,6 +11,8 @@ import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.util.JsonOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class BlockInteractionCriterion extends AbstractCriterionTriggerInstance {
     private final PropertyMatcher after;
     private final ToolType toolType;

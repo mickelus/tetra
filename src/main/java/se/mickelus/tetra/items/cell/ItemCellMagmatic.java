@@ -17,10 +17,11 @@ import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
-
+@ParametersAreNonnullByDefault
 public class ItemCellMagmatic extends TetraItem {
     private static final String unlocalizedName = "magmatic_cell";
 
@@ -42,7 +43,7 @@ public class ItemCellMagmatic extends TetraItem {
 
     @Override
     public void clientInit() {
-        ItemProperties.register(this, new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity) -> getCharge(itemStack) > 0 ? 1 : 0);
+        ItemProperties.register(this, new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity, i) -> getCharge(itemStack) > 0 ? 1 : 0);
     }
 
     @Override
@@ -108,6 +109,7 @@ public class ItemCellMagmatic extends TetraItem {
         return false;
     }
 
+    /*
     public double getDurabilityForDisplay(ItemStack itemStack) {
         return super.getDurabilityForDisplay(itemStack);
     }
@@ -116,4 +118,5 @@ public class ItemCellMagmatic extends TetraItem {
     public int getRGBDurabilityForDisplay(ItemStack itemStack) {
         return super.getRGBDurabilityForDisplay(itemStack);
     }
+     */
 }

@@ -13,7 +13,7 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: "0.7-SNAPSHOT"
     }
 }
 
@@ -50,7 +50,7 @@ println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getPro
 
 minecraft {
     mappings channel: 'official', version: mc_version
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -146,6 +146,8 @@ dependencies {
 //    
 //    compile fg.deobf("curse.maven:cursed:2913022")
 //    compile fg.deobf("curse.maven:cursed-bookshelf:2935828")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
 }
 
 jar {

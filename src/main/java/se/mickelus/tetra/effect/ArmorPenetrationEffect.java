@@ -6,9 +6,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.UUID;
-
+@ParametersAreNonnullByDefault
 public class ArmorPenetrationEffect {
 
     private static final UUID uuid = UUID.fromString("a43e0407-f070-4e2f-8813-a5e16328f1a5");

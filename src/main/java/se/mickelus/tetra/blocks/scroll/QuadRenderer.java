@@ -8,6 +8,8 @@ import com.mojang.math.Vector3f;
 import com.mojang.math.Vector4f;
 import net.minecraft.core.Direction;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class QuadRenderer {
     public final Vertex[] vertexPositions;
     public final Vector3f normal;

@@ -13,6 +13,8 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
 import se.mickelus.tetra.ToolTypes;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ForgedBlockCommon {
 
     public static final Material forgedMaterial = new Material(MaterialColor.METAL, false, true, true, true, false, false, PushReaction.BLOCK);

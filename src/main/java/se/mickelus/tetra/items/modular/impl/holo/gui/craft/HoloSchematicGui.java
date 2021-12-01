@@ -11,8 +11,9 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloSchematicGui extends GuiElement {
     private final GuiElement listGroup;
     private final Consumer<OutcomePreview> onVariantOpen;

@@ -10,11 +10,9 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.stats.getter.StatGetterEffectLevel;
 import se.mickelus.tetra.gui.stats.getter.TooltipGetterNone;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-
-/**
- * Displays the first of the provided indicators that is active
- */
+@ParametersAreNonnullByDefault
 public class StrikingStatIndicatorGui extends GuiStatIndicator {
     GuiStatIndicator striking;
     GuiStatIndicator sweeping;

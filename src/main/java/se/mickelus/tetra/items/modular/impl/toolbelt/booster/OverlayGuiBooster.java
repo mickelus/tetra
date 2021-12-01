@@ -3,6 +3,8 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 import net.minecraft.client.Minecraft;
 import se.mickelus.mgui.gui.GuiRoot;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class OverlayGuiBooster extends GuiRoot {
 
     private GuiBarBooster barElement;

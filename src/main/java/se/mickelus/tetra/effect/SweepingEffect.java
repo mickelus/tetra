@@ -18,6 +18,8 @@ import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class SweepingEffect {
 
     /**
@@ -42,8 +44,8 @@ public class SweepingEffect {
                 .filter(entity -> attacker.distanceToSqr(entity) < (range + reach) * (range + reach))
                 .forEach(entity -> {
                     entity.knockback(knockback,
-                            Mth.sin(attacker.yRot * (float) Math.PI / 180F),
-                            -Mth.cos(attacker.yRot * (float) Math.PI / 180F));
+                            Mth.sin(attacker.getYRot() * (float) Math.PI / 180F),
+                            -Mth.cos(attacker.getYRot() * (float) Math.PI / 180F));
 
                     DamageSource damageSource = attacker instanceof Player
                             ? DamageSource.playerAttack((Player) attacker) : DamageSource.indirectMobAttack(attacker, entity);
@@ -80,7 +82,7 @@ public class SweepingEffect {
         float knockback = 0.5f + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
         double range = 2 + EffectHelper.getEffectEfficiency(itemStack, ItemEffect.sweeping);
 
-        Vec3 target = Vec3.directionFromRotation(attacker.xRot, attacker.yRot)
+        Vec3 target = Vec3.directionFromRotation(attacker.getXRot(), attacker.getYRot())
                 .normalize()
                 .scale(range)
                 .add(attacker.getEyePosition(0));
@@ -92,8 +94,8 @@ public class SweepingEffect {
                 .filter(entity -> !attacker.isAlliedTo(entity))
                 .forEach(entity -> {
                     entity.knockback(knockback,
-                            Mth.sin(attacker.yRot * (float) Math.PI / 180F),
-                            -Mth.cos(attacker.yRot * (float) Math.PI / 180F));
+                            Mth.sin(attacker.getYRot() * (float) Math.PI / 180F),
+                            -Mth.cos(attacker.getXRot() * (float) Math.PI / 180F));
 
                     ItemEffectHandler.applyHitEffects(itemStack, entity, attacker);
                     EffectHelper.applyEnchantmentHitEffects(itemStack, entity, attacker);

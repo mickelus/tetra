@@ -11,11 +11,12 @@ import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class SuspendEffect {
     private static final Set<MobEffect> enablingEffects = Stream.concat(
             Arrays.stream(BeaconBlockEntity.BEACON_EFFECTS).flatMap(Arrays::stream),

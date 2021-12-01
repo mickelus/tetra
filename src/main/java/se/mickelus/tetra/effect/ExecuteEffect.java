@@ -1,5 +1,6 @@
 package se.mickelus.tetra.effect;
 
+import com.mojang.math.Vector3f;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -20,9 +21,10 @@ import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Random;
-
+@ParametersAreNonnullByDefault
 public class ExecuteEffect extends ChargedAbilityEffect {
 
     public static final ExecuteEffect instance = new ExecuteEffect();
@@ -187,7 +189,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
             Random rand = target.getRandom();
             CastOptional.cast(target.level, ServerLevel.class).ifPresent(world ->
-                    world.sendParticles(new DustParticleOptions(0.6f, 0, 0, 0.8f),
+                    world.sendParticles(new DustParticleOptions(new Vector3f(0.6f, 0, 0), 0.8f),
                             hitVec.x, hitVec.y, hitVec.z, 10,
                             rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, 0.1f));
         } else {

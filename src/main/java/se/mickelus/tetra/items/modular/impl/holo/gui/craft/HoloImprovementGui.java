@@ -11,13 +11,14 @@ import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class HoloImprovementGui extends GuiElement {
     private final GuiHorizontalLayoutGroup header;
     private final GuiTexture backdrop;

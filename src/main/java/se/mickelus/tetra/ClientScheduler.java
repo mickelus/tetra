@@ -5,9 +5,10 @@ import net.minecraft.server.TickTask;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Iterator;
 import java.util.Queue;
-
+@ParametersAreNonnullByDefault
 public class ClientScheduler {
     private static final Queue<Task> queue = Queues.newConcurrentLinkedQueue();
     private static int counter;

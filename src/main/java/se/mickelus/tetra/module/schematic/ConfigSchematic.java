@@ -21,11 +21,12 @@ import se.mickelus.tetra.module.data.VariantData;
 import se.mickelus.tetra.util.Filter;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class ConfigSchematic extends BaseSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String nameSuffix = ".name";
@@ -184,7 +185,7 @@ public class ConfigSchematic extends BaseSchematic {
         if (definition.materialRevealSlot > -1) {
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 4; y++) {
-                    if (getOutcomeFromMaterial(player.inventory.getItem(y * 9 + x), definition.materialRevealSlot).isPresent()) {
+                    if (getOutcomeFromMaterial(player.getInventory().getItem(y * 9 + x), definition.materialRevealSlot).isPresent()) {
                         return true;
                     }
                 }

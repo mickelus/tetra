@@ -4,8 +4,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Predicate;
-
+@ParametersAreNonnullByDefault
 public class ShootableDummyItem extends ProjectileWeaponItem {
 
     public static final Predicate<ItemStack> ammoPredicate = ARROW_OR_FIREWORK

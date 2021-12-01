@@ -17,9 +17,10 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class GuiSchematicDetail extends GuiElement {
 
     private static final int MAX_NUM_SLOTS = 2;

@@ -31,9 +31,10 @@ import se.mickelus.tetra.module.schematic.OutcomeDefinition;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
-
+@ParametersAreNonnullByDefault
 public class DataManager {
 
     private final Logger logger = LogManager.getLogger();

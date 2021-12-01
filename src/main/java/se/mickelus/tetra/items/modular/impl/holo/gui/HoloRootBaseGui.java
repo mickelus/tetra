@@ -4,6 +4,8 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class HoloRootBaseGui extends GuiElement {
 
     KeyframeAnimation showAnimation;

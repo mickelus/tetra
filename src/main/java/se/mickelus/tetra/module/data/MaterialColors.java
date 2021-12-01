@@ -3,8 +3,9 @@ package se.mickelus.tetra.module.data;
 import com.google.gson.*;
 import se.mickelus.tetra.items.modular.ItemColors;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
-
+@ParametersAreNonnullByDefault
 public class MaterialColors {
     public int texture = 0xffffffff;
     public int glyph = 0xffffffff;

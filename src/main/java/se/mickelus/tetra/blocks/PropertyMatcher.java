@@ -13,10 +13,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
-
+@ParametersAreNonnullByDefault
 public class PropertyMatcher implements Predicate<BlockState> {
     public static final PropertyMatcher any = new PropertyMatcher();
 

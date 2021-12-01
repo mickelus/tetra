@@ -11,10 +11,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import se.mickelus.tetra.items.modular.ModularItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class AttributeHelper {
 
     public static final Multimap<Attribute, AttributeModifier> emptyMap = ImmutableMultimap.of();

@@ -14,6 +14,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import se.mickelus.tetra.effect.EffectHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ExhaustedPotionEffect extends MobEffect {
     public static ExhaustedPotionEffect instance;
 

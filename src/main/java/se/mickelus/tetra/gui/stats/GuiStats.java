@@ -15,8 +15,10 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 import se.mickelus.tetra.properties.TetraAttributes;
 
-import static se.mickelus.tetra.gui.stats.StatsHelper.*;
+import javax.annotation.ParametersAreNonnullByDefault;
 
+import static se.mickelus.tetra.gui.stats.StatsHelper.*;
+@ParametersAreNonnullByDefault
 public class GuiStats {
     public static final IStatGetter attackDamageGetter = new StatGetterAttribute(Attributes.ATTACK_DAMAGE);
     public static final GuiStatBar attackDamage = new GuiStatBar(0, 0, barLength, "tetra.stats.attack_damage",

@@ -1,5 +1,7 @@
 package se.mickelus.tetra.gui;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiModuleOffsets {
     private int[] offsetX;
     private int[] offsetY;

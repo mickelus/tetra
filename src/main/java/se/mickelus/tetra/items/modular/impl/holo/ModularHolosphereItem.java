@@ -32,10 +32,11 @@ import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.properties.TetraAttributes;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class ModularHolosphereItem extends ModularItem {
     private static final String unlocalizedName = "holo";
 
@@ -142,8 +143,8 @@ public class ModularHolosphereItem extends ModularItem {
 
     public static ItemStack findHolosphere(Player player) {
         return Stream.of(
-                player.inventory.offhand.stream(),
-                player.inventory.items.stream(),
+                player.getInventory().offhand.stream(),
+                player.getInventory().items.stream(),
                 ToolbeltHelper.getToolbeltItems(player).stream())
                 .flatMap(Function.identity())
                 .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)

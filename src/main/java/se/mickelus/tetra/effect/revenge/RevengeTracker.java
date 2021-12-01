@@ -14,13 +14,14 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class RevengeTracker {
     private static final Logger logger = LogManager.getLogger();
 

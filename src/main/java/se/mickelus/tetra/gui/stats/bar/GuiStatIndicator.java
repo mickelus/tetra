@@ -9,6 +9,8 @@ import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class GuiStatIndicator extends GuiTexture {
     protected String label;
     protected IStatGetter statGetter;

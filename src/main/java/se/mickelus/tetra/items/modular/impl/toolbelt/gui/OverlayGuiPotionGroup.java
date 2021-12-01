@@ -8,9 +8,10 @@ import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Objects;
-
+@ParametersAreNonnullByDefault
 public class OverlayGuiPotionGroup extends GuiElement {
     GuiString focusSlot;
 

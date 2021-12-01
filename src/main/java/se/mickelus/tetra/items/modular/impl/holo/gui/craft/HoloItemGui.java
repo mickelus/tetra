@@ -10,10 +10,11 @@ import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-
+@ParametersAreNonnullByDefault
 public class HoloItemGui extends GuiClickable {
 
     GuiElement slotGroup;

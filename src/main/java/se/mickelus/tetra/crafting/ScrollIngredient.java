@@ -10,8 +10,9 @@ import se.mickelus.tetra.blocks.scroll.ScrollData;
 import se.mickelus.tetra.blocks.scroll.ScrollItem;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class ScrollIngredient extends Ingredient {
     private final ItemStack itemStack;
 

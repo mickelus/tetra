@@ -7,6 +7,8 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.items.modular.impl.bow.GuiRangedProgress;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class CrossbowOverlay {
     public static CrossbowOverlay instance;
 
@@ -24,9 +26,12 @@ public class CrossbowOverlay {
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
+        /*
         if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
             return;
         }
+        FIXME: still needed? if so, search for ported way
+         */
 
         ItemStack activeStack = mc.player.getUseItem();
 

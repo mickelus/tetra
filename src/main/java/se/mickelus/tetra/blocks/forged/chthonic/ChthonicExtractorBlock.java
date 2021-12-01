@@ -22,6 +22,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,8 +33,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
@@ -50,11 +49,12 @@ import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-
-public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBlock {
+@ParametersAreNonnullByDefault
+public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBlock, EntityBlock {
     public static final String unlocalizedName = "chthonic_extractor";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -195,17 +195,6 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return new ChthonicExtractorTile();
-    }
-
-    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return shape;
     }
@@ -225,5 +214,11 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new ChthonicExtractorTile(p_153215_, p_153216_);
     }
 }

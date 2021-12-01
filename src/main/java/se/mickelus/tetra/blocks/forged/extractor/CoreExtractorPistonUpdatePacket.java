@@ -6,6 +6,8 @@ import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.BlockPosPacket;
 import se.mickelus.tetra.util.TileEntityOptional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class CoreExtractorPistonUpdatePacket extends BlockPosPacket {
     private long timestamp;
 

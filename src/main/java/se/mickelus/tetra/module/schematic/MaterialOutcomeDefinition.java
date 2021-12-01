@@ -4,12 +4,13 @@ import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.module.data.ToolData;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@ParametersAreNonnullByDefault
 public class MaterialOutcomeDefinition extends OutcomeDefinition {
 
     public ResourceLocation[] materials = {};

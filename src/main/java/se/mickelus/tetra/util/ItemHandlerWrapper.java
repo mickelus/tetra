@@ -5,9 +5,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-/**
- * Hacked together based on {@link net.minecraftforge.items.wrapper.RecipeWrapper}, used to feed itemhandler into vanilla methods
- */
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 public class ItemHandlerWrapper implements Container {
 
     protected final IItemHandler inv;

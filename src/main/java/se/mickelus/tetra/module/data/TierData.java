@@ -1,10 +1,11 @@
 package se.mickelus.tetra.module.data;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class TierData<T> {
 
     public Map<T, Float> levelMap;

@@ -7,9 +7,10 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 import se.mickelus.tetra.module.schematic.SchematicDefinition;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class RepairRegistry {
     private static final Logger logger = LogManager.getLogger();
 

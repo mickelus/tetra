@@ -21,6 +21,9 @@ import se.mickelus.tetra.gui.VerticalTabGroupGui;
 
 import java.util.stream.IntStream;
 
+
+import javax.annotation.ParametersAreNonnullByDefault;
+@ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContainerContainer> {
     private static final ResourceLocation containerTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/forged-container.png");
@@ -91,8 +94,8 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void containerTick() {
+        super.containerTick();
 
         int size = ForgedContainerTile.compartmentSize;
         tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(itemHandler -> {

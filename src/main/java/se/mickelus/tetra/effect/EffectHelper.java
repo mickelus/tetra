@@ -24,11 +24,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
-
+@ParametersAreNonnullByDefault
 public class EffectHelper {
     private static final Cache<UUID, Float> cooledAttackStrengthCache = CacheBuilder.newBuilder()
             .maximumSize(50)
@@ -103,7 +104,7 @@ public class EffectHelper {
                 boolean canRemove = !toolStack.onBlockStartBreak(pos, breakingPlayer)
                         && !breakingPlayer.blockActionRestricted(world, pos, gameType)
                         && (!harvest || blockState.canHarvestBlock(world, pos, breakingPlayer))
-                        && blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest, world.getFluidState(pos));
+                        && blockState.getBlock().onDestroyedByPlayer(blockState, world, pos, breakingPlayer, harvest, world.getFluidState(pos));
 
                 if (canRemove) {
                     blockState.getBlock().destroy(world, pos, blockState);
@@ -121,7 +122,7 @@ public class EffectHelper {
 
             return false;
         } else {
-            return blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest,
+            return blockState.getBlock().onDestroyedByPlayer(blockState, world, pos, breakingPlayer, harvest,
                     world.getFluidState(pos));
         }
     }

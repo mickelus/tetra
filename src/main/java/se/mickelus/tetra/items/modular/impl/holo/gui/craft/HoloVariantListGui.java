@@ -10,13 +10,14 @@ import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 import se.mickelus.tetra.gui.stats.sorting.StatSorters;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
+@ParametersAreNonnullByDefault
 public class HoloVariantListGui extends GuiElement {
     private GuiHorizontalScrollable groupsScroll;
     private GuiHorizontalLayoutGroup groups;
