@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiClickable;
 import se.mickelus.mgui.gui.GuiString;

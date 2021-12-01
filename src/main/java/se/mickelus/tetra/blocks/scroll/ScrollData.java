@@ -7,11 +7,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTDynamicOps;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 import se.mickelus.tetra.util.HexCodec;
 
@@ -92,12 +92,12 @@ public class ScrollData {
     }
 
     public void write(ItemStack itemStack) {
-        itemStack.addTagElement("BlockEntityTag", ScrollData.write(new ScrollData[] { this }, new CompoundNBT()));
+        itemStack.addTagElement("BlockEntityTag", ScrollData.write(new ScrollData[] { this }, new CompoundTag()));
     }
 
-    public static ScrollData[] read(CompoundNBT tag) {
+    public static ScrollData[] read(CompoundTag tag) {
         return tag.getList("data", Constants.NBT.TAG_COMPOUND).stream()
-                .map(nbt -> ScrollData.codec.decode(NBTDynamicOps.INSTANCE, nbt))
+                .map(nbt -> ScrollData.codec.decode(NbtOps.INSTANCE, nbt))
                 .map(DataResult::result)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -105,13 +105,13 @@ public class ScrollData {
                 .toArray(ScrollData[]::new);
     }
 
-    public static CompoundNBT write(ScrollData[] data, CompoundNBT tag) {
-        ListNBT list = Arrays.stream(data)
-                .map(scroll -> ScrollData.codec.encodeStart(NBTDynamicOps.INSTANCE, scroll))
+    public static CompoundTag write(ScrollData[] data, CompoundTag tag) {
+        ListTag list = Arrays.stream(data)
+                .map(scroll -> ScrollData.codec.encodeStart(NbtOps.INSTANCE, scroll))
                 .map(DataResult::result)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .collect(Collectors.toCollection(ListNBT::new));
+                .collect(Collectors.toCollection(ListTag::new));
         tag.put("data", list);
         return tag;
     }

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.effect.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,9 +42,9 @@ public class AbilityOverlays extends GuiRoot {
         draw(event.getMatrixStack());
     }
 
-    public void draw(MatrixStack matrixStack) {
+    public void draw(PoseStack matrixStack) {
         if (isVisible()) {
-            MainWindow window = mc.getWindow();
+            Window window = mc.getWindow();
             int width = window.getGuiScaledWidth();
             int height = window.getGuiScaledHeight();
 

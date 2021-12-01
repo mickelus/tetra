@@ -1,8 +1,8 @@
 package se.mickelus.tetra.trades;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.entity.merchant.villager.VillagerProfession;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,8 +15,8 @@ import java.util.List;
 public class TradeHandler {
     @SubscribeEvent
     public void setupWandererTrades(WandererTradesEvent event) {
-        List<VillagerTrades.ITrade> generic = event.getGenericTrades();
-        List<VillagerTrades.ITrade> rare = event.getRareTrades();
+        List<VillagerTrades.ItemListing> generic = event.getGenericTrades();
+        List<VillagerTrades.ItemListing> rare = event.getRareTrades();
 
         generic.add(new ItemsForScrapTrade(InsulatedPlateItem.instance, 1, 24, 1));
         generic.add(new ItemsForEmeraldsAndScrapTrade(LubricantDispenser.instance, 1, 8, 16, 1));

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.ItemModule;
@@ -41,7 +41,7 @@ public class GuiModuleDetails extends GuiElement {
         description = new GuiTextSmall(5, 19, 105, "");
         addChild(description);
 
-        emptyLabel = new GuiString(0, -3, TextFormatting.DARK_GRAY + I18n.get("tetra.workbench.module_detail.empty"));
+        emptyLabel = new GuiString(0, -3, ChatFormatting.DARK_GRAY + I18n.get("tetra.workbench.module_detail.empty"));
         emptyLabel.setAttachment(GuiAttachment.middleCenter);
         addChild(emptyLabel);
 
@@ -54,7 +54,7 @@ public class GuiModuleDetails extends GuiElement {
         repairTitle = new GuiStringSmall(0, 7, I18n.get("item.tetra.modular.repair_material.label"));
         repairGroup.addChild(repairTitle);
 
-        noRepairLabel = new GuiStringSmall(0, 7, TextFormatting.GRAY + I18n.get("item.tetra.modular.repair_material.empty"));
+        noRepairLabel = new GuiStringSmall(0, 7, ChatFormatting.GRAY + I18n.get("item.tetra.modular.repair_material.empty"));
         noRepairLabel.setAttachment(GuiAttachment.topCenter);
         noRepairLabel.setVisible(false);
         repairGroup.addChild(noRepairLabel);
@@ -74,7 +74,7 @@ public class GuiModuleDetails extends GuiElement {
         glyph.clearChildren();
         if (module != null) {
             title.setString(module.getName(itemStack));
-            description.setString(TextFormatting.GRAY + module.getDescription(itemStack).replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString()));
+            description.setString(ChatFormatting.GRAY + module.getDescription(itemStack).replace(ChatFormatting.RESET.toString(), ChatFormatting.GRAY.toString()));
 
             GlyphData glyphData = module.getVariantData(itemStack).glyph;
 

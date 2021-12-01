@@ -1,27 +1,27 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.state.*;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
@@ -43,8 +43,22 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+
 public class TransferUnitBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
-    public static final DirectionProperty facingProp = HorizontalBlock.FACING;
+    public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty plateProp = BooleanProperty.create("plate");
     public static final IntegerProperty cellProp = IntegerProperty.create("cell", 0, 2);
     public static final EnumProperty<EnumTransferConfig> configProp = EnumProperty.create("config", EnumTransferConfig.class);
@@ -87,35 +101,35 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
 
     @Override
     public void clientInit() {
-        RenderTypeLookup.setRenderLayer(this, RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutout());
     }
 
-    public static boolean removePlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
+    public static boolean removePlate(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction hitFace) {
         if (!world.isClientSide) {
             if (player != null) {
-                BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerWorld) world, blockState);
+                BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerLevel) world, blockState);
             } else {
-                BlockInteraction.dropLoot(plateLootTable, (ServerWorld) world, pos, blockState);
+                BlockInteraction.dropLoot(plateLootTable, (ServerLevel) world, pos, blockState);
             }
         }
 
-        world.playSound(player, pos, SoundEvents.SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
+        world.playSound(player, pos, SoundEvents.SHIELD_BREAK, SoundSource.PLAYERS, 1, 0.5f);
         world.setBlock(pos, blockState.setValue(plateProp, false), 3);
 
         return true;
     }
 
-    public static boolean attachPlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player) {
-        world.playSound(player, pos, SoundEvents.METAL_PLACE, SoundCategory.PLAYERS, 0.5f, 1);
+    public static boolean attachPlate(Level world, BlockPos pos, BlockState blockState, Player player) {
+        world.playSound(player, pos, SoundEvents.METAL_PLACE, SoundSource.PLAYERS, 0.5f, 1);
         world.setBlock(pos, blockState.setValue(plateProp, true), 3);
 
         return true;
     }
 
-    public static boolean reconfigure(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace) {
+    public static boolean reconfigure(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace) {
         EnumTransferConfig config = EnumTransferConfig.getNextConfiguration(blockState.getValue(configProp));
 
-        world.playSound(player, pos, SoundEvents.ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);
+        world.playSound(player, pos, SoundEvents.ANVIL_HIT, SoundSource.PLAYERS, 1, 1);
         world.setBlock(pos, blockState.setValue(configProp, config), 3);
 
         TileEntityOptional.from(world, pos, TransferUnitTile.class).ifPresent(TransferUnitTile::updateTransferState);
@@ -128,7 +142,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
      * translated into SEND/RECEIVE depending on the powered side.
      * @return the effect with redstone power taken into consideration
      */
-    public static EnumTransferEffect getEffectPowered(World world, BlockPos pos, BlockState blockState) {
+    public static EnumTransferEffect getEffectPowered(Level world, BlockPos pos, BlockState blockState) {
         EnumTransferEffect effect = EnumTransferEffect.fromConfig(blockState.getValue(configProp), 0);
         if (effect.equals(EnumTransferEffect.redstone)) {
             Direction facing = blockState.getValue(facingProp);
@@ -144,7 +158,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         return effect;
     }
 
-    public static void setReceiving(World world, BlockPos pos, BlockState blockState, boolean receiving) {
+    public static void setReceiving(Level world, BlockPos pos, BlockState blockState, boolean receiving) {
         EnumTransferState newState = receiving ? EnumTransferState.receiving : EnumTransferState.none;
     }
 
@@ -152,7 +166,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         return EnumTransferState.receiving.equals(blockState.getValue(transferProp));
     }
 
-    public static void setSending(World world, BlockPos pos, BlockState blockState, boolean sending) {
+    public static void setSending(Level world, BlockPos pos, BlockState blockState, boolean sending) {
         EnumTransferState newState = sending ? EnumTransferState.sending : EnumTransferState.none;
     }
 
@@ -164,7 +178,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         return blockState.getValue(plateProp);
     }
 
-    public static void updateCellProp(World world, BlockPos pos, boolean hasCell, int cellCharge) {
+    public static void updateCellProp(Level world, BlockPos pos, boolean hasCell, int cellCharge) {
         BlockState blockState = world.getBlockState(pos);
         world.setBlock(pos, blockState.setValue(cellProp, hasCell ? cellCharge > 0 ? 2 : 1 : 0), 3);
     }
@@ -174,20 +188,20 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(world, pos, blockState, blockState.getValue(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         Direction blockFacing = state.getValue(facingProp);
         TransferUnitTile tile = TileEntityOptional.from(world, pos, TransferUnitTile.class).orElse(null);
         ItemStack heldStack = player.getItemInHand(hand);
 
         if (tile == null) {
-            return ActionResultType.FAIL;
+            return InteractionResult.FAIL;
         }
 
         if (hit.getDirection().equals(Direction.UP)) {
@@ -199,26 +213,26 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
                     popResource(world, pos.above(), cell);
                 }
 
-                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
+                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.6f);
 
                 world.sendBlockUpdated(pos, state, state, 3);
 
                 if (!player.level.isClientSide) {
-                    BlockUseCriterion.trigger((ServerPlayerEntity) player, state, ItemStack.EMPTY);
+                    BlockUseCriterion.trigger((ServerPlayer) player, state, ItemStack.EMPTY);
                 }
 
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else if (heldStack.getItem() instanceof ItemCellMagmatic) { // put cell
                 tile.putCell(heldStack);
                 player.setItemInHand(hand, ItemStack.EMPTY);
-                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
+                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.5f);
                 world.sendBlockUpdated(pos, state, state, 3);
 
                 if (!player.level.isClientSide) {
-                    BlockUseCriterion.trigger((ServerPlayerEntity) player, state, ItemStack.EMPTY);
+                    BlockUseCriterion.trigger((ServerPlayer) player, state, ItemStack.EMPTY);
                 }
 
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         } else if (blockFacing.equals(hit.getDirection().getOpposite()) // attach plate
                 && heldStack.getItem() instanceof InsulatedPlateItem
@@ -228,31 +242,31 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
             heldStack.shrink(1);
 
             if (!player.level.isClientSide) {
-                BlockUseCriterion.trigger((ServerPlayerEntity) player, state, ItemStack.EMPTY);
+                BlockUseCriterion.trigger((ServerPlayer) player, state, ItemStack.EMPTY);
             }
 
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
             TileEntityOptional.from(world, pos, TransferUnitTile.class)
                     .ifPresent(tile -> {
                         if (tile.hasCell()) {
-                            InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), tile.getCell().copy());
+                            Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), tile.getCell().copy());
                         }
                     });
 
-            TileEntityOptional.from(world, pos, TransferUnitTile.class).ifPresent(TileEntity::setRemoved);
+            TileEntityOptional.from(world, pos, TransferUnitTile.class).ifPresent(BlockEntity::setRemoved);
         }
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block fromBlock, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block fromBlock, BlockPos fromPos, boolean isMoving) {
         if (!pos.relative(world.getBlockState(pos).getValue(facingProp)).equals(fromPos)) {
             TileEntityOptional.from(world, pos, TransferUnitTile.class)
                     .ifPresent(TransferUnitTile::updateTransferState);
@@ -260,7 +274,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(facingProp);
 
         switch (facing) {
@@ -278,7 +292,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(facingProp, configProp, plateProp, cellProp, transferProp);
     }
@@ -290,19 +304,19 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return new TransferUnitTile();
     }
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return super.getStateForPlacement(context)
                 .setValue(facingProp, context.getHorizontalDirection());
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 

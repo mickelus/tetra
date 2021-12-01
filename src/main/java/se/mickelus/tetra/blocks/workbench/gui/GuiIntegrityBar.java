@@ -1,9 +1,9 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
@@ -60,7 +60,7 @@ public class GuiIntegrityBar extends GuiElement {
             }
 
             if (integrityGain - integrityCost < 0) {
-                label.setString(TextFormatting.RED + I18n.get("tetra.stats.integrity_usage", integrityCost, integrityGain));
+                label.setString(ChatFormatting.RED + I18n.get("tetra.stats.integrity_usage", integrityCost, integrityGain));
             } else {
                 label.setString(I18n.get("tetra.stats.integrity_usage", integrityCost, integrityGain));
             }
@@ -93,7 +93,7 @@ public class GuiIntegrityBar extends GuiElement {
     }
 
     @Override
-    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         for (int i = 0; i < integrityCost; i++) {
@@ -112,7 +112,7 @@ public class GuiIntegrityBar extends GuiElement {
         }
     }
 
-    private void drawSegment(MatrixStack matrixStack, int x, int y, int color, float opacity) {
+    private void drawSegment(PoseStack matrixStack, int x, int y, int color, float opacity) {
         drawRect(matrixStack, x, y,x + segmentWidth, y + segmentHeight, color, opacity);
     }
 

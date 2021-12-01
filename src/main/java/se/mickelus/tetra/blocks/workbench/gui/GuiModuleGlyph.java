@@ -1,9 +1,9 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.module.data.GlyphData;
 
@@ -31,7 +31,7 @@ public class GuiModuleGlyph extends GuiTexture {
     }
 
     @Override
-    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (shift) {
             matrixStack.pushPose();
             matrixStack.translate(0.5, 0.5, 0);

@@ -2,9 +2,9 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
@@ -86,7 +86,7 @@ public class HoloVariantDetailGui extends GuiElement {
         requiredTools = new GuiElement(0, -3, width, height);
         header.addChild(requiredTools);
 
-        PlayerEntity player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
         availableToolLevels = Stream.of(PropertyHelper.getPlayerToolLevels(player), PropertyHelper.getToolbeltToolLevels(player))
                 .map(Map::entrySet)
                 .flatMap(Collection::stream)
@@ -137,7 +137,7 @@ public class HoloVariantDetailGui extends GuiElement {
 
             synergyIndicator.update(baseOutcome.itemStack, slot);
 
-            PlayerEntity player = Minecraft.getInstance().player;
+            Player player = Minecraft.getInstance().player;
             ItemStack improvementStack = baseOutcome.itemStack;
             UpgradeSchematic[] improvementSchematics = Arrays.stream(SchematicRegistry.getSchematics(slot, improvementStack))
                     .filter(improvementSchematic -> SchematicType.improvement.equals(improvementSchematic.getType()))

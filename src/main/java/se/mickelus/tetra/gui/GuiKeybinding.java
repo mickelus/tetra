@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.settings.KeyModifier;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
@@ -13,14 +13,14 @@ import javax.annotation.Nullable;
 
 public class GuiKeybinding extends GuiElement {
 
-    public GuiKeybinding(int x, int y, KeyBinding keyBinding) {
+    public GuiKeybinding(int x, int y, KeyMapping keyBinding) {
         this(x, y,
                 keyBinding.getKey().getDisplayName().getString(),
                 keyBinding.getKeyModifier() != KeyModifier.NONE ? keyBinding.getKeyModifier().toString() : null,
                 I18n.get(keyBinding.getName()));
     }
 
-    public GuiKeybinding(int x, int y, KeyBinding keyBinding, GuiAttachment attachment) {
+    public GuiKeybinding(int x, int y, KeyMapping keyBinding, GuiAttachment attachment) {
         this(x, y,
                 keyBinding.getKey().getDisplayName().getString(),
                 keyBinding.getKeyModifier() != KeyModifier.NONE ? keyBinding.getKeyModifier().toString() : null,

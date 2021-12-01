@@ -1,26 +1,26 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.mgui.gui.DisabledSlot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 
 
-public class ToolbeltContainer extends Container {
+public class ToolbeltContainer extends AbstractContainerMenu {
     private ItemStack itemStackToolbelt;
     private QuickslotInventory quickslotInventory;
     private StorageInventory storageInventory;
     private PotionsInventory potionsInventory;
     private QuiverInventory quiverInventory;
 
-    public ToolbeltContainer(int windowId, IInventory playerInventory, ItemStack itemStackToolbelt, PlayerEntity player) {
+    public ToolbeltContainer(int windowId, Container playerInventory, ItemStack itemStackToolbelt, Player player) {
         super(ModularToolbeltItem.containerType, windowId);
         this.quickslotInventory = new QuickslotInventory(itemStackToolbelt);
         this.storageInventory = new StorageInventory(itemStackToolbelt);
@@ -92,7 +92,7 @@ public class ToolbeltContainer extends Container {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static ToolbeltContainer create(int windowId, PlayerInventory inv) {
+    public static ToolbeltContainer create(int windowId, Inventory inv) {
         ItemStack itemStack = inv.player.getMainHandItem();
         if (!ModularToolbeltItem.instance.equals(itemStack.getItem())) {
             itemStack = inv.player.getOffhandItem();
@@ -153,7 +153,7 @@ public class ToolbeltContainer extends Container {
     }
 
     @Override
-    public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+    public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
         if (clickTypeIn == ClickType.PICKUP && 0 <= slotId && slotId < potionsInventory.getContainerSize()) {
             Slot slot = getSlot(slotId);
             if (player.inventory.getCarried().isEmpty()) {
@@ -182,7 +182,7 @@ public class ToolbeltContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return this.quickslotInventory.stillValid(playerIn);
     }
 
@@ -190,7 +190,7 @@ public class ToolbeltContainer extends Container {
      * Take a stack from the specified inventory slot.
      */
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         Slot slot = slots.get(index);
 
         if (slot != null && slot.hasItem()) {
@@ -250,7 +250,7 @@ public class ToolbeltContainer extends Container {
     /**
      * Called when the container is closed.
      */
-    public void removed(PlayerEntity playerIn) {
+    public void removed(Player playerIn) {
         super.removed(playerIn);
         this.quickslotInventory.stopOpen(playerIn);
     }

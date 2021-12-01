@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
@@ -18,7 +18,7 @@ import se.mickelus.tetra.network.PacketHandler;
 import javax.annotation.Nullable;
 
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class ModularSingleHeadedItem extends ItemModularHandheld {
 

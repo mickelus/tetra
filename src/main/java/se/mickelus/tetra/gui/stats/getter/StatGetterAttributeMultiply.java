@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.properties.AttributeHelper;
@@ -17,12 +17,12 @@ public class StatGetterAttributeMultiply implements IStatGetter {
 
 
     @Override
-    public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
         return getValue(player, currentStack) != 0 || getValue(player, previewStack) != 0;
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack) {
+    public double getValue(Player player, ItemStack itemStack) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getAttributeModifiers(itemStack))
                 .map(map -> map.get(attribute))
@@ -31,7 +31,7 @@ public class StatGetterAttributeMultiply implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
+    public double getValue(Player player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getAttributeModifiers(itemStack))
@@ -41,7 +41,7 @@ public class StatGetterAttributeMultiply implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
+    public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> module.getImprovement(itemStack, improvement))

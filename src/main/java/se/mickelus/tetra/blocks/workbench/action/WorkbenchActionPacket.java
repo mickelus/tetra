@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.workbench.action;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.network.BlockPosPacket;
 
@@ -20,7 +20,7 @@ public class WorkbenchActionPacket extends BlockPosPacket {
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         super.toBytes(buffer);
         try {
             writeString(actionKey, buffer);
@@ -30,7 +30,7 @@ public class WorkbenchActionPacket extends BlockPosPacket {
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         super.fromBytes(buffer);
 
         try {
@@ -41,7 +41,7 @@ public class WorkbenchActionPacket extends BlockPosPacket {
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         WorkbenchTile workbench = (WorkbenchTile) player.level.getBlockEntity(pos);
         if (workbench != null) {
             workbench.performAction(player, actionKey);

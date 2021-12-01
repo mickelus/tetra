@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
-import net.minecraft.item.Item;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.world.item.Item;
+import net.minecraft.util.StringRepresentable;
 import se.mickelus.tetra.items.forged.CombustionChamberItem;
 import se.mickelus.tetra.items.forged.InsulatedPlateItem;
 import se.mickelus.tetra.items.forged.LubricantDispenser;
@@ -9,7 +9,7 @@ import se.mickelus.tetra.items.forged.PlanarStabilizerItem;
 
 import java.util.Arrays;
 
-public enum HammerEffect implements IStringSerializable {
+public enum HammerEffect implements StringRepresentable {
 
     efficient(InsulatedPlateItem.instance),
     power(CombustionChamberItem.instance),

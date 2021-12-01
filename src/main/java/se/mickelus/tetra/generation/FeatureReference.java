@@ -2,10 +2,10 @@ package se.mickelus.tetra.generation;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
-public class FeatureReference implements IFeatureConfig {
+public class FeatureReference implements FeatureConfiguration {
     public ResourceLocation location;
 
     public static final Codec<FeatureReference> codec = RecordCodecBuilder

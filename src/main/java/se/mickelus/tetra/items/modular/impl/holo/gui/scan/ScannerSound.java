@@ -1,28 +1,28 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.scan;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.TickableSound;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraSounds;
 
-import net.minecraft.client.audio.ISound.AttenuationType;
+import net.minecraft.client.resources.sounds.SoundInstance.Attenuation;
 
 @OnlyIn(Dist.CLIENT)
-public class ScannerSound extends TickableSound {
+public class ScannerSound extends AbstractTickableSoundInstance {
     private int activeCounter;
     private Minecraft mc;
     private boolean hasStarted;
 
     public ScannerSound(Minecraft mc) {
-        super(TetraSounds.scannerLoop, SoundCategory.BLOCKS);
+        super(TetraSounds.scannerLoop, SoundSource.BLOCKS);
 
         this.mc = mc;
 
         priority = true;
         looping = true;
-        attenuation = AttenuationType.NONE;
+        attenuation = Attenuation.NONE;
 
         volume = 0;
         pitch = 0.5f;

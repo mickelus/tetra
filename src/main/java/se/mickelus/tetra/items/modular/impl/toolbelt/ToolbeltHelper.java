@@ -1,15 +1,15 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.tetra.ConfigHandler;
@@ -27,7 +27,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 import java.util.*;
 
 public class ToolbeltHelper {
-    public static void equipItemFromToolbelt(PlayerEntity player, ToolbeltSlotType slotType, int index, Hand hand) {
+    public static void equipItemFromToolbelt(Player player, ToolbeltSlotType slotType, int index, InteractionHand hand) {
         ToolbeltInventory inventory = null;
         ItemStack toolbeltStack = findToolbelt(player);
 
@@ -64,7 +64,7 @@ public class ToolbeltHelper {
                 if (!player.inventory.add(heldItemStack)) {
                     inventory.storeItemInInventory(player.getItemInHand(hand));
                     player.setItemInHand(hand, heldItemStack);
-                    player.displayClientMessage(new TranslationTextComponent("tetra.toolbelt.blocked"), true);
+                    player.displayClientMessage(new TranslatableComponent("tetra.toolbelt.blocked"), true);
                 }
             }
         }
@@ -76,14 +76,14 @@ public class ToolbeltHelper {
      * @param player A player
      * @return false if the toolbelt is full, otherwise true
      */
-    public static boolean storeItemInToolbelt(PlayerEntity player) {
+    public static boolean storeItemInToolbelt(Player player) {
         ItemStack toolbeltStack = findToolbelt(player);
-        ItemStack itemStack = player.getItemInHand(Hand.OFF_HAND);
-        Hand sourceHand = Hand.OFF_HAND;
+        ItemStack itemStack = player.getItemInHand(InteractionHand.OFF_HAND);
+        InteractionHand sourceHand = InteractionHand.OFF_HAND;
 
         if (itemStack.isEmpty()) {
-            itemStack = player.getItemInHand(Hand.MAIN_HAND);
-            sourceHand = Hand.MAIN_HAND;
+            itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+            sourceHand = InteractionHand.MAIN_HAND;
         }
 
         if (toolbeltStack.isEmpty() || itemStack.isEmpty() || itemStack.getItem() == ModularToolbeltItem.instance) {
@@ -122,7 +122,7 @@ public class ToolbeltHelper {
      * @param player A player
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
-    public static ItemStack findToolbelt(PlayerEntity player) {
+    public static ItemStack findToolbelt(Player player) {
         if (CuriosCompat.isLoaded) {
             Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance, player);
             if (maybeToolbelt.isPresent()) {
@@ -132,7 +132,7 @@ public class ToolbeltHelper {
                 return ItemStack.EMPTY;
             }
         }
-        PlayerInventory inventoryPlayer = player.inventory;
+        Inventory inventoryPlayer = player.inventory;
         for (int i = 0; i < inventoryPlayer.items.size(); ++i) {
             ItemStack itemStack = inventoryPlayer.getItem(i);
             if (ModularToolbeltItem.instance.equals(itemStack.getItem())) {
@@ -142,7 +142,7 @@ public class ToolbeltHelper {
         return ItemStack.EMPTY;
     }
 
-    public static List<ItemStack> getToolbeltItems(PlayerEntity player) {
+    public static List<ItemStack> getToolbeltItems(Player player) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> {
@@ -163,7 +163,7 @@ public class ToolbeltHelper {
                 .orElse(Collections.emptyList());
     }
 
-    public static void emptyOverflowSlots(ItemStack itemStack, PlayerEntity player) {
+    public static void emptyOverflowSlots(ItemStack itemStack, Player player) {
         new QuickslotInventory(itemStack).emptyOverflowSlots(player);
         new PotionsInventory(itemStack).emptyOverflowSlots(player);
         new StorageInventory(itemStack).emptyOverflowSlots(player);
@@ -177,7 +177,7 @@ public class ToolbeltHelper {
      * @param blockState A blockstate
      * @return a quickslot inventory index if a suitable tool is found, otherwise -1
      */
-    public static int getQuickAccessSlotIndex(PlayerEntity player, RayTraceResult traceResult, BlockState blockState) {
+    public static int getQuickAccessSlotIndex(Player player, HitResult traceResult, BlockState blockState) {
         ItemStack toolbeltStack = ToolbeltHelper.findToolbelt(player);
 
         if (toolbeltStack.isEmpty()) {
@@ -187,9 +187,9 @@ public class ToolbeltHelper {
         QuickslotInventory inventory = new QuickslotInventory(toolbeltStack);
         List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
 
-        if (traceResult instanceof BlockRayTraceResult) {
-            BlockRayTraceResult trace = (BlockRayTraceResult) traceResult;
-            Vector3d hitVector = trace.getLocation();
+        if (traceResult instanceof BlockHitResult) {
+            BlockHitResult trace = (BlockHitResult) traceResult;
+            Vec3 hitVector = trace.getLocation();
             BlockPos blockPos = trace.getBlockPos();
 
             BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IInteractiveBlock.class)

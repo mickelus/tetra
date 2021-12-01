@@ -1,13 +1,13 @@
 package se.mickelus.tetra.blocks.workbench;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -18,12 +18,12 @@ import se.mickelus.mgui.gui.ToggleableSlot;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 
-public class WorkbenchContainer extends Container {
+public class WorkbenchContainer extends AbstractContainerMenu {
     private WorkbenchTile workbench;
 
     private ToggleableSlot[] materialSlots = new ToggleableSlot[0];
 
-    public WorkbenchContainer(int windowId, WorkbenchTile workbench, IInventory playerInventory, PlayerEntity player) {
+    public WorkbenchContainer(int windowId, WorkbenchTile workbench, Container playerInventory, Player player) {
         super(WorkbenchTile.containerType, windowId);
         this.workbench = workbench;
 
@@ -54,7 +54,7 @@ public class WorkbenchContainer extends Container {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static WorkbenchContainer create(int windowId, BlockPos pos, PlayerInventory inv) {
+    public static WorkbenchContainer create(int windowId, BlockPos pos, Inventory inv) {
         WorkbenchTile te = (WorkbenchTile) Minecraft.getInstance().level.getBlockEntity(pos);
         return new WorkbenchContainer(windowId, te, inv, Minecraft.getInstance().player);
     }
@@ -66,7 +66,7 @@ public class WorkbenchContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         BlockPos pos = workbench.getBlockPos();
 
         // based on Container.isWithinUsableDistance but with more generic blockcheck
@@ -81,7 +81,7 @@ public class WorkbenchContainer extends Container {
      * Take a stack from the specified inventory slot.
      */
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack resultStack = ItemStack.EMPTY;
 
         Slot slot = slots.get(index);

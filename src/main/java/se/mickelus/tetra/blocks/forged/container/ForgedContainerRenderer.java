@@ -1,51 +1,51 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.model.RenderMaterial;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
 
 // todo 1.15: ripped out
 @OnlyIn(Dist.CLIENT)
-public class ForgedContainerRenderer extends TileEntityRenderer<ForgedContainerTile> {
-    public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_container/forged_container"));
+public class ForgedContainerRenderer extends BlockEntityRenderer<ForgedContainerTile> {
+    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_container/forged_container"));
 
-    public ModelRenderer lid;
-    public ModelRenderer base;
+    public ModelPart lid;
+    public ModelPart base;
 
-    public ModelRenderer locks[];
+    public ModelPart locks[];
 
     private static final float openDuration = 300;
 
-    public ForgedContainerRenderer(TileEntityRendererDispatcher dispatcher) {
+    public ForgedContainerRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
 
-        lid = new ModelRenderer(128, 64, 0, 0);
+        lid = new ModelPart(128, 64, 0, 0);
         lid.addBox(0, -3, -14, 30, 3, 14, 0);
         lid.x = 1;
         lid.y = 7;
         lid.z = 15;
 
-        locks = new ModelRenderer[4];
+        locks = new ModelPart[4];
         for (int i = 0; i < locks.length; i++) {
-            locks[i] = new ModelRenderer(128, 64, 0, 0);
+            locks[i] = new ModelPart(128, 64, 0, 0);
             locks[i].addBox(-2 + i * 6, -1, -14.03f, 2, 3, 1, 0);
             locks[i].x = 8;
             locks[i].y = 7;
             locks[i].z = 15;
         }
 
-        base = new ModelRenderer(128, 64, 0, 17);
+        base = new ModelPart(128, 64, 0, 17);
         base.addBox(0, 1, 0, 30, 9, 14, 0);
         base.x = 1;
         base.y = 6;
@@ -53,7 +53,7 @@ public class ForgedContainerRenderer extends TileEntityRenderer<ForgedContainerT
     }
 
     @Override
-    public void render(ForgedContainerTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer,
+    public void render(ForgedContainerTile tile, float partialTicks, PoseStack matrixStack, MultiBufferSource renderTypeBuffer,
             int combinedLight, int combinedOverlay) {
         if (tile.isFlipped()) {
             return;
@@ -67,7 +67,7 @@ public class ForgedContainerRenderer extends TileEntityRenderer<ForgedContainerT
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(tile.getFacing().toYRot()));
             matrixStack.translate(-0.5F, -0.5F, -0.5F);
 
-            IVertexBuilder vertexBuilder = material.buffer(renderTypeBuffer, RenderType::entitySolid);
+            VertexConsumer vertexBuilder = material.buffer(renderTypeBuffer, RenderType::entitySolid);
 
             renderLid(tile, partialTicks, matrixStack, vertexBuilder, combinedLight, combinedOverlay);
             renderLocks(tile, partialTicks, matrixStack, vertexBuilder, combinedLight, combinedOverlay);
@@ -77,7 +77,7 @@ public class ForgedContainerRenderer extends TileEntityRenderer<ForgedContainerT
         }
     }
 
-    private void renderLid(ForgedContainerTile tile, float partialTicks, MatrixStack matrixStack, IVertexBuilder vertexBuilder,
+    private void renderLid(ForgedContainerTile tile, float partialTicks, PoseStack matrixStack, VertexConsumer vertexBuilder,
             int combinedLight, int combinedOverlay) {
         if (tile.isOpen()) {
             float progress = Math.min(1, (System.currentTimeMillis() - tile.openTime) / openDuration);
@@ -93,7 +93,7 @@ public class ForgedContainerRenderer extends TileEntityRenderer<ForgedContainerT
         }
     }
 
-    private void renderLocks(ForgedContainerTile tile, float partialTicks, MatrixStack matrixStack, IVertexBuilder vertexBuilder,
+    private void renderLocks(ForgedContainerTile tile, float partialTicks, PoseStack matrixStack, VertexConsumer vertexBuilder,
             int combinedLight, int combinedOverlay) {
         Boolean[] locked = tile.isLocked();
         for (int i = 0; i < locks.length; i++) {

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.scroll.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.util.ResourceLocation;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.resources.ResourceLocation;
 import se.mickelus.mgui.gui.GuiClickable;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.TetraMod;
@@ -25,7 +25,7 @@ public class ScrollPageButtonGui extends GuiClickable {
     }
 
     @Override
-    protected void drawChildren(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    protected void drawChildren(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (hasFocus()) {
             hoverTexture.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
         } else {

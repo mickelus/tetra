@@ -3,14 +3,14 @@ package se.mickelus.tetra.module;
 import java.util.*;
 
 import com.google.common.collect.Multimap;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.StringUtils;
@@ -55,15 +55,15 @@ public abstract class ItemModule implements IToolProvider {
         return slotTagKey;
     }
 
-    public void addModule(ItemStack targetStack, String variantKey, PlayerEntity player) {
-        CompoundNBT tag = targetStack.getOrCreateTag();
+    public void addModule(ItemStack targetStack, String variantKey, Player player) {
+        CompoundTag tag = targetStack.getOrCreateTag();
 
         tag.putString(slotTagKey, moduleKey);
         tag.putString(this.variantTagKey, variantKey);
     }
 
     public ItemStack[] removeModule(ItemStack targetStack) {
-        CompoundNBT tag = targetStack.getOrCreateTag();
+        CompoundTag tag = targetStack.getOrCreateTag();
 
         tag.remove(slotTagKey);
         tag.remove(variantTagKey);
@@ -71,7 +71,7 @@ public abstract class ItemModule implements IToolProvider {
         return new ItemStack[0];
     }
 
-    public void postRemove(ItemStack targetStack, PlayerEntity player) { }
+    public void postRemove(ItemStack targetStack, Player player) { }
 
     public VariantData[] getVariantData() {
         return variantData;
@@ -272,7 +272,7 @@ public abstract class ItemModule implements IToolProvider {
     public int getRepairExperienceCost(ItemStack itemStack) {
         return Optional.of(getDestabilizationChance(itemStack, 1))
                 .map(capacity -> capacity * repairLevelFactor)
-                .map(MathHelper::ceil)
+                .map(Mth::ceil)
                 .map(capacity -> Math.max(0, capacity))
                 .orElse(0);
     }
@@ -306,7 +306,7 @@ public abstract class ItemModule implements IToolProvider {
     public int getTweakStep(ItemStack itemStack, TweakData tweak) {
         return Optional.ofNullable(itemStack.getTag())
                 .map(tag -> tag.getInt(slotTagKey + ":" + tweak.key))
-                .map(step -> MathHelper.clamp(step, -tweak.steps,  tweak.steps))
+                .map(step -> Mth.clamp(step, -tweak.steps,  tweak.steps))
                 .orElse(0);
     }
 

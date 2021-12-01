@@ -1,10 +1,10 @@
 package se.mickelus.tetra.blocks.salvage;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import se.mickelus.mgui.gui.hud.GuiRootHud;
 import se.mickelus.tetra.properties.PropertyHelper;
 
@@ -20,7 +20,7 @@ public class InteractiveBlockOverlayGui extends GuiRootHud {
 
     }
 
-    public void update(World world, BlockPos pos, BlockState blockState, Direction face, PlayerEntity player, boolean transition) {
+    public void update(Level world, BlockPos pos, BlockState blockState, Direction face, Player player, boolean transition) {
         if (blockState.getBlock() instanceof IInteractiveBlock) {
             IInteractiveBlock block = (IInteractiveBlock) blockState.getBlock();
 

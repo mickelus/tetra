@@ -1,8 +1,8 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Hand;
 import se.mickelus.tetra.network.AbstractPacket;
 
@@ -16,17 +16,17 @@ public class LungeEchoPacket extends AbstractPacket {
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         buffer.writeBoolean(isVertical);
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         isVertical = buffer.readBoolean();
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         LungeEffect.receiveEchoPacket(player, isVertical);
     }
 }

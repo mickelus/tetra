@@ -1,8 +1,8 @@
 package se.mickelus.tetra.effect.gui;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
@@ -43,10 +43,10 @@ public class RevengeGui extends GuiElement {
                 .applyTo(new Applier.Opacity(0), new Applier.TranslateX(3));
     }
 
-    public void update(PlayerEntity player, RayTraceResult mouseover) {
-        if (mouseover != null && mouseover.getType() == RayTraceResult.Type.ENTITY
+    public void update(Player player, HitResult mouseover) {
+        if (mouseover != null && mouseover.getType() == HitResult.Type.ENTITY
                 && RevengeTracker.canRevenge(player)
-                && RevengeTracker.canRevenge(player, ((EntityRayTraceResult) mouseover).getEntity())) {
+                && RevengeTracker.canRevenge(player, ((EntityHitResult) mouseover).getEntity())) {
             if (!showAnimationLeft.isActive() && indicatorLeft.getOpacity() < 1) {
                 showAnimationLeft.start();
                 showAnimationRight.start();

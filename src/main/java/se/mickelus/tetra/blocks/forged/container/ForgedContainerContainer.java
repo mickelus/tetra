@@ -1,15 +1,15 @@
 package se.mickelus.tetra.blocks.forged.container;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -24,16 +24,16 @@ import se.mickelus.tetra.network.PacketHandler;
 import java.util.Arrays;
 
 
-public class ForgedContainerContainer extends Container {
+public class ForgedContainerContainer extends AbstractContainerMenu {
     @ObjectHolder(TetraMod.MOD_ID + ":" + ForgedContainerBlock.unlocalizedName)
-    public static ContainerType<ForgedContainerContainer> type;
+    public static MenuType<ForgedContainerContainer> type;
 
     private ForgedContainerTile tile;
 
     private ToggleableSlot[][] compartmentSlots;
     private int currentCompartment = 0;
 
-    public ForgedContainerContainer(int windowId, ForgedContainerTile tile, IInventory playerInventory, PlayerEntity player) {
+    public ForgedContainerContainer(int windowId, ForgedContainerTile tile, Container playerInventory, Player player) {
         super(ForgedContainerContainer.type, windowId);
         this.tile = tile;
 
@@ -70,7 +70,7 @@ public class ForgedContainerContainer extends Container {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static ForgedContainerContainer create(int windowId, BlockPos pos, PlayerInventory inv) {
+    public static ForgedContainerContainer create(int windowId, BlockPos pos, Inventory inv) {
         ForgedContainerTile te = (ForgedContainerTile) Minecraft.getInstance().level.getBlockEntity(pos);
         return new ForgedContainerContainer(windowId, te, inv, Minecraft.getInstance().player);
     }
@@ -97,7 +97,7 @@ public class ForgedContainerContainer extends Container {
      * Take a stack from the specified inventory slot.
      */
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack resultStack = ItemStack.EMPTY;
 
         Slot slot = slots.get(index);
@@ -125,8 +125,8 @@ public class ForgedContainerContainer extends Container {
         return resultStack;
     }
 
-    public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(tile.getLevel(), tile.getBlockPos()), playerIn, ForgedContainerBlock.instance);
+    public boolean stillValid(Player playerIn) {
+        return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerIn, ForgedContainerBlock.instance);
     }
 
     public ForgedContainerTile getTile() {

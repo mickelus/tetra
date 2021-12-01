@@ -1,79 +1,79 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.model.RenderMaterial;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 
 @OnlyIn(Dist.CLIENT)
-public class HammerBaseRenderer extends TileEntityRenderer<HammerBaseTile> {
-    public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_hammer/base_sheet"));
+public class HammerBaseRenderer extends BlockEntityRenderer<HammerBaseTile> {
+    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_hammer/base_sheet"));
 
-    private final ModelRenderer unpowered;
-    private final ModelRenderer powered;
+    private final ModelPart unpowered;
+    private final ModelPart powered;
 
-    private final ModelRenderer[] modulesA;
-    private final ModelRenderer[] modulesB;
+    private final ModelPart[] modulesA;
+    private final ModelPart[] modulesB;
 
 
-    private final ModelRenderer cellAunpowered;
-    private final ModelRenderer cellBunpowered;
-    private final ModelRenderer cellApowered;
-    private final ModelRenderer cellBpowered;
+    private final ModelPart cellAunpowered;
+    private final ModelPart cellBunpowered;
+    private final ModelPart cellApowered;
+    private final ModelPart cellBpowered;
 
-    public HammerBaseRenderer(TileEntityRendererDispatcher rendererDispatcher) {
+    public HammerBaseRenderer(BlockEntityRenderDispatcher rendererDispatcher) {
         super(rendererDispatcher);
 
-        unpowered = new ModelRenderer(128, 64, 0, 0);
+        unpowered = new ModelPart(128, 64, 0, 0);
         unpowered.addBox(0, 0, 0, 16, 16, 16, 0);
 
-        powered = new ModelRenderer(128, 64, 64, 0);
+        powered = new ModelPart(128, 64, 64, 0);
         powered.addBox(0, 0, 0, 16, 16, 16, 0);
 
         HammerEffect[] effects = HammerEffect.values();
-        modulesA = new ModelRenderer[effects.length];
+        modulesA = new ModelPart[effects.length];
         for (int i = 0; i < effects.length; i++) {
-            modulesA[i] = new ModelRenderer(128, 64, i * 16, 32);
+            modulesA[i] = new ModelPart(128, 64, i * 16, 32);
             modulesA[i].addBox(0, 0, -16, 16, 16, 0, 0.03f);
             modulesA[i].yRot = (float) -Math.PI / 2f;
         }
 
-        modulesB = new ModelRenderer[effects.length];
+        modulesB = new ModelPart[effects.length];
         for (int i = 0; i < effects.length; i++) {
-            modulesB[i] = new ModelRenderer(128, 64, i * 16, 32);
+            modulesB[i] = new ModelPart(128, 64, i * 16, 32);
             modulesB[i].addBox(-16, 0, 0, 16, 16, 0, 0.03f);
             modulesB[i].yRot = (float) Math.PI / 2f;
         }
 
-        cellAunpowered = new ModelRenderer(128, 64, 48, 0);
+        cellAunpowered = new ModelPart(128, 64, 48, 0);
         cellAunpowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
         cellAunpowered.xRot = (float) -Math.PI / 2f;
-        cellApowered = new ModelRenderer(128, 64, 48, 8);
+        cellApowered = new ModelPart(128, 64, 48, 8);
         cellApowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
         cellApowered.xRot = (float) -Math.PI / 2f;
 
-        cellBunpowered = new ModelRenderer(128, 64, 48, 0);
+        cellBunpowered = new ModelPart(128, 64, 48, 0);
         cellBunpowered.addBox(5.5f, -3, -10f, 5, 3, 5, 0);
         cellBunpowered.xRot = (float) Math.PI / 2f;
-        cellBpowered = new ModelRenderer(128, 64, 48, 8);
+        cellBpowered = new ModelPart(128, 64, 48, 8);
         cellBpowered.addBox(5.5f, -3, -10f, 5, 3, 5, 0);
         cellBpowered.xRot = (float) Math.PI / 2f;
     }
 
     @Override
-    public void render(HammerBaseTile tile, float v, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void render(HammerBaseTile tile, float v, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         if (tile.hasLevel()) {
             matrixStack.pushPose();
             matrixStack.translate(0.5F, 0.5F, 0.5F);
@@ -82,7 +82,7 @@ public class HammerBaseRenderer extends TileEntityRenderer<HammerBaseTile> {
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(tile.getFacing().toYRot()));
             matrixStack.translate(-0.5F, -0.5F, -0.5F);
 
-            IVertexBuilder vertexBuilder = material.buffer(buffer, RenderType::entityCutout);
+            VertexConsumer vertexBuilder = material.buffer(buffer, RenderType::entityCutout);
 
             if (tile.isFueled()) {
                 powered.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);

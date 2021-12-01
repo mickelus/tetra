@@ -1,11 +1,11 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -22,7 +22,7 @@ import se.mickelus.tetra.gui.GuiTextures;
 import java.util.stream.IntStream;
 
 @OnlyIn(Dist.CLIENT)
-public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContainer> {
+public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContainerContainer> {
     private static final ResourceLocation containerTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/forged-container.png");
 
     private final ForgedContainerTile tileEntity;
@@ -34,7 +34,7 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
 
     private final VerticalTabGroupGui compartmentButtons;
 
-    public ForgedContainerScreen(ForgedContainerContainer container, PlayerInventory playerInventory, ITextComponent title) {
+    public ForgedContainerScreen(ForgedContainerContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
 
         this.imageWidth = 179;
@@ -110,7 +110,7 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         renderTooltip(matrixStack, mouseX, mouseY);
@@ -120,7 +120,7 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
 
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
@@ -128,5 +128,5 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
     }
 
     @Override
-    protected void renderLabels(MatrixStack matrixStack, int x, int y) { }
+    protected void renderLabels(PoseStack matrixStack, int x, int y) { }
 }

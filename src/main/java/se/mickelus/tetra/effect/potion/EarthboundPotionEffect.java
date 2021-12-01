@@ -1,28 +1,28 @@
 package se.mickelus.tetra.effect.potion;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.DisplayEffectsScreen;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
 
-public class EarthboundPotionEffect extends Effect {
+public class EarthboundPotionEffect extends MobEffect {
     public static EarthboundPotionEffect instance;
 
     public static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/potions.png");
 
     public EarthboundPotionEffect() {
-        super(EffectType.HARMFUL, 0x006600);
+        super(MobEffectCategory.HARMFUL, 0x006600);
         setRegistryName("earthbound");
 
         addAttributeModifier(Attributes.MOVEMENT_SPEED, "dc6d6b51-a5da-4735-9277-41fd355829f5", -0.3, AttributeModifier.Operation.MULTIPLY_TOTAL);
@@ -33,7 +33,7 @@ public class EarthboundPotionEffect extends Effect {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void renderHUDEffect(EffectInstance effect, AbstractGui gui, MatrixStack matrixStack, int x, int y, float z, float alpha) {
+    public void renderHUDEffect(MobEffectInstance effect, GuiComponent gui, PoseStack matrixStack, int x, int y, float z, float alpha) {
         Minecraft.getInstance().getTextureManager().bind(texture);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, alpha);
         GlStateManager._enableBlend();

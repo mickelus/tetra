@@ -1,6 +1,6 @@
 package se.mickelus.tetra.module;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;

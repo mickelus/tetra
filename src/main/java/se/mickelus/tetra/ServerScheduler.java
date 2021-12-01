@@ -1,7 +1,7 @@
 package se.mickelus.tetra;
 
 import com.google.common.collect.Queues;
-import net.minecraft.util.concurrent.TickDelayedTask;
+import net.minecraft.server.TickTask;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -38,7 +38,7 @@ public class ServerScheduler {
         counter++;
     }
 
-    static class Task extends TickDelayedTask {
+    static class Task extends TickTask {
         private String id;
 
         public Task(int timestamp, Runnable task) {

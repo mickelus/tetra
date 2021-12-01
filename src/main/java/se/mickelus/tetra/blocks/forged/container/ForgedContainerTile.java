@@ -1,25 +1,25 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -34,9 +34,15 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
 
-public class ForgedContainerTile extends TileEntity implements INamedContainerProvider {
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+
+public class ForgedContainerTile extends BlockEntity implements MenuProvider {
     @ObjectHolder(TetraMod.MOD_ID + ":" + ForgedContainerBlock.unlocalizedName)
-    public static TileEntityType<ForgedContainerTile> type;
+    public static BlockEntityType<ForgedContainerTile> type;
 
     private static final String inventoryKey = "inv";
 
@@ -79,22 +85,22 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
         return super.getCapability(cap, side);
     }
 
-    public void open(@Nullable PlayerEntity player) {
+    public void open(@Nullable Player player) {
         if (lidIntegrity > 0) {
             lidIntegrity--;
             setChanged();
 
             if (!level.isClientSide) {
-                ServerWorld worldServer = (ServerWorld) level;
+                ServerLevel worldServer = (ServerLevel) level;
                 if (lidIntegrity == 0) {
                     causeOpeningEffects(worldServer);
                 } else {
-                    worldServer.playSound(null, worldPosition, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 1.3f);
+                    worldServer.playSound(null, worldPosition, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 1.3f);
                 }
 
                 Optional.ofNullable(player)
-                        .filter(p -> !p.hasEffect(Effects.DAMAGE_BOOST))
-                        .ifPresent(p -> p.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, 200, 5)));
+                        .filter(p -> !p.hasEffect(MobEffects.DAMAGE_BOOST))
+                        .ifPresent(p -> p.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 200, 5)));
             } else if (lidIntegrity == 0) { // start lid open animation on the client
                 openTime = System.currentTimeMillis();
             }
@@ -103,9 +109,9 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
         }
     }
 
-    private void causeOpeningEffects(ServerWorld worldServer) {
-        Direction facing = worldServer.getBlockState(worldPosition).getValue(HorizontalBlock.FACING);
-        Vector3d smokeDirection = Vector3d.atLowerCornerOf(facing.getClockWise().getNormal());
+    private void causeOpeningEffects(ServerLevel worldServer) {
+        Direction facing = worldServer.getBlockState(worldPosition).getValue(HorizontalDirectionalBlock.FACING);
+        Vec3 smokeDirection = Vec3.atLowerCornerOf(facing.getClockWise().getNormal());
         Random random = new Random();
         int smokeCount = 5 + random.nextInt(4);
 
@@ -126,8 +132,8 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
                     1, 0, 0, 0, 0d);
         }
 
-        worldServer.playSound(null, worldPosition, SoundEvents.IRON_TRAPDOOR_OPEN, SoundCategory.PLAYERS, 1, 0.5f);
-        worldServer.playSound(null, worldPosition, SoundEvents.LAVA_EXTINGUISH, SoundCategory.PLAYERS, 0.2f, 0.8f);
+        worldServer.playSound(null, worldPosition, SoundEvents.IRON_TRAPDOOR_OPEN, SoundSource.PLAYERS, 1, 0.5f);
+        worldServer.playSound(null, worldPosition, SoundEvents.LAVA_EXTINGUISH, SoundSource.PLAYERS, 0.2f, 0.8f);
     }
 
     private void updateBlockState() {
@@ -175,21 +181,21 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
                 .toArray(Boolean[]::new);
     }
 
-    public void breakLock(@Nullable PlayerEntity player, int index, @Nullable Hand hand) {
+    public void breakLock(@Nullable Player player, int index, @Nullable InteractionHand hand) {
         if (lockIntegrity[index] > 0) {
             lockIntegrity[index]--;
 
             if (lockIntegrity[index] == 0) {
-                level.playSound(player, worldPosition, SoundEvents.SHIELD_BREAK, SoundCategory.PLAYERS, 1,0.5f);
+                level.playSound(player, worldPosition, SoundEvents.SHIELD_BREAK, SoundSource.PLAYERS, 1,0.5f);
             } else {
-                level.playSound(player, worldPosition, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1,0.5f);
+                level.playSound(player, worldPosition, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundSource.PLAYERS, 1,0.5f);
             }
 
             if (!level.isClientSide && lockIntegrity[index] == 0) {
                 if (player != null) {
-                    BlockInteraction.dropLoot(lockLootTable, player, hand, (ServerWorld) level, getBlockState());
+                    BlockInteraction.dropLoot(lockLootTable, player, hand, (ServerLevel) level, getBlockState());
                 } else {
-                    BlockInteraction.dropLoot(lockLootTable, (ServerWorld) level, getBlockPos(), getBlockState());
+                    BlockInteraction.dropLoot(lockLootTable, (ServerLevel) level, getBlockPos(), getBlockState());
                 }
             }
         }
@@ -199,34 +205,34 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new StringTextComponent(ForgedContainerBlock.unlocalizedName);
+    public Component getDisplayName() {
+        return new TextComponent(ForgedContainerBlock.unlocalizedName);
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
         return new ForgedContainerContainer(windowId, this, playerInventory, playerEntity);
     }
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return save(new CompoundTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT compound) {
+    public void load(BlockState state, CompoundTag compound) {
         super.load(state, compound);
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
@@ -239,7 +245,7 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         super.save(compound);
 
         handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
@@ -250,13 +256,13 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
         return compound;
     }
 
-    public static void writeLockData(CompoundNBT compound, int[] lockIntegrity) {
+    public static void writeLockData(CompoundTag compound, int[] lockIntegrity) {
         for (int i = 0; i < lockIntegrity.length; i++) {
             compound.putInt("lock_integrity" + i, lockIntegrity[i]);
         }
     }
 
-    public static void writeLidData(CompoundNBT compound, int lidIntegrity) {
+    public static void writeLidData(CompoundTag compound, int lidIntegrity) {
         compound.putInt("lid_integrity", lidIntegrity);
     }
 }

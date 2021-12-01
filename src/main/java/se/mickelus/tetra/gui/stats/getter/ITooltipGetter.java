@@ -1,12 +1,12 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import se.mickelus.tetra.Tooltips;
 
 public interface ITooltipGetter {
-    public default String getTooltip(PlayerEntity player, ItemStack itemStack) {
+    public default String getTooltip(Player player, ItemStack itemStack) {
         if (hasExtendedTooltip(player, itemStack)) {
             return getTooltipBase(player, itemStack) + "\n \n" + Tooltips.expand.getString();
         }
@@ -20,22 +20,22 @@ public interface ITooltipGetter {
      * @param itemStack
      * @return
      */
-    public default String getTooltipExtended(PlayerEntity player, ItemStack itemStack) {
+    public default String getTooltipExtended(Player player, ItemStack itemStack) {
         if (hasExtendedTooltip(player, itemStack)) {
             return getTooltipBase(player, itemStack) + "\n \n" + Tooltips.expanded.getString() + "\n"
-                    + TextFormatting.GRAY + getTooltipExtension(player, itemStack);
+                    + ChatFormatting.GRAY + getTooltipExtension(player, itemStack);
         }
 
         return getTooltip(player, itemStack);
     }
 
-    public String getTooltipBase(PlayerEntity player, ItemStack itemStack);
+    public String getTooltipBase(Player player, ItemStack itemStack);
 
-    public default boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
+    public default boolean hasExtendedTooltip(Player player, ItemStack itemStack) {
         return false;
     }
 
-    public default String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
+    public default String getTooltipExtension(Player player, ItemStack itemStack) {
         return null;
     }
 }

@@ -1,32 +1,32 @@
 package se.mickelus.tetra.effect.potion;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.DisplayEffectsScreen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.effect.EffectHelper;
 
 import java.util.Random;
 
-public class PuncturedPotionEffect extends Effect {
+public class PuncturedPotionEffect extends MobEffect {
     public static PuncturedPotionEffect instance;
 
     public PuncturedPotionEffect() {
-        super(EffectType.HARMFUL, 0x880000);
+        super(MobEffectCategory.HARMFUL, 0x880000);
 
         setRegistryName("punctured");
 
@@ -38,10 +38,10 @@ public class PuncturedPotionEffect extends Effect {
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.getCommandSenderWorld().isClientSide) {
             Random rand = entity.getRandom();
-            EquipmentSlotType slot = EquipmentSlotType.values()[2 + rand.nextInt(4)];
+            EquipmentSlot slot = EquipmentSlot.values()[2 + rand.nextInt(4)];
             ItemStack itemStack = entity.getItemBySlot(slot);
             if (!itemStack.isEmpty()) {
-                ((ServerWorld) entity.level).sendParticles(new ItemParticleData(ParticleTypes.ITEM, itemStack),
+                ((ServerLevel) entity.level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, itemStack),
                         entity.getX() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
                         entity.getY() + entity.getBbHeight() * (0.2 + rand.nextGaussian() * 0.4),
                         entity.getZ() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
@@ -58,13 +58,13 @@ public class PuncturedPotionEffect extends Effect {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void renderInventoryEffect(EffectInstance effect, DisplayEffectsScreen<?> gui, MatrixStack mStack, int x, int y, float z) {
+    public void renderInventoryEffect(MobEffectInstance effect, EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, float z) {
         super.renderInventoryEffect(effect, gui, mStack, x, y, z);
 
         int amp = effect.getAmplifier() + 1;
         double armor = gui.getMinecraft().player.getArmorValue();
         double armorReduction =  armor / (1 - amp * 0.1) - armor;
         EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new StringTextComponent(I18n.get("effect.tetra.punctured.tooltip", String.format("%d", amp * 10), String.format("%.1f", armorReduction))));
+                new TextComponent(I18n.get("effect.tetra.punctured.tooltip", String.format("%d", amp * 10), String.format("%.1f", armorReduction))));
     }
 }

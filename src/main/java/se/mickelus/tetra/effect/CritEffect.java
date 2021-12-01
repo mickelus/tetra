@@ -2,16 +2,16 @@ package se.mickelus.tetra.effect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -29,7 +29,7 @@ public class CritEffect {
             .expireAfterWrite(10, TimeUnit.SECONDS)
             .build();
 
-    public static boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack, int critLevel) {
+    public static boolean critBlock(Level world, Player breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack, int critLevel) {
         BlockPos recentCritPos = critBlockCache.getIfPresent(breakingPlayer.getUUID());
 
         // this avoids some log spam from when the client attempts to abort breaking of a critted block
@@ -51,11 +51,11 @@ public class CritEffect {
 
                 critBlockCache.put(breakingPlayer.getUUID(), pos);
 
-                CastOptional.cast(breakingPlayer, ServerPlayerEntity.class)
+                CastOptional.cast(breakingPlayer, ServerPlayer.class)
                         .ifPresent(serverPlayer -> EffectHelper.sendEventToPlayer(serverPlayer, 2001, pos, Block.getId(blockState)));
 
-                if (world instanceof ServerWorld) {
-                    ((ServerWorld) world).sendParticles(ParticleTypes.ENCHANTED_HIT,
+                if (world instanceof ServerLevel) {
+                    ((ServerLevel) world).sendParticles(ParticleTypes.ENCHANTED_HIT,
                             pos.getX() + 0.5, // world.rand.nextGaussian(),
                             pos.getY() + 0.5, // world.rand.nextGaussian(),
                             pos.getZ() + 0.5, // world.rand.nextGaussian(),

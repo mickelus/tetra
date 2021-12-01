@@ -1,9 +1,9 @@
 package se.mickelus.tetra.module.schematic;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -172,7 +172,7 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean isVisibleForPlayer(PlayerEntity player, @Nullable WorkbenchTile tile, ItemStack targetStack) {
+    public boolean isVisibleForPlayer(Player player, @Nullable WorkbenchTile tile, ItemStack targetStack) {
         if (definition.locked) {
             return Optional.ofNullable(tile)
                     .map(WorkbenchTile::getUnlockedSchematics)
@@ -243,7 +243,7 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, Player player) {
         ItemStack upgradedStack = itemStack.copy();
 
         if (definition.materialSlotCount > 0) {
@@ -273,7 +273,7 @@ public class ConfigSchematic extends BaseSchematic {
         return upgradedStack;
     }
 
-    private void applyOutcome(OutcomeDefinition outcome, ItemStack upgradedStack, boolean consumeMaterials, String slot, PlayerEntity player) {
+    private void applyOutcome(OutcomeDefinition outcome, ItemStack upgradedStack, boolean consumeMaterials, String slot, Player player) {
         if (outcome.moduleKey != null) {
             ItemModule module = ItemUpgradeRegistry.instance.getModule(getModuleKey(outcome));
 
@@ -292,26 +292,26 @@ public class ConfigSchematic extends BaseSchematic {
         }
     }
 
-    private void triggerAdvancement(OutcomeDefinition outcome, PlayerEntity player, ItemStack itemStack, ItemStack upgradedStack, String slot) {
-        if(player instanceof ServerPlayerEntity) {
+    private void triggerAdvancement(OutcomeDefinition outcome, Player player, ItemStack itemStack, ItemStack upgradedStack, String slot) {
+        if(player instanceof ServerPlayer) {
 
             if (outcome.moduleKey != null) {
                 if (outcome.requiredTools.getValues().isEmpty()) {
-                    ModuleCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
+                    ModuleCraftCriterion.trigger((ServerPlayer) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
                             outcome.moduleVariant, null, -1);
                 } else {
                     outcome.requiredTools.getLevelMap().forEach((tool, toolLevel) ->
-                            ModuleCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
+                            ModuleCraftCriterion.trigger((ServerPlayer) player, itemStack, upgradedStack, getKey(), slot, outcome.moduleKey,
                                     outcome.moduleVariant, tool, toolLevel));
                 }
             }
 
             outcome.improvements.forEach((improvement, level) -> {
                 if (outcome.requiredTools.getValues().isEmpty()) {
-                    ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, improvement, level, null, -1);
+                    ImprovementCraftCriterion.trigger((ServerPlayer) player, itemStack, upgradedStack, getKey(), slot, improvement, level, null, -1);
                 } else {
                     outcome.requiredTools.getLevelMap().forEach((tool, toolLevel) ->
-                            ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot, improvement, level,
+                            ImprovementCraftCriterion.trigger((ServerPlayer) player, itemStack, upgradedStack, getKey(), slot, improvement, level,
                             tool, toolLevel));
                 }
             });

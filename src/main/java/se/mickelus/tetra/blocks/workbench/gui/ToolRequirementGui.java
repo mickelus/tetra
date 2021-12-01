@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.gui.GuiColors;
 
@@ -58,7 +58,7 @@ public class ToolRequirementGui extends GuiTool {
         if (hasFocus() && showTooltip) {
             if (showTooltipRequirement) {
                 return Collections.singletonList(I18n.get(requirementTooltip, requiredLevel) + "\n \n"
-                        + (requiredLevel > availableLevel ? TextFormatting.RED : TextFormatting.GREEN)
+                        + (requiredLevel > availableLevel ? ChatFormatting.RED : ChatFormatting.GREEN)
                         + I18n.get( "tetra.tool.available", availableLevel));
 
             }

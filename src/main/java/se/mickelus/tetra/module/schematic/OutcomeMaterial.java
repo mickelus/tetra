@@ -2,22 +2,22 @@ package se.mickelus.tetra.module.schematic;
 
 import com.google.gson.*;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.advancements.criterion.EnchantmentPredicate;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.advancements.criterion.NBTPredicate;
+import net.minecraft.advancements.critereon.EnchantmentPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.ITagCollection;
-import net.minecraft.tags.TagCollectionManager;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagParser;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagCollection;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -63,32 +63,32 @@ public class OutcomeMaterial {
     }
 
     // todo: this is rather hacky, networked tags are required on clients in multiplayer, but that's not always available
-    protected static ITagCollection<Item> getTagCollection() {
+    protected static TagCollection<Item> getTagCollection() {
         if (FMLEnvironment.dist.isClient()) {
             if (Minecraft.getInstance().level != null) {
                 return Minecraft.getInstance().level.getTagManager().getItems();
             }
         }
 
-        return TagCollectionManager.getInstance().getItems();
+        return SerializationTags.getInstance().getItems();
     }
 
     @OnlyIn(Dist.CLIENT)
-    public ITextComponent[] getDisplayNames() {
+    public Component[] getDisplayNames() {
         if (getPredicate() == null) {
-            return new ITextComponent[] {new StringTextComponent("Unknown material")};
+            return new Component[] {new TextComponent("Unknown material")};
         } else if (itemStack != null) {
-            return new ITextComponent[] {itemStack.getHoverName()};
+            return new Component[] {itemStack.getHoverName()};
         } else if (tagLocation != null) {
             return getTagCollection()
                     .getTagOrEmpty(tagLocation)
                     .getValues()
                     .stream()
                     .map(item -> item.getName(item.getDefaultInstance()))
-                    .toArray(ITextComponent[]::new);
+                    .toArray(Component[]::new);
         }
 
-        return new ITextComponent[] {new StringTextComponent("Unknown material")};
+        return new Component[] {new TextComponent("Unknown material")};
     }
 
     public ItemStack[] getApplicableItemStacks() {
@@ -134,20 +134,20 @@ public class OutcomeMaterial {
             OutcomeMaterial material = new OutcomeMaterial();
 
             if (element != null && !element.isJsonNull()) {
-                JsonObject jsonObject = JSONUtils.convertToJsonObject(element, "material");
+                JsonObject jsonObject = GsonHelper.convertToJsonObject(element, "material");
 
-                material.count = JSONUtils.getAsInt(jsonObject, "count", 1);
+                material.count = GsonHelper.getAsInt(jsonObject, "count", 1);
                 jsonObject.remove("count");
 
                 if (jsonObject.has("item")) {
                     try {
-                        Item item = JSONUtils.getAsItem(jsonObject, "item");
+                        Item item = GsonHelper.getAsItem(jsonObject, "item");
                         material.itemStack = new ItemStack(item, material.count);
                     } catch (JsonSyntaxException e) {}
 
                     if (material.itemStack != null && jsonObject.has("nbt")) {
                         try {
-                            CompoundNBT compoundnbt = JsonToNBT.parseTag(JSONUtils.convertToString(jsonObject.get("nbt"), "nbt"));
+                            CompoundTag compoundnbt = TagParser.parseTag(GsonHelper.convertToString(jsonObject.get("nbt"), "nbt"));
                             material.itemStack.setTag(compoundnbt);
                         } catch (CommandSyntaxException exception) {
                             throw new JsonSyntaxException("Encountered invalid nbt tag when parsing material: " + exception.getMessage());
@@ -155,7 +155,7 @@ public class OutcomeMaterial {
                     }
 
                 } else if (jsonObject.has("tag")) {
-                    material.tagLocation = new ResourceLocation(JSONUtils.getAsString(jsonObject, "tag"));
+                    material.tagLocation = new ResourceLocation(GsonHelper.getAsString(jsonObject, "tag"));
                 }
 
                 if (!jsonObject.has("type") && jsonObject.has("tag")) {
@@ -169,21 +169,21 @@ public class OutcomeMaterial {
 
         // todo: workaround as vanilla predicates always use the non-networked tag manager
         private ItemPredicate deserializeTagPredicate(@Nullable JsonElement element) {
-            JsonObject jsonObject = JSONUtils.convertToJsonObject(element, "item");
+            JsonObject jsonObject = GsonHelper.convertToJsonObject(element, "item");
 
-            ResourceLocation resourceLocation = new ResourceLocation(JSONUtils.getAsString(jsonObject, "tag"));
-            ITag<Item> tag = getTagCollection().getTag(resourceLocation);
+            ResourceLocation resourceLocation = new ResourceLocation(GsonHelper.getAsString(jsonObject, "tag"));
+            Tag<Item> tag = getTagCollection().getTag(resourceLocation);
 
             if (tag == null) {
                 logger.debug("Failed to parse outcome material predicate for \"{}\": Unknown tag '{}'", jsonObject.toString(), resourceLocation);
                 return null;
             }
 
-            MinMaxBounds.IntBound count = MinMaxBounds.IntBound.fromJson(jsonObject.get("count"));
-            MinMaxBounds.IntBound durability = MinMaxBounds.IntBound.fromJson(jsonObject.get("durability"));
+            MinMaxBounds.Ints count = MinMaxBounds.Ints.fromJson(jsonObject.get("count"));
+            MinMaxBounds.Ints durability = MinMaxBounds.Ints.fromJson(jsonObject.get("durability"));
             EnchantmentPredicate[] enchantments = EnchantmentPredicate.fromJsonArray(jsonObject.get("enchantments"));
             EnchantmentPredicate[] storedEnchantments = EnchantmentPredicate.fromJsonArray(jsonObject.get("stored_enchantments"));
-            NBTPredicate nbt = NBTPredicate.fromJson(jsonObject.get("nbt"));
+            NbtPredicate nbt = NbtPredicate.fromJson(jsonObject.get("nbt"));
 
             return new ItemPredicate(tag, null, count, durability, enchantments, storedEnchantments, null, nbt);
         }

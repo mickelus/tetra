@@ -1,11 +1,11 @@
 package se.mickelus.tetra.network;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -83,7 +83,7 @@ public class PacketHandler {
         return null;
     }
 
-    public void sendTo(AbstractPacket message, ServerPlayerEntity player) {
+    public void sendTo(AbstractPacket message, ServerPlayer player) {
         channel.sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
@@ -91,7 +91,7 @@ public class PacketHandler {
         channel.send(PacketDistributor.ALL.noArg(), message);
     }
 
-    public void sendToAllPlayersNear(AbstractPacket message, BlockPos pos, double r2, RegistryKey<World> dim) {
+    public void sendToAllPlayersNear(AbstractPacket message, BlockPos pos, double r2, ResourceKey<Level> dim) {
         channel.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), r2, dim)), message);
     }
 

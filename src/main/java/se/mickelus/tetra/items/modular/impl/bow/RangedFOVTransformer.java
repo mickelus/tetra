@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,7 +14,7 @@ public class RangedFOVTransformer {
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onFOVUpdate(FOVUpdateEvent event) {
-        PlayerEntity player = event.getEntity();
+        Player player = event.getEntity();
         if (player.isUsingItem()) {
             ItemStack itemStack = player.getUseItem();
             CastOptional.cast(itemStack.getItem(), ModularBowItem.class)

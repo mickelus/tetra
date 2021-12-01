@@ -1,18 +1,18 @@
 package se.mickelus.tetra.blocks.rack;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -22,11 +22,11 @@ import se.mickelus.tetra.TetraMod;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RackTile extends TileEntity {
+public class RackTile extends BlockEntity {
     public static final String unlocalizedName = "rack";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static TileEntityType<RackTile> type;
+    public static BlockEntityType<RackTile> type;
 
     private static final String inventoryKey = "inv";
 
@@ -51,7 +51,7 @@ public class RackTile extends TileEntity {
         return super.getCapability(cap, side);
     }
 
-    public void slotInteract(int slot, PlayerEntity playerEntity, Hand hand) {
+    public void slotInteract(int slot, Player playerEntity, InteractionHand hand) {
         handler.ifPresent(handler -> {
             ItemStack slotStack = handler.getStackInSlot(slot);
             ItemStack heldStack = playerEntity.getItemInHand(hand);
@@ -71,35 +71,35 @@ public class RackTile extends TileEntity {
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return VoxelShapes.block().bounds().move(worldPosition);
+    public AABB getRenderBoundingBox() {
+        return Shapes.block().bounds().move(worldPosition);
     }
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return save(new CompoundTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compound) {
+    public void load(BlockState blockState, CompoundTag compound) {
         super.load(blockState, compound);
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         super.save(compound);
 
         handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));

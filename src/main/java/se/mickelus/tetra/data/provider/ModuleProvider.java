@@ -3,11 +3,11 @@ package se.mickelus.tetra.data.provider;
 import com.google.gson.*;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IDataProvider;
-import net.minecraft.resources.IResource;
-import net.minecraft.resources.ResourcePackType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.HashCache;
+import net.minecraft.data.DataProvider;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.util.*;
 
-public class ModuleProvider implements IDataProvider {
+public class ModuleProvider implements DataProvider {
     private static final Logger logger = LogManager.getLogger();
 
     public static final Gson gson = new GsonBuilder()
@@ -96,7 +96,7 @@ public class ModuleProvider implements IDataProvider {
     }
 
     @Override
-    public void run(DirectoryCache cache) throws IOException {
+    public void run(HashCache cache) throws IOException {
         setup();
 
         builders.forEach(builder -> saveModule(cache, builder.module, builder.getModuleJson()));
@@ -114,7 +114,7 @@ public class ModuleProvider implements IDataProvider {
     private ModuleBuilder setupModule(String module, String prefix, String localization, String fallbackReference, String schematicPath) {
         JsonObject referenceModule = null;
         try {
-            IResource resource = existingFileHelper.getResource(new ResourceLocation("tetra", module), ResourcePackType.SERVER_DATA, ".json", "modules");
+            Resource resource = existingFileHelper.getResource(new ResourceLocation("tetra", module), PackType.SERVER_DATA, ".json", "modules");
             BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
             referenceModule = gson.fromJson(reader, JsonObject.class);
 
@@ -128,28 +128,28 @@ public class ModuleProvider implements IDataProvider {
         return builder;
     }
 
-    private void saveModule(DirectoryCache cache, String moduleKey, JsonObject moduleData) {
+    private void saveModule(HashCache cache, String moduleKey, JsonObject moduleData) {
         Path outputPath = generator.getOutputFolder().resolve("data/tetra/modules/" + moduleKey + ".json");
         try {
-            IDataProvider.save(gson, cache, moduleData, outputPath);
+            DataProvider.save(gson, cache, moduleData, outputPath);
         } catch (IOException e) {
             logger.error("Couldn't save module data to {}", outputPath, e);
         }
     }
 
-    private void saveSchematic(DirectoryCache cache, String schematicPath, JsonObject schematicData) {
+    private void saveSchematic(HashCache cache, String schematicPath, JsonObject schematicData) {
         Path outputPath = generator.getOutputFolder().resolve("data/tetra/schematics/" + schematicPath + ".json");
         try {
-            IDataProvider.save(gson, cache, schematicData, outputPath);
+            DataProvider.save(gson, cache, schematicData, outputPath);
         } catch (IOException e) {
             logger.error("Couldn't save schematic data to {}", outputPath, e);
         }
     }
 
-    private void saveLocalization(DirectoryCache cache, JsonObject localizationEntries) {
+    private void saveLocalization(HashCache cache, JsonObject localizationEntries) {
         Path outputPath = generator.getOutputFolder().resolve("temp/modules_" + lang + ".json");
         try {
-            IDataProvider.save(gson, cache, localizationEntries, outputPath);
+            DataProvider.save(gson, cache, localizationEntries, outputPath);
         } catch (IOException e) {
             logger.error("Couldn't save localization to {}", outputPath, e);
         }

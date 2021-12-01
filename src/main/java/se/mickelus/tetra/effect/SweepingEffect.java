@@ -1,17 +1,17 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
@@ -42,11 +42,11 @@ public class SweepingEffect {
                 .filter(entity -> attacker.distanceToSqr(entity) < (range + reach) * (range + reach))
                 .forEach(entity -> {
                     entity.knockback(knockback,
-                            MathHelper.sin(attacker.yRot * (float) Math.PI / 180F),
-                            -MathHelper.cos(attacker.yRot * (float) Math.PI / 180F));
+                            Mth.sin(attacker.yRot * (float) Math.PI / 180F),
+                            -Mth.cos(attacker.yRot * (float) Math.PI / 180F));
 
-                    DamageSource damageSource = attacker instanceof PlayerEntity
-                            ? DamageSource.playerAttack((PlayerEntity) attacker) : DamageSource.indirectMobAttack(attacker, entity);
+                    DamageSource damageSource = attacker instanceof Player
+                            ? DamageSource.playerAttack((Player) attacker) : DamageSource.indirectMobAttack(attacker, entity);
 
                     if (trueSweep) {
                         ItemEffectHandler.applyHitEffects(itemStack, entity, attacker);
@@ -62,7 +62,7 @@ public class SweepingEffect {
         attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                 SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);
 
-        CastOptional.cast(attacker, PlayerEntity.class).ifPresent(PlayerEntity::sweepAttack);
+        CastOptional.cast(attacker, Player.class).ifPresent(Player::sweepAttack);
     }
 
     public static void triggerTruesweep() {
@@ -80,11 +80,11 @@ public class SweepingEffect {
         float knockback = 0.5f + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
         double range = 2 + EffectHelper.getEffectEfficiency(itemStack, ItemEffect.sweeping);
 
-        Vector3d target = Vector3d.directionFromRotation(attacker.xRot, attacker.yRot)
+        Vec3 target = Vec3.directionFromRotation(attacker.xRot, attacker.yRot)
                 .normalize()
                 .scale(range)
                 .add(attacker.getEyePosition(0));
-        AxisAlignedBB aoe = new AxisAlignedBB(target, target);
+        AABB aoe = new AABB(target, target);
 
         // range values set up to mimic vanilla behaviour
         attacker.level.getEntitiesOfClass(LivingEntity.class, aoe.inflate(range, 1d, range)).stream()
@@ -92,27 +92,27 @@ public class SweepingEffect {
                 .filter(entity -> !attacker.isAlliedTo(entity))
                 .forEach(entity -> {
                     entity.knockback(knockback,
-                            MathHelper.sin(attacker.yRot * (float) Math.PI / 180F),
-                            -MathHelper.cos(attacker.yRot * (float) Math.PI / 180F));
+                            Mth.sin(attacker.yRot * (float) Math.PI / 180F),
+                            -Mth.cos(attacker.yRot * (float) Math.PI / 180F));
 
                     ItemEffectHandler.applyHitEffects(itemStack, entity, attacker);
                     EffectHelper.applyEnchantmentHitEffects(itemStack, entity, attacker);
 
 
-                    DamageSource damageSource = attacker instanceof PlayerEntity
-                            ? DamageSource.playerAttack((PlayerEntity) attacker) : DamageSource.indirectMobAttack(attacker, entity);
+                    DamageSource damageSource = attacker instanceof Player
+                            ? DamageSource.playerAttack((Player) attacker) : DamageSource.indirectMobAttack(attacker, entity);
                     causeTruesweepDamage(damageSource, damage, itemStack, attacker, entity);
                 });
 
         attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                 SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);
 
-        CastOptional.cast(attacker, PlayerEntity.class).ifPresent(PlayerEntity::sweepAttack);
+        CastOptional.cast(attacker, Player.class).ifPresent(Player::sweepAttack);
     }
 
     private static void causeTruesweepDamage(DamageSource damageSource, float baseDamage, ItemStack itemStack, LivingEntity attacker, LivingEntity target) {
         float targetModifier = EnchantmentHelper.getDamageBonus(itemStack, target.getMobType());
-        float critMultiplier = CastOptional.cast(attacker, PlayerEntity.class)
+        float critMultiplier = CastOptional.cast(attacker, Player.class)
                 .map(player -> ForgeHooks.getCriticalHit(player, target, false, 1.5f))
                 .map(CriticalHitEvent::getDamageModifier)
                 .orElse(1f);
@@ -120,12 +120,12 @@ public class SweepingEffect {
         target.hurt(damageSource, (baseDamage + targetModifier) * critMultiplier);
 
         if (targetModifier > 0) {
-            CastOptional.cast(attacker, PlayerEntity.class).ifPresent(player -> player.magicCrit(target));
+            CastOptional.cast(attacker, Player.class).ifPresent(player -> player.magicCrit(target));
         }
 
         if (critMultiplier > 1) {
-            attacker.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 1.3f);
-            ((PlayerEntity) attacker).crit(target);
+            attacker.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1, 1.3f);
+            ((Player) attacker).crit(target);
         }
     }
 }

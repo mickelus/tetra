@@ -1,12 +1,12 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.suspend;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.tileentity.BeaconTileEntity;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.block.entity.BeaconBlockEntity;
+import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
@@ -17,31 +17,31 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SuspendEffect {
-    private static final Set<Effect> enablingEffects = Stream.concat(
-            Arrays.stream(BeaconTileEntity.BEACON_EFFECTS).flatMap(Arrays::stream),
-            Stream.of(Effects.CONDUIT_POWER)
+    private static final Set<MobEffect> enablingEffects = Stream.concat(
+            Arrays.stream(BeaconBlockEntity.BEACON_EFFECTS).flatMap(Arrays::stream),
+            Stream.of(MobEffects.CONDUIT_POWER)
     ).collect(Collectors.toSet());
 
-    public static void toggleSuspend(PlayerEntity entity, boolean toggleOn) {
+    public static void toggleSuspend(Player entity, boolean toggleOn) {
         if (toggleOn) {
             if (canSuspend(entity)) {
-                Vector3d motion = entity.getDeltaMovement();
+                Vec3 motion = entity.getDeltaMovement();
                 entity.setDeltaMovement(motion.x, 0, motion.z);
                 entity.hurtMarked = true;
-                entity.addEffect(new EffectInstance(SuspendPotionEffect.instance, 100, 0, false, false));
+                entity.addEffect(new MobEffectInstance(SuspendPotionEffect.instance, 100, 0, false, false));
             }
         } else {
             entity.removeEffect(SuspendPotionEffect.instance);
         }
     }
 
-    public static boolean canSuspend(PlayerEntity entity) {
+    public static boolean canSuspend(Player entity) {
         ItemStack itemStack = ToolbeltHelper.findToolbelt(entity);
         boolean hasEffect = !itemStack.isEmpty() && ((IModularItem) itemStack.getItem()).getEffectLevel(itemStack, ItemEffect.suspendSelf) > 0;
 
         return hasEffect && entity.getActiveEffects().stream()
-                .filter(EffectInstance::isAmbient)
-                .map(EffectInstance::getEffect)
+                .filter(MobEffectInstance::isAmbient)
+                .map(MobEffectInstance::getEffect)
                 .anyMatch(enablingEffects::contains);
     }
 }

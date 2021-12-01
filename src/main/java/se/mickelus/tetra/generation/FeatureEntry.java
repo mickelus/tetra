@@ -1,32 +1,32 @@
 package se.mickelus.tetra.generation;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootTable;
+import net.minecraft.world.Container;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.WorldGenRegion;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.template.IntegrityProcessor;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockRotProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
@@ -46,18 +46,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference> {
+public class FeatureEntry extends Feature<NoneFeatureConfiguration> { //<FeatureReference> {
     public static final String key = "feature";
     public static FeatureEntry instance = new FeatureEntry();
-    public static ConfiguredFeature<?, ?> configuredInstance = instance.configured(NoFeatureConfig.INSTANCE);
+    public static ConfiguredFeature<?, ?> configuredInstance = instance.configured(NoneFeatureConfiguration.INSTANCE);
 
-    private TemplateManager templateManager;
+    private StructureManager templateManager;
     private Registry<Biome> biomeRegistry;
 
     private List<FeatureParameters> entryPoints = Collections.emptyList();
 
     public FeatureEntry() {
-        super(NoFeatureConfig.CODEC);
+        super(NoneFeatureConfiguration.CODEC);
 //        super(FeatureReference.codec);
 
         setRegistryName(TetraMod.MOD_ID, key);
@@ -79,7 +79,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
     }
 
     public void registerFeatures(BiomeLoadingEvent event) {
-        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, configuredInstance);
+        event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_STRUCTURES, configuredInstance);
 
 //        DataManager.featureData.getData().values().stream()
 //                .filter(params -> params.biomes.length > 0)
@@ -135,7 +135,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
 
 
     @Override
-    public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig ref) {
+    public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos, NoneFeatureConfiguration ref) {
         Biome biome = world.getBiome(pos);
         ResourceLocation dimensionType = world.getLevel().dimension().location();
 
@@ -166,7 +166,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
 //        return false;
 //    }
 
-    public void generateFeatureRoot(FeatureParameters feature, ISeedReader world, BlockPos pos, Random random) {
+    public void generateFeatureRoot(FeatureParameters feature, WorldGenLevel world, BlockPos pos, Random random) {
         Rotation rotation = Rotation.NONE;
         Mirror mirror = Mirror.NONE;
 
@@ -178,11 +178,11 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
         generateFeature(feature, world, pos, rotation, mirror, random, 0);
     }
 
-    private void generateFeature(FeatureParameters feature, ISeedReader world, BlockPos pos, Rotation rotation, Mirror mirror,
+    private void generateFeature(FeatureParameters feature, WorldGenLevel world, BlockPos pos, Rotation rotation, Mirror mirror,
             Random random, int depth) {
-        final Template template = templateManager.get(feature.location);
+        final StructureTemplate template = templateManager.get(feature.location);
         if (template != null) {
-            final PlacementSettings settings = new PlacementSettings();
+            final StructurePlaceSettings settings = new StructurePlaceSettings();
             settings.setRotation(rotation);
 
             // todo: child mirroring needs to be in place for this to work properly
@@ -197,7 +197,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
 
             if (feature.integrityMin < 1) {
                 settings.addProcessor(
-                        new IntegrityProcessor(random.nextFloat() * (feature.integrityMax - feature.integrityMin) + feature.integrityMin));
+                        new BlockRotProcessor(random.nextFloat() * (feature.integrityMax - feature.integrityMin) + feature.integrityMin));
             }
             settings.addProcessor(new ForgedContainerProcessor());
             settings.addProcessor(new ForgedCrateProcessor());
@@ -217,7 +217,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
         }
     }
 
-    private void generateChildren(FeatureParameters feature, ISeedReader world, BlockPos pos, Rotation rotation, Mirror mirror,
+    private void generateChildren(FeatureParameters feature, WorldGenLevel world, BlockPos pos, Rotation rotation, Mirror mirror,
             Random random, int depth) {
         Arrays.stream(feature.children)
                 .filter(child -> child.chance == 1 || random.nextFloat() < child.chance)
@@ -228,18 +228,18 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
 
                     if (selectedFeature != null) {
                         Rotation childRotation = rotation.getRotated(RotationHelper.rotationFromFacing(child.facing));
-                        PlacementSettings offsetPlacement = new PlacementSettings()
+                        StructurePlaceSettings offsetPlacement = new StructurePlaceSettings()
                                 .setMirror(mirror)
                                 .setRotation(rotation);
-                        PlacementSettings originPlacement = new PlacementSettings()
+                        StructurePlaceSettings originPlacement = new StructurePlaceSettings()
                                 .setMirror(mirror)
                                 .setRotation(childRotation);
 
                         // todo: custom child rotation offsetting, keep around until builtin func proves to work
                         // BlockPos childPos = child.offset.rotate(rotation).subtract(selectedFeature.origin.rotate(childRotation));
                         // childPos = childPos.add(pos);
-                        BlockPos childPos = Template.calculateRelativePosition(offsetPlacement, child.offset)
-                                .subtract(Template.calculateRelativePosition(originPlacement, selectedFeature.origin))
+                        BlockPos childPos = StructureTemplate.calculateRelativePosition(offsetPlacement, child.offset)
+                                .subtract(StructureTemplate.calculateRelativePosition(originPlacement, selectedFeature.origin))
                                 .offset(pos);
 
                         generateFeature(selectedFeature, world, childPos, childRotation, mirror, random, depth + 1);
@@ -247,7 +247,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
                 });
     }
 
-    private BlockPos adjustRootPosition(Template template, BlockPos blockPos, Rotation rotation) {
+    private BlockPos adjustRootPosition(StructureTemplate template, BlockPos blockPos, Rotation rotation) {
         BlockPos size = template.getSize();
         size = size.rotate(rotation);
         BlockPos offset = new BlockPos(16 - Math.abs(size.getX()) / 2, 0, 16 - Math.abs(size.getZ()) / 2);
@@ -262,29 +262,29 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
      * @param settings Placement settings
      * @param random Rand
      */
-    private void generateLoot(FeatureParameters feature, ISeedReader world, BlockPos pos, PlacementSettings settings, Random random) {
+    private void generateLoot(FeatureParameters feature, WorldGenLevel world, BlockPos pos, StructurePlaceSettings settings, Random random) {
         Arrays.stream(feature.loot).forEach(loot ->
-                addLoot(loot.table, world, Template.calculateRelativePosition(settings, loot.position).offset(pos), random));
+                addLoot(loot.table, world, StructureTemplate.calculateRelativePosition(settings, loot.position).offset(pos), random));
     }
 
-    private void addLoot(ResourceLocation lootLocation, ISeedReader world, BlockPos pos, Random random) {
-        TileEntity tileEntity = world.getBlockEntity(pos);
+    private void addLoot(ResourceLocation lootLocation, WorldGenLevel world, BlockPos pos, Random random) {
+        BlockEntity tileEntity = world.getBlockEntity(pos);
 
-        ServerWorld serverWorld = world instanceof WorldGenRegion ? world.getLevel() : ((ServerWorld) world);
+        ServerLevel serverWorld = world instanceof WorldGenRegion ? world.getLevel() : ((ServerLevel) world);
 
-        if (tileEntity instanceof LockableLootTileEntity) {
-            ((LockableLootTileEntity) tileEntity).setLootTable(lootLocation, random.nextLong());
-        } else if (tileEntity instanceof IInventory) {
+        if (tileEntity instanceof RandomizableContainerBlockEntity) {
+            ((RandomizableContainerBlockEntity) tileEntity).setLootTable(lootLocation, random.nextLong());
+        } else if (tileEntity instanceof Container) {
             LootTable lootTable = serverWorld.getServer().getLootTables().get(lootLocation);
             LootContext.Builder builder = new LootContext.Builder(serverWorld);
 
-            lootTable.fill((IInventory) tileEntity, builder.create(LootParameterSets.EMPTY));
+            lootTable.fill((Container) tileEntity, builder.create(LootContextParamSets.EMPTY));
         } else if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
                 LootTable lootTable = serverWorld.getServer().getLootTables().get(lootLocation);
                 LootContext.Builder builder = new LootContext.Builder(serverWorld);
 
-                lootTable.fill(new ItemHandlerWrapper(handler), builder.create(LootParameterSets.EMPTY));
+                lootTable.fill(new ItemHandlerWrapper(handler), builder.create(LootContextParamSets.EMPTY));
             });
         }
     }

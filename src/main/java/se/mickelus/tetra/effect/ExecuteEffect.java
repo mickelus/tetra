@@ -1,20 +1,20 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.FoodStats;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.food.FoodData;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
@@ -31,11 +31,11 @@ public class ExecuteEffect extends ChargedAbilityEffect {
     public static final ExecuteEffect instance = new ExecuteEffect();
 
     ExecuteEffect() {
-        super(20, 0.5f, 40, 8, ItemEffect.execute, TargetRequirement.entity, UseAction.SPEAR, "raised");
+        super(20, 0.5f, 40, 8, ItemEffect.execute, TargetRequirement.entity, UseAnim.SPEAR, "raised");
     }
 
     @Override
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
+    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
         if (!target.level.isClientSide) {
             AbilityUseResult result;
             if (isDefensive(item, itemStack, hand)) {
@@ -60,10 +60,10 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    private AbilityUseResult regularExecute(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks) {
+    private AbilityUseResult regularExecute(Player attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks) {
         long harmfulCount = target.getActiveEffects().stream()
-                .filter(effect -> effect.getEffect().getCategory() == EffectType.HARMFUL)
-                .mapToInt(EffectInstance::getAmplifier)
+                .filter(effect -> effect.getEffect().getCategory() == MobEffectCategory.HARMFUL)
+                .mapToInt(MobEffectInstance::getAmplifier)
                 .map(amp -> amp + 1)
                 .sum();
 
@@ -71,7 +71,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             harmfulCount++;
         }
 
-        float missingHealth = MathHelper.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
+        float missingHealth = Mth.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.execute);
 
         double damageMultiplier = missingHealth + harmfulCount * efficiency / 100;
@@ -94,7 +94,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
         int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
         if (overextendLevel > 0) {
-            FoodStats foodStats = attacker.getFoodData();
+            FoodData foodStats = attacker.getFoodData();
             float exhaustion = Math.min(40, foodStats.getFoodLevel() + foodStats.getSaturationLevel());
             damageMultiplier *= 1 + overextendLevel * exhaustion * 0.25 / 100;
             attacker.causeFoodExhaustion(exhaustion); // 4 exhaustion per food/saturation so this should drain 1/4th
@@ -111,7 +111,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
             if (momentumLevel > 0) {
                 int duration = (int) (momentumLevel * damageMultiplier * 20);
-                target.addEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                target.addEffect(new MobEffectInstance(StunPotionEffect.instance, duration, 0, false, false));
             }
 
             int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
@@ -121,7 +121,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
                 int duration = (int) (Math.min(200, item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration) * maxHealth) * 20);
 
                 if (amplifier >= 0 && duration > 0) {
-                    attacker.addEffect(new EffectInstance(SmallStrengthPotionEffect.instance, duration, amplifier, false, true));
+                    attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, duration, amplifier, false, true));
                 }
             }
         }
@@ -129,11 +129,11 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         return result;
     }
 
-    private void echoExecute(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
+    private void echoExecute(Player attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
         EchoHelper.echo(attacker, 100, () -> {
             long harmfulCount = target.getActiveEffects().stream()
-                    .filter(effect -> effect.getEffect().getCategory() == EffectType.HARMFUL)
-                    .mapToInt(EffectInstance::getAmplifier)
+                    .filter(effect -> effect.getEffect().getCategory() == MobEffectCategory.HARMFUL)
+                    .mapToInt(MobEffectInstance::getAmplifier)
                     .map(amp -> amp + 1)
                     .sum();
 
@@ -141,7 +141,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
                 harmfulCount++;
             }
 
-            float missingHealth = MathHelper.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
+            float missingHealth = Mth.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
             double damageMultiplier = missingHealth + harmfulCount;
 
             if (damageMultiplier > 0) {
@@ -151,7 +151,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         });
     }
 
-    private AbilityUseResult defensiveExecute(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
+    private AbilityUseResult defensiveExecute(Player attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
         boolean targetFullHealth = target.getMaxHealth() == target.getHealth();
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) / 100f;
 
@@ -163,20 +163,20 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
         if (result != AbilityUseResult.fail) {
             int amp = Optional.ofNullable(target.getEffect(SeveredPotionEffect.instance))
-                    .map(EffectInstance::getAmplifier)
+                    .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
             amp += targetFullHealth ? 2 : 1;
             amp = Math.min(amp, 2);
 
-            target.addEffect(new EffectInstance(SeveredPotionEffect.instance, 1200, amp, false, false));
+            target.addEffect(new MobEffectInstance(SeveredPotionEffect.instance, 1200, amp, false, false));
         }
 
         return result;
     }
 
-    private double getRevengeMultiplier(PlayerEntity player, ItemModularHandheld item, ItemStack itemStack) {
+    private double getRevengeMultiplier(Player player, ItemModularHandheld item, ItemStack itemStack) {
         int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
-        if (revengeLevel > 0 && (player.getActiveEffects().stream().anyMatch(effect -> effect.getEffect().getCategory() == EffectType.HARMFUL)
+        if (revengeLevel > 0 && (player.getActiveEffects().stream().anyMatch(effect -> effect.getEffect().getCategory() == MobEffectCategory.HARMFUL)
                 || player.isOnFire())) {
             return 1 + revengeLevel / 100d;
         }
@@ -184,17 +184,17 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         return 0;
     }
 
-    private void playEffects(boolean isSuccess, LivingEntity target, Vector3d hitVec) {
+    private void playEffects(boolean isSuccess, LivingEntity target, Vec3 hitVec) {
         if (isSuccess) {
-            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 1, 0.8f);
 
             Random rand = target.getRandom();
-            CastOptional.cast(target.level, ServerWorld.class).ifPresent(world ->
-                    world.sendParticles(new RedstoneParticleData(0.6f, 0, 0, 0.8f),
+            CastOptional.cast(target.level, ServerLevel.class).ifPresent(world ->
+                    world.sendParticles(new DustParticleOptions(0.6f, 0, 0, 0.8f),
                             hitVec.x, hitVec.y, hitVec.z, 10,
                             rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, 0.1f));
         } else {
-            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundSource.PLAYERS, 1, 0.8f);
         }
     }
 }

@@ -5,11 +5,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResource;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +32,7 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
     }
 
     @Override
-    protected Map<ResourceLocation, JsonElement> prepare(IResourceManager resourceManager, IProfiler profiler) {
+    protected Map<ResourceLocation, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
         logger.debug("Reading data for {} data store...", directory);
         Map<ResourceLocation, JsonElement> map = Maps.newHashMap();
         int i = this.directory.length() + 1;
@@ -48,12 +48,12 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
             JsonArray allResources = new JsonArray();
 
             try {
-                for (IResource resource : resourceManager.getResources(fullLocation)) {
+                for (Resource resource : resourceManager.getResources(fullLocation)) {
                     try (
                             InputStream inputstream = resource.getInputStream();
                             Reader reader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8));
                     ) {
-                        JsonObject json = JSONUtils.fromJson(gson, reader, JsonObject.class);
+                        JsonObject json = GsonHelper.fromJson(gson, reader, JsonObject.class);
 
                         if (json != null) {
                             if (shouldLoad(json)) {
@@ -88,7 +88,7 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
         Map<ResourceLocation, JsonElement> splashList = data.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        entry -> JSONUtils.fromJson(gson, entry.getValue(), JsonArray.class)
+                        entry -> GsonHelper.fromJson(gson, entry.getValue(), JsonArray.class)
                 ));
 
         parseData(splashList);

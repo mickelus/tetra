@@ -1,13 +1,13 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
@@ -34,17 +34,17 @@ public class FracturedBedrockBlock extends TetraBlock {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return new FracturedBedrockTile();
     }
 
-    public static boolean canPierce(World world, BlockPos pos) {
+    public static boolean canPierce(Level world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos);
         return Blocks.BEDROCK.equals(blockState.getBlock())
                 || (SeepingBedrockBlock.instance.equals(blockState.getBlock()) && !SeepingBedrockBlock.isActive(blockState));
     }
 
-    public static void pierce(World world, BlockPos pos, int amount) {
+    public static void pierce(Level world, BlockPos pos, int amount) {
         FracturedBedrockTile tile = TileEntityOptional.from(world, pos, FracturedBedrockTile.class).orElse(null);
 
         if (tile == null && canPierce(world, pos)) {

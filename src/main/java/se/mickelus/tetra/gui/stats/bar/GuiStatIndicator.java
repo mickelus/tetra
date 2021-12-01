@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui.stats.bar;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.mgui.gui.GuiTexture;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -31,7 +31,7 @@ public class GuiStatIndicator extends GuiTexture {
      * @param improvement
      * @return true if the indicator should be displayed
      */
-    public boolean update(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public boolean update(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         double value;
         double diffValue;
 
@@ -61,7 +61,7 @@ public class GuiStatIndicator extends GuiTexture {
         return false;
     }
 
-    public boolean isActive(PlayerEntity player, ItemStack itemStack) {
+    public boolean isActive(Player player, ItemStack itemStack) {
         return statGetter.getValue(player, itemStack) > 0;
     }
 
@@ -81,15 +81,15 @@ public class GuiStatIndicator extends GuiTexture {
         return label;
     }
 
-    public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipBase(Player player, ItemStack itemStack) {
         return tooltipGetter.getTooltipBase(player, itemStack);
     }
 
-    public boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
+    public boolean hasExtendedTooltip(Player player, ItemStack itemStack) {
         return tooltipGetter.hasExtendedTooltip(player, itemStack);
     }
 
-    public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipExtension(Player player, ItemStack itemStack) {
         return tooltipGetter.getTooltipExtension(player, itemStack);
     }
 }

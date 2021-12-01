@@ -1,14 +1,14 @@
 package se.mickelus.tetra;
 
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class Tooltips {
-    public static final ITextComponent reveal = new TranslationTextComponent("item.tetra.tooltip_reveal").withStyle(TextFormatting.GRAY);
+    public static final Component reveal = new TranslatableComponent("item.tetra.tooltip_reveal").withStyle(ChatFormatting.GRAY);
 
 
-    public static final ITextComponent expand = new TranslationTextComponent("item.tetra.tooltip_expand");
-    public static final ITextComponent expanded = new TranslationTextComponent("item.tetra.tooltip_expanded");
+    public static final Component expand = new TranslatableComponent("item.tetra.tooltip_expand");
+    public static final Component expanded = new TranslatableComponent("item.tetra.tooltip_expanded");
 }

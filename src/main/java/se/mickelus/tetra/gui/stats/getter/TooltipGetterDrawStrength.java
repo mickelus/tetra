@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 
 public class TooltipGetterDrawStrength implements ITooltipGetter {
@@ -13,7 +13,7 @@ public class TooltipGetterDrawStrength implements ITooltipGetter {
     }
 
     @Override
-    public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipBase(Player player, ItemStack itemStack) {
         double drawStrength = getter.getValue(player, itemStack);
         return I18n.get("tetra.stats.draw_strength.tooltip",
                 String.format("%.1f", drawStrength),
@@ -22,12 +22,12 @@ public class TooltipGetterDrawStrength implements ITooltipGetter {
     }
 
     @Override
-    public boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
+    public boolean hasExtendedTooltip(Player player, ItemStack itemStack) {
         return true;
     }
 
     @Override
-    public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipExtension(Player player, ItemStack itemStack) {
         return I18n.get("tetra.stats.draw_strength.tooltip_extended");
     }
 }

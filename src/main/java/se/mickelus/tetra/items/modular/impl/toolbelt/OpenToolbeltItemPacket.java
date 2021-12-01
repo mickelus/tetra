@@ -1,10 +1,10 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Hand;
 import net.minecraftforge.fml.network.NetworkHooks;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
@@ -15,18 +15,18 @@ public class OpenToolbeltItemPacket extends AbstractPacket {
     public OpenToolbeltItemPacket() { }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
         if (!itemStack.isEmpty()) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) itemStack.getItem());
+            NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) itemStack.getItem());
         }
     }
 }

@@ -1,10 +1,10 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.*;
@@ -100,15 +100,15 @@ public class GuiSchematicDetail extends GuiElement {
     }
 
     public void update(UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, Map<ToolType, Integer> availableTools,
-            PlayerEntity player) {
+            Player player) {
         this.schematic = schematic;
 
         title.setString(schematic.getName());
         title.setColor(schematic.getRarity().tint);
 
         String descriptionString = schematic.getDescription(itemStack);
-        description.setString(TextFormatting.GRAY + descriptionString
-                .replace(TextFormatting.RESET.toString(), TextFormatting.RESET.toString() + TextFormatting.GRAY.toString()));
+        description.setString(ChatFormatting.GRAY + descriptionString
+                .replace(ChatFormatting.RESET.toString(), ChatFormatting.RESET.toString() + ChatFormatting.GRAY.toString()));
         descriptionTooltip = ImmutableList.of(descriptionString);
 
         materialTranslation.setVisible(schematic.getNumMaterialSlots() > 0);
@@ -202,7 +202,7 @@ public class GuiSchematicDetail extends GuiElement {
         toolRequirementList.updateAvailableTools(availableTools);
     }
 
-    public void updateButton(UpgradeSchematic schematic, PlayerEntity player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
+    public void updateButton(UpgradeSchematic schematic, Player player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
             Map<ToolType, Integer> availableTools) {
         craftButton.update(schematic, player, itemStack, previewStack, materials, slot, availableTools);
     }

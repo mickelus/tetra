@@ -2,11 +2,11 @@ package se.mickelus.tetra.effect.revenge;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,8 +57,8 @@ public class RevengeTracker {
             if (enemy != null) {
                 addEnemy(entity, enemy);
 
-                if (entity instanceof ServerPlayerEntity) {
-                    TetraMod.packetHandler.sendTo(new AddRevengePacket(enemy), (ServerPlayerEntity) entity);
+                if (entity instanceof ServerPlayer) {
+                    TetraMod.packetHandler.sendTo(new AddRevengePacket(enemy), (ServerPlayer) entity);
                 } else {
                     logger.warn("Unable to sync revenge state, server entity of type player is of other heritage. This should not happen");
                 }
@@ -71,7 +71,7 @@ public class RevengeTracker {
      * @param entity
      * @param enemy
      */
-    public static void removeEnemySynced(ServerPlayerEntity entity, Entity enemy) {
+    public static void removeEnemySynced(ServerPlayer entity, Entity enemy) {
         removeEnemy(entity, enemy.getId());
         TetraMod.packetHandler.sendTo(new RemoveRevengePacket(enemy), entity);
     }

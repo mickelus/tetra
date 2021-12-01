@@ -1,15 +1,15 @@
 package se.mickelus.tetra.items.modular.impl.shield;
 
 import com.google.common.collect.Multimap;
-import net.minecraft.block.DispenserBlock;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
@@ -29,7 +29,7 @@ import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Optional;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class ModularShieldItem extends ItemModularHandheld {
     public final static String plateKey = "shield/plate";
@@ -75,7 +75,7 @@ public class ModularShieldItem extends ItemModularHandheld {
     public void clientInit() {
         super.clientInit();
 
-        ItemModelsProperties.register(this, new ResourceLocation("blocking"),
+        ItemProperties.register(this, new ResourceLocation("blocking"),
                 (itemStack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == itemStack ? 1.0F : 0.0F);
 
         MinecraftForge.EVENT_BUS.register(new BlockProgressOverlay(Minecraft.getInstance()));
@@ -103,8 +103,8 @@ public class ModularShieldItem extends ItemModularHandheld {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
-        if (slot == EquipmentSlotType.MAINHAND || slot == EquipmentSlotType.OFFHAND) {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack itemStack) {
+        if (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) {
             return getAttributeModifiersCached(itemStack);
         }
 

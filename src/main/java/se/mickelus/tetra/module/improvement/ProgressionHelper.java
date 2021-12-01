@@ -1,7 +1,7 @@
 package se.mickelus.tetra.module.improvement;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class ProgressionHelper {
     public static void showHoneToastClient(ItemStack itemStack) {

@@ -2,17 +2,17 @@ package se.mickelus.tetra.advancements;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.ConditionArrayParser;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.util.JsonOptional;
 
-public class ModuleCraftCriterion extends CriterionInstance {
+public class ModuleCraftCriterion extends AbstractCriterionTriggerInstance {
     private final ItemPredicate before;
     private final ItemPredicate after;
 
@@ -23,11 +23,11 @@ public class ModuleCraftCriterion extends CriterionInstance {
     private final String variant;
 
     private final ToolType toolType;
-    private final MinMaxBounds.IntBound toolLevel;
+    private final MinMaxBounds.Ints toolLevel;
 
     public static final GenericTrigger<ModuleCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_module", ModuleCraftCriterion::deserialize);
 
-    public ModuleCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String module, String variant, ToolType toolType, MinMaxBounds.IntBound toolLevel) {
+    public ModuleCraftCriterion(EntityPredicate.Composite playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String module, String variant, ToolType toolType, MinMaxBounds.Ints toolLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -39,7 +39,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
         this.toolLevel = toolLevel;
     }
 
-    public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schematic, String slot, String module,
+    public static void trigger(ServerPlayer player, ItemStack before, ItemStack after, String schematic, String slot, String module,
             String variant, ToolType toolType, int toolLevel) {
         trigger.fulfillCriterion(player, criterion -> criterion.test(before, after, schematic, slot, module, variant, toolType,
                 toolLevel));
@@ -82,7 +82,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
         return true;
     }
 
-    private static ModuleCraftCriterion deserialize(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+    private static ModuleCraftCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
         return new ModuleCraftCriterion(entityPredicate,
                 JsonOptional.field(json, "before")
                         .map(ItemPredicate::fromJson)
@@ -107,7 +107,7 @@ public class ModuleCraftCriterion extends CriterionInstance {
                         .map(ToolType::get)
                         .orElse(null),
                 JsonOptional.field(json, "toolLevel")
-                        .map(MinMaxBounds.IntBound::fromJson)
-                        .orElse(MinMaxBounds.IntBound.ANY));
+                        .map(MinMaxBounds.Ints::fromJson)
+                        .orElse(MinMaxBounds.Ints.ANY));
     }
 }

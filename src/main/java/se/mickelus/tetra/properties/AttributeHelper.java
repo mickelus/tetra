@@ -5,10 +5,10 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import io.netty.util.internal.ThreadLocalRandom;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.util.Mth;
 import se.mickelus.tetra.items.modular.ModularItem;
 
 import java.util.*;
@@ -210,7 +210,7 @@ public class AttributeHelper {
     }
 
     private static UUID getAttributeId(Attribute attribute, AttributeModifier.Operation operation) {
-        return attributeIdMap.computeIfAbsent(getAttributeKey(attribute, operation), k -> MathHelper.createInsecureUUID(ThreadLocalRandom.current()));
+        return attributeIdMap.computeIfAbsent(getAttributeKey(attribute, operation), k -> Mth.createInsecureUUID(ThreadLocalRandom.current()));
     }
 
     public static AttributeModifier fixIdentifiers(Attribute attribute, AttributeModifier modifier) {

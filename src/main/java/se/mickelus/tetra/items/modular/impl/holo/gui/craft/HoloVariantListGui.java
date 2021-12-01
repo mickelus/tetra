@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.mgui.gui.impl.GuiHorizontalScrollable;
@@ -54,7 +54,7 @@ public class HoloVariantListGui extends GuiElement {
     private void update() {
         groups.clearChildren();
 
-        PlayerEntity player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
 
         boolean isDevelopment = ConfigHandler.development.get();
         Map<String, List<OutcomePreview>> result = Arrays.stream(previews)

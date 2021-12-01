@@ -1,11 +1,11 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
@@ -23,14 +23,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
-public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
+public class ToolbeltGui extends AbstractContainerScreen<ToolbeltContainer> {
 
     private static ToolbeltGui instance;
 
     private GuiElement defaultGui;
     private GuiElement keybindGui;
 
-    public ToolbeltGui(ToolbeltContainer container, PlayerInventory playerInventory, ITextComponent title) {
+    public ToolbeltGui(ToolbeltContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
 
         this.imageWidth = 179;
@@ -88,7 +88,7 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         renderTooltip(matrixStack, mouseX, mouseY);
@@ -97,7 +97,7 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     }
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
@@ -107,15 +107,15 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     }
 
     @Override
-    protected void renderTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
+    protected void renderTooltip(PoseStack matrixStack, int mouseX, int mouseY) {
         super.renderTooltip(matrixStack, mouseX, mouseY);
         List<String> tooltipLines = defaultGui.getTooltipLines();
 
         if (tooltipLines != null) {
-            List<ITextComponent> textComponents = tooltipLines.stream()
+            List<Component> textComponents = tooltipLines.stream()
                     .map(line -> line.replace("\\n", "\n"))
                     .flatMap(line -> Arrays.stream(line.split("\n")))
-                    .map(StringTextComponent::new)
+                    .map(TextComponent::new)
                     .collect(Collectors.toList());
 
             GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 280, font);
@@ -123,7 +123,7 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     }
 
     @Override
-    protected void renderLabels(MatrixStack matrixStack, int x, int y) { }
+    protected void renderLabels(PoseStack matrixStack, int x, int y) { }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {

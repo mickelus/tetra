@@ -1,12 +1,12 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerLevel;
 import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
 
 import java.util.Optional;
@@ -18,16 +18,16 @@ public class SeveringEffect {
             int stackCap = (int) EffectHelper.getEffectEfficiency(itemStack, ItemEffect.severing) - 1;
 
             int currentAmplifier = Optional.ofNullable(target.getEffect(SeveredPotionEffect.instance))
-                    .map(EffectInstance::getAmplifier)
+                    .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
 
-            target.addEffect(new EffectInstance(SeveredPotionEffect.instance, 1200, Math.min(currentAmplifier + 1, stackCap), false, false));
+            target.addEffect(new MobEffectInstance(SeveredPotionEffect.instance, 1200, Math.min(currentAmplifier + 1, stackCap), false, false));
 
             if (!target.level.isClientSide) {
                 Random rand = target.getRandom();
                 target.getCommandSenderWorld().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.PLAYER_ATTACK_STRONG,
-                        SoundCategory.PLAYERS, 0.8f, 0.9f);
-                ((ServerWorld) target.getCommandSenderWorld()).sendParticles(new RedstoneParticleData(0.5f, 0, 0, 0.5f),
+                        SoundSource.PLAYERS, 0.8f, 0.9f);
+                ((ServerLevel) target.getCommandSenderWorld()).sendParticles(new DustParticleOptions(0.5f, 0, 0, 0.5f),
                         target.getX() + target.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
                         target.getY() + target.getBbHeight() * (0.2 + rand.nextGaussian() * 0.4),
                         target.getZ() + target.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),

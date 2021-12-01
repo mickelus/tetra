@@ -1,10 +1,10 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
 import se.mickelus.mgui.gui.GuiRoot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
@@ -52,14 +52,14 @@ public class OverlayGuiToolbelt extends GuiRoot {
     @Override
     public void draw() {
         if (isVisible()) {
-            MainWindow window = mc.getWindow();
+            Window window = mc.getWindow();
             int width = window.getGuiScaledWidth();
             int height = window.getGuiScaledHeight();
 
             int mouseX = (int)(mc.mouseHandler.xpos() * window.getGuiScaledWidth() / window.getScreenWidth());
             int mouseY = (int)(mc.mouseHandler.ypos() * window.getGuiScaledHeight() / window.getScreenHeight());
 
-            this.drawChildren(new MatrixStack(), width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
+            this.drawChildren(new PoseStack(), width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
         }
     }
 
@@ -98,22 +98,22 @@ public class OverlayGuiToolbelt extends GuiRoot {
         return -1;
     }
 
-    public Hand getFocusHand() {
-        Hand quickslotHand = quickslotGroup.getHand();
+    public InteractionHand getFocusHand() {
+        InteractionHand quickslotHand = quickslotGroup.getHand();
         if (quickslotHand != null) {
             return quickslotHand;
         }
 
-        Hand potionHand = potionGroup.getHand();
+        InteractionHand potionHand = potionGroup.getHand();
         if (potionHand != null) {
             return potionHand;
         }
 
-        Hand quiverHand = quiverGroup.getHand();
+        InteractionHand quiverHand = quiverGroup.getHand();
         if (quiverHand != null) {
             return quiverHand;
         }
 
-        return Hand.OFF_HAND;
+        return InteractionHand.OFF_HAND;
     }
 }

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.salvage;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;
@@ -19,10 +19,10 @@ public class InteractiveToolGui extends GuiElement {
     private ToolType toolType;
     private int toolLevel;
 
-    private PlayerEntity player;
+    private Player player;
     private int currentSlot;
 
-    public InteractiveToolGui(int x, int y, ToolType toolType, int toolLevel, PlayerEntity player) {
+    public InteractiveToolGui(int x, int y, ToolType toolType, int toolLevel, Player player) {
         super(x, y, 16, 16);
         opacity = 0;
 
@@ -72,7 +72,7 @@ public class InteractiveToolGui extends GuiElement {
     }
 
     @Override
-    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (player.inventory.selected != currentSlot) {
             updateTint();
             currentSlot = player.inventory.selected;

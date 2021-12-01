@@ -1,7 +1,7 @@
 package se.mickelus.tetra.module.schematic;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -89,7 +89,7 @@ public interface UpgradeSchematic {
      * @param targetStack The target itemstack for the schematic
      * @return true if it should be visible, otherwise false
      */
-    public default boolean isVisibleForPlayer(PlayerEntity player, @Nullable WorkbenchTile tile, ItemStack targetStack) {
+    public default boolean isVisibleForPlayer(Player player, @Nullable WorkbenchTile tile, ItemStack targetStack) {
         return true;
     }
 
@@ -102,10 +102,10 @@ public interface UpgradeSchematic {
      * @param availableTools The tools that are available for use
      * @return
      */
-    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools);
+    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools);
 
-    public boolean isIntegrityViolation(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot);
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player);
+    public boolean isIntegrityViolation(Player player, ItemStack itemStack, ItemStack[] materials, String slot);
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, Player player);
 
     public boolean checkTools(final ItemStack targetStack, final ItemStack[] materials, Map<ToolType, Integer> availableTools);
     public Map<ToolType, Integer> getRequiredToolLevels(final ItemStack targetStack, final ItemStack[] materials);

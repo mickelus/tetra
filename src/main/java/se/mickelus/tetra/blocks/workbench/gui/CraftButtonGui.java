@@ -1,9 +1,9 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiClickable;
@@ -47,7 +47,7 @@ public class CraftButtonGui extends GuiClickable {
         return enabled && super.onMouseClick(x, y, button);
     }
 
-    public void update(UpgradeSchematic schematic, PlayerEntity player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
+    public void update(UpgradeSchematic schematic, Player player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
             Map<ToolType, Integer> availableTools) {
         enabled = schematic.canApplyUpgrade(player, itemStack, materials, slot, availableTools);
         tooltip = null;
@@ -62,7 +62,7 @@ public class CraftButtonGui extends GuiClickable {
 
                 if (!destabilizationChance.isEmpty()) {
                     backdropColor = GuiColors.destabilized;
-                    tooltip = TextFormatting.GRAY + I18n.get("tetra.workbench.schematic_detail.destabilize_tooltip") + "\n";
+                    tooltip = ChatFormatting.GRAY + I18n.get("tetra.workbench.schematic_detail.destabilize_tooltip") + "\n";
                     tooltip += String.join("\n", destabilizationChance);
                 }
             } else {
@@ -113,7 +113,7 @@ public class CraftButtonGui extends GuiClickable {
                 .orElseGet(Stream::empty)
                 .filter(Objects::nonNull)
                 .filter(module -> module.getMagicCapacity(itemStack) < 0)
-                .map(module -> String.format("  %s%s: %s%.0f%%", TextFormatting.WHITE, module.getName(itemStack), TextFormatting.YELLOW,
+                .map(module -> String.format("  %s%s: %s%.0f%%", ChatFormatting.WHITE, module.getName(itemStack), ChatFormatting.YELLOW,
                         module.getDestabilizationChance(itemStack, severity) * 100))
                 .collect(Collectors.toList());
     }

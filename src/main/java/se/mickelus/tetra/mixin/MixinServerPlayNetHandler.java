@@ -1,7 +1,7 @@
 package se.mickelus.tetra.mixin;
 
-import net.minecraft.network.play.ServerPlayNetHandler;
-import net.minecraft.network.play.client.CPlayerPacket;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.potion.Effects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
@@ -11,18 +11,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.SuspendPotionEffect;
 
-@Mixin(ServerPlayNetHandler.class)
+@Mixin(ServerGamePacketListenerImpl.class)
 public abstract class MixinServerPlayNetHandler {
 
     @Inject(at = @At("TAIL"), method = "processPlayer")
-    private void processPlayer(CPlayerPacket packet, CallbackInfo callback) {
+    private void processPlayer(ServerboundMovePlayerPacket packet, CallbackInfo callback) {
         if (getInstance().player.hasEffect(SuspendPotionEffect.instance)) {
             setFloating(false);
         }
     }
 
-    private ServerPlayNetHandler getInstance() {
-        return ((ServerPlayNetHandler) (Object) this);
+    private ServerGamePacketListenerImpl getInstance() {
+        return ((ServerGamePacketListenerImpl) (Object) this);
     }
 
     @Accessor

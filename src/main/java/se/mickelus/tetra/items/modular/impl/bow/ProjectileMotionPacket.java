@@ -1,9 +1,9 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.network.AbstractPacket;
 
 import java.util.Optional;
@@ -16,17 +16,17 @@ public class ProjectileMotionPacket extends AbstractPacket {
 
     public ProjectileMotionPacket() {}
 
-    public ProjectileMotionPacket(ProjectileEntity target) {
+    public ProjectileMotionPacket(Projectile target) {
         entityId = target.getId();
 
-        Vector3d motion = target.getDeltaMovement();
+        Vec3 motion = target.getDeltaMovement();
         motionX = (float) motion.x;
         motionY = (float) motion.y;
         motionZ = (float) motion.z;
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         buffer.writeVarInt(entityId);
         buffer.writeFloat(motionX);
         buffer.writeFloat(motionY);
@@ -34,7 +34,7 @@ public class ProjectileMotionPacket extends AbstractPacket {
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         entityId = buffer.readVarInt();
         motionX = buffer.readFloat();
         motionY = buffer.readFloat();
@@ -42,7 +42,7 @@ public class ProjectileMotionPacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         Optional.of(entityId)
                 .filter(id -> id != -1)
                 .map(id -> player.level.getEntity(id))

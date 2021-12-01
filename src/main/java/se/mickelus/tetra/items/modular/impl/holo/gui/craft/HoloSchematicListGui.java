@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.blocks.workbench.gui.GuiSchematicListItem;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.Applier;

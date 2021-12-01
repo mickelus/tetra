@@ -2,10 +2,10 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
@@ -81,17 +81,17 @@ public class HoloMaterialTranslation extends GuiElement {
 
             if (!primary.isEmpty()) {
                 result.add(" ");
-                result.add(TextFormatting.WHITE + I18n.get("tetra.holo.craft.materials.stat.primary") + ":");
+                result.add(ChatFormatting.WHITE + I18n.get("tetra.holo.craft.materials.stat.primary") + ":");
                 result.addAll(primary);
             }
             if (!secondary.isEmpty()) {
                 result.add(" ");
-                result.add(TextFormatting.WHITE + I18n.get("tetra.holo.craft.materials.stat.secondary") + ":");
+                result.add(ChatFormatting.WHITE + I18n.get("tetra.holo.craft.materials.stat.secondary") + ":");
                 result.addAll(secondary);
             }
             if (!tertiary.isEmpty()) {
                 result.add(" ");
-                result.add(TextFormatting.WHITE + I18n.get("tetra.holo.craft.materials.stat.tertiary") + ":");
+                result.add(ChatFormatting.WHITE + I18n.get("tetra.holo.craft.materials.stat.tertiary") + ":");
                 result.addAll(tertiary);
             }
 
@@ -111,7 +111,7 @@ public class HoloMaterialTranslation extends GuiElement {
 
     private String getStatLine(String unlocalizedStat, int value, String unlocalizedSuffix) {
         if (I18n.exists(unlocalizedStat)) {
-            StringBuilder line = new StringBuilder(TextFormatting.GRAY.toString());
+            StringBuilder line = new StringBuilder(ChatFormatting.GRAY.toString());
 
             line.append(I18n.get(unlocalizedStat));
 
@@ -121,10 +121,10 @@ public class HoloMaterialTranslation extends GuiElement {
             }
 
             if (value < 0) {
-                line.append(TextFormatting.RED);
+                line.append(ChatFormatting.RED);
                 line.append(" -");
             } else {
-                line.append(TextFormatting.GREEN);
+                line.append(ChatFormatting.GREEN);
                 line.append(" +");
             }
 

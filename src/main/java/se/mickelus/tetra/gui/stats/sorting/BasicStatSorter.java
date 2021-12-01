@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui.stats.sorting;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.StatFormat;
 
@@ -43,7 +43,7 @@ public class BasicStatSorter implements IStatSorter {
     }
 
     @Override
-    public <T> Comparator<T> compare(PlayerEntity player, Function<? super T, ItemStack> keyExtractor) {
+    public <T> Comparator<T> compare(Player player, Function<? super T, ItemStack> keyExtractor) {
         if (inverted) {
             return Comparator.comparing(a -> getter.getValue(player, keyExtractor.apply(a)));
         }
@@ -52,12 +52,12 @@ public class BasicStatSorter implements IStatSorter {
 
     @Override
     @Nullable
-    public String getValue(PlayerEntity player, ItemStack itemStack) {
+    public String getValue(Player player, ItemStack itemStack) {
         return statFormat.get(getter.getValue(player, itemStack));
     }
 
     @Override
-    public int getWeight(PlayerEntity player, ItemStack itemStack) {
+    public int getWeight(Player player, ItemStack itemStack) {
         return getter.shouldShow(player, itemStack, itemStack) ? 1 : 0;
     }
 }

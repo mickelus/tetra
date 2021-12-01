@@ -1,8 +1,8 @@
 package se.mickelus.tetra.data.deserializer;
 
 import com.google.gson.*;
-import net.minecraft.block.Block;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;

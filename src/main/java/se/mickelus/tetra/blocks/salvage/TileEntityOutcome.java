@@ -1,16 +1,16 @@
 package se.mickelus.tetra.blocks.salvage;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import java.util.function.Function;
 
-public class TileEntityOutcome<T extends TileEntity> implements InteractionOutcome {
+public class TileEntityOutcome<T extends BlockEntity> implements InteractionOutcome {
 
     Class<T> tileEntityClass;
     Function<T, Boolean> outcome;
@@ -21,8 +21,8 @@ public class TileEntityOutcome<T extends TileEntity> implements InteractionOutco
     }
 
     @Override
-    public boolean apply(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
-        TileEntity tileEntity = world.getBlockEntity(pos);
+    public boolean apply(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction hitFace) {
+        BlockEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntityClass.isInstance(tileEntity)) {
             boolean result = outcome.apply(tileEntityClass.cast(tileEntity));
             world.sendBlockUpdated(pos, blockState, blockState, 3);

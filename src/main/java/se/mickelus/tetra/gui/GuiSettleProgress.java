@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
@@ -48,14 +48,14 @@ public class GuiSettleProgress extends GuiElement {
         boolean isGain = module.getIntegrityGain(itemStack) > 0;
 
         if (isArrested) {
-            labelString.setString(TextFormatting.RED + I18n.get("tetra.improvement.arrested.name"));
+            labelString.setString(ChatFormatting.RED + I18n.get("tetra.improvement.arrested.name"));
             labelString.setAttachment(GuiAttachment.topCenter);
             tooltip = Collections.singletonList(I18n.get("tetra.improvement.arrested.description"));
 
             valueString.setString("");
             bar.setValue(0, 0);
         } else if (fullySettled) {
-            labelString.setString(TextFormatting.GREEN + I18n.get("item.tetra.modular.settle_full.label"));
+            labelString.setString(ChatFormatting.GREEN + I18n.get("item.tetra.modular.settle_full.label"));
             labelString.setAttachment(GuiAttachment.topCenter);
 
             if (isGain) {

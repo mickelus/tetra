@@ -1,20 +1,20 @@
 package se.mickelus.tetra.blocks.workbench;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -33,7 +33,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInteractiveBlock {
     public AbstractWorkbenchBlock(Properties properties) {
@@ -41,22 +41,22 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ActionResultType interactionResult = BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
-        if (interactionResult != ActionResultType.PASS || hand == Hand.OFF_HAND) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        InteractionResult interactionResult = BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
+        if (interactionResult != InteractionResult.PASS || hand == InteractionHand.OFF_HAND) {
             return interactionResult;
         }
 
         if (!world.isClientSide) {
             TileEntityOptional.from(world, pos, WorkbenchTile.class)
-                    .ifPresent(te -> NetworkHooks.openGui((ServerPlayerEntity) player, te, pos));
+                    .ifPresent(te -> NetworkHooks.openGui((ServerPlayer) player, te, pos));
         }
 
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
             TileEntityOptional.from(world, pos, WorkbenchTile.class)
                     .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
@@ -65,17 +65,17 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
                         for (int i = 0; i < cap.getSlots(); i++) {
                             ItemStack itemStack = cap.getStackInSlot(i);
                             if (!itemStack.isEmpty()) {
-                                InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack.copy());
+                                Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack.copy());
                             }
                         }
                     });
 
-            TileEntityOptional.from(world, pos, WorkbenchTile.class).ifPresent(TileEntity::setRemoved);
+            TileEntityOptional.from(world, pos, WorkbenchTile.class).ifPresent(BlockEntity::setRemoved);
         }
     }
 
     @Override
-    public Collection<ToolType> getTools(World world, BlockPos pos, BlockState blockState) {
+    public Collection<ToolType> getTools(Level world, BlockPos pos, BlockState blockState) {
         return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
                 .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
@@ -86,7 +86,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
     }
 
     @Override
-    public int getToolLevel(World world, BlockPos pos, BlockState blockState, ToolType toolType) {
+    public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolType toolType) {
         return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
                 .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
@@ -96,7 +96,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
                 .orElse(-1);
     }
 
-    private Pair<BlockPos, BlockState> getProvidingBlockstate(World world, BlockPos pos, BlockState blockState, ItemStack targetStack,
+    private Pair<BlockPos, BlockState> getProvidingBlockstate(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack,
             ToolType toolType, int level) {
         return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
@@ -108,7 +108,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
     }
 
     @Override
-    public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing, PlayerEntity player,
+    public ItemStack onCraftConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing, Player player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         Pair<BlockPos, BlockState> provider = getProvidingBlockstate(world, pos, blockState, targetStack, requiredTool, requiredLevel);
 
@@ -122,7 +122,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
     }
 
     @Override
-    public ItemStack onActionConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+    public ItemStack onActionConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         Pair<BlockPos, BlockState> provider = getProvidingBlockstate(world, pos, blockState, targetStack, requiredTool, requiredLevel);
 
@@ -136,7 +136,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
     }
 
     @Override
-    public ResourceLocation[] getSchematics(World world, BlockPos pos, BlockState blockState) {
+    public ResourceLocation[] getSchematics(Level world, BlockPos pos, BlockState blockState) {
         return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
                 .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
@@ -147,7 +147,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
     }
 
     @Override
-    public ResourceLocation[] getCraftingEffects(World world, BlockPos pos, BlockState blockState) {
+    public ResourceLocation[] getCraftingEffects(Level world, BlockPos pos, BlockState blockState) {
         return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
                 .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
@@ -158,7 +158,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
         if (face == Direction.UP) {
             return TileEntityOptional.from(world, pos, WorkbenchTile.class)
                     .map(WorkbenchTile::getInteractions)
@@ -175,7 +175,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+    public BlockEntity createTileEntity(final BlockState state, final BlockGetter world) {
         return new WorkbenchTile();
     }
 }

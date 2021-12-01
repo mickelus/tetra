@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
@@ -71,7 +71,7 @@ public class PotionsInventory extends ToolbeltInventory {
     }
 
     @Override
-    public void emptyOverflowSlots(PlayerEntity player) {
+    public void emptyOverflowSlots(Player player) {
         for (int i = getContainerSize(); i < maxSize; i++) {
             ItemStack itemStack = getItem(i);
             while (!itemStack.isEmpty()) {

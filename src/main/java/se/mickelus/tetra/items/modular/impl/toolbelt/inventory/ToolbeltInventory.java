@@ -1,15 +1,15 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class ToolbeltInventory implements IInventory {
+public class ToolbeltInventory implements Container {
     protected static final String slotKey = "slot";
 
     protected ItemStack toolbeltItemStack;
@@ -75,11 +75,11 @@ public class ToolbeltInventory implements IInventory {
     }
 
 
-    public void readFromNBT(CompoundNBT compound) {
-        ListNBT items = compound.getList(inventoryKey, Constants.NBT.TAG_COMPOUND);
+    public void readFromNBT(CompoundTag compound) {
+        ListTag items = compound.getList(inventoryKey, Constants.NBT.TAG_COMPOUND);
 
         for (int i = 0; i < items.size(); i++) {
-            CompoundNBT itemTag = items.getCompound(i);
+            CompoundTag itemTag = items.getCompound(i);
             int slot = itemTag.getByte(slotKey) & 255;
 
             if (0 <= slot && slot < maxSize) {
@@ -88,12 +88,12 @@ public class ToolbeltInventory implements IInventory {
         }
     }
 
-    public void writeToNBT(CompoundNBT tagcompound) {
-        ListNBT items = new ListNBT();
+    public void writeToNBT(CompoundTag tagcompound) {
+        ListTag items = new ListTag();
 
         for (int i = 0; i < maxSize; i++) {
             if (getItem(i) != null) {
-                CompoundNBT compound = new CompoundNBT();
+                CompoundTag compound = new CompoundTag();
                 getItem(i).save(compound);
                 compound.putByte(slotKey, (byte)i);
                 items.add(compound);
@@ -125,7 +125,7 @@ public class ToolbeltInventory implements IInventory {
 
     @Override
     public ItemStack removeItem(int index, int count) {
-        ItemStack itemstack = ItemStackHelper.removeItem(this.inventoryContents, index, count);
+        ItemStack itemstack = ContainerHelper.removeItem(this.inventoryContents, index, count);
 
         if (!itemstack.isEmpty()) {
             this.setChanged();
@@ -174,15 +174,15 @@ public class ToolbeltInventory implements IInventory {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return true;
     }
 
     @Override
-    public void startOpen(PlayerEntity player) {}
+    public void startOpen(Player player) {}
 
     @Override
-    public void stopOpen(PlayerEntity player) {}
+    public void stopOpen(Player player) {}
 
     @Override
     public boolean canPlaceItem(int index, ItemStack stack) {
@@ -200,14 +200,14 @@ public class ToolbeltInventory implements IInventory {
         return itemStack;
     }
 
-    public void emptyOverflowSlots(PlayerEntity player) {
+    public void emptyOverflowSlots(Player player) {
         for (int i = getContainerSize(); i < maxSize; i++) {
             moveStackToPlayer(removeItemNoUpdate(i), player);
         }
         this.setChanged();
     }
 
-    protected void moveStackToPlayer(ItemStack itemStack, PlayerEntity player) {
+    protected void moveStackToPlayer(ItemStack itemStack, Player player) {
         if (!itemStack.isEmpty()) {
             if (!player.inventory.add(itemStack)) {
                 player.drop(itemStack, false);

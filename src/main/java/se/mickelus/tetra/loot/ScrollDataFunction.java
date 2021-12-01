@@ -3,22 +3,22 @@ package se.mickelus.tetra.loot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootFunction;
-import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.scroll.ScrollData;
 
-public class ScrollDataFunction extends LootFunction {
+public class ScrollDataFunction extends LootItemConditionalFunction {
     public static final ResourceLocation identifier = new ResourceLocation(TetraMod.MOD_ID, "scroll");
-    public static final LootFunctionType type = new LootFunctionType(new Serializer());
+    public static final LootItemFunctionType type = new LootItemFunctionType(new Serializer());
 
     private ScrollData data;
 
-    protected ScrollDataFunction(ILootCondition[] conditions, ScrollData data) {
+    protected ScrollDataFunction(LootItemCondition[] conditions, ScrollData data) {
         super(conditions);
 
         this.data = data;
@@ -31,11 +31,11 @@ public class ScrollDataFunction extends LootFunction {
     }
 
     @Override
-    public LootFunctionType getType() {
+    public LootItemFunctionType getType() {
         return type;
     }
 
-    public static class Serializer extends LootFunction.Serializer<ScrollDataFunction> {
+    public static class Serializer extends LootItemConditionalFunction.Serializer<ScrollDataFunction> {
         public void serialize(JsonObject json, ScrollDataFunction dataFunction, JsonSerializationContext context) {
             super.serialize(json, dataFunction, context);
 
@@ -43,7 +43,7 @@ public class ScrollDataFunction extends LootFunction {
         }
 
         @Override
-        public ScrollDataFunction deserialize(JsonObject json, JsonDeserializationContext context, ILootCondition[] conditions) {
+        public ScrollDataFunction deserialize(JsonObject json, JsonDeserializationContext context, LootItemCondition[] conditions) {
             return new ScrollDataFunction(conditions, ScrollData.read(json));
         }
     }

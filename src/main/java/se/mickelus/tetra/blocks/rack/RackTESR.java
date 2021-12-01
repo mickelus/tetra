@@ -1,19 +1,19 @@
 package se.mickelus.tetra.blocks.rack;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.core.Direction;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -22,17 +22,17 @@ import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
 @OnlyIn(Dist.CLIENT)
-public class RackTESR extends TileEntityRenderer<RackTile> {
+public class RackTESR extends BlockEntityRenderer<RackTile> {
 
     private ItemRenderer itemRenderer;
 
-    public RackTESR(TileEntityRendererDispatcher dispatcher) {
+    public RackTESR(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
         itemRenderer = Minecraft.getInstance().getItemRenderer();
     }
 
     @Override
-    public void render(RackTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void render(RackTile tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
             Direction direction = tile.getBlockState().getValue(RackBlock.facingProp);
             Direction itemDirection = direction.getCounterClockWise();
@@ -54,11 +54,11 @@ public class RackTESR extends TileEntityRenderer<RackTile> {
         });
     }
 
-    private void renderItemStack(World world, ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer buffer,
+    private void renderItemStack(Level world, ItemStack itemStack, PoseStack matrixStack, MultiBufferSource buffer,
             int combinedLight, int combinedOverlay) {
         if (itemStack != null && !itemStack.isEmpty()) {
 
-            IBakedModel model = itemRenderer.getModel(itemStack, world, null);
+            BakedModel model = itemRenderer.getModel(itemStack, world, null);
 
             matrixStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
@@ -78,7 +78,7 @@ public class RackTESR extends TileEntityRenderer<RackTile> {
                 matrixStack.mulPose(Vector3f.ZP.rotationDegrees(-45.0F));
             }
 
-            Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay,
+            Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemTransforms.TransformType.FIXED, combinedLight, combinedOverlay,
                     matrixStack, buffer);
 
         }

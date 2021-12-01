@@ -2,27 +2,27 @@ package se.mickelus.tetra.effect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.level.block.state.BlockState;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.DisplayEffectsScreen;
+import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPlaySoundEventPacket;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.protocol.game.ClientboundLevelEventPacket;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.GameType;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -38,11 +38,11 @@ public class EffectHelper {
             .expireAfterWrite(10, TimeUnit.SECONDS)
             .build();
 
-    public static void setCooledAttackStrength(PlayerEntity player, float strength) {
+    public static void setCooledAttackStrength(Player player, float strength) {
         cooledAttackStrengthCache.put(player.getUUID(), strength);
     }
 
-    public static float getCooledAttackStrength(PlayerEntity player) {
+    public static float getCooledAttackStrength(Player player) {
         try {
             return cooledAttackStrengthCache.get(player.getUUID(), () -> 0f);
         } catch (ExecutionException e) {
@@ -91,16 +91,16 @@ public class EffectHelper {
      * @param harvest true if the player is ment to harvest the block, false if it should just magically disappear
      * @return True if the player was allowed to break the block, otherwise false
      */
-    public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState,
+    public static boolean breakBlock(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState,
             boolean harvest) {
         if (!world.isClientSide) {
-            ServerWorld serverWorld = (ServerWorld) world;
-            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) breakingPlayer;
+            ServerLevel serverWorld = (ServerLevel) world;
+            ServerPlayer serverPlayer = (ServerPlayer) breakingPlayer;
             GameType gameType = serverPlayer.gameMode.getGameModeForPlayer();
 
             int exp = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, gameType, serverPlayer, pos);
 
-            TileEntity tileEntity = world.getBlockEntity(pos);
+            BlockEntity tileEntity = world.getBlockEntity(pos);
 
             if (exp != -1) {
                 boolean canRemove = !toolStack.onBlockStartBreak(pos, breakingPlayer)
@@ -136,8 +136,8 @@ public class EffectHelper {
      * @param pos the position in which the event takes place
      * @param data an integer representation of event data (e.g. Block.getStateId)
      */
-    public static void sendEventToPlayer(ServerPlayerEntity player, int type, BlockPos pos, int data) {
-        player.connection.send(new SPlaySoundEventPacket(type, pos, data, false));
+    public static void sendEventToPlayer(ServerPlayer player, int type, BlockPos pos, int data) {
+        player.connection.send(new ClientboundLevelEventPacket(type, pos, data, false));
     }
 
     /**
@@ -167,9 +167,9 @@ public class EffectHelper {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderInventoryEffectTooltip(DisplayEffectsScreen<?> gui, MatrixStack mStack, int x, int y, Supplier<ITextComponent> tooltip) {
+    public static void renderInventoryEffectTooltip(EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, Supplier<Component> tooltip) {
         Minecraft mc = Minecraft.getInstance();
-        MainWindow window = mc.getWindow();
+        Window window = mc.getWindow();
 
         int width = window.getGuiScaledWidth();
         int height = window.getGuiScaledHeight();

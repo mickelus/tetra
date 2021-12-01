@@ -1,8 +1,8 @@
 package se.mickelus.tetra.module;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
@@ -161,7 +161,7 @@ public class SchematicRegistry {
         return instance.schematicMap.values();
     }
 
-    public static UpgradeSchematic[] getAvailableSchematics(PlayerEntity player, WorkbenchTile tile, ItemStack itemStack) {
+    public static UpgradeSchematic[] getAvailableSchematics(Player player, WorkbenchTile tile, ItemStack itemStack) {
         return getAllSchematics().stream()
                 .filter(upgradeSchematic -> playerHasSchematic(player, tile, itemStack, upgradeSchematic))
                 .filter(upgradeSchematic -> upgradeSchematic.isApplicableForItem(itemStack))
@@ -174,7 +174,7 @@ public class SchematicRegistry {
                 .toArray(UpgradeSchematic[]::new);
     }
 
-    public static boolean playerHasSchematic(PlayerEntity player, WorkbenchTile tile, ItemStack targetStack, UpgradeSchematic schematic) {
+    public static boolean playerHasSchematic(Player player, WorkbenchTile tile, ItemStack targetStack, UpgradeSchematic schematic) {
         return schematic.isVisibleForPlayer(player, tile, targetStack);
     }
 }

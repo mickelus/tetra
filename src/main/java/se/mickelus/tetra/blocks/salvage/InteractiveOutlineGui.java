@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.salvage;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.resources.ResourceLocation;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
@@ -21,7 +21,7 @@ public class InteractiveOutlineGui extends GuiElement {
 
     private InteractiveToolGui tool;
 
-    public InteractiveOutlineGui(BlockInteraction blockInteraction, PlayerEntity player) {
+    public InteractiveOutlineGui(BlockInteraction blockInteraction, Player player) {
         super((int) blockInteraction.minX * 4, (int) blockInteraction.minY * 4,
                 (int) (blockInteraction.maxX - blockInteraction.minX) * 4,
                 (int) (blockInteraction.maxY - blockInteraction.minY) * 4);

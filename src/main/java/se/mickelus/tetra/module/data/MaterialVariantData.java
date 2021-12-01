@@ -1,6 +1,6 @@
 package se.mickelus.tetra.module.data;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import java.util.Arrays;

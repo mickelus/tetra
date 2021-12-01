@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.ItemStack;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
@@ -27,7 +27,7 @@ public class HoloVariantGroupGui extends GuiElement {
     private final KeyframeAnimation labelAnimation;
     private final KeyframeAnimation[] itemAnimations;
 
-    public HoloVariantGroupGui(int x, int y, String category, List<OutcomePreview> outcomes, int offset, IStatSorter sorter, PlayerEntity player,
+    public HoloVariantGroupGui(int x, int y, String category, List<OutcomePreview> outcomes, int offset, IStatSorter sorter, Player player,
             Consumer<OutcomePreview> onVariantHover, Consumer<OutcomePreview> onVariantBlur, Consumer<OutcomePreview> onVariantSelect) {
         super(x, y, 0, 50);
 

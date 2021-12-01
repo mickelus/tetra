@@ -1,32 +1,32 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -51,6 +51,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+
 public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBlock {
     public static final String unlocalizedName = "chthonic_extractor";
 
@@ -71,7 +78,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand))
     };
 
-    protected static final VoxelShape shape = VoxelShapes.or(
+    protected static final VoxelShape shape = Shapes.or(
             Block.box(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D),
             Block.box(6.0D, 15.0D, 6.0D, 10.0D, 16.0D, 10.0D));
 
@@ -114,22 +121,22 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     }
 
     @Override
-    public void appendHoverText(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
-        tooltip.add(new TranslationTextComponent(description).withStyle(TextFormatting.GRAY));
-        tooltip.add(new StringTextComponent(" "));
+    public void appendHoverText(final ItemStack stack, @Nullable final BlockGetter world, final List<Component> tooltip, final TooltipFlag advanced) {
+        tooltip.add(new TranslatableComponent(description).withStyle(ChatFormatting.GRAY));
+        tooltip.add(new TextComponent(" "));
 
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
-            tooltip.add(new StringTextComponent(" "));
+            tooltip.add(new TextComponent(" "));
             tooltip.add(ForgedBlockCommon.locationTooltip);
-            tooltip.add(new StringTextComponent(" "));
-            tooltip.add(new TranslationTextComponent(extendedDescription).withStyle(TextFormatting.GRAY));
+            tooltip.add(new TextComponent(" "));
+            tooltip.add(new TranslatableComponent(extendedDescription).withStyle(ChatFormatting.GRAY));
         } else {
             tooltip.add(Tooltips.expand);
         }
     }
 
-    private static boolean hit(World world, BlockPos pos, @Nullable PlayerEntity playerEntity, Hand hand) {
+    private static boolean hit(Level world, BlockPos pos, @Nullable Player playerEntity, InteractionHand hand) {
         if (ConfigHandler.enableExtractor.get()) {
             int amount = Optional.ofNullable(playerEntity)
                     .map(player -> player.getItemInHand(hand))
@@ -140,25 +147,25 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
 
             TileEntityOptional.from(world, pos, ChthonicExtractorTile.class).ifPresent(tile -> tile.damage(amount));
             FracturedBedrockBlock.pierce(world, pos.below(), amount);
-            world.playSound(playerEntity, pos, SoundEvents.NETHERITE_BLOCK_HIT, SoundCategory.PLAYERS, 0.8f, 0.5f);
+            world.playSound(playerEntity, pos, SoundEvents.NETHERITE_BLOCK_HIT, SoundSource.PLAYERS, 0.8f, 0.5f);
             return true;
         }
         return false;
     }
 
-    private static int getTier(World world, BlockPos pos) {
+    private static int getTier(Level world, BlockPos pos) {
         return TileEntityOptional.from(world, pos.below(), FracturedBedrockTile.class)
                 .map(FracturedBedrockTile::getProjectedTier)
                 .orElseGet(() -> FracturedBedrockBlock.canPierce(world, pos.below()) ? 0 : -1);
     }
 
     @Override
-    public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         TileEntityOptional.from(world, pos, ChthonicExtractorTile.class)
                 .ifPresent(tile -> tile.setDamage(stack.getDamageValue()));
     }
 
-    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         TileEntityOptional.from(world, pos, ChthonicExtractorTile.class)
                 .ifPresent(tile -> {
                     ItemStack itemStack = getItemStack(tile);
@@ -172,7 +179,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     }
 
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-        TileEntity tile = builder.getOptionalParameter(LootParameters.BLOCK_ENTITY);
+        BlockEntity tile = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (tile instanceof ChthonicExtractorTile) {
             builder = builder.withDynamicDrop(new ResourceLocation("tetra:cthtonic_drop"),
                     (context, stackConsumer) -> stackConsumer.accept(getItemStack((ChthonicExtractorTile) tile)));
@@ -198,17 +205,17 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return new ChthonicExtractorTile();
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return shape;
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
         int tier = getTier(world, pos);
 
         // todo: this could be less hacky
@@ -220,7 +227,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
     }
 }

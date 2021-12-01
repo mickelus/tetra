@@ -1,6 +1,6 @@
 package se.mickelus.tetra.module.schematic;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;

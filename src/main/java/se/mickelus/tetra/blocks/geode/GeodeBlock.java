@@ -1,22 +1,22 @@
 package se.mickelus.tetra.blocks.geode;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.registries.ObjectHolder;
@@ -26,7 +26,7 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.network.PacketHandler;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class GeodeBlock extends TetraBlock {
 
@@ -50,7 +50,7 @@ public class GeodeBlock extends TetraBlock {
         if (density > 0) {
             int size = 3;
             int maxHeight = 32;
-            OreFeatureConfig config = new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, defaultBlockState(), size);
+            OreConfiguration config = new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, defaultBlockState(), size);
             configuredFeature = Feature.ORE.configured(config)
                     .range(maxHeight)
                     .squared()
@@ -59,20 +59,20 @@ public class GeodeBlock extends TetraBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+    public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
         return Blocks.STONE.getPickBlock(state, target, world, pos, player);
     }
 
     @Override
     public void init(PacketHandler packetHandler) {
         if (configuredFeature != null) {
-            Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName), configuredFeature);
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName), configuredFeature);
         }
     }
 
     public static void registerFeature(BiomeGenerationSettingsBuilder builder) {
         if (instance.configuredFeature != null) {
-            builder.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, instance.configuredFeature);
+            builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, instance.configuredFeature);
         }
     }
 }

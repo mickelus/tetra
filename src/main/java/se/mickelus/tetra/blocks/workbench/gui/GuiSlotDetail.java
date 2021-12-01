@@ -1,10 +1,10 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiButton;
 import se.mickelus.mgui.gui.GuiElement;
@@ -117,7 +117,7 @@ public class GuiSlotDetail extends GuiElement {
         tweakControls.setVisible(tab == 2);
     }
 
-    public void onTileEntityChange(PlayerEntity player, WorkbenchTile tileEntity, ItemStack itemStack, String selectedSlot, UpgradeSchematic currentSchematic) {
+    public void onTileEntityChange(Player player, WorkbenchTile tileEntity, ItemStack itemStack, String selectedSlot, UpgradeSchematic currentSchematic) {
         ItemModule module = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, selectedSlot))
                 .orElse(null);
@@ -125,7 +125,7 @@ public class GuiSlotDetail extends GuiElement {
         if (currentSchematic == null) {
             updateSchematicList(player, tileEntity, selectedSlot);
         } else {
-            World world = tileEntity.getLevel();
+            Level world = tileEntity.getLevel();
             BlockPos pos = tileEntity.getBlockPos();
             Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, world, pos, world.getBlockState(pos));
             ItemStack[] materials = tileEntity.getMaterials();
@@ -152,7 +152,7 @@ public class GuiSlotDetail extends GuiElement {
         tabGroup.setActive(tab);
     }
 
-    public void update(PlayerEntity player, WorkbenchTile tileEntity, Map<ToolType, Integer> availableTools) {
+    public void update(Player player, WorkbenchTile tileEntity, Map<ToolType, Integer> availableTools) {
         schematicDetail.updateAvailableTools(availableTools);
 
         ItemStack currentStack = tileEntity.getTargetItemStack().copy();
@@ -166,7 +166,7 @@ public class GuiSlotDetail extends GuiElement {
         schematicDetail.updateMagicCapacity(schematic, slot, itemStack, previewStack);
     }
 
-    private void updateSchematicList(PlayerEntity player, WorkbenchTile tileEntity, String selectedSlot) {
+    private void updateSchematicList(Player player, WorkbenchTile tileEntity, String selectedSlot) {
         ItemStack targetStack = tileEntity.getTargetItemStack();
         UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, tileEntity, targetStack);
         schematics = Arrays.stream(schematics)

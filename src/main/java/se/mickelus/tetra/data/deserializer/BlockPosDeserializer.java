@@ -1,7 +1,7 @@
 package se.mickelus.tetra.data.deserializer;
 
 import com.google.gson.*;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 import java.lang.reflect.Type;
 

@@ -1,16 +1,16 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.PuncturedPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -20,11 +20,11 @@ public class PunctureEffect extends ChargedAbilityEffect {
     public static final PunctureEffect instance = new PunctureEffect();
 
     PunctureEffect() {
-        super(20, 0.5f, 40, 8, ItemEffect.puncture, TargetRequirement.entity, UseAction.SPEAR, "raised");
+        super(20, 0.5f, 40, 8, ItemEffect.puncture, TargetRequirement.entity, UseAnim.SPEAR, "raised");
     }
 
     @Override
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
+    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
         if (!attacker.level.isClientSide) {
             int armorBefore = target.getArmorValue();
             int comboPoints = ComboPoints.get(attacker);
@@ -61,7 +61,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    public AbilityUseResult performRegular(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks,
+    public AbilityUseResult performRegular(Player attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks,
             boolean isSatiated, int comboPoints) {
         int armor = target.getArmorValue();
 
@@ -94,7 +94,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
                     duration += exhilarationLevel;
                 }
 
-                target.addEffect(new EffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
+                target.addEffect(new MobEffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
             }
 
             if (!(armor < 6 || isPunctured) || reversal) {
@@ -110,7 +110,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
                     amplifier += overextendLevel;
                 }
 
-                target.addEffect(new EffectInstance(PuncturedPotionEffect.instance, duration, amplifier, false, false));
+                target.addEffect(new MobEffectInstance(PuncturedPotionEffect.instance, duration, amplifier, false, false));
             }
 
             if (!isPunctured) {
@@ -122,15 +122,15 @@ public class PunctureEffect extends ChargedAbilityEffect {
                 }
             }
 
-            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1, 0.8f);
         } else {
-            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundSource.PLAYERS, 1, 0.8f);
         }
 
         return result;
     }
 
-    public AbilityUseResult performDefensive(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
+    public AbilityUseResult performDefensive(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
         int armor = target.getArmorValue();
 
         float knockbackMultiplier = 0.3f;
@@ -143,18 +143,18 @@ public class PunctureEffect extends ChargedAbilityEffect {
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, 0.3, 0.8f, knockbackMultiplier);
 
         if (result != AbilityUseResult.fail) {
-            target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20),
+            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20),
                     item.getEffectLevel(itemStack, ItemEffect.abilityDefensive), false, true));
 
-            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.PLAYERS, 1, 0.8f);
         } else {
-            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundSource.PLAYERS, 1, 0.8f);
         }
 
         return result;
     }
 
-    public void performEcho(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks,
+    public void performEcho(Player attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks,
             boolean isSatiated, int comboPoints) {
         EchoHelper.echo(attacker, 60, () -> performRegular(attacker, item, itemStack, target, chargedTicks, isSatiated, comboPoints));
     }

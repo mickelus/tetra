@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.workbench.action;
 
 
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.module.data.ToolData;
 
 /**

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.network.AbstractPacket;
 
@@ -23,19 +23,19 @@ public class UpdateBoosterPacket extends AbstractPacket {
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         buffer.writeBoolean(active);
         buffer.writeBoolean(charged);
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         active = buffer.readBoolean();
         charged = buffer.readBoolean();
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
 
         if (!itemStack.isEmpty() && UtilBooster.canBoost(itemStack)) {

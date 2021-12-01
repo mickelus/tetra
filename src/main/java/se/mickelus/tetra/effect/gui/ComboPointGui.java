@@ -1,6 +1,6 @@
 package se.mickelus.tetra.effect.gui;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
@@ -43,7 +43,7 @@ public class ComboPointGui extends GuiElement {
         }
     }
 
-    public void update(PlayerEntity player) {
+    public void update(Player player) {
         if (ComboPoints.canSpend(player)) {
             update(ComboPoints.get(player));
         } else {

@@ -2,30 +2,30 @@ package se.mickelus.tetra.advancements;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.util.JsonOptional;
 
-public class BlockInteractionCriterion extends CriterionInstance {
+public class BlockInteractionCriterion extends AbstractCriterionTriggerInstance {
     private final PropertyMatcher after;
     private final ToolType toolType;
     private int toolLevel;
 
     public static final GenericTrigger<BlockInteractionCriterion> trigger = new GenericTrigger<>("tetra:block_interaction", BlockInteractionCriterion::deserialize);
 
-    public BlockInteractionCriterion(EntityPredicate.AndPredicate playerCondition, PropertyMatcher after, ToolType toolType, int toolLevel) {
+    public BlockInteractionCriterion(EntityPredicate.Composite playerCondition, PropertyMatcher after, ToolType toolType, int toolLevel) {
         super(trigger.getId(), playerCondition);
         this.after = after;
         this.toolType = toolType;
         this.toolLevel = toolLevel;
     }
 
-    public static void trigger(ServerPlayerEntity player, BlockState state, ToolType usedToolType, int usedToolLevel) {
+    public static void trigger(ServerPlayer player, BlockState state, ToolType usedToolType, int usedToolLevel) {
         trigger.fulfillCriterion(player, criterion -> criterion.test(state, usedToolType, usedToolLevel));
 
 
@@ -47,7 +47,7 @@ public class BlockInteractionCriterion extends CriterionInstance {
         return true;
     }
 
-    private static BlockInteractionCriterion deserialize(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+    private static BlockInteractionCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
         return new BlockInteractionCriterion(entityPredicate,
                 JsonOptional.field(json, "after")
                         .map(PropertyMatcher::deserialize)

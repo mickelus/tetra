@@ -1,22 +1,22 @@
 package se.mickelus.tetra.module.improvement;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.gui.toasts.IToast;
-import net.minecraft.client.gui.toasts.ToastGui;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
+import com.mojang.blaze3d.platform.Lighting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
 
-import net.minecraft.client.gui.toasts.IToast.Visibility;
+import net.minecraft.client.gui.components.toasts.Toast.Visibility;
 
-public class HoneToast implements IToast {
+public class HoneToast implements Toast {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/toasts.png");
 
     private boolean hasPlayedSound = false;
@@ -27,7 +27,7 @@ public class HoneToast implements IToast {
     }
 
     @Override
-    public Visibility render(MatrixStack matrixStack, ToastGui toastGui, long delta) {
+    public Visibility render(PoseStack matrixStack, ToastComponent toastGui, long delta) {
         if (itemStack != null) {
             toastGui.getMinecraft().getTextureManager().bind(texture);
             RenderSystem.color3f(1.0F, 1.0F, 1.0F);
@@ -40,15 +40,15 @@ public class HoneToast implements IToast {
             if (!this.hasPlayedSound && delta > 0L) {
                 this.hasPlayedSound = true;
                 toastGui.getMinecraft().getSoundManager()
-                        .play(SimpleSound.forUI(SoundEvents.PLAYER_LEVELUP, 0.6F, 0.7F));
+                        .play(SimpleSoundInstance.forUI(SoundEvents.PLAYER_LEVELUP, 0.6F, 0.7F));
             }
 
-            RenderHelper.turnBackOn();
+            Lighting.turnBackOn();
             toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(null, itemStack, 8, 8);
 
-            return delta > 5000 ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;
+            return delta > 5000 ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
         }
 
-        return IToast.Visibility.HIDE;
+        return Toast.Visibility.HIDE;
     }
 }

@@ -1,20 +1,20 @@
 package se.mickelus.tetra.effect.potion;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.DisplayEffectsScreen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.effect.EffectHelper;
@@ -22,11 +22,11 @@ import se.mickelus.tetra.util.ParticleHelper;
 
 import java.util.Random;
 
-public class PriedPotionEffect extends Effect {
+public class PriedPotionEffect extends MobEffect {
     public static PriedPotionEffect instance;
 
     public PriedPotionEffect() {
-        super(EffectType.HARMFUL, 0x880000);
+        super(MobEffectCategory.HARMFUL, 0x880000);
 
         setRegistryName("pried");
 
@@ -37,7 +37,7 @@ public class PriedPotionEffect extends Effect {
 
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.getCommandSenderWorld().isClientSide) {
-            ParticleHelper.spawnArmorParticles(((ServerWorld) entity.level), entity);
+            ParticleHelper.spawnArmorParticles(((ServerLevel) entity.level), entity);
         }
     }
 
@@ -48,11 +48,11 @@ public class PriedPotionEffect extends Effect {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void renderInventoryEffect(EffectInstance effect, DisplayEffectsScreen<?> gui, MatrixStack mStack, int x, int y, float z) {
+    public void renderInventoryEffect(MobEffectInstance effect, EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, float z) {
         super.renderInventoryEffect(effect, gui, mStack, x, y, z);
 
         int amount = effect.getAmplifier() + 1;
         EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new StringTextComponent(I18n.get("effect.tetra.pried.tooltip", amount)));
+                new TextComponent(I18n.get("effect.tetra.pried.tooltip", amount)));
     }
 }

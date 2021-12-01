@@ -1,27 +1,27 @@
 package se.mickelus.tetra.blocks.forged;
 
 import net.minecraft.block.*;
-import net.minecraft.block.pattern.BlockStateMatcher;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
@@ -39,29 +39,44 @@ import java.util.Collection;
 import java.util.List;
 
 import static net.minecraft.fluid.Fluids.WATER;
-import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
+import staticnet.minecraft.world.level.material.Fluidsrties.BlockStateProperties.WATERLOGGED;
 
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInteractiveBlock, IWaterLoggable {
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInteractiveBlock, SimpleWaterloggedBlock {
     static final String unlocalizedName = "forged_crate";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ForgedCrateBlock instance;
 
-    public static final DirectionProperty propFacing = HorizontalBlock.FACING;
+    public static final DirectionProperty propFacing = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty propStacked = BooleanProperty.create("stacked");
     public static final IntegerProperty propIntegrity = IntegerProperty.create("integrity", 0, 3);
 
     static final BlockInteraction[] interactions = new BlockInteraction[] {
             new BlockInteraction(ToolTypes.pry, 1, Direction.EAST, 6, 8, 6, 8,
-                    BlockStateMatcher.ANY,
+                    BlockStatePredicate.ANY,
                     ForgedCrateBlock::attemptBreakPry),
             new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 1, 4, 1, 4,
-                    BlockStateMatcher.ANY,
+                    BlockStatePredicate.ANY,
                     ForgedCrateBlock::attemptBreakHammer),
             new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 10, 13, 10, 13,
-                    BlockStateMatcher.ANY,
+                    BlockStatePredicate.ANY,
                     ForgedCrateBlock::attemptBreakHammer),
     };
 
@@ -92,19 +107,19 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
-    private static boolean attemptBreakHammer(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
+    private static boolean attemptBreakHammer(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction facing) {
         return attemptBreak(world, pos, blockState, player, hand, player.getItemInHand(hand), ToolTypes.hammer, 2, 1);
     }
 
-    private static boolean attemptBreakPry(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
+    private static boolean attemptBreakPry(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction facing) {
         return attemptBreak(world, pos, blockState, player, hand, player.getItemInHand(hand), ToolTypes.pry, 0, 2);
     }
 
-    private static boolean attemptBreak(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand,
+    private static boolean attemptBreak(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand,
             ItemStack itemStack, ToolType toolType, int min, int multiplier) {
 
         if (player == null) {
@@ -120,16 +135,16 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
 
         if (integrity - progress >= 0) {
             if (ToolTypes.hammer.equals(toolType)) {
-                world.playSound(player, pos, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1, 0.5f);
+                world.playSound(player, pos, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundSource.PLAYERS, 1, 0.5f);
             } else {
-                world.playSound(player, pos, SoundEvents.LADDER_STEP, SoundCategory.PLAYERS, 0.7f, 2f);
+                world.playSound(player, pos, SoundEvents.LADDER_STEP, SoundSource.PLAYERS, 0.7f, 2f);
             }
 
             world.setBlockAndUpdate(pos, blockState.setValue(propIntegrity, integrity - progress));
         } else {
             boolean didBreak = EffectHelper.breakBlock(world, player, itemStack, pos, blockState, false);
-            if (didBreak && world instanceof ServerWorld) {
-                BlockInteraction.getLoot(interactionLootTable, player, hand, (ServerWorld) world, blockState)
+            if (didBreak && world instanceof ServerLevel) {
+                BlockInteraction.getLoot(interactionLootTable, player, hand, (ServerLevel) world, blockState)
                         .forEach(lootStack -> popResource(world, pos, lootStack));
             }
         }
@@ -138,17 +153,17 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
             return interactions;
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(propFacing, propStacked, propIntegrity, WATERLOGGED);
     }
@@ -160,7 +175,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return super.getStateForPlacement(context)
                 .setValue(propFacing, context.getHorizontalDirection())
                 .setValue(propStacked, equals(context.getLevel().getBlockState(context.getClickedPos().below()).getBlock()))
@@ -168,7 +183,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos,
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos,
             BlockPos facingPos) {
         if (state.getValue(WATERLOGGED)) {
             world.getLiquidTicks().scheduleTick(currentPos, WATER, WATER.getTickDelay(world));
@@ -183,7 +198,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         if (!state.getValue(propStacked)) {
             return shapesNormal[state.getValue(propFacing).get2DDataValue()];
         }

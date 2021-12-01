@@ -6,16 +6,16 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.command.ISuggestionProvider;
-import net.minecraft.command.arguments.ItemArgument;
-import net.minecraft.entity.item.ItemFrameEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.item.ItemArgument;
+import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -27,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModuleDevCommand {
     private static final Logger logger = LogManager.getLogger();
 
-    public static void register(CommandDispatcher<CommandSource> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("tmdev")
                 .requires(source -> source.hasPermission(2))
                 .then(Commands.argument("item", ItemArgument.item())
@@ -36,9 +36,9 @@ public class ModuleDevCommand {
                                 .executes(ModuleDevCommand::run))));
     }
 
-    private static int run(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private static int run(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         BlockPos pos = new BlockPos(context.getSource().getPosition());
-        World world = context.getSource().getLevel();
+        Level world = context.getSource().getLevel();
 
         ItemStack baseStack = ItemArgument.getItem(context, "item").createItemStack(1, false);
 
@@ -60,15 +60,15 @@ public class ModuleDevCommand {
         return 1;
     }
 
-    private static void plopFrame(World world, BlockPos pos, ItemStack itemStack, String label) {
-        itemStack.setHoverName(new StringTextComponent(label));
-        ItemFrameEntity itemFrame = new ItemFrameEntity(world, pos, Direction.SOUTH);
+    private static void plopFrame(Level world, BlockPos pos, ItemStack itemStack, String label) {
+        itemStack.setHoverName(new TextComponent(label));
+        ItemFrame itemFrame = new ItemFrame(world, pos, Direction.SOUTH);
         itemFrame.setItem(itemStack);
         world.addFreshEntity(itemFrame);
     }
 
     private static CompletableFuture<Suggestions> getModuleSuggestions(final CommandContext context, final SuggestionsBuilder builder) {
-        return ISuggestionProvider.suggest(
+        return SharedSuggestionProvider.suggest(
                 ItemUpgradeRegistry.instance.getAllModules().stream()
                         .map(ItemModule::getKey)
                         .toArray(String[]::new),

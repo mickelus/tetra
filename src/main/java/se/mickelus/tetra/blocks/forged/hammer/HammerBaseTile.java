@@ -1,28 +1,28 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.ByteNBT;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.ByteTag;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.ToolTypes;
@@ -39,10 +39,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
-public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
+public class HammerBaseTile extends BlockEntity implements TickableBlockEntity {
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.unlocalizedName)
-    public static TileEntityType<HammerBaseTile> type;
+    public static BlockEntityType<HammerBaseTile> type;
 
     private static final String moduleAKey = "modA";
     private static final String moduleBKey = "modB";
@@ -221,7 +221,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
                                 consumeFuel();
                             } else {
                                 head.activate();
-                                level.playSound(null, worldPosition, SoundEvents.ANVIL_LAND, SoundCategory.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
+                                level.playSound(null, worldPosition, SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
                             }
                         } else {
                             head.activate();
@@ -235,17 +235,17 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
      */
     private void applyConsumeEffect() {
         Direction facing = getLevel().getBlockState(getBlockPos()).getValue(HammerBaseBlock.facingProp);
-        Vector3d pos = Vector3d.atCenterOf(getBlockPos());
+        Vec3 pos = Vec3.atCenterOf(getBlockPos());
 
-        Vector3d oppositePos = pos.add(Vector3d.atLowerCornerOf(facing.getOpposite().getNormal()).scale(0.55));
-        pos = pos.add(Vector3d.atLowerCornerOf(facing.getNormal()).scale(0.55));
+        Vec3 oppositePos = pos.add(Vec3.atLowerCornerOf(facing.getOpposite().getNormal()).scale(0.55));
+        pos = pos.add(Vec3.atLowerCornerOf(facing.getNormal()).scale(0.55));
 
         if (hasEffect(HammerEffect.power)) {
-            spawnParticle(ParticleTypes.ENCHANTED_HIT, Vector3d.atLowerCornerOf(getBlockPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
+            spawnParticle(ParticleTypes.ENCHANTED_HIT, Vec3.atLowerCornerOf(getBlockPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
         }
 
         if (hasEffect(HammerEffect.power)) {
-            spawnParticle(ParticleTypes.WHITE_ASH, Vector3d.atLowerCornerOf(getBlockPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
+            spawnParticle(ParticleTypes.WHITE_ASH, Vec3.atLowerCornerOf(getBlockPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
             int count = level.random.nextInt(2 + getEffectLevel(HammerEffect.power) * 4);
 
             if (count > 2) {
@@ -280,9 +280,9 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
 
         if (level.random.nextFloat() < getJamChance()) {
             TileEntityOptional.from(level, getBlockPos().below(), HammerHeadTile.class).ifPresent(head -> head.setJammed(true));
-            level.getEntitiesOfClass(ServerPlayerEntity.class, new AxisAlignedBB(getBlockPos()).inflate(10, 5, 10))
+            level.getEntitiesOfClass(ServerPlayer.class, new AABB(getBlockPos()).inflate(10, 5, 10))
                     .forEach(player -> BlockUseCriterion.trigger(player, getBlockState(), ItemStack.EMPTY));
-            level.playSound(null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundCategory.BLOCKS, 0.8f, 0.5f);
+            level.playSound(null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.8f, 0.5f);
         }
     }
 
@@ -346,9 +346,9 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
     /**
      * Utility for spawning particles on the server
      */
-    private void spawnParticle(IParticleData particle, Vector3d pos, int count, float speed) {
-        if (level instanceof ServerWorld) {
-            ((ServerWorld) level).sendParticles(particle, pos.x, pos.y, pos.z, count, 0, 0, 0, speed);
+    private void spawnParticle(ParticleOptions particle, Vec3 pos, int count, float speed) {
+        if (level instanceof ServerLevel) {
+            ((ServerLevel) level).sendParticles(particle, pos.x, pos.y, pos.z, count, 0, 0, 0, speed);
         }
     }
 
@@ -358,30 +358,30 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.worldPosition, 0, this.getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(this.worldPosition, 0, this.getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return save(new CompoundTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         this.load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compound) {
+    public void load(BlockState blockState, CompoundTag compound) {
         super.load(blockState, compound);
 
         slots = new ItemStack[2];
         if (compound.contains(slotsKey)) {
-            ListNBT tagList = compound.getList(slotsKey, 10);
+            ListTag tagList = compound.getList(slotsKey, 10);
 
             for (int i = 0; i < tagList.size(); i++) {
-                CompoundNBT itemCompound = tagList.getCompound(i);
+                CompoundTag itemCompound = tagList.getCompound(i);
                 int slot = itemCompound.getByte(indexKey) & 255;
 
                 if (slot < this.slots.length) {
@@ -415,7 +415,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         super.save(compound);
 
         writeCells(compound, slots);
@@ -427,21 +427,21 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
         return compound;
     }
 
-    public static void writeModules(CompoundNBT compound, HammerEffect moduleA, HammerEffect moduleB) {
+    public static void writeModules(CompoundTag compound, HammerEffect moduleA, HammerEffect moduleB) {
         if (moduleA != null) {
-            compound.put(moduleAKey, ByteNBT.valueOf((byte) moduleA.ordinal()));
+            compound.put(moduleAKey, ByteTag.valueOf((byte) moduleA.ordinal()));
         }
 
         if (moduleB != null) {
-            compound.put(moduleBKey, ByteNBT.valueOf((byte) moduleB.ordinal()));
+            compound.put(moduleBKey, ByteTag.valueOf((byte) moduleB.ordinal()));
         }
     }
 
-    public static void writeCells(CompoundNBT compound, ItemStack... cells) {
-        ListNBT nbttaglist = new ListNBT();
+    public static void writeCells(CompoundTag compound, ItemStack... cells) {
+        ListTag nbttaglist = new ListTag();
         for (int i = 0; i < cells.length; i++) {
             if (cells[i] != null) {
-                CompoundNBT nbttagcompound = new CompoundNBT();
+                CompoundTag nbttagcompound = new CompoundTag();
 
                 nbttagcompound.putByte(indexKey, (byte) i);
                 cells[i].save(nbttagcompound);

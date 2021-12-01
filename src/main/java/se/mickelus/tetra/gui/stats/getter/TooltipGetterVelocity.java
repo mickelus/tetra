@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.properties.TetraAttributes;
@@ -12,7 +12,7 @@ public class TooltipGetterVelocity implements ITooltipGetter {
     public static final IStatGetter drawStrengthGetter = new StatGetterAttribute(TetraAttributes.drawStrength.get());
 
     @Override
-    public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipBase(Player player, ItemStack itemStack) {
         double velocityBonus = velocityGetter.getValue(player, itemStack);
         double drawStrength = drawStrengthGetter.getValue(player, itemStack);
         return I18n.get("tetra.stats.velocity.tooltip",

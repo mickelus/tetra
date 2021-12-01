@@ -1,15 +1,15 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.scan;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,12 +23,12 @@ public class ScannerDebugRenderer {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onRenderWorld(RenderWorldLastEvent event) {
-        PlayerEntity player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
 
         if (player != null && player.isCreative()) {
-            MatrixStack matrixStack = event.getMatrixStack();
-            IVertexBuilder vertexBuilder = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
-            Vector3d eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTicks());
+            PoseStack matrixStack = event.getMatrixStack();
+            VertexConsumer vertexBuilder = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
+            Vec3 eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTicks());
 
             GlStateManager._lineWidth(3);
             if (overlayGui.upHighlight != null) drawDebugBox(overlayGui.upHighlight, eyePos, matrixStack, vertexBuilder, 1, 0, 0, 0.5f);
@@ -38,11 +38,11 @@ public class ScannerDebugRenderer {
         }
     }
 
-    private void drawDebugBox(BlockPos blockPos, Vector3d eyePos, MatrixStack matrixStack, IVertexBuilder vertexBuilder, float red, float green, float blue, float alpha) {
-        Vector3d pos = Vector3d.atLowerCornerOf(blockPos).subtract(eyePos);
-        AxisAlignedBB aabb = new AxisAlignedBB(pos, pos.add(1, 1, 1));
+    private void drawDebugBox(BlockPos blockPos, Vec3 eyePos, PoseStack matrixStack, VertexConsumer vertexBuilder, float red, float green, float blue, float alpha) {
+        Vec3 pos = Vec3.atLowerCornerOf(blockPos).subtract(eyePos);
+        AABB aabb = new AABB(pos, pos.add(1, 1, 1));
 
         // draw center box
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.0030000000949949026D), red, green, blue, alpha);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.0030000000949949026D), red, green, blue, alpha);
     }
 }

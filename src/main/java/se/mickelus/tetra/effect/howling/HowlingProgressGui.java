@@ -1,7 +1,7 @@
 package se.mickelus.tetra.effect.howling;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
 import se.mickelus.mgui.gui.*;
@@ -88,9 +88,9 @@ public class HowlingProgressGui extends GuiRoot {
         }
     }
 
-    public void draw(MatrixStack matrixStack) {
+    public void draw(PoseStack matrixStack) {
         if (isVisible()) {
-            MainWindow window = mc.getWindow();
+            Window window = mc.getWindow();
             int width = window.getGuiScaledWidth();
             int height = window.getGuiScaledHeight();
 

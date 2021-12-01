@@ -1,15 +1,15 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.VexEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -25,12 +25,12 @@ public class HauntedEffect {
                 if (entity.getRandom().nextDouble() < effectProbability * multiplier) {
                     int effectLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.haunted);
 
-                    VexEntity vex = EntityType.VEX.create(entity.level);
+                    Vex vex = EntityType.VEX.create(entity.level);
                     vex.setLimitedLife(effectLevel * 20);
                     vex.moveTo(entity.getX(), entity.getY() + 1, entity.getZ(), entity.yRot, 0.0F);
-                    vex.setItemInHand(Hand.MAIN_HAND, itemStack.copy());
-                    vex.setDropChance(EquipmentSlotType.MAINHAND, 0);
-                    vex.addEffect(new EffectInstance(Effects.INVISIBILITY, 2000 + effectLevel * 20));
+                    vex.setItemInHand(InteractionHand.MAIN_HAND, itemStack.copy());
+                    vex.setDropChance(EquipmentSlot.MAINHAND, 0);
+                    vex.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 2000 + effectLevel * 20));
                     entity.level.addFreshEntity(vex);
 
                     // todo: use temporary modules for this instead once implemented
@@ -49,7 +49,7 @@ public class HauntedEffect {
                                 }
                             });
 
-                    entity.level.playSound(null, entity.blockPosition(), SoundEvents.WITCH_AMBIENT, SoundCategory.PLAYERS, 2f, 2);
+                    entity.level.playSound(null, entity.blockPosition(), SoundEvents.WITCH_AMBIENT, SoundSource.PLAYERS, 2f, 2);
                 }
             }
         }

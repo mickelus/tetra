@@ -1,10 +1,10 @@
 package se.mickelus.tetra.gui;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
@@ -47,7 +47,7 @@ public class GuiSynergyIndicator extends GuiElement {
         boolean hasActive = alwaysShowStats;
 
         tooltip = new ArrayList<>();
-        tooltip.add(TextFormatting.GRAY + I18n.get("item.tetra.modular.synergy_indicator.header"));
+        tooltip.add(ChatFormatting.GRAY + I18n.get("item.tetra.modular.synergy_indicator.header"));
 
         if (itemStack.getItem() instanceof IModularItem) {
             IModularItem item = (IModularItem) itemStack.getItem();
@@ -74,7 +74,7 @@ public class GuiSynergyIndicator extends GuiElement {
 
 
         if (tooltip.size() <= 1) {
-            tooltip = Collections.singletonList(TextFormatting.GRAY + I18n.get("item.tetra.modular.synergy_indicator.empty"));
+            tooltip = Collections.singletonList(ChatFormatting.GRAY + I18n.get("item.tetra.modular.synergy_indicator.empty"));
             indicator.setTextureCoordinates(emptyCoord, 0);
         } else if (!hasActive) {
             indicator.setTextureCoordinates(inactiveCoord, 0);
@@ -105,10 +105,10 @@ public class GuiSynergyIndicator extends GuiElement {
 
         if (isActive || alwaysShowStats) {
             List<String> result = getDataLines(data);
-            result.add(0, TextFormatting.GREEN + "\u00BB " + TextFormatting.WHITE + header);
+            result.add(0, ChatFormatting.GREEN + "\u00BB " + ChatFormatting.WHITE + header);
             return result;
         }
-        return Collections.singletonList(TextFormatting.BOLD + "  " + TextFormatting.DARK_GRAY + header);
+        return Collections.singletonList(ChatFormatting.BOLD + "  " + ChatFormatting.DARK_GRAY + header);
     }
 
     private List<String> getModuleLines(boolean isActive, SynergyData data) {
@@ -117,15 +117,15 @@ public class GuiSynergyIndicator extends GuiElement {
                 .collect(Collectors.joining(" + "));
 
         if (data.sameVariant) {
-            header += " " + TextFormatting.DARK_GRAY + I18n.get("item.tetra.modular.synergy_indicator.variant_same");
+            header += " " + ChatFormatting.DARK_GRAY + I18n.get("item.tetra.modular.synergy_indicator.variant_same");
         }
 
         if (isActive || alwaysShowStats) {
             List<String> result = getDataLines(data);
-            result.add(0, TextFormatting.GREEN + "\u00BB " + TextFormatting.WHITE + header);
+            result.add(0, ChatFormatting.GREEN + "\u00BB " + ChatFormatting.WHITE + header);
             return result;
         }
-        return Collections.singletonList(TextFormatting.BOLD + "  " + TextFormatting.DARK_GRAY + header);
+        return Collections.singletonList(ChatFormatting.BOLD + "  " + ChatFormatting.DARK_GRAY + header);
     }
 
     private List<String> getDataLines(SynergyData data) {
@@ -179,9 +179,9 @@ public class GuiSynergyIndicator extends GuiElement {
 
         for (int i = 0; i < result.size(); i++) {
             if (i == result.size() - 1) {
-                result.set(i, TextFormatting.GRAY + "  \u2514 " + result.get(i));
+                result.set(i, ChatFormatting.GRAY + "  \u2514 " + result.get(i));
             } else {
-                result.set(i, TextFormatting.GRAY + "  \u251c " + result.get(i));
+                result.set(i, ChatFormatting.GRAY + "  \u251c " + result.get(i));
             }
         }
 
@@ -190,28 +190,28 @@ public class GuiSynergyIndicator extends GuiElement {
 
     public String getValueInteger(int value, int flippingPoint) {
         if (value > flippingPoint) {
-            return TextFormatting.GREEN + String.format("%+d ", value) + TextFormatting.RESET;
+            return ChatFormatting.GREEN + String.format("%+d ", value) + ChatFormatting.RESET;
 
         } else {
-            return TextFormatting.RED + String.format("%+d ", value) + TextFormatting.RESET;
+            return ChatFormatting.RED + String.format("%+d ", value) + ChatFormatting.RESET;
         }
     }
 
     public String getValueMultiplier(double value) {
         if (value > 1) {
-            return TextFormatting.GREEN + String.format("%.02fx ", value) + TextFormatting.RESET;
+            return ChatFormatting.GREEN + String.format("%.02fx ", value) + ChatFormatting.RESET;
 
         } else {
-            return TextFormatting.RED + String.format("%.02fx ", value) + TextFormatting.RESET;
+            return ChatFormatting.RED + String.format("%.02fx ", value) + ChatFormatting.RESET;
         }
     }
 
     public String getValueDouble(double value, double flippingPoint) {
         if (value > flippingPoint) {
-            return TextFormatting.GREEN + String.format("%+.02f ", value) + TextFormatting.RESET;
+            return ChatFormatting.GREEN + String.format("%+.02f ", value) + ChatFormatting.RESET;
 
         } else {
-            return TextFormatting.RED + String.format("%+.02f ", value) + TextFormatting.RESET;
+            return ChatFormatting.RED + String.format("%+.02f ", value) + ChatFormatting.RESET;
         }
     }
 

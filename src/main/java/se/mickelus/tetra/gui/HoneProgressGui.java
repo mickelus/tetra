@@ -1,10 +1,10 @@
 package se.mickelus.tetra.gui;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.Mth;
+import net.minecraft.ChatFormatting;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
@@ -54,7 +54,7 @@ public class HoneProgressGui extends GuiElement {
             IModularItem item = (IModularItem) itemStack.getItem();
             int limit = item.getHoningLimit(itemStack);
             int progress = limit - item.getHoningProgress(itemStack);
-            float factor = MathHelper.clamp(1f * progress / limit, 0, 1);
+            float factor = Mth.clamp(1f * progress / limit, 0, 1);
             float workableFactor = -item.getEffectLevel(itemStack, ItemEffect.workable);
 
             String factorString = String.format("%.0f%%", (100f * factor));
@@ -68,7 +68,7 @@ public class HoneProgressGui extends GuiElement {
 
             tooltip = Collections.singletonList(tooltipBase + "\n \n" + Tooltips.expand.getString());
             extendedTooltip = Collections.singletonList(tooltipBase + "\n \n" + Tooltips.expanded.getString()
-                    + "\n" + TextFormatting.GRAY.toString() + I18n.get("item.tetra.modular.hone_progress.description_extended"));
+                    + "\n" + ChatFormatting.GRAY.toString() + I18n.get("item.tetra.modular.hone_progress.description_extended"));
 
             valueString.setString(factorString);
 

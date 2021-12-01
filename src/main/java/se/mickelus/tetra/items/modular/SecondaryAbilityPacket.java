@@ -1,11 +1,11 @@
 package se.mickelus.tetra.items.modular;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Hand;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.InteractionHand;
 import se.mickelus.tetra.network.AbstractPacket;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -14,11 +14,11 @@ import java.util.Optional;
 public class SecondaryAbilityPacket extends AbstractPacket {
 
     private int targetId = -1;
-    private Hand hand;
+    private InteractionHand hand;
 
     public SecondaryAbilityPacket() {}
 
-    public SecondaryAbilityPacket(LivingEntity target, Hand hand) {
+    public SecondaryAbilityPacket(LivingEntity target, InteractionHand hand) {
         targetId = Optional.ofNullable(target)
                 .map(Entity::getId)
                 .orElse(-1);
@@ -27,19 +27,19 @@ public class SecondaryAbilityPacket extends AbstractPacket {
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         buffer.writeInt(targetId);
         buffer.writeInt(hand.ordinal());
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         targetId = buffer.readInt();
-        hand = Hand.values()[buffer.readInt()];
+        hand = InteractionHand.values()[buffer.readInt()];
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         LivingEntity target = Optional.of(targetId)
                 .filter(id -> id != -1)
                 .map(id -> player.level.getEntity(id))

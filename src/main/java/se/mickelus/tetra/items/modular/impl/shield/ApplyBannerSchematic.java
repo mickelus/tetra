@@ -1,12 +1,12 @@
 package se.mickelus.tetra.items.modular.impl.shield;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.BannerItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.BannerItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -92,17 +92,17 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
+    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
         return isMaterialsValid(itemStack, slot, materials);
     }
 
     @Override
-    public boolean isIntegrityViolation(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot) {
+    public boolean isIntegrityViolation(Player player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return false;
     }
 
     @Override
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, Player player) {
         ItemStack upgradedStack = itemStack.copy();
 
         ItemStack bannerStack = materials[0];
@@ -116,9 +116,9 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
                         if (module.acceptsImprovementLevel(ModularShieldItem.bannerImprovementKey, 0)) {
                             module.addImprovement(upgradedStack, ModularShieldItem.bannerImprovementKey, 0);
 
-                            CompoundNBT bannerTag = Optional.ofNullable(bannerStack.getTagElement("BlockEntityTag"))
-                                    .map(CompoundNBT::copy)
-                                    .orElse(new CompoundNBT());
+                            CompoundTag bannerTag = Optional.ofNullable(bannerStack.getTagElement("BlockEntityTag"))
+                                    .map(CompoundTag::copy)
+                                    .orElse(new CompoundTag());
 
                             bannerTag.putInt("Base", ((BannerItem) bannerStack.getItem()).getColor().getId());
                             upgradedStack.addTagElement("BlockEntityTag", bannerTag.copy());
@@ -127,8 +127,8 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
                                 materials[0].shrink(1);
                             }
 
-                            if (consumeMaterials && player instanceof ServerPlayerEntity) {
-                                ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot,
+                            if (consumeMaterials && player instanceof ServerPlayer) {
+                                ImprovementCraftCriterion.trigger((ServerPlayer) player, itemStack, upgradedStack, getKey(), slot,
                                         ModularShieldItem.bannerImprovementKey, 0, null, -1);
                             }
                         }

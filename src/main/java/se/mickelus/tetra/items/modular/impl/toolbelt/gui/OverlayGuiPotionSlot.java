@@ -1,12 +1,12 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.gui.Font;
+import com.mojang.blaze3d.platform.Lighting;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
@@ -24,7 +24,7 @@ public class OverlayGuiPotionSlot extends GuiElement {
 
     private KeyframeAnimation showAnimation;
 
-    private FontRenderer fontRenderer;
+    private Font fontRenderer;
 
     GuiTexture backdrop;
 
@@ -70,7 +70,7 @@ public class OverlayGuiPotionSlot extends GuiElement {
     }
 
     @Override
-    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (this.opacity == 1) {
@@ -82,14 +82,14 @@ public class OverlayGuiPotionSlot extends GuiElement {
         RenderSystem.pushMatrix();
         GlStateManager._enableDepthTest();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        RenderHelper.turnBackOn();
+        Lighting.turnBackOn();
 
         mc.getItemRenderer().renderAndDecorateItem(itemStack, x, y);
         mc.getItemRenderer().renderGuiItemDecorations(fontRenderer, itemStack, x, y, "");
         GlStateManager._disableDepthTest();
 
         RenderSystem.popMatrix();
-        RenderHelper.turnOff();
+        Lighting.turnOff();
     }
 
 

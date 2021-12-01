@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -17,7 +17,7 @@ public class StatGetterToolLevel implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack) {
+    public double getValue(Player player, ItemStack itemStack) {
         return CastOptional.cast(itemStack.getItem(), IToolProvider.class)
                 .map(item -> item.getToolData(itemStack))
                 .map(data -> data.getLevel(tool))
@@ -25,7 +25,7 @@ public class StatGetterToolLevel implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
+    public double getValue(Player player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getToolLevel(itemStack, tool))
@@ -33,7 +33,7 @@ public class StatGetterToolLevel implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
+    public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> module.getImprovement(itemStack, improvement))

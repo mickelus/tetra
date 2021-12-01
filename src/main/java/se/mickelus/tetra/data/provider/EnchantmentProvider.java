@@ -5,11 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IDataProvider;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.HashCache;
+import net.minecraft.data.DataProvider;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +23,7 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class EnchantmentProvider implements IDataProvider {
+public class EnchantmentProvider implements DataProvider {
     private static final Logger logger = LogManager.getLogger();
 
     public static final Gson gson = new GsonBuilder()
@@ -226,7 +226,7 @@ public class EnchantmentProvider implements IDataProvider {
     }
 
     @Override
-    public void run(DirectoryCache cache) throws IOException {
+    public void run(HashCache cache) throws IOException {
         setup();
         JsonObject localization = new JsonObject();
         JsonObject missingLocalization = new JsonObject();
@@ -321,55 +321,55 @@ public class EnchantmentProvider implements IDataProvider {
         return builder;
     }
 
-    private void saveEnchantments(DirectoryCache cache, String modId, JsonArray enchantments) {
+    private void saveEnchantments(HashCache cache, String modId, JsonArray enchantments) {
         Path outputPath = generator.getOutputFolder().resolve("data/tetra/enchantments/" + modId + ".json");
         try {
-            IDataProvider.save(gson, cache, enchantments, outputPath);
+            DataProvider.save(gson, cache, enchantments, outputPath);
         } catch (IOException e) {
             logger.error("Couldn't save enchantments to {}", outputPath, e);
         }
     }
 
-    private void saveDestabilization(DirectoryCache cache, String modId, JsonArray destabilization) {
+    private void saveDestabilization(HashCache cache, String modId, JsonArray destabilization) {
         Path outputPath = generator.getOutputFolder().resolve("data/tetra/destabilization/" + modId + ".json");
         try {
-            IDataProvider.save(gson, cache, destabilization, outputPath);
+            DataProvider.save(gson, cache, destabilization, outputPath);
         } catch (IOException e) {
             logger.error("Couldn't save destabilization to {}", outputPath, e);
         }
     }
 
-    private void saveImprovements(DirectoryCache cache, String enchantmentKey, JsonArray improvements) {
+    private void saveImprovements(HashCache cache, String enchantmentKey, JsonArray improvements) {
         Path outputPath = generator.getOutputFolder().resolve("data/tetra/improvements/" + enchantmentKey + ".json");
         try {
-            IDataProvider.save(gson, cache, improvements, outputPath);
+            DataProvider.save(gson, cache, improvements, outputPath);
         } catch (IOException e) {
             logger.error("Couldn't save improvements to {}", outputPath, e);
         }
     }
 
-    private void saveLocalization(DirectoryCache cache, JsonObject localizationEntries) {
+    private void saveLocalization(HashCache cache, JsonObject localizationEntries) {
         Path outputPath = generator.getOutputFolder().resolve("temp/enchantments_" + lang + ".json");
         try {
-            IDataProvider.save(gson, cache, localizationEntries, outputPath);
+            DataProvider.save(gson, cache, localizationEntries, outputPath);
         } catch (IOException e) {
             logger.error("Couldn't save localization to {}", outputPath, e);
         }
     }
 
-    private void saveMissingLocalization(DirectoryCache cache, JsonObject localizationEntries) {
+    private void saveMissingLocalization(HashCache cache, JsonObject localizationEntries) {
         Path outputPath = generator.getOutputFolder().resolve("temp/missing_localization.json");
         try {
-            IDataProvider.save(gson, cache, localizationEntries, outputPath);
+            DataProvider.save(gson, cache, localizationEntries, outputPath);
         } catch (IOException e) {
             logger.error("Couldn't save missing localization to {}", outputPath, e);
         }
     }
 
-    private void saveImprovementTypeMappings(DirectoryCache cache, JsonObject mappings) {
+    private void saveImprovementTypeMappings(HashCache cache, JsonObject mappings) {
         Path outputPath = generator.getOutputFolder().resolve("temp/enchantment_mappings.json");
         try {
-            IDataProvider.save(gson, cache, mappings, outputPath);
+            DataProvider.save(gson, cache, mappings, outputPath);
         } catch (IOException e) {
             logger.error("Couldn't save missing localization to {}", outputPath, e);
         }

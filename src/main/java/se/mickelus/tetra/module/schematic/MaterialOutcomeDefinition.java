@@ -1,6 +1,6 @@
 package se.mickelus.tetra.module.schematic;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.module.data.*;
 
 import java.util.Collection;

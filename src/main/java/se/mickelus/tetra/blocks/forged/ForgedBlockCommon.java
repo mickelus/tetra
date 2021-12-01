@@ -1,16 +1,16 @@
 package se.mickelus.tetra.blocks.forged;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
 import se.mickelus.tetra.ToolTypes;
 
 public class ForgedBlockCommon {
@@ -36,13 +36,13 @@ public class ForgedBlockCommon {
             .isViewBlocking(ForgedBlockCommon::notSolid)
             .strength(12F, 600.0F);
 
-    public static final ITextComponent locationTooltip = new TranslationTextComponent("item.tetra.forged_description")
-            .withStyle(TextFormatting.GRAY);
+    public static final Component locationTooltip = new TranslatableComponent("item.tetra.forged_description")
+            .withStyle(ChatFormatting.GRAY);
 
-    public static final ITextComponent unsettlingTooltip = new TranslationTextComponent("item.tetra.forged_unsettling")
-            .withStyle(TextFormatting.GRAY, TextFormatting.ITALIC);
+    public static final Component unsettlingTooltip = new TranslatableComponent("item.tetra.forged_unsettling")
+            .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
 
-    private static boolean notSolid(BlockState state, IBlockReader reader, BlockPos pos) {
+    private static boolean notSolid(BlockState state, BlockGetter reader, BlockPos pos) {
         return false;
     }
 }

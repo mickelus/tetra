@@ -1,15 +1,15 @@
 package se.mickelus.tetra.effect.potion;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.damagesource.DamageSource;
 
-public class BleedingPotionEffect extends Effect {
+public class BleedingPotionEffect extends MobEffect {
     public static BleedingPotionEffect instance;
     public BleedingPotionEffect() {
-        super(EffectType.HARMFUL, 0x880000);
+        super(MobEffectCategory.HARMFUL, 0x880000);
 
         setRegistryName("bleeding");
 
@@ -27,12 +27,12 @@ public class BleedingPotionEffect extends Effect {
     }
 
     @Override
-    public boolean shouldRender(EffectInstance effect) {
+    public boolean shouldRender(MobEffectInstance effect) {
         return false;
     }
 
     @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
+    public boolean shouldRenderHUD(MobEffectInstance effect) {
         return false;
     }
 }

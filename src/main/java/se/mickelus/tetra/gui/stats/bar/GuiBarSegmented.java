@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui.stats.bar;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import se.mickelus.mgui.gui.GuiAlignment;
 
 public class GuiBarSegmented extends GuiBar {
@@ -34,7 +34,7 @@ public class GuiBarSegmented extends GuiBar {
     }
 
     @Override
-    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (alignment == GuiAlignment.right) {
             for (int i = 0; i < segmentCount; i++) {
                 drawSegmentReverse(matrixStack, refX, refY, i, 0xffffffff, opacity);
@@ -58,7 +58,7 @@ public class GuiBarSegmented extends GuiBar {
         }
     }
 
-    private void drawSegment(MatrixStack matrixStack, int refX, int refY, int index, int color, float opacity) {
+    private void drawSegment(PoseStack matrixStack, int refX, int refY, int index, int color, float opacity) {
         drawRect(matrixStack,
             refX + x + (index * (segmentLength)),
             refY + y + 6,
@@ -67,7 +67,7 @@ public class GuiBarSegmented extends GuiBar {
             color, opacity);
     }
 
-    private void drawSegmentReverse(MatrixStack matrixStack, int refX, int refY, int index, int color, float opacity) {
+    private void drawSegmentReverse(PoseStack matrixStack, int refX, int refY, int index, int color, float opacity) {
         drawSegment(matrixStack,refX + width, refY, -index - 1, color, opacity);
     }
 }

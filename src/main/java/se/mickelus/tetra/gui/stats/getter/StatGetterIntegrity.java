@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.util.CastOptional;
@@ -11,17 +11,17 @@ public class StatGetterIntegrity implements IStatGetter {
     public StatGetterIntegrity() {}
 
     @Override
-    public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack) {
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
         return true;
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack) {
+    public double getValue(Player player, ItemStack itemStack) {
         return IModularItem.getIntegrityGain(itemStack) - IModularItem.getIntegrityCost(itemStack);
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
+    public double getValue(Player player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getIntegrityGain(itemStack) - module.getIntegrityCost(itemStack))
@@ -29,7 +29,7 @@ public class StatGetterIntegrity implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
+    public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> module.getImprovement(itemStack, improvement))

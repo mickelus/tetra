@@ -5,26 +5,26 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import net.minecraft.client.Minecraft;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.UseAction;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -51,7 +51,13 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
+
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 
 public class ModularBowItem extends ModularItem {
     public final static String staveKey = "bow/stave";
@@ -109,16 +115,16 @@ public class ModularBowItem extends ModularItem {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack itemStack) {
         if (isBroken(itemStack)) {
             return AttributeHelper.emptyMap;
         }
 
-        if (slot == EquipmentSlotType.MAINHAND) {
+        if (slot == EquipmentSlot.MAINHAND) {
             return getAttributeModifiersCached(itemStack);
         }
 
-        if (slot == EquipmentSlotType.OFFHAND) {
+        if (slot == EquipmentSlot.OFFHAND) {
             return getAttributeModifiersCached(itemStack).entries().stream()
                     .filter(entry -> !(entry.getKey().equals(Attributes.ATTACK_DAMAGE) || entry.getKey().equals(Attributes.ATTACK_DAMAGE)))
                     .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
@@ -130,21 +136,21 @@ public class ModularBowItem extends ModularItem {
     /**
      * Called when the player stops using an Item (stops holding the right mouse button).
      */
-    public void releaseUsing(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
+    public void releaseUsing(ItemStack itemStack, Level world, LivingEntity entity, int timeLeft) {
         if (getEffectLevel(itemStack, ItemEffect.overbowed) > 0 && timeLeft <= 0) {
             entity.stopUsingItem();
             // trigger a small cooldown here to avoid the bow getting drawn again instantly
-            CastOptional.cast(entity, PlayerEntity.class).ifPresent(player -> player.getCooldowns().addCooldown(this, 10));
+            CastOptional.cast(entity, Player.class).ifPresent(player -> player.getCooldowns().addCooldown(this, 10));
         } else {
             fireArrow(itemStack, world, entity, timeLeft);
         }
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack itemStack, World world, LivingEntity entity) {
+    public ItemStack finishUsingItem(ItemStack itemStack, Level world, LivingEntity entity) {
         if (getEffectLevel(itemStack, ItemEffect.overbowed) > 0) {
             entity.stopUsingItem();
-            CastOptional.cast(entity, PlayerEntity.class).ifPresent(player -> player.getCooldowns().addCooldown(this, 10));
+            CastOptional.cast(entity, Player.class).ifPresent(player -> player.getCooldowns().addCooldown(this, 10));
         }
 
         return super.finishUsingItem(itemStack, world, entity);
@@ -157,9 +163,9 @@ public class ModularBowItem extends ModularItem {
         }
     }
 
-    protected void fireArrow(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
-        if (entity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)entity;
+    protected void fireArrow(ItemStack itemStack, Level world, LivingEntity entity, int timeLeft) {
+        if (entity instanceof Player) {
+            Player player = (Player)entity;
             ItemStack ammoStack = player.getProjectile(vanillaBow);
 
             boolean playerInfinite = isInfinite(player, itemStack, ammoStack);
@@ -188,7 +194,7 @@ public class ModularBowItem extends ModularItem {
                             .orElse((ArrowItem) Items.ARROW);
 
                     boolean infiniteAmmo = player.abilities.instabuild || ammoItem.isInfinite(ammoStack, itemStack, player);
-                    int count = MathHelper.clamp(getEffectLevel(itemStack, ItemEffect.multishot), 1, infiniteAmmo ? 64 : ammoStack.getCount());
+                    int count = Mth.clamp(getEffectLevel(itemStack, ItemEffect.multishot), 1, infiniteAmmo ? 64 : ammoStack.getCount());
 
                     if (!world.isClientSide) {
                         double spread = getEffectEfficiency(itemStack, ItemEffect.multishot);
@@ -200,7 +206,7 @@ public class ModularBowItem extends ModularItem {
 
                         for (int i = 0; i < count; i++) {
                             double yaw = player.yRot - spread * (count - 1) / 2f + spread * i;
-                            AbstractArrowEntity projectile = ammoItem.createArrow(world, ammoStack, player);
+                            AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player);
                             projectile.shootFromRotation(player, player.xRot, (float) yaw, 0.0F, projectileVelocity * 3.0F, 1.0F);
 
                             if (drawProgress >= 20) {
@@ -237,15 +243,15 @@ public class ModularBowItem extends ModularItem {
 
                             if (infiniteAmmo || player.abilities.instabuild
                                     && (ammoStack.getItem() == Items.SPECTRAL_ARROW || ammoStack.getItem() == Items.TIPPED_ARROW)) {
-                                projectile.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+                                projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                             }
 
                             if (suspendLevel > 0 && drawProgress >= 20) {
-                                Vector3d projDir = projectile.getDeltaMovement().normalize();
-                                Vector3d projPos = projectile.position();
+                                Vec3 projDir = projectile.getDeltaMovement().normalize();
+                                Vec3 projPos = projectile.position();
                                 for (int j = 0; j < 4; j++) {
-                                    Vector3d pos = projPos.add(projDir.scale(2 + j * 2));
-                                    ((ServerWorld)entity.level).sendParticles(ParticleTypes.END_ROD,
+                                    Vec3 pos = projPos.add(projDir.scale(2 + j * 2));
+                                    ((ServerLevel)entity.level).sendParticles(ParticleTypes.END_ROD,
                                             pos.x(), pos.y(), pos.z(), 1,
                                             0, 0, 0, 0.01);
                                 }
@@ -276,7 +282,7 @@ public class ModularBowItem extends ModularItem {
                         pitchBase = pitchBase / 2;
                     }
                     world.playSound(null, player.getX(), player.getY(), player.getZ(),
-                            SoundEvents.ARROW_SHOOT, SoundCategory.PLAYERS,
+                            SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS,
                             0.8F + projectileVelocity * 0.2f,
                             1.9f + random.nextFloat() * 0.2F - pitchBase * 0.8F);
 
@@ -293,7 +299,7 @@ public class ModularBowItem extends ModularItem {
         }
     }
 
-    private boolean isInfinite(PlayerEntity player, ItemStack bowStack, ItemStack ammoStack) {
+    private boolean isInfinite(Player player, ItemStack bowStack, ItemStack ammoStack) {
         return player.abilities.instabuild
                 || (ammoStack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) > 0)
                 || CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
@@ -350,7 +356,7 @@ public class ModularBowItem extends ModularItem {
                     .filter(e -> itemStack.equals(e.getUseItem()))
                     .map(LivingEntity::getUseItemRemainingTicks)
                     .map(useCount -> 1 - useCount / (overbowedLevel * 2f))
-                    .map(progress -> MathHelper.clamp(progress, 0, 1))
+                    .map(progress -> Mth.clamp(progress, 0, 1))
                     .orElse(0f);
         }
 
@@ -374,8 +380,8 @@ public class ModularBowItem extends ModularItem {
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public UseAction getUseAnimation(ItemStack stack) {
-        return UseAction.BOW;
+    public UseAnim getUseAnimation(ItemStack stack) {
+        return UseAnim.BOW;
     }
 
     @Override
@@ -383,22 +389,22 @@ public class ModularBowItem extends ModularItem {
         return true;
     }
 
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack bowStack = player.getItemInHand(hand);
         boolean hasAmmo = !player.getProjectile(vanillaBow).isEmpty();
 
         if (isBroken(bowStack)) {
-            return ActionResult.pass(bowStack);
+            return InteractionResultHolder.pass(bowStack);
         }
 
-        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
+        InteractionResultHolder<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
         if (ret != null) return ret;
 
         if (!hasAmmo && !player.abilities.instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) <= 0) {
-            return ActionResult.fail(bowStack);
+            return InteractionResultHolder.fail(bowStack);
         } else {
             player.startUsingItem(hand);
-            return ActionResult.consume(bowStack);
+            return InteractionResultHolder.consume(bowStack);
         }
     }
 

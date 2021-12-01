@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.stats;
 
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.ForgeMod;
 import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBar;

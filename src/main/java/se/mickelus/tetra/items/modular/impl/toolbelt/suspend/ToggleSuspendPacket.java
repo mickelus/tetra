@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.suspend;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
 import se.mickelus.tetra.network.AbstractPacket;
 
 public class ToggleSuspendPacket extends AbstractPacket {
@@ -15,17 +15,17 @@ public class ToggleSuspendPacket extends AbstractPacket {
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         buffer.writeBoolean(toggleOn);
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         toggleOn = buffer.readBoolean();
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         SuspendEffect.toggleSuspend(player, toggleOn);
     }
 }

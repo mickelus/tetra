@@ -1,19 +1,19 @@
 package se.mickelus.tetra.effect.potion;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 
-public class StunPotionEffect extends Effect {
+public class StunPotionEffect extends MobEffect {
     public static StunPotionEffect instance;
     public StunPotionEffect() {
-        super(EffectType.HARMFUL, 0xeeeeee);
+        super(MobEffectCategory.HARMFUL, 0xeeeeee);
 
         setRegistryName("stun");
 
@@ -26,14 +26,14 @@ public class StunPotionEffect extends Effect {
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.getCommandSenderWorld().isClientSide) {
-            Vector3d pos = entity.getEyePosition(0);
+            Vec3 pos = entity.getEyePosition(0);
             double time = System.currentTimeMillis() / 1000d * Math.PI;
             double xOffset = Math.cos(time) * 0.4;
             double zOffset = Math.sin(time) * 0.4;
 
-            ((ServerWorld) entity.getCommandSenderWorld()).sendParticles(ParticleTypes.ENTITY_EFFECT, pos.x + xOffset, pos.y + 0.1, pos.z + zOffset,
+            ((ServerLevel) entity.getCommandSenderWorld()).sendParticles(ParticleTypes.ENTITY_EFFECT, pos.x + xOffset, pos.y + 0.1, pos.z + zOffset,
                     1, 0, 0, 0, 0);
-            ((ServerWorld) entity.getCommandSenderWorld()).sendParticles(ParticleTypes.ENTITY_EFFECT, pos.x - xOffset, pos.y + 0.4, pos.z - zOffset,
+            ((ServerLevel) entity.getCommandSenderWorld()).sendParticles(ParticleTypes.ENTITY_EFFECT, pos.x - xOffset, pos.y + 0.4, pos.z - zOffset,
                     1, 0, 0, 0, 0);
         }
     }
@@ -44,12 +44,12 @@ public class StunPotionEffect extends Effect {
     }
 
     @Override
-    public boolean shouldRender(EffectInstance effect) {
+    public boolean shouldRender(MobEffectInstance effect) {
         return false;
     }
 
     @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
+    public boolean shouldRenderHUD(MobEffectInstance effect) {
         return false;
     }
 }

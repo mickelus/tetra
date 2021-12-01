@@ -2,10 +2,10 @@ package se.mickelus.tetra.crafting;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import se.mickelus.tetra.blocks.scroll.ScrollData;
@@ -20,7 +20,7 @@ public class ScrollIngredient extends Ingredient {
     private final ScrollData data;
 
     protected ScrollIngredient(ItemStack itemStack, ScrollData data) {
-        super(Stream.of(new Ingredient.SingleItemList(itemStack)));
+        super(Stream.of(new Ingredient.ItemValue(itemStack)));
         this.itemStack = itemStack;
 
         this.data = data;
@@ -71,13 +71,13 @@ public class ScrollIngredient extends Ingredient {
         }
 
         @Override
-        public ScrollIngredient parse(PacketBuffer buffer) {
+        public ScrollIngredient parse(FriendlyByteBuf buffer) {
             ItemStack itemStack = buffer.readItem();
             return new ScrollIngredient(itemStack, ScrollData.read(itemStack));
         }
 
         @Override
-        public void write(PacketBuffer buffer, ScrollIngredient ingredient) {
+        public void write(FriendlyByteBuf buffer, ScrollIngredient ingredient) {
             buffer.writeItem(ingredient.itemStack);
         }
     }

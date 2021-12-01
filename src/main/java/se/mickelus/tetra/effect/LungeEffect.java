@@ -2,27 +2,27 @@ package se.mickelus.tetra.effect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.particles.BlockParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
@@ -46,11 +46,11 @@ public class LungeEffect extends ChargedAbilityEffect {
     public static final LungeEffect instance = new LungeEffect();
 
     LungeEffect() {
-        super(5, 0.5f, 60, 6.5, ItemEffect.lunge, TargetRequirement.none, UseAction.SPEAR, "raised");
+        super(5, 0.5f, 60, 6.5, ItemEffect.lunge, TargetRequirement.none, UseAnim.SPEAR, "raised");
     }
 
     @Override
-    public int getChargeTime(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack) {
+    public int getChargeTime(Player attacker, ItemModularHandheld item, ItemStack itemStack) {
         if (ComboPoints.canSpend(item, itemStack)) {
             return (int) (super.getChargeTime(attacker, item, itemStack)
                     * (1 - item.getEffectLevel(itemStack, ItemEffect.abilityCombo) / 100d * ComboPoints.get(attacker)));
@@ -59,12 +59,12 @@ public class LungeEffect extends ChargedAbilityEffect {
     }
 
     @Override
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack,
-            @Nullable LivingEntity target, @Nullable BlockPos targetPos,@Nullable Vector3d hitVec, int chargedTicks) {
+    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack,
+            @Nullable LivingEntity target, @Nullable BlockPos targetPos,@Nullable Vec3 hitVec, int chargedTicks) {
         if (attacker.isOnGround()) {
             float damageMultiplierOffset = 0;
             float strength = 1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
-            Vector3d lookVector = attacker.getLookAngle();
+            Vec3 lookVector = attacker.getLookAngle();
             double verticalVelocityFactor = 0.8;
             float hitCooldown = 0.7f;
             float exhaustDuration = 0;
@@ -116,17 +116,17 @@ public class LungeEffect extends ChargedAbilityEffect {
 
             attacker.push(
                     lookVector.x * strength,
-                    MathHelper.clamp(lookVector.y * strength * verticalVelocityFactor + 0.3, 0.3, verticalVelocityFactor),
+                    Mth.clamp(lookVector.y * strength * verticalVelocityFactor + 0.3, 0.3, verticalVelocityFactor),
                     lookVector.z * strength);
             attacker.hurtMarked = true;
 
-            attacker.move(MoverType.SELF, new Vector3d(0, 0.4, 0));
+            attacker.move(MoverType.SELF, new Vec3(0, 0.4, 0));
 
             attacker.causeFoodExhaustion(overextendLevel > 0 ? 6 : 1);
             attacker.getCooldowns().addCooldown(item, getCooldown(item, itemStack));
 
             attacker.getCommandSenderWorld().playSound(attacker, new BlockPos(attacker.position().add(attacker.getDeltaMovement())), SoundEvents.UI_TOAST_IN,
-                    SoundCategory.PLAYERS, 1, 1.3f);
+                    SoundSource.PLAYERS, 1, 1.3f);
 
         }
 
@@ -135,11 +135,11 @@ public class LungeEffect extends ChargedAbilityEffect {
         }
     }
 
-    public static void onPlayerTick(PlayerEntity player) {
+    public static void onPlayerTick(Player player) {
         LungeData data = activeCache.getIfPresent(getIdentifier(player));
         if (data != null && !player.isPassenger()) {
             if (!player.isOnGround()) {
-                AxisAlignedBB axisalignedbb = player.getBoundingBox().inflate(0.2, 0, 0.2).move(player.getDeltaMovement());
+                AABB axisalignedbb = player.getBoundingBox().inflate(0.2, 0, 0.2).move(player.getDeltaMovement());
 
                 player.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb).stream()
                         .filter(Entity::isAlive)
@@ -152,17 +152,17 @@ public class LungeEffect extends ChargedAbilityEffect {
                 activeCache.invalidate(getIdentifier(player));
 
                 if (data.exhaustDuration > 0) {
-                    player.addEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (data.exhaustDuration * 20), 4, false, true));
+                    player.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, (int) (data.exhaustDuration * 20), 4, false, true));
                 }
             }
         }
     }
 
-    private static void onEntityImpact(PlayerEntity player, LivingEntity target, LungeData data) {
+    private static void onEntityImpact(Player player, LivingEntity target, LungeData data) {
         ItemStack itemStack = data.itemStack;
         ItemModularHandheld item = CastOptional.cast(itemStack.getItem(), ItemModularHandheld.class).orElse(null);
 
-        Vector3d bounceVector = player.position().subtract(target.position()).normalize().scale(0.1f);
+        Vec3 bounceVector = player.position().subtract(target.position()).normalize().scale(0.1f);
         player.setDeltaMovement(bounceVector);
         player.hurtMarked = true;
 
@@ -189,13 +189,13 @@ public class LungeEffect extends ChargedAbilityEffect {
             if (result != AbilityUseResult.fail) {
                 if (momentumLevel > 0) {
                     int duration = 10 + (int) (Math.min(momentumLevel, player.fallDistance) * item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum) * 20);
-                    target.addEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                    target.addEffect(new MobEffectInstance(StunPotionEffect.instance, duration, 0, false, false));
                     spawnMomentumParticles(target, bonusDamage);
                 }
             }
 
-            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.8f);
-            player.swing(Hand.MAIN_HAND, true);
+            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.PLAYERS, 1, 0.8f);
+            player.swing(InteractionHand.MAIN_HAND, true);
         }
 
         if (momentumLevel > 0) {
@@ -215,13 +215,13 @@ public class LungeEffect extends ChargedAbilityEffect {
         BlockState blockState = target.level.getBlockState(pos);
 
         if (!blockState.isAir(target.level, pos)) {
-            ((ServerWorld)target.level).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, blockState), target.getX(), target.getY(),
+            ((ServerLevel)target.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState), target.getX(), target.getY(),
                     target.getZ(), (int) (bonus * 8) + 20, 0.0D, 0.0D, 0.0D, 0.15);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void onRightClick(ClientPlayerEntity player) {
+    public static void onRightClick(LocalPlayer player) {
         LungeData data = activeCache.getIfPresent(getIdentifier(player));
         if (data != null && data.echoCount > 0) {
             TetraMod.packetHandler.sendToServer(new LungeEchoPacket());
@@ -230,7 +230,7 @@ public class LungeEffect extends ChargedAbilityEffect {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void onJump(ClientPlayerEntity player) {
+    public static void onJump(LocalPlayer player) {
         LungeData data = activeCache.getIfPresent(getIdentifier(player));
         if (data != null && data.echoCount > 0) {
             TetraMod.packetHandler.sendToServer(new LungeEchoPacket(true));
@@ -238,15 +238,15 @@ public class LungeEffect extends ChargedAbilityEffect {
         }
     }
 
-    public static void receiveEchoPacket(PlayerEntity player, boolean isVertical) {
+    public static void receiveEchoPacket(Player player, boolean isVertical) {
         LungeData data = activeCache.getIfPresent(getIdentifier(player));
         if (data != null && data.echoCount > 0) {
             echo(player, data, isVertical);
         }
     }
 
-    public static void echo(PlayerEntity entity, LungeData data, boolean isVertical) {
-        Vector3d lookVector = entity.getLookAngle();
+    public static void echo(Player entity, LungeData data, boolean isVertical) {
+        Vec3 lookVector = entity.getLookAngle();
         entity.setDeltaMovement(lookVector.scale(entity.getDeltaMovement().dot(lookVector) / lookVector.dot(lookVector)));
 
         double strength = data.echoStrength;
@@ -265,7 +265,7 @@ public class LungeEffect extends ChargedAbilityEffect {
         }
 
         if (isVertical) {
-            Vector3d motion = entity.getDeltaMovement();
+            Vec3 motion = entity.getDeltaMovement();
             double vertical = motion.y > 0 ? motion.y + strength * 0.5 : strength * 0.5;
             entity.setDeltaMovement(motion.x, vertical, motion.z);
         }
@@ -277,11 +277,11 @@ public class LungeEffect extends ChargedAbilityEffect {
         entity.hurtMarked = true;
 
         entity.getCommandSenderWorld().playSound(entity, new BlockPos(entity.position().add(entity.getDeltaMovement())), SoundEvents.UI_TOAST_IN,
-                SoundCategory.PLAYERS, 1, 1.3f);
+                SoundSource.PLAYERS, 1, 1.3f);
 
         if (!entity.level.isClientSide) {
             Random rand = entity.getRandom();
-            ((ServerWorld) entity.level).sendParticles(ParticleTypes.WITCH,
+            ((ServerLevel) entity.level).sendParticles(ParticleTypes.WITCH,
                     entity.getX() + (rand.nextGaussian() - 0.5) * 0.5,
                     entity.getY(),
                     entity.getZ() + (rand.nextGaussian() - 0.5) * 0.5,
@@ -291,7 +291,7 @@ public class LungeEffect extends ChargedAbilityEffect {
         data.echoCount--;
     }
 
-    private static int getIdentifier(PlayerEntity entity) {
+    private static int getIdentifier(Player entity) {
         return entity.level.isClientSide ? -entity.getId() : entity.getId();
     }
 

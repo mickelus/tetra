@@ -1,10 +1,10 @@
 package se.mickelus.tetra.module.schematic;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -62,7 +62,7 @@ public class RepairSchematic extends BaseSchematic {
                         return Arrays.stream(cycle)
                                 .map(module -> {
                                     String name = module.getName(itemStack);
-                                    return currentTarget.equals(module) ? TextFormatting.WHITE + name + TextFormatting.RESET : name;
+                                    return currentTarget.equals(module) ? ChatFormatting.WHITE + name + ChatFormatting.RESET : name;
                                 })
                                 .collect(Collectors.joining(", "));
                     }
@@ -127,7 +127,7 @@ public class RepairSchematic extends BaseSchematic {
     }
 
     @Override
-    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
+    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, Player player) {
         ItemStack upgradedStack = itemStack.copy();
         IModularItem item = (IModularItem) upgradedStack.getItem();
         int quantity = getRequiredQuantity(itemStack, 0, materials[0]);
@@ -148,7 +148,7 @@ public class RepairSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean isIntegrityViolation(PlayerEntity player, ItemStack itemStack, final ItemStack[] materials, String slot) {
+    public boolean isIntegrityViolation(Player player, ItemStack itemStack, final ItemStack[] materials, String slot) {
         return false;
     }
 

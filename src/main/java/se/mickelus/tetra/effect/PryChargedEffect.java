@@ -1,11 +1,11 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
@@ -14,7 +14,7 @@ public class PryChargedEffect extends ChargedAbilityEffect {
     public static final PryChargedEffect instance = new PryChargedEffect();
 
     PryChargedEffect() {
-        super(20, 0, 40, 3, ItemEffect.pry, TargetRequirement.entity, UseAction.SPEAR, "raised");
+        super(20, 0, 40, 3, ItemEffect.pry, TargetRequirement.entity, UseAnim.SPEAR, "raised");
     }
 
     @Override
@@ -23,7 +23,7 @@ public class PryChargedEffect extends ChargedAbilityEffect {
     }
 
     @Override
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
+    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
 
         if (!target.level.isClientSide) {
             int amplifier = item.getEffectLevel(itemStack, ItemEffect.pry);

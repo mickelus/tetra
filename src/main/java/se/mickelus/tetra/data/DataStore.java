@@ -2,13 +2,13 @@ package se.mickelus.tetra.data;
 
 import com.google.common.collect.Maps;
 import com.google.gson.*;
-import net.minecraft.client.resources.ReloadListener;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResource;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.forgespi.Environment;
@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonElement>> {
+public class DataStore<V> extends SimplePreparableReloadListener<Map<ResourceLocation, JsonElement>> {
     private static final Logger logger = LogManager.getLogger();
     protected static final int jsonExtLength = ".json".length();
 
@@ -45,7 +45,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
         listeners = new LinkedList<>();
     }
 
-    protected Map<ResourceLocation, JsonElement> prepare(IResourceManager resourceManager, IProfiler profiler) {
+    protected Map<ResourceLocation, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
         logger.debug("Reading data for {} data store...", directory);
         Map<ResourceLocation, JsonElement> map = Maps.newHashMap();
         int i = this.directory.length() + 1;
@@ -59,16 +59,16 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
             ResourceLocation location = new ResourceLocation(fullLocation.getNamespace(), path.substring(i, path.length() - jsonExtLength));
 
             try (
-                    IResource resource = resourceManager.getResource(fullLocation);
+                    Resource resource = resourceManager.getResource(fullLocation);
                     InputStream inputStream = resource.getInputStream();
                     Reader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             ) {
                 JsonElement json;
 
                 if (dataClass.isArray()) {
-                    json = JSONUtils.fromJson(gson, reader, JsonArray.class);
+                    json = GsonHelper.fromJson(gson, reader, JsonArray.class);
                 } else {
-                    json = JSONUtils.fromJson(gson, reader, JsonElement.class);
+                    json = GsonHelper.fromJson(gson, reader, JsonElement.class);
                 }
 
                 if (json != null) {
@@ -92,7 +92,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> splashList, IResourceManager resourceManager, IProfiler profiler) {
+    protected void apply(Map<ResourceLocation, JsonElement> splashList, ResourceManager resourceManager, ProfilerFiller profiler) {
         rawData = splashList;
 
         // PacketHandler dependencies get upset when called upon before the server has started properly
@@ -103,7 +103,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
         parseData(rawData);
     }
 
-    public void sendToPlayer(ServerPlayerEntity player) {
+    public void sendToPlayer(ServerPlayer player) {
         TetraMod.packetHandler.sendTo(new UpdateDataPacket(directory, rawData), player);
     }
 
@@ -113,9 +113,9 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
                         Map.Entry::getKey,
                         entry -> {
                             if (dataClass.isArray()) {
-                                return JSONUtils.fromJson(gson, entry.getValue(), JsonArray.class);
+                                return GsonHelper.fromJson(gson, entry.getValue(), JsonArray.class);
                             } else {
-                                return JSONUtils.fromJson(gson, entry.getValue(), JsonElement.class);
+                                return GsonHelper.fromJson(gson, entry.getValue(), JsonElement.class);
                             }
                         }
                 ));
@@ -148,7 +148,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
         }
 
         JsonObject jsonObject = json.getAsJsonObject();
-        return !jsonObject.has("conditions") || CraftingHelper.processConditions(JSONUtils.getAsJsonArray(jsonObject, "conditions"));
+        return !jsonObject.has("conditions") || CraftingHelper.processConditions(GsonHelper.getAsJsonArray(jsonObject, "conditions"));
     }
 
     protected void processData() {

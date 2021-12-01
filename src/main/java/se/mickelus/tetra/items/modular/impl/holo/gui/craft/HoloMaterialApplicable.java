@@ -3,16 +3,16 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ForgeRegistries;
 import se.mickelus.mgui.gui.GuiClickable;
@@ -60,7 +60,7 @@ public class HoloMaterialApplicable extends GuiElement {
         return null;
     }
 
-    public void update(ItemStack itemStack, String slot, UpgradeSchematic schematic, PlayerEntity playerEntity) {
+    public void update(ItemStack itemStack, String slot, UpgradeSchematic schematic, Player playerEntity) {
         this.item = null;
         this.slot = null;
         this.schematic = null;
@@ -78,22 +78,22 @@ public class HoloMaterialApplicable extends GuiElement {
                         }
                         return Optional.ofNullable(ForgeRegistries.ITEMS.getValue(new ResourceLocation(mat)))
                                 .map(Item::getDescription)
-                                .map(ITextComponent::getString)
+                                .map(Component::getString)
                                 .orElse(mat);
                     })
                     .collect(Collectors.joining(", "));
 
-            tooltipBuilder.add(I18n.get("tetra.holo.craft.applicable_materials"), TextFormatting.GRAY + materialsString);
+            tooltipBuilder.add(I18n.get("tetra.holo.craft.applicable_materials"), ChatFormatting.GRAY + materialsString);
 
             tooltipBuilder.add(" ");
 
             if ((schematic.getType() != SchematicType.major && schematic.getType() != SchematicType.minor)
                     || schematic.getRarity() != SchematicRarity.basic) {
                 tooltipBuilder.add(I18n.get("tetra.holo.craft.holosphere_shortcut_disabled"));
-                tooltipBuilder.add(TextFormatting.DARK_GRAY + I18n.get("tetra.holo.craft.holosphere_shortcut_unavailable"));
+                tooltipBuilder.add(ChatFormatting.DARK_GRAY + I18n.get("tetra.holo.craft.holosphere_shortcut_unavailable"));
             } else if (ModularHolosphereItem.findHolosphere(playerEntity).isEmpty() || !(itemStack.getItem() instanceof IModularItem)) {
                 tooltipBuilder.add(I18n.get("tetra.holo.craft.holosphere_shortcut_disabled"));
-                tooltipBuilder.add(TextFormatting.DARK_GRAY + I18n.get("tetra.holo.craft.holosphere_shortcut_missing"));
+                tooltipBuilder.add(ChatFormatting.DARK_GRAY + I18n.get("tetra.holo.craft.holosphere_shortcut_missing"));
             } else {
                 tooltipBuilder.add(I18n.get("tetra.holo.craft.holosphere_shortcut"));
                 this.item = (IModularItem) itemStack.getItem();

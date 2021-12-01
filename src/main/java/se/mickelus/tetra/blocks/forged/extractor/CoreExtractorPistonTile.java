@@ -1,21 +1,21 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.TileEntityOptional;
 
-public class CoreExtractorPistonTile extends TileEntity implements ITickableTileEntity {
+public class CoreExtractorPistonTile extends BlockEntity implements TickableBlockEntity {
     @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorPistonBlock.unlocalizedName)
-    public static TileEntityType<CoreExtractorPistonTile> type;
+    public static BlockEntityType<CoreExtractorPistonTile> type;
 
     static final long activationDuration = 105;
     private static final int fillAmount = 40;
@@ -67,16 +67,16 @@ public class CoreExtractorPistonTile extends TileEntity implements ITickableTile
     }
 
     private void runEndEffects() {
-        if (level instanceof ServerWorld) {
-            ((ServerWorld) level).sendParticles(ParticleTypes.LARGE_SMOKE,
+        if (level instanceof ServerLevel) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.LARGE_SMOKE,
                     worldPosition.getX() + 0.5, worldPosition.getY() + 0.1, worldPosition.getZ() + 0.5,
                     5,  0, 0, 0, 0.02f);
         }
 
-        level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS,
+        level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
                 0.1f, 1);
 
-        level.playSound(null, worldPosition, SoundEvents.METAL_FALL, SoundCategory.BLOCKS,
+        level.playSound(null, worldPosition, SoundEvents.METAL_FALL, SoundSource.BLOCKS,
                 0.2f, 0.5f);
     }
 }

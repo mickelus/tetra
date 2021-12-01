@@ -1,13 +1,13 @@
 package se.mickelus.tetra.generation.processing;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.gen.feature.template.IStructureProcessorType;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.StructureProcessor;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import se.mickelus.tetra.blocks.forged.ForgedCrateBlock;
 
 import javax.annotation.Nullable;
@@ -18,8 +18,8 @@ public class ForgedCrateProcessor extends StructureProcessor {
 
     @Nullable
     @Override
-    public Template.BlockInfo process(IWorldReader world, BlockPos pos, BlockPos pos2, Template.BlockInfo $, Template.BlockInfo blockInfo,
-            PlacementSettings placementSettings, @Nullable Template template) {
+    public StructureTemplate.StructureBlockInfo process(LevelReader world, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo $, StructureTemplate.StructureBlockInfo blockInfo,
+            StructurePlaceSettings placementSettings, @Nullable StructureTemplate template) {
         if (blockInfo.state.getBlock() instanceof ForgedCrateBlock) {
             Random random = placementSettings.getRandom(blockInfo.pos);
 
@@ -27,14 +27,14 @@ public class ForgedCrateProcessor extends StructureProcessor {
                     .setValue(ForgedCrateBlock.propIntegrity, random.nextInt(4))
                     .setValue(ForgedCrateBlock.propFacing, Direction.from2DDataValue(random.nextInt(4)));
 
-            return new Template.BlockInfo(blockInfo.pos, blockState, blockInfo.nbt);
+            return new StructureTemplate.StructureBlockInfo(blockInfo.pos, blockState, blockInfo.nbt);
         }
 
         return blockInfo;
     }
 
     @Override
-    protected IStructureProcessorType getType() {
+    protected StructureProcessorType getType() {
         return ProcessorTypes.forgedCrate;
     }
 }

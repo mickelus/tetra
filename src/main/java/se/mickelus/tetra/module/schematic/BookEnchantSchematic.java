@@ -1,13 +1,13 @@
 package se.mickelus.tetra.module.schematic;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.TetraMod;
@@ -106,18 +106,18 @@ public class BookEnchantSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
+    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
         return isMaterialsValid(itemStack, slot, materials)
                 && (player.isCreative() || player.experienceLevel >= getExperienceCost(itemStack, materials, slot));
     }
 
     @Override
-    public boolean isIntegrityViolation(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot) {
+    public boolean isIntegrityViolation(Player player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return false;
     }
 
     @Override
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
+    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, Player player) {
         ItemStack upgradedStack = itemStack.copy();
 
         ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), IModularItem.class)
@@ -133,8 +133,8 @@ public class BookEnchantSchematic implements UpgradeSchematic {
                     if (module.acceptsImprovementLevel(mapping.improvement, entry.getValue())) {
                         module.addImprovement(upgradedStack, mapping.improvement, entry.getValue());
 
-                        if (consumeMaterials && player instanceof ServerPlayerEntity) {
-                            ImprovementCraftCriterion.trigger((ServerPlayerEntity) player, itemStack, upgradedStack, getKey(), slot,
+                        if (consumeMaterials && player instanceof ServerPlayer) {
+                            ImprovementCraftCriterion.trigger((ServerPlayer) player, itemStack, upgradedStack, getKey(), slot,
                                     mapping.improvement, (int) (entry.getValue() / mapping.multiplier), null, -1);
                         }
                     }

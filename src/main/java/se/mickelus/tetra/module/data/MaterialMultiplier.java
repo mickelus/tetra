@@ -1,8 +1,8 @@
 package se.mickelus.tetra.module.data;
 
 import com.google.common.collect.Multimap;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public class MaterialMultiplier {
     public Multimap<Attribute, AttributeModifier> primaryAttributes;

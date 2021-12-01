@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 public class TooltipGetterPercentage implements ITooltipGetter {
 
@@ -16,17 +16,17 @@ public class TooltipGetterPercentage implements ITooltipGetter {
 
 
     @Override
-    public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipBase(Player player, ItemStack itemStack) {
         return I18n.get(localizationKey, String.format("%.0f%%", statGetter.getValue(player, itemStack)));
     }
 
     @Override
-    public boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
+    public boolean hasExtendedTooltip(Player player, ItemStack itemStack) {
         return I18n.exists(localizationKey + "_extended");
     }
 
     @Override
-    public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipExtension(Player player, ItemStack itemStack) {
         return I18n.get(localizationKey + "_extended");
     }
 }

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiTexture;
@@ -45,7 +45,7 @@ public class HoloSortButton extends GuiElement {
         this.label.setString(StatSorters.none.getName());
         if (previews.length > 0) {
             OutcomePreview preview = previews[0];
-            PlayerEntity player = Minecraft.getInstance().player;
+            Player player = Minecraft.getInstance().player;
 
             popover.update(StatSorters.sorters.stream()
                     .filter(sorter -> sorter.getWeight(player, preview.itemStack) > 0)

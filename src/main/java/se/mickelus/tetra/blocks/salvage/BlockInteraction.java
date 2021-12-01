@@ -1,27 +1,27 @@
 package se.mickelus.tetra.blocks.salvage;
 
 import com.google.common.base.Predicates;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.state.Property;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.util.RotationHelper;
 import se.mickelus.tetra.advancements.BlockInteractionCriterion;
@@ -86,7 +86,7 @@ public class BlockInteraction {
                 outcome);
     }
 
-    public boolean applicableForBlock(World world, BlockPos pos, BlockState blockState) {
+    public boolean applicableForBlock(Level world, BlockPos pos, BlockState blockState) {
         return predicate.test(blockState);
     }
 
@@ -94,27 +94,27 @@ public class BlockInteraction {
         return minX <= x && x <= maxX && minY <= y && y <= maxY;
     }
 
-    public boolean isPotentialInteraction(World world, BlockPos pos, BlockState blockState, Direction hitFace, Collection<ToolType> availableTools) {
+    public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction hitFace, Collection<ToolType> availableTools) {
         return isPotentialInteraction(world, pos, blockState, Direction.NORTH, hitFace, availableTools);
     }
 
-    public boolean isPotentialInteraction(World world, BlockPos pos, BlockState blockState, Direction blockFacing, Direction hitFace,
+    public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction blockFacing, Direction hitFace,
             Collection<ToolType> availableTools) {
         return applicableForBlock(world, pos, blockState)
                 && RotationHelper.rotationFromFacing(blockFacing).rotate(face).equals(hitFace)
                 && (alwaysReveal || availableTools.contains(requiredTool));
     }
 
-    public void applyOutcome(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace) {
+    public void applyOutcome(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace) {
         outcome.apply(world, pos, blockState, player, hand, hitFace);
     }
 
-    public static ActionResultType attemptInteraction(World world, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand,
-            BlockRayTraceResult rayTrace) {
+    public static InteractionResult attemptInteraction(Level world, BlockState blockState, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult rayTrace) {
         ItemStack heldStack = player.getItemInHand(hand);
         Collection<ToolType> availableTools = PropertyHelper.getItemTools(heldStack);
 
-        AxisAlignedBB boundingBox = blockState.getShape(world, pos, ISelectionContext.of(player)).bounds();
+        AABB boundingBox = blockState.getShape(world, pos, CollisionContext.of(player)).bounds();
         double hitU = 16 * getHitU(rayTrace.getDirection(), boundingBox,
                 rayTrace.getLocation().x - pos.getX(),
                 rayTrace.getLocation().y - pos.getY(),
@@ -133,17 +133,17 @@ public class BlockInteraction {
                 .orElse(null);
 
         if (possibleInteraction != null) {
-            if (Hand.MAIN_HAND == hand) {
+            if (InteractionHand.MAIN_HAND == hand) {
                 if (player.getAttackStrengthScale(0) < 0.8) {
                     if (player.getOffhandItem().isEmpty()) {
                         player.resetAttackStrengthTicker();
-                        return ActionResultType.FAIL;
+                        return InteractionResult.FAIL;
                     }
-                    return ActionResultType.PASS;
+                    return InteractionResult.PASS;
                 }
             } else {
                 if (player.getCooldowns().isOnCooldown(heldStack.getItem())) {
-                    return ActionResultType.FAIL;
+                    return InteractionResult.FAIL;
                 }
             }
 
@@ -162,14 +162,14 @@ public class BlockInteraction {
                 }
             }
 
-            if (player instanceof ServerPlayerEntity) {
+            if (player instanceof ServerPlayer) {
                 BlockState newState = world.getBlockState(pos);
 
-                BlockInteractionCriterion.trigger((ServerPlayerEntity) player, newState, possibleInteraction.requiredTool,
+                BlockInteractionCriterion.trigger((ServerPlayer) player, newState, possibleInteraction.requiredTool,
                         possibleInteraction.requiredLevel);
             }
 
-            if (Hand.MAIN_HAND == hand) {
+            if (InteractionHand.MAIN_HAND == hand) {
                 player.resetAttackStrengthTicker();
             } else {
                 int cooldown = CastOptional.cast(heldStack.getItem(), ItemModularHandheld.class)
@@ -182,14 +182,14 @@ public class BlockInteraction {
                 InteractiveBlockOverlay.markDirty();
             }
 
-            return ActionResultType.sidedSuccess(player.level.isClientSide);
+            return InteractionResult.sidedSuccess(player.level.isClientSide);
         }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 
-    public static BlockInteraction getInteractionAtPoint(PlayerEntity player, BlockState blockState, BlockPos pos, Direction hitFace,
+    public static BlockInteraction getInteractionAtPoint(Player player, BlockState blockState, BlockPos pos, Direction hitFace,
             double hitX, double hitY, double hitZ) {
-        AxisAlignedBB boundingBox = blockState.getShape(player.level, pos).bounds();
+        AABB boundingBox = blockState.getShape(player.level, pos).bounds();
         double hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
         double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 
@@ -210,7 +210,7 @@ public class BlockInteraction {
      * @param hitZ
      * @return
      */
-    private static double getHitU(Direction facing, AxisAlignedBB boundingBox, double hitX, double hitY, double hitZ) {
+    private static double getHitU(Direction facing, AABB boundingBox, double hitX, double hitY, double hitZ) {
         switch (facing) {
             case DOWN:
                 return boundingBox.maxX - hitX;
@@ -237,7 +237,7 @@ public class BlockInteraction {
      * @param hitZ
      * @return
      */
-    private static double getHitV(Direction facing, AxisAlignedBB boundingBox, double hitX, double hitY, double hitZ) {
+    private static double getHitV(Direction facing, AABB boundingBox, double hitX, double hitY, double hitZ) {
         switch (facing) {
             case DOWN:
                 return boundingBox.maxZ - hitZ;
@@ -274,41 +274,41 @@ public class BlockInteraction {
         return Objects.hash(requiredTool, requiredLevel, face, minX, minY, maxX, maxY);
     }
 
-    public static List<ItemStack> getLoot(ResourceLocation lootTable, PlayerEntity player, Hand hand, ServerWorld world,
+    public static List<ItemStack> getLoot(ResourceLocation lootTable, Player player, InteractionHand hand, ServerLevel world,
             BlockState blockState) {
         LootTable table = world.getServer().getLootTables().get(lootTable);
 
         LootContext context = new LootContext.Builder(world)
                 .withLuck(player.getLuck())
-                .withParameter(LootParameters.THIS_ENTITY, player)
-                .withParameter(LootParameters.BLOCK_STATE, blockState)
-                .withParameter(LootParameters.TOOL, player.getItemInHand(hand))
-                .withParameter(LootParameters.ORIGIN, player.position())
-                .create(LootParameterSets.BLOCK);
+                .withParameter(LootContextParams.THIS_ENTITY, player)
+                .withParameter(LootContextParams.BLOCK_STATE, blockState)
+                .withParameter(LootContextParams.TOOL, player.getItemInHand(hand))
+                .withParameter(LootContextParams.ORIGIN, player.position())
+                .create(LootContextParamSets.BLOCK);
 
         return table.getRandomItems(context);
     }
 
-    public static List<ItemStack> getLoot(ResourceLocation lootTable, ServerWorld world, BlockPos pos, BlockState blockState) {
+    public static List<ItemStack> getLoot(ResourceLocation lootTable, ServerLevel world, BlockPos pos, BlockState blockState) {
         LootTable table = world.getServer().getLootTables().get(lootTable);
 
         LootContext context = new LootContext.Builder(world)
-                .withParameter(LootParameters.BLOCK_STATE, blockState)
-                .withParameter(LootParameters.TOOL, ItemStack.EMPTY)
-                .withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(pos))
-                .create(LootParameterSets.BLOCK);
+                .withParameter(LootContextParams.BLOCK_STATE, blockState)
+                .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
+                .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
+                .create(LootContextParamSets.BLOCK);
 
         return table.getRandomItems(context);
     }
 
-    public static void dropLoot(ResourceLocation lootTable, @Nullable PlayerEntity player, @Nullable Hand hand, ServerWorld world, BlockState blockState) {
+    public static void dropLoot(ResourceLocation lootTable, @Nullable Player player, @Nullable InteractionHand hand, ServerLevel world, BlockState blockState) {
         getLoot(lootTable, player, hand, world, blockState).forEach(itemStack -> {
             if (!player.inventory.add(itemStack)) {
                 player.drop(itemStack, false);
             }
         });
     }
-    public static void dropLoot(ResourceLocation lootTable, ServerWorld world, BlockPos pos, BlockState blockState) {
+    public static void dropLoot(ResourceLocation lootTable, ServerLevel world, BlockPos pos, BlockState blockState) {
         getLoot(lootTable, world, pos, blockState).forEach(itemStack -> {
             Block.popResource(world, pos, itemStack);
         });

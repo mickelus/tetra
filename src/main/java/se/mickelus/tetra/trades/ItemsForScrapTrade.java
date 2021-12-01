@@ -1,16 +1,16 @@
 package se.mickelus.tetra.trades;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.MerchantOffer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.MerchantOffer;
 
 import java.util.Random;
 
-class ItemsForScrapTrade implements VillagerTrades.ITrade {
+class ItemsForScrapTrade implements VillagerTrades.ItemListing {
     private final ItemStack sellingItem;
     private final int scrapCount;
     private final int sellingItemCount;

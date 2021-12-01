@@ -1,9 +1,9 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
@@ -59,7 +59,7 @@ public class GuiRangedProgress extends GuiRoot {
         }
 
         if (progress > 0) {
-            bar.setWidth(MathHelper.clamp((int) (progress * width), 0, width));
+            bar.setWidth(Mth.clamp((int) (progress * width), 0, width));
 
             if (!showAnimation.isActive() && container.getOpacity() < 1) {
                 showAnimation.start();
@@ -78,14 +78,14 @@ public class GuiRangedProgress extends GuiRoot {
     @Override
     public void draw() {
         if (isVisible() && (progress > 0 || hideAnimation.isActive())) {
-            MainWindow window = mc.getWindow();
+            Window window = mc.getWindow();
             int width = window.getGuiScaledWidth();
             int height = window.getGuiScaledHeight();
 
             int mouseX = (int)(mc.mouseHandler.xpos() * window.getGuiScaledWidth() / window.getScreenWidth());
             int mouseY = (int)(mc.mouseHandler.ypos() * window.getGuiScaledHeight() / window.getScreenHeight());
 
-            this.drawChildren(new MatrixStack(), width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
+            this.drawChildren(new PoseStack(), width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
         }
     }
 }

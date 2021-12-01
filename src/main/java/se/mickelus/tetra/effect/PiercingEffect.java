@@ -1,21 +1,21 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ServerScheduler;
@@ -25,8 +25,8 @@ import se.mickelus.tetra.util.CastOptional;
 import java.util.Optional;
 
 public class PiercingEffect {
-    public static void pierceBlocks(ItemModularHandheld item, ItemStack itemStack, int pierceAmount, ServerWorld world, BlockState state, BlockPos pos, LivingEntity entity) {
-        PlayerEntity player = CastOptional.cast(entity, PlayerEntity.class).orElse(null);
+    public static void pierceBlocks(ItemModularHandheld item, ItemStack itemStack, int pierceAmount, ServerLevel world, BlockState state, BlockPos pos, LivingEntity entity) {
+        Player player = CastOptional.cast(entity, Player.class).orElse(null);
 
         if (pierceAmount > 0) {
             double critMultiplier = CritEffect.rollMultiplier(entity.getRandom(), item, itemStack);
@@ -35,16 +35,16 @@ public class PiercingEffect {
                 world.sendParticles(ParticleTypes.ENCHANTED_HIT, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, 15, 0.2D, 0.2D, 0.2D, 0.0D);
             }
 
-            Vector3d entityPosition = entity.getEyePosition(0);
+            Vec3 entityPosition = entity.getEyePosition(0);
             double lookDistance = Optional.ofNullable(entity.getAttribute(ForgeMod.REACH_DISTANCE.get()))
-                    .map(ModifiableAttributeInstance::getValue)
+                    .map(AttributeInstance::getValue)
                     .orElse(5d);
 
-            Vector3d lookingPosition = entity.getLookAngle().scale(lookDistance).add(entityPosition);
-            BlockRayTraceResult rayTrace = world.clip(new RayTraceContext(entityPosition, lookingPosition,
-                    RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity));
+            Vec3 lookingPosition = entity.getLookAngle().scale(lookDistance).add(entityPosition);
+            BlockHitResult rayTrace = world.clip(new ClipContext(entityPosition, lookingPosition,
+                    ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
 
-            Direction direction = rayTrace.getType() == RayTraceResult.Type.BLOCK
+            Direction direction = rayTrace.getType() == HitResult.Type.BLOCK
                     ? rayTrace.getDirection().getOpposite()
                     : Direction.orderedByNearest(entity)[0];
 
@@ -73,7 +73,7 @@ public class PiercingEffect {
         }
     }
 
-    private static void enqueueBlockBreak(World world, PlayerEntity player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool, int remaining) {
+    private static void enqueueBlockBreak(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool, int remaining) {
         ServerScheduler.schedule(1, () -> {
             BlockState offsetState = world.getBlockState(pos);
             ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
@@ -85,7 +85,7 @@ public class PiercingEffect {
                     && blockHardness <= refHardness
                     && ItemModularHandheld.isToolEffective(refTool, offsetState)) {
                 if (EffectHelper.breakBlock(world, player, itemStack, pos, offsetState, true)) {
-                    EffectHelper.sendEventToPlayer((ServerPlayerEntity) player, 2001, pos, Block.getId(offsetState));
+                    EffectHelper.sendEventToPlayer((ServerPlayer) player, 2001, pos, Block.getId(offsetState));
 
                     item.applyBreakEffects(itemStack, world, offsetState, pos, player);
 

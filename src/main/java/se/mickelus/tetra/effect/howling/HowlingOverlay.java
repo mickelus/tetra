@@ -3,7 +3,7 @@ package se.mickelus.tetra.effect.howling;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,7 +33,7 @@ public class HowlingOverlay {
 
         int amplifier = Optional.ofNullable(mc.player)
                 .map(player -> player.getEffect(HowlingPotionEffect.instance))
-                .map(EffectInstance::getAmplifier)
+                .map(MobEffectInstance::getAmplifier)
                 .orElse(-1);
 
         gui.updateAmplifier(amplifier);

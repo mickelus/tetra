@@ -1,18 +1,18 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -28,18 +28,18 @@ public class ReapEffect extends ChargedAbilityEffect {
     public static final ReapEffect instance = new ReapEffect();
 
     ReapEffect() {
-        super(20, 0.7f, 40, 8, ItemEffect.reap, TargetRequirement.none, UseAction.SPEAR, "raised");
+        super(20, 0.7f, 40, 8, ItemEffect.reap, TargetRequirement.none, UseAnim.SPEAR, "raised");
     }
 
     @Override
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vector3d hitVec, int chargedTicks) {
+    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vec3 hitVec, int chargedTicks) {
         if (!attacker.level.isClientSide) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
             double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
             int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
             int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
             boolean overextend = overextendLevel > 0 && !attacker.getFoodData().needsFood();
-            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) attacker;
+            ServerPlayer serverPlayer = (ServerPlayer) attacker;
 
             int cooldown = getCooldown(item, itemStack);
             double damageMultiplier = EffectHelper.getEffectLevel(itemStack, ItemEffect.reap) / 100d;
@@ -59,17 +59,17 @@ public class ReapEffect extends ChargedAbilityEffect {
             AtomicInteger kills = new AtomicInteger();
             AtomicInteger revengeKills = new AtomicInteger();
             AtomicInteger hits = new AtomicInteger();
-            Vector3d targetVec;
+            Vec3 targetVec;
             if (target != null) {
                 targetVec = hitVec;
             } else {
-                targetVec = Vector3d.directionFromRotation(attacker.xRot, attacker.yRot)
+                targetVec = Vec3.directionFromRotation(attacker.xRot, attacker.yRot)
                         .normalize()
                         .scale(range)
                         .add(attacker.getEyePosition(0));
             }
 
-            AxisAlignedBB aoe = new AxisAlignedBB(targetVec, targetVec).inflate(range, 1d, range);
+            AABB aoe = new AABB(targetVec, targetVec).inflate(range, 1d, range);
 
             hitEntities(serverPlayer, item, itemStack, aoe, damageMultiplier, revengeLevel, overextend, overextendLevel, momentumEfficiency,
                     kills, revengeKills, hits);
@@ -107,7 +107,7 @@ public class ReapEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    private void hitEntities(ServerPlayerEntity player, ItemModularHandheld item, ItemStack itemStack, AxisAlignedBB aoe,
+    private void hitEntities(ServerPlayer player, ItemModularHandheld item, ItemStack itemStack, AABB aoe,
             double damageMultiplier, int revengeLevel, boolean overextend, int overextendLevel, double momentumEfficiency,
             AtomicInteger kills, AtomicInteger revengeKills, AtomicInteger hits) {
         Collection<LivingEntity> momentumTargets = new LinkedList<>();
@@ -143,28 +143,28 @@ public class ReapEffect extends ChargedAbilityEffect {
                     }
 
                     if (result == AbilityUseResult.crit) {
-                        player.getCommandSenderWorld().playSound(player, entity.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 1.3f);
+                        player.getCommandSenderWorld().playSound(player, entity.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1, 1.3f);
                     }
                 });
 
         if (momentumEfficiency > 0 && kills.get() > 0) {
             int stunDuration = (int) (momentumEfficiency * kills.get() * 20);
-            momentumTargets.forEach(entity -> entity.addEffect(new EffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false)));
+            momentumTargets.forEach(entity -> entity.addEffect(new MobEffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false)));
         }
     }
 
-    private void applyBuff(PlayerEntity attacker, int kills, int hits, Hand hand, ItemModularHandheld item, ItemStack itemStack, int chargedTicks,
+    private void applyBuff(Player attacker, int kills, int hits, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, int chargedTicks,
             int comboPoints, int revengeKills) {
         int defensiveLevel = item.getEffectLevel(itemStack, ItemEffect.abilityDefensive);
         if (defensiveLevel > 0) {
-            if (hand == Hand.OFF_HAND) {
+            if (hand == InteractionHand.OFF_HAND) {
                 if (hits > 0) {
                     int duration = defensiveLevel * (1 + kills * 2);
-                    attacker.addEffect(new EffectInstance(SteeledPotionEffect.instance, duration, hits - 1, false, true));
+                    attacker.addEffect(new MobEffectInstance(SteeledPotionEffect.instance, duration, hits - 1, false, true));
                 }
             } else if (kills > 0) {
                 int duration = (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20);
-                attacker.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, duration, kills - 1, false, true));
+                attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, duration, kills - 1, false, true));
             }
         }
 
@@ -175,18 +175,18 @@ public class ReapEffect extends ChargedAbilityEffect {
 
                 duration *= 1 + getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge);
 
-                attacker.addEffect(new EffectInstance(SmallStrengthPotionEffect.instance, (int) duration, kills - 1, false, true));
+                attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, (int) duration, kills - 1, false, true));
             }
 
             int speedLevel = item.getEffectLevel(itemStack, ItemEffect.abilitySpeed);
             if (speedLevel > 0) {
-                attacker.addEffect(new EffectInstance(Effects.DIG_SPEED, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilitySpeed) * 20),
+                attacker.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilitySpeed) * 20),
                         kills - 1, false, true));
             }
 
             int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
             if (momentumLevel > 0) {
-                attacker.addEffect(new EffectInstance(UnwaveringPotionEffect.instance, momentumLevel * kills * 20,
+                attacker.addEffect(new MobEffectInstance(UnwaveringPotionEffect.instance, momentumLevel * kills * 20,
                         0, false, true));
             }
 
@@ -196,7 +196,7 @@ public class ReapEffect extends ChargedAbilityEffect {
 
                 duration += comboEfficiency * comboPoints * 20;
 
-                attacker.addEffect(new EffectInstance(Effects.DIG_SPEED, (int) duration, kills - 1, false, true));
+                attacker.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, (int) duration, kills - 1, false, true));
             }
 
 
@@ -204,40 +204,40 @@ public class ReapEffect extends ChargedAbilityEffect {
                 double duration = 20 * 20;
                 duration += item.getEffectEfficiency(itemStack, ItemEffect.abilityRevenge) * revengeKills * 20;
 
-                attacker.addEffect(new EffectInstance(SmallStrengthPotionEffect.instance, (int) duration, kills - 1, false, true));
+                attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, (int) duration, kills - 1, false, true));
             }
 
             int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
             if (exhilarationLevel > 0) {
                 int currentAmplifier = Optional.ofNullable(attacker.getEffect(SmallAbsorbPotionEffect.instance))
-                        .map(EffectInstance::getAmplifier)
+                        .map(MobEffectInstance::getAmplifier)
                         .orElse(-1);
                 int amp = Math.max(currentAmplifier, kills - 1);
-                attacker.addEffect(new EffectInstance(SmallAbsorbPotionEffect.instance, 30 * 20, amp, false, true));
+                attacker.addEffect(new MobEffectInstance(SmallAbsorbPotionEffect.instance, 30 * 20, amp, false, true));
             }
 
             int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
             if (echoLevel > 0) {
                 int amp = Optional.ofNullable(attacker.getEffect(SmallStrengthPotionEffect.instance))
-                        .map(EffectInstance::getAmplifier)
+                        .map(MobEffectInstance::getAmplifier)
                         .orElse(-1);
                 amp = Math.min(echoLevel, amp + kills);
-                attacker.addEffect(new EffectInstance(SmallStrengthPotionEffect.instance, 30 * 20, amp, false, true));
+                attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, 30 * 20, amp, false, true));
             }
         }
 
         int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
         if (overextendLevel > 0) {
             if (kills > 0) {
-                attacker.addEffect(new EffectInstance(SmallHealthPotionEffect.instance, 45 * 20, kills - 1, false, true));
+                attacker.addEffect(new MobEffectInstance(SmallHealthPotionEffect.instance, 45 * 20, kills - 1, false, true));
             } else if (!attacker.getFoodData().needsFood()) {
-                attacker.addEffect(new EffectInstance(ExhaustedPotionEffect.instance, 20 * 20, 4, false, true));
+                attacker.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, 20 * 20, 4, false, true));
                 attacker.causeFoodExhaustion(12);
             }
         }
     }
 
-    private void echoReap(ServerPlayerEntity player, Hand hand, ItemModularHandheld item, ItemStack itemStack, int chargedTicks, AxisAlignedBB aoe,
+    private void echoReap(ServerPlayer player, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, int chargedTicks, AABB aoe,
             double damageMultiplier, int revengeLevel, boolean overextend, int overextendLevel, double momentumEfficiency, int comboPoints) {
         EchoHelper.echo(player, 60, () -> {
             AtomicInteger kills = new AtomicInteger();

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -25,14 +25,14 @@ public class StatGetterEffectEfficiency implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack) {
+    public double getValue(Player player, ItemStack itemStack) {
         return base + CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getEffectEfficiency(itemStack, effect) * multiplier)
                 .orElse(0d);
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
+    public double getValue(Player player, ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .map(module -> module.getEffectEfficiency(itemStack, effect) * multiplier)
@@ -40,7 +40,7 @@ public class StatGetterEffectEfficiency implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
+    public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
         return base + CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> module.getImprovement(itemStack, improvement))

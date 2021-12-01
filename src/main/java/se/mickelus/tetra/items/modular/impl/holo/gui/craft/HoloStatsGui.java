@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiAttachment;
@@ -113,7 +113,7 @@ public class HoloStatsGui extends GuiElement {
         bars.add(statBar);
     }
 
-    public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, PlayerEntity player) {
+    public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, Player player) {
         boolean shouldShow = !itemStack.isEmpty() && itemStack.getItem() instanceof IModularItem;
         setVisible(shouldShow);
         if (shouldShow) {

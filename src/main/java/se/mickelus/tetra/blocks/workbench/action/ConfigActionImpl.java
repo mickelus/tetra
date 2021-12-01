@@ -1,21 +1,21 @@
 package se.mickelus.tetra.blocks.workbench.action;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSet;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.properties.PropertyHelper;
@@ -25,10 +25,10 @@ import java.util.Map;
 
 public class ConfigActionImpl extends ConfigAction {
 
-    private static final LootParameterSet lootParameters = new LootParameterSet.Builder()
-            .required(LootParameters.ORIGIN)
-            .optional(LootParameters.TOOL)
-            .optional(LootParameters.THIS_ENTITY)
+    private static final LootContextParamSet lootParameters = new LootContextParamSet.Builder()
+            .required(LootContextParams.ORIGIN)
+            .optional(LootContextParams.TOOL)
+            .optional(LootContextParams.THIS_ENTITY)
             .build();
 
     @Override
@@ -37,7 +37,7 @@ public class ConfigActionImpl extends ConfigAction {
     }
 
     @Override
-    public boolean canPerformOn(PlayerEntity player, WorkbenchTile tile, ItemStack itemStack) {
+    public boolean canPerformOn(Player player, WorkbenchTile tile, ItemStack itemStack) {
         return requirement.matches(itemStack);
     }
 
@@ -57,9 +57,9 @@ public class ConfigActionImpl extends ConfigAction {
     }
 
     @Override
-    public void perform(PlayerEntity player, ItemStack targetStack, WorkbenchTile workbench) {
+    public void perform(Player player, ItemStack targetStack, WorkbenchTile workbench) {
         if (player != null && !player.level.isClientSide) {
-            ServerWorld world = (ServerWorld) player.level;
+            ServerLevel world = (ServerLevel) player.level;
             LootTable table = world.getServer().getLootTables().get(lootTable);
             ItemStack toolStack = requiredTools.getLevelMap().entrySet().stream()
                     .min(Map.Entry.comparingByValue())
@@ -76,9 +76,9 @@ public class ConfigActionImpl extends ConfigAction {
 
             LootContext context = new LootContext.Builder(world)
                     .withLuck(player.getLuck())
-                    .withParameter(LootParameters.TOOL, toolStack)
-                    .withParameter(LootParameters.THIS_ENTITY, player)
-                    .withParameter(LootParameters.ORIGIN, player.position())
+                    .withParameter(LootContextParams.TOOL, toolStack)
+                    .withParameter(LootContextParams.THIS_ENTITY, player)
+                    .withParameter(LootContextParams.ORIGIN, player.position())
                     .create(lootParameters);
 
             table.getRandomItems(context).forEach(itemStack -> {
@@ -91,31 +91,31 @@ public class ConfigActionImpl extends ConfigAction {
             world.playSound(null, pos, SoundEvents.STONE_BREAK, player.getSoundSource(),
                     1.0F, 1.5f + (float) Math.random() * 0.5f);
 
-            world.sendParticles(new ItemParticleData(ParticleTypes.ITEM, targetStack),
+            world.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, targetStack),
                     pos.getX() + 0.5d, pos.getY() + 1.1d, pos.getZ() + 0.5d,
                     4, 0, 0, 0,
                     0.1f);
 
             // todo: add proper criteria
-            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, targetStack);
+            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, targetStack);
 
             targetStack.setCount(targetStack.getCount() - 1);
             workbench.setChanged();
         } else if (!workbench.getLevel().isClientSide) {
-            ServerWorld world = (ServerWorld) workbench.getLevel();
+            ServerLevel world = (ServerLevel) workbench.getLevel();
             LootTable table = world.getServer().getLootTables().get(lootTable);
 
             LootContext context = new LootContext.Builder(world)
-                    .withParameter(LootParameters.ORIGIN, Vector3d.upFromBottomCenterOf(workbench.getBlockPos(), 1.1f))
+                    .withParameter(LootContextParams.ORIGIN, Vec3.upFromBottomCenterOf(workbench.getBlockPos(), 1.1f))
                     .create(lootParameters);
 
             table.getRandomItems(context).forEach(itemStack -> Block.popResource(world, workbench.getBlockPos().above(), itemStack));
 
             BlockPos pos = workbench.getBlockPos();
-            world.playSound(null, pos, SoundEvents.STONE_BREAK, SoundCategory.BLOCKS,
+            world.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS,
                     1.0F, 1.5f + (float) Math.random() * 0.5f);
 
-            world.sendParticles(new ItemParticleData(ParticleTypes.ITEM, targetStack),
+            world.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, targetStack),
                     pos.getX() + 0.5d, pos.getY() + 1.1d, pos.getZ() + 0.5d,
                     4, 0, 0, 0,
                     0.1f);

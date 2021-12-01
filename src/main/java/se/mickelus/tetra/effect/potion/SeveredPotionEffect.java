@@ -1,19 +1,19 @@
 package se.mickelus.tetra.effect.potion;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.DisplayEffectsScreen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.effect.EffectHelper;
@@ -21,10 +21,10 @@ import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Random;
 
-public class SeveredPotionEffect extends Effect {
+public class SeveredPotionEffect extends MobEffect {
     public static SeveredPotionEffect instance;
     public SeveredPotionEffect() {
-        super(EffectType.HARMFUL, 0x880000);
+        super(MobEffectCategory.HARMFUL, 0x880000);
 
         setRegistryName("severed");
 
@@ -37,7 +37,7 @@ public class SeveredPotionEffect extends Effect {
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.getCommandSenderWorld().isClientSide) {
             Random rand = entity.getRandom();
-            ((ServerWorld) entity.level).sendParticles(new RedstoneParticleData(0.5f, 0, 0, 0.5f),
+            ((ServerLevel) entity.level).sendParticles(new DustParticleOptions(0.5f, 0, 0, 0.5f),
                     entity.getX() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
                     entity.getY() + entity.getBbHeight() * (0.2 + rand.nextGaussian() * 0.4),
                     entity.getZ() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
@@ -53,11 +53,11 @@ public class SeveredPotionEffect extends Effect {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void renderInventoryEffect(EffectInstance effect, DisplayEffectsScreen<?> gui, MatrixStack mStack, int x, int y, float z) {
+    public void renderInventoryEffect(MobEffectInstance effect, EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, float z) {
         super.renderInventoryEffect(effect, gui, mStack, x, y, z);
 
         int amp = effect.getAmplifier() + 1;
         EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new StringTextComponent(I18n.get("effect.tetra.severed.tooltip", String.format("%d", amp * 10), String.format("%d", amp * 5))));
+                new TextComponent(I18n.get("effect.tetra.severed.tooltip", String.format("%d", amp * 10), String.format("%d", amp * 5))));
     }
 }

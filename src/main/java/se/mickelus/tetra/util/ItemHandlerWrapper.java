@@ -1,14 +1,14 @@
 package se.mickelus.tetra.util;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
 /**
  * Hacked together based on {@link net.minecraftforge.items.wrapper.RecipeWrapper}, used to feed itemhandler into vanilla methods
  */
-public class ItemHandlerWrapper implements IInventory {
+public class ItemHandlerWrapper implements Container {
 
     protected final IItemHandler inv;
 
@@ -86,9 +86,9 @@ public class ItemHandlerWrapper implements IInventory {
     @Override
     public void setChanged() {}
     @Override
-    public boolean stillValid(PlayerEntity player) { return false; }
+    public boolean stillValid(Player player) { return false; }
     @Override
-    public void startOpen(PlayerEntity player) {}
+    public void startOpen(Player player) {}
     @Override
-    public void stopOpen(PlayerEntity player) {}
+    public void stopOpen(Player player) {}
 }

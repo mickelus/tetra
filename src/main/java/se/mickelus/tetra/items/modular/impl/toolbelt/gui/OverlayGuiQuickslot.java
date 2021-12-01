@@ -1,14 +1,14 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.HandSide;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
 import se.mickelus.mgui.gui.GuiItem;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringOutline;
@@ -83,7 +83,7 @@ public class OverlayGuiQuickslot extends GuiElement {
     }
 
     @Override
-    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 
@@ -109,9 +109,9 @@ public class OverlayGuiQuickslot extends GuiElement {
         return slot;
     }
 
-    public Hand getHand() {
-        return (Minecraft.getInstance().player.getMainArm() == HandSide.RIGHT) == hitRight.hasFocus()
-                ? Hand.MAIN_HAND
-                : Hand.OFF_HAND;
+    public InteractionHand getHand() {
+        return (Minecraft.getInstance().player.getMainArm() == HumanoidArm.RIGHT) == hitRight.hasFocus()
+                ? InteractionHand.MAIN_HAND
+                : InteractionHand.OFF_HAND;
     }
 }

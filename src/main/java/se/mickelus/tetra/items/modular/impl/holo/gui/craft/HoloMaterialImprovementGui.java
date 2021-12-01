@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.ChatFormatting;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -24,7 +24,7 @@ public class HoloMaterialImprovementGui extends GuiElement {
         String improvementName = IModularItem.getImprovementName(key, 0);
 
         tooltip = ImmutableList.of(I18n.get("tetra.holo.craft.materials.stat_modifier.tooltip", improvementName),
-                TextFormatting.DARK_GRAY + IModularItem.getImprovementDescription(key));
+                ChatFormatting.DARK_GRAY + IModularItem.getImprovementDescription(key));
 
         backdrop = new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench);
         backdrop.setColor(0x222222);

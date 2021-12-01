@@ -1,20 +1,20 @@
 package se.mickelus.tetra.blocks.scroll;
 
 import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.*;
 import net.minecraftforge.fml.network.NetworkHooks;
 import se.mickelus.tetra.TetraMod;
@@ -27,7 +27,21 @@ import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class ScrollBlock extends TetraBlock {
 
@@ -51,34 +65,34 @@ public class ScrollBlock extends TetraBlock {
     }
 
     @Override
-    public boolean canUnlockSchematics(World world, BlockPos pos, BlockPos targetPos) {
+    public boolean canUnlockSchematics(Level world, BlockPos pos, BlockPos targetPos) {
         boolean isIntricate = TileEntityOptional.from(world, pos, ScrollTile.class).map(ScrollTile::isIntricate).orElse(false);
         return !isIntricate || targetPos.above().equals(pos);
     }
 
     @Override
-    public ResourceLocation[] getSchematics(World world, BlockPos pos, BlockState blockState) {
+    public ResourceLocation[] getSchematics(Level world, BlockPos pos, BlockState blockState) {
         return TileEntityOptional.from(world, pos, ScrollTile.class).map(ScrollTile::getSchematics).orElseGet(() -> new ResourceLocation[0]);
     }
 
     @Override
-    public boolean canUnlockCraftingEffects(World world, BlockPos pos, BlockPos targetPos) {
+    public boolean canUnlockCraftingEffects(Level world, BlockPos pos, BlockPos targetPos) {
         boolean isIntricate = TileEntityOptional.from(world, pos, ScrollTile.class).map(ScrollTile::isIntricate).orElse(false);
         return !isIntricate || targetPos.above().equals(pos);
     }
 
     @Override
-    public ResourceLocation[] getCraftingEffects(World world, BlockPos pos, BlockState blockState) {
+    public ResourceLocation[] getCraftingEffects(Level world, BlockPos pos, BlockState blockState) {
         return TileEntityOptional.from(world, pos, ScrollTile.class).map(ScrollTile::getCraftingEffects).orElseGet(() -> new ResourceLocation[0]);
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (arrangement == Arrangement.open) {
             BlockState offsetState = world.getBlockState(pos.below());
 
             if (offsetState.getBlock()  instanceof AbstractWorkbenchBlock) {
-                return offsetState.use(world, player, hand, new BlockRayTraceResult(Vector3d.ZERO, Direction.UP, pos.below(), true));
+                return offsetState.use(world, player, hand, new BlockHitResult(Vec3.ZERO, Direction.UP, pos.below(), true));
             }
         }
 
@@ -86,7 +100,7 @@ public class ScrollBlock extends TetraBlock {
     }
 
     @Override
-    public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
         Direction facing = Direction.UP;
         if (getArrangement() == Arrangement.wall) {
             facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
@@ -103,10 +117,10 @@ public class ScrollBlock extends TetraBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
         if (!blockState.canSurvive(world, currentPos)) {
-            if (!world.isClientSide() && world.getLevelData().getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && world instanceof World) {
-                dropScrolls((World) world, currentPos);
+            if (!world.isClientSide() && world.getLevelData().getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && world instanceof Level) {
+                dropScrolls((Level) world, currentPos);
             }
             return Blocks.AIR.defaultBlockState();
         }
@@ -115,14 +129,14 @@ public class ScrollBlock extends TetraBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
     }
 
     @Override
-    public BlockRenderType getRenderShape(BlockState state) {
-        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
@@ -132,12 +146,12 @@ public class ScrollBlock extends TetraBlock {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+    public BlockEntity createTileEntity(final BlockState state, final BlockGetter world) {
         return new ScrollTile();
     }
 
     @Override
-    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         super.playerWillDestroy(world, pos, state, player);
 
         if (!world.isClientSide && !player.isCreative() && world.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
@@ -145,10 +159,10 @@ public class ScrollBlock extends TetraBlock {
         }
     }
 
-    public void dropScrolls(World world, BlockPos pos) {
+    public void dropScrolls(Level world, BlockPos pos) {
         TileEntityOptional.from(world, pos, ScrollTile.class)
                 .ifPresent(tile -> {
-                    for (CompoundNBT nbt: tile.getItemTags()) {
+                    for (CompoundTag nbt: tile.getItemTags()) {
                         ItemStack itemStack = new ItemStack(ScrollItem.instance);
                         itemStack.addTagElement("BlockEntityTag", nbt);
 

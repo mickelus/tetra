@@ -1,10 +1,10 @@
 package se.mickelus.tetra.items;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.blocks.geode.GeodeItem;
 
-public class TetraItemGroup extends ItemGroup {
+public class TetraItemGroup extends CreativeModeTab {
 
     public static TetraItemGroup instance;
 

@@ -2,13 +2,13 @@ package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -106,7 +106,7 @@ public class DataManager {
         // todo: stop this from sending to player in singleplayer (while still sending to others in lan worlds)
         logger.info("Sending data to client: {}", event.getPlayer().getName().getContents());
         for (DataStore dataStore : dataStores) {
-            dataStore.sendToPlayer((ServerPlayerEntity) event.getPlayer());
+            dataStore.sendToPlayer((ServerPlayer) event.getPlayer());
         }
     }
 

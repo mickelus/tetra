@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.language.I18n;
 import se.mickelus.mgui.gui.GuiClickable;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiTexture;

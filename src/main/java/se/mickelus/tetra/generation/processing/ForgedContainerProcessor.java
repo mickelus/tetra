@@ -1,13 +1,13 @@
 package se.mickelus.tetra.generation.processing;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.gen.feature.template.IStructureProcessorType;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.StructureProcessor;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 
@@ -19,8 +19,8 @@ public class ForgedContainerProcessor extends StructureProcessor {
 
     @Nullable
     @Override
-    public Template.BlockInfo process(IWorldReader world, BlockPos pos, BlockPos pos2, Template.BlockInfo $, Template.BlockInfo blockInfo,
-            PlacementSettings placementSettings, @Nullable Template template) {
+    public StructureTemplate.StructureBlockInfo process(LevelReader world, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo $, StructureTemplate.StructureBlockInfo blockInfo,
+            StructurePlaceSettings placementSettings, @Nullable StructureTemplate template) {
         if (blockInfo.state.getBlock() instanceof ForgedContainerBlock) {
             Random random;
 
@@ -31,7 +31,7 @@ public class ForgedContainerProcessor extends StructureProcessor {
                 random = placementSettings.getRandom(blockInfo.pos);
             }
 
-            CompoundNBT newCompound = blockInfo.nbt.copy();
+            CompoundTag newCompound = blockInfo.nbt.copy();
 
             int[] lockIntegrity = new int[ForgedContainerTile.lockCount];
             for (int i = 0; i < lockIntegrity.length; i++) {
@@ -44,14 +44,14 @@ public class ForgedContainerProcessor extends StructureProcessor {
 
             BlockState newState = ForgedContainerTile.getUpdatedBlockState(blockInfo.state, lockIntegrity, lidIntegrity);
 
-            return new Template.BlockInfo(blockInfo.pos, newState, newCompound);
+            return new StructureTemplate.StructureBlockInfo(blockInfo.pos, newState, newCompound);
         }
 
         return blockInfo;
     }
 
     @Override
-    protected IStructureProcessorType getType() {
+    protected StructureProcessorType getType() {
         return ProcessorTypes.forgedContainer;
     }
 }

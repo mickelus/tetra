@@ -3,8 +3,8 @@ package se.mickelus.tetra.client.model;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.resources.IResourceManager;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.client.model.IModelLoader;
 import net.minecraftforge.resource.IResourceType;
 import org.apache.logging.log4j.LogManager;
@@ -47,18 +47,18 @@ public class ModularModelLoader implements IModelLoader<ModularItemModel> {
     }
 
     @Override
-    public void onResourceManagerReload(IResourceManager resourceManager) {
+    public void onResourceManagerReload(ResourceManager resourceManager) {
         logger.info("Reloading item models, old: {}, new: {}", models.size(), newModels.size());
         shuffle();
     }
 
     @Override
     public ModularItemModel read(JsonDeserializationContext deserializationContext, JsonObject modelContents) {
-        ItemCameraTransforms cameraTransforms = deserializationContext.deserialize(modelContents.get("display"), ItemCameraTransforms.class);
+        ItemTransforms cameraTransforms = deserializationContext.deserialize(modelContents.get("display"), ItemTransforms.class);
 
         if (modelContents.has("variants")) {
-            Map<String, ItemCameraTransforms> transformVariants = deserializationContext.deserialize(modelContents.get("variants"),
-                    new TypeToken<Map<String, ItemCameraTransforms>>(){}.getType());
+            Map<String, ItemTransforms> transformVariants = deserializationContext.deserialize(modelContents.get("variants"),
+                    new TypeToken<Map<String, ItemTransforms>>(){}.getType());
 
             ModularItemModel model = new ModularItemModel(cameraTransforms, transformVariants);
             newModels.add(model);

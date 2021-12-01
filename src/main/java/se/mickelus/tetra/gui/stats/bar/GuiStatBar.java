@@ -1,10 +1,10 @@
 package se.mickelus.tetra.gui.stats.bar;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.mgui.gui.GuiAlignment;
@@ -110,7 +110,7 @@ public class GuiStatBar extends GuiStatBase {
     }
 
     @Override
-    public void update(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public void update(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         double value;
         double diffValue;
 
@@ -144,7 +144,7 @@ public class GuiStatBar extends GuiStatBase {
         updateIndicators(player, currentStack, previewStack, slot, improvement);
     }
 
-    protected void updateIndicators(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    protected void updateIndicators(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         indicatorGroup.clearChildren();
 
         for (int i = 0; i < indicators.length; i++) {
@@ -155,11 +155,11 @@ public class GuiStatBar extends GuiStatBase {
     }
 
     @Override
-    public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         return statGetter.shouldShow(player, currentStack, previewStack);
     }
 
-    protected double getSlotValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
+    protected double getSlotValue(Player player, ItemStack itemStack, String slot, String improvement) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> {
                     if (improvement != null) {
@@ -195,20 +195,20 @@ public class GuiStatBar extends GuiStatBase {
         return indicatorGroup.getChildren(GuiStatIndicator.class);
     }
 
-    protected String getCombinedTooltipBase(PlayerEntity player, ItemStack itemStack) {
+    protected String getCombinedTooltipBase(Player player, ItemStack itemStack) {
         String tooltip = tooltipGetter.getTooltipBase(player, itemStack);
 
         tooltip += getActiveIndicators().stream()
                 .filter(indicator -> indicator.isActive(player, itemStack))
-                .map(indicator -> TextFormatting.YELLOW + indicator.getLabel() + "\n" + TextFormatting.GRAY + indicator.getTooltipBase(player, itemStack))
+                .map(indicator -> ChatFormatting.YELLOW + indicator.getLabel() + "\n" + ChatFormatting.GRAY + indicator.getTooltipBase(player, itemStack))
                 .map(string -> "\n \n" + string)
                 .collect(Collectors.joining())
-                .replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString());
+                .replace(ChatFormatting.RESET.toString(), ChatFormatting.GRAY.toString());
 
         return tooltip;
     }
 
-    protected String getCombinedTooltip(PlayerEntity player, ItemStack itemStack) {
+    protected String getCombinedTooltip(Player player, ItemStack itemStack) {
         String tooltip = getCombinedTooltipBase(player, itemStack);
 
         if (tooltipGetter.hasExtendedTooltip(player, itemStack) || getActiveIndicators().stream().anyMatch(ind -> ind.hasExtendedTooltip(player, itemStack))) {
@@ -218,7 +218,7 @@ public class GuiStatBar extends GuiStatBase {
         return tooltip;
     }
 
-    protected String getCombinedTooltipExtended(PlayerEntity player, ItemStack itemStack) {
+    protected String getCombinedTooltipExtended(Player player, ItemStack itemStack) {
         String tooltip = getCombinedTooltipBase(player, itemStack);
 
         if (tooltipGetter.hasExtendedTooltip(player, itemStack) || getActiveIndicators().stream().anyMatch(ind -> ind.hasExtendedTooltip(player, itemStack))) {
@@ -226,14 +226,14 @@ public class GuiStatBar extends GuiStatBase {
 
             List<String> extendedTooltip = new LinkedList<>();
             if (tooltipGetter.hasExtendedTooltip(player, itemStack)) {
-                extendedTooltip.add(TextFormatting.GRAY + tooltipGetter.getTooltipExtension(player, itemStack)
-                        .replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString()));
+                extendedTooltip.add(ChatFormatting.GRAY + tooltipGetter.getTooltipExtension(player, itemStack)
+                        .replace(ChatFormatting.RESET.toString(), ChatFormatting.GRAY.toString()));
             }
 
             getActiveIndicators().stream()
                     .filter(indicator -> indicator.hasExtendedTooltip(player, itemStack))
-                    .map(indicator -> TextFormatting.GRAY + indicator.getTooltipExtension(player, itemStack))
-                    .map(string -> string.replace(TextFormatting.RESET.toString(), TextFormatting.GRAY.toString()))
+                    .map(indicator -> ChatFormatting.GRAY + indicator.getTooltipExtension(player, itemStack))
+                    .map(string -> string.replace(ChatFormatting.RESET.toString(), ChatFormatting.GRAY.toString()))
                     .map(string -> "\n" + string)
                     .forEach(extendedTooltip::add);
 

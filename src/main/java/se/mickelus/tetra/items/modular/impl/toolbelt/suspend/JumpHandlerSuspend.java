@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.suspend;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,7 +11,7 @@ import se.mickelus.tetra.TetraMod;
 public class JumpHandlerSuspend {
     private final Minecraft mc;
 
-    private KeyBinding jumpKey;
+    private KeyMapping jumpKey;
     private boolean wasJumpKeyDown = false;
 
     public JumpHandlerSuspend(Minecraft mc) {
@@ -22,7 +22,7 @@ public class JumpHandlerSuspend {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (mc.isWindowActive()) {
-            PlayerEntity player = mc.player;
+            Player player = mc.player;
             if (jumpKey.isDown() && !wasJumpKeyDown
                     && !player.isOnGround() && !player.isCreative() && !player.isSpectator()) {
                 boolean isSuspended = player.hasEffect(SuspendPotionEffect.instance);

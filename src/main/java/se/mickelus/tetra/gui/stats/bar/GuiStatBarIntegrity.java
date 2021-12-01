@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui.stats.bar;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.stats.StatsHelper;
@@ -61,7 +61,7 @@ public class GuiStatBarIntegrity extends GuiStatBase {
     public void setAlignment(GuiAlignment alignment) {}
 
     @Override
-    public void update(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public void update(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         double value;
         double diffValue;
 
@@ -91,11 +91,11 @@ public class GuiStatBarIntegrity extends GuiStatBase {
     }
 
     @Override
-    public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         return statGetter.shouldShow(player, currentStack, previewStack);
     }
 
-    protected double getSlotValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
+    protected double getSlotValue(Player player, ItemStack itemStack, String slot, String improvement) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> {
                     if (improvement != null) {

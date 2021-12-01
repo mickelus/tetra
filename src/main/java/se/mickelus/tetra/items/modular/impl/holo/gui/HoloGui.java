@@ -1,11 +1,11 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.InputMappings;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
@@ -47,7 +47,7 @@ public class HoloGui extends Screen {
     private Runnable closeCallback;
 
     public HoloGui() {
-        super(new StringTextComponent("tetra:holosphere"));
+        super(new TextComponent("tetra:holosphere"));
 
         width = 320;
         height = 240;
@@ -124,7 +124,7 @@ public class HoloGui extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+    public void render(PoseStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
         renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
 
@@ -134,13 +134,13 @@ public class HoloGui extends Screen {
         renderHoveredToolTip(matrixStack, mouseX, mouseY);
     }
 
-    protected void renderHoveredToolTip(MatrixStack matrixStack, int mouseX, int mouseY) {
+    protected void renderHoveredToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
         List<String> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
-            List<ITextComponent> textComponents = tooltipLines.stream()
+            List<Component> textComponents = tooltipLines.stream()
                     .map(line -> line.replace("\\n", "\n"))
                     .flatMap(line -> Arrays.stream(line.split("\n")))
-                    .map(StringTextComponent::new)
+                    .map(TextComponent::new)
                     .collect(Collectors.toList());
 
             GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 280, font);

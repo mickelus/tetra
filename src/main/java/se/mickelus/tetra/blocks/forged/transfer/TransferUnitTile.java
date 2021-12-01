@@ -1,17 +1,17 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
@@ -22,9 +22,9 @@ import se.mickelus.tetra.util.TileEntityOptional;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class TransferUnitTile extends TileEntity implements ITickableTileEntity, IHeatTransfer {
+public class TransferUnitTile extends BlockEntity implements TickableBlockEntity, IHeatTransfer {
     @ObjectHolder(TetraMod.MOD_ID + ":" + TransferUnitBlock.unlocalizedName)
-    public static TileEntityType<TransferUnitTile> type;
+    public static BlockEntityType<TransferUnitTile> type;
 
     private ItemStack cell;
 
@@ -194,21 +194,21 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
     }
 
     private void runDrainedEffects() {
-        if (level instanceof ServerWorld) {
-            ((ServerWorld) level).sendParticles(ParticleTypes.SMOKE,
+        if (level instanceof ServerLevel) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE,
                     worldPosition.getX() + 0.5, worldPosition.getY() + 0.7, worldPosition.getZ() + 0.5,
                     10,  0, 0, 0, 0.02f);
-            level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS,
+            level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
                     0.2f, 1);
         }
     }
 
     private void runFilledEffects() {
-        if (level instanceof ServerWorld) {
-            ((ServerWorld) level).sendParticles(ParticleTypes.FLAME,
+        if (level instanceof ServerLevel) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.FLAME,
                     worldPosition.getX() + 0.5, worldPosition.getY() + 0.7, worldPosition.getZ() + 0.5,
                     5,  0, 0, 0, 0.02f);
-            level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS,
+            level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
                     0.2f, 1);
         }
     }
@@ -250,7 +250,7 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
     }
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compound) {
+    public void load(BlockState blockState, CompoundTag compound) {
         super.load(blockState, compound);
 
         if (compound.contains("cell")) {
@@ -260,16 +260,16 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
         }
     }
 
-    public static final void writeCell(CompoundNBT compound, ItemStack cell) {
+    public static final void writeCell(CompoundTag compound, ItemStack cell) {
         if (!cell.isEmpty()) {
-            CompoundNBT cellNBT = new CompoundNBT();
+            CompoundTag cellNBT = new CompoundTag();
             cell.save(cellNBT);
             compound.put("cell", cellNBT);
         }
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         super.save(compound);
 
         writeCell(compound, cell);
@@ -279,17 +279,17 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return save(new CompoundTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
         this.load(getBlockState(), packet.getTag());
     }
 }

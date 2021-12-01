@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Arrays;
 
@@ -13,21 +13,21 @@ public class StatGetterMultiply implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack) {
+    public double getValue(Player player, ItemStack itemStack) {
         return Arrays.stream(statGetters)
                 .mapToDouble(getter -> getter.getValue(player, itemStack))
                 .reduce(1d, (a, b) -> a * b);
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
+    public double getValue(Player player, ItemStack itemStack, String slot) {
         return Arrays.stream(statGetters)
                 .map(getter -> getter.getValue(player, itemStack, slot))
                 .reduce(1d, (a, b) -> a * b);
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
+    public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
         return Arrays.stream(statGetters)
                 .map(getter -> getter.getValue(player, itemStack, slot, improvement))
                 .reduce(1d, (a, b) -> a * b);

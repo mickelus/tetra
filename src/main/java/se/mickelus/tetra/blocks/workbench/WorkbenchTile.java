@@ -1,25 +1,25 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -52,14 +52,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WorkbenchTile extends TileEntity implements INamedContainerProvider {
+public class WorkbenchTile extends BlockEntity implements MenuProvider {
     public static final String unlocalizedName = "workbench";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static TileEntityType<WorkbenchTile> type;
+    public static BlockEntityType<WorkbenchTile> type;
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + WorkbenchTile.unlocalizedName)
-    public static ContainerType<WorkbenchContainer> containerType;
+    public static MenuType<WorkbenchContainer> containerType;
 
     private static final String inventoryKey = "inv";
     private static final String currentSlotKey = "current_slot";
@@ -141,14 +141,14 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         };
     }
 
-    public WorkbenchAction[] getAvailableActions(PlayerEntity player) {
+    public WorkbenchAction[] getAvailableActions(Player player) {
         ItemStack itemStack = getTargetItemStack();
         return Arrays.stream(actions)
                 .filter(action -> action.canPerformOn(player, this, itemStack))
                 .toArray(WorkbenchAction[]::new);
     }
 
-    public void performAction(PlayerEntity player, String actionKey) {
+    public void performAction(Player player, String actionKey) {
         if (level.isClientSide) {
             TetraMod.packetHandler.sendToServer(new WorkbenchActionPacket(worldPosition, actionKey));
             return;
@@ -217,7 +217,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 });
     }
 
-    private boolean checkActionTools(PlayerEntity player, WorkbenchAction action, ItemStack itemStack) {
+    private boolean checkActionTools(Player player, WorkbenchAction action, ItemStack itemStack) {
         return action.getRequiredTools(itemStack).entrySet().stream()
                 .allMatch(requirement ->
                         PropertyHelper.getCombinedToolLevel(player, getLevel(), getBlockPos(), level.getBlockState(getBlockPos()), requirement.getKey())
@@ -262,7 +262,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
      * @param currentSlot A slot key, or null if it should be unset
      * @param player
      */
-    public void update(UpgradeSchematic currentSchematic, String currentSlot, PlayerEntity player) {
+    public void update(UpgradeSchematic currentSchematic, String currentSlot, Player player) {
         // todo: inventory change hack, better solution?
         if (currentSchematic == null && player != null) {
             emptyMaterialSlots(player);
@@ -319,7 +319,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 .orElse(new ItemStack[0]);
     }
 
-    public void initiateCrafting(PlayerEntity player) {
+    public void initiateCrafting(Player player) {
         if (level.isClientSide) {
             TetraMod.packetHandler.sendToServer(new WorkbenchPacketCraft(worldPosition));
         }
@@ -329,7 +329,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         sync();
     }
 
-    public void craft(PlayerEntity player) {
+    public void craft(Player player) {
         ItemStack targetStack = getTargetItemStack();
         ItemStack upgradedStack = targetStack;
         IModularItem item = CastOptional.cast(upgradedStack.getItem(), IModularItem.class).orElse(null);
@@ -347,7 +347,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
             // store durability and honing factor so that it can be restored after the schematic is applied
             double durabilityFactor = upgradedStack.isDamageableItem() ? upgradedStack.getDamageValue() * 1d / upgradedStack.getMaxDamage() : 0;
-            double honingFactor = MathHelper.clamp(item.getHoningProgress(upgradedStack) * 1d / item.getHoningLimit(upgradedStack), 0, 1);
+            double honingFactor = Mth.clamp(item.getHoningProgress(upgradedStack) * 1d / item.getHoningLimit(upgradedStack), 0, 1);
 
             Map<ToolType, Integer> tools = currentSchematic.getRequiredToolLevels(targetStack, materials);
 
@@ -401,7 +401,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
      * applies crafting tool effects in the following order: inventory, toolbelt, nearby blocks
      */
     public static ItemStack consumeCraftingToolEffects(ItemStack upgradedStack, String slot, boolean isReplacing, ToolType tool, int level,
-            PlayerEntity player, World world, BlockPos pos, BlockState blockState, boolean consumeResources) {
+            Player player, Level world, BlockPos pos, BlockState blockState, boolean consumeResources) {
         ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(tool, level, player);
         if (!providingStack.isEmpty()) {
             if (providingStack.getItem() instanceof IToolProvider) {
@@ -423,8 +423,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         return upgradedStack;
     }
 
-    public static ItemStack applyCraftingBonusEffects(ItemStack upgradedStack, String slot, boolean isReplacing, PlayerEntity player,
-            ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ToolType, Integer> tools, World world, BlockPos pos, BlockState blockState,
+    public static ItemStack applyCraftingBonusEffects(ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
+            ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ToolType, Integer> tools, Level world, BlockPos pos, BlockState blockState,
             boolean consumeResources) {
         ItemStack result = upgradedStack.copy();
         ResourceLocation[] unlockedEffects = CastOptional.cast(blockState.getBlock(), AbstractWorkbenchBlock.class)
@@ -443,7 +443,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 .orElse(new ResourceLocation[0]);
     }
 
-    public void applyTweaks(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
+    public void applyTweaks(Player player, String slot, Map<String, Integer> tweaks) {
         if (level.isClientSide) {
             TetraMod.packetHandler.sendToServer(new WorkbenchPacketTweak(worldPosition, slot, tweaks));
         }
@@ -453,7 +453,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         sync();
     }
 
-    public void tweak(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
+    public void tweak(Player player, String slot, Map<String, Integer> tweaks) {
         handler.ifPresent(handler -> {
             ItemStack tweakedStack = getTargetItemStack().copy();
             CastOptional.cast(tweakedStack.getItem(), IModularItem.class)
@@ -484,22 +484,22 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return save(new CompoundTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compound) {
+    public void load(BlockState blockState, CompoundTag compound) {
         super.load(blockState, compound);
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
@@ -520,7 +520,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         super.save(compound);
 
         handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
@@ -540,7 +540,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
      * Empties all material slots into the given players inventory.
      * @param player
      */
-    private void emptyMaterialSlots(PlayerEntity player) {
+    private void emptyMaterialSlots(Player player) {
         handler.ifPresent(handler -> {
             for (int i = 1; i < handler.getSlots(); i++) {
                 transferStackToPlayer(player, i);
@@ -572,7 +572,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         });
     }
 
-    private void transferStackToPlayer(PlayerEntity player, int index) {
+    private void transferStackToPlayer(Player player, int index) {
         handler.ifPresent(handler -> {
             ItemStack itemStack = handler.extractItem(index, handler.getSlotLimit(index), false);
             if (!itemStack.isEmpty()) {
@@ -584,13 +584,13 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new StringTextComponent(unlocalizedName);
+    public Component getDisplayName() {
+        return new TextComponent(unlocalizedName);
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
         return new WorkbenchContainer(windowId, this, playerInventory, playerEntity);
     }
 }

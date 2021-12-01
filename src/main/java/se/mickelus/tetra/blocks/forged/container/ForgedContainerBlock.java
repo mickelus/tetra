@@ -1,27 +1,27 @@
 package se.mickelus.tetra.blocks.forged.container;
 
 import net.minecraft.block.*;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
@@ -45,12 +45,23 @@ import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
 
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+
 public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
     public static final String unlocalizedName = "forged_container";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ForgedContainerBlock instance;
 
-    public static final DirectionProperty facingProp = HorizontalBlock.FACING;
+    public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty flippedProp = BooleanProperty.create("flipped");
     public static final BooleanProperty locked1Prop = BooleanProperty.create("locked1");
     public static final BooleanProperty locked2Prop = BooleanProperty.create("locked2");
@@ -113,7 +124,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     @Override
     public void clientInit() {
         ClientRegistry.bindTileEntityRenderer(ForgedContainerTile.type, ForgedContainerRenderer::new);
-        ScreenManager.register(ForgedContainerContainer.type, ForgedContainerScreen::new);
+        MenuScreens.register(ForgedContainerContainer.type, ForgedContainerScreen::new);
     }
 
     @Override
@@ -122,11 +133,11 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
-    private static boolean breakLock(World world, BlockPos pos, @Nullable PlayerEntity player, int index, @Nullable Hand hand) {
+    private static boolean breakLock(Level world, BlockPos pos, @Nullable Player player, int index, @Nullable InteractionHand hand) {
         ForgedContainerTile te = (ForgedContainerTile) world.getBlockEntity(pos);
         if (te != null) {
             te.getOrDelegate().breakLock(player, index, hand);
@@ -135,7 +146,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
         return true;
     }
 
-    private static boolean open(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
+    private static boolean open(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction facing) {
         ForgedContainerTile te = (ForgedContainerTile) world.getBlockEntity(pos);
         if (te != null) {
             te.getOrDelegate().open(player);
@@ -145,23 +156,23 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.getValue(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ActionResultType didInteract = BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        InteractionResult didInteract = BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
 
-        if (didInteract != ActionResultType.SUCCESS) {
+        if (didInteract != InteractionResult.SUCCESS) {
             if (!world.isClientSide) {
                 TileEntityOptional.from(world, pos, ForgedContainerTile.class)
                         .ifPresent(te -> {
                             ForgedContainerTile delegate = te.getOrDelegate();
                             if (delegate.isOpen()) {
-                                NetworkHooks.openGui((ServerPlayerEntity) player, delegate, delegate.getBlockPos());
+                                NetworkHooks.openGui((ServerPlayer) player, delegate, delegate.getBlockPos());
                             }
                         });
             }
@@ -169,23 +180,23 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
             world.sendBlockUpdated(pos, state, state, 3);
         }
 
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
             // only drop loot from open, primary/unflipped chests
             if (state.getValue(openProp) && !state.getValue(flippedProp)) {
                 dropBlockInventory(this, world, pos, newState);
             } else {
-                TileEntityOptional.from(world, pos, ForgedContainerTile.class).ifPresent(TileEntity::setRemoved);
+                TileEntityOptional.from(world, pos, ForgedContainerTile.class).ifPresent(BlockEntity::setRemoved);
             }
         }
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(facingProp);
         boolean flipped = state.getValue(flippedProp);
 
@@ -243,7 +254,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(facingProp, flippedProp, locked1Prop, locked2Prop, anyLockedProp, openProp);
     }
@@ -255,13 +266,13 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return new ForgedContainerTile();
     }
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+    public BlockState getStateForPlacement(final BlockPlaceContext context) {
         if (context.getLevel().getBlockState(context.getClickedPos().relative(context.getHorizontalDirection().getClockWise())).canBeReplaced(context)) {
             return super.getStateForPlacement(context).setValue(facingProp, context.getHorizontalDirection());
         }
@@ -271,13 +282,13 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     // based on same method implementation in BedBlock
-    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         Direction facing = state.getValue(facingProp);
         world.setBlock(pos.relative(facing.getClockWise()), defaultBlockState().setValue(flippedProp, true).setValue(facingProp, facing), 3);
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos,
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos,
             BlockPos facingPos) {
         Direction pairedFacing = state.getValue(facingProp);
         if (state.getValue(flippedProp)) {
@@ -294,8 +305,8 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     @Override
-    public BlockRenderType getRenderShape(BlockState state) {
-        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,7 +11,7 @@ public class JumpHandlerBooster {
 
     private final Minecraft mc;
 
-    private KeyBinding jumpKey;
+    private KeyMapping jumpKey;
 
     private boolean wasJumpKeyDown = false;
 

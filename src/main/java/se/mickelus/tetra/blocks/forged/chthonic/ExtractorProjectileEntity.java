@@ -1,27 +1,27 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.GameType;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
@@ -34,7 +34,18 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.RotationHelper;
 
-public class ExtractorProjectileEntity extends AbstractArrowEntity implements IEntityAdditionalSpawnData {
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+
+public class ExtractorProjectileEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
     public static final String unlocalizedName = "extractor_projectile";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -48,7 +59,7 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
 
     private boolean extinguishing = false;
 
-    public ExtractorProjectileEntity(World world, LivingEntity shooter, ItemStack itemStack) {
+    public ExtractorProjectileEntity(Level world, LivingEntity shooter, ItemStack itemStack) {
         super(type, shooter, world);
 
         damage = itemStack.getDamageValue();
@@ -59,7 +70,7 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
         setPierceLevel(Byte.MAX_VALUE);
     }
 
-    public ExtractorProjectileEntity(EntityType<? extends ExtractorProjectileEntity> type, World worldIn) {
+    public ExtractorProjectileEntity(EntityType<? extends ExtractorProjectileEntity> type, Level worldIn) {
         super(type, worldIn);
         setBaseDamage(0.5);
         setKnockback(3);
@@ -68,14 +79,14 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
 
 
     @OnlyIn(Dist.CLIENT)
-    public ExtractorProjectileEntity(World worldIn, double x, double y, double z) {
+    public ExtractorProjectileEntity(Level worldIn, double x, double y, double z) {
         super(type, x, y, z, worldIn);
         setBaseDamage(0.5);
         setKnockback(3);
         setPierceLevel(Byte.MAX_VALUE);
     }
 
-    public ExtractorProjectileEntity(FMLPlayMessages.SpawnEntity packet, World worldIn) {
+    public ExtractorProjectileEntity(FMLPlayMessages.SpawnEntity packet, Level worldIn) {
         super(type, worldIn);
         setBaseDamage(0.5);
         setKnockback(3);
@@ -88,15 +99,15 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
     }
 
     @Override
-    protected void onHit(RayTraceResult rayTraceResult) {
+    protected void onHit(HitResult rayTraceResult) {
         if (!level.isClientSide
-                && rayTraceResult.getType() == RayTraceResult.Type.BLOCK
+                && rayTraceResult.getType() == HitResult.Type.BLOCK
                 && getDeltaMovement().lengthSqr() > 0.95) {
-            ServerPlayerEntity shooter = CastOptional.cast(getOwner(), ServerPlayerEntity.class).orElse(null);
-            BlockPos pos = ((BlockRayTraceResult) rayTraceResult).getBlockPos();
+            ServerPlayer shooter = CastOptional.cast(getOwner(), ServerPlayer.class).orElse(null);
+            BlockPos pos = ((BlockHitResult) rayTraceResult).getBlockPos();
 
             if (shooter != null && breakBlock(level, pos, shooter)) {
-                breakAround(level, pos, ((BlockRayTraceResult) rayTraceResult).getDirection(), shooter);
+                breakAround(level, pos, ((BlockHitResult) rayTraceResult).getDirection(), shooter);
                 setDeltaMovement(getDeltaMovement().scale(0.95f));
                 hitAdditional();
                 return;
@@ -111,20 +122,20 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
      * This is called recursively
      */
     private void hitAdditional() {
-        Vector3d position = position();
-        Vector3d target = position.add(getDeltaMovement());
-        RayTraceResult rayTraceResult = level.clip(
-                new RayTraceContext(position, target, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
+        Vec3 position = position();
+        Vec3 target = position.add(getDeltaMovement());
+        HitResult rayTraceResult = level.clip(
+                new ClipContext(position, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 
-        if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK
+        if (rayTraceResult.getType() == HitResult.Type.BLOCK
                 && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
             onHit(rayTraceResult);
         }
     }
 
-    private void breakAround(World world, BlockPos pos, Direction face, ServerPlayerEntity shooter) {
-        Vector3i axis1 = RotationHelper.shiftAxis(face.getNormal());
-        Vector3i axis2 = RotationHelper.shiftAxis(axis1);
+    private void breakAround(Level world, BlockPos pos, Direction face, ServerPlayer shooter) {
+        Vec3i axis1 = RotationHelper.shiftAxis(face.getNormal());
+        Vec3i axis2 = RotationHelper.shiftAxis(axis1);
         ServerScheduler.schedule(2, () -> {
                 breakBlock(world, pos.offset(axis1), shooter);
                 breakBlock(world, pos.subtract(axis1), shooter);
@@ -143,12 +154,12 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
         });
     }
 
-    private boolean breakBlock(World world, BlockPos pos, ServerPlayerEntity shooter) {
-        ServerWorld serverWorld = (ServerWorld) world;
+    private boolean breakBlock(Level world, BlockPos pos, ServerPlayer shooter) {
+        ServerLevel serverWorld = (ServerLevel) world;
         GameType gameType = shooter.gameMode.getGameModeForPlayer();
         BlockState blockState = world.getBlockState(pos);
 
-        TileEntity tileEntity = world.getBlockEntity(pos);
+        BlockEntity tileEntity = world.getBlockEntity(pos);
 
         if (blockState.getDestroySpeed(world, pos) != -1
                 && isAlive()
@@ -182,7 +193,7 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
 
     private void destroyExtractor() {
         remove();
-        level.explode(getOwner(), getX(), getY(), getZ(), 4, Explosion.Mode.BREAK);
+        level.explode(getOwner(), getX(), getY(), getZ(), 4, Explosion.BlockInteraction.BREAK);
     }
 
     @Override
@@ -193,17 +204,17 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
             if (isOnGround() && heat > 0) {
                 int cooldown = isInWater() ? 10 : 1;
                 if (tickCount % 10 == 0) {
-                    Vector3d pos = position().add(getLookAngle().scale(-Math.random()));
-                    ((ServerWorld) level).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, cooldown, 0,
+                    Vec3 pos = position().add(getLookAngle().scale(-Math.random()));
+                    ((ServerLevel) level).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, cooldown, 0,
                             0.01, 0, 0.01D);
 
-                    ((ServerWorld) level).sendParticles(ParticleTypes.FLAME, pos.x, pos.y + 0.1, pos.z, 1, 0,
+                    ((ServerLevel) level).sendParticles(ParticleTypes.FLAME, pos.x, pos.y + 0.1, pos.z, 1, 0,
                             0.01, 0, 0.01D);
                 }
 
                 if (cooldown > 1 && !extinguishing) {
-                    level.playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 0.2f, 0.9f);
-                    ((ServerWorld) level).sendParticles(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, getX(), getY(), getZ(), 12, 0,
+                    level.playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 0.2f, 0.9f);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, getX(), getY(), getZ(), 12, 0,
                             0.01, 0, 0.01D);
 
                     extinguishing = true;
@@ -212,8 +223,8 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
                 heat -= cooldown;
             } else {
                 if (tickCount % 40 == 0) {
-                    Vector3d pos = position().add(getLookAngle().scale(-Math.random()));
-                    ((ServerWorld) level).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, 1, 0,
+                    Vec3 pos = position().add(getLookAngle().scale(-Math.random()));
+                    ((ServerLevel) level).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, 1, 0,
                             0.01, 0, 0.01D);
                 }
             }
@@ -237,13 +248,13 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
     }
 
     @Override
-    protected void onHitBlock(BlockRayTraceResult rayTraceResult) {
+    protected void onHitBlock(BlockHitResult rayTraceResult) {
         super.onHitBlock(rayTraceResult);
         this.setSoundEvent(SoundEvents.NETHERITE_BLOCK_HIT);
     }
 
     @Override
-    protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
+    protected void onHitEntity(EntityHitResult p_213868_1_) {
         super.onHitEntity(p_213868_1_);
         setDeltaMovement(getDeltaMovement().normalize().scale(-0.1));
     }
@@ -252,7 +263,7 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
      * Called by a player entity when they collide with an entity
      */
     @Override
-    public void playerTouch(PlayerEntity player) {
+    public void playerTouch(Player player) {
         if (inGround) {
             super.playerTouch(player);
 
@@ -270,20 +281,20 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
 
     // pretty much the same as a regular pickup but attempts to place it in the offhand first
     @Override
-    public ActionResultType interactAt(PlayerEntity player, Vector3d vec, Hand hand) {
+    public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
         if (!level.isClientSide
                 && isOnGround()
                 && isAlive()
-                && pickup == AbstractArrowEntity.PickupStatus.ALLOWED) {
+                && pickup == AbstractArrow.Pickup.ALLOWED) {
 
             ItemStack itemStack = getPickupItem();
             boolean success = false;
 
             if (player.getMainHandItem().isEmpty()) {
-                player.setItemInHand(Hand.MAIN_HAND, itemStack);
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
                 success = true;
             } else if (player.getOffhandItem().isEmpty()) {
-                player.setItemInHand(Hand.OFF_HAND, itemStack);
+                player.setItemInHand(InteractionHand.OFF_HAND, itemStack);
                 success = true;
             } else if (player.inventory.add(itemStack)) {
                 success = true;
@@ -294,13 +305,13 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
                 ignitePlayer(player);
                 remove();
 
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
         return super.interactAt(player, vec, hand);
     }
 
-    private void ignitePlayer(PlayerEntity player) {
+    private void ignitePlayer(Player player) {
         if (!isAlive() && heat > 10) {
             player.setSecondsOnFire(3 + heat / 20);
         }
@@ -311,12 +322,12 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
     public void tickDespawn() { }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT compound) {
+    public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
 
         damage = compound.getInt(damageKey);
@@ -324,7 +335,7 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT compound) {
+    public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
 
         compound.putInt(damageKey, damage);
@@ -332,13 +343,13 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
     }
 
     @Override
-    public void writeSpawnData(PacketBuffer buffer) {
+    public void writeSpawnData(FriendlyByteBuf buffer) {
         buffer.writeInt(damage);
         buffer.writeInt(heat);
     }
 
     @Override
-    public void readSpawnData(PacketBuffer buffer) {
+    public void readSpawnData(FriendlyByteBuf buffer) {
         damage = buffer.readInt();
         heat = buffer.readInt();
     }

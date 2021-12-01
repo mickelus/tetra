@@ -1,9 +1,9 @@
 package se.mickelus.tetra.items;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import se.mickelus.tetra.network.PacketHandler;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class TetraItem extends Item implements ITetraItem {
 

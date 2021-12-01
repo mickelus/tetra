@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.ChatFormatting;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiButton;
 import se.mickelus.mgui.gui.GuiElement;
@@ -104,7 +104,7 @@ public class HoloBreadcrumbsGui extends GuiElement {
             xOffset = last.getX() + last.getWidth() + 12;
         }
 
-        GuiButton button = new GuiButton(xOffset, 4, TextFormatting.stripFormatting(label), () -> onClick.accept(index));
+        GuiButton button = new GuiButton(xOffset, 4, ChatFormatting.stripFormatting(label), () -> onClick.accept(index));
         new KeyframeAnimation(80, button)
                 .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateX(xOffset - 2, xOffset))
                 .withDelay(40)

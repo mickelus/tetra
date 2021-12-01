@@ -1,20 +1,20 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 public class GuiInventoryInfo extends GuiElement {
-    private PlayerInventory inventory;
+    private Inventory inventory;
     private ItemStack targetStack;
     private String slot;
     private UpgradeSchematic schematic;
 
     private GuiInventoryHighlight[] highlights;
 
-    public GuiInventoryInfo(int x, int y, PlayerEntity player) {
+    public GuiInventoryInfo(int x, int y, Player player) {
         super(x, y, 224, 72);
 
         this.inventory = player.inventory;

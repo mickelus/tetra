@@ -3,16 +3,16 @@ package se.mickelus.tetra.advancements;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -39,20 +39,20 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (TickEvent.Phase.START == event.phase && event.player.tickCount % 20 == 0 && !event.player.level.isClientSide) {
             event.player.level.getProfiler().push("lookTrigger");
-            Vector3d playerPosition = event.player.getEyePosition(0);
+            Vec3 playerPosition = event.player.getEyePosition(0);
 
             float lookDistance = 5; // event.player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue()
-            Vector3d lookingPosition = event.player.getLookAngle().scale(lookDistance).add(playerPosition);
+            Vec3 lookingPosition = event.player.getLookAngle().scale(lookDistance).add(playerPosition);
 
-            BlockRayTraceResult result = event.player.level.clip(new RayTraceContext(playerPosition, lookingPosition,
-                    RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, event.player));
+            BlockHitResult result = event.player.level.clip(new ClipContext(playerPosition, lookingPosition,
+                    ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, event.player));
 
 
-            if (!RayTraceResult.Type.MISS.equals(result.getType())) {
+            if (!HitResult.Type.MISS.equals(result.getType())) {
                 BlockState currentState = event.player.level.getBlockState(new BlockPos(result.getBlockPos()));
 
                 if (!currentState.equals(stateCache.getIfPresent(event.player.getUUID()))) {
-                    trigger((ServerPlayerEntity) event.player, currentState);
+                    trigger((ServerPlayer) event.player, currentState);
                     stateCache.put(event.player.getUUID(), currentState);
                 }
             } else {
@@ -62,7 +62,7 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
         }
     }
 
-    public static Instance deserialize(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+    public static Instance deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
         PropertyMatcher propertyMatcher = null;
         if (json.has("block")) {
             propertyMatcher = PropertyMatcher.deserialize(json.get("block"));
@@ -71,14 +71,14 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
         return new Instance(entityPredicate, propertyMatcher);
     }
 
-    public void trigger(ServerPlayerEntity player, BlockState state) {
+    public void trigger(ServerPlayer player, BlockState state) {
         fulfillCriterion(player, instance -> instance.test(state));
     }
 
-    public static class Instance extends CriterionInstance {
+    public static class Instance extends AbstractCriterionTriggerInstance {
         private PropertyMatcher block = null;
 
-        public Instance(EntityPredicate.AndPredicate playerCondition, PropertyMatcher propertyMatcher) {
+        public Instance(EntityPredicate.Composite playerCondition, PropertyMatcher propertyMatcher) {
             super(instance.getId(), playerCondition);
 
             this.block = propertyMatcher;

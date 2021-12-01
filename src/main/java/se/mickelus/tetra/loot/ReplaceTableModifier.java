@@ -1,12 +1,12 @@
 package se.mickelus.tetra.loot;
 
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.loot.LootParameterSet;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class ReplaceTableModifier extends LootModifier {
     ResourceLocation table;
 
-    protected ReplaceTableModifier(ILootCondition[] conditions, ResourceLocation table) {
+    protected ReplaceTableModifier(LootItemCondition[] conditions, ResourceLocation table) {
         super(conditions);
 
         this.table = table;
@@ -28,7 +28,7 @@ public class ReplaceTableModifier extends LootModifier {
         LootContext newContext = new LootContext.Builder(context.getLevel())
                 .withRandom(context.getRandom())
                 .withLuck(context.getLuck())
-                .create(LootParameterSets.EMPTY);
+                .create(LootContextParamSets.EMPTY);
         newContext.setQueriedLootTableId(table);
 
         return context.getLevel()
@@ -39,7 +39,7 @@ public class ReplaceTableModifier extends LootModifier {
     }
 
     public static class Serializer extends GlobalLootModifierSerializer<ReplaceTableModifier> {
-        public ReplaceTableModifier read(ResourceLocation location, JsonObject object, ILootCondition[] conditions) {
+        public ReplaceTableModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] conditions) {
             return new ReplaceTableModifier(conditions, new ResourceLocation(object.get("table").getAsString()));
         }
 

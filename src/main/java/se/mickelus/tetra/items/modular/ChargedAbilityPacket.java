@@ -1,12 +1,12 @@
 package se.mickelus.tetra.items.modular;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.network.AbstractPacket;
 import se.mickelus.tetra.network.BlockPosPacket;
 
@@ -15,14 +15,14 @@ import java.util.Optional;
 public class ChargedAbilityPacket extends BlockPosPacket {
 
     private int targetId = -1;
-    private Hand hand;
+    private InteractionHand hand;
     private int ticksUsed;
 
-    private Vector3d hitVec;
+    private Vec3 hitVec;
 
     public ChargedAbilityPacket() {}
 
-    public ChargedAbilityPacket(LivingEntity target, BlockPos pos, Vector3d hitVec, Hand hand, int ticksUsed) {
+    public ChargedAbilityPacket(LivingEntity target, BlockPos pos, Vec3 hitVec, InteractionHand hand, int ticksUsed) {
         super(pos == null ? BlockPos.ZERO : pos);
         targetId = Optional.ofNullable(target)
                 .map(Entity::getId)
@@ -31,11 +31,11 @@ public class ChargedAbilityPacket extends BlockPosPacket {
         this.hand = hand;
         this.ticksUsed = ticksUsed;
 
-        this.hitVec = hitVec == null ? Vector3d.ZERO : hitVec;
+        this.hitVec = hitVec == null ? Vec3.ZERO : hitVec;
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         super.toBytes(buffer);
         buffer.writeInt(targetId);
         buffer.writeInt(hand.ordinal());
@@ -47,20 +47,20 @@ public class ChargedAbilityPacket extends BlockPosPacket {
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         super.fromBytes(buffer);
         targetId = buffer.readInt();
-        hand = Hand.values()[buffer.readInt()];
+        hand = InteractionHand.values()[buffer.readInt()];
         ticksUsed = buffer.readInt();
 
         double x = buffer.readDouble();
         double y = buffer.readDouble();
         double z = buffer.readDouble();
-        hitVec = new Vector3d(x, y, z);
+        hitVec = new Vec3(x, y, z);
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         LivingEntity target = Optional.of(targetId)
                 .filter(id -> id != -1)
                 .map(id -> player.level.getEntity(id))
@@ -69,6 +69,6 @@ public class ChargedAbilityPacket extends BlockPosPacket {
                 .orElse(null);
 
         ItemModularHandheld.handleChargedAbility(player, hand, target, BlockPos.ZERO.equals(pos) ? null : pos,
-                Vector3d.ZERO.equals(hitVec) ? null : hitVec, ticksUsed);
+                Vec3.ZERO.equals(hitVec) ? null : hitVec, ticksUsed);
     }
 }

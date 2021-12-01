@@ -1,15 +1,15 @@
 package se.mickelus.tetra.effect.potion;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class MiningSpeedPotionEffect extends Effect {
+public class MiningSpeedPotionEffect extends MobEffect {
     public static MiningSpeedPotionEffect instance;
     public MiningSpeedPotionEffect() {
-        super(EffectType.BENEFICIAL, 0xeeeeee);
+        super(MobEffectCategory.BENEFICIAL, 0xeeeeee);
 
         setRegistryName("mining_speed");
 
@@ -17,12 +17,12 @@ public class MiningSpeedPotionEffect extends Effect {
     }
 
     @Override
-    public boolean shouldRender(EffectInstance effect) {
+    public boolean shouldRender(MobEffectInstance effect) {
         return false;
     }
 
     @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
+    public boolean shouldRenderHUD(MobEffectInstance effect) {
         return false;
     }
 

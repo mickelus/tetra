@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
 import se.mickelus.tetra.network.AbstractPacket;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -16,17 +16,17 @@ public class ChangeCompartmentPacket extends AbstractPacket {
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         buffer.writeInt(compartmentIndex);
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         compartmentIndex = buffer.readInt();
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         CastOptional.cast(player.containerMenu, ForgedContainerContainer.class)
                 .ifPresent(container -> container.changeCompartment(compartmentIndex));
     }

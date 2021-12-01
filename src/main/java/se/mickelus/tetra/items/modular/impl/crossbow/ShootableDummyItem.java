@@ -1,15 +1,15 @@
 package se.mickelus.tetra.items.modular.impl.crossbow;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.ShootableItem;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 
 import java.util.function.Predicate;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
-public class ShootableDummyItem extends ShootableItem {
+public class ShootableDummyItem extends ProjectileWeaponItem {
 
     public static final Predicate<ItemStack> ammoPredicate = ARROW_OR_FIREWORK
             .or(stack -> stack.getItem() == ChthonicExtractorBlock.item)

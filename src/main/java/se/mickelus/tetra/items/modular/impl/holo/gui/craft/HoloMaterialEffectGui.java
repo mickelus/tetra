@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.ChatFormatting;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -22,7 +22,7 @@ public class HoloMaterialEffectGui extends GuiElement {
 
         tooltip = ImmutableList.of(
                 I18n.get("tetra.holo.craft.materials.stat_effect.tooltip", I18n.get("tetra.stats." + key)),
-                TextFormatting.GRAY + I18n.get("tetra.stats." + key + ".tooltip_short"));
+                ChatFormatting.GRAY + I18n.get("tetra.stats." + key + ".tooltip_short"));
 
         backdrop = new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench);
         backdrop.setColor(0x222222);

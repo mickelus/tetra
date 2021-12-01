@@ -1,7 +1,7 @@
 package se.mickelus.tetra.network;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
 
 import java.io.IOException;
 
@@ -17,21 +17,21 @@ public abstract class AbstractPacket {
      *
      * @param buffer the buffer to encode into
      */
-    public abstract void toBytes(PacketBuffer buffer);
+    public abstract void toBytes(FriendlyByteBuf buffer);
 
     /**
      * Decode the packet data from the ByteBuf stream. Complex data sets may need specific data handlers (See @link{cpw.mods.fml.common.network.ByteBuffUtils})
      *
      * @param buffer the buffer to decode from
      */
-    public abstract void fromBytes(PacketBuffer buffer);
+    public abstract void fromBytes(FriendlyByteBuf buffer);
 
     /**
      * Handle the reception of this packet.
      *
      * @param player A reference to the sending player when handled on the server side
      */
-    public abstract void handle(PlayerEntity player);
+    public abstract void handle(Player player);
 
     /**
      * Utility method that reads a string from a buffer object.
@@ -39,7 +39,7 @@ public abstract class AbstractPacket {
      * @return A string read from the buffer
      * @throws IOException
      */
-    protected static String readString(PacketBuffer buffer) throws IOException {
+    protected static String readString(FriendlyByteBuf buffer) throws IOException {
         String string = "";
         char c = buffer.readChar();
 
@@ -51,7 +51,7 @@ public abstract class AbstractPacket {
         return string;
     }
 
-    protected static void writeString(String string, PacketBuffer buffer) throws IOException {
+    protected static void writeString(String string, FriendlyByteBuf buffer) throws IOException {
         for (int i = 0; i < string.length(); i++) {
             buffer.writeChar(string.charAt(i));
         }

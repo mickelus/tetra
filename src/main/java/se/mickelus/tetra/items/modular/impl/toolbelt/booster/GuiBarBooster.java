@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.animation.VisibilityFilter;
@@ -23,7 +23,7 @@ public class GuiBarBooster extends GuiElement {
     }
 
     @Override
-    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         opacity = filter.apply(visibleIndicators) * opacity;
         if (opacity > 0) {
             matrixStack.translate(opacity * -10, 0, 0);

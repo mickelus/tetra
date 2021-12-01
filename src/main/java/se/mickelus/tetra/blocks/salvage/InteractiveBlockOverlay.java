@@ -1,14 +1,14 @@
 package se.mickelus.tetra.blocks.salvage;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.client.event.DrawHighlightEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -36,11 +36,11 @@ public class InteractiveBlockOverlay {
 
     @SubscribeEvent
     public void renderOverlay(DrawHighlightEvent event) {
-        if (event.getTarget().getType().equals(RayTraceResult.Type.BLOCK)) {
-            BlockRayTraceResult rayTrace = (BlockRayTraceResult) event.getTarget();
+        if (event.getTarget().getType().equals(HitResult.Type.BLOCK)) {
+            BlockHitResult rayTrace = (BlockHitResult) event.getTarget();
 
-            World world = Minecraft.getInstance().level;
-            VoxelShape shape = world.getBlockState(rayTrace.getBlockPos()).getShape(Minecraft.getInstance().level, rayTrace.getBlockPos(), ISelectionContext.of(mc.player));
+            Level world = Minecraft.getInstance().level;
+            VoxelShape shape = world.getBlockState(rayTrace.getBlockPos()).getShape(Minecraft.getInstance().level, rayTrace.getBlockPos(), CollisionContext.of(mc.player));
 
             BlockPos blockPos = rayTrace.getBlockPos();
             Direction face = rayTrace.getDirection();

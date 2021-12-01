@@ -1,15 +1,15 @@
 package se.mickelus.tetra.blocks.scroll;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.TetraMod;
@@ -17,11 +17,11 @@ import se.mickelus.tetra.TetraMod;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class ScrollTile extends TileEntity {
+public class ScrollTile extends BlockEntity {
     public static final String unlocalizedName = "scroll";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static TileEntityType<ScrollTile> type;
+    public static BlockEntityType<ScrollTile> type;
 
     private static final String scrollsKey = "scrolls";
     private ScrollData[] scrolls = new ScrollData[0];
@@ -67,43 +67,43 @@ public class ScrollTile extends TileEntity {
     }
 
 
-    public CompoundNBT[] getItemTags() {
+    public CompoundTag[] getItemTags() {
         return Arrays.stream(scrolls)
                 .map(data -> new ScrollData[] { data })
-                .map(data -> ScrollData.write(data, new CompoundNBT()))
-                .toArray(CompoundNBT[]::new);
+                .map(data -> ScrollData.write(data, new CompoundTag()))
+                .toArray(CompoundTag[]::new);
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return VoxelShapes.block().bounds().move(worldPosition);
+    public AABB getRenderBoundingBox() {
+        return Shapes.block().bounds().move(worldPosition);
     }
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return save(new CompoundTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compound) {
+    public void load(BlockState blockState, CompoundTag compound) {
         super.load(blockState, compound);
 
         scrolls = ScrollData.read(compound);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         super.save(compound);
 
         return ScrollData.write(scrolls, compound);

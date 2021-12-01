@@ -1,30 +1,30 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
 import com.google.common.collect.Sets;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.loot.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.particles.BlockParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.spawner.WorldEntitySpawner;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ObjectHolder;
@@ -38,9 +38,27 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 
-public class FracturedBedrockTile extends TileEntity implements ITickableTileEntity {
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.AABB;
+
+public class FracturedBedrockTile extends BlockEntity implements TickableBlockEntity {
     @ObjectHolder(TetraMod.MOD_ID + ":" + FracturedBedrockBlock.unlocalizedName)
-    public static TileEntityType<FracturedBedrockTile> type;
+    public static BlockEntityType<FracturedBedrockTile> type;
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -65,7 +83,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier4")
     };
 
-    private MobSpawnInfo spawnInfo;
+    private MobSpawnSettings spawnInfo;
 
     public FracturedBedrockTile() {
         super(type);
@@ -76,7 +94,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
             spawnInfo = level.getBiome(worldPosition).getMobSettings();
         }
 
-        boolean spawnBonus = spawnInfo.getMobs(EntityClassification.MONSTER).stream()
+        boolean spawnBonus = spawnInfo.getMobs(MobCategory.MONSTER).stream()
                 .map(spawner -> spawner.type)
                 .anyMatch(type -> EntityType.HUSK.equals(type) || EntityType.STRAY.equals(type) || EntityType.WITCH.equals(type));
         if (spawnBonus) {
@@ -104,7 +122,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     }
 
     private int getRate() {
-        return 20 - MathHelper.clamp(activity / 64 * 5, 0, 15);
+        return 20 - Mth.clamp(activity / 64 * 5, 0, 15);
     }
 
     private int getIntensity() {
@@ -149,14 +167,14 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
         return step >= ChthonicExtractorBlock.maxDamage * 12;
     }
 
-    private Vector3d getTarget(int i) {
+    private Vec3 getTarget(int i) {
         int maxDistance = getMaxDistance();
         int steps = 32;
         double directionRotation = 90d * (i % 4);
         double offsetRotation = 360d / steps * (i / 4) + i / 8f;
         float pitch = -(i % (steps * 16)) / steps * 5f;
 
-        return Vector3d.directionFromRotation(pitch, (float) (directionRotation + offsetRotation)).multiply(maxDistance, 4 + maxDistance / 2f, maxDistance);
+        return Vec3.directionFromRotation(pitch, (float) (directionRotation + offsetRotation)).multiply(maxDistance, 4 + maxDistance / 2f, maxDistance);
     }
 
     private boolean isBedrock(Block block) {
@@ -170,8 +188,8 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
         return blockState.getMaterial().isReplaceable();
     }
 
-    private BlockPos raytrace(Vector3d origin, Vector3d target) {
-        return IBlockReader.traverseBlocks(new RayTraceContext(origin, target, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, null), (ctx, blockPos) -> {
+    private BlockPos raytrace(Vec3 origin, Vec3 target) {
+        return BlockGetter.traverseBlocks(new ClipContext(origin, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null), (ctx, blockPos) -> {
             BlockState blockState = level.getBlockState(blockPos);
             Block block = blockState.getBlock();
 
@@ -183,7 +201,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     }
 
     private BlockPos traceDown(BlockPos blockPos) {
-        BlockPos.Mutable movePos = blockPos.mutable();
+        BlockPos.MutableBlockPos movePos = blockPos.mutable();
 
         while (movePos.getY() >= 0) {
             movePos.move(Direction.DOWN);
@@ -201,18 +219,18 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
         return movePos.immutable();
     }
 
-    public static boolean breakBlock(World world, BlockPos pos, BlockState blockState) {
-        if (world instanceof ServerWorld
+    public static boolean breakBlock(Level world, BlockPos pos, BlockState blockState) {
+        if (world instanceof ServerLevel
                 && !blockState.isAir(world, pos)
                 && breakMaterials.contains(blockState.getMaterial())
                 && blockState.getDestroySpeed(world, pos) > -1) {
-            TileEntity tile = blockState.hasTileEntity() ? world.getBlockEntity(pos) : null;
-            LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world)
+            BlockEntity tile = blockState.hasTileEntity() ? world.getBlockEntity(pos) : null;
+            LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world)
                     .withRandom(world.random)
-                    .withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(pos))
-                    .withParameter(LootParameters.TOOL, ItemStack.EMPTY)
-                    .withOptionalParameter(LootParameters.BLOCK_ENTITY, tile)
-                    .withOptionalParameter(LootParameters.THIS_ENTITY, null);
+                    .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
+                    .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
+                    .withOptionalParameter(LootContextParams.BLOCK_ENTITY, tile)
+                    .withOptionalParameter(LootContextParams.THIS_ENTITY, null);
 
             blockState.getDrops(lootBuilder).forEach(itemStack -> Block.popResource(world, pos, itemStack));
 
@@ -226,9 +244,9 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     }
 
     private void spawnOre(BlockPos pos) {
-        ServerWorld serverWorld = (ServerWorld) level;
+        ServerLevel serverWorld = (ServerLevel) level;
         LootTable table = serverWorld.getServer().getLootTables().get(lootTables[getTier()]);
-        LootContext context = new LootContext.Builder(serverWorld).withLuck(luck).create(LootParameterSets.EMPTY);
+        LootContext context = new LootContext.Builder(serverWorld).withLuck(luck).create(LootContextParamSets.EMPTY);
 
         table.getRandomItems(context).stream()
                 .filter(itemStack -> !itemStack.isEmpty())
@@ -257,19 +275,19 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
             return;
         }
 
-        List<MobSpawnInfo.Spawners> spawners = spawnInfo.getMobs(EntityClassification.MONSTER);
+        List<MobSpawnSettings.SpawnerData> spawners = spawnInfo.getMobs(MobCategory.MONSTER);
 
-        if (WeightedRandom.getTotalWeight(spawners) == 0) {
+        if (WeighedRandom.getTotalWeight(spawners) == 0) {
             return;
         }
 
-        MobSpawnInfo.Spawners mob = WeightedRandom.getRandomItem(level.getRandom(), spawners);
+        MobSpawnSettings.SpawnerData mob = WeighedRandom.getRandomItem(level.getRandom(), spawners);
 
-        ServerWorld serverWorld = (ServerWorld) level;
+        ServerLevel serverWorld = (ServerLevel) level;
         if (mob.type.canSummon()
 //                && WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementType(mob.type), world, pos, mob.type)
                 && serverWorld.noCollision(mob.type.getAABB(pos.getX(), pos.getY(), pos.getZ()))
-                && EntitySpawnPlacementRegistry.checkSpawnRules(mob.type, serverWorld, SpawnReason.SPAWNER, pos, serverWorld.getRandom())) {
+                && SpawnPlacements.checkSpawnRules(mob.type, serverWorld, MobSpawnType.SPAWNER, pos, serverWorld.getRandom())) {
 
             Entity entity;
             try {
@@ -280,16 +298,16 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
             }
 
             entity.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
-            CastOptional.cast(entity, MobEntity.class)
-                    .filter(e -> ForgeHooks.canEntitySpawn(e, serverWorld, pos.getX(), pos.getY(), pos.getZ(), null, SpawnReason.SPAWNER) != -1)
-                    .filter(e -> e.checkSpawnRules(serverWorld, SpawnReason.CHUNK_GENERATION))
+            CastOptional.cast(entity, Mob.class)
+                    .filter(e -> ForgeHooks.canEntitySpawn(e, serverWorld, pos.getX(), pos.getY(), pos.getZ(), null, MobSpawnType.SPAWNER) != -1)
+                    .filter(e -> e.checkSpawnRules(serverWorld, MobSpawnType.CHUNK_GENERATION))
                     .filter(e -> e.checkSpawnObstruction(serverWorld))
                     .ifPresent(e -> {
-                        e.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(e.blockPosition()), SpawnReason.CHUNK_GENERATION, null, null);
+                        e.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(e.blockPosition()), MobSpawnType.CHUNK_GENERATION, null, null);
                         serverWorld.addFreshEntityWithPassengers(e);
 
                         // makes the mob angry at a nearby player
-                        serverWorld.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(getBlockPos()).inflate(24, 8, 24)).stream()
+                        serverWorld.getEntitiesOfClass(Player.class, new AABB(getBlockPos()).inflate(24, 8, 24)).stream()
                                 .findAny()
                                 .ifPresent(e::setLastHurtMob);
                     });
@@ -297,17 +315,17 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     }
 
     private void playSound() {
-        level.playSound(null, worldPosition.below(worldPosition.getY()), SoundEvents.BEACON_AMBIENT, SoundCategory.BLOCKS, 3f, 0.5f);
+        level.playSound(null, worldPosition.below(worldPosition.getY()), SoundEvents.BEACON_AMBIENT, SoundSource.BLOCKS, 3f, 0.5f);
     }
 
     @Override
     public void tick() {
         if (!level.isClientSide && activity > 0 && level.getGameTime() % getRate() == 0) {
             int intensity = getIntensity();
-            Vector3d origin = Vector3d.atCenterOf(getBlockPos());
+            Vec3 origin = Vec3.atCenterOf(getBlockPos());
 
             for (int i = 0; i < intensity; i++) {
-                Vector3d target = getTarget(step + i);
+                Vec3 target = getTarget(step + i);
                 BlockPos hitPos = raytrace(origin, origin.add(target));
 
                 if (hitPos != null) {
@@ -332,7 +350,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
                 }
             }
 
-            ((ServerWorld) level).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.defaultBlockState()),
+            ((ServerLevel) level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.defaultBlockState()),
                     worldPosition.getX() + 0.5, worldPosition.getY() + 1.1, worldPosition.getZ() + 0.5,
                     8, 0, level.random.nextGaussian() * 0.1, 0, 0.1);
 
@@ -350,7 +368,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     }
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compound) {
+    public void load(BlockState blockState, CompoundTag compound) {
         super.load(blockState, compound);
 
         if (compound.contains(activityKey)) {
@@ -367,7 +385,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         super.save(compound);
 
         compound.putInt(activityKey, activity);
@@ -379,17 +397,17 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return save(new CompoundTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
         this.load(getBlockState(), packet.getTag());
     }
 }

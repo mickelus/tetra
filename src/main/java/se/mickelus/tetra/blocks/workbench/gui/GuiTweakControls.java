@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiButton;
 import se.mickelus.mgui.gui.GuiElement;
@@ -28,7 +28,7 @@ public class GuiTweakControls extends GuiElement {
     public GuiTweakControls(int x, int y, Consumer<Map<String, Integer>> previewTweak, Consumer<Map<String, Integer>> applyTweak) {
         super(x, y, 224, 67);
 
-        untweakableLabel = new GuiString(0, -3, TextFormatting.DARK_GRAY + I18n.get("tetra.workbench.module_detail.not_tweakable"));
+        untweakableLabel = new GuiString(0, -3, ChatFormatting.DARK_GRAY + I18n.get("tetra.workbench.module_detail.not_tweakable"));
         untweakableLabel.setAttachment(GuiAttachment.middleCenter);
         addChild(untweakableLabel);
 

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
@@ -58,7 +58,7 @@ public class OverlayGuiQuiverGroup extends GuiElement {
         return -1;
     }
 
-    public Hand getHand() {
+    public InteractionHand getHand() {
         return null;
     }
 }

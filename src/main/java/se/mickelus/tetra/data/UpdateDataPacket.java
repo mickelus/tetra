@@ -1,9 +1,9 @@
 package se.mickelus.tetra.data;
 
 import com.google.gson.JsonElement;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.network.AbstractPacket;
 
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class UpdateDataPacket extends AbstractPacket {
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         buffer.writeUtf(directory);
         buffer.writeInt(data.size());
         data.forEach((resourceLocation, data) -> {
@@ -37,7 +37,7 @@ public class UpdateDataPacket extends AbstractPacket {
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         directory = buffer.readUtf();
         int count = buffer.readInt();
         data = new HashMap<>();
@@ -47,7 +47,7 @@ public class UpdateDataPacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         DataManager.instance.onDataRecieved(directory, data);
     }
 }

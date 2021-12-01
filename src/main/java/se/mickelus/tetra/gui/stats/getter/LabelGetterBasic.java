@@ -1,10 +1,10 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 
 public class LabelGetterBasic implements ILabelGetter {
-    protected static final String increaseColorFont = TextFormatting.GREEN.toString();
-    protected static final String decreaseColorFont = TextFormatting.RED.toString();
+    protected static final String increaseColorFont = ChatFormatting.GREEN.toString();
+    protected static final String decreaseColorFont = ChatFormatting.RED.toString();
 
     protected String formatDiff;
     protected String formatDiffFlipped;
@@ -55,7 +55,7 @@ public class LabelGetterBasic implements ILabelGetter {
             if (flipped) {
                 return String.format(formatDiffFlipped, diffValue, getDiffColor(value, diffValue), diffValue - value);
             } else {
-                return String.format(formatDiff, getDiffColor(value, diffValue), diffValue - value, TextFormatting.RESET, diffValue);
+                return String.format(formatDiff, getDiffColor(value, diffValue), diffValue - value, ChatFormatting.RESET, diffValue);
             }
         } else {
             return String.format(format, diffValue);

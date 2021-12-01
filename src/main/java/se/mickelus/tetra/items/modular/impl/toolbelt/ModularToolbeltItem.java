@@ -1,22 +1,22 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -45,9 +45,9 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
-public class ModularToolbeltItem extends ModularItem implements INamedContainerProvider {
+public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     public final static String unlocalizedName = "modular_toolbelt";
 
     public final static String slot1Key = "toolbelt/slot1";
@@ -66,7 +66,7 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
     public static ModularToolbeltItem instance;
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ContainerType<ToolbeltContainer> containerType;
+    public static MenuType<ToolbeltContainer> containerType;
 
     public ModularToolbeltItem() {
         super(new Properties()
@@ -107,11 +107,11 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
         MinecraftForge.EVENT_BUS.register(new JumpHandlerSuspend(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getInstance()));
-        ScreenManager.register(ModularToolbeltItem.containerType, ToolbeltGui::new);
+        MenuScreens.register(ModularToolbeltItem.containerType, ToolbeltGui::new);
     }
 
     @Override
-    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         if (allowdedIn(group)) {
             items.add(createStack("belt/rope"));
             items.add(createStack("belt/inlaid"));
@@ -126,22 +126,22 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, this);
+            NetworkHooks.openGui((ServerPlayer) player, this);
         }
 
-        return new ActionResult<>(ActionResultType.SUCCESS, player.getItemInHand(hand));
+        return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new StringTextComponent(getRegistryName().getPath());
+    public Component getDisplayName() {
+        return new TextComponent(getRegistryName().getPath());
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
         ItemStack itemStack = player.getMainHandItem();
         if (!this.equals(itemStack.getItem())) {
             itemStack = player.getOffhandItem();

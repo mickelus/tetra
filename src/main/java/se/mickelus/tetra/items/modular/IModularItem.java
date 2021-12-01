@@ -2,22 +2,22 @@ package se.mickelus.tetra.items.modular;
 
 import com.google.common.cache.Cache;
 import com.google.common.collect.*;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.UnbreakingEnchantment;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.text.*;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
@@ -49,6 +49,12 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public interface IModularItem {
     Logger logger = LogManager.getLogger();
@@ -88,7 +94,7 @@ public interface IModularItem {
         updateIdentifier(itemStack.getOrCreateTag());
     }
 
-    public static void updateIdentifier(CompoundNBT nbt) {
+    public static void updateIdentifier(CompoundTag nbt) {
         nbt.putString(identifierKey, UUID.randomUUID().toString());
     }
 
@@ -124,7 +130,7 @@ public interface IModularItem {
     }
 
     default Collection<ItemModule> getAllModules(ItemStack stack) {
-        CompoundNBT stackTag = stack.getTag();
+        CompoundTag stackTag = stack.getTag();
 
         if (stackTag != null) {
             return Stream.concat(Arrays.stream(getMajorModuleKeys()),Arrays.stream(getMinorModuleKeys()))
@@ -140,7 +146,7 @@ public interface IModularItem {
     default ItemModuleMajor[] getMajorModules(ItemStack itemStack) {
         String[] majorModuleKeys = getMajorModuleKeys();
         ItemModuleMajor[] modules = new ItemModuleMajor[majorModuleKeys.length];
-        CompoundNBT tag = itemStack.getTag();
+        CompoundTag tag = itemStack.getTag();
 
         if (tag != null) {
             for (int i = 0; i < majorModuleKeys.length; i++) {
@@ -157,7 +163,7 @@ public interface IModularItem {
     default ItemModule[] getMinorModules(ItemStack itemStack) {
         String[] minorModuleKeys = getMinorModuleKeys();
         ItemModule[] modules = new ItemModule[minorModuleKeys.length];
-        CompoundNBT tag = itemStack.getTag();
+        CompoundTag tag = itemStack.getTag();
 
         if (tag != null) {
             for (int i = 0; i < minorModuleKeys.length; i++) {
@@ -199,13 +205,13 @@ public interface IModularItem {
      * @param moduleVariant
      */
     public static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariantKey, String moduleVariant) {
-        CompoundNBT tag = itemStack.getOrCreateTag();
+        CompoundTag tag = itemStack.getOrCreateTag();
         tag.putString(slot, module);
         tag.putString(moduleVariantKey, moduleVariant);
     }
 
     public static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariant) {
-        CompoundNBT tag = itemStack.getOrCreateTag();
+        CompoundTag tag = itemStack.getOrCreateTag();
         tag.putString(slot, module);
         tag.putString(module + "_material", moduleVariant);
     }
@@ -254,7 +260,7 @@ public interface IModularItem {
         }
 
         // todo: store this in a separate data structure?
-        CompoundNBT tag = itemStack.getOrCreateTag();
+        CompoundTag tag = itemStack.getOrCreateTag();
         if (!isHoneable(itemStack)) {
             int honingProgress;
             if (tag.contains(honeProgressKey)) {
@@ -269,8 +275,8 @@ public interface IModularItem {
             if (honingProgress <= 0 && !isHoneable(itemStack)) {
                 tag.putBoolean(honeAvailableKey, true);
 
-                if (entity instanceof ServerPlayerEntity) {
-                    TetraMod.packetHandler.sendTo(new HonePacket(itemStack), (ServerPlayerEntity) entity);
+                if (entity instanceof ServerPlayer) {
+                    TetraMod.packetHandler.sendTo(new HonePacket(itemStack), (ServerPlayer) entity);
                 }
             }
         }
@@ -322,7 +328,7 @@ public interface IModularItem {
     }
 
     public static void removeHoneable(ItemStack itemStack) {
-        CompoundNBT tag = itemStack.getTag();
+        CompoundTag tag = itemStack.getTag();
 
         if (tag != null) {
             tag.remove(honeAvailableKey);
@@ -376,7 +382,7 @@ public interface IModularItem {
 
             if (level > 0) {
                 for (int i = 0; i < amount; i++) {
-                    if (UnbreakingEnchantment.shouldIgnoreDurabilityDrop(itemStack, level, responsibleEntity.level.random)) {
+                    if (DigDurabilityEnchantment.shouldIgnoreDurabilityDrop(itemStack, level, responsibleEntity.level.random)) {
                         reduction++;
                     }
                 }
@@ -396,11 +402,11 @@ public interface IModularItem {
     }
 
     @OnlyIn(Dist.CLIENT)
-    default List<ITextComponent> getTooltip(ItemStack itemStack, @Nullable World world, ITooltipFlag advanced) {
-        List<ITextComponent> tooltip = Lists.newArrayList();
+    default List<Component> getTooltip(ItemStack itemStack, @Nullable Level world, TooltipFlag advanced) {
+        List<Component> tooltip = Lists.newArrayList();
         if (isBroken(itemStack)) {
-            tooltip.add(new TranslationTextComponent("item.tetra.modular.broken")
-                    .withStyle(TextFormatting.DARK_RED, TextFormatting.ITALIC));
+            tooltip.add(new TranslatableComponent("item.tetra.modular.broken")
+                    .withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
         }
 
         if (Screen.hasShiftDown()) {
@@ -408,31 +414,31 @@ public interface IModularItem {
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
                     .forEach(module -> {
-                        tooltip.add(new StringTextComponent("\u00BB ").withStyle(TextFormatting.DARK_GRAY)
-                                .append(new StringTextComponent(module.getName(itemStack)).withStyle(TextFormatting.GRAY)));
+                        tooltip.add(new TextComponent("\u00BB ").withStyle(ChatFormatting.DARK_GRAY)
+                                .append(new TextComponent(module.getName(itemStack)).withStyle(ChatFormatting.GRAY)));
                         Arrays.stream(module.getImprovements(itemStack))
                                 .map(improvement -> String.format("  - %s", getImprovementTooltip(improvement.key, improvement.level, true)))
-                                .map(StringTextComponent::new)
-                                .map(textComponent -> textComponent.withStyle(TextFormatting.DARK_GRAY))
+                                .map(TextComponent::new)
+                                .map(textComponent -> textComponent.withStyle(ChatFormatting.DARK_GRAY))
                                 .forEach(tooltip::add);
                     });
             Arrays.stream(getMinorModules(itemStack))
                     .filter(Objects::nonNull)
-                    .map(module -> new StringTextComponent(" * ").withStyle(TextFormatting.DARK_GRAY)
-                            .append(new StringTextComponent(module.getName(itemStack)).withStyle(TextFormatting.GRAY)))
+                    .map(module -> new TextComponent(" * ").withStyle(ChatFormatting.DARK_GRAY)
+                            .append(new TextComponent(module.getName(itemStack)).withStyle(ChatFormatting.GRAY)))
                     .forEach(tooltip::add);
 
             // honing tooltip
             if (ConfigHandler.moduleProgression.get() && canGainHoneProgress()) {
                 if (isHoneable(itemStack)) {
-                    tooltip.add(new StringTextComponent(" > ").withStyle(TextFormatting.AQUA)
-                            .append(new TranslationTextComponent("tetra.hone.available").setStyle(Style.EMPTY.applyFormat(TextFormatting.GRAY))));
+                    tooltip.add(new TextComponent(" > ").withStyle(ChatFormatting.AQUA)
+                            .append(new TranslatableComponent("tetra.hone.available").setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY))));
                 } else {
                     int progress = getHoningProgress(itemStack);
                     int base = getHoningLimit(itemStack);
                     String percentage = String.format("%.0f", 100f * (base - progress) / base);
-                    tooltip.add(new StringTextComponent(" > ").withStyle(TextFormatting.DARK_AQUA)
-                            .append(new TranslationTextComponent("tetra.hone.progress", base - progress, base, percentage).withStyle(TextFormatting.GRAY)));
+                    tooltip.add(new TextComponent(" > ").withStyle(ChatFormatting.DARK_AQUA)
+                            .append(new TranslatableComponent("tetra.hone.progress", base - progress, base, percentage).withStyle(ChatFormatting.GRAY)));
                 }
             }
         } else {
@@ -444,8 +450,8 @@ public interface IModularItem {
                     .entrySet()
                     .stream()
                     .map(entry -> getImprovementTooltip(entry.getKey(), entry.getValue(), false))
-                    .map(StringTextComponent::new)
-                    .map(text -> text.withStyle(TextFormatting.GRAY))
+                    .map(TextComponent::new)
+                    .map(text -> text.withStyle(ChatFormatting.GRAY))
                     .forEach(tooltip::add);
 
             tooltip.add(Tooltips.expand);
@@ -456,7 +462,7 @@ public interface IModularItem {
 
     default String getImprovementTooltip(String key, int level, boolean clearFormatting) {
         if (clearFormatting) {
-            return TextFormatting.stripFormatting(getImprovementName(key, level));
+            return ChatFormatting.stripFormatting(getImprovementName(key, level));
         }
 
         return getImprovementName(key, level);
@@ -614,7 +620,7 @@ public interface IModularItem {
     }
 
     default void incrementRepairCount(ItemStack itemStack) {
-        CompoundNBT tag = itemStack.getOrCreateTag();
+        CompoundTag tag = itemStack.getOrCreateTag();
         tag.putInt(repairCountKey, tag.getInt(repairCountKey) + 1);
     }
 
@@ -690,7 +696,7 @@ public interface IModularItem {
         return 1 + (getEffectLevel(itemStack, ItemEffect.stabilizing) - getEffectLevel(itemStack, ItemEffect.unstable)) / 100f;
     }
 
-    default void applyDestabilizationEffects(ItemStack itemStack, World world, float probabilityMultiplier) {
+    default void applyDestabilizationEffects(ItemStack itemStack, Level world, float probabilityMultiplier) {
         if (!world.isClientSide) {
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
@@ -1056,7 +1062,7 @@ public interface IModularItem {
      * @param itemStack The modular item itemstack
      * @param severity
      */
-    default void assemble(ItemStack itemStack, @Nullable World world, float severity) {
+    default void assemble(ItemStack itemStack, @Nullable Level world, float severity) {
         if (itemStack.getDamageValue() > itemStack.getMaxDamage()) {
             itemStack.setDamageValue(itemStack.getMaxDamage());
         }
@@ -1065,7 +1071,7 @@ public interface IModularItem {
             applyDestabilizationEffects(itemStack, world, severity);
         }
 
-        CompoundNBT nbt = itemStack.getOrCreateTag();
+        CompoundTag nbt = itemStack.getOrCreateTag();
 
         // this stops the tooltip renderer from showing enchantments
         nbt.putInt("HideFlags", 1);

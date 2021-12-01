@@ -3,13 +3,13 @@ package se.mickelus.tetra.advancements;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.ConditionArrayParser;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.advancements.critereon.DeserializationContext;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.util.JsonOptional;
@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BlockUseCriterion extends CriterionInstance {
+public class BlockUseCriterion extends AbstractCriterionTriggerInstance {
     private final PropertyMatcher before;
     private final PropertyMatcher after;
 
@@ -31,7 +31,7 @@ public class BlockUseCriterion extends CriterionInstance {
 
     public static final GenericTrigger<BlockUseCriterion> trigger = new GenericTrigger<>("tetra:block_use", BlockUseCriterion::deserialize);
 
-    public BlockUseCriterion(EntityPredicate.AndPredicate playerCondition, PropertyMatcher before, PropertyMatcher after, ItemPredicate item, Map<String, String> data) {
+    public BlockUseCriterion(EntityPredicate.Composite playerCondition, PropertyMatcher before, PropertyMatcher after, ItemPredicate item, Map<String, String> data) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -39,11 +39,11 @@ public class BlockUseCriterion extends CriterionInstance {
         this.data = data;
     }
 
-    public static void trigger(ServerPlayerEntity player, BlockState state, ItemStack usedItem, Map<String, String> data) {
+    public static void trigger(ServerPlayer player, BlockState state, ItemStack usedItem, Map<String, String> data) {
         trigger.fulfillCriterion(player, criterion -> criterion.test(state, usedItem, data));
     }
 
-    public static void trigger(ServerPlayerEntity player, BlockState state, ItemStack usedItem) {
+    public static void trigger(ServerPlayer player, BlockState state, ItemStack usedItem) {
         trigger(player, state, usedItem, Collections.emptyMap());
     }
 
@@ -71,7 +71,7 @@ public class BlockUseCriterion extends CriterionInstance {
         return true;
     }
 
-    private static BlockUseCriterion deserialize(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+    private static BlockUseCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
         return new BlockUseCriterion(entityPredicate,
                 JsonOptional.field(json, "before")
                         .map(PropertyMatcher::deserialize)

@@ -1,21 +1,21 @@
 package se.mickelus.tetra.generation;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.debug.DebugRenderer;
-import net.minecraft.client.renderer.tileentity.StructureTileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.tileentity.StructureBlockTileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.client.renderer.blockentity.StructureBlockRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import net.minecraft.world.level.block.entity.StructureBlockEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import com.mojang.math.Matrix4f;
+import net.minecraft.core.Vec3i;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.data.DataManager;
@@ -23,15 +23,18 @@ import se.mickelus.tetra.data.DataManager;
 import java.util.Arrays;
 import java.util.Optional;
 
-@OnlyIn(Dist.CLIENT)
-public class ExtendedStructureTESR extends StructureTileEntityRenderer {
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.Tesselator;
 
-    public ExtendedStructureTESR(TileEntityRendererDispatcher dispatcher) {
+@OnlyIn(Dist.CLIENT)
+public class ExtendedStructureTESR extends StructureBlockRenderer {
+
+    public ExtendedStructureTESR(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(StructureBlockTileEntity te, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void render(StructureBlockEntity te, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         super.render(te, partialTicks, matrixStack, buffer, combinedLight, combinedOverlay);
 
         BlockPos rel = te.getStructurePos();
@@ -40,21 +43,21 @@ public class ExtendedStructureTESR extends StructureTileEntityRenderer {
                 .ifPresent(feature -> renderFeatureInfo(feature, matrixStack, buffer, rel.getX(), rel.getY(), rel.getZ()));
     }
 
-    private void renderFeatureInfo(FeatureParameters feature, MatrixStack matrixStack, IRenderTypeBuffer buffer, double x, double y, double z) {
-        IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.lines());
+    private void renderFeatureInfo(FeatureParameters feature, PoseStack matrixStack, MultiBufferSource buffer, double x, double y, double z) {
+        VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.lines());
         GlStateManager._lineWidth(3);
 
         BlockPos origin = feature.origin;
 
-        AxisAlignedBB aabb = new AxisAlignedBB(x + origin.getX() + 0.5, y + origin.getY() + 0.5, z + origin.getZ() + 0.5,
+        AABB aabb = new AABB(x + origin.getX() + 0.5, y + origin.getY() + 0.5, z + origin.getZ() + 0.5,
                 x + origin.getX() + 0.5, y + origin.getY() + 0.5, z + origin.getZ() + 0.5);
 
         // draw center box
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.5030000000949949026D), 1, 0, 1, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.5030000000949949026D), 1, 0, 1, 1);
         DebugRenderer.renderFilledBox(aabb.inflate(0.1), 1, 1, 1, 0.6f);
 
         // draw outline
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.5030000000949949026D), 1, 0, 1, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.5030000000949949026D), 1, 0, 1, 1);
 
         Arrays.stream(feature.children).forEach(featureChild -> renderChild(featureChild, matrixStack, buffer, (float) x, (float) y, (float) z));
 
@@ -63,22 +66,22 @@ public class ExtendedStructureTESR extends StructureTileEntityRenderer {
         GlStateManager._lineWidth(1.0F);
     }
 
-    private void renderChild(FeatureChild featureChild, MatrixStack matrixStack, IRenderTypeBuffer buffer, float x, float y, float z) {
-        IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.lines());
-        Tessellator tessellator = Tessellator.getInstance();
+    private void renderChild(FeatureChild featureChild, PoseStack matrixStack, MultiBufferSource buffer, float x, float y, float z) {
+        VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.lines());
+        Tesselator tessellator = Tesselator.getInstance();
         Matrix4f matrix4f = matrixStack.last().pose();
         BufferBuilder bufferBuilder = tessellator.getBuilder();
         BlockPos offset = featureChild.offset;
 
-        AxisAlignedBB aabb = new AxisAlignedBB(x + offset.getX() + 0.5, y + offset.getY() + 0.5, z + offset.getZ() + 0.5,
+        AABB aabb = new AABB(x + offset.getX() + 0.5, y + offset.getY() + 0.5, z + offset.getZ() + 0.5,
                 x + offset.getX() + 0.5, y + offset.getY() + 0.5, z + offset.getZ() + 0.5);
 
         // build outline box
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.5020000000949949026D), 1, 1, 0, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.5020000000949949026D), 1, 1, 0, 1);
 
         // build arrow
-        bufferBuilder.begin(3, DefaultVertexFormats.POSITION_COLOR);
-        Vector3i facing = featureChild.facing.getNormal();
+        bufferBuilder.begin(3, DefaultVertexFormat.POSITION_COLOR);
+        Vec3i facing = featureChild.facing.getNormal();
         vertexBuilder.vertex(matrix4f, x + offset.getX() + 0.5f, y + offset.getY() + 0.5f, z + offset.getZ() + 0.5f)
                 .color(0.0F, 0.0F, 0.0F, 0.0F)
                 .endVertex();
@@ -93,40 +96,40 @@ public class ExtendedStructureTESR extends StructureTileEntityRenderer {
         tessellator.end();
 
         // draw middle block
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.01), 1, 1, 0, 0.5f);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.01), 1, 1, 0, 0.5f);
 
         // draw position label
         drawLabel("[" + offset.toShortString() + "]", x + offset.getX(), y + offset.getY(), z + offset.getZ(), matrixStack, buffer, 15728880);
     }
 
-    private void renderLoot(FeatureLoot featureLoot, MatrixStack matrixStack, IVertexBuilder vertexBuilder, double x, double y, double z) {
+    private void renderLoot(FeatureLoot featureLoot, PoseStack matrixStack, VertexConsumer vertexBuilder, double x, double y, double z) {
         BlockPos offset = featureLoot.position;
 
-        AxisAlignedBB aabb = new AxisAlignedBB(x + offset.getX(), y + offset.getY(), z + offset.getZ(),
+        AABB aabb = new AABB(x + offset.getX(), y + offset.getY(), z + offset.getZ(),
                 x + offset.getX() + 0.2, y + offset.getY() + 0.2, z + offset.getZ() + 0.2).move(-0.1, -0.1, -0.1);
 
         // draw bottom blocks
         DebugRenderer.renderFilledBox(aabb, 0, 1, 0, 0.2f);
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb, 0, 1, 0, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb, 0, 1, 0, 1);
         DebugRenderer.renderFilledBox(aabb.move(1, 0, 0), 0, 1, 0, 0.2f);
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(1, 0, 0), 0, 1, 0, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(1, 0, 0), 0, 1, 0, 1);
         DebugRenderer.renderFilledBox(aabb.move(0, 0, 1), 0, 1, 0, 0.2f);
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(0, 0, 1), 0, 1, 0, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(0, 0, 1), 0, 1, 0, 1);
         DebugRenderer.renderFilledBox(aabb.move(1, 0, 1), 0, 1, 0, 0.2f);
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(1, 0, 1), 0, 1, 0, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(1, 0, 1), 0, 1, 0, 1);
 
         // draw top blocks
         DebugRenderer.renderFilledBox(aabb.move(0, 1, 0), 0, 1, 0, 0.2f);
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(0, 1, 0), 0, 1, 0, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(0, 1, 0), 0, 1, 0, 1);
         DebugRenderer.renderFilledBox(aabb.move(0, 1, 1), 0, 1, 0, 0.2f);
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(0, 1, 1), 0, 1, 0, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(0, 1, 1), 0, 1, 0, 1);
         DebugRenderer.renderFilledBox(aabb.move(1, 1, 0), 0, 1, 0, 0.2f);
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(1, 1, 0), 0, 1, 0, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(1, 1, 0), 0, 1, 0, 1);
         DebugRenderer.renderFilledBox(aabb.move(1, 1, 1), 0, 1, 0, 0.2f);
-        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(1, 1, 1), 0, 1, 0, 1);
+        LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.move(1, 1, 1), 0, 1, 0, 1);
     }
 
-    protected void drawLabel(String label, float x, float y, float z, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+    protected void drawLabel(String label, float x, float y, float z, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         matrixStackIn.pushPose();
         matrixStackIn.translate(x, y, z);
         matrixStackIn.translate(0.5D, 0.9f, 0.5D);
@@ -136,7 +139,7 @@ public class ExtendedStructureTESR extends StructureTileEntityRenderer {
         Matrix4f matrix4f = matrixStackIn.last().pose();
         float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
         int j = (int) (f1 * 255.0F) << 24;
-        FontRenderer fontrenderer = renderer.font;
+        Font fontrenderer = renderer.font;
         float f2 = (float) (-fontrenderer.width(label) / 2);
         fontrenderer.draw(matrixStackIn, label, f2, 0, 553648127);
         fontrenderer.drawInBatch(label, f2, 0, -1, true, matrix4f, bufferIn, false, j, packedLightIn, false);

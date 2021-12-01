@@ -4,12 +4,12 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.client.model.IModelConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,10 +24,16 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 // todo: 1.15: ripped everything out
-public class ModularOverrideList extends ItemOverrideList {
+import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelState;
+
+public class ModularOverrideList extends ItemOverrides {
     private static final Logger logger = LogManager.getLogger();
 
-    private Cache<CacheKey, IBakedModel> bakedModelCache = CacheBuilder.newBuilder()
+    private Cache<CacheKey, BakedModel> bakedModelCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
             .expireAfterWrite(5, TimeUnit.MINUTES)
             .build();
@@ -36,12 +42,12 @@ public class ModularOverrideList extends ItemOverrideList {
     private ModularItemModel model;
     private IModelConfiguration owner;
     private ModelBakery bakery;
-    private Function<RenderMaterial, TextureAtlasSprite> spriteGetter;
-    private IModelTransform modelTransform;
+    private Function<Material, TextureAtlasSprite> spriteGetter;
+    private ModelState modelTransform;
     private ResourceLocation modelLocation;
 
     public ModularOverrideList(ModularItemModel model, IModelConfiguration owner, ModelBakery bakery,
-            Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ResourceLocation modelLocation) {
+            Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ResourceLocation modelLocation) {
         this.model = model;
         this.owner = owner;
         this.bakery = bakery;
@@ -57,9 +63,9 @@ public class ModularOverrideList extends ItemOverrideList {
 
     @Nullable
     @Override
-    public IBakedModel resolve(IBakedModel originalModel, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
-        CompoundNBT baseTag = stack.getTag();
-        IBakedModel result = originalModel;
+    public BakedModel resolve(BakedModel originalModel, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity) {
+        CompoundTag baseTag = stack.getTag();
+        BakedModel result = originalModel;
 
         if(baseTag != null && !baseTag.isEmpty()) {
             CacheKey key = getCacheKey(stack, entity, originalModel);
@@ -74,25 +80,25 @@ public class ModularOverrideList extends ItemOverrideList {
         return result;
     }
 
-    protected IBakedModel getOverrideModel(ItemStack itemStack, @Nullable World world, @Nullable LivingEntity entity) {
+    protected BakedModel getOverrideModel(ItemStack itemStack, @Nullable Level world, @Nullable LivingEntity entity) {
         IModularItem item  = (IModularItem) itemStack.getItem();
 
         List<ModuleModel> models = item.getModels(itemStack, entity);
         String transformVariant = item.getTransformVariant(itemStack, entity);
 
-        return model.realBake(models, transformVariant, owner, bakery, spriteGetter, modelTransform, ItemOverrideList.EMPTY, modelLocation);
+        return model.realBake(models, transformVariant, owner, bakery, spriteGetter, modelTransform, ItemOverrides.EMPTY, modelLocation);
     }
 
-    protected CacheKey getCacheKey(ItemStack itemStack, LivingEntity entity, IBakedModel original) {
+    protected CacheKey getCacheKey(ItemStack itemStack, LivingEntity entity, BakedModel original) {
         return new CacheKey(original, ((IModularItem) itemStack.getItem()).getModelCacheKey(itemStack, entity));
     }
 
     protected static class CacheKey {
 
-        final IBakedModel parent;
+        final BakedModel parent;
         final String data;
 
-        protected CacheKey(IBakedModel parent, String hash) {
+        protected CacheKey(BakedModel parent, String hash) {
             this.parent = parent;
             this.data = hash;
         }

@@ -1,16 +1,16 @@
 package se.mickelus.tetra.blocks.salvage;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import java.util.function.Function;
 
-public class TileBlockInteraction<T extends TileEntity> extends BlockInteraction {
+public class TileBlockInteraction<T extends BlockEntity> extends BlockInteraction {
 
     private final Function<T, Boolean> predicate;
     private final Class<T> tileEntityClass;
@@ -24,7 +24,7 @@ public class TileBlockInteraction<T extends TileEntity> extends BlockInteraction
     }
 
     @Override
-    public boolean applicableForBlock(World world, BlockPos pos, BlockState blockState) {
+    public boolean applicableForBlock(Level world, BlockPos pos, BlockState blockState) {
         return TileEntityOptional.from(world, pos, tileEntityClass)
                 .map(predicate::apply)
                 .orElse(false);

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.module;
 
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.item.ItemStack;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Used when converting vanilla or non-tetra items into modular items, the fields in the class differs a fair amount

@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui.stats.bar;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import se.mickelus.mgui.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 
@@ -74,7 +74,7 @@ public class GuiBar extends GuiElement {
     }
 
     @Override
-    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         drawRect(matrixStack, refX + x, refY + y + 6,refX + x + width, refY + y + 6 + height, color, 0.14f * opacity);
 
         if (alignment == GuiAlignment.right) {

@@ -1,16 +1,16 @@
 package se.mickelus.tetra.items.cell;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.BaseComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraItem;
@@ -21,7 +21,7 @@ import java.util.List;
 
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemCellMagmatic extends TetraItem {
     private static final String unlocalizedName = "magmatic_cell";
@@ -44,32 +44,32 @@ public class ItemCellMagmatic extends TetraItem {
 
     @Override
     public void clientInit() {
-        ItemModelsProperties.register(this, new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity) -> getCharge(itemStack) > 0 ? 1 : 0);
+        ItemProperties.register(this, new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity) -> getCharge(itemStack) > 0 ? 1 : 0);
     }
 
     @Override
-    public void appendHoverText(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
+    public void appendHoverText(final ItemStack stack, @Nullable final Level world, final List<Component> tooltip, final TooltipFlag advanced) {
         int charge = getCharge(stack);
 
-        TextComponent chargeLine = new TranslationTextComponent("item.tetra.magmatic_cell.charge");
+        BaseComponent chargeLine = new TranslatableComponent("item.tetra.magmatic_cell.charge");
 
         if (charge == maxCharge) {
-            chargeLine.append(new TranslationTextComponent("item.tetra.magmatic_cell.charge_full"));
+            chargeLine.append(new TranslatableComponent("item.tetra.magmatic_cell.charge_full"));
         } else if (charge > maxCharge * 0.4) {
-            chargeLine.append(new TranslationTextComponent("item.tetra.magmatic_cell.charge_good"));
+            chargeLine.append(new TranslatableComponent("item.tetra.magmatic_cell.charge_good"));
         } else if (charge > 0) {
-            chargeLine.append(new TranslationTextComponent("item.tetra.magmatic_cell.charge_low"));
+            chargeLine.append(new TranslatableComponent("item.tetra.magmatic_cell.charge_low"));
         } else {
-            chargeLine.append(new TranslationTextComponent("item.tetra.magmatic_cell.charge_empty"));
+            chargeLine.append(new TranslatableComponent("item.tetra.magmatic_cell.charge_empty"));
         }
 
         tooltip.add(chargeLine);
-        tooltip.add(new StringTextComponent(" "));
+        tooltip.add(new TextComponent(" "));
         tooltip.add(locationTooltip);
     }
 
     @Override
-    public void fillItemCategory(final ItemGroup itemGroup, final NonNullList<ItemStack> itemList) {
+    public void fillItemCategory(final CreativeModeTab itemGroup, final NonNullList<ItemStack> itemList) {
         if (allowdedIn(itemGroup)) {
             itemList.add(new ItemStack(this));
 

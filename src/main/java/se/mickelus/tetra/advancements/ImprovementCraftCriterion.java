@@ -2,18 +2,18 @@ package se.mickelus.tetra.advancements;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.ConditionArrayParser;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraftforge.common.ToolType;
 import org.apache.commons.lang3.EnumUtils;
 import se.mickelus.tetra.util.JsonOptional;
 
-public class ImprovementCraftCriterion extends CriterionInstance {
+public class ImprovementCraftCriterion extends AbstractCriterionTriggerInstance {
     private final ItemPredicate before;
     private final ItemPredicate after;
 
@@ -24,11 +24,11 @@ public class ImprovementCraftCriterion extends CriterionInstance {
     private final int improvementLevel;
 
     private final ToolType toolType;
-    private final MinMaxBounds.IntBound toolLevel;
+    private final MinMaxBounds.Ints toolLevel;
 
     public static final GenericTrigger<ImprovementCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_improvement", ImprovementCraftCriterion::deserialize);
 
-    public ImprovementCraftCriterion(EntityPredicate.AndPredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolType toolType, MinMaxBounds.IntBound toolLevel) {
+    public ImprovementCraftCriterion(EntityPredicate.Composite playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolType toolType, MinMaxBounds.Ints toolLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -40,7 +40,7 @@ public class ImprovementCraftCriterion extends CriterionInstance {
         this.toolLevel = toolLevel;
     }
 
-    public static void trigger(ServerPlayerEntity player, ItemStack before, ItemStack after, String schematic, String slot, String improvement,
+    public static void trigger(ServerPlayer player, ItemStack before, ItemStack after, String schematic, String slot, String improvement,
             int improvementLevel, ToolType toolType, int toolLevel) {
         trigger.fulfillCriterion(player,
                 criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, toolType, toolLevel));
@@ -84,7 +84,7 @@ public class ImprovementCraftCriterion extends CriterionInstance {
         return true;
     }
 
-    private static ImprovementCraftCriterion deserialize(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+    private static ImprovementCraftCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
         return new ImprovementCraftCriterion(entityPredicate,
                 JsonOptional.field(json, "before")
                         .map(ItemPredicate::fromJson)
@@ -109,7 +109,7 @@ public class ImprovementCraftCriterion extends CriterionInstance {
                         .map(ToolType::get)
                         .orElse(null),
                 JsonOptional.field(json, "toolLevel")
-                        .map(MinMaxBounds.IntBound::fromJson)
-                        .orElse(MinMaxBounds.IntBound.ANY));
+                        .map(MinMaxBounds.Ints::fromJson)
+                        .orElse(MinMaxBounds.Ints.ANY));
     }
 }

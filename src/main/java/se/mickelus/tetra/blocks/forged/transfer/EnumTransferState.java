@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum EnumTransferState implements IStringSerializable {
+public enum EnumTransferState implements StringRepresentable {
     sending,
     receiving,
     none;

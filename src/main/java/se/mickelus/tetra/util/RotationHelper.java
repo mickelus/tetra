@@ -1,14 +1,14 @@
 package se.mickelus.tetra.util;
 
 import net.minecraft.block.Block;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.Vec3i;
 
 public class RotationHelper {
     public static Rotation rotationFromFacing(Direction facing) {
@@ -29,8 +29,8 @@ public class RotationHelper {
     }
 
     public static BlockPos rotatePitch(BlockPos pos, float pitch) {
-        float f = MathHelper.cos(pitch);
-        float f1 = MathHelper.sin(pitch);
+        float f = Mth.cos(pitch);
+        float f1 = Mth.sin(pitch);
         float x = pos.getX();
         float y = pos.getY() * f + pos.getZ() * f1;
         float z = pos.getZ() * f - pos.getY() * f1;
@@ -38,8 +38,8 @@ public class RotationHelper {
     }
 
     public static BlockPos rotateYaw(BlockPos pos, float yaw) {
-        float f = MathHelper.cos(yaw);
-        float f1 = MathHelper.sin(yaw);
+        float f = Mth.cos(yaw);
+        float f1 = Mth.sin(yaw);
         double x = pos.getX() * (double)f + pos.getZ() * (double)f1;
         double y = pos.getY();
         double z = pos.getZ() * (double)f - pos.getX() * (double)f1;
@@ -62,19 +62,19 @@ public class RotationHelper {
 
     // todo: there has to be a less hacky way?
     public static VoxelShape rotateDirection(VoxelShape shape, Direction facing) {
-        VoxelShape[] temp = new VoxelShape[] { shape.move(-0.5, 0, -0.5), VoxelShapes.empty() };
+        VoxelShape[] temp = new VoxelShape[] { shape.move(-0.5, 0, -0.5), Shapes.empty() };
 
         for (int i = 0; i < facing.get2DDataValue(); i++) {
-            temp[0].forAllBoxes((x1, y1, z1, x2, y2, z2) -> temp[1] = VoxelShapes.or(temp[1], VoxelShapes.box(-z1, y1, x1, -z2, y2, x2)));
+            temp[0].forAllBoxes((x1, y1, z1, x2, y2, z2) -> temp[1] = Shapes.or(temp[1], Shapes.box(-z1, y1, x1, -z2, y2, x2)));
             temp[0] = temp[1];
-            temp[1] = VoxelShapes.empty();
+            temp[1] = Shapes.empty();
         }
 
         return temp[0].move(0.5, 0, 0.5);
     }
 
-    public static Vector3i shiftAxis(Vector3i pos) {
-        return new Vector3i(pos.getY(), pos.getZ(), pos.getX());
+    public static Vec3i shiftAxis(Vec3i pos) {
+        return new Vec3i(pos.getY(), pos.getZ(), pos.getX());
     }
 
     /**
@@ -83,7 +83,7 @@ public class RotationHelper {
      * @param b
      * @return
      */
-    public static double getHorizontalAngle(Vector3d a, Vector3d b) {
-        return MathHelper.atan2(a.x - b.x, a.z - b.z);
+    public static double getHorizontalAngle(Vec3 a, Vec3 b) {
+        return Mth.atan2(a.x - b.x, a.z - b.z);
     }
 }

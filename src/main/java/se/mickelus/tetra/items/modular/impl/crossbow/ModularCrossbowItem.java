@@ -3,27 +3,27 @@ package se.mickelus.tetra.items.modular.impl.crossbow;
 import com.google.common.collect.*;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -50,7 +50,20 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
+
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.FireworkRocketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
 
 public class ModularCrossbowItem extends ModularItem {
     public final static String staveKey = "crossbow/stave";
@@ -118,17 +131,17 @@ public class ModularCrossbowItem extends ModularItem {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         List<ItemStack> list = getProjectiles(stack);
         if (isLoaded(stack) && !list.isEmpty()) {
             ItemStack itemstack = list.get(0);
-            tooltip.add((new TranslationTextComponent("item.minecraft.crossbow.projectile")).append(" ").append(itemstack.getDisplayName()));
+            tooltip.add((new TranslatableComponent("item.minecraft.crossbow.projectile")).append(" ").append(itemstack.getDisplayName()));
             if (flagIn.isAdvanced() && itemstack.getItem() == Items.FIREWORK_ROCKET) {
-                List<ITextComponent> list1 = Lists.newArrayList();
+                List<Component> list1 = Lists.newArrayList();
                 Items.FIREWORK_ROCKET.appendHoverText(itemstack, worldIn, list1, flagIn);
                 if (!list1.isEmpty()) {
                     for(int i = 0; i < list1.size(); ++i) {
-                        list1.set(i, (new StringTextComponent("  ")).append(list1.get(i)).withStyle(TextFormatting.GRAY));
+                        list1.set(i, (new TextComponent("  ")).append(list1.get(i)).withStyle(ChatFormatting.GRAY));
                     }
 
                     tooltip.addAll(list1);
@@ -139,23 +152,23 @@ public class ModularCrossbowItem extends ModularItem {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         if (Screen.hasShiftDown()) {
-            tooltip.add(new StringTextComponent(" "));
-            tooltip.add(new TranslationTextComponent("item.tetra.crossbow.wip").withStyle(TextFormatting.GRAY));
-            tooltip.add(new StringTextComponent(" "));
+            tooltip.add(new TextComponent(" "));
+            tooltip.add(new TranslatableComponent("item.tetra.crossbow.wip").withStyle(ChatFormatting.GRAY));
+            tooltip.add(new TextComponent(" "));
         }
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack itemStack) {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack itemStack) {
         if (isBroken(itemStack)) {
             return AttributeHelper.emptyMap;
         }
 
-        if (slot == EquipmentSlotType.MAINHAND) {
+        if (slot == EquipmentSlot.MAINHAND) {
             return getAttributeModifiersCached(itemStack);
         }
 
-        if (slot == EquipmentSlotType.OFFHAND) {
+        if (slot == EquipmentSlot.OFFHAND) {
             return getAttributeModifiersCached(itemStack).entries().stream()
                     .filter(entry -> !(entry.getKey().equals(Attributes.ATTACK_DAMAGE) || entry.getKey().equals(Attributes.ATTACK_DAMAGE)))
                     .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
@@ -168,7 +181,7 @@ public class ModularCrossbowItem extends ModularItem {
      * Continously called while the item is "active"
      */
     @Override
-    public void onUseTick(World world, LivingEntity entity, ItemStack itemStack, int count) {
+    public void onUseTick(Level world, LivingEntity entity, ItemStack itemStack, int count) {
         if (!world.isClientSide) {
             int drawDuration = getReloadDuration(itemStack);
             float f = getProgress(itemStack, entity);
@@ -180,28 +193,28 @@ public class ModularCrossbowItem extends ModularItem {
 
             if (f >= 0.2F && !isLoadingStart) {
                 isLoadingStart = true;
-                world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), getSoundEvent(drawDuration), SoundCategory.PLAYERS, 0.5F, 1.0F);
+                world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), getSoundEvent(drawDuration), SoundSource.PLAYERS, 0.5F, 1.0F);
             }
 
             if (f >= 0.5F && drawDuration <= 28 && !isLoadingMiddle) {
                 isLoadingMiddle = true;
                 if (drawDuration > 21) {
                     world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CROSSBOW_LOADING_MIDDLE,
-                            SoundCategory.PLAYERS, 0.5F, 1.0F);
+                            SoundSource.PLAYERS, 0.5F, 1.0F);
                 }
             }
         }
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         // todo: crossbows don't fire the nock event when loading arrows so needs some way to load ammo from quiver
 //        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
         ItemStack itemstack = player.getItemInHand(hand);
         if (isLoaded(itemstack)) {
             fireProjectiles(itemstack, world, player);
             setLoaded(itemstack, false);
-            return ActionResult.consume(itemstack);
+            return InteractionResultHolder.consume(itemstack);
         } else if (!findAmmo(player).isEmpty()) {
             if (!isLoaded(itemstack)) {
                 this.isLoadingStart = false;
@@ -209,9 +222,9 @@ public class ModularCrossbowItem extends ModularItem {
                 player.startUsingItem(hand);
             }
 
-            return ActionResult.consume(itemstack);
+            return InteractionResultHolder.consume(itemstack);
         } else {
-            return ActionResult.fail(itemstack);
+            return InteractionResultHolder.fail(itemstack);
         }
     }
 
@@ -219,13 +232,13 @@ public class ModularCrossbowItem extends ModularItem {
      * Called when the player stops using an Item (stops holding the right mouse button).
      */
     @Override
-    public void releaseUsing(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
+    public void releaseUsing(ItemStack itemStack, Level world, LivingEntity entity, int timeLeft) {
         float progress = getProgress(itemStack, entity);
         if (progress >= 1.0F && !isLoaded(itemStack)) {
             boolean gotLoaded = reload(entity, itemStack);
             if (gotLoaded) {
                 setLoaded(itemStack, true);
-                SoundCategory soundcategory = entity instanceof PlayerEntity ? SoundCategory.PLAYERS : SoundCategory.HOSTILE;
+                SoundSource soundcategory = entity instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE;
                 world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CROSSBOW_LOADING_END, soundcategory,
                         1.0f, 1.0f / (random.nextFloat() * 0.5f + 1.0f) + 0.2f);
             }
@@ -233,10 +246,10 @@ public class ModularCrossbowItem extends ModularItem {
 
     }
 
-    protected void fireProjectiles(ItemStack itemStack, World world, LivingEntity entity) {
-        if (entity instanceof PlayerEntity && !world.isClientSide) {
+    protected void fireProjectiles(ItemStack itemStack, Level world, LivingEntity entity) {
+        if (entity instanceof Player && !world.isClientSide) {
             ItemStack advancementCopy = itemStack.copy();
-            PlayerEntity player = (PlayerEntity) entity;
+            Player player = (Player) entity;
             int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot), 1);
             List<ItemStack> list = takeProjectiles(itemStack, count);
 
@@ -254,10 +267,10 @@ public class ModularCrossbowItem extends ModularItem {
                 applyUsageEffects(entity, itemStack, 1);
 
                 world.playSound(null, player.getX(), player.getY(), player.getZ(),
-                        SoundEvents.CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1, 1);
+                        SoundEvents.CROSSBOW_SHOOT, SoundSource.PLAYERS, 1, 1);
 
-                if (player instanceof ServerPlayerEntity) {
-                    CriteriaTriggers.SHOT_CROSSBOW.trigger((ServerPlayerEntity) player, advancementCopy);
+                if (player instanceof ServerPlayer) {
+                    CriteriaTriggers.SHOT_CROSSBOW.trigger((ServerPlayer) player, advancementCopy);
 
                     player.awardStat(Stats.ITEM_USED.get(this));
                 }
@@ -265,7 +278,7 @@ public class ModularCrossbowItem extends ModularItem {
         }
     }
 
-    protected void fireProjectile(World world, ItemStack crossbowStack, ItemStack ammoStack, PlayerEntity player, double yaw) {
+    protected void fireProjectile(Level world, ItemStack crossbowStack, ItemStack ammoStack, Player player, double yaw) {
         double strength = getAttributeValue(crossbowStack, TetraAttributes.drawStrength.get());
         float velocityBonus = getEffectLevel(crossbowStack, ItemEffect.velocity) / 100f;
         float projectileVelocity = getProjectileVelocity(strength, velocityBonus);
@@ -274,7 +287,7 @@ public class ModularCrossbowItem extends ModularItem {
             ExtractorProjectileEntity projectileEntity = new ExtractorProjectileEntity(world, player, ammoStack);
 
             if (player.abilities.instabuild) {
-                projectileEntity.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+                projectileEntity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             }
 
             projectileEntity.shootFromRotation(player, player.xRot, (float) yaw, 0.0F, projectileVelocity, 1.0F);
@@ -288,7 +301,7 @@ public class ModularCrossbowItem extends ModularItem {
         } else {
             ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class).orElse((ArrowItem) Items.ARROW);
 
-            AbstractArrowEntity projectile = ammoItem.createArrow(world, ammoStack, player);
+            AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player);
             projectile.setSoundEvent(SoundEvents.CROSSBOW_HIT);
             projectile.setShotFromCrossbow(true);
             projectile.setCritArrow(true);
@@ -308,7 +321,7 @@ public class ModularCrossbowItem extends ModularItem {
             }
 
             if (player.abilities.instabuild) {
-                projectile.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+                projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             }
 
             projectile.shootFromRotation(player, player.xRot, (float) yaw, 0.0F, projectileVelocity * 3.15F, 1.0F);
@@ -351,7 +364,7 @@ public class ModularCrossbowItem extends ModularItem {
 
     private boolean reload(LivingEntity entity, ItemStack crossbowStack) {
         int count = Math.max(getEffectLevel(crossbowStack, ItemEffect.multishot), 1);
-        boolean infinite = CastOptional.cast(entity, PlayerEntity.class)
+        boolean infinite = CastOptional.cast(entity, Player.class)
                 .map(player -> player.abilities.instabuild)
                 .orElse(false);
 
@@ -385,8 +398,8 @@ public class ModularCrossbowItem extends ModularItem {
             ItemStack itemstack;
             if (!flag && !p_220023_4_ && !p_220023_3_) {
                 itemstack = ammoStack.split(1);
-                if (ammoStack.isEmpty() && entity instanceof PlayerEntity) {
-                    ((PlayerEntity)entity).inventory.removeItem(ammoStack);
+                if (ammoStack.isEmpty() && entity instanceof Player) {
+                    ((Player)entity).inventory.removeItem(ammoStack);
                 }
             } else {
                 itemstack = ammoStack.copy();
@@ -398,34 +411,34 @@ public class ModularCrossbowItem extends ModularItem {
     }
 
     public boolean isLoaded(ItemStack stack) {
-        CompoundNBT compoundnbt = stack.getTag();
+        CompoundTag compoundnbt = stack.getTag();
         return compoundnbt != null && compoundnbt.getBoolean("Charged");
     }
 
     public void setLoaded(ItemStack stack, boolean chargedIn) {
-        CompoundNBT compoundnbt = stack.getOrCreateTag();
+        CompoundTag compoundnbt = stack.getOrCreateTag();
         compoundnbt.putBoolean("Charged", chargedIn);
     }
 
-    private ListNBT getProjectilesNBT(ItemStack itemStack) {
+    private ListTag getProjectilesNBT(ItemStack itemStack) {
         if (itemStack.hasTag()) {
             return getProjectilesNBT(itemStack.getTag());
         }
-        return new ListNBT();
+        return new ListTag();
     }
 
-    private ListNBT getProjectilesNBT(CompoundNBT nbt) {
+    private ListTag getProjectilesNBT(CompoundTag nbt) {
         if (nbt.contains("ChargedProjectiles", 9)) {
             return nbt.getList("ChargedProjectiles", 10);
         }
-        return new ListNBT();
+        return new ListTag();
     }
 
     private void writeProjectile(ItemStack crossbowStack, ItemStack projectileStack) {
-        CompoundNBT crossbowTag = crossbowStack.getOrCreateTag();
-        ListNBT list = getProjectilesNBT(crossbowTag);
+        CompoundTag crossbowTag = crossbowStack.getOrCreateTag();
+        ListTag list = getProjectilesNBT(crossbowTag);
 
-        CompoundNBT projectileTag = new CompoundNBT();
+        CompoundTag projectileTag = new CompoundTag();
         projectileStack.save(projectileTag);
         list.add(projectileTag);
 
@@ -433,7 +446,7 @@ public class ModularCrossbowItem extends ModularItem {
     }
 
     private ItemStack getFirstProjectile(ItemStack itemStack) {
-        ListNBT projectiles = getProjectilesNBT(itemStack);
+        ListTag projectiles = getProjectilesNBT(itemStack);
         if (projectiles.size() > 0) {
             return ItemStack.of(projectiles.getCompound(0));
         }
@@ -443,10 +456,10 @@ public class ModularCrossbowItem extends ModularItem {
 
     private List<ItemStack> getProjectiles(ItemStack itemStack) {
         List<ItemStack> result = Lists.newArrayList();
-        ListNBT projectileTags = getProjectilesNBT(itemStack);
+        ListTag projectileTags = getProjectilesNBT(itemStack);
 
         for(int i = 0; i < projectileTags.size(); ++i) {
-            CompoundNBT stackNbt = projectileTags.getCompound(i);
+            CompoundTag stackNbt = projectileTags.getCompound(i);
             result.add(ItemStack.of(stackNbt));
         }
 
@@ -454,12 +467,12 @@ public class ModularCrossbowItem extends ModularItem {
     }
 
     private List<ItemStack> takeProjectiles(ItemStack itemStack, int count) {
-        ListNBT nbtList = getProjectilesNBT(itemStack);
+        ListTag nbtList = getProjectilesNBT(itemStack);
         int size = Math.min(nbtList.size(), count);
         List<ItemStack> result = new ArrayList<>(size);
 
         for(int i = 0; i < size; ++i) {
-            CompoundNBT stackNbt = nbtList.getCompound(0);
+            CompoundTag stackNbt = nbtList.getCompound(0);
             nbtList.remove(0);
             result.add(ItemStack.of(stackNbt));
         }
@@ -491,11 +504,11 @@ public class ModularCrossbowItem extends ModularItem {
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public UseAction getUseAnimation(ItemStack stack) {
+    public UseAnim getUseAnimation(ItemStack stack) {
         if (isLoaded(stack)) {
-            return UseAction.BOW;
+            return UseAnim.BOW;
         }
-        return UseAction.CROSSBOW;
+        return UseAnim.CROSSBOW;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.workbench;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import se.mickelus.tetra.network.BlockPosPacket;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -27,7 +27,7 @@ public class WorkbenchPacketTweak extends BlockPosPacket {
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         super.toBytes(buffer);
 
         try {
@@ -47,7 +47,7 @@ public class WorkbenchPacketTweak extends BlockPosPacket {
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         super.fromBytes(buffer);
 
         try {
@@ -62,7 +62,7 @@ public class WorkbenchPacketTweak extends BlockPosPacket {
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         CastOptional.cast(player.level.getBlockEntity(pos), WorkbenchTile.class)
                 .ifPresent(workbench -> workbench.tweak(player, slot, tweaks));
     }

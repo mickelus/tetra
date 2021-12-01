@@ -1,30 +1,30 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.block.BlockState;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.EmptyModelData;
 
 @OnlyIn(Dist.CLIENT)
-public class CoreExtractorPistonTESR extends TileEntityRenderer<CoreExtractorPistonTile> {
-    private static BlockRendererDispatcher blockRenderer;
+public class CoreExtractorPistonTESR extends BlockEntityRenderer<CoreExtractorPistonTile> {
+    private static BlockRenderDispatcher blockRenderer;
 
-    public CoreExtractorPistonTESR(TileEntityRendererDispatcher dispatcher) {
+    public CoreExtractorPistonTESR(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
 
         blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }
 
     @Override
-    public void render(CoreExtractorPistonTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight,
+    public void render(CoreExtractorPistonTile tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight,
             int combinedOverlay) {
 
         BlockState state = CoreExtractorPistonBlock.instance.defaultBlockState();
@@ -37,15 +37,15 @@ public class CoreExtractorPistonTESR extends TileEntityRenderer<CoreExtractorPis
         }
 
         BlockState shaftState = state.setValue(CoreExtractorPistonBlock.hackProp, true);
-        IBakedModel shaftModel = blockRenderer.getBlockModelShaper().getBlockModel(shaftState);
-        blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Atlases.solidBlockSheet()),
+        BakedModel shaftModel = blockRenderer.getBlockModelShaper().getBlockModel(shaftState);
+        blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()),
                 shaftState, shaftModel, 1f, 1f, 1f, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
 
         matrixStack.translate(0, offset, 0);
 
         BlockState coverState = state.setValue(CoreExtractorPistonBlock.hackProp, false);
-        IBakedModel coverModel = blockRenderer.getBlockModelShaper().getBlockModel(coverState);
-        blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Atlases.solidBlockSheet()),
+        BakedModel coverModel = blockRenderer.getBlockModelShaper().getBlockModel(coverState);
+        blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()),
                 coverState, coverModel, 1f, 1f, 1f, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
     }
 }

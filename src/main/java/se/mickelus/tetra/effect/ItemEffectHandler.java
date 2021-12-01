@@ -1,24 +1,24 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.particles.BlockParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
@@ -47,6 +47,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.CombatRules;
+import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
+
 public class ItemEffectHandler {
 
     public static ItemEffectHandler instance;
@@ -58,9 +67,9 @@ public class ItemEffectHandler {
     public static void applyHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
         int bleedingLevel = getEffectLevel(itemStack, ItemEffect.bleeding);
         if (bleedingLevel > 0) {
-            if (!CreatureAttribute.UNDEAD.equals(target.getMobType())
+            if (!MobType.UNDEAD.equals(target.getMobType())
                     && attacker.getRandom().nextFloat() < 0.3f) {
-                target.addEffect(new EffectInstance(BleedingPotionEffect.instance, 40, bleedingLevel));
+                target.addEffect(new MobEffectInstance(BleedingPotionEffect.instance, 40, bleedingLevel));
             }
         }
 
@@ -72,11 +81,11 @@ public class ItemEffectHandler {
         // todo: only trigger if target is standing on stone/earth/sand/gravel
         int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
         if (earthbindLevel > 0 && attacker.getRandom().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.getY()  / 128 ))) {
-            target.addEffect(new EffectInstance(EarthboundPotionEffect.instance, earthbindLevel * 20, 0, false, true));
+            target.addEffect(new MobEffectInstance(EarthboundPotionEffect.instance, earthbindLevel * 20, 0, false, true));
 
-            if (target.level instanceof ServerWorld) {
+            if (target.level instanceof ServerLevel) {
                 BlockState blockState = target.level.getBlockState(new BlockPos(target.getX(), target.getY() - 1, target.getZ()));
-                ((ServerWorld)target.level).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, blockState),
+                ((ServerLevel)target.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState),
                         target.getX(), target.getY() + 0.1, target.getZ(),
                         16, 0, target.level.random.nextGaussian() * 0.2, 0, 0.1);
             }
@@ -127,8 +136,8 @@ public class ItemEffectHandler {
                     .ifPresent(itemStack -> {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
                         LivingEntity blocker = event.getEntityLiving();
-                        if (UseAction.BLOCK.equals(itemStack.getUseAnimation())) {
-                            item.applyUsageEffects(blocker, itemStack, MathHelper.ceil(event.getAmount() / 2f));
+                        if (UseAnim.BLOCK.equals(itemStack.getUseAnimation())) {
+                            item.applyUsageEffects(blocker, itemStack, Mth.ceil(event.getAmount() / 2f));
                         }
 
                         if (event.getSource().getDirectEntity() instanceof LivingEntity) {
@@ -223,7 +232,7 @@ public class ItemEffectHandler {
     @SubscribeEvent
     public void onLivingDamage(LivingDamageEvent event) {
         Optional.ofNullable(event.getSource().getEntity())
-                .filter(entity -> entity instanceof PlayerEntity)
+                .filter(entity -> entity instanceof Player)
                 .map(entity -> (LivingEntity) entity)
                 .map(LivingEntity::getMainHandItem)
                 .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
@@ -282,7 +291,7 @@ public class ItemEffectHandler {
                 && !event.isCanceled()
                 && itemStack.getItem() instanceof ItemModularHandheld
                 && mc.hitResult != null
-                && RayTraceResult.Type.MISS.equals(mc.hitResult.getType())) {
+                && HitResult.Type.MISS.equals(mc.hitResult.getType())) {
             if (getEffectLevel(itemStack, ItemEffect.truesweep) > 0) {
                 SweepingEffect.triggerTruesweep();
             }
@@ -299,7 +308,7 @@ public class ItemEffectHandler {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        KeyBinding jumpKey = Minecraft.getInstance().options.keyJump;
+        KeyMapping jumpKey = Minecraft.getInstance().options.keyJump;
         if (jumpKey.matches(event.getKey(), event.getScanCode()) && jumpKey.isDown()) {
             LungeEffect.onJump(Minecraft.getInstance().player);
         }
@@ -313,9 +322,9 @@ public class ItemEffectHandler {
                 .ifPresent(itemStack -> {
                     ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
                     BlockPos pos = event.getPos();
-                    World world = event.getWorld();
+                    Level world = event.getWorld();
                     BlockState blockState = world.getBlockState(pos);
-                    PlayerEntity breakingPlayer = event.getPlayer();
+                    Player breakingPlayer = event.getPlayer();
 
                     boolean didStrike = StrikingEffect.causeEffect(breakingPlayer, itemStack, item, world, pos, blockState);
                     if (didStrike) {
@@ -354,18 +363,18 @@ public class ItemEffectHandler {
     @SubscribeEvent
     public void onEnderTeleport(EnderTeleportEvent event) {
         if (!event.getEntity().getCommandSenderWorld().isClientSide) {
-            AxisAlignedBB aabb = new AxisAlignedBB(
+            AABB aabb = new AABB(
                     event.getTargetX() - 24, event.getTargetY() - 24, event.getTargetZ() - 24,
                     event.getTargetX() + 24, event.getTargetY() + 24, event.getTargetZ() + 24);
 
-            event.getEntity().getCommandSenderWorld().getEntitiesOfClass(PlayerEntity.class, aabb).forEach(player -> {
+            event.getEntity().getCommandSenderWorld().getEntitiesOfClass(Player.class, aabb).forEach(player -> {
                 int reverbLevel = PropertyHelper.getPlayerEffectLevel(player, ItemEffect.enderReverb);
                 if (reverbLevel > 0 && !player.isCreative()) {
                     double effectProbability = PropertyHelper.getPlayerEffectEfficiency(player, ItemEffect.enderReverb);
                     if (effectProbability > 0) {
                         if (player.getRandom().nextDouble() < effectProbability * 2) {
                             player.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
-                            player.addEffect(new EffectInstance(Effects.CONFUSION, 40 * reverbLevel));
+                            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 40 * reverbLevel));
                         }
                     }
                 }
@@ -375,8 +384,8 @@ public class ItemEffectHandler {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onArrowNock(ArrowNockEvent event) {
-        PlayerEntity player = event.getPlayer();
-        if (!event.hasAmmo() && player.getItemInHand(Hand.OFF_HAND).isEmpty()) {
+        Player player = event.getPlayer();
+        if (!event.hasAmmo() && player.getItemInHand(InteractionHand.OFF_HAND).isEmpty()) {
             ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
             if (!itemStack.isEmpty()) {
                 QuiverInventory inventory = new QuiverInventory(itemStack);
@@ -389,11 +398,11 @@ public class ItemEffectHandler {
                 for (int i = 0; i < inventory.getContainerSize(); i++) {
                     if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getItem(i).isEmpty()) {
 
-                        player.setItemInHand(Hand.OFF_HAND, inventory.getItem(i).split(count));
+                        player.setItemInHand(InteractionHand.OFF_HAND, inventory.getItem(i).split(count));
                         player.startUsingItem(event.getHand());
                         inventory.setChanged();
 
-                        event.setAction(new ActionResult<>(ActionResultType.SUCCESS, event.getBow()));
+                        event.setAction(new InteractionResultHolder<>(InteractionResult.SUCCESS, event.getBow()));
                         return;
                     }
                 }

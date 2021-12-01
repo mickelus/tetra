@@ -1,17 +1,17 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerLevel;
 import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -31,18 +31,18 @@ public class PryEffect {
         return (int) ((flatCooldown + item.getCooldownBase(itemStack) * cooldownSpeedMultiplier) * speedBonus * 20);
     }
 
-    public static void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
+    public static void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
         if (!attacker.level.isClientSide) {
             int comboPoints = ComboPoints.get(attacker);
             boolean isSatiated = !attacker.getFoodData().needsFood();
 
-            if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) > 0) {
+            if (hand == InteractionHand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) > 0) {
                 performDefensive(attacker, item, itemStack, target);
             } else {
                 performRegular(attacker, item, itemStack, damageMultiplier, effectLevel, target, isSatiated, comboPoints);
             }
 
-            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundSource.PLAYERS, 0.8f, 0.8f);
 
             boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
             attacker.causeFoodExhaustion(overextended ? 6f : 0.5f);
@@ -68,7 +68,7 @@ public class PryEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    public static AbilityUseResult performRegular(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, double damageMultiplier,
+    public static AbilityUseResult performRegular(Player attacker, ItemModularHandheld item, ItemStack itemStack, double damageMultiplier,
             int amplifier, LivingEntity target, boolean isSatiated, int comboPoints) {
         int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
 
@@ -84,7 +84,7 @@ public class PryEffect {
         int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
         if (exhilarationLevel > 0) {
             int amp = Optional.ofNullable(target.getEffect(PriedPotionEffect.instance))
-                    .map(EffectInstance::getAmplifier)
+                    .map(MobEffectInstance::getAmplifier)
                     .orElse(-1) + 1;
             if (amp > 0) {
                 damageMultiplier += exhilarationLevel * amp / 100d;
@@ -95,7 +95,7 @@ public class PryEffect {
 
         if (result != AbilityUseResult.fail) {
             int currentAmplifier = Optional.ofNullable(target.getEffect(PriedPotionEffect.instance))
-                    .map(EffectInstance::getAmplifier)
+                    .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
 
             double comboEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityCombo);
@@ -104,7 +104,7 @@ public class PryEffect {
 
                 if (!target.getCommandSenderWorld().isClientSide) {
                     Random rand = target.getCommandSenderWorld().getRandom();
-                    ((ServerWorld) target.getCommandSenderWorld()).sendParticles(ParticleTypes.CRIT,
+                    ((ServerLevel) target.getCommandSenderWorld()).sendParticles(ParticleTypes.CRIT,
                             target.getX(), target.getY() + target.getBbHeight() / 2, target.getZ(), 10,
                             rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getBbHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
                 }
@@ -119,35 +119,35 @@ public class PryEffect {
                 amplifier++;
             }
 
-            target.addEffect(new EffectInstance(PriedPotionEffect.instance, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),
+            target.addEffect(new MobEffectInstance(PriedPotionEffect.instance, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),
                     currentAmplifier + amplifier, false, false));
 
             if (!target.getCommandSenderWorld().isClientSide) {
-                ParticleHelper.spawnArmorParticles((ServerWorld) target.getCommandSenderWorld(), target);
+                ParticleHelper.spawnArmorParticles((ServerLevel) target.getCommandSenderWorld(), target);
             }
 
             int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
             if (momentumLevel > 0 && currentAmplifier > -1) {
                 int duration = momentumLevel * (currentAmplifier + 1);
-                target.addEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                target.addEffect(new MobEffectInstance(StunPotionEffect.instance, duration, 0, false, false));
             }
         }
 
         return result;
     }
 
-    public static AbilityUseResult performDefensive(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
+    public static AbilityUseResult performDefensive(Player attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, 0.5, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
-            target.addEffect(new EffectInstance(Effects.WEAKNESS, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20),
+            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20),
                     item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) - 1, false, true));
 
             if (!target.getCommandSenderWorld().isClientSide) {
-                if (target.hasItemInSlot(EquipmentSlotType.MAINHAND)) {
-                    ParticleHelper.spawnArmorParticles((ServerWorld) target.getCommandSenderWorld(), target, EquipmentSlotType.MAINHAND);
-                } else if (target.hasItemInSlot(EquipmentSlotType.OFFHAND)) {
-                    ParticleHelper.spawnArmorParticles((ServerWorld) target.getCommandSenderWorld(), target, EquipmentSlotType.OFFHAND);
+                if (target.hasItemInSlot(EquipmentSlot.MAINHAND)) {
+                    ParticleHelper.spawnArmorParticles((ServerLevel) target.getCommandSenderWorld(), target, EquipmentSlot.MAINHAND);
+                } else if (target.hasItemInSlot(EquipmentSlot.OFFHAND)) {
+                    ParticleHelper.spawnArmorParticles((ServerLevel) target.getCommandSenderWorld(), target, EquipmentSlot.OFFHAND);
                 }
             }
         }
@@ -155,7 +155,7 @@ public class PryEffect {
         return result;
     }
 
-    public static void performEcho(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, double damageMultiplier, int amplifier, LivingEntity target,
+    public static void performEcho(Player attacker, ItemModularHandheld item, ItemStack itemStack, double damageMultiplier, int amplifier, LivingEntity target,
             boolean isSatiated, int comboPoints) {
         EchoHelper.echo(attacker, 60, () -> {
             performRegular(attacker, item, itemStack, damageMultiplier, amplifier, target, isSatiated, comboPoints);

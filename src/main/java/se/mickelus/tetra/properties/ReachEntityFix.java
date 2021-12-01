@@ -1,14 +1,14 @@
 package se.mickelus.tetra.properties;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemFrameEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
@@ -52,29 +52,29 @@ public class ReachEntityFix {
         Minecraft mc = Minecraft.getInstance();
         double reach = mc.gameMode.getPickRange() - 1.5f; // subtract as default entity reach is 3
         if (mc.hitResult != null
-                && mc.hitResult.getType() != RayTraceResult.Type.ENTITY
+                && mc.hitResult.getType() != HitResult.Type.ENTITY
                 && reach > (ForgeMod.REACH_DISTANCE.get().getDefaultValue() - 2f)) {
 
             Entity entity = mc.getCameraEntity();
-            Vector3d eyePos = entity.getEyePosition(1);
-            Vector3d lookVec = entity.getViewVector(1);
-            Vector3d targetVec = eyePos.add(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
+            Vec3 eyePos = entity.getEyePosition(1);
+            Vec3 lookVec = entity.getViewVector(1);
+            Vec3 targetVec = eyePos.add(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
 
-            AxisAlignedBB traceBox = entity.getBoundingBox().expandTowards(lookVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
+            AABB traceBox = entity.getBoundingBox().expandTowards(lookVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
 
-            if (mc.hitResult.getType() != RayTraceResult.Type.MISS) {
+            if (mc.hitResult.getType() != HitResult.Type.MISS) {
                 reach = mc.hitResult.getLocation().distanceToSqr(eyePos);
             } else {
                 reach = reach * reach;
             }
 
-            EntityRayTraceResult rayTraceResult = ProjectileHelper.getEntityHitResult(entity, eyePos, targetVec, traceBox,
+            EntityHitResult rayTraceResult = ProjectileUtil.getEntityHitResult(entity, eyePos, targetVec, traceBox,
                     hit -> !hit.isSpectator() && hit.isPickable(), reach);
 
             if (rayTraceResult != null) {
                 mc.hitResult = rayTraceResult;
                 Entity hitEntity = rayTraceResult.getEntity();
-                if (hitEntity instanceof LivingEntity || hitEntity instanceof ItemFrameEntity) {
+                if (hitEntity instanceof LivingEntity || hitEntity instanceof ItemFrame) {
                     mc.crosshairPickEntity = hitEntity;
                 }
             }

@@ -1,23 +1,23 @@
 package se.mickelus.tetra.blocks.scroll;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.*;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,7 +35,20 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
+
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 
 public class ScrollItem extends BlockItem {
     static final String identifier = "scroll_rolled";
@@ -87,12 +100,12 @@ public class ScrollItem extends BlockItem {
     @OnlyIn(Dist.CLIENT)
     public static void clientPostInit() {
         Minecraft.getInstance().getItemColors().register(new ScrollItemColor(), instance);
-        ItemModelsProperties.register(instance, new ResourceLocation(TetraMod.MOD_ID, "scroll_mat"),
+        ItemProperties.register(instance, new ResourceLocation(TetraMod.MOD_ID, "scroll_mat"),
                 (itemStack, world, livingEntity) -> ScrollData.readMaterialFast(itemStack));
     }
 
     @Override
-    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         if (allowdedIn(group)) {
             items.add(gemExpertise);
             items.add(metalExpertise);
@@ -151,77 +164,77 @@ public class ScrollItem extends BlockItem {
     }
 
     @Override
-    public ITextComponent getName(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         String key = ScrollData.read(stack).key;
         // sometimes called on the server, need to check before calling I18n
         if (!Environment.get().getDist().isDedicatedServer()) {
             String prefixKey = "item.tetra.scroll." + key + ".prefix";
             if (I18n.exists(prefixKey)) {
-                return new TranslationTextComponent("item.tetra.scroll." + key + ".prefix")
-                        .append(new StringTextComponent(": "))
-                        .append(new TranslationTextComponent("item.tetra.scroll." + key + ".name"));
+                return new TranslatableComponent("item.tetra.scroll." + key + ".prefix")
+                        .append(new TextComponent(": "))
+                        .append(new TranslatableComponent("item.tetra.scroll." + key + ".name"));
             }
         }
 
-        return new TranslationTextComponent("item.tetra.scroll." + key + ".name");
+        return new TranslatableComponent("item.tetra.scroll." + key + ".name");
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack itemStack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         ScrollData data = ScrollData.read(itemStack);
         StringJoiner attributes = new StringJoiner(" ");
 
         if (!ScrollData.read(itemStack).schematics.isEmpty()) {
-            attributes.add(TextFormatting.DARK_PURPLE + I18n.get("item.tetra.scroll.schematics"));
+            attributes.add(ChatFormatting.DARK_PURPLE + I18n.get("item.tetra.scroll.schematics"));
         }
 
         if (!ScrollData.read(itemStack).craftingEffects.isEmpty()) {
-            attributes.add(TextFormatting.DARK_AQUA + I18n.get("item.tetra.scroll.effects"));
+            attributes.add(ChatFormatting.DARK_AQUA + I18n.get("item.tetra.scroll.effects"));
         }
 
         if (data.isIntricate) {
-            attributes.add(TextFormatting.GOLD + I18n.get("item.tetra.scroll.intricate"));
+            attributes.add(ChatFormatting.GOLD + I18n.get("item.tetra.scroll.intricate"));
         }
 
-        tooltip.add(new StringTextComponent(attributes.toString()));
-        tooltip.add(new StringTextComponent(" "));
-        tooltip.add(new TranslationTextComponent("item.tetra.scroll." + data.key + ".description").withStyle(TextFormatting.GRAY));
-        tooltip.add(new StringTextComponent(" "));
+        tooltip.add(new TextComponent(attributes.toString()));
+        tooltip.add(new TextComponent(" "));
+        tooltip.add(new TranslatableComponent("item.tetra.scroll." + data.key + ".description").withStyle(ChatFormatting.GRAY));
+        tooltip.add(new TextComponent(" "));
 
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
 
             if (!ScrollData.read(itemStack).schematics.isEmpty()) {
-                tooltip.add(new StringTextComponent(" "));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.schematics").withStyle(TextFormatting.UNDERLINE, TextFormatting.DARK_PURPLE));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.schematics.description").withStyle(TextFormatting.GRAY));
+                tooltip.add(new TextComponent(" "));
+                tooltip.add(new TranslatableComponent("item.tetra.scroll.schematics").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.DARK_PURPLE));
+                tooltip.add(new TranslatableComponent("item.tetra.scroll.schematics.description").withStyle(ChatFormatting.GRAY));
             }
 
             if (!ScrollData.read(itemStack).craftingEffects.isEmpty()) {
-                tooltip.add(new StringTextComponent(" "));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.effects").withStyle(TextFormatting.UNDERLINE, TextFormatting.DARK_AQUA));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.effects.description").withStyle(TextFormatting.GRAY));
+                tooltip.add(new TextComponent(" "));
+                tooltip.add(new TranslatableComponent("item.tetra.scroll.effects").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.DARK_AQUA));
+                tooltip.add(new TranslatableComponent("item.tetra.scroll.effects.description").withStyle(ChatFormatting.GRAY));
             }
 
             if (data.isIntricate) {
-                tooltip.add(new StringTextComponent(" "));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.intricate").withStyle(TextFormatting.UNDERLINE, TextFormatting.GOLD));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.intricate.description").withStyle(TextFormatting.GRAY));
+                tooltip.add(new TextComponent(" "));
+                tooltip.add(new TranslatableComponent("item.tetra.scroll.intricate").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GOLD));
+                tooltip.add(new TranslatableComponent("item.tetra.scroll.intricate.description").withStyle(ChatFormatting.GRAY));
             } else {
-                tooltip.add(new StringTextComponent(" "));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.range.description").withStyle(TextFormatting.GRAY));
+                tooltip.add(new TextComponent(" "));
+                tooltip.add(new TranslatableComponent("item.tetra.scroll.range.description").withStyle(ChatFormatting.GRAY));
             }
 
             if (I18n.exists("item.tetra.scroll." + data.key + ".description_extended")) {
-                tooltip.add(new StringTextComponent(" "));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll." + data.key + ".description_extended").withStyle(TextFormatting.GRAY));
+                tooltip.add(new TextComponent(" "));
+                tooltip.add(new TranslatableComponent("item.tetra.scroll." + data.key + ".description_extended").withStyle(ChatFormatting.GRAY));
             }
         } else {
             tooltip.add(Tooltips.expand);
         }
 
         if (flagIn.isAdvanced()) {
-            tooltip.add(new StringTextComponent("s: " + data.schematics + ",e: " + data.craftingEffects));
+            tooltip.add(new TextComponent("s: " + data.schematics + ",e: " + data.craftingEffects));
         }
     }
 
@@ -245,24 +258,24 @@ public class ScrollItem extends BlockItem {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if (openScroll(player.getItemInHand(hand), world.isClientSide)) {
-            return ActionResult.sidedSuccess(itemstack, world.isClientSide());
+            return InteractionResultHolder.sidedSuccess(itemstack, world.isClientSide());
         }
-        return ActionResult.pass(itemstack);
+        return InteractionResultHolder.pass(itemstack);
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
-        World world = context.getLevel();
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         ItemStack itemStack = context.getItemInHand();
-        PlayerEntity player = context.getPlayer();
+        Player player = context.getPlayer();
         Block block = context.getLevel().getBlockState(context.getClickedPos()).getBlock();
 
         if (!(block instanceof AbstractWorkbenchBlock) && player != null && player.isCrouching() && openScroll(itemStack, world.isClientSide)) {
-            return ActionResultType.sidedSuccess(world.isClientSide);
+            return InteractionResult.sidedSuccess(world.isClientSide);
         }
 
         // add scroll to an existing stack of rolled up scrolls
@@ -275,16 +288,16 @@ public class ScrollItem extends BlockItem {
                 if (player == null || !player.abilities.instabuild) {
                     itemStack.shrink(1);
                 }
-                return ActionResultType.sidedSuccess(world.isClientSide);
+                return InteractionResult.sidedSuccess(world.isClientSide);
             }
         }
 
-        return place(new BlockItemUseContext(context));
+        return place(new BlockPlaceContext(context));
     }
 
     @Nullable
     @Override
-    protected BlockState getPlacementState(BlockItemUseContext context) {
+    protected BlockState getPlacementState(BlockPlaceContext context) {
         BlockState state = getBlock().defaultBlockState();
 
         if (context.getClickedFace().getAxis().getPlane() == Direction.Plane.HORIZONTAL) {

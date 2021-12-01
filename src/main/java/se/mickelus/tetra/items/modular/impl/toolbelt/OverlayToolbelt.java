@@ -1,14 +1,14 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
@@ -29,9 +29,9 @@ public class OverlayToolbelt {
 
     public static final String bindingGroup = "tetra.toolbelt.binding.group";
 
-    public KeyBinding accessBinding;
-    public KeyBinding restockBinding;
-    public KeyBinding openBinding;
+    public KeyMapping accessBinding;
+    public KeyMapping restockBinding;
+    public KeyMapping openBinding;
 
     private long openTime = -1;
 
@@ -45,12 +45,12 @@ public class OverlayToolbelt {
 
         gui = new OverlayGuiToolbelt(mc);
 
-        accessBinding = new KeyBinding("tetra.toolbelt.binding.access", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM,
+        accessBinding = new KeyMapping("tetra.toolbelt.binding.access", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_B, bindingGroup);
-        restockBinding = new KeyBinding("tetra.toolbelt.binding.restock", KeyConflictContext.IN_GAME, KeyModifier.SHIFT,
-                InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_B, bindingGroup);
-        openBinding = new KeyBinding("tetra.toolbelt.binding.open", KeyConflictContext.IN_GAME, KeyModifier.ALT,
-                InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_B, bindingGroup);
+        restockBinding = new KeyMapping("tetra.toolbelt.binding.restock", KeyConflictContext.IN_GAME, KeyModifier.SHIFT,
+                InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, bindingGroup);
+        openBinding = new KeyMapping("tetra.toolbelt.binding.open", KeyConflictContext.IN_GAME, KeyModifier.ALT,
+                InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, bindingGroup);
 
         ClientRegistry.registerKeyBinding(accessBinding);
         ClientRegistry.registerKeyBinding(restockBinding);
@@ -62,7 +62,7 @@ public class OverlayToolbelt {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (restockBinding.isDown()) {
-            equipToolbeltItem(ToolbeltSlotType.quickslot, -1, Hand.OFF_HAND);
+            equipToolbeltItem(ToolbeltSlotType.quickslot, -1, InteractionHand.OFF_HAND);
         } else if (openBinding.isDown()) {
             openToolbelt();
         } else if (accessBinding.isDown() && mc.isWindowActive() && !isActive) {
@@ -106,7 +106,7 @@ public class OverlayToolbelt {
         }
     }
 
-    private void equipToolbeltItem(ToolbeltSlotType slotType, int toolbeltItemIndex, Hand hand) {
+    private void equipToolbeltItem(ToolbeltSlotType slotType, int toolbeltItemIndex, InteractionHand hand) {
         EquipToolbeltItemPacket packet = new EquipToolbeltItemPacket(slotType, toolbeltItemIndex, hand);
         TetraMod.packetHandler.sendToServer(packet);
         if (toolbeltItemIndex > -1) {
@@ -114,19 +114,19 @@ public class OverlayToolbelt {
         } else {
             boolean storeItemSuccess = ToolbeltHelper.storeItemInToolbelt(mc.player);
             if (!storeItemSuccess) {
-                mc.player.displayClientMessage(new TranslationTextComponent("tetra.toolbelt.full"), true);
+                mc.player.displayClientMessage(new TranslatableComponent("tetra.toolbelt.full"), true);
             }
         }
     }
 
     private void quickEquip() {
-        if (mc.hitResult.getType() == RayTraceResult.Type.BLOCK) {
-            BlockRayTraceResult raytrace = (BlockRayTraceResult) mc.hitResult;
+        if (mc.hitResult.getType() == HitResult.Type.BLOCK) {
+            BlockHitResult raytrace = (BlockHitResult) mc.hitResult;
             BlockState blockState = mc.level.getBlockState(raytrace.getBlockPos());
             int index = ToolbeltHelper.getQuickAccessSlotIndex(mc.player, mc.hitResult, blockState);
 
             if (index > -1) {
-                equipToolbeltItem(ToolbeltSlotType.quickslot, index, Hand.MAIN_HAND);
+                equipToolbeltItem(ToolbeltSlotType.quickslot, index, InteractionHand.MAIN_HAND);
             }
         }
     }
@@ -159,7 +159,7 @@ public class OverlayToolbelt {
         return gui.getFocusIndex();
     }
 
-    private Hand getHand() {
+    private InteractionHand getHand() {
         return gui.getFocusHand();
     }
 

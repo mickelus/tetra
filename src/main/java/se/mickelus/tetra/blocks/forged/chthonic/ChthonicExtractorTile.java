@@ -1,17 +1,17 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 
-public class ChthonicExtractorTile extends TileEntity {
+public class ChthonicExtractorTile extends BlockEntity {
     @ObjectHolder(TetraMod.MOD_ID + ":" + ChthonicExtractorBlock.unlocalizedName)
-    public static TileEntityType<ChthonicExtractorTile> type;
+    public static BlockEntityType<ChthonicExtractorTile> type;
 
     private static final String damageKey = "dmg";
     private int damage = 0;
@@ -42,7 +42,7 @@ public class ChthonicExtractorTile extends TileEntity {
 
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compound) {
+    public void load(BlockState blockState, CompoundTag compound) {
         super.load(blockState, compound);
 
         if (compound.contains(damageKey)) {
@@ -51,7 +51,7 @@ public class ChthonicExtractorTile extends TileEntity {
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         super.save(compound);
 
         compound.putInt(damageKey, damage);

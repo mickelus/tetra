@@ -1,21 +1,21 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.scan;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.level.block.state.BlockState;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -88,10 +88,10 @@ public class ScannerOverlayGui extends GuiRoot {
     public void toggleSnooze() {
         if (isSnoozed()) {
             snooze = -1;
-            mc.getSoundManager().play(SimpleSound.forUI(SoundEvents.GRINDSTONE_USE, 2f, 0.3f));
+            mc.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.GRINDSTONE_USE, 2f, 0.3f));
         } else {
             snooze = ticks + snoozeLength;
-            mc.getSoundManager().play(SimpleSound.forUI(SoundEvents.GRINDSTONE_USE, 1.6f, 0.3f));
+            mc.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.GRINDSTONE_USE, 1.6f, 0.3f));
         }
     }
 
@@ -165,8 +165,8 @@ public class ScannerOverlayGui extends GuiRoot {
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        World world = mc.level;
-        PlayerEntity player = mc.player;
+        Level world = mc.level;
+        Player player = mc.player;
 
         if (world == null || player == null || TickEvent.Phase.START != event.phase) {
             return;
@@ -234,12 +234,12 @@ public class ScannerOverlayGui extends GuiRoot {
     }
 
     @Nullable
-    private BlockPos getPositions(PlayerEntity player, World world, int pitchOffset, int yawOffset) {
-        Vector3d eyePosition = player.getEyePosition(0);
-        Vector3d lookVector = getVectorForRotation(player.getViewXRot(1) + pitchOffset, player.getViewYRot(1) + yawOffset);
-        Vector3d endVector = eyePosition.add(lookVector.x * range, lookVector.y * range, lookVector.z * range);
+    private BlockPos getPositions(Player player, Level world, int pitchOffset, int yawOffset) {
+        Vec3 eyePosition = player.getEyePosition(0);
+        Vec3 lookVector = getVectorForRotation(player.getViewXRot(1) + pitchOffset, player.getViewYRot(1) + yawOffset);
+        Vec3 endVector = eyePosition.add(lookVector.x * range, lookVector.y * range, lookVector.z * range);
 
-        return IBlockReader.traverseBlocks(new RayTraceContext(eyePosition, endVector, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player), (ctx, blockPos) -> {
+        return BlockGetter.traverseBlocks(new ClipContext(eyePosition, endVector, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player), (ctx, blockPos) -> {
             BlockState blockState = world.getBlockState(blockPos);
 
             if (blockState.getBlock().getTags().contains(tag)) {
@@ -249,14 +249,14 @@ public class ScannerOverlayGui extends GuiRoot {
         }, ctx -> null);
     }
 
-    private Vector3d getVectorForRotation(float pitch, float yaw) {
+    private Vec3 getVectorForRotation(float pitch, float yaw) {
         float f = pitch * ((float)Math.PI / 180F);
         float f1 = -yaw * ((float)Math.PI / 180F);
-        float f2 = MathHelper.cos(f1);
-        float f3 = MathHelper.sin(f1);
-        float f4 = MathHelper.cos(f);
-        float f5 = MathHelper.sin(f);
-        return new Vector3d(f3 * f4, -f5, f2 * f4);
+        float f2 = Mth.cos(f1);
+        float f3 = Mth.sin(f1);
+        float f4 = Mth.cos(f);
+        float f5 = Mth.sin(f);
+        return new Vec3(f3 * f4, -f5, f2 * f4);
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
@@ -269,14 +269,14 @@ public class ScannerOverlayGui extends GuiRoot {
     @Override
     public void draw() {
         if (isVisible()) {
-            MainWindow window = mc.getWindow();
+            Window window = mc.getWindow();
             width = window.getGuiScaledWidth();
             height = window.getGuiScaledHeight();
 
             int mouseX = (int) (mc.mouseHandler.xpos() * width / window.getScreenWidth());
             int mouseY = (int) (mc.mouseHandler.ypos() * height / window.getScreenHeight());
 
-            this.drawChildren(new MatrixStack(), 0, 0, width, height, mouseX, mouseY, 1.0F);
+            this.drawChildren(new PoseStack(), 0, 0, width, height, mouseX, mouseY, 1.0F);
 
             widthRatio = scanner.getWidth() * 1f / width;
         }

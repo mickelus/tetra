@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class PotionSlot extends PredicateSlot {
     public PotionSlot(PotionsInventory inventory, int index, int x, int y) {

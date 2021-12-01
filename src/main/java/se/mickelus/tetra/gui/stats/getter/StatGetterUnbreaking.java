@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.module.ItemModule;
@@ -13,7 +13,7 @@ public class StatGetterUnbreaking implements IStatGetter {
     public StatGetterUnbreaking() { }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack) {
+    public double getValue(Player player, ItemStack itemStack) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getEffectLevel(itemStack, ItemEffect.unbreaking))
                 .map(level -> 100 - 100d / (level + 1))
@@ -21,7 +21,7 @@ public class StatGetterUnbreaking implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot) {
+    public double getValue(Player player, ItemStack itemStack, String slot) {
         int levelItem = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getEffectLevel(itemStack, ItemEffect.unbreaking))
                 .orElse(0);
@@ -34,7 +34,7 @@ public class StatGetterUnbreaking implements IStatGetter {
     }
 
     @Override
-    public double getValue(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
+    public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
         int levelItem = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getEffectLevel(itemStack, ItemEffect.unbreaking))
                 .orElse(0);

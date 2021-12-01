@@ -6,18 +6,18 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.command.ISuggestionProvider;
-import net.minecraft.command.arguments.BlockPosArgument;
+import net.minecraft.commands.CommandRuntimeException;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.command.arguments.ItemArgument;
-import net.minecraft.command.arguments.ResourceLocationArgument;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.World;
 import se.mickelus.tetra.data.DataManager;
 
@@ -25,7 +25,7 @@ import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
 public class TGenCommand {
-    public static void register(CommandDispatcher<CommandSource> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("tgen")
                 .requires(source -> source.hasPermission(2))
                 .then(Commands.argument("feature", ResourceLocationArgument.id())
@@ -36,10 +36,10 @@ public class TGenCommand {
     }
 
     private static CompletableFuture<Suggestions> getFeatureSuggestions(final CommandContext context, final SuggestionsBuilder builder) {
-        return ISuggestionProvider.suggestResource(DataManager.featureData.getData().keySet(), builder);
+        return SharedSuggestionProvider.suggestResource(DataManager.featureData.getData().keySet(), builder);
     }
 
-    private static int generateAtPlayer(CommandContext<CommandSource> context) {
+    private static int generateAtPlayer(CommandContext<CommandSourceStack> context) {
         BlockPos pos = new BlockPos(context.getSource().getPosition());
 
         generate(ResourceLocationArgument.getId(context, "feature"), context.getSource().getLevel(), pos,
@@ -48,14 +48,14 @@ public class TGenCommand {
         return 1;
     }
 
-    private static int generateAtPos(CommandContext<CommandSource> context) throws CommandSyntaxException{
+    private static int generateAtPos(CommandContext<CommandSourceStack> context) throws CommandSyntaxException{
         generate(ResourceLocationArgument.getId(context, "feature"), context.getSource().getLevel(),
                 BlockPosArgument.getOrLoadBlockPos(context, "pos"), context.getSource().getLevel().getSeed());
 
         return 1;
     }
 
-    private static void generate(ResourceLocation featureLocation, ISeedReader world, BlockPos pos, long seed) throws CommandException {
+    private static void generate(ResourceLocation featureLocation, WorldGenLevel world, BlockPos pos, long seed) throws CommandRuntimeException {
         FeatureParameters feature = DataManager.featureData.getData(featureLocation);
         if (feature != null) {
             ChunkPos chunkPos = new ChunkPos(pos);

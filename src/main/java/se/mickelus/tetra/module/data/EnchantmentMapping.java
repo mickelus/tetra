@@ -1,7 +1,7 @@
 package se.mickelus.tetra.module.data;
 
 import com.google.gson.JsonObject;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 public class EnchantmentMapping {
     /**

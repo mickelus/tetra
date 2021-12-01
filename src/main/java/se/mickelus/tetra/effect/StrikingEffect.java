@@ -2,16 +2,16 @@ package se.mickelus.tetra.effect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.ToolTypes;
@@ -83,7 +83,7 @@ public class StrikingEffect {
             new BlockPos(1, -1, 0),
     };
 
-    public static boolean causeEffect(PlayerEntity breakingPlayer, ItemStack itemStack, ItemModularHandheld item, World world, BlockPos pos, BlockState blockState) {
+    public static boolean causeEffect(Player breakingPlayer, ItemStack itemStack, ItemModularHandheld item, Level world, BlockPos pos, BlockState blockState) {
         int strikingLevel = 0;
         ToolType tool = null;
 
@@ -173,7 +173,7 @@ public class StrikingEffect {
      *             match this
      * @param sweepingLevel the level of the sweeping effect on the toolStack
      */
-    private static void breakBlocksAround(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos originPos, ToolType tool,
+    private static void breakBlocksAround(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos originPos, ToolType tool,
             int sweepingLevel) {
         if (world.isClientSide) {
             return;
@@ -193,7 +193,7 @@ public class StrikingEffect {
 
         if (critMultiplier != 1) {
             efficiency *= critMultiplier;
-            ((ServerWorld) world).sendParticles(ParticleTypes.ENCHANTED_HIT,
+            ((ServerLevel) world).sendParticles(ParticleTypes.ENCHANTED_HIT,
                     originPos.getX() + .5f, originPos.getY() + .5f, originPos.getZ() + .5f, 15, 0.2D, 0.2D, 0.2D, 0.0D);
         }
 
@@ -241,14 +241,14 @@ public class StrikingEffect {
         }
     }
 
-    private static void enqueueBlockBreak(World world, PlayerEntity player, ItemStack itemStack, BlockPos pos, BlockState blockState, ToolType tool,
+    private static void enqueueBlockBreak(Level world, Player player, ItemStack itemStack, BlockPos pos, BlockState blockState, ToolType tool,
             int toolLevel, int delay) {
         ServerScheduler.schedule(delay, () -> {
             if (((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
                     || itemStack.isCorrectToolForDrops(blockState))
                     && ItemModularHandheld.isToolEffective(tool, blockState)) {
                 if (EffectHelper.breakBlock(world, player, itemStack, pos, blockState, true)) {
-                    EffectHelper.sendEventToPlayer((ServerPlayerEntity) player, 2001, pos, Block.getId(blockState));
+                    EffectHelper.sendEventToPlayer((ServerPlayer) player, 2001, pos, Block.getId(blockState));
                 }
             }
         });

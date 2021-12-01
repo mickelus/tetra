@@ -1,9 +1,9 @@
 package se.mickelus.tetra.items.modular.impl;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiRect;
@@ -49,7 +49,7 @@ public class GuiBlockProgress extends GuiRoot {
 
     public void setProgress(float progress) {
         if (progress > 0) {
-            bar.setWidth(MathHelper.clamp((int) (progress * width), 0, width));
+            bar.setWidth(Mth.clamp((int) (progress * width), 0, width));
 
 
             if (!showAnimation.isActive() && container.getOpacity() < 1) {
@@ -64,9 +64,9 @@ public class GuiBlockProgress extends GuiRoot {
         }
     }
 
-    public void draw(MatrixStack matrixStack) {
+    public void draw(PoseStack matrixStack) {
         if (isVisible()) {
-            MainWindow window = mc.getWindow();
+            Window window = mc.getWindow();
             int width = window.getGuiScaledWidth();
             int height = window.getGuiScaledHeight();
 

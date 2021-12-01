@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.stats.bar;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
@@ -45,7 +45,7 @@ public class GuiStatBarTool extends GuiStatBar {
     }
 
     @Override
-    public void update(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public void update(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         super.update(player, currentStack, previewStack, slot, improvement);
 
         int level = (int) levelGetter.getValue(player, currentStack);
@@ -84,7 +84,7 @@ public class GuiStatBarTool extends GuiStatBar {
     }
 
     @Override
-    public boolean shouldShow(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         return levelGetter.getValue(player, currentStack) > 0 || levelGetter.getValue(player, previewStack) > 0
                 || (efficiencyVisibility && (statGetter.getValue(player, currentStack) > 0 || statGetter.getValue(player, previewStack) > 0));
     }
@@ -99,7 +99,7 @@ public class GuiStatBarTool extends GuiStatBar {
         return GuiColors.normal;
     }
 
-    protected int getSlotLevel(PlayerEntity player, ItemStack itemStack, String slot, String improvement) {
+    protected int getSlotLevel(Player player, ItemStack itemStack, String slot, String improvement) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> {
                     if (improvement != null) {

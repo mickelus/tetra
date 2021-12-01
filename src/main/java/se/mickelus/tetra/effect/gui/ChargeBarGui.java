@@ -1,8 +1,8 @@
 package se.mickelus.tetra.effect.gui;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.Mth;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiTexture;
@@ -78,7 +78,7 @@ public class ChargeBarGui extends GuiElement {
         }
     }
 
-    public void update(PlayerEntity player) {
+    public void update(Player player) {
 
         ItemStack activeStack = player.getUseItem();
         ItemModularHandheld item = CastOptional.cast(activeStack.getItem(), ItemModularHandheld.class).orElse(null);
@@ -91,7 +91,7 @@ public class ChargeBarGui extends GuiElement {
         }
     }
 
-    private float getProgress(PlayerEntity player, ItemModularHandheld item, ItemStack itemStack, ChargedAbilityEffect ability) {
+    private float getProgress(Player player, ItemModularHandheld item, ItemStack itemStack, ChargedAbilityEffect ability) {
         return ability != null ? (itemStack.getUseDuration() - player.getUseItemRemainingTicks()) * 1f / ability.getChargeTime(player, item, itemStack) : 0;
     }
 
@@ -111,7 +111,7 @@ public class ChargeBarGui extends GuiElement {
         }
 
         public void setProgress(double progress) {
-            int barWidth = MathHelper.clamp((int) (progress * width), 0, width);
+            int barWidth = Mth.clamp((int) (progress * width), 0, width);
             bar.setWidth(barWidth);
             background.setWidth(Math.max(0, width - barWidth));
         }

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.gui.stats.bar;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -44,7 +44,7 @@ public class StrikingStatIndicatorGui extends GuiStatIndicator {
                 new TooltipGetterNone("tetra.stats.tool.sweeping.tooltip"));
     }
 
-    public boolean update(PlayerEntity player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public boolean update(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
         if (striking != null && striking.update(player, currentStack, previewStack, slot, improvement)) {
             if (sweeping.update(player, currentStack, previewStack, slot, improvement)) {
                 current = sweeping;
@@ -59,7 +59,7 @@ public class StrikingStatIndicatorGui extends GuiStatIndicator {
     }
 
     @Override
-    public boolean isActive(PlayerEntity player, ItemStack itemStack) {
+    public boolean isActive(Player player, ItemStack itemStack) {
         return current != null && current.isActive(player, itemStack);
     }
 
@@ -75,26 +75,26 @@ public class StrikingStatIndicatorGui extends GuiStatIndicator {
                 .orElse("");
     }
 
-    public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipBase(Player player, ItemStack itemStack) {
         return Optional.ofNullable(current)
                 .map(c -> c.getTooltipBase(player, itemStack))
                 .orElse("");
     }
 
-    public boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
+    public boolean hasExtendedTooltip(Player player, ItemStack itemStack) {
         return Optional.ofNullable(current)
                 .map(c -> c.hasExtendedTooltip(player, itemStack))
                 .orElse(false);
     }
 
-    public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
+    public String getTooltipExtension(Player player, ItemStack itemStack) {
         return Optional.ofNullable(current)
                 .map(c -> c.getTooltipExtension(player, itemStack))
                 .orElse("");
     }
 
     @Override
-    public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (current != null) {
             current.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
         }

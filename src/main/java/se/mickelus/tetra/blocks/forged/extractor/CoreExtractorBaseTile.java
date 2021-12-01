@@ -1,13 +1,13 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
@@ -16,9 +16,9 @@ import se.mickelus.tetra.util.TileEntityOptional;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEntity, IHeatTransfer {
+public class CoreExtractorBaseTile extends BlockEntity implements TickableBlockEntity, IHeatTransfer {
     @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.unlocalizedName)
-    public static TileEntityType<CoreExtractorBaseTile> type;
+    public static BlockEntityType<CoreExtractorBaseTile> type;
 
     private boolean isSending = false;
 
@@ -207,7 +207,7 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
     }
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compound) {
+    public void load(BlockState blockState, CompoundTag compound) {
         super.load(blockState, compound);
 
         if (compound.contains(chargeKey)) {
@@ -218,7 +218,7 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         super.save(compound);
 
         compound.putInt(chargeKey, currentCharge);
@@ -228,17 +228,17 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return save(new CompoundTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
         this.load(getBlockState(), packet.getTag());
 //        BlockState state = getBlockState();
 

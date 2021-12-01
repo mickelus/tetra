@@ -5,12 +5,12 @@ import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.Property;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
@@ -50,7 +50,7 @@ public class PropertyMatcher implements Predicate<BlockState> {
     public static PropertyMatcher deserialize(JsonElement json) {
         PropertyMatcher result = new PropertyMatcher();
         if (json.isJsonObject()) {
-            JsonObject jsonObject = JSONUtils.convertToJsonObject(json, "propertyMatcher");
+            JsonObject jsonObject = GsonHelper.convertToJsonObject(json, "propertyMatcher");
 
             if (jsonObject.has("block")) {
                 String blockString = jsonObject.get("block").getAsString();
@@ -64,7 +64,7 @@ public class PropertyMatcher implements Predicate<BlockState> {
 
 
             if (result.block != null && jsonObject.has("state")) {
-                StateContainer<Block, BlockState> stateContainer = result.block.getStateDefinition();
+                StateDefinition<Block, BlockState> stateContainer = result.block.getStateDefinition();
                 for (Map.Entry<String, JsonElement> entry : jsonObject.get("state").getAsJsonObject().entrySet()) {
                     Property<?> property = stateContainer.getProperty(entry.getKey());
 
@@ -73,7 +73,7 @@ public class PropertyMatcher implements Predicate<BlockState> {
                                 + result.block.getDescriptionId() + "'");
                     }
 
-                    String s = JSONUtils.convertToString(entry.getValue(), entry.getKey());
+                    String s = GsonHelper.convertToString(entry.getValue(), entry.getKey());
                     Optional<?> optional = property.getValue(s);
 
                     if (!optional.isPresent()) {

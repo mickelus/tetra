@@ -1,26 +1,26 @@
 package se.mickelus.tetra.effect;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.particles.BlockParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
@@ -37,11 +37,11 @@ public class SlamEffect extends ChargedAbilityEffect {
     public static final SlamEffect instance = new SlamEffect();
 
     SlamEffect() {
-        super(10, 1f, 40, 6, ItemEffect.slam, TargetRequirement.either, UseAction.SPEAR, "raised");
+        super(10, 1f, 40, 6, ItemEffect.slam, TargetRequirement.either, UseAnim.SPEAR, "raised");
     }
 
     @Override
-    public int getChargeTime(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack) {
+    public int getChargeTime(Player attacker, ItemModularHandheld item, ItemStack itemStack) {
         if (ComboPoints.canSpend(item, itemStack)) {
             return (int) (super.getChargeTime(attacker, item, itemStack)
                     * (1 - item.getEffectLevel(itemStack, ItemEffect.abilityCombo) / 100d * ComboPoints.get(attacker)));
@@ -50,7 +50,7 @@ public class SlamEffect extends ChargedAbilityEffect {
     }
 
     @Override
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
+    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
         AbilityUseResult result = directSlam(attacker, hand, item, itemStack, target, hitVec, chargedTicks);
 
         double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
@@ -72,7 +72,7 @@ public class SlamEffect extends ChargedAbilityEffect {
         }
     }
 
-    public AbilityUseResult directSlam(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
+    public AbilityUseResult directSlam(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
         int stunDuration = 0;
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) * 1.5 / 100;
         float knockbackBase = (float) item.getEffectEfficiency(itemStack, ItemEffect.slam);
@@ -112,7 +112,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
         if (result != AbilityUseResult.fail) {
             if (stunDuration > 0) {
-                target.addEffect(new EffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false));
+                target.addEffect(new MobEffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false));
             }
 
             if (momentumEfficiency > 0) {
@@ -122,7 +122,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             }
 
             if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
-                target.addEffect(new EffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
+                target.addEffect(new MobEffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
             }
 
             double exhilarationEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration);
@@ -131,26 +131,26 @@ public class SlamEffect extends ChargedAbilityEffect {
             }
 
             Random rand = target.getRandom();
-            CastOptional.cast(target.level, ServerWorld.class).ifPresent(world ->
+            CastOptional.cast(target.level, ServerLevel.class).ifPresent(world ->
                     world.sendParticles(ParticleTypes.CRIT,
                             hitVec.x, hitVec.y, hitVec.z, 10,
                             rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getBbHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f));
 
-            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.7f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 1, 0.7f);
         } else {
-            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.7f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundSource.PLAYERS, 1, 0.7f);
         }
 
         return result;
     }
 
-    private void knockbackExhilaration(PlayerEntity attacker, Vector3d origin, LivingEntity target, long timeLimit, double multiplier) {
+    private void knockbackExhilaration(Player attacker, Vec3 origin, LivingEntity target, long timeLimit, double multiplier) {
         ServerScheduler.schedule(20, () -> {
             if (target.isOnGround()) {
                 double distance = Math.min(20, origin.distanceTo(target.position()));
                 int amplifier = (int) (distance * multiplier) - 1;
                 if (amplifier >= 0) {
-                    attacker.addEffect(new EffectInstance(SmallStrengthPotionEffect.instance, 200, amplifier, false, true));
+                    attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, 200, amplifier, false, true));
                 }
             } else if (target.level.getGameTime() < timeLimit) {
                 knockbackExhilaration(attacker, origin, target, timeLimit, multiplier);
@@ -159,7 +159,7 @@ public class SlamEffect extends ChargedAbilityEffect {
     }
 
     @Override
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, BlockPos targetPos, Vector3d hitVec, int chargedTicks) {
+    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, BlockPos targetPos, Vec3 hitVec, int chargedTicks) {
         if (!attacker.level.isClientSide) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
             int slowDuration = isDefensive(item, itemStack, hand) ? (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20) : 0;
@@ -169,9 +169,9 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             double range = getAoeRange(attacker, item, itemStack, overchargeBonus);
 
-            Vector3d direction = hitVec.subtract(attacker.position()).multiply(1, 0, 1).normalize();
-            double yaw = MathHelper.atan2(direction.x, direction.z);
-            AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).inflate(range + 1, 4, range + 1).move(direction.scale(range / 2));
+            Vec3 direction = hitVec.subtract(attacker.position()).multiply(1, 0, 1).normalize();
+            double yaw = Mth.atan2(direction.x, direction.z);
+            AABB boundingBox = new AABB(hitVec, hitVec).inflate(range + 1, 4, range + 1).move(direction.scale(range / 2));
             List<LivingEntity> targets = attacker.level.getEntitiesOfClass(LivingEntity.class, boundingBox).stream()
                     .filter(Entity::isAlive)
                     .filter(Entity::isAttackable)
@@ -201,10 +201,10 @@ public class SlamEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    private void echoGround(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, Vector3d hitVec, Vector3d direction, double yaw,
+    private void echoGround(Player attacker, ItemModularHandheld item, ItemStack itemStack, Vec3 hitVec, Vec3 direction, double yaw,
             double range, double damageMultiplier, int slowDuration, double momentumEfficiency, int revengeLevel) {
         EchoHelper.echo(attacker, 60, () -> {
-            AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).inflate(range + 1, 4, range + 1).move(direction.scale(range / 2));
+            AABB boundingBox = new AABB(hitVec, hitVec).inflate(range + 1, 4, range + 1).move(direction.scale(range / 2));
             List<LivingEntity> targets = attacker.level.getEntitiesOfClass(LivingEntity.class, boundingBox).stream()
                     .filter(Entity::isAlive)
                     .filter(Entity::isAttackable)
@@ -217,20 +217,20 @@ public class SlamEffect extends ChargedAbilityEffect {
         });
     }
 
-    private void echoTarget(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
+    private void echoTarget(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
         if (!attacker.level.isClientSide) {
             EchoHelper.echo(attacker, 60, () -> {
                 directSlam(attacker, hand, item, itemStack, target, hitVec, chargedTicks);
 
                 int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
                 if (revengeLevel > 0) {
-                    RevengeTracker.removeEnemySynced((ServerPlayerEntity) attacker, target);
+                    RevengeTracker.removeEnemySynced((ServerPlayer) attacker, target);
                 }
             });
         }
     }
 
-    private double getAoeDamageMultiplier(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, boolean isDefensive, int overchargeBonus,
+    private double getAoeDamageMultiplier(Player attacker, ItemModularHandheld item, ItemStack itemStack, boolean isDefensive, int overchargeBonus,
             List<LivingEntity> targets) {
         double damageMultiplier = item.getEffectLevel(itemStack, ItemEffect.slam) / 100f;
 
@@ -255,7 +255,7 @@ public class SlamEffect extends ChargedAbilityEffect {
         return damageMultiplier;
     }
 
-    private double getAoeRange(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, int overchargeBonus) {
+    private double getAoeRange(Player attacker, ItemModularHandheld item, ItemStack itemStack, int overchargeBonus) {
         double range = 8;
 
         if (overchargeBonus > 0) {
@@ -270,20 +270,20 @@ public class SlamEffect extends ChargedAbilityEffect {
         return range;
     }
 
-    private void spawnGroundParticles(World world, Vector3d origin, Vector3d direction, double yaw, double range) {
+    private void spawnGroundParticles(Level world, Vec3 origin, Vec3 direction, double yaw, double range) {
         Random rand = world.random;
 
         BlockState originState = world.getBlockState(new BlockPos(origin));
-        ((ServerWorld) world).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, originState),
+        ((ServerLevel) world).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, originState),
                 origin.x(), origin.y(), origin.z(),
                 8, 0, rand.nextGaussian() * 0.1, 0, 0.1);
-        world.playSound(null, new BlockPos(origin), originState.getSoundType().getBreakSound(), SoundCategory.PLAYERS, 1.5f, 0.5f);
+        world.playSound(null, new BlockPos(origin), originState.getSoundType().getBreakSound(), SoundSource.PLAYERS, 1.5f, 0.5f);
 
         int bound = (int) Math.ceil(range / 2);
 
         BlockPos center = new BlockPos(origin.add(direction.scale(range / 2)));
         origin = origin.add(direction.scale(-1));
-        BlockPos.Mutable targetPos = new BlockPos.Mutable(0, 0, 0);
+        BlockPos.MutableBlockPos targetPos = new BlockPos.MutableBlockPos(0, 0, 0);
         for (int x = -bound; x <= bound; x++) {
             for (int z = -bound; z <= bound; z++) {
                 targetPos.setWithOffset(center, x, 0, z);
@@ -301,12 +301,12 @@ public class SlamEffect extends ChargedAbilityEffect {
                                 BlockPos particlePos = targetPos.immutable();
 
                                 ServerScheduler.schedule(particlePos.distManhattan(new BlockPos(origin)) - 3, () -> {
-                                    ((ServerWorld) world).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, targetState),
+                                    ((ServerLevel) world).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, targetState),
                                             particlePos.getX() + 0.5, particlePos.getY() + yOffset, particlePos.getZ() + 0.5,
                                             3, 0, rand.nextGaussian() * 0.1, 0, 0.1);
 
                                     if (rand.nextFloat() < 0.3f) {
-                                        world.playSound(null, particlePos, targetState.getSoundType().getFallSound(), SoundCategory.PLAYERS, 1, 0.5f);
+                                        world.playSound(null, particlePos, targetState.getSoundType().getFallSound(), SoundSource.PLAYERS, 1, 0.5f);
                                     }
                                 });
                             }
@@ -318,10 +318,10 @@ public class SlamEffect extends ChargedAbilityEffect {
         }
     }
 
-    private boolean inRange(Vector3d origin, Entity entity, double originYaw, double range) {
+    private boolean inRange(Vec3 origin, Entity entity, double originYaw, double range) {
         if (origin.closerThan(entity.position(), range)) {
-            Vector3d direction = entity.position().subtract(origin);
-            double entityYaw = MathHelper.atan2(direction.x, direction.z);
+            Vec3 direction = entity.position().subtract(origin);
+            double entityYaw = Mth.atan2(direction.x, direction.z);
             double yawDiff = Math.abs((originYaw - entityYaw + 3 * Math.PI) % (Math.PI * 2) - Math.PI);
 
             return yawDiff < Math.PI / 6;
@@ -329,15 +329,15 @@ public class SlamEffect extends ChargedAbilityEffect {
         return false;
     }
 
-    private boolean compareAngle(Vector3d originPos, BlockPos.Mutable offsetPos, double originYaw) {
-        Vector3d direction = Vector3d.atBottomCenterOf(offsetPos).subtract(originPos);
-        double offsetYaw = MathHelper.atan2(direction.x(), direction.z());
+    private boolean compareAngle(Vec3 originPos, BlockPos.MutableBlockPos offsetPos, double originYaw) {
+        Vec3 direction = Vec3.atBottomCenterOf(offsetPos).subtract(originPos);
+        double offsetYaw = Mth.atan2(direction.x(), direction.z());
 
         double yawDiff = Math.abs((originYaw - offsetYaw + 3 * Math.PI) % (Math.PI * 2) - Math.PI);
         return yawDiff < Math.PI / 6;
     }
 
-    private static void groundSlamEntity(PlayerEntity attacker, LivingEntity target, ItemModularHandheld item, ItemStack itemStack, Vector3d origin,
+    private static void groundSlamEntity(Player attacker, LivingEntity target, ItemModularHandheld item, ItemStack itemStack, Vec3 origin,
             double damageMultiplier, int slowDuration, double momentumEfficiency, int revengeLevel) {
         ServerScheduler.schedule(target.blockPosition().distManhattan(new BlockPos(origin)) - 3, () -> {
             float knockback = momentumEfficiency > 0 ? 0.1f : 0.5f;
@@ -345,32 +345,32 @@ public class SlamEffect extends ChargedAbilityEffect {
             AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, knockback, knockback);
 
             if (momentumEfficiency > 0) {
-                target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.GENERIC_BIG_FALL, SoundCategory.PLAYERS, 1, 0.7f);
+                target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.GENERIC_BIG_FALL, SoundSource.PLAYERS, 1, 0.7f);
             } else {
-                target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.9f);
+                target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 1, 0.9f);
             }
 
             if (result != AbilityUseResult.fail) {
                 if (slowDuration > 0) {
-                    target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, slowDuration, 1, false, true));
+                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, slowDuration, 1, false, true));
                 }
 
                 if (momentumEfficiency > 0) {
                     double velocity = momentumEfficiency;
                     velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
                     target.push(0, velocity, 0);
-                    target.addEffect(new EffectInstance(StunPotionEffect.instance, 40, 0, false, false));
+                    target.addEffect(new MobEffectInstance(StunPotionEffect.instance, 40, 0, false, false));
                 }
 
                 if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
-                    target.addEffect(new EffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
-                    RevengeTracker.removeEnemySynced((ServerPlayerEntity) attacker, target);
+                    target.addEffect(new MobEffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
+                    RevengeTracker.removeEnemySynced((ServerPlayer) attacker, target);
                 }
             }
 
             if (result == AbilityUseResult.crit) {
                 Random rand = target.getRandom();
-                CastOptional.cast(target.level, ServerWorld.class).ifPresent(world ->
+                CastOptional.cast(target.level, ServerLevel.class).ifPresent(world ->
                         world.sendParticles(ParticleTypes.CRIT,
                                 target.getX(), target.getY(), target.getZ(), 10,
                                 rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.5, rand.nextGaussian() * 0.3, 0.1f));

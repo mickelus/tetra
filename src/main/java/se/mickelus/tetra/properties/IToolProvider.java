@@ -1,8 +1,8 @@
 package se.mickelus.tetra.properties;
 
 import com.google.common.cache.Cache;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -66,7 +66,7 @@ public interface IToolProvider {
      * @param toolLevel The level of the used tool
      * @param consumeResources
      */
-    public default ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, PlayerEntity player, ToolType tool, int toolLevel,
+    public default ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, Player player, ToolType tool, int toolLevel,
             boolean consumeResources) {
         ItemStack result = targetStack.copy();
 
@@ -83,7 +83,7 @@ public interface IToolProvider {
      * @param toolLevel The level of the used tool
      * @param consumeResources
      */
-    public default ItemStack onActionConsume(ItemStack providerStack, ItemStack targetStack, PlayerEntity player, ToolType tool, int toolLevel,
+    public default ItemStack onActionConsume(ItemStack providerStack, ItemStack targetStack, Player player, ToolType tool, int toolLevel,
             boolean consumeResources) {
         ItemStack result = targetStack.copy();
 

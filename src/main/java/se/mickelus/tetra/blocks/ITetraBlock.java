@@ -1,14 +1,14 @@
 package se.mickelus.tetra.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
@@ -44,46 +44,46 @@ public interface ITetraBlock {
         registry.register(item);
     }
 
-    default boolean canProvideTools(World world, BlockPos pos, BlockPos targetPos) {
+    default boolean canProvideTools(Level world, BlockPos pos, BlockPos targetPos) {
         return false;
     }
 
-    default Collection<ToolType> getTools(World world, BlockPos pos, BlockState blockState) {
+    default Collection<ToolType> getTools(Level world, BlockPos pos, BlockState blockState) {
         return Collections.emptyList();
     }
 
-    default int getToolLevel(World world, BlockPos pos, BlockState blockState, ToolType toolType) {
+    default int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolType toolType) {
         return -1;
     }
 
-    default Map<ToolType, Integer> getToolLevels(World world, BlockPos pos, BlockState blockState) {
+    default Map<ToolType, Integer> getToolLevels(Level world, BlockPos pos, BlockState blockState) {
         return getTools(world, pos, blockState).stream()
                 .collect(Collectors.toMap(Function.identity(), toolType -> getToolLevel(world, pos, blockState, toolType)));
     }
 
-    default ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
-            PlayerEntity player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
+    default ItemStack onCraftConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
+            Player player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         return null;
     }
 
-    default ItemStack onActionConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+    default ItemStack onActionConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         return null;
     }
 
-    default boolean canUnlockSchematics(World world, BlockPos pos, BlockPos targetPos) {
+    default boolean canUnlockSchematics(Level world, BlockPos pos, BlockPos targetPos) {
         return false;
     }
 
-    default ResourceLocation[] getSchematics(World world, BlockPos pos, BlockState blockState) {
+    default ResourceLocation[] getSchematics(Level world, BlockPos pos, BlockState blockState) {
         return new ResourceLocation[0];
     }
 
-    default boolean canUnlockCraftingEffects(World world, BlockPos pos, BlockPos targetPos) {
+    default boolean canUnlockCraftingEffects(Level world, BlockPos pos, BlockPos targetPos) {
         return false;
     }
 
-    default ResourceLocation[] getCraftingEffects(World world, BlockPos pos, BlockState blockState) {
+    default ResourceLocation[] getCraftingEffects(Level world, BlockPos pos, BlockState blockState) {
         return new ResourceLocation[0];
     }
 }

@@ -3,33 +3,33 @@ package se.mickelus.tetra.blocks.rack;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.util.NonNullFunction;
@@ -49,12 +49,23 @@ import se.mickelus.tetra.util.TileEntityOptional;
 import javax.annotation.Nullable;
 import java.util.*;
 
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+
 public class RackBlock extends TetraWaterloggedBlock {
     public static final String unlocalizedName = "rack";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static RackBlock instance;
 
-    public static final DirectionProperty facingProp = HorizontalBlock.FACING;
+    public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
 
     private static final Map<Direction, VoxelShape> shapes = Maps.newEnumMap(ImmutableMap.of(
             Direction.NORTH, Block.box(0.0, 11.0, 14.0, 16.0, 14.0, 16.0),
@@ -79,7 +90,7 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(facingProp);
     }
@@ -91,16 +102,16 @@ public class RackBlock extends TetraWaterloggedBlock {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+    public BlockEntity createTileEntity(final BlockState state, final BlockGetter world) {
         return new RackTile();
     }
 
     @Override
-    public ActionResultType use(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState blockState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         Direction facing = blockState.getValue(facingProp);
-        AxisAlignedBB boundingBox = blockState.getShape(player.level, pos).bounds();
+        AABB boundingBox = blockState.getShape(player.level, pos).bounds();
         if (facing == hit.getDirection()) {
-            Vector3d hitVec = hit.getLocation();
+            Vec3 hitVec = hit.getLocation();
             int slot = getHitX(facing, boundingBox,
                     (float) hitVec.x - pos.getX(),
                     (float) hitVec.y - pos.getY(),
@@ -110,13 +121,13 @@ public class RackBlock extends TetraWaterloggedBlock {
             TileEntityOptional.from(world, pos, RackTile.class)
                     .ifPresent(tile -> tile.slotInteract(slot, player, hand));
 
-            return ActionResultType.sidedSuccess(world.isClientSide);
+            return InteractionResult.sidedSuccess(world.isClientSide);
         }
 
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 
-    private static double getHitX(Direction facing, AxisAlignedBB boundingBox, double hitX, double hitY, double hitZ) {
+    private static double getHitX(Direction facing, AABB boundingBox, double hitX, double hitY, double hitZ) {
         switch (facing) {
             case NORTH:
                 return boundingBox.maxX - hitX;
@@ -131,7 +142,7 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         if (Direction.Axis.Y != context.getClickedFace().getAxis()) {
             return Optional.of(defaultBlockState().setValue(facingProp, context.getClickedFace()))
                     .filter(blockState -> blockState.canSurvive(context.getLevel(), context.getClickedPos()))
@@ -142,22 +153,22 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         return worldIn.getBlockState(pos.relative(state.getValue(facingProp).getOpposite())).getMaterial().isSolid();
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         dropBlockInventory(this, world, pos, newState);
     }
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         return facing.getOpposite() == stateIn.getValue(facingProp) && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : stateIn;
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return shapes.get(state.getValue(facingProp));
     }
 
@@ -173,23 +184,23 @@ public class RackBlock extends TetraWaterloggedBlock {
 
 
     @Override
-    public void appendHoverText(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip,
-            final ITooltipFlag advanced) {
+    public void appendHoverText(final ItemStack stack, @Nullable final BlockGetter world, final List<Component> tooltip,
+            final TooltipFlag advanced) {
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
-            tooltip.add(new TranslationTextComponent("block.tetra.rack.description").withStyle(TextFormatting.GRAY));
+            tooltip.add(new TranslatableComponent("block.tetra.rack.description").withStyle(ChatFormatting.GRAY));
         } else {
             tooltip.add(Tooltips.expand);
         }
     }
 
     @Override
-    public boolean canProvideTools(World world, BlockPos pos, BlockPos targetPos) {
+    public boolean canProvideTools(Level world, BlockPos pos, BlockPos targetPos) {
         return true;
     }
 
     @Override
-    public Collection<ToolType> getTools(World world, BlockPos pos, BlockState blockState) {
+    public Collection<ToolType> getTools(Level world, BlockPos pos, BlockState blockState) {
         return Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
@@ -199,7 +210,7 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public int getToolLevel(World world, BlockPos pos, BlockState blockState, ToolType toolType) {
+    public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolType toolType) {
         return Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
@@ -209,17 +220,17 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
-            PlayerEntity player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
+    public ItemStack onCraftConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
+            Player player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
 
 
-        Optional<IInventory> optional = Optional.ofNullable(world.getBlockEntity(pos))
+        Optional<Container> optional = Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new);
 
         if (optional.isPresent() && player != null) {
-            IInventory inventory = optional.orElse(null);
+            Container inventory = optional.orElse(null);
             ItemStack providerStack = PropertyHelper.getInventoryProvidingItemStack(inventory, requiredTool, requiredLevel);
 
             if (!providerStack.isEmpty()) {
@@ -236,7 +247,7 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public ItemStack onActionConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
+    public ItemStack onActionConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
         Optional<ItemHandlerWrapper> optional = Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
@@ -244,7 +255,7 @@ public class RackBlock extends TetraWaterloggedBlock {
                 .map(ItemHandlerWrapper::new);
 
         if (optional.isPresent() && player != null) {
-            IInventory inventory = optional.orElse(null);
+            Container inventory = optional.orElse(null);
             ItemStack providerStack = PropertyHelper.getInventoryProvidingItemStack(inventory, requiredTool, requiredLevel);
 
             if (!providerStack.isEmpty()) {
@@ -269,22 +280,22 @@ public class RackBlock extends TetraWaterloggedBlock {
      * @param inventory
      * @param providerStack
      */
-    private void spawnConsumeParticle(World world, BlockPos pos, BlockState blockState, IInventory inventory, ItemStack providerStack) {
-        if (world instanceof ServerWorld) {
+    private void spawnConsumeParticle(Level world, BlockPos pos, BlockState blockState, Container inventory, ItemStack providerStack) {
+        if (world instanceof ServerLevel) {
             Direction facing = blockState.getValue(RackBlock.facingProp);
-            Vector3d particlePos = Vector3d.atLowerCornerOf(pos).add(0.5f, 0.75f, 0.5f).add(Vector3d.atLowerCornerOf(facing.getNormal()).scale(-0.3));
+            Vec3 particlePos = Vec3.atLowerCornerOf(pos).add(0.5f, 0.75f, 0.5f).add(Vec3.atLowerCornerOf(facing.getNormal()).scale(-0.3));
 
             ItemStack firstSlot = inventory.getItem(0);
             firstSlot = Optional.of(ItemUpgradeRegistry.instance.getReplacement(firstSlot))
                     .filter(itemStack -> !itemStack.isEmpty())
                     .orElse(firstSlot);
             if (ItemStack.matches(providerStack, firstSlot)) {
-                particlePos = particlePos.add(Vector3d.atLowerCornerOf(facing.getCounterClockWise().getNormal()).scale(-0.25));
+                particlePos = particlePos.add(Vec3.atLowerCornerOf(facing.getCounterClockWise().getNormal()).scale(-0.25));
             } else {
-                particlePos = particlePos.add(Vector3d.atLowerCornerOf(facing.getCounterClockWise().getNormal()).scale(0.25));
+                particlePos = particlePos.add(Vec3.atLowerCornerOf(facing.getCounterClockWise().getNormal()).scale(0.25));
             }
 
-            ((ServerWorld) world).sendParticles(new RedstoneParticleData(0.0f, 0.66f, 0.66f, 1f), particlePos.x(), particlePos.y(), particlePos.z(), 2, 0, 0, 0, 0f);
+            ((ServerLevel) world).sendParticles(new DustParticleOptions(0.0f, 0.66f, 0.66f, 1f), particlePos.x(), particlePos.y(), particlePos.z(), 2, 0, 0, 0, 0f);
         }
     }
 }

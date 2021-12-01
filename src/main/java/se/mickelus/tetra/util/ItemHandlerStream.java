@@ -1,9 +1,9 @@
 package se.mickelus.tetra.util;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -15,11 +15,11 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 public class ItemHandlerStream {
-    public static Stream<ItemStack> of(IBlockReader world, BlockPos pos) {
+    public static Stream<ItemStack> of(BlockGetter world, BlockPos pos) {
         return of(world.getBlockEntity(pos));
     }
 
-    public static Stream<ItemStack> of(TileEntity tileEntity) {
+    public static Stream<ItemStack> of(BlockEntity tileEntity) {
         return Optional.ofNullable(tileEntity)
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())

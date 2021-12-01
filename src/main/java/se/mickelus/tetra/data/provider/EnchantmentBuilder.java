@@ -2,10 +2,10 @@ package se.mickelus.tetra.data.provider;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.ChatFormatting;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 
@@ -86,7 +86,7 @@ public class EnchantmentBuilder {
         return getImprovementKey();
     }
 
-    public EnchantmentType getEnchantmentType() {
+    public EnchantmentCategory getEnchantmentType() {
         return enchantment.category;
     }
 
@@ -225,7 +225,7 @@ public class EnchantmentBuilder {
         if (existingLocalizations.has(key)) {
             name = existingLocalizations.get(key).getAsString();
             if (isCurse) {
-                result.put("tetra.improvement." + getImprovementKey() + ".name", TextFormatting.DARK_PURPLE + name);
+                result.put("tetra.improvement." + getImprovementKey() + ".name", ChatFormatting.DARK_PURPLE + name);
             } else {
                 result.put("tetra.improvement." + getImprovementKey() + ".name", name);
             }
@@ -241,7 +241,7 @@ public class EnchantmentBuilder {
 
         if (canDestabilize()) {
             if (name != null) {
-                result.put("tetra.improvement." + getDestabilizationKey() + ".name", TextFormatting.DARK_PURPLE + "Destabilized: " + name);
+                result.put("tetra.improvement." + getDestabilizationKey() + ".name", ChatFormatting.DARK_PURPLE + "Destabilized: " + name);
                 result.put("tetra.improvement." + getDestabilizationKey() + ".description", "Reduces the effect of the " + name + " enchantment");
             } else {
                 result.put("tetra.improvement." + getDestabilizationKey() + ".name", "");

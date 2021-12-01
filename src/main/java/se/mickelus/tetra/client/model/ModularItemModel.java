@@ -3,13 +3,13 @@ package se.mickelus.tetra.client.model;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.util.math.vector.TransformationMatrix;
+import com.mojang.math.Transformation;
 import net.minecraft.client.renderer.model.*;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.IModelConfiguration;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.client.model.geometry.IModelGeometry;
@@ -21,6 +21,15 @@ import se.mickelus.tetra.module.data.ModuleModel;
 import java.util.*;
 import java.util.function.Function;
 
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelState;
+import net.minecraft.client.resources.model.UnbakedModel;
+
 /**
  * Forge reimplementation of vanilla {@link ItemModelGenerator}, i.e. builtin/generated models,
  * with the following changes:
@@ -31,18 +40,18 @@ import java.util.function.Function;
  */
 public final class ModularItemModel implements IModelGeometry<ModularItemModel> {
 
-    private ItemCameraTransforms cameraTransforms;
+    private ItemTransforms cameraTransforms;
 
-    private Map<String, ItemCameraTransforms> transformVariants = Collections.emptyMap();
+    private Map<String, ItemTransforms> transformVariants = Collections.emptyMap();
 
     ModularOverrideList overrideList;
 
-    public ModularItemModel(ItemCameraTransforms cameraTransforms, Map<String, ItemCameraTransforms> transformVariants) {
+    public ModularItemModel(ItemTransforms cameraTransforms, Map<String, ItemTransforms> transformVariants) {
         this(cameraTransforms);
         this.transformVariants = transformVariants != null ? transformVariants : Collections.emptyMap();
     }
 
-    public ModularItemModel(ItemCameraTransforms cameraTransforms) {
+    public ModularItemModel(ItemTransforms cameraTransforms) {
         this.cameraTransforms = cameraTransforms;
     }
 
@@ -51,7 +60,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
     }
 
     @Override
-    public Collection<RenderMaterial> getTextures(IModelConfiguration owner, Function<ResourceLocation, IUnbakedModel> modelGetter,
+    public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter,
             Set<Pair<String, String>> missingTextureErrors) {
         return Collections.emptyList();
     }
@@ -67,25 +76,25 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
      * @return
      */
     @Override
-    public IBakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<RenderMaterial, TextureAtlasSprite> spriteGetter,
-            IModelTransform modelTransform, ItemOverrideList overrides, ResourceLocation modelLocation) {
+    public BakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter,
+            ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
 
         overrideList = new ModularOverrideList(this, owner, bakery, spriteGetter, modelTransform, modelLocation);
         return new BakedWrapper(this, owner, bakery, spriteGetter, modelTransform, modelLocation, overrideList);
     }
 
-    public IBakedModel realBake(List<ModuleModel> moduleModels, String transformVariant, IModelConfiguration owner, ModelBakery bakery,
-            Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ItemOverrideList overrides,
+    public BakedModel realBake(List<ModuleModel> moduleModels, String transformVariant, IModelConfiguration owner, ModelBakery bakery,
+            Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides,
             ResourceLocation modelLocation) {
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
         TextureAtlasSprite particle = null;
 
-        TransformationMatrix rotationTransform = modelTransform.getRotation();
-        ImmutableMap<ItemCameraTransforms.TransformType, TransformationMatrix> transforms = PerspectiveMapWrapper.getTransforms(modelTransform);
+        Transformation rotationTransform = modelTransform.getRotation();
+        ImmutableMap<ItemTransforms.TransformType, Transformation> transforms = PerspectiveMapWrapper.getTransforms(modelTransform);
         for(int i = 0; i < moduleModels.size(); i++) {
             ModuleModel model = moduleModels.get(i);
-            TextureAtlasSprite sprite = spriteGetter.apply(new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, model.location));
+            TextureAtlasSprite sprite = spriteGetter.apply(new Material(TextureAtlas.LOCATION_BLOCKS, model.location));
             builder.addAll(getQuadsForSprite(i, sprite, rotationTransform, model.tint));
 
             particle = sprite;
@@ -95,26 +104,26 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
                 getCameraTransforms(transformVariant));
     }
 
-    protected ItemCameraTransforms getCameraTransforms(String transformVariant) {
+    protected ItemTransforms getCameraTransforms(String transformVariant) {
         if (transformVariant != null && transformVariants.containsKey(transformVariant)) {
-            ItemCameraTransforms variant = transformVariants.get(transformVariant);
+            ItemTransforms variant = transformVariants.get(transformVariant);
 
-            return new ItemCameraTransforms(
-            variant.hasTransform(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND) ?
+            return new ItemTransforms(
+            variant.hasTransform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND) ?
                 variant.thirdPersonLeftHand : cameraTransforms.thirdPersonLeftHand,
-            variant.hasTransform(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND) ?
+            variant.hasTransform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND) ?
                 variant.thirdPersonRightHand : cameraTransforms.thirdPersonRightHand,
-            variant.hasTransform(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND) ?
+            variant.hasTransform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND) ?
                 variant.firstPersonLeftHand : cameraTransforms.firstPersonLeftHand,
-            variant.hasTransform(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) ?
+            variant.hasTransform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) ?
                 variant.firstPersonRightHand : cameraTransforms.firstPersonRightHand,
-            variant.hasTransform(ItemCameraTransforms.TransformType.HEAD) ?
+            variant.hasTransform(ItemTransforms.TransformType.HEAD) ?
                 variant.head : cameraTransforms.head,
-            variant.hasTransform(ItemCameraTransforms.TransformType.GUI) ?
+            variant.hasTransform(ItemTransforms.TransformType.GUI) ?
                 variant.gui : cameraTransforms.gui,
-            variant.hasTransform(ItemCameraTransforms.TransformType.GROUND) ?
+            variant.hasTransform(ItemTransforms.TransformType.GROUND) ?
                 variant.ground : cameraTransforms.ground,
-            variant.hasTransform(ItemCameraTransforms.TransformType.FIXED) ?
+            variant.hasTransform(ItemTransforms.TransformType.FIXED) ?
                 variant.fixed : cameraTransforms.fixed
             );
         }
@@ -122,7 +131,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
         return cameraTransforms;
     }
 
-    public static List<BakedQuad> getQuadsForSprite(int tintIndex, TextureAtlasSprite sprite, TransformationMatrix transform, int color) {
+    public static List<BakedQuad> getQuadsForSprite(int tintIndex, TextureAtlasSprite sprite, Transformation transform, int color) {
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
         int uMax = sprite.getWidth();
@@ -158,7 +167,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
     }
 
 
-    private static BakedQuad buildSideQuad(TransformationMatrix transform, Direction side, int tintIndex,
+    private static BakedQuad buildSideQuad(Transformation transform, Direction side, int tintIndex,
             int color, TextureAtlasSprite sprite, int u, int v, int size) {
 
         final float eps = 1e-2f;
@@ -220,7 +229,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
         return side.getAxis() == Direction.Axis.Y ? side.getOpposite() : side;
     }
 
-    private static BakedQuad buildQuad(TransformationMatrix transform, Direction side, TextureAtlasSprite sprite, int tintIndex, int color,
+    private static BakedQuad buildQuad(Transformation transform, Direction side, TextureAtlasSprite sprite, int tintIndex, int color,
             float x0, float y0, float z0, float u0, float v0,
             float x1, float y1, float z1, float u1, float v1,
             float x2, float y2, float z2, float u2, float v2,

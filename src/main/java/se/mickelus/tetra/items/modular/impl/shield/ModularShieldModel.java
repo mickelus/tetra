@@ -1,27 +1,27 @@
 package se.mickelus.tetra.items.modular.impl.shield;
 
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.ShieldModel;
-import net.minecraft.client.renderer.model.Model;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.model.Model;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ModularShieldModel extends Model {
-    private final ModelRenderer towerPlate;
+    private final ModelPart towerPlate;
 
-    private final ModelRenderer heaterPlate;
+    private final ModelPart heaterPlate;
 
-    private final ModelRenderer bucklerPlate;
+    private final ModelPart bucklerPlate;
 
-    private final ModelRenderer grip;
-    private ModelRenderer straps;
+    private final ModelPart grip;
+    private ModelPart straps;
 
-    private ModelRenderer boss;
+    private ModelPart boss;
 
     public static final String towerModelType = "shield_tower";
     public static final String heaterModelType = "shield_heater";
@@ -41,30 +41,30 @@ public class ModularShieldModel extends Model {
         texWidth = 32;
         texHeight = 32;
 
-        towerPlate = new ModelRenderer(this, 0, 0);
+        towerPlate = new ModelPart(this, 0, 0);
         towerPlate.addBox(-6.0F, -11.0F, -2.0F, 12.0F, 22.0F, 1.0F, 0.0F);
 
-        heaterPlate = new ModelRenderer(this, 0, 0);
+        heaterPlate = new ModelPart(this, 0, 0);
         heaterPlate.addBox(-7.0F, -8.0F, -2.0F, 14.0F, 16.0F, 1.0F, 0.0F);
 
-        bucklerPlate = new ModelRenderer(this, 0, 0);
+        bucklerPlate = new ModelPart(this, 0, 0);
         bucklerPlate.addBox(-5.0F, -5.0F, -2.0F, 10.0F, 10.0F, 1.0F, 0.0F);
         bucklerPlate.zRot = (float) (- Math.PI / 4);
 
-        grip = new ModelRenderer(this, 0, 0);
+        grip = new ModelPart(this, 0, 0);
         grip.addBox(-1.0F, -3.0F, -1.0F, 2.0F, 6.0F, 6.0F, 0.0F);
 
-        straps = new ModelRenderer(this, 0, 0);
+        straps = new ModelPart(this, 0, 0);
         straps.addBox(2, -3, -1, 1, 6, 1, 0);
         straps.addBox(-3, -3, -1, 1, 6, 1, 0);
 
-        boss = new ModelRenderer(this, 0, 0);
+        boss = new ModelPart(this, 0, 0);
         boss.addBox(-5.0F, -5.0F, -2.01F, 10.0F, 10.0F, 1.0F, 0.0F);
 
         bannerModel = new ModularShieldBannerModel();
     }
 
-    public ModelRenderer getModel(String modelType) {
+    public ModelPart getModel(String modelType) {
         switch (modelType) {
             case towerModelType:
                 return towerPlate;
@@ -89,7 +89,7 @@ public class ModularShieldModel extends Model {
         return null;
     }
 
-    public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {
         this.towerPlate.render(matrixStack, vertexBuilder, light, overlay, red, green, blue, alpha);
         this.grip.render(matrixStack, vertexBuilder, light, overlay, red, green, blue, alpha);
     }

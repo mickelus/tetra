@@ -1,17 +1,17 @@
 package se.mickelus.tetra.trades;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.MerchantOffer;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.ItemLike;
 import se.mickelus.tetra.items.forged.ItemMetalScrap;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-class ItemsForEmeraldsAndScrapTrade implements VillagerTrades.ITrade {
+class ItemsForEmeraldsAndScrapTrade implements VillagerTrades.ItemListing {
     private final ItemStack sellingItem;
     private final int sellingItemCount;
     private final int emeraldCount;
@@ -20,7 +20,7 @@ class ItemsForEmeraldsAndScrapTrade implements VillagerTrades.ITrade {
     private final int xpValue;
     private final float priceMultiplier;
 
-    public ItemsForEmeraldsAndScrapTrade(IItemProvider sellingItem, int sellingItemCount, int emeraldCount, int scrapCount, int maxUses) {
+    public ItemsForEmeraldsAndScrapTrade(ItemLike sellingItem, int sellingItemCount, int emeraldCount, int scrapCount, int maxUses) {
         this.sellingItem = new ItemStack(sellingItem);
         this.sellingItemCount = sellingItemCount;
         this.emeraldCount = emeraldCount;

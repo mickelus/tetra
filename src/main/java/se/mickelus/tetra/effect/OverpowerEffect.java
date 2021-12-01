@@ -2,19 +2,19 @@ package se.mickelus.tetra.effect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
@@ -35,12 +35,12 @@ public class OverpowerEffect extends ChargedAbilityEffect {
     public static final OverpowerEffect instance = new OverpowerEffect();
 
     OverpowerEffect() {
-        super(10, 1f, 10, 1, ItemEffect.overpower, TargetRequirement.none, UseAction.SPEAR, "raised");
+        super(10, 1f, 10, 1, ItemEffect.overpower, TargetRequirement.none, UseAnim.SPEAR, "raised");
     }
 
 
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack,
-            @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vector3d hitVec, int chargedTicks) {
+    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack,
+            @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vec3 hitVec, int chargedTicks) {
         super.perform(attacker, hand, item, itemStack, target, targetPos, hitVec, chargedTicks);
 
         boolean isDefensive = isDefensive(item, itemStack, hand);
@@ -52,7 +52,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         if (!attacker.level.isClientSide && !isDefensive) {
             int currentAmp = Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
-                    .map(EffectInstance::getAmplifier)
+                    .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
 
             int newAmp = 1;
@@ -66,7 +66,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 newAmp--;
 
                 Random rand = attacker.getCommandSenderWorld().getRandom();
-                ((ServerWorld) attacker.getCommandSenderWorld()).sendParticles(ParticleTypes.HAPPY_VILLAGER,
+                ((ServerLevel) attacker.getCommandSenderWorld()).sendParticles(ParticleTypes.HAPPY_VILLAGER,
                         attacker.getX(), attacker.getY() + attacker.getBbHeight() / 2, attacker.getZ(), 10,
                         rand.nextGaussian() * 0.3, rand.nextGaussian() * attacker.getBbHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
             }
@@ -84,7 +84,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 if (echoLevel > 0) {
                     delayExhaustion(attacker, item, itemStack, (int) (exhaustDuration * 20), newAmp);
                 } else {
-                    attacker.addEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20),
+                    attacker.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20),
                             newAmp + currentAmp, false, true));
                 }
             }
@@ -111,7 +111,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
     }
 
     @Override
-    public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
+    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
         boolean isDefensive = isDefensive(item, itemStack, hand);
         int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
         int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
@@ -135,7 +135,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.1f, 0.1f);
         if (result != AbilityUseResult.fail) {
             int currentAmplifier = Optional.ofNullable(target.getEffect(ExhaustedPotionEffect.instance))
-                    .map(EffectInstance::getAmplifier)
+                    .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
 
             int amplifier = currentAmplifier + 2;
@@ -155,7 +155,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 velocity += momentumEfficiency * (currentAmplifier + 1);
 
                 velocity += momentumEfficiency * Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
-                        .map(EffectInstance::getAmplifier)
+                        .map(MobEffectInstance::getAmplifier)
                         .map(amp -> amp + 1)
                         .orElse(0);
 
@@ -173,11 +173,11 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
             }
 
-            target.addEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), amplifier, false, true));
+            target.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), amplifier, false, true));
 
-            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1, 0.8f);
         } else {
-            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundSource.PLAYERS, 1, 0.8f);
         }
 
 
@@ -185,7 +185,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
         item.applyDamage(2, itemStack, attacker);
     }
 
-    private void delayExhaustion(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, int duration, int amplifier) {
+    private void delayExhaustion(Player attacker, ItemModularHandheld item, ItemStack itemStack, int duration, int amplifier) {
         int delay = getChargeTime(item, itemStack) + getCooldown(item, itemStack) + item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
 
         try {
@@ -200,9 +200,9 @@ public class OverpowerEffect extends ChargedAbilityEffect {
             DelayData data = delayCache.getIfPresent(attacker.getId());
             if (attacker.isAlive() && attacker.level != null && data != null && attacker.level.getGameTime() > data.timestamp) {
                 int currentAmp = Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
-                        .map(EffectInstance::getAmplifier)
+                        .map(MobEffectInstance::getAmplifier)
                         .orElse(-1);
-                attacker.addEffect(new EffectInstance(ExhaustedPotionEffect.instance, duration, currentAmp + data.amplifier, false, true));
+                attacker.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, duration, currentAmp + data.amplifier, false, true));
 
                 delayCache.invalidate(attacker.getId());
             }

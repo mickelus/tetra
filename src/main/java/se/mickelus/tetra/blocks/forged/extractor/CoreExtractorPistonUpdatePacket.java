@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.forged.extractor;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import se.mickelus.tetra.network.BlockPosPacket;
 import se.mickelus.tetra.util.TileEntityOptional;
 
@@ -18,19 +18,19 @@ public class CoreExtractorPistonUpdatePacket extends BlockPosPacket {
     }
 
     @Override
-    public void toBytes(PacketBuffer buffer) {
+    public void toBytes(FriendlyByteBuf buffer) {
         super.toBytes(buffer);
         buffer.writeLong(timestamp);
     }
 
     @Override
-    public void fromBytes(PacketBuffer buffer) {
+    public void fromBytes(FriendlyByteBuf buffer) {
         super.fromBytes(buffer);
         timestamp = buffer.readLong();
     }
 
     @Override
-    public void handle(PlayerEntity player) {
+    public void handle(Player player) {
         TileEntityOptional.from(player.level, pos, CoreExtractorPistonTile.class)
                 .ifPresent(tile -> tile.setEndTime(timestamp));
     }

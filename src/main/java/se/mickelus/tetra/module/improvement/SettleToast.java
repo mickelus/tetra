@@ -1,15 +1,15 @@
 package se.mickelus.tetra.module.improvement;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.gui.toasts.IToast;
-import net.minecraft.client.gui.toasts.ToastGui;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
+import com.mojang.blaze3d.platform.Lighting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
@@ -21,9 +21,9 @@ import se.mickelus.tetra.util.CastOptional;
 import java.util.Optional;
 
 
-import net.minecraft.client.gui.toasts.IToast.Visibility;
+import net.minecraft.client.gui.components.toasts.Toast.Visibility;
 
-public class SettleToast implements IToast {
+public class SettleToast implements Toast {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/toasts.png");
 
     private boolean hasPlayedSound = false;
@@ -50,7 +50,7 @@ public class SettleToast implements IToast {
     }
 
     @Override
-    public Visibility render(MatrixStack matrixStack, ToastGui toastGui, long delta) {
+    public Visibility render(PoseStack matrixStack, ToastComponent toastGui, long delta) {
 
 
         if (itemStack != null) {
@@ -62,19 +62,19 @@ public class SettleToast implements IToast {
                 this.hasPlayedSound = true;
 
                 toastGui.getMinecraft().getSoundManager()
-                        .play(SimpleSound.forUI(SoundEvents.EXPERIENCE_ORB_PICKUP, 2F, 0.7F));
+                        .play(SimpleSoundInstance.forUI(SoundEvents.EXPERIENCE_ORB_PICKUP, 2F, 0.7F));
             }
 
             if (glyph != null) {
                 toastGui.blit(matrixStack, 20, 14, 160, 0, 15, 15);
-                glyph.draw(new MatrixStack(), 19, 14, 260, 43, -1, -1, 1);
+                glyph.draw(new PoseStack(), 19, 14, 260, 43, -1, -1, 1);
             }
 
             toastGui.getMinecraft().font.draw(matrixStack, I18n.get(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchematicRarity.hone.tint);
             toastGui.getMinecraft().font.draw(matrixStack, toastGui.getMinecraft().font.plainSubstrByWidth(moduleName, 118), 37, 18, GuiColors.muted);
 
 
-            RenderHelper.turnBackOn();
+            Lighting.turnBackOn();
             toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(null, itemStack, 8, 8);
 
             return delta > 5000 ? Visibility.HIDE : Visibility.SHOW;

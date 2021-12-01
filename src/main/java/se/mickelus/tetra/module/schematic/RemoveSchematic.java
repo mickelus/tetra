@@ -1,9 +1,9 @@
 package se.mickelus.tetra.module.schematic;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.Mth;
 import net.minecraftforge.common.ToolType;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -93,7 +93,7 @@ public class RemoveSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean canApplyUpgrade(PlayerEntity player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
+    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
         return !isIntegrityViolation(player, itemStack, materials, slot)
                 && checkTools(itemStack, materials, availableTools);
     }
@@ -104,7 +104,7 @@ public class RemoveSchematic extends BaseSchematic {
     }
 
     @Override
-    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, PlayerEntity player) {
+    public ItemStack applyUpgrade(final ItemStack itemStack, final ItemStack[] materials, boolean consumeMaterials, String slot, Player player) {
         ItemStack upgradedStack = itemStack.copy();
         IModularItem item = (IModularItem) itemStack.getItem();
 
@@ -114,7 +114,7 @@ public class RemoveSchematic extends BaseSchematic {
             durabilityFactor = upgradedStack.getDamageValue() * 1f / upgradedStack.getMaxDamage();
         }
 
-        float honingFactor = MathHelper.clamp(1f * item.getHoningProgress(upgradedStack) / item.getHoningLimit(upgradedStack), 0, 1);
+        float honingFactor = Mth.clamp(1f * item.getHoningProgress(upgradedStack) / item.getHoningLimit(upgradedStack), 0, 1);
 
         ItemModule previousModule = item.getModuleFromSlot(upgradedStack, slot);
         if (previousModule != null) {

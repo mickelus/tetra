@@ -2,12 +2,12 @@ package se.mickelus.tetra.module;
 
 
 import com.google.common.collect.Multimap;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -43,7 +43,7 @@ public abstract class ItemModuleMajor extends ItemModule {
             return;
         }
 
-        CompoundNBT tag = itemStack.getOrCreateTag();
+        CompoundTag tag = itemStack.getOrCreateTag();
         int settleLevel = getImprovementLevel(itemStack, settleImprovement);
 
         if (settleLevel < settleMaxCount && (getImprovementLevel(itemStack, arrestedImprovement) == -1)) {
@@ -55,8 +55,8 @@ public abstract class ItemModuleMajor extends ItemModule {
                 addImprovement(itemStack, settleImprovement, settleLevel == -1 ? 1 : settleLevel + 1);
                 tag.remove(settleProgressKey);
 
-                if (entity instanceof ServerPlayerEntity) {
-                    TetraMod.packetHandler.sendTo(new SettlePacket(itemStack, getSlot()), (ServerPlayerEntity) entity);
+                if (entity instanceof ServerPlayer) {
+                    TetraMod.packetHandler.sendTo(new SettlePacket(itemStack, getSlot()), (ServerPlayer) entity);
                 }
             }
         }
@@ -119,7 +119,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     public ImprovementData getImprovement(ItemStack itemStack, String improvementKey) {
         if (itemStack.hasTag()) {
-            CompoundNBT tag = itemStack.getTag();
+            CompoundTag tag = itemStack.getTag();
             return Arrays.stream(improvements)
                     .filter(improvement -> improvementKey.equals(improvement.key))
                     .filter(improvement -> tag.contains(slotTagKey + ":" + improvement.key))
@@ -133,7 +133,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     public ImprovementData[] getImprovements(ItemStack itemStack) {
         if (itemStack.hasTag()) {
-            CompoundNBT tag = itemStack.getTag();
+            CompoundTag tag = itemStack.getTag();
             return Arrays.stream(improvements)
                     .filter(improvement -> tag.contains(slotTagKey + ":" + improvement.key))
                     .filter(improvement -> improvement.level == tag.getInt(slotTagKey + ":" + improvement.key))
@@ -227,7 +227,7 @@ public abstract class ItemModuleMajor extends ItemModule {
         ItemStack[] salvage = super.removeModule(targetStack);
 
         if (targetStack.hasTag()) {
-            CompoundNBT tag = targetStack.getTag();
+            CompoundTag tag = targetStack.getTag();
             Arrays.stream(improvements)
                     .map(improvement -> slotTagKey + ":" + improvement.key)
                     .forEach(tag::remove);

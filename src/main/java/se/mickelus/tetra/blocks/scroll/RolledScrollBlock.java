@@ -1,15 +1,15 @@
 package se.mickelus.tetra.blocks.scroll;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.util.RotationHelper;
@@ -27,11 +27,11 @@ public class RolledScrollBlock extends ScrollBlock {
             Block.box(6.0, 0.0, 1.0, 9.0, 3.0, 15.0),
             Block.box(4.0, 0.0, 1.0, 11.0, 3.0, 15.0),
             Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-            VoxelShapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+            Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
                     Block.box(8.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
-            VoxelShapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+            Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
                     Block.box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
-            VoxelShapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+            Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
                     Block.box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0),
                     Block.box(6.0, 6.0, 1.0, 9.0, 9.0, 15.0))
     };
@@ -55,12 +55,12 @@ public class RolledScrollBlock extends ScrollBlock {
 
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
         int index = TileEntityOptional.from(worldIn, pos, ScrollTile.class)
                 .map(ScrollTile::getScrolls)
                 .map(scrolls -> scrolls.length - 1)
-                .map(c -> MathHelper.clamp(c, 0, 5))
+                .map(c -> Mth.clamp(c, 0, 5))
                 .orElse(0);
 
         return shapes.get(facing)[index];
