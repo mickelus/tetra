@@ -50,36 +50,36 @@ public class HammerHeadTile extends TileEntity {
             unjamTime = System.currentTimeMillis();
         }
 
-        world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
-        markDirty();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        setChanged();
     }
 
 
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
+        return new SUpdateTileEntityPacket(this.worldPosition, 0, this.getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return write(super.getUpdateTag());
+        return save(super.getUpdateTag());
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(getBlockState(), pkt.getNbtCompound());
+        this.load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compound) {
-        super.read(blockState, compound);
+    public void load(BlockState blockState, CompoundNBT compound) {
+        super.load(blockState, compound);
         this.jammed = compound.contains(jamKey) && compound.getBoolean(jamKey);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
 
         if (isJammed()) {
             compound.putBoolean(jamKey, true);

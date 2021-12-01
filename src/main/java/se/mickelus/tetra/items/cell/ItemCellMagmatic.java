@@ -21,6 +21,8 @@ import java.util.List;
 
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
+import net.minecraft.item.Item.Properties;
+
 public class ItemCellMagmatic extends TetraItem {
     private static final String unlocalizedName = "magmatic_cell";
 
@@ -33,20 +35,20 @@ public class ItemCellMagmatic extends TetraItem {
 
     public ItemCellMagmatic() {
         super(new Properties()
-                .maxStackSize(1)
-                .maxDamage(maxCharge)
-                .group(TetraItemGroup.instance));
+                .stacksTo(1)
+                .durability(maxCharge)
+                .tab(TetraItemGroup.instance));
 
         setRegistryName(unlocalizedName);
     }
 
     @Override
     public void clientInit() {
-        ItemModelsProperties.registerProperty(this, new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity) -> getCharge(itemStack) > 0 ? 1 : 0);
+        ItemModelsProperties.register(this, new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity) -> getCharge(itemStack) > 0 ? 1 : 0);
     }
 
     @Override
-    public void addInformation(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
+    public void appendHoverText(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
         int charge = getCharge(stack);
 
         TextComponent chargeLine = new TranslationTextComponent("item.tetra.magmatic_cell.charge");
@@ -67,27 +69,27 @@ public class ItemCellMagmatic extends TetraItem {
     }
 
     @Override
-    public void fillItemGroup(final ItemGroup itemGroup, final NonNullList<ItemStack> itemList) {
-        if (isInGroup(itemGroup)) {
+    public void fillItemCategory(final ItemGroup itemGroup, final NonNullList<ItemStack> itemList) {
+        if (allowdedIn(itemGroup)) {
             itemList.add(new ItemStack(this));
 
             ItemStack emptyStack = new ItemStack(this);
-            emptyStack.setDamage(maxCharge);
+            emptyStack.setDamageValue(maxCharge);
             itemList.add(emptyStack);
         }
     }
 
     public int getCharge(ItemStack itemStack) {
-        return itemStack.getMaxDamage() - itemStack.getDamage();
+        return itemStack.getMaxDamage() - itemStack.getDamageValue();
     }
 
     public int drainCharge(ItemStack itemStack, int amount) {
-        if (itemStack.getDamage() + amount < itemStack.getMaxDamage()) {
-            setDamage(itemStack, itemStack.getDamage() + amount);
+        if (itemStack.getDamageValue() + amount < itemStack.getMaxDamage()) {
+            setDamage(itemStack, itemStack.getDamageValue() + amount);
             return amount;
         }
 
-        int actualAmount = itemStack.getMaxDamage() - itemStack.getDamage();
+        int actualAmount = itemStack.getMaxDamage() - itemStack.getDamageValue();
         setDamage(itemStack, itemStack.getMaxDamage());
         return actualAmount;
     }

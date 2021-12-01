@@ -87,7 +87,7 @@ public class EnchantmentBuilder {
     }
 
     public EnchantmentType getEnchantmentType() {
-        return enchantment.type;
+        return enchantment.category;
     }
 
     public boolean shouldApply() {
@@ -192,7 +192,7 @@ public class EnchantmentBuilder {
                 data.add("glyph", glyph);
             } else {
                 data.addProperty("magicCapacity",
-                        -(enchantment.getMaxEnchantability(i) + enchantment.getMinEnchantability(i)) / 2 * capacityMultiplier);
+                        -(enchantment.getMaxCost(i) + enchantment.getMinCost(i)) / 2 * capacityMultiplier);
             }
 
             result.add(data);
@@ -219,7 +219,7 @@ public class EnchantmentBuilder {
     public Map<String, String> getLocalizationEntries(JsonObject existingLocalizations) {
         Map<String, String> result = new LinkedHashMap<>();
 
-        String key = enchantment.getName();
+        String key = enchantment.getDescriptionId();
 
         String name = null;
         if (existingLocalizations.has(key)) {
@@ -255,7 +255,7 @@ public class EnchantmentBuilder {
     public Collection<String> getLocalizationKeys() {
         LinkedList<String> result = new LinkedList<>();
 
-        String key = enchantment.getName();
+        String key = enchantment.getDescriptionId();
 
         String name = null;
         if (isCurse) {

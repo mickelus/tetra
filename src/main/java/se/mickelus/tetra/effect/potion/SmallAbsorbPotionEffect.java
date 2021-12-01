@@ -33,16 +33,16 @@ public class SmallAbsorbPotionEffect extends Effect {
 
         int amount = effect.getAmplifier() + 1;
         EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new StringTextComponent(I18n.format("effect.tetra.small_absorb.tooltip", amount)));
+                new StringTextComponent(I18n.get("effect.tetra.small_absorb.tooltip", amount)));
     }
 
-    public void removeAttributesModifiersFromEntity(LivingEntity entity, AttributeModifierManager attributeManager, int amplifier) {
+    public void removeAttributeModifiers(LivingEntity entity, AttributeModifierManager attributeManager, int amplifier) {
         entity.setAbsorptionAmount(entity.getAbsorptionAmount() - (amplifier + 1));
-        super.removeAttributesModifiersFromEntity(entity, attributeManager, amplifier);
+        super.removeAttributeModifiers(entity, attributeManager, amplifier);
     }
 
-    public void applyAttributesModifiersToEntity(LivingEntity entity, AttributeModifierManager attributeManager, int amplifier) {
+    public void addAttributeModifiers(LivingEntity entity, AttributeModifierManager attributeManager, int amplifier) {
         entity.setAbsorptionAmount(entity.getAbsorptionAmount() + amplifier + 1);
-        super.applyAttributesModifiersToEntity(entity, attributeManager, amplifier);
+        super.addAttributeModifiers(entity, attributeManager, amplifier);
     }
 }

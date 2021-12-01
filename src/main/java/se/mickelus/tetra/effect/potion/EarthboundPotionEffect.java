@@ -25,8 +25,8 @@ public class EarthboundPotionEffect extends Effect {
         super(EffectType.HARMFUL, 0x006600);
         setRegistryName("earthbound");
 
-        addAttributesModifier(Attributes.MOVEMENT_SPEED, "dc6d6b51-a5da-4735-9277-41fd355829f5", -0.3, AttributeModifier.Operation.MULTIPLY_TOTAL);
-        addAttributesModifier(Attributes.KNOCKBACK_RESISTANCE, "4134bd78-8b75-46fe-bd9e-cbddff983181", 1, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        addAttributeModifier(Attributes.MOVEMENT_SPEED, "dc6d6b51-a5da-4735-9277-41fd355829f5", -0.3, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, "4134bd78-8b75-46fe-bd9e-cbddff983181", 1, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
         instance = this;
     }
@@ -34,9 +34,9 @@ public class EarthboundPotionEffect extends Effect {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void renderHUDEffect(EffectInstance effect, AbstractGui gui, MatrixStack matrixStack, int x, int y, float z, float alpha) {
-        Minecraft.getInstance().getTextureManager().bindTexture(texture);
+        Minecraft.getInstance().getTextureManager().bind(texture);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, alpha);
-        GlStateManager.enableBlend();
+        GlStateManager._enableBlend();
         gui.blit(matrixStack, x + 4, y + 4, 0, 0, 16, 16);
     }
 }

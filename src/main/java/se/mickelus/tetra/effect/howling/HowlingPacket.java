@@ -18,8 +18,8 @@ public class HowlingPacket extends AbstractPacket {
 
     @Override
     public void handle(PlayerEntity player) {
-        ItemStack itemStack = player.getHeldItemMainhand();
-        if (player.getCooledAttackStrength(0.5f) > 0.9f) {
+        ItemStack itemStack = player.getMainHandItem();
+        if (player.getAttackStrengthScale(0.5f) > 0.9f) {
             int effectLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.howling);
             if (effectLevel > 0) {
                 HowlingEffect.trigger(itemStack, player, effectLevel);

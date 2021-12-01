@@ -44,7 +44,7 @@ public class ScrollScreen extends Screen {
     public ScrollScreen(String key) {
         super(new StringTextComponent("tetra:scroll"));
 
-        pages = I18n.format("item.tetra.scroll." + key + ".details").split("\r");
+        pages = I18n.get("item.tetra.scroll." + key + ".details").split("\r");
 
         width = 320;
         height = 240;

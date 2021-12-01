@@ -50,8 +50,8 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         double exhaustDuration = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
-        if (!attacker.world.isRemote && !isDefensive) {
-            int currentAmp = Optional.ofNullable(attacker.getActivePotionEffect(ExhaustedPotionEffect.instance))
+        if (!attacker.level.isClientSide && !isDefensive) {
+            int currentAmp = Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1);
 
@@ -62,20 +62,20 @@ public class OverpowerEffect extends ChargedAbilityEffect {
             }
 
             double comboEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityCombo);
-            if (comboEfficiency > 0 && attacker.getEntityWorld().getRandom().nextFloat() < (comboEfficiency * ComboPoints.get(attacker) / 100f)) {
+            if (comboEfficiency > 0 && attacker.getCommandSenderWorld().getRandom().nextFloat() < (comboEfficiency * ComboPoints.get(attacker) / 100f)) {
                 newAmp--;
 
-                Random rand = attacker.getEntityWorld().getRandom();
-                ((ServerWorld) attacker.getEntityWorld()).spawnParticle(ParticleTypes.HAPPY_VILLAGER,
-                        attacker.getPosX(), attacker.getPosY() + attacker.getHeight() / 2, attacker.getPosZ(), 10,
-                        rand.nextGaussian() * 0.3, rand.nextGaussian() * attacker.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
+                Random rand = attacker.getCommandSenderWorld().getRandom();
+                ((ServerWorld) attacker.getCommandSenderWorld()).sendParticles(ParticleTypes.HAPPY_VILLAGER,
+                        attacker.getX(), attacker.getY() + attacker.getBbHeight() / 2, attacker.getZ(), 10,
+                        rand.nextGaussian() * 0.3, rand.nextGaussian() * attacker.getBbHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
             }
 
             if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
                 newAmp--;
             }
 
-            if (overextended && !attacker.getFoodStats().needFood()) {
+            if (overextended && !attacker.getFoodData().needsFood()) {
                 newAmp = -1;
             }
 
@@ -84,13 +84,13 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 if (echoLevel > 0) {
                     delayExhaustion(attacker, item, itemStack, (int) (exhaustDuration * 20), newAmp);
                 } else {
-                    attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20),
+                    attacker.addEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20),
                             newAmp + currentAmp, false, true));
                 }
             }
         }
 
-        attacker.addExhaustion(overextended ? 6 : 1);
+        attacker.causeFoodExhaustion(overextended ? 6 : 1);
         attacker.swing(hand, false);
 
         int cooldown = getCooldown(item, itemStack);
@@ -107,7 +107,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
             RevengeTracker.removeEnemy(attacker, target);
         }
 
-        attacker.getCooldownTracker().setCooldown(item, cooldown);
+        attacker.getCooldowns().addCooldown(item, cooldown);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.1f, 0.1f);
         if (result != AbilityUseResult.fail) {
-            int currentAmplifier = Optional.ofNullable(target.getActivePotionEffect(ExhaustedPotionEffect.instance))
+            int currentAmplifier = Optional.ofNullable(target.getEffect(ExhaustedPotionEffect.instance))
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1);
 
@@ -154,7 +154,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 double velocity = momentumLevel / 100d;
                 velocity += momentumEfficiency * (currentAmplifier + 1);
 
-                velocity += momentumEfficiency * Optional.ofNullable(attacker.getActivePotionEffect(ExhaustedPotionEffect.instance))
+                velocity += momentumEfficiency * Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
                         .map(EffectInstance::getAmplifier)
                         .map(amp -> amp + 1)
                         .orElse(0);
@@ -162,22 +162,22 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
 
                 if (velocity > 0) {
-                    target.addVelocity(0, velocity, 0);
+                    target.push(0, velocity, 0);
                 }
             }
 
 
             int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
             if (exhilarationLevel > 0 && !target.isAlive()) {
-                ServerScheduler.schedule(0, () -> attacker.removePotionEffect(ExhaustedPotionEffect.instance));
+                ServerScheduler.schedule(0, () -> attacker.removeEffect(ExhaustedPotionEffect.instance));
 
             }
 
-            target.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), amplifier, false, true));
+            target.addEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), amplifier, false, true));
 
-            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 0.8f);
         } else {
-            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
         }
 
 
@@ -189,22 +189,22 @@ public class OverpowerEffect extends ChargedAbilityEffect {
         int delay = getChargeTime(item, itemStack) + getCooldown(item, itemStack) + item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
 
         try {
-            DelayData data = delayCache.get(attacker.getEntityId(), DelayData::new);
-            data.timestamp = attacker.world.getGameTime() + delay;
+            DelayData data = delayCache.get(attacker.getId(), DelayData::new);
+            data.timestamp = attacker.level.getGameTime() + delay;
             data.amplifier += amplifier;
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
         ServerScheduler.schedule(delay + 1, () -> {
-            DelayData data = delayCache.getIfPresent(attacker.getEntityId());
-            if (attacker.isAlive() && attacker.world != null && data != null && attacker.world.getGameTime() > data.timestamp) {
-                int currentAmp = Optional.ofNullable(attacker.getActivePotionEffect(ExhaustedPotionEffect.instance))
+            DelayData data = delayCache.getIfPresent(attacker.getId());
+            if (attacker.isAlive() && attacker.level != null && data != null && attacker.level.getGameTime() > data.timestamp) {
+                int currentAmp = Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
                         .map(EffectInstance::getAmplifier)
                         .orElse(-1);
-                attacker.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, duration, currentAmp + data.amplifier, false, true));
+                attacker.addEffect(new EffectInstance(ExhaustedPotionEffect.instance, duration, currentAmp + data.amplifier, false, true));
 
-                delayCache.invalidate(attacker.getEntityId());
+                delayCache.invalidate(attacker.getId());
             }
         });
     }

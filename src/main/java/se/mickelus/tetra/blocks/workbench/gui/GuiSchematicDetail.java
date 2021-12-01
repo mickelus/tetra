@@ -46,7 +46,7 @@ public class GuiSchematicDetail extends GuiElement {
 
     public GuiSchematicDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 67);
-        addChild(new GuiButton(-4 , height - 2, 40, 8, "< " + I18n.format("tetra.workbench.schematic_detail.back"), backListener));
+        addChild(new GuiButton(-4 , height - 2, 40, 8, "< " + I18n.get("tetra.workbench.schematic_detail.back"), backListener));
 
         glyph = new GuiElement(3, 3, 16, 16);
         addChild(glyph);

@@ -23,7 +23,7 @@ public class FracturedBedrockBlock extends TetraBlock {
     public static FracturedBedrockBlock instance;
 
     public FracturedBedrockBlock() {
-        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F).noDrops());
+        super(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
         setRegistryName(unlocalizedName);
     }
 
@@ -49,10 +49,10 @@ public class FracturedBedrockBlock extends TetraBlock {
 
         if (tile == null && canPierce(world, pos)) {
             BlockState blockState = world.getBlockState(pos);
-            world.setBlockState(pos, instance.getDefaultState(), 2);
+            world.setBlock(pos, instance.defaultBlockState(), 2);
             tile = TileEntityOptional.from(world, pos, FracturedBedrockTile.class).orElse(null);
 
-            if (!world.isRemote) {
+            if (!world.isClientSide) {
                 tile.updateLuck(SeepingBedrockBlock.instance.equals(blockState.getBlock()));
             }
         }

@@ -24,11 +24,11 @@ public class HowlingEffect {
 
     public static void trigger(ItemStack itemStack, LivingEntity player, int effectLevel) {
         int duration = (int) Math.round(EffectHelper.getEffectEfficiency(itemStack, ItemEffect.howling) * 20);
-        int currentAmplifier = Optional.ofNullable(player.getActivePotionEffect(HowlingPotionEffect.instance))
+        int currentAmplifier = Optional.ofNullable(player.getEffect(HowlingPotionEffect.instance))
                 .map(EffectInstance::getAmplifier)
                 .orElse(-1);
 
-        player.addPotionEffect(new EffectInstance(HowlingPotionEffect.instance, duration, Math.min(currentAmplifier + effectLevel, 11), false, false));
+        player.addEffect(new EffectInstance(HowlingPotionEffect.instance, duration, Math.min(currentAmplifier + effectLevel, 11), false, false));
     }
 
     public static void deflectProjectile(ProjectileImpactEvent event, ProjectileEntity projectile, RayTraceResult rayTraceResult) {
@@ -37,20 +37,20 @@ public class HowlingEffect {
                 .map(result -> (EntityRayTraceResult) result)
                 .map(EntityRayTraceResult::getEntity)
                 .flatMap(entity -> CastOptional.cast(entity, LivingEntity.class))
-                .filter(entity -> willDeflect(entity.getActivePotionEffect(HowlingPotionEffect.instance), entity.getRNG()))
+                .filter(entity -> willDeflect(entity.getEffect(HowlingPotionEffect.instance), entity.getRandom()))
                 .ifPresent(entity -> {
                     Vector3d newDir;
-                    if (entity.getActivePotionEffect(HowlingPotionEffect.instance).getAmplifier() * 0.02 < entity.getRNG().nextDouble()) {
-                        Vector3d normal = entity.getPositionVec().add(0, entity.getHeight() / 2, 0).subtract(projectile.getPositionVec()).normalize();
-                        newDir = projectile.getMotion().subtract(normal.scale(2 * projectile.getMotion().dotProduct(normal)));
+                    if (entity.getEffect(HowlingPotionEffect.instance).getAmplifier() * 0.02 < entity.getRandom().nextDouble()) {
+                        Vector3d normal = entity.position().add(0, entity.getBbHeight() / 2, 0).subtract(projectile.position()).normalize();
+                        newDir = projectile.getDeltaMovement().subtract(normal.scale(2 * projectile.getDeltaMovement().dot(normal)));
                     } else {
-                        newDir = projectile.getMotion().scale(-0.8);
-                        CastOptional.cast(projectile.func_234616_v_(), LivingEntity.class)
-                                .ifPresent(shooter -> shooter.setLastAttackedEntity(entity));
-                        projectile.setShooter(entity);
+                        newDir = projectile.getDeltaMovement().scale(-0.8);
+                        CastOptional.cast(projectile.getOwner(), LivingEntity.class)
+                                .ifPresent(shooter -> shooter.setLastHurtMob(entity));
+                        projectile.setOwner(entity);
                     }
 //                    projectile.setMotion(newDir.scale(0.7f));
-                    projectile.shoot(newDir.x, newDir.y, newDir.z, (float) projectile.getMotion().length(), 0.1f);
+                    projectile.shoot(newDir.x, newDir.y, newDir.z, (float) projectile.getDeltaMovement().length(), 0.1f);
                     event.setCanceled(true);
                 });
     }

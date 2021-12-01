@@ -96,7 +96,7 @@ public class ModuleProvider implements IDataProvider {
     }
 
     @Override
-    public void act(DirectoryCache cache) throws IOException {
+    public void run(DirectoryCache cache) throws IOException {
         setup();
 
         builders.forEach(builder -> saveModule(cache, builder.module, builder.getModuleJson()));

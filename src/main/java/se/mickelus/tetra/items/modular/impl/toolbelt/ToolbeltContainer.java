@@ -31,10 +31,10 @@ public class ToolbeltContainer extends Container {
 
 //        quickslotInventory.openInventory(player);
 
-        int numPotionSlots = potionsInventory.getSizeInventory();
-        int numQuickslots = quickslotInventory.getSizeInventory();
-        int numStorageSlots = storageInventory.getSizeInventory();
-        int numQuiverSlots = quiverInventory.getSizeInventory();
+        int numPotionSlots = potionsInventory.getContainerSize();
+        int numQuickslots = quickslotInventory.getContainerSize();
+        int numStorageSlots = storageInventory.getContainerSize();
+        int numQuiverSlots = quiverInventory.getContainerSize();
         int offset = 0;
 
         if (numStorageSlots > 0) {
@@ -71,7 +71,7 @@ public class ToolbeltContainer extends Container {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 Slot slot;
-                if (itemStackToolbelt.isItemEqual(playerInventory.getStackInSlot(i * 9 + j + 9))) {
+                if (itemStackToolbelt.sameItem(playerInventory.getItem(i * 9 + j + 9))) {
                     slot = new DisabledSlot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 142);
                 } else {
                     slot = new Slot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 142);
@@ -82,7 +82,7 @@ public class ToolbeltContainer extends Container {
 
         for (int i = 0; i < 9; i++) {
             Slot slot;
-            if (itemStackToolbelt.isItemEqualIgnoreDurability(playerInventory.getStackInSlot(i))) {
+            if (itemStackToolbelt.sameItemStackIgnoreDurability(playerInventory.getItem(i))) {
                 slot = new DisabledSlot(playerInventory, i, i * 17 + 12, 197);
             } else {
                 slot = new Slot(playerInventory, i, i * 17 + 12, 197);
@@ -93,9 +93,9 @@ public class ToolbeltContainer extends Container {
 
     @OnlyIn(Dist.CLIENT)
     public static ToolbeltContainer create(int windowId, PlayerInventory inv) {
-        ItemStack itemStack = inv.player.getHeldItemMainhand();
+        ItemStack itemStack = inv.player.getMainHandItem();
         if (!ModularToolbeltItem.instance.equals(itemStack.getItem())) {
-            itemStack = inv.player.getHeldItemOffhand();
+            itemStack = inv.player.getOffhandItem();
         }
 
         if (!ModularToolbeltItem.instance.equals(itemStack.getItem())) {
@@ -116,31 +116,31 @@ public class ToolbeltContainer extends Container {
     private boolean mergeItemStackExtended(ItemStack incomingStack, int startIndex, int endIndex) {
 
         for (int i = startIndex; i < endIndex; i++) {
-            Slot slot = this.inventorySlots.get(i);
-            if (slot.isItemValid(incomingStack)) {
-                ItemStack slotStack = slot.getStack();
-                if (ItemStack.areItemsEqual(slotStack, incomingStack) && ItemStack.areItemStackTagsEqual(slotStack, incomingStack)) {
-                    if (slotStack.getCount() + incomingStack.getCount() < slot.getItemStackLimit(slotStack)) {
+            Slot slot = this.slots.get(i);
+            if (slot.mayPlace(incomingStack)) {
+                ItemStack slotStack = slot.getItem();
+                if (ItemStack.isSame(slotStack, incomingStack) && ItemStack.tagMatches(slotStack, incomingStack)) {
+                    if (slotStack.getCount() + incomingStack.getCount() < slot.getMaxStackSize(slotStack)) {
                         slotStack.grow(incomingStack.getCount());
                         incomingStack.setCount(0);
-                        slot.onSlotChanged();
+                        slot.setChanged();
                         return true;
                     } else {
-                        int mergeCount = slot.getItemStackLimit(slotStack) - slotStack.getCount();
+                        int mergeCount = slot.getMaxStackSize(slotStack) - slotStack.getCount();
                         slotStack.grow(mergeCount);
                         incomingStack.shrink(mergeCount);
-                        slot.onSlotChanged();
+                        slot.setChanged();
                     }
                 }
             }
         }
 
         for (int i = startIndex; i < endIndex; i++) {
-            Slot slot = this.inventorySlots.get(i);
-            if (slot.isItemValid(incomingStack)) {
-                ItemStack slotStack = slot.getStack();
+            Slot slot = this.slots.get(i);
+            if (slot.mayPlace(incomingStack)) {
+                ItemStack slotStack = slot.getItem();
                 if (slotStack.isEmpty()) {
-                    slot.putStack(incomingStack.split(slot.getItemStackLimit(slotStack)));
+                    slot.set(incomingStack.split(slot.getMaxStackSize(slotStack)));
 
                     if (incomingStack.isEmpty()) {
                         return true;
@@ -153,89 +153,89 @@ public class ToolbeltContainer extends Container {
     }
 
     @Override
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-        if (clickTypeIn == ClickType.PICKUP && 0 <= slotId && slotId < potionsInventory.getSizeInventory()) {
+    public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+        if (clickTypeIn == ClickType.PICKUP && 0 <= slotId && slotId < potionsInventory.getContainerSize()) {
             Slot slot = getSlot(slotId);
-            if (player.inventory.getItemStack().isEmpty()) {
-                player.inventory.setItemStack(slot.decrStackSize(64));
+            if (player.inventory.getCarried().isEmpty()) {
+                player.inventory.setCarried(slot.remove(64));
             } else {
-                if (slot.isItemValid(player.inventory.getItemStack())) {
-                    if (slot.getStack().isEmpty()) {
-                        slot.putStack(player.inventory.getItemStack());
-                        player.inventory.setItemStack(ItemStack.EMPTY);
-                    } else if (ItemStack.areItemsEqual(slot.getStack(), player.inventory.getItemStack())
-                            && ItemStack.areItemStackTagsEqual(slot.getStack(), player.inventory.getItemStack())) {
-                        int moveAmount = Math.min(player.inventory.getItemStack().getCount(), slot.getSlotStackLimit() - slot.getStack().getCount());
-                        slot.getStack().grow(moveAmount);
-                        player.inventory.getItemStack().shrink(moveAmount);
-                    } else if (slot.getStack().getCount() <= slot.getStack().getMaxStackSize()) {
-                        ItemStack tempStack = slot.getStack();
-                        slot.putStack(player.inventory.getItemStack());
-                        player.inventory.setItemStack(tempStack);
+                if (slot.mayPlace(player.inventory.getCarried())) {
+                    if (slot.getItem().isEmpty()) {
+                        slot.set(player.inventory.getCarried());
+                        player.inventory.setCarried(ItemStack.EMPTY);
+                    } else if (ItemStack.isSame(slot.getItem(), player.inventory.getCarried())
+                            && ItemStack.tagMatches(slot.getItem(), player.inventory.getCarried())) {
+                        int moveAmount = Math.min(player.inventory.getCarried().getCount(), slot.getMaxStackSize() - slot.getItem().getCount());
+                        slot.getItem().grow(moveAmount);
+                        player.inventory.getCarried().shrink(moveAmount);
+                    } else if (slot.getItem().getCount() <= slot.getItem().getMaxStackSize()) {
+                        ItemStack tempStack = slot.getItem();
+                        slot.set(player.inventory.getCarried());
+                        player.inventory.setCarried(tempStack);
                     }
                 }
             }
             return ItemStack.EMPTY;
         } else {
-            return super.slotClick(slotId, dragType, clickTypeIn, player);
+            return super.clicked(slotId, dragType, clickTypeIn, player);
         }
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return this.quickslotInventory.isUsableByPlayer(playerIn);
+    public boolean stillValid(PlayerEntity playerIn) {
+        return this.quickslotInventory.stillValid(playerIn);
     }
 
     /**
      * Take a stack from the specified inventory slot.
      */
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int index) {
-        Slot slot = inventorySlots.get(index);
+    public ItemStack quickMoveStack(PlayerEntity player, int index) {
+        Slot slot = slots.get(index);
 
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemStack = slot.getStack();
+        if (slot != null && slot.hasItem()) {
+            ItemStack itemStack = slot.getItem();
 
-            if (itemStack.isItemEqual(itemStackToolbelt)) {
+            if (itemStack.sameItem(itemStackToolbelt)) {
                 return ItemStack.EMPTY;
             }
 
-            int numQuiverSlots = quiverInventory.getSizeInventory();
-            int numPotionSlots = potionsInventory.getSizeInventory();
-            int numQuickslots = quickslotInventory.getSizeInventory();
-            int numStorageSlots = storageInventory.getSizeInventory();
+            int numQuiverSlots = quiverInventory.getContainerSize();
+            int numPotionSlots = potionsInventory.getContainerSize();
+            int numQuickslots = quickslotInventory.getContainerSize();
+            int numStorageSlots = storageInventory.getContainerSize();
             int playerInventoryStart = numQuickslots + numStorageSlots + numPotionSlots + numQuiverSlots;
 
-            if (slot.inventory instanceof ToolbeltInventory) {
+            if (slot.container instanceof ToolbeltInventory) {
                 // handle moving from potion slots separately
-                if (slot.inventory == potionsInventory && slot.getSlotIndex() == index) {
-                    int count = slot.getStack().getCount();
-                    itemStack = slot.decrStackSize(64);
-                    if (!this.mergeItemStack(itemStack, playerInventoryStart,  inventorySlots.size(), true)) {
+                if (slot.container == potionsInventory && slot.getSlotIndex() == index) {
+                    int count = slot.getItem().getCount();
+                    itemStack = slot.remove(64);
+                    if (!this.moveItemStackTo(itemStack, playerInventoryStart,  slots.size(), true)) {
                         // reset count if it was not possible to move the itemstack
                         itemStack.setCount(count);
-                        slot.putStack(itemStack);
+                        slot.set(itemStack);
                         return ItemStack.EMPTY;
                     }
                 } else {
                     // move item from slot into player inventory
-                    if (!this.mergeItemStack(itemStack, playerInventoryStart,  inventorySlots.size(), true)) {
+                    if (!this.moveItemStackTo(itemStack, playerInventoryStart,  slots.size(), true)) {
                         return ItemStack.EMPTY;
                     }
                 }
 
-                slot.onSlotChanged();
+                slot.setChanged();
             } else {
                 if (numPotionSlots > 0 && mergeItemStackExtended(itemStack, 0,  numPotionSlots)) {
                     return itemStack;
                 }
-                if (numQuiverSlots > 0 && mergeItemStack(itemStack, numPotionSlots,  numPotionSlots + numQuiverSlots, false)) {
+                if (numQuiverSlots > 0 && moveItemStackTo(itemStack, numPotionSlots,  numPotionSlots + numQuiverSlots, false)) {
                     return itemStack;
                 }
-                if (numQuickslots > 0 && mergeItemStack(itemStack, numPotionSlots + numQuiverSlots,  numPotionSlots + numQuiverSlots + numQuickslots, false)) {
+                if (numQuickslots > 0 && moveItemStackTo(itemStack, numPotionSlots + numQuiverSlots,  numPotionSlots + numQuiverSlots + numQuickslots, false)) {
                     return itemStack;
                 }
-                if (numStorageSlots > 0 && mergeItemStack(itemStack, numPotionSlots + numQuiverSlots + numQuickslots,  playerInventoryStart, false)) {
+                if (numStorageSlots > 0 && moveItemStackTo(itemStack, numPotionSlots + numQuiverSlots + numQuickslots,  playerInventoryStart, false)) {
                     return itemStack;
                 }
                 return ItemStack.EMPTY;
@@ -250,9 +250,9 @@ public class ToolbeltContainer extends Container {
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(PlayerEntity playerIn) {
-        super.onContainerClosed(playerIn);
-        this.quickslotInventory.closeInventory(playerIn);
+    public void removed(PlayerEntity playerIn) {
+        super.removed(playerIn);
+        this.quickslotInventory.stopOpen(playerIn);
     }
 
     public QuickslotInventory getQuickslotInventory() {

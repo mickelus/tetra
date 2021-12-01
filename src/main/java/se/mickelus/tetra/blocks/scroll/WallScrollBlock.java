@@ -22,8 +22,8 @@ public class WallScrollBlock extends ScrollBlock {
     public static ScrollBlock instance;
 
     private VoxelShape baseShape = VoxelShapes.or(
-            Block.makeCuboidShape(1.0, 14.0, 0.0, 15.0, 16.0, 2.0),
-            Block.makeCuboidShape(1.0, 1.0, 0.0, 15.0, 14.0, 0.1));
+            Block.box(1.0, 14.0, 0.0, 15.0, 16.0, 2.0),
+            Block.box(1.0, 1.0, 0.0, 15.0, 14.0, 0.1));
     private final Map<Direction, VoxelShape> shapes;
 
     public WallScrollBlock() {
@@ -31,13 +31,13 @@ public class WallScrollBlock extends ScrollBlock {
 
         shapes = new EnumMap<>(Direction.class);
         for (int i = 0; i < 4; i++) {
-            Direction direction = Direction.byHorizontalIndex(i);
+            Direction direction = Direction.from2DDataValue(i);
             shapes.put(direction, RotationHelper.rotateDirection(baseShape, direction));
         }
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return shapes.get(state.get(BlockStateProperties.HORIZONTAL_FACING));
+        return shapes.get(state.getValue(BlockStateProperties.HORIZONTAL_FACING));
     }
 }

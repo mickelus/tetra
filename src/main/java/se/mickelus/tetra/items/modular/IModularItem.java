@@ -175,7 +175,7 @@ public interface IModularItem {
 
     default String[] getMajorModuleNames() {
         return Arrays.stream(getMajorModuleKeys())
-                .map(key -> I18n.format("tetra.slot." + key))
+                .map(key -> I18n.get("tetra.slot." + key))
                 .toArray(String[]::new);
     }
 
@@ -185,7 +185,7 @@ public interface IModularItem {
 
     default String[] getMinorModuleNames() {
         return Arrays.stream(getMinorModuleKeys())
-                .map(key -> I18n.format("tetra.slot." + key))
+                .map(key -> I18n.get("tetra.slot." + key))
                 .toArray(String[]::new);
     }
 
@@ -355,16 +355,16 @@ public interface IModularItem {
     }
 
     default void applyDamage(int amount, ItemStack itemStack, LivingEntity responsibleEntity) {
-        int damage = itemStack.getDamage();
+        int damage = itemStack.getDamageValue();
         int maxDamage = itemStack.getMaxDamage();
 
         if (!isBroken(damage, maxDamage)) {
             int reducedAmount = getReducedDamage(amount, itemStack, responsibleEntity);
-            itemStack.damageItem(reducedAmount, responsibleEntity, breaker -> breaker.sendBreakAnimation(breaker.getActiveHand()));
+            itemStack.hurtAndBreak(reducedAmount, responsibleEntity, breaker -> breaker.broadcastBreakEvent(breaker.getUsedItemHand()));
 
-            if (isBroken(damage + reducedAmount, maxDamage) && !responsibleEntity.world.isRemote) {
-                responsibleEntity.sendBreakAnimation(responsibleEntity.getActiveHand());
-                responsibleEntity.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1, 1);
+            if (isBroken(damage + reducedAmount, maxDamage) && !responsibleEntity.level.isClientSide) {
+                responsibleEntity.broadcastBreakEvent(responsibleEntity.getUsedItemHand());
+                responsibleEntity.playSound(SoundEvents.SHIELD_BREAK, 1, 1);
             }
         }
     }
@@ -376,7 +376,7 @@ public interface IModularItem {
 
             if (level > 0) {
                 for (int i = 0; i < amount; i++) {
-                    if (UnbreakingEnchantment.negateDamage(itemStack, level, responsibleEntity.world.rand)) {
+                    if (UnbreakingEnchantment.shouldIgnoreDurabilityDrop(itemStack, level, responsibleEntity.level.random)) {
                         reduction++;
                     }
                 }
@@ -388,7 +388,7 @@ public interface IModularItem {
     }
 
     default boolean isBroken(ItemStack itemStack) {
-        return isBroken(itemStack.getDamage(), itemStack.getMaxDamage());
+        return isBroken(itemStack.getDamageValue(), itemStack.getMaxDamage());
     }
 
     default boolean isBroken(int damage, int maxDamage) {
@@ -400,7 +400,7 @@ public interface IModularItem {
         List<ITextComponent> tooltip = Lists.newArrayList();
         if (isBroken(itemStack)) {
             tooltip.add(new TranslationTextComponent("item.tetra.modular.broken")
-                    .mergeStyle(TextFormatting.DARK_RED, TextFormatting.ITALIC));
+                    .withStyle(TextFormatting.DARK_RED, TextFormatting.ITALIC));
         }
 
         if (Screen.hasShiftDown()) {
@@ -408,31 +408,31 @@ public interface IModularItem {
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
                     .forEach(module -> {
-                        tooltip.add(new StringTextComponent("\u00BB ").mergeStyle(TextFormatting.DARK_GRAY)
-                                .append(new StringTextComponent(module.getName(itemStack)).mergeStyle(TextFormatting.GRAY)));
+                        tooltip.add(new StringTextComponent("\u00BB ").withStyle(TextFormatting.DARK_GRAY)
+                                .append(new StringTextComponent(module.getName(itemStack)).withStyle(TextFormatting.GRAY)));
                         Arrays.stream(module.getImprovements(itemStack))
                                 .map(improvement -> String.format("  - %s", getImprovementTooltip(improvement.key, improvement.level, true)))
                                 .map(StringTextComponent::new)
-                                .map(textComponent -> textComponent.mergeStyle(TextFormatting.DARK_GRAY))
+                                .map(textComponent -> textComponent.withStyle(TextFormatting.DARK_GRAY))
                                 .forEach(tooltip::add);
                     });
             Arrays.stream(getMinorModules(itemStack))
                     .filter(Objects::nonNull)
-                    .map(module -> new StringTextComponent(" * ").mergeStyle(TextFormatting.DARK_GRAY)
-                            .append(new StringTextComponent(module.getName(itemStack)).mergeStyle(TextFormatting.GRAY)))
+                    .map(module -> new StringTextComponent(" * ").withStyle(TextFormatting.DARK_GRAY)
+                            .append(new StringTextComponent(module.getName(itemStack)).withStyle(TextFormatting.GRAY)))
                     .forEach(tooltip::add);
 
             // honing tooltip
             if (ConfigHandler.moduleProgression.get() && canGainHoneProgress()) {
                 if (isHoneable(itemStack)) {
-                    tooltip.add(new StringTextComponent(" > ").mergeStyle(TextFormatting.AQUA)
-                            .append(new TranslationTextComponent("tetra.hone.available").setStyle(Style.EMPTY.applyFormatting(TextFormatting.GRAY))));
+                    tooltip.add(new StringTextComponent(" > ").withStyle(TextFormatting.AQUA)
+                            .append(new TranslationTextComponent("tetra.hone.available").setStyle(Style.EMPTY.applyFormat(TextFormatting.GRAY))));
                 } else {
                     int progress = getHoningProgress(itemStack);
                     int base = getHoningLimit(itemStack);
                     String percentage = String.format("%.0f", 100f * (base - progress) / base);
-                    tooltip.add(new StringTextComponent(" > ").mergeStyle(TextFormatting.DARK_AQUA)
-                            .append(new TranslationTextComponent("tetra.hone.progress", base - progress, base, percentage).mergeStyle(TextFormatting.GRAY)));
+                    tooltip.add(new StringTextComponent(" > ").withStyle(TextFormatting.DARK_AQUA)
+                            .append(new TranslationTextComponent("tetra.hone.progress", base - progress, base, percentage).withStyle(TextFormatting.GRAY)));
                 }
             }
         } else {
@@ -445,7 +445,7 @@ public interface IModularItem {
                     .stream()
                     .map(entry -> getImprovementTooltip(entry.getKey(), entry.getValue(), false))
                     .map(StringTextComponent::new)
-                    .map(text -> text.mergeStyle(TextFormatting.GRAY))
+                    .map(text -> text.withStyle(TextFormatting.GRAY))
                     .forEach(tooltip::add);
 
             tooltip.add(Tooltips.expand);
@@ -456,7 +456,7 @@ public interface IModularItem {
 
     default String getImprovementTooltip(String key, int level, boolean clearFormatting) {
         if (clearFormatting) {
-            return TextFormatting.getTextWithoutFormattingCodes(getImprovementName(key, level));
+            return TextFormatting.stripFormatting(getImprovementName(key, level));
         }
 
         return getImprovementName(key, level);
@@ -464,16 +464,16 @@ public interface IModularItem {
 
     public static String getImprovementName(String key, int level) {
         String name = null;
-        if (I18n.hasKey("tetra.improvement." + key + ".name")) {
-            name = I18n.format("tetra.improvement." + key + ".name");
+        if (I18n.exists("tetra.improvement." + key + ".name")) {
+            name = I18n.get("tetra.improvement." + key + ".name");
         } else {
             int lastSlash = key.lastIndexOf("/");
             if (lastSlash != -1) {
                 String templateKey = "tetra.improvement." + key.substring(0, lastSlash) + ".name";
-                if (I18n.hasKey(templateKey)) {
+                if (I18n.exists(templateKey)) {
                     String materialKey = "tetra.material." + key.substring(lastSlash + 1) + ".prefix";
-                    if (I18n.hasKey(materialKey)) {
-                        name = StringUtils.capitalize(I18n.format(templateKey, I18n.format(materialKey).toLowerCase()));
+                    if (I18n.exists(materialKey)) {
+                        name = StringUtils.capitalize(I18n.get(templateKey, I18n.get(materialKey).toLowerCase()));
                     }
                 }
             }
@@ -484,22 +484,22 @@ public interface IModularItem {
         }
 
         if (level > 0) {
-            name += " " + I18n.format("enchantment.level." + level);
+            name += " " + I18n.get("enchantment.level." + level);
         }
 
         return name;
     }
 
     public static String getImprovementDescription(String key) {
-        if (I18n.hasKey("tetra.improvement." + key + ".description")) {
-            return I18n.format("tetra.improvement." + key + ".description");
+        if (I18n.exists("tetra.improvement." + key + ".description")) {
+            return I18n.get("tetra.improvement." + key + ".description");
         }
 
         int lastSlash = key.lastIndexOf("/");
         if (lastSlash != -1) {
             String splitKey = "tetra.improvement." + key.substring(0, lastSlash) + ".description";
-            if (I18n.hasKey(splitKey)) {
-                return I18n.format(splitKey);
+            if (I18n.exists(splitKey)) {
+                return I18n.get(splitKey);
             }
         }
 
@@ -691,7 +691,7 @@ public interface IModularItem {
     }
 
     default void applyDestabilizationEffects(ItemStack itemStack, World world, float probabilityMultiplier) {
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
                     .forEach(module -> {
@@ -703,8 +703,8 @@ public interface IModularItem {
                                     DestabilizationEffect.getEffectsForImprovement(instability, module.getImprovements(itemStack));
 
                             do {
-                                if (destabilizationChance > world.rand.nextFloat()) {
-                                    DestabilizationEffect effect = possibleEffects[world.rand.nextInt(possibleEffects.length)];
+                                if (destabilizationChance > world.random.nextFloat()) {
+                                    DestabilizationEffect effect = possibleEffects[world.random.nextInt(possibleEffects.length)];
                                     int currentEffectLevel = module.getImprovementLevel(itemStack, effect.destabilizationKey);
                                     int newLevel;
 
@@ -713,7 +713,7 @@ public interface IModularItem {
                                     } else if (effect.minLevel == effect.maxLevel) {
                                         newLevel = effect.minLevel;
                                     } else {
-                                        newLevel = effect.minLevel + world.rand.nextInt(effect.maxLevel - effect.minLevel);
+                                        newLevel = effect.minLevel + world.random.nextInt(effect.maxLevel - effect.minLevel);
                                     }
 
                                     if (module.acceptsImprovementLevel(effect.destabilizationKey, newLevel)) {
@@ -737,8 +737,8 @@ public interface IModularItem {
             return;
         }
 
-        if (itemStack.isDamageable()) {
-            durabilityFactor = itemStack.getDamage() * 1d / itemStack.getMaxDamage();
+        if (itemStack.isDamageableItem()) {
+            durabilityFactor = itemStack.getDamageValue() * 1d / itemStack.getMaxDamage();
         }
 
         tweaks.forEach((tweakKey, step) -> {
@@ -747,8 +747,8 @@ public interface IModularItem {
             }
         });
 
-        if (itemStack.isDamageable()) {
-            itemStack.setDamage((int) Math.ceil((durabilityFactor * itemStack.getMaxDamage()
+        if (itemStack.isDamageableItem()) {
+            itemStack.setDamageValue((int) Math.ceil((durabilityFactor * itemStack.getMaxDamage()
                     - (durabilityFactor * durabilityFactor * module.getDurability(itemStack)))));
         }
 
@@ -914,8 +914,8 @@ public interface IModularItem {
         return Stream.concat(
                 Arrays.stream(getImprovements(itemStack))
                         .map(improvement -> improvement.key + ".prefix")
-                        .filter(I18n::hasKey)
-                        .map(I18n::format),
+                        .filter(I18n::exists)
+                        .map(I18n::get),
                 getAllModules(itemStack).stream()
                         .sorted(Comparator.comparing(module -> module.getItemPrefixPriority(itemStack)))
                         .map(module -> module.getItemPrefix(itemStack))
@@ -935,8 +935,8 @@ public interface IModularItem {
                 .map(synergyData -> synergyData.name)
                 .filter(Objects::nonNull)
                 .map(key -> "tetra.synergy." + key)
-                .filter(I18n::hasKey)
-                .map(I18n::format)
+                .filter(I18n::exists)
+                .map(I18n::get)
                 .findFirst()
                 .orElse(null);
 
@@ -1057,8 +1057,8 @@ public interface IModularItem {
      * @param severity
      */
     default void assemble(ItemStack itemStack, @Nullable World world, float severity) {
-        if (itemStack.getDamage() > itemStack.getMaxDamage()) {
-            itemStack.setDamage(itemStack.getMaxDamage());
+        if (itemStack.getDamageValue() > itemStack.getMaxDamage()) {
+            itemStack.setDamageValue(itemStack.getMaxDamage());
         }
 
         if (world != null) {
@@ -1080,8 +1080,8 @@ public interface IModularItem {
     }
 
     public static ItemStack removeAllEnchantments(ItemStack itemStack) {
-        itemStack.removeChildTag("Enchantments");
-        itemStack.removeChildTag("StoredEnchantments");
+        itemStack.removeTagKey("Enchantments");
+        itemStack.removeTagKey("StoredEnchantments");
         Arrays.stream(((IModularItem) itemStack.getItem()).getMajorModules(itemStack))
                 .filter(Objects::nonNull)
                 .forEach(module -> module.removeEnchantments(itemStack));

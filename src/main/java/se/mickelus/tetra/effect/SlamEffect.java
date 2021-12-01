@@ -54,9 +54,9 @@ public class SlamEffect extends ChargedAbilityEffect {
         AbilityUseResult result = directSlam(attacker, hand, item, itemStack, target, hitVec, chargedTicks);
 
         double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
-        attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
+        attacker.causeFoodExhaustion(overextendLevel > 0 ? 6 : 1);
         attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, Math.round(getCooldown(item, itemStack) * 1.5f));
+        attacker.getCooldowns().addCooldown(item, Math.round(getCooldown(item, itemStack) * 1.5f));
 
         int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
         if (revengeLevel > 0) {
@@ -104,7 +104,7 @@ public class SlamEffect extends ChargedAbilityEffect {
         }
 
         double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
-        if (overextendLevel > 0 && !attacker.getFoodStats().needFood()) {
+        if (overextendLevel > 0 && !attacker.getFoodData().needsFood()) {
             damageMultiplier += overextendLevel / 100d;
         }
 
@@ -112,33 +112,33 @@ public class SlamEffect extends ChargedAbilityEffect {
 
         if (result != AbilityUseResult.fail) {
             if (stunDuration > 0) {
-                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false));
+                target.addEffect(new EffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false));
             }
 
             if (momentumEfficiency > 0) {
                 double velocity = momentumEfficiency;
                 velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
-                target.addVelocity(0, velocity, 0);
+                target.push(0, velocity, 0);
             }
 
             if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
-                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
+                target.addEffect(new EffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
             }
 
             double exhilarationEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration);
             if (exhilarationEfficiency > 0) {
-                knockbackExhilaration(attacker, attacker.getPositionVec(), target, target.world.getGameTime() + 200, exhilarationEfficiency);
+                knockbackExhilaration(attacker, attacker.position(), target, target.level.getGameTime() + 200, exhilarationEfficiency);
             }
 
-            Random rand = target.getRNG();
-            CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
-                    world.spawnParticle(ParticleTypes.CRIT,
+            Random rand = target.getRandom();
+            CastOptional.cast(target.level, ServerWorld.class).ifPresent(world ->
+                    world.sendParticles(ParticleTypes.CRIT,
                             hitVec.x, hitVec.y, hitVec.z, 10,
-                            rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f));
+                            rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getBbHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f));
 
-            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.7f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.7f);
         } else {
-            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.7f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.7f);
         }
 
         return result;
@@ -147,12 +147,12 @@ public class SlamEffect extends ChargedAbilityEffect {
     private void knockbackExhilaration(PlayerEntity attacker, Vector3d origin, LivingEntity target, long timeLimit, double multiplier) {
         ServerScheduler.schedule(20, () -> {
             if (target.isOnGround()) {
-                double distance = Math.min(20, origin.distanceTo(target.getPositionVec()));
+                double distance = Math.min(20, origin.distanceTo(target.position()));
                 int amplifier = (int) (distance * multiplier) - 1;
                 if (amplifier >= 0) {
-                    attacker.addPotionEffect(new EffectInstance(SmallStrengthPotionEffect.instance, 200, amplifier, false, true));
+                    attacker.addEffect(new EffectInstance(SmallStrengthPotionEffect.instance, 200, amplifier, false, true));
                 }
-            } else if (target.world.getGameTime() < timeLimit) {
+            } else if (target.level.getGameTime() < timeLimit) {
                 knockbackExhilaration(attacker, origin, target, timeLimit, multiplier);
             }
         });
@@ -160,7 +160,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, BlockPos targetPos, Vector3d hitVec, int chargedTicks) {
-        if (!attacker.world.isRemote) {
+        if (!attacker.level.isClientSide) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
             int slowDuration = isDefensive(item, itemStack, hand) ? (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20) : 0;
             double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
@@ -169,12 +169,12 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             double range = getAoeRange(attacker, item, itemStack, overchargeBonus);
 
-            Vector3d direction = hitVec.subtract(attacker.getPositionVec()).mul(1, 0, 1).normalize();
+            Vector3d direction = hitVec.subtract(attacker.position()).multiply(1, 0, 1).normalize();
             double yaw = MathHelper.atan2(direction.x, direction.z);
-            AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).grow(range + 1, 4, range + 1).offset(direction.scale(range / 2));
-            List<LivingEntity> targets = attacker.world.getEntitiesWithinAABB(LivingEntity.class, boundingBox).stream()
+            AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).inflate(range + 1, 4, range + 1).move(direction.scale(range / 2));
+            List<LivingEntity> targets = attacker.level.getEntitiesOfClass(LivingEntity.class, boundingBox).stream()
                     .filter(Entity::isAlive)
-                    .filter(Entity::canBeAttackedWithItem)
+                    .filter(Entity::isAttackable)
                     .filter(entity -> !attacker.equals(entity))
                     .filter(entity -> inRange(hitVec, entity, yaw, range))
                     .collect(Collectors.toList());
@@ -183,9 +183,9 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             targets.forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration, momentumEfficiency, revengeLevel));
 
-            spawnGroundParticles(attacker.world, hitVec, direction, yaw, range);
+            spawnGroundParticles(attacker.level, hitVec, direction, yaw, range);
 
-            attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
+            attacker.causeFoodExhaustion(overextendLevel > 0 ? 6 : 1);
 
             int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
             if (echoLevel > 0) {
@@ -195,7 +195,7 @@ public class SlamEffect extends ChargedAbilityEffect {
         }
 
         attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+        attacker.getCooldowns().addCooldown(item, getCooldown(item, itemStack));
 
         item.tickProgression(attacker, itemStack, 2);
         item.applyDamage(2, itemStack, attacker);
@@ -204,21 +204,21 @@ public class SlamEffect extends ChargedAbilityEffect {
     private void echoGround(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, Vector3d hitVec, Vector3d direction, double yaw,
             double range, double damageMultiplier, int slowDuration, double momentumEfficiency, int revengeLevel) {
         EchoHelper.echo(attacker, 60, () -> {
-            AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).grow(range + 1, 4, range + 1).offset(direction.scale(range / 2));
-            List<LivingEntity> targets = attacker.world.getEntitiesWithinAABB(LivingEntity.class, boundingBox).stream()
+            AxisAlignedBB boundingBox = new AxisAlignedBB(hitVec, hitVec).inflate(range + 1, 4, range + 1).move(direction.scale(range / 2));
+            List<LivingEntity> targets = attacker.level.getEntitiesOfClass(LivingEntity.class, boundingBox).stream()
                     .filter(Entity::isAlive)
-                    .filter(Entity::canBeAttackedWithItem)
+                    .filter(Entity::isAttackable)
                     .filter(entity -> inRange(hitVec, entity, yaw, range))
                     .collect(Collectors.toList());
 
             targets.forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration, momentumEfficiency, revengeLevel));
 
-            spawnGroundParticles(attacker.world, hitVec, direction, yaw, range);
+            spawnGroundParticles(attacker.level, hitVec, direction, yaw, range);
         });
     }
 
     private void echoTarget(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
-        if (!attacker.world.isRemote) {
+        if (!attacker.level.isClientSide) {
             EchoHelper.echo(attacker, 60, () -> {
                 directSlam(attacker, hand, item, itemStack, target, hitVec, chargedTicks);
 
@@ -243,7 +243,7 @@ public class SlamEffect extends ChargedAbilityEffect {
         }
 
         double overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
-        if (overextendLevel > 0 && !attacker.getFoodStats().needFood()) {
+        if (overextendLevel > 0 && !attacker.getFoodData().needsFood()) {
             damageMultiplier += overextendLevel / 100d;
         }
 
@@ -263,7 +263,7 @@ public class SlamEffect extends ChargedAbilityEffect {
         }
 
         double overextendEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityOverextend);
-        if (overextendEfficiency > 0 && !attacker.getFoodStats().needFood()) {
+        if (overextendEfficiency > 0 && !attacker.getFoodData().needsFood()) {
             range += overextendEfficiency;
         }
 
@@ -271,11 +271,11 @@ public class SlamEffect extends ChargedAbilityEffect {
     }
 
     private void spawnGroundParticles(World world, Vector3d origin, Vector3d direction, double yaw, double range) {
-        Random rand = world.rand;
+        Random rand = world.random;
 
         BlockState originState = world.getBlockState(new BlockPos(origin));
-        ((ServerWorld) world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, originState),
-                origin.getX(), origin.getY(), origin.getZ(),
+        ((ServerWorld) world).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, originState),
+                origin.x(), origin.y(), origin.z(),
                 8, 0, rand.nextGaussian() * 0.1, 0, 0.1);
         world.playSound(null, new BlockPos(origin), originState.getSoundType().getBreakSound(), SoundCategory.PLAYERS, 1.5f, 0.5f);
 
@@ -286,22 +286,22 @@ public class SlamEffect extends ChargedAbilityEffect {
         BlockPos.Mutable targetPos = new BlockPos.Mutable(0, 0, 0);
         for (int x = -bound; x <= bound; x++) {
             for (int z = -bound; z <= bound; z++) {
-                targetPos.setAndOffset(center, x, 0, z);
+                targetPos.setWithOffset(center, x, 0, z);
                 if (compareAngle(origin, targetPos, yaw)) {
                     for (int y = -2; y < 2; y++) {
-                        targetPos.setAndOffset(center, x, y, z);
+                        targetPos.setWithOffset(center, x, y, z);
                         BlockState targetState = world.getBlockState(targetPos);
-                        if (targetState.isSolid() && !world.getBlockState(targetPos.up()).isSolid()) {
-                            targetPos.down();
+                        if (targetState.canOcclude() && !world.getBlockState(targetPos.above()).canOcclude()) {
+                            targetPos.below();
 
-                            double distance = targetPos.distanceSq(origin.x, origin.y, origin.z, true);
+                            double distance = targetPos.distSqr(origin.x, origin.y, origin.z, true);
 
                             if (distance < range * range) {
-                                double yOffset = targetState.getShape(world, targetPos).getBoundingBox().maxY;
-                                BlockPos particlePos = targetPos.toImmutable();
+                                double yOffset = targetState.getShape(world, targetPos).bounds().maxY;
+                                BlockPos particlePos = targetPos.immutable();
 
-                                ServerScheduler.schedule(particlePos.manhattanDistance(new BlockPos(origin)) - 3, () -> {
-                                    ((ServerWorld) world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, targetState),
+                                ServerScheduler.schedule(particlePos.distManhattan(new BlockPos(origin)) - 3, () -> {
+                                    ((ServerWorld) world).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, targetState),
                                             particlePos.getX() + 0.5, particlePos.getY() + yOffset, particlePos.getZ() + 0.5,
                                             3, 0, rand.nextGaussian() * 0.1, 0, 0.1);
 
@@ -319,8 +319,8 @@ public class SlamEffect extends ChargedAbilityEffect {
     }
 
     private boolean inRange(Vector3d origin, Entity entity, double originYaw, double range) {
-        if (origin.isWithinDistanceOf(entity.getPositionVec(), range)) {
-            Vector3d direction = entity.getPositionVec().subtract(origin);
+        if (origin.closerThan(entity.position(), range)) {
+            Vector3d direction = entity.position().subtract(origin);
             double entityYaw = MathHelper.atan2(direction.x, direction.z);
             double yawDiff = Math.abs((originYaw - entityYaw + 3 * Math.PI) % (Math.PI * 2) - Math.PI);
 
@@ -330,8 +330,8 @@ public class SlamEffect extends ChargedAbilityEffect {
     }
 
     private boolean compareAngle(Vector3d originPos, BlockPos.Mutable offsetPos, double originYaw) {
-        Vector3d direction = Vector3d.copyCenteredHorizontally(offsetPos).subtract(originPos);
-        double offsetYaw = MathHelper.atan2(direction.getX(), direction.getZ());
+        Vector3d direction = Vector3d.atBottomCenterOf(offsetPos).subtract(originPos);
+        double offsetYaw = MathHelper.atan2(direction.x(), direction.z());
 
         double yawDiff = Math.abs((originYaw - offsetYaw + 3 * Math.PI) % (Math.PI * 2) - Math.PI);
         return yawDiff < Math.PI / 6;
@@ -339,40 +339,40 @@ public class SlamEffect extends ChargedAbilityEffect {
 
     private static void groundSlamEntity(PlayerEntity attacker, LivingEntity target, ItemModularHandheld item, ItemStack itemStack, Vector3d origin,
             double damageMultiplier, int slowDuration, double momentumEfficiency, int revengeLevel) {
-        ServerScheduler.schedule(target.getPosition().manhattanDistance(new BlockPos(origin)) - 3, () -> {
+        ServerScheduler.schedule(target.blockPosition().distManhattan(new BlockPos(origin)) - 3, () -> {
             float knockback = momentumEfficiency > 0 ? 0.1f : 0.5f;
 
             AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, knockback, knockback);
 
             if (momentumEfficiency > 0) {
-                target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_GENERIC_BIG_FALL, SoundCategory.PLAYERS, 1, 0.7f);
+                target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.GENERIC_BIG_FALL, SoundCategory.PLAYERS, 1, 0.7f);
             } else {
-                target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.9f);
+                target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.9f);
             }
 
             if (result != AbilityUseResult.fail) {
                 if (slowDuration > 0) {
-                    target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, slowDuration, 1, false, true));
+                    target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, slowDuration, 1, false, true));
                 }
 
                 if (momentumEfficiency > 0) {
                     double velocity = momentumEfficiency;
                     velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
-                    target.addVelocity(0, velocity, 0);
-                    target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, 40, 0, false, false));
+                    target.push(0, velocity, 0);
+                    target.addEffect(new EffectInstance(StunPotionEffect.instance, 40, 0, false, false));
                 }
 
                 if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
-                    target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
+                    target.addEffect(new EffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
                     RevengeTracker.removeEnemySynced((ServerPlayerEntity) attacker, target);
                 }
             }
 
             if (result == AbilityUseResult.crit) {
-                Random rand = target.getRNG();
-                CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
-                        world.spawnParticle(ParticleTypes.CRIT,
-                                target.getPosX(), target.getPosY(), target.getPosZ(), 10,
+                Random rand = target.getRandom();
+                CastOptional.cast(target.level, ServerWorld.class).ifPresent(world ->
+                        world.sendParticles(ParticleTypes.CRIT,
+                                target.getX(), target.getY(), target.getZ(), 10,
                                 rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.5, rand.nextGaussian() * 0.3, 0.1f));
             }
         });

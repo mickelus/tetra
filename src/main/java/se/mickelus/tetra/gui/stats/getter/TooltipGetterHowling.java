@@ -14,7 +14,7 @@ public class TooltipGetterHowling implements ITooltipGetter {
 
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("tetra.stats.howling.tooltip",
+        return I18n.get("tetra.stats.howling.tooltip",
                 String.format("%.0f", levelGetter.getValue(player, itemStack)),
                 String.format("%.1f", efficiencyGetter.getValue(player, itemStack)));
     }

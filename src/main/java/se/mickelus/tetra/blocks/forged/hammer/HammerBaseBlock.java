@@ -54,7 +54,7 @@ import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
 public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
-    public static final DirectionProperty facingProp = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty facingProp = HorizontalBlock.FACING;
 
     public static final String qualityImprovementKey = "quality";
 
@@ -80,7 +80,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
     }
 
     @Override
-    protected void fillStateContainer(final StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
         builder.add(facingProp);
     }
 
@@ -91,16 +91,16 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderShape(BlockState state) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
-    public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
+    public void appendHoverText(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag advanced) {
         tooltip.add(locationTooltip);
         tooltip.add(new StringTextComponent(" "));
         tooltip.add(new TranslationTextComponent("block.multiblock_hint.1x2x1")
-                .mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
+                .withStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
     }
 
     public boolean isFunctional(World world, BlockPos pos) {
@@ -126,15 +126,15 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
                 .map(ItemStack::new)
                 .orElse(null);
 
-        if (moduleStack != null && !world.isRemote) {
-            if (player != null && player.inventory.addItemStackToInventory(moduleStack)) {
-                player.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, 1);
+        if (moduleStack != null && !world.isClientSide) {
+            if (player != null && player.inventory.add(moduleStack)) {
+                player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
             } else {
-                spawnAsEntity(world, pos.offset(hitFace), moduleStack);
+                popResource(world, pos.relative(hitFace), moduleStack);
             }
         }
 
-        world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
+        world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
 
         return true;
     }
@@ -186,12 +186,12 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
     }
 
     @Override
-    public ActionResultType onBlockActivated(final BlockState blockState, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand,
+    public ActionResultType use(final BlockState blockState, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand,
             final BlockRayTraceResult rayTraceResult) {
-        Direction blockFacing = blockState.get(facingProp);
+        Direction blockFacing = blockState.getValue(facingProp);
         HammerBaseTile te = TileEntityOptional.from(world, pos, HammerBaseTile.class).orElse(null);
-        ItemStack heldStack = player.getHeldItem(hand);
-        Direction facing = rayTraceResult.getFace();
+        ItemStack heldStack = player.getItemInHand(hand);
+        Direction facing = rayTraceResult.getDirection();
 
         if (te == null) {
             return ActionResultType.FAIL;
@@ -201,29 +201,29 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
             int slotIndex = blockFacing.equals(facing)? 0 : 1;
             if (te.hasCellInSlot(slotIndex)) {
                 ItemStack cell = te.removeCellFromSlot(slotIndex);
-                if (player.inventory.addItemStackToInventory(cell)) {
-                    player.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, 1);
+                if (player.inventory.add(cell)) {
+                    player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
                 } else {
-                    spawnAsEntity(world, pos.offset(facing), cell);
+                    popResource(world, pos.relative(facing), cell);
                 }
 
-                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
+                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
 
-                if (!player.world.isRemote) {
+                if (!player.level.isClientSide) {
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), ItemStack.EMPTY, getAdvancementData(world, pos));
                 }
 
-                return ActionResultType.func_233537_a_(player.world.isRemote);
+                return ActionResultType.sidedSuccess(player.level.isClientSide);
             } else if (heldStack.getItem() instanceof ItemCellMagmatic) {
                 te.putCellInSlot(heldStack, slotIndex);
-                player.setHeldItem(hand, ItemStack.EMPTY);
-                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
+                player.setItemInHand(hand, ItemStack.EMPTY);
+                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
 
-                if (!player.world.isRemote) {
+                if (!player.level.isClientSide) {
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), heldStack, getAdvancementData(world, pos));
                 }
 
-                return ActionResultType.func_233537_a_(player.world.isRemote);
+                return ActionResultType.sidedSuccess(player.level.isClientSide);
             }
         } else {
             boolean isA = Rotation.CLOCKWISE_90.rotate(blockFacing).equals(facing);
@@ -231,18 +231,18 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
             if (te.getEffect(isA) == null) {
                 boolean success = te.setModule(isA, heldStack.getItem());
                 if (success) {
-                    if (!player.world.isRemote) {
+                    if (!player.level.isClientSide) {
                         BlockUseCriterion.trigger((ServerPlayerEntity) player, world.getBlockState(pos), heldStack, getAdvancementData(world, pos));
                     }
 
-                    world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
+                    world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
                     heldStack.shrink(1);
 
-                    if (world.isRemote) {
+                    if (world.isClientSide) {
                         InteractiveBlockOverlay.markDirty();
                     }
 
-                    return ActionResultType.func_233537_a_(player.world.isRemote);
+                    return ActionResultType.sidedSuccess(player.level.isClientSide);
                 }
             }
         }
@@ -251,13 +251,13 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
             TileEntityOptional.from(world, pos, HammerBaseTile.class)
                     .ifPresent(tile -> {
                         for (int i = 0; i < 2; i++) {
                             if (tile.hasCellInSlot(i)) {
-                                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), tile.getStackInSlot(i).copy());
+                                InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), tile.getStackInSlot(i).copy());
                             }
                         }
 
@@ -265,17 +265,17 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
                                 .filter(Objects::nonNull)
                                 .map(HammerEffect::getItem)
                                 .map(ItemStack::new)
-                                .forEach(stack -> InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
+                                .forEach(stack -> InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
                     });
 
-            TileEntityOptional.from(world, pos, HammerBaseTile.class).ifPresent(TileEntity::remove);
+            TileEntityOptional.from(world, pos, HammerBaseTile.class).ifPresent(TileEntity::setRemoved);
         }
     }
 
     @Override
     public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, final BlockState state, final Direction face, final Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.get(facingProp), face, tools))
+                .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.getValue(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
@@ -291,27 +291,27 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
         TileEntityOptional.from(world, currentPos, HammerBaseTile.class).ifPresent(HammerBaseTile::updateRedstonePower);
         if (Direction.DOWN.equals(facing) && !HammerHeadBlock.instance.equals(facingState.getBlock())) {
-            return Blocks.AIR.getDefaultState();
+            return Blocks.AIR.defaultBlockState();
         }
 
-        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+        return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
     }
 
     // based on same method implementation in BedBlock
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        BlockState headState = HammerHeadBlock.instance.getDefaultState()
-                .with(WATERLOGGED, world.getFluidState(pos.down()).getFluid() == WATER);
-        world.setBlockState(pos.down(), headState, 3);
+    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        BlockState headState = HammerHeadBlock.instance.defaultBlockState()
+                .setValue(WATERLOGGED, world.getFluidState(pos.below()).getType() == WATER);
+        world.setBlock(pos.below(), headState, 3);
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(final BlockItemUseContext context) {
-        if (context.getWorld().getBlockState(context.getPos().down()).isReplaceable(context)) {
-            return this.getDefaultState().with(facingProp, context.getPlacementHorizontalFacing().getOpposite());
+        if (context.getLevel().getBlockState(context.getClickedPos().below()).canBeReplaced(context)) {
+            return this.defaultBlockState().setValue(facingProp, context.getHorizontalDirection().getOpposite());
         }
 
         // returning null here stops the block from being placed
@@ -325,11 +325,11 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock {
 
     @Override
     public BlockState rotate(final BlockState state, final Rotation rotation) {
-        return state.with(facingProp, rotation.rotate(state.get(facingProp)));
+        return state.setValue(facingProp, rotation.rotate(state.getValue(facingProp)));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.toRotation(state.get(facingProp)));
+        return state.rotate(mirror.getRotation(state.getValue(facingProp)));
     }
 }

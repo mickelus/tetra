@@ -28,8 +28,8 @@ public class MiningSpeedPotionEffect extends Effect {
 
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (event.getPlayer().isPotionActive(instance)) {
-            event.setNewSpeed(event.getNewSpeed() * event.getPlayer().getActivePotionEffect(instance).getAmplifier() / 10f);
+        if (event.getPlayer().hasEffect(instance)) {
+            event.setNewSpeed(event.getNewSpeed() * event.getPlayer().getEffect(instance).getAmplifier() / 10f);
         }
     }
 }

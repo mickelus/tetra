@@ -20,7 +20,7 @@ public class SecondaryAbilityPacket extends AbstractPacket {
 
     public SecondaryAbilityPacket(LivingEntity target, Hand hand) {
         targetId = Optional.ofNullable(target)
-                .map(Entity::getEntityId)
+                .map(Entity::getId)
                 .orElse(-1);
 
         this.hand = hand;
@@ -42,7 +42,7 @@ public class SecondaryAbilityPacket extends AbstractPacket {
     public void handle(PlayerEntity player) {
         LivingEntity target = Optional.of(targetId)
                 .filter(id -> id != -1)
-                .map(id -> player.world.getEntityByID(id))
+                .map(id -> player.level.getEntity(id))
                 .filter(entity -> entity instanceof LivingEntity)
                 .map(entity -> (LivingEntity) entity)
                 .orElse(null);

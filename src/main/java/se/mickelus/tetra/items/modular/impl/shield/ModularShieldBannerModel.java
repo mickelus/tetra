@@ -17,9 +17,9 @@ public class ModularShieldBannerModel extends Model {
     public final ModelRenderer bucklerBanner;
 
     public ModularShieldBannerModel() {
-        super(RenderType::getEntityTranslucent);
-        textureWidth = 64;
-        textureHeight = 64;
+        super(RenderType::entityTranslucent);
+        texWidth = 64;
+        texHeight = 64;
 
         towerBanner = new ModelRenderer(this, 0, 0);
         towerBanner.addBox(-6.0F, -11.0F, -2.005F, 12.0F, 22.0F, 1.0F, 0.0F);
@@ -29,10 +29,10 @@ public class ModularShieldBannerModel extends Model {
 
         bucklerBanner = new ModelRenderer(this, 2, 7);
         bucklerBanner.addBox(-4.0F, -4.0F, -2.005F, 8.0F, 8.0F, 1.0F, 0.0F);
-        bucklerBanner.rotateAngleZ = (float) (- Math.PI / 4);
+        bucklerBanner.zRot = (float) (- Math.PI / 4);
     }
 
-    public void render(MatrixStack matrixStack, IVertexBuilder vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {
         towerBanner.render(matrixStack, vertexBuilder, light, overlay, red, green, blue, alpha);
     }
 

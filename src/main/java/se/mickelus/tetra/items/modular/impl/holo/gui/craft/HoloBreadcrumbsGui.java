@@ -65,7 +65,7 @@ public class HoloBreadcrumbsGui extends GuiElement {
         int xOffset = 0;
         int overlapCount = Math.min(buttons.size(), items.length);
         for (int i = 0; i < overlapCount; i++) {
-            String label = !"".equals(items[i]) ? items[i] : I18n.format("tetra.holo.craft.slot");
+            String label = !"".equals(items[i]) ? items[i] : I18n.get("tetra.holo.craft.slot");
             GuiButton button = buttons.get(i);
             button.setText(label);
             button.setX(xOffset);
@@ -84,7 +84,7 @@ public class HoloBreadcrumbsGui extends GuiElement {
 
         // add new items
         for (int i = buttons.size(); i < items.length; i++) {
-            String label = !"".equals(items[i]) ? items[i] : I18n.format("tetra.holo.craft.slot");
+            String label = !"".equals(items[i]) ? items[i] : I18n.get("tetra.holo.craft.slot");
 
             addButton(i, label);
         }
@@ -104,7 +104,7 @@ public class HoloBreadcrumbsGui extends GuiElement {
             xOffset = last.getX() + last.getWidth() + 12;
         }
 
-        GuiButton button = new GuiButton(xOffset, 4, TextFormatting.getTextWithoutFormattingCodes(label), () -> onClick.accept(index));
+        GuiButton button = new GuiButton(xOffset, 4, TextFormatting.stripFormatting(label), () -> onClick.accept(index));
         new KeyframeAnimation(80, button)
                 .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateX(xOffset - 2, xOffset))
                 .withDelay(40)

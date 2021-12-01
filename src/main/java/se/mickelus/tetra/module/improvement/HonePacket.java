@@ -18,12 +18,12 @@ public class HonePacket extends AbstractPacket {
 
     @Override
     public void toBytes(PacketBuffer buffer) {
-        buffer.writeItemStack(itemStack);
+        buffer.writeItem(itemStack);
     }
 
     @Override
     public void fromBytes(PacketBuffer buffer) {
-        itemStack = buffer.readItemStack();
+        itemStack = buffer.readItem();
     }
 
     @Override

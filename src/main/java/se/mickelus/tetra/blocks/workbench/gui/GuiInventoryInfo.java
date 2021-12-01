@@ -49,7 +49,7 @@ public class GuiInventoryInfo extends GuiElement {
                     boolean shouldHighlight = false;
 
                     for (int materialIndex = 0; materialIndex < schematic.getNumMaterialSlots(); materialIndex++) {
-                        if (schematic.acceptsMaterial(targetStack, slot, materialIndex, inventory.getStackInSlot(stackIndex))) {
+                        if (schematic.acceptsMaterial(targetStack, slot, materialIndex, inventory.getItem(stackIndex))) {
                             shouldHighlight = true;
                             break;
                         }
@@ -64,7 +64,7 @@ public class GuiInventoryInfo extends GuiElement {
                 boolean shouldHighlight = false;
 
                 for (int materialIndex = 0; materialIndex < schematic.getNumMaterialSlots(); materialIndex++) {
-                    if (schematic.acceptsMaterial(targetStack, slot, materialIndex, inventory.getStackInSlot(stackIndex))) {
+                    if (schematic.acceptsMaterial(targetStack, slot, materialIndex, inventory.getItem(stackIndex))) {
                         shouldHighlight = true;
                         break;
                     }

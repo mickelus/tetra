@@ -36,7 +36,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
-        if (!target.world.isRemote) {
+        if (!target.level.isClientSide) {
             AbilityUseResult result;
             if (isDefensive(item, itemStack, hand)) {
                 result = defensiveExecute(attacker, item, itemStack, target);
@@ -49,9 +49,9 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
         }
 
-        attacker.addExhaustion(1f);
+        attacker.causeFoodExhaustion(1f);
         attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+        attacker.getCooldowns().addCooldown(item, getCooldown(item, itemStack));
 
         if (ComboPoints.canSpend(item, itemStack)) {
             ComboPoints.reset(attacker);
@@ -61,13 +61,13 @@ public class ExecuteEffect extends ChargedAbilityEffect {
     }
 
     private AbilityUseResult regularExecute(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks) {
-        long harmfulCount = target.getActivePotionEffects().stream()
-                .filter(effect -> effect.getPotion().getEffectType() == EffectType.HARMFUL)
+        long harmfulCount = target.getActiveEffects().stream()
+                .filter(effect -> effect.getEffect().getCategory() == EffectType.HARMFUL)
                 .mapToInt(EffectInstance::getAmplifier)
                 .map(amp -> amp + 1)
                 .sum();
 
-        if (target.isBurning()) {
+        if (target.isOnFire()) {
             harmfulCount++;
         }
 
@@ -94,10 +94,10 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
         int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
         if (overextendLevel > 0) {
-            FoodStats foodStats = attacker.getFoodStats();
+            FoodStats foodStats = attacker.getFoodData();
             float exhaustion = Math.min(40, foodStats.getFoodLevel() + foodStats.getSaturationLevel());
             damageMultiplier *= 1 + overextendLevel * exhaustion * 0.25 / 100;
-            attacker.addExhaustion(exhaustion); // 4 exhaustion per food/saturation so this should drain 1/4th
+            attacker.causeFoodExhaustion(exhaustion); // 4 exhaustion per food/saturation so this should drain 1/4th
         }
 
         int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
@@ -111,7 +111,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
             if (momentumLevel > 0) {
                 int duration = (int) (momentumLevel * damageMultiplier * 20);
-                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                target.addEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
             }
 
             int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
@@ -121,7 +121,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
                 int duration = (int) (Math.min(200, item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration) * maxHealth) * 20);
 
                 if (amplifier >= 0 && duration > 0) {
-                    attacker.addPotionEffect(new EffectInstance(SmallStrengthPotionEffect.instance, duration, amplifier, false, true));
+                    attacker.addEffect(new EffectInstance(SmallStrengthPotionEffect.instance, duration, amplifier, false, true));
                 }
             }
         }
@@ -131,13 +131,13 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
     private void echoExecute(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
         EchoHelper.echo(attacker, 100, () -> {
-            long harmfulCount = target.getActivePotionEffects().stream()
-                    .filter(effect -> effect.getPotion().getEffectType() == EffectType.HARMFUL)
+            long harmfulCount = target.getActiveEffects().stream()
+                    .filter(effect -> effect.getEffect().getCategory() == EffectType.HARMFUL)
                     .mapToInt(EffectInstance::getAmplifier)
                     .map(amp -> amp + 1)
                     .sum();
 
-            if (target.isBurning()) {
+            if (target.isOnFire()) {
                 harmfulCount++;
             }
 
@@ -146,7 +146,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
             if (damageMultiplier > 0) {
                 AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
-                playEffects(result != AbilityUseResult.fail, target, target.getPositionVec().add(0, target.getHeight() / 2, 0));
+                playEffects(result != AbilityUseResult.fail, target, target.position().add(0, target.getBbHeight() / 2, 0));
             }
         });
     }
@@ -162,13 +162,13 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
-            int amp = Optional.ofNullable(target.getActivePotionEffect(SeveredPotionEffect.instance))
+            int amp = Optional.ofNullable(target.getEffect(SeveredPotionEffect.instance))
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1);
             amp += targetFullHealth ? 2 : 1;
             amp = Math.min(amp, 2);
 
-            target.addPotionEffect(new EffectInstance(SeveredPotionEffect.instance, 1200, amp, false, false));
+            target.addEffect(new EffectInstance(SeveredPotionEffect.instance, 1200, amp, false, false));
         }
 
         return result;
@@ -176,8 +176,8 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
     private double getRevengeMultiplier(PlayerEntity player, ItemModularHandheld item, ItemStack itemStack) {
         int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
-        if (revengeLevel > 0 && (player.getActivePotionEffects().stream().anyMatch(effect -> effect.getPotion().getEffectType() == EffectType.HARMFUL)
-                || player.isBurning())) {
+        if (revengeLevel > 0 && (player.getActiveEffects().stream().anyMatch(effect -> effect.getEffect().getCategory() == EffectType.HARMFUL)
+                || player.isOnFire())) {
             return 1 + revengeLevel / 100d;
         }
 
@@ -186,15 +186,15 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
     private void playEffects(boolean isSuccess, LivingEntity target, Vector3d hitVec) {
         if (isSuccess) {
-            target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1, 0.8f);
 
-            Random rand = target.getRNG();
-            CastOptional.cast(target.world, ServerWorld.class).ifPresent(world ->
-                    world.spawnParticle(new RedstoneParticleData(0.6f, 0, 0, 0.8f),
+            Random rand = target.getRandom();
+            CastOptional.cast(target.level, ServerWorld.class).ifPresent(world ->
+                    world.sendParticles(new RedstoneParticleData(0.6f, 0, 0, 0.8f),
                             hitVec.x, hitVec.y, hitVec.z, 10,
                             rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, 0.1f));
         } else {
-            target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
         }
     }
 }

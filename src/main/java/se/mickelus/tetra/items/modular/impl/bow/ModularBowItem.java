@@ -51,6 +51,8 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import net.minecraft.item.Item.Properties;
+
 public class ModularBowItem extends ModularItem {
     public final static String staveKey = "bow/stave";
     public final static String stringKey = "bow/string";
@@ -73,7 +75,7 @@ public class ModularBowItem extends ModularItem {
     public static ModularBowItem instance;
 
     public ModularBowItem() {
-        super(new Properties().maxStackSize(1).isImmuneToFire());
+        super(new Properties().stacksTo(1).fireResistant());
         setRegistryName(unlocalizedName);
 
         majorModuleKeys = new String[] { stringKey, staveKey };
@@ -128,37 +130,37 @@ public class ModularBowItem extends ModularItem {
     /**
      * Called when the player stops using an Item (stops holding the right mouse button).
      */
-    public void onPlayerStoppedUsing(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
+    public void releaseUsing(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
         if (getEffectLevel(itemStack, ItemEffect.overbowed) > 0 && timeLeft <= 0) {
-            entity.resetActiveHand();
+            entity.stopUsingItem();
             // trigger a small cooldown here to avoid the bow getting drawn again instantly
-            CastOptional.cast(entity, PlayerEntity.class).ifPresent(player -> player.getCooldownTracker().setCooldown(this, 10));
+            CastOptional.cast(entity, PlayerEntity.class).ifPresent(player -> player.getCooldowns().addCooldown(this, 10));
         } else {
             fireArrow(itemStack, world, entity, timeLeft);
         }
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack itemStack, World world, LivingEntity entity) {
+    public ItemStack finishUsingItem(ItemStack itemStack, World world, LivingEntity entity) {
         if (getEffectLevel(itemStack, ItemEffect.overbowed) > 0) {
-            entity.resetActiveHand();
-            CastOptional.cast(entity, PlayerEntity.class).ifPresent(player -> player.getCooldownTracker().setCooldown(this, 10));
+            entity.stopUsingItem();
+            CastOptional.cast(entity, PlayerEntity.class).ifPresent(player -> player.getCooldowns().addCooldown(this, 10));
         }
 
-        return super.onItemUseFinish(itemStack, world, entity);
+        return super.finishUsingItem(itemStack, world, entity);
     }
 
     @Override
     public void onUsingTick(ItemStack itemStack, LivingEntity player, int count) {
         if (getEffectLevel(itemStack, ItemEffect.releaseLatch) > 0 && getProgress(itemStack, player) >= 1) {
-            player.stopActiveHand();
+            player.releaseUsingItem();
         }
     }
 
     protected void fireArrow(ItemStack itemStack, World world, LivingEntity entity, int timeLeft) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)entity;
-            ItemStack ammoStack = player.findAmmo(vanillaBow);
+            ItemStack ammoStack = player.getProjectile(vanillaBow);
 
             boolean playerInfinite = isInfinite(player, itemStack, ammoStack);
 
@@ -185,44 +187,44 @@ public class ModularBowItem extends ModularItem {
                     ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
                             .orElse((ArrowItem) Items.ARROW);
 
-                    boolean infiniteAmmo = player.abilities.isCreativeMode || ammoItem.isInfinite(ammoStack, itemStack, player);
+                    boolean infiniteAmmo = player.abilities.instabuild || ammoItem.isInfinite(ammoStack, itemStack, player);
                     int count = MathHelper.clamp(getEffectLevel(itemStack, ItemEffect.multishot), 1, infiniteAmmo ? 64 : ammoStack.getCount());
 
-                    if (!world.isRemote) {
+                    if (!world.isClientSide) {
                         double spread = getEffectEfficiency(itemStack, ItemEffect.multishot);
 
-                        int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, itemStack);
-                        int punchLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, itemStack);
-                        int flameLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, itemStack);
+                        int powerLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, itemStack);
+                        int punchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, itemStack);
+                        int flameLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, itemStack);
                         int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing);
 
                         for (int i = 0; i < count; i++) {
-                            double yaw = player.rotationYaw - spread * (count - 1) / 2f + spread * i;
+                            double yaw = player.yRot - spread * (count - 1) / 2f + spread * i;
                             AbstractArrowEntity projectile = ammoItem.createArrow(world, ammoStack, player);
-                            projectile.func_234612_a_(player, player.rotationPitch, (float) yaw, 0.0F, projectileVelocity * 3.0F, 1.0F);
+                            projectile.shootFromRotation(player, player.xRot, (float) yaw, 0.0F, projectileVelocity * 3.0F, 1.0F);
 
                             if (drawProgress >= 20) {
-                                projectile.setIsCritical(true);
+                                projectile.setCritArrow(true);
                             }
 
                             // the damage modifier is based on fully drawn damage, vanilla bows deal 3 times base damage + 0-4 crit damage
-                            projectile.setDamage(projectile.getDamage() -2 + strength / 3);
+                            projectile.setBaseDamage(projectile.getBaseDamage() -2 + strength / 3);
 
                             if (powerLevel > 0) {
-                                projectile.setDamage(projectile.getDamage() + powerLevel * 0.5D + 0.5D);
+                                projectile.setBaseDamage(projectile.getBaseDamage() + powerLevel * 0.5D + 0.5D);
                             }
 
                             // velocity multiplies arrow damage for vanilla projectiles, need to reduce damage if velocity > 1
                             if (projectileVelocity > 1) {
-                                projectile.setDamage(projectile.getDamage() / projectileVelocity);
+                                projectile.setBaseDamage(projectile.getBaseDamage() / projectileVelocity);
                             }
 
                             if (punchLevel > 0) {
-                                projectile.setKnockbackStrength(punchLevel);
+                                projectile.setKnockback(punchLevel);
                             }
 
                             if (flameLevel > 0) {
-                                projectile.setFire(100);
+                                projectile.setSecondsOnFire(100);
                             }
 
                             if (piercingLevel > 0) {
@@ -233,27 +235,27 @@ public class ModularBowItem extends ModularItem {
                                 projectile.setNoGravity(true);
                             }
 
-                            if (infiniteAmmo || player.abilities.isCreativeMode
+                            if (infiniteAmmo || player.abilities.instabuild
                                     && (ammoStack.getItem() == Items.SPECTRAL_ARROW || ammoStack.getItem() == Items.TIPPED_ARROW)) {
-                                projectile.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+                                projectile.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                             }
 
                             if (suspendLevel > 0 && drawProgress >= 20) {
-                                Vector3d projDir = projectile.getMotion().normalize();
-                                Vector3d projPos = projectile.getPositionVec();
+                                Vector3d projDir = projectile.getDeltaMovement().normalize();
+                                Vector3d projPos = projectile.position();
                                 for (int j = 0; j < 4; j++) {
                                     Vector3d pos = projPos.add(projDir.scale(2 + j * 2));
-                                    ((ServerWorld)entity.world).spawnParticle(ParticleTypes.END_ROD,
-                                            pos.getX(), pos.getY(), pos.getZ(), 1,
+                                    ((ServerWorld)entity.level).sendParticles(ParticleTypes.END_ROD,
+                                            pos.x(), pos.y(), pos.z(), 1,
                                             0, 0, 0, 0.01);
                                 }
                             }
 
-                            world.addEntity(projectile);
+                            world.addFreshEntity(projectile);
 
                             // vanilla velocity sync breaks when velocity is >3.9 on any axis
                             if (projectileVelocity * 3 > 4) {
-                                TetraMod.packetHandler.sendToAllPlayersNear(new ProjectileMotionPacket(projectile), projectile.getPosition(), 512, world.getDimensionKey());
+                                TetraMod.packetHandler.sendToAllPlayersNear(new ProjectileMotionPacket(projectile), projectile.blockPosition(), 512, world.dimension());
                             }
                         }
 
@@ -273,27 +275,27 @@ public class ModularBowItem extends ModularItem {
                     } else if (suspendLevel > 0) {
                         pitchBase = pitchBase / 2;
                     }
-                    world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(),
-                            SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS,
+                    world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                            SoundEvents.ARROW_SHOOT, SoundCategory.PLAYERS,
                             0.8F + projectileVelocity * 0.2f,
                             1.9f + random.nextFloat() * 0.2F - pitchBase * 0.8F);
 
-                    if (!infiniteAmmo && !player.abilities.isCreativeMode) {
+                    if (!infiniteAmmo && !player.abilities.instabuild) {
                         ammoStack.shrink(count);
                         if (ammoStack.isEmpty()) {
-                            player.inventory.deleteStack(ammoStack);
+                            player.inventory.removeItem(ammoStack);
                         }
                     }
 
-                    player.addStat(Stats.ITEM_USED.get(this));
+                    player.awardStat(Stats.ITEM_USED.get(this));
                 }
             }
         }
     }
 
     private boolean isInfinite(PlayerEntity player, ItemStack bowStack, ItemStack ammoStack) {
-        return player.abilities.isCreativeMode
-                || (ammoStack.isEmpty() && EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, bowStack) > 0)
+        return player.abilities.instabuild
+                || (ammoStack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) > 0)
                 || CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
                 .map(item -> item.isInfinite(ammoStack, bowStack, player))
                 .orElse(false);
@@ -335,9 +337,9 @@ public class ModularBowItem extends ModularItem {
      */
     public float getProgress(ItemStack itemStack, @Nullable LivingEntity entity) {
         return Optional.ofNullable(entity)
-                .filter(e -> e.getItemInUseCount() > 0)
-                .filter(e -> itemStack.equals(e.getActiveItemStack()))
-                .map( e -> (getUseDuration(itemStack) - e.getItemInUseCount()) * 1f / getDrawDuration(itemStack))
+                .filter(e -> e.getUseItemRemainingTicks() > 0)
+                .filter(e -> itemStack.equals(e.getUseItem()))
+                .map( e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getDrawDuration(itemStack))
                 .orElse(0f);
     }
 
@@ -345,8 +347,8 @@ public class ModularBowItem extends ModularItem {
         int overbowedLevel = getEffectLevel(itemStack, ItemEffect.overbowed);
         if (overbowedLevel > 0) {
             return Optional.ofNullable(entity)
-                    .filter(e -> itemStack.equals(e.getActiveItemStack()))
-                    .map(LivingEntity::getItemInUseCount)
+                    .filter(e -> itemStack.equals(e.getUseItem()))
+                    .map(LivingEntity::getUseItemRemainingTicks)
                     .map(useCount -> 1 - useCount / (overbowedLevel * 2f))
                     .map(progress -> MathHelper.clamp(progress, 0, 1))
                     .orElse(0f);
@@ -372,31 +374,31 @@ public class ModularBowItem extends ModularItem {
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public UseAction getUseAction(ItemStack stack) {
+    public UseAction getUseAnimation(ItemStack stack) {
         return UseAction.BOW;
     }
 
     @Override
-    public boolean isDamageable() {
+    public boolean canBeDepleted() {
         return true;
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack bowStack = player.getHeldItem(hand);
-        boolean hasAmmo = !player.findAmmo(vanillaBow).isEmpty();
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack bowStack = player.getItemInHand(hand);
+        boolean hasAmmo = !player.getProjectile(vanillaBow).isEmpty();
 
         if (isBroken(bowStack)) {
-            return ActionResult.resultPass(bowStack);
+            return ActionResult.pass(bowStack);
         }
 
         ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
         if (ret != null) return ret;
 
-        if (!hasAmmo && !player.abilities.isCreativeMode && EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, bowStack) <= 0) {
-            return ActionResult.resultFail(bowStack);
+        if (!hasAmmo && !player.abilities.instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) <= 0) {
+            return ActionResult.fail(bowStack);
         } else {
-            player.setActiveHand(hand);
-            return ActionResult.resultConsume(bowStack);
+            player.startUsingItem(hand);
+            return ActionResult.consume(bowStack);
         }
     }
 

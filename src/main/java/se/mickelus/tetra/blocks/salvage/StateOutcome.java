@@ -20,7 +20,7 @@ public class StateOutcome<T extends Comparable<T>, V extends T> implements Inter
 
     @Override
     public boolean apply(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
-        blockState.with(property, value);
+        blockState.setValue(property, value);
 
         return true;
     }

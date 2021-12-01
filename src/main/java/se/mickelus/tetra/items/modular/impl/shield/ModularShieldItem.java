@@ -29,6 +29,8 @@ import se.mickelus.tetra.util.CastOptional;
 
 import java.util.Optional;
 
+import net.minecraft.item.Item.Properties;
+
 public class ModularShieldItem extends ItemModularHandheld {
     public final static String plateKey = "shield/plate";
     public final static String gripKey = "shield/grip";
@@ -43,8 +45,8 @@ public class ModularShieldItem extends ItemModularHandheld {
 
     public ModularShieldItem() {
         super(new Properties()
-                .maxStackSize(1)
-                .isImmuneToFire()
+                .stacksTo(1)
+                .fireResistant()
                 .setISTER(() -> ModularShieldISTER::new));
         setRegistryName(unlocalizedName);
 
@@ -61,7 +63,7 @@ public class ModularShieldItem extends ItemModularHandheld {
 
         ItemUpgradeRegistry.instance.registerReplacementHook(this::copyBanner);
 
-        DispenserBlock.registerDispenseBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+        DispenserBlock.registerBehavior(this, ArmorItem.DISPENSE_ITEM_BEHAVIOR);
     }
 
     @Override
@@ -73,15 +75,15 @@ public class ModularShieldItem extends ItemModularHandheld {
     public void clientInit() {
         super.clientInit();
 
-        ItemModelsProperties.registerProperty(this, new ResourceLocation("blocking"),
-                (itemStack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == itemStack ? 1.0F : 0.0F);
+        ItemModelsProperties.register(this, new ResourceLocation("blocking"),
+                (itemStack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == itemStack ? 1.0F : 0.0F);
 
         MinecraftForge.EVENT_BUS.register(new BlockProgressOverlay(Minecraft.getInstance()));
     }
 
     private ItemStack copyBanner(ItemStack original, ItemStack replacement) {
         if (equals(replacement.getItem())) {
-            Optional.ofNullable(original.getChildTag("BlockEntityTag"))
+            Optional.ofNullable(original.getTagElement("BlockEntityTag"))
                     .ifPresent(tag -> {
                         replacement.getOrCreateTag().put("BlockEntityTag", tag);
 

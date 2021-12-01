@@ -19,7 +19,7 @@ import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
 
 @OnlyIn(Dist.CLIENT)
 public class HammerBaseRenderer extends TileEntityRenderer<HammerBaseTile> {
-    public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_hammer/base_sheet"));
+    public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_hammer/base_sheet"));
 
     private final ModelRenderer unpowered;
     private final ModelRenderer powered;
@@ -47,42 +47,42 @@ public class HammerBaseRenderer extends TileEntityRenderer<HammerBaseTile> {
         for (int i = 0; i < effects.length; i++) {
             modulesA[i] = new ModelRenderer(128, 64, i * 16, 32);
             modulesA[i].addBox(0, 0, -16, 16, 16, 0, 0.03f);
-            modulesA[i].rotateAngleY = (float) -Math.PI / 2f;
+            modulesA[i].yRot = (float) -Math.PI / 2f;
         }
 
         modulesB = new ModelRenderer[effects.length];
         for (int i = 0; i < effects.length; i++) {
             modulesB[i] = new ModelRenderer(128, 64, i * 16, 32);
             modulesB[i].addBox(-16, 0, 0, 16, 16, 0, 0.03f);
-            modulesB[i].rotateAngleY = (float) Math.PI / 2f;
+            modulesB[i].yRot = (float) Math.PI / 2f;
         }
 
         cellAunpowered = new ModelRenderer(128, 64, 48, 0);
         cellAunpowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
-        cellAunpowered.rotateAngleX = (float) -Math.PI / 2f;
+        cellAunpowered.xRot = (float) -Math.PI / 2f;
         cellApowered = new ModelRenderer(128, 64, 48, 8);
         cellApowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
-        cellApowered.rotateAngleX = (float) -Math.PI / 2f;
+        cellApowered.xRot = (float) -Math.PI / 2f;
 
         cellBunpowered = new ModelRenderer(128, 64, 48, 0);
         cellBunpowered.addBox(5.5f, -3, -10f, 5, 3, 5, 0);
-        cellBunpowered.rotateAngleX = (float) Math.PI / 2f;
+        cellBunpowered.xRot = (float) Math.PI / 2f;
         cellBpowered = new ModelRenderer(128, 64, 48, 8);
         cellBpowered.addBox(5.5f, -3, -10f, 5, 3, 5, 0);
-        cellBpowered.rotateAngleX = (float) Math.PI / 2f;
+        cellBpowered.xRot = (float) Math.PI / 2f;
     }
 
     @Override
     public void render(HammerBaseTile tile, float v, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        if (tile.hasWorld()) {
-            matrixStack.push();
+        if (tile.hasLevel()) {
+            matrixStack.pushPose();
             matrixStack.translate(0.5F, 0.5F, 0.5F);
             // todo: why does the model render upside down by default?
-            matrixStack.rotate(Vector3f.ZP.rotationDegrees(180));
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(tile.getFacing().getHorizontalAngle()));
+            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180));
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(tile.getFacing().toYRot()));
             matrixStack.translate(-0.5F, -0.5F, -0.5F);
 
-            IVertexBuilder vertexBuilder = material.getBuffer(buffer, RenderType::getEntityCutout);
+            IVertexBuilder vertexBuilder = material.buffer(buffer, RenderType::entityCutout);
 
             if (tile.isFueled()) {
                 powered.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
@@ -114,7 +114,7 @@ public class HammerBaseRenderer extends TileEntityRenderer<HammerBaseTile> {
                 modulesB[tile.getEffect(false).ordinal()].render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
             }
 
-            matrixStack.pop();
+            matrixStack.popPose();
         }
     }
 }

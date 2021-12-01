@@ -17,7 +17,7 @@ public class TooltipGetterScannerHorizontalRange implements ITooltipGetter {
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
 
 
-        return I18n.format("tetra.stats.holo.scannerHorizontalSpread.tooltip",
+        return I18n.get("tetra.stats.holo.scannerHorizontalSpread.tooltip",
                 String.format("%.0f", levelGetter.getValue(player, itemStack)),
                 String.format("%.1f", ScannerBarGui.getDegreesPerUnit()));
     }

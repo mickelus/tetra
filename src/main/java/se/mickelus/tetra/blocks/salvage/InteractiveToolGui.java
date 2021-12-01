@@ -40,7 +40,7 @@ public class InteractiveToolGui extends GuiElement {
                 .applyTo(new Applier.Opacity(1, 0));
 
         updateTint();
-        currentSlot = player.inventory.currentItem;
+        currentSlot = player.inventory.selected;
     }
 
     public void updateFadeTime() {
@@ -48,8 +48,8 @@ public class InteractiveToolGui extends GuiElement {
     }
 
     private void updateTint() {
-        int mainHandLevel = PropertyHelper.getItemToolLevel(player.getHeldItemMainhand(), toolType);
-        int offHandLevel = PropertyHelper.getItemToolLevel(player.getHeldItemOffhand(), toolType);
+        int mainHandLevel = PropertyHelper.getItemToolLevel(player.getMainHandItem(), toolType);
+        int offHandLevel = PropertyHelper.getItemToolLevel(player.getOffhandItem(), toolType);
 
         if (mainHandLevel >= toolLevel || offHandLevel >= toolLevel) {
             toolIcon.update(toolLevel, GuiColors.normal);
@@ -73,9 +73,9 @@ public class InteractiveToolGui extends GuiElement {
 
     @Override
     public void draw(MatrixStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        if (player.inventory.currentItem != currentSlot) {
+        if (player.inventory.selected != currentSlot) {
             updateTint();
-            currentSlot = player.inventory.currentItem;
+            currentSlot = player.inventory.selected;
         }
 
         super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);

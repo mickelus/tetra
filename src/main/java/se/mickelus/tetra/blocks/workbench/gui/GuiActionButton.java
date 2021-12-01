@@ -40,8 +40,8 @@ public class GuiActionButton extends GuiElement {
         this.action = action;
         this.targetStack = targetStack;
 
-        String label = I18n.format(String.format("%s.%s.label", TetraMod.MOD_ID, action.getKey()));
-        width = Minecraft.getInstance().fontRenderer.getStringWidth(label) + 42;
+        String label = I18n.get(String.format("%s.%s.label", TetraMod.MOD_ID, action.getKey()));
+        width = Minecraft.getInstance().font.width(label) + 42;
 
         labelClickable = new GuiClickable(0, 0, width, height, () -> clickHandler.accept(action)) {
             protected void onFocus() {

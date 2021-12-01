@@ -49,7 +49,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'snapshot', version: "${mcp_mappings}"
+    mappings channel: 'official', version: mc_version
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {

@@ -39,7 +39,7 @@ public class HoloMaterialsButtonGui extends GuiClickable {
         icon.setAttachment(GuiAttachment.middleCenter);
         addChild(icon);
 
-        label = new GuiStringOutline(0, -1, I18n.format("tetra.holo.craft.materials"));
+        label = new GuiStringOutline(0, -1, I18n.get("tetra.holo.craft.materials"));
         label.setAttachment(GuiAttachment.middleCenter);
         label.setOpacity(0);
         addChild(label);

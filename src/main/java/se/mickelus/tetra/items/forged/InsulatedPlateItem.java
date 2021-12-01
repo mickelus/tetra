@@ -15,20 +15,22 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class InsulatedPlateItem extends TetraItem {
     private static final String unlocalizedName = "vent_plate";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static InsulatedPlateItem instance;
 
     public InsulatedPlateItem() {
-        super(new Properties().group(TetraItemGroup.instance));
+        super(new Properties().tab(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        tooltip.add(new TranslationTextComponent("item.tetra.vent_plate.description").mergeStyle(TextFormatting.GRAY));
+    public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+        tooltip.add(new TranslationTextComponent("item.tetra.vent_plate.description").withStyle(TextFormatting.GRAY));
         tooltip.add(new StringTextComponent(" "));
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }

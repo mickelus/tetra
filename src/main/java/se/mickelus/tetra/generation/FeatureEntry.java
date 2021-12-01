@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
 public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference> {
     public static final String key = "feature";
     public static FeatureEntry instance = new FeatureEntry();
-    public static ConfiguredFeature<?, ?> configuredInstance = instance.withConfiguration(NoFeatureConfig.field_236559_b_);
+    public static ConfiguredFeature<?, ?> configuredInstance = instance.configured(NoFeatureConfig.INSTANCE);
 
     private TemplateManager templateManager;
     private Registry<Biome> biomeRegistry;
@@ -57,7 +57,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
     private List<FeatureParameters> entryPoints = Collections.emptyList();
 
     public FeatureEntry() {
-        super(NoFeatureConfig.field_236558_a_);
+        super(NoFeatureConfig.CODEC);
 //        super(FeatureReference.codec);
 
         setRegistryName(TetraMod.MOD_ID, key);
@@ -74,12 +74,12 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
     }
 
     public void setup(MinecraftServer server) {
-        templateManager = server.getTemplateManager();
-        biomeRegistry = server.func_244267_aX().getRegistry(Registry.BIOME_KEY);
+        templateManager = server.getStructureManager();
+        biomeRegistry = server.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
     }
 
     public void registerFeatures(BiomeLoadingEvent event) {
-        event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, configuredInstance);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, configuredInstance);
 
 //        DataManager.featureData.getData().values().stream()
 //                .filter(params -> params.biomes.length > 0)
@@ -87,8 +87,8 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
 //                .forEach(params -> event.getGeneration().withFeature(
 //                        GenerationStage.Decoration.UNDERGROUND_STRUCTURES,
 //                        withConfiguration(new FeatureReference(params.location))
-//                                .withPlacement(Placement.field_242907_l.configure(new TopSolidRangeConfig(params.minY, params.minY, params.maxY)))));
-//                                    .func_242732_c(density));
+//                                .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(params.minY, params.minY, params.maxY)))));
+//                                    .countRandom(density));
     }
 
     private void addToBiomes() {
@@ -100,7 +100,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
 //                            .forEach(params -> biome.getGenerationSettings().
 //                                    GenerationStage.Decoration.UNDERGROUND_STRUCTURES,
 //                                    withConfiguration(new FeatureReference(params.location))
-//                                            .withPlacement(Placement.field_242907_l.configure(new TopSolidRangeConfig(params.minY, params.minY, params.maxY)))));
+//                                            .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(params.minY, params.minY, params.maxY)))));
 //                });
 
 //        if (EffectiveSide.get().isClient()) {
@@ -135,15 +135,15 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
 
 
     @Override
-    public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig ref) {
+    public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig ref) {
         Biome biome = world.getBiome(pos);
-        ResourceLocation dimensionType = world.getWorld().getDimensionKey().getLocation();
+        ResourceLocation dimensionType = world.getLevel().dimension().location();
 
         for (FeatureParameters params: entryPoints) {
             if (Arrays.asList(params.dimensions).contains(dimensionType)
-                    && Arrays.stream(params.biomes).anyMatch(biomeName -> biomeName.equalsIgnoreCase(biome.getCategory().getName()))
+                    && Arrays.stream(params.biomes).anyMatch(biomeName -> biomeName.equalsIgnoreCase(biome.getBiomeCategory().getName()))
                     && rand.nextFloat() < params.probability) {
-                generateFeatureRoot(params, world, pos.up(params.minY + rand.nextInt(params.maxY - params.minY)), rand);
+                generateFeatureRoot(params, world, pos.above(params.minY + rand.nextInt(params.maxY - params.minY)), rand);
                 return true;
             }
         }
@@ -151,7 +151,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
         return false;
     }
 
-//    public boolean func_241855_a(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, FeatureReference ref) {
+//    public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, FeatureReference ref) {
 //        FeatureParameters params = DataManager.featureData.getData(ref.location);
 //
 //        ResourceLocation dimensionType = world.getWorld().getDimensionKey().getLocation();
@@ -180,7 +180,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
 
     private void generateFeature(FeatureParameters feature, ISeedReader world, BlockPos pos, Rotation rotation, Mirror mirror,
             Random random, int depth) {
-        final Template template = templateManager.getTemplate(feature.location);
+        final Template template = templateManager.get(feature.location);
         if (template != null) {
             final PlacementSettings settings = new PlacementSettings();
             settings.setRotation(rotation);
@@ -205,7 +205,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
             settings.addProcessor(new TransferUnitProcessor());
 
             // todo 1.16: new BlockPos param here, what does it do?
-            boolean blocksAdded = template.func_237146_a_(world, pos, pos, settings, random,2);
+            boolean blocksAdded = template.placeInWorld(world, pos, pos, settings, random,2);
 
             if (blocksAdded) {
                 generateLoot(feature, world, pos, settings, random);
@@ -227,7 +227,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
 
 
                     if (selectedFeature != null) {
-                        Rotation childRotation = rotation.add(RotationHelper.rotationFromFacing(child.facing));
+                        Rotation childRotation = rotation.getRotated(RotationHelper.rotationFromFacing(child.facing));
                         PlacementSettings offsetPlacement = new PlacementSettings()
                                 .setMirror(mirror)
                                 .setRotation(rotation);
@@ -238,9 +238,9 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
                         // todo: custom child rotation offsetting, keep around until builtin func proves to work
                         // BlockPos childPos = child.offset.rotate(rotation).subtract(selectedFeature.origin.rotate(childRotation));
                         // childPos = childPos.add(pos);
-                        BlockPos childPos = Template.transformedBlockPos(offsetPlacement, child.offset)
-                                .subtract(Template.transformedBlockPos(originPlacement, selectedFeature.origin))
-                                .add(pos);
+                        BlockPos childPos = Template.calculateRelativePosition(offsetPlacement, child.offset)
+                                .subtract(Template.calculateRelativePosition(originPlacement, selectedFeature.origin))
+                                .offset(pos);
 
                         generateFeature(selectedFeature, world, childPos, childRotation, mirror, random, depth + 1);
                     }
@@ -251,7 +251,7 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
         BlockPos size = template.getSize();
         size = size.rotate(rotation);
         BlockPos offset = new BlockPos(16 - Math.abs(size.getX()) / 2, 0, 16 - Math.abs(size.getZ()) / 2);
-        return blockPos.add(offset);
+        return blockPos.offset(offset);
     }
 
     /**
@@ -264,27 +264,27 @@ public class FeatureEntry extends Feature<NoFeatureConfig> { //<FeatureReference
      */
     private void generateLoot(FeatureParameters feature, ISeedReader world, BlockPos pos, PlacementSettings settings, Random random) {
         Arrays.stream(feature.loot).forEach(loot ->
-                addLoot(loot.table, world, Template.transformedBlockPos(settings, loot.position).add(pos), random));
+                addLoot(loot.table, world, Template.calculateRelativePosition(settings, loot.position).offset(pos), random));
     }
 
     private void addLoot(ResourceLocation lootLocation, ISeedReader world, BlockPos pos, Random random) {
-        TileEntity tileEntity = world.getTileEntity(pos);
+        TileEntity tileEntity = world.getBlockEntity(pos);
 
-        ServerWorld serverWorld = world instanceof WorldGenRegion ? world.getWorld() : ((ServerWorld) world);
+        ServerWorld serverWorld = world instanceof WorldGenRegion ? world.getLevel() : ((ServerWorld) world);
 
         if (tileEntity instanceof LockableLootTileEntity) {
             ((LockableLootTileEntity) tileEntity).setLootTable(lootLocation, random.nextLong());
         } else if (tileEntity instanceof IInventory) {
-            LootTable lootTable = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(lootLocation);
+            LootTable lootTable = serverWorld.getServer().getLootTables().get(lootLocation);
             LootContext.Builder builder = new LootContext.Builder(serverWorld);
 
-            lootTable.fillInventory((IInventory) tileEntity, builder.build(LootParameterSets.EMPTY));
+            lootTable.fill((IInventory) tileEntity, builder.create(LootParameterSets.EMPTY));
         } else if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-                LootTable lootTable = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(lootLocation);
+                LootTable lootTable = serverWorld.getServer().getLootTables().get(lootLocation);
                 LootContext.Builder builder = new LootContext.Builder(serverWorld);
 
-                lootTable.fillInventory(new ItemHandlerWrapper(handler), builder.build(LootParameterSets.EMPTY));
+                lootTable.fill(new ItemHandlerWrapper(handler), builder.create(LootParameterSets.EMPTY));
             });
         }
     }

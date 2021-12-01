@@ -28,7 +28,7 @@ public class HoloMaterialStatGui extends GuiElement {
         this.valueFormatter = valueFormatter;
         this.getter = getter;
 
-        tooltip = ImmutableList.of(I18n.format("tetra.holo.craft.materials.stat." + key + ".tooltip"));
+        tooltip = ImmutableList.of(I18n.get("tetra.holo.craft.materials.stat." + key + ".tooltip"));
 
         backdrop = new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench);
         backdrop.setColor(0x222222);
@@ -38,7 +38,7 @@ public class HoloMaterialStatGui extends GuiElement {
         value.setAttachment(GuiAttachment.topCenter);
         addChild(value);
 
-        label = new GuiStringOutline(0, -3, I18n.format("tetra.holo.craft.materials.stat." + key + ".short"));
+        label = new GuiStringOutline(0, -3, I18n.get("tetra.holo.craft.materials.stat." + key + ".short"));
         label.setColor(GuiColors.muted);
         label.setAttachment(GuiAttachment.bottomCenter);
         addChild(label);

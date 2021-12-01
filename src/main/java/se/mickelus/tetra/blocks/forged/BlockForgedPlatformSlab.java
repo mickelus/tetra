@@ -26,7 +26,7 @@ public class BlockForgedPlatformSlab extends SlabBlock implements ITetraBlock {
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 

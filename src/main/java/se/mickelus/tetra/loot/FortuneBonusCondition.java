@@ -34,17 +34,17 @@ public class FortuneBonusCondition implements ILootCondition {
         int fortuneLevel = 0;
 
         if (requiredTool != null) {
-            ItemStack toolStack = context.get(LootParameters.TOOL);
+            ItemStack toolStack = context.getParamOrNull(LootParameters.TOOL);
 
             if (toolStack != null && toolStack.getItem() instanceof IToolProvider) {
                 if (((IToolProvider) toolStack.getItem()).getToolLevel(toolStack, requiredTool) > requiredToolLevel) {
-                    fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, toolStack);
+                    fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, toolStack);
                 }
             }
         } else {
-            ItemStack tool = context.get(LootParameters.TOOL);
+            ItemStack tool = context.getParamOrNull(LootParameters.TOOL);
             if (tool != null) {
-                fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, context.get(LootParameters.TOOL));
+                fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, context.getParamOrNull(LootParameters.TOOL));
             }
         }
 
@@ -52,7 +52,7 @@ public class FortuneBonusCondition implements ILootCondition {
     }
 
     @Override
-    public LootConditionType func_230419_b_() {
+    public LootConditionType getType() {
         return type;
     }
 

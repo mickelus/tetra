@@ -169,7 +169,7 @@ public class AttributeHelper {
     }
 
     public static AttributeModifier multiplyModifier(AttributeModifier modifier, double multiplier) {
-        return new AttributeModifier(modifier.getID(), modifier.getName(), modifier.getAmount() * multiplier, modifier.getOperation());
+        return new AttributeModifier(modifier.getId(), modifier.getName(), modifier.getAmount() * multiplier, modifier.getOperation());
     }
 
     public static Multimap<Attribute, AttributeModifier> collapseRound(Multimap<Attribute, AttributeModifier> modifiers) {
@@ -201,16 +201,16 @@ public class AttributeHelper {
                 || TetraAttributes.abilityDamage.get().equals(attribute))
                 && mod.getOperation() == AttributeModifier.Operation.ADDITION
                 ? 2 : 20;
-        return new AttributeModifier(mod.getID(), mod.getName(), Math.round(mod.getAmount() * multiplier) / multiplier, mod.getOperation());
+        return new AttributeModifier(mod.getId(), mod.getName(), Math.round(mod.getAmount() * multiplier) / multiplier, mod.getOperation());
 //        return mod;
     }
 
     public static String getAttributeKey(Attribute attribute, AttributeModifier.Operation operation) {
-        return attribute.getAttributeName() + operation.ordinal();
+        return attribute.getDescriptionId() + operation.ordinal();
     }
 
     private static UUID getAttributeId(Attribute attribute, AttributeModifier.Operation operation) {
-        return attributeIdMap.computeIfAbsent(getAttributeKey(attribute, operation), k -> MathHelper.getRandomUUID(ThreadLocalRandom.current()));
+        return attributeIdMap.computeIfAbsent(getAttributeKey(attribute, operation), k -> MathHelper.createInsecureUUID(ThreadLocalRandom.current()));
     }
 
     public static AttributeModifier fixIdentifiers(Attribute attribute, AttributeModifier modifier) {

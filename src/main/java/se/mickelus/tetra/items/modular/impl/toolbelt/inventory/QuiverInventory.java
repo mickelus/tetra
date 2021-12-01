@@ -30,7 +30,7 @@ public class QuiverInventory extends ToolbeltInventory {
         for (ItemStack itemStack : inventoryContents) {
             boolean found = false;
             for (ItemStack aggregatedStack : aggregatedStacks) {
-                if (ItemStack.areItemsEqual(itemStack, aggregatedStack) && ItemStack.areItemStackTagsEqual(itemStack, aggregatedStack)) {
+                if (ItemStack.isSame(itemStack, aggregatedStack) && ItemStack.tagMatches(itemStack, aggregatedStack)) {
                     found = true;
                     aggregatedStack.grow(itemStack.getCount());
                     break;
@@ -46,7 +46,7 @@ public class QuiverInventory extends ToolbeltInventory {
 
     public int getFirstIndexForStack(ItemStack itemStack) {
         for (int i = 0; i < inventoryContents.size(); i++) {
-            if (ItemStack.areItemsEqual(itemStack, inventoryContents.get(i)) && ItemStack.areItemStackTagsEqual(inventoryContents.get(i), itemStack)) {
+            if (ItemStack.isSame(itemStack, inventoryContents.get(i)) && ItemStack.tagMatches(inventoryContents.get(i), itemStack)) {
                 return i;
             }
         }

@@ -54,12 +54,12 @@ public class RemoveSchematic extends BaseSchematic {
 
     @Override
     public String getName() {
-        return I18n.format(localizationPrefix + key + nameSuffix);
+        return I18n.get(localizationPrefix + key + nameSuffix);
     }
 
     @Override
     public String getDescription(ItemStack itemStack) {
-        return I18n.format(localizationPrefix + key + descriptionSuffix);
+        return I18n.get(localizationPrefix + key + descriptionSuffix);
     }
 
     @Override
@@ -110,8 +110,8 @@ public class RemoveSchematic extends BaseSchematic {
 
 
         float durabilityFactor = 0;
-        if (consumeMaterials && upgradedStack.isDamageable()) {
-            durabilityFactor = upgradedStack.getDamage() * 1f / upgradedStack.getMaxDamage();
+        if (consumeMaterials && upgradedStack.isDamageableItem()) {
+            durabilityFactor = upgradedStack.getDamageValue() * 1f / upgradedStack.getMaxDamage();
         }
 
         float honingFactor = MathHelper.clamp(1f * item.getHoningProgress(upgradedStack) / item.getHoningLimit(upgradedStack), 0, 1);
@@ -129,8 +129,8 @@ public class RemoveSchematic extends BaseSchematic {
                 item.setHoningProgress(upgradedStack, (int) Math.ceil(honingFactor * item.getHoningLimit(upgradedStack)));
             }
 
-            if (upgradedStack.isDamageable()) {
-                upgradedStack.setDamage((int) (durabilityFactor * upgradedStack.getMaxDamage()));
+            if (upgradedStack.isDamageableItem()) {
+                upgradedStack.setDamageValue((int) (durabilityFactor * upgradedStack.getMaxDamage()));
             }
         }
 

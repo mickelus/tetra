@@ -63,8 +63,8 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     }
 
     public ForgedContainerTile getOrDelegate() {
-        if (world != null && getBlockState().getBlock() instanceof ForgedContainerBlock && isFlipped()) {
-            return TileEntityOptional.from(world, pos.offset(getFacing().rotateYCCW()), ForgedContainerTile.class)
+        if (level != null && getBlockState().getBlock() instanceof ForgedContainerBlock && isFlipped()) {
+            return TileEntityOptional.from(level, worldPosition.relative(getFacing().getCounterClockWise()), ForgedContainerTile.class)
                     .orElse(null);
         }
         return this;
@@ -82,19 +82,19 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     public void open(@Nullable PlayerEntity player) {
         if (lidIntegrity > 0) {
             lidIntegrity--;
-            markDirty();
+            setChanged();
 
-            if (!world.isRemote) {
-                ServerWorld worldServer = (ServerWorld) world;
+            if (!level.isClientSide) {
+                ServerWorld worldServer = (ServerWorld) level;
                 if (lidIntegrity == 0) {
                     causeOpeningEffects(worldServer);
                 } else {
-                    worldServer.playSound(null, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 1.3f);
+                    worldServer.playSound(null, worldPosition, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 1.3f);
                 }
 
                 Optional.ofNullable(player)
-                        .filter(p -> !p.isPotionActive(Effects.STRENGTH))
-                        .ifPresent(p -> p.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, 200, 5)));
+                        .filter(p -> !p.hasEffect(Effects.DAMAGE_BOOST))
+                        .ifPresent(p -> p.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, 200, 5)));
             } else if (lidIntegrity == 0) { // start lid open animation on the client
                 openTime = System.currentTimeMillis();
             }
@@ -104,61 +104,61 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     }
 
     private void causeOpeningEffects(ServerWorld worldServer) {
-        Direction facing = worldServer.getBlockState(pos).get(HorizontalBlock.HORIZONTAL_FACING);
-        Vector3d smokeDirection = Vector3d.copy(facing.rotateY().getDirectionVec());
+        Direction facing = worldServer.getBlockState(worldPosition).getValue(HorizontalBlock.FACING);
+        Vector3d smokeDirection = Vector3d.atLowerCornerOf(facing.getClockWise().getNormal());
         Random random = new Random();
         int smokeCount = 5 + random.nextInt(4);
 
-        BlockPos smokeOrigin = pos;
+        BlockPos smokeOrigin = worldPosition;
         if (Direction.SOUTH.equals(facing)) {
-            smokeOrigin = smokeOrigin.add(1, 0, 0);
+            smokeOrigin = smokeOrigin.offset(1, 0, 0);
         } else if (Direction.WEST.equals(facing)) {
-            smokeOrigin = smokeOrigin.add(1, 0, 1);
+            smokeOrigin = smokeOrigin.offset(1, 0, 1);
         } else if (Direction.NORTH.equals(facing)) {
-            smokeOrigin = smokeOrigin.add(0, 0, 1);
+            smokeOrigin = smokeOrigin.offset(0, 0, 1);
         }
 
         for (int i = 0; i < smokeCount; i++) {
-            worldServer.spawnParticle(ParticleTypes.SMOKE,
+            worldServer.sendParticles(ParticleTypes.SMOKE,
                     smokeOrigin.getX() + smokeDirection.x * i * 2 / ( smokeCount - 1),
                     smokeOrigin.getY() + 0.8,
                     smokeOrigin.getZ() + smokeDirection.z * i * 2 / ( smokeCount - 1),
                     1, 0, 0, 0, 0d);
         }
 
-        worldServer.playSound(null, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN, SoundCategory.PLAYERS, 1, 0.5f);
-        worldServer.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.PLAYERS, 0.2f, 0.8f);
+        worldServer.playSound(null, worldPosition, SoundEvents.IRON_TRAPDOOR_OPEN, SoundCategory.PLAYERS, 1, 0.5f);
+        worldServer.playSound(null, worldPosition, SoundEvents.LAVA_EXTINGUISH, SoundCategory.PLAYERS, 0.2f, 0.8f);
     }
 
     private void updateBlockState() {
-        world.setBlockState(pos, getUpdatedBlockState(getBlockState(), lockIntegrity, lidIntegrity), 3);
+        level.setBlock(worldPosition, getUpdatedBlockState(getBlockState(), lockIntegrity, lidIntegrity), 3);
 
-        BlockPos offsetPos = pos.offset(getFacing().rotateY());
-        world.setBlockState(offsetPos, getUpdatedBlockState(world.getBlockState(offsetPos), lockIntegrity, lidIntegrity), 3);
+        BlockPos offsetPos = worldPosition.relative(getFacing().getClockWise());
+        level.setBlock(offsetPos, getUpdatedBlockState(level.getBlockState(offsetPos), lockIntegrity, lidIntegrity), 3);
     }
 
     public static BlockState getUpdatedBlockState(BlockState blockState, int[] lockIntegrity, int lidIntegrity) {
-        if (blockState.get(ForgedContainerBlock.flippedProp)) {
+        if (blockState.getValue(ForgedContainerBlock.flippedProp)) {
             return blockState
-                    .with(ForgedContainerBlock.locked1Prop, lockIntegrity[2] > 0)
-                    .with(ForgedContainerBlock.locked2Prop, lockIntegrity[3] > 0)
-                    .with(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
-                    .with(ForgedContainerBlock.openProp, lidIntegrity <= 0);
+                    .setValue(ForgedContainerBlock.locked1Prop, lockIntegrity[2] > 0)
+                    .setValue(ForgedContainerBlock.locked2Prop, lockIntegrity[3] > 0)
+                    .setValue(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
+                    .setValue(ForgedContainerBlock.openProp, lidIntegrity <= 0);
         }
 
         return blockState
-                .with(ForgedContainerBlock.locked1Prop, lockIntegrity[0] > 0)
-                .with(ForgedContainerBlock.locked2Prop, lockIntegrity[1] > 0)
-                .with(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
-                .with(ForgedContainerBlock.openProp, lidIntegrity <= 0);
+                .setValue(ForgedContainerBlock.locked1Prop, lockIntegrity[0] > 0)
+                .setValue(ForgedContainerBlock.locked2Prop, lockIntegrity[1] > 0)
+                .setValue(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
+                .setValue(ForgedContainerBlock.openProp, lidIntegrity <= 0);
     }
 
     public Direction getFacing() {
-        return getBlockState().get(ForgedContainerBlock.facingProp);
+        return getBlockState().getValue(ForgedContainerBlock.facingProp);
     }
 
     public boolean isFlipped() {
-        return getBlockState().get(ForgedContainerBlock.flippedProp);
+        return getBlockState().getValue(ForgedContainerBlock.flippedProp);
     }
 
     public boolean isOpen() {
@@ -180,22 +180,22 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
             lockIntegrity[index]--;
 
             if (lockIntegrity[index] == 0) {
-                world.playSound(player, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1,0.5f);
+                level.playSound(player, worldPosition, SoundEvents.SHIELD_BREAK, SoundCategory.PLAYERS, 1,0.5f);
             } else {
-                world.playSound(player, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1,0.5f);
+                level.playSound(player, worldPosition, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1,0.5f);
             }
 
-            if (!world.isRemote && lockIntegrity[index] == 0) {
+            if (!level.isClientSide && lockIntegrity[index] == 0) {
                 if (player != null) {
-                    BlockInteraction.dropLoot(lockLootTable, player, hand, (ServerWorld) world, getBlockState());
+                    BlockInteraction.dropLoot(lockLootTable, player, hand, (ServerWorld) level, getBlockState());
                 } else {
-                    BlockInteraction.dropLoot(lockLootTable, (ServerWorld) world, getPos(), getBlockState());
+                    BlockInteraction.dropLoot(lockLootTable, (ServerWorld) level, getBlockPos(), getBlockState());
                 }
             }
         }
 
         updateBlockState();
-        markDirty();
+        setChanged();
     }
 
     @Override
@@ -212,22 +212,22 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, 0, getUpdateTag());
+        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return write(new CompoundNBT());
+        return save(new CompoundNBT());
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(getBlockState(), pkt.getNbtCompound());
+        load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
+    public void load(BlockState state, CompoundNBT compound) {
+        super.load(state, compound);
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
 
@@ -239,8 +239,8 @@ public class ForgedContainerTile extends TileEntity implements INamedContainerPr
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
 
         handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
 

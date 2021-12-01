@@ -32,12 +32,12 @@ public abstract class BasicSchematic extends BaseSchematic {
 
     @Override
     public String getName() {
-        return I18n.format(key + nameSuffix);
+        return I18n.get(key + nameSuffix);
     }
 
     @Override
     public String getDescription(ItemStack itemStack) {
-        return I18n.format(key + descriptionSuffix);
+        return I18n.get(key + descriptionSuffix);
     }
 
     @Override
@@ -47,7 +47,7 @@ public abstract class BasicSchematic extends BaseSchematic {
 
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
-        return I18n.format(key + slotSuffix);
+        return I18n.get(key + slotSuffix);
     }
 
     @Override

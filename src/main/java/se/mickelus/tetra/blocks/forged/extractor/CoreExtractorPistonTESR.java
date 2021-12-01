@@ -20,14 +20,14 @@ public class CoreExtractorPistonTESR extends TileEntityRenderer<CoreExtractorPis
     public CoreExtractorPistonTESR(TileEntityRendererDispatcher dispatcher) {
         super(dispatcher);
 
-        blockRenderer = Minecraft.getInstance().getBlockRendererDispatcher();
+        blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }
 
     @Override
     public void render(CoreExtractorPistonTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight,
             int combinedOverlay) {
 
-        BlockState state = CoreExtractorPistonBlock.instance.getDefaultState();
+        BlockState state = CoreExtractorPistonBlock.instance.defaultBlockState();
 
         double offset = tile.getProgress(partialTicks);
 
@@ -36,16 +36,16 @@ public class CoreExtractorPistonTESR extends TileEntityRenderer<CoreExtractorPis
             offset = -49 * offset + 49;
         }
 
-        BlockState shaftState = state.with(CoreExtractorPistonBlock.hackProp, true);
-        IBakedModel shaftModel = blockRenderer.getBlockModelShapes().getModel(shaftState);
-        blockRenderer.getBlockModelRenderer().renderModel(matrixStack.getLast(), buffer.getBuffer(Atlases.getSolidBlockType()),
+        BlockState shaftState = state.setValue(CoreExtractorPistonBlock.hackProp, true);
+        IBakedModel shaftModel = blockRenderer.getBlockModelShaper().getBlockModel(shaftState);
+        blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Atlases.solidBlockSheet()),
                 shaftState, shaftModel, 1f, 1f, 1f, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
 
         matrixStack.translate(0, offset, 0);
 
-        BlockState coverState = state.with(CoreExtractorPistonBlock.hackProp, false);
-        IBakedModel coverModel = blockRenderer.getBlockModelShapes().getModel(coverState);
-        blockRenderer.getBlockModelRenderer().renderModel(matrixStack.getLast(), buffer.getBuffer(Atlases.getSolidBlockType()),
+        BlockState coverState = state.setValue(CoreExtractorPistonBlock.hackProp, false);
+        IBakedModel coverModel = blockRenderer.getBlockModelShaper().getBlockModel(coverState);
+        blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Atlases.solidBlockSheet()),
                 coverState, coverModel, 1f, 1f, 1f, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
     }
 }

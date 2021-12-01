@@ -62,15 +62,15 @@ public class RotationHelper {
 
     // todo: there has to be a less hacky way?
     public static VoxelShape rotateDirection(VoxelShape shape, Direction facing) {
-        VoxelShape[] temp = new VoxelShape[] { shape.withOffset(-0.5, 0, -0.5), VoxelShapes.empty() };
+        VoxelShape[] temp = new VoxelShape[] { shape.move(-0.5, 0, -0.5), VoxelShapes.empty() };
 
-        for (int i = 0; i < facing.getHorizontalIndex(); i++) {
-            temp[0].forEachBox((x1, y1, z1, x2, y2, z2) -> temp[1] = VoxelShapes.or(temp[1], VoxelShapes.create(-z1, y1, x1, -z2, y2, x2)));
+        for (int i = 0; i < facing.get2DDataValue(); i++) {
+            temp[0].forAllBoxes((x1, y1, z1, x2, y2, z2) -> temp[1] = VoxelShapes.or(temp[1], VoxelShapes.box(-z1, y1, x1, -z2, y2, x2)));
             temp[0] = temp[1];
             temp[1] = VoxelShapes.empty();
         }
 
-        return temp[0].withOffset(0.5, 0, 0.5);
+        return temp[0].move(0.5, 0, 0.5);
     }
 
     public static Vector3i shiftAxis(Vector3i pos) {

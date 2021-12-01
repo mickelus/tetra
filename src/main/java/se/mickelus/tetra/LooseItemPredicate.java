@@ -23,7 +23,7 @@ public class LooseItemPredicate extends ItemPredicate {
     }
 
     @Override
-    public boolean test(ItemStack itemStack) {
+    public boolean matches(ItemStack itemStack) {
         String target = itemStack.getItem().getRegistryName().getPath();
         for (String key: keys) {
             if (key.equals(target)) {

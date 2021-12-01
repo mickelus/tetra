@@ -15,7 +15,7 @@ public class TetraItemGroup extends ItemGroup {
     }
 
     @Override
-    public ItemStack createIcon() {
+    public ItemStack makeIcon() {
         return new ItemStack(GeodeItem.instance);
     }
 }

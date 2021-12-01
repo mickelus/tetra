@@ -8,7 +8,7 @@ public enum EnumTransferConfig implements IStringSerializable {
     c;
 
     @Override
-    public String getString() {
+    public String getSerializedName() {
         return toString().toLowerCase();
     }
 

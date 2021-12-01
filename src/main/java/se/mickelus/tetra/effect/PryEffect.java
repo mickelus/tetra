@@ -32,9 +32,9 @@ public class PryEffect {
     }
 
     public static void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
-        if (!attacker.world.isRemote) {
+        if (!attacker.level.isClientSide) {
             int comboPoints = ComboPoints.get(attacker);
-            boolean isSatiated = !attacker.getFoodStats().needFood();
+            boolean isSatiated = !attacker.getFoodData().needsFood();
 
             if (hand == Hand.OFF_HAND && item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) > 0) {
                 performDefensive(attacker, item, itemStack, target);
@@ -42,11 +42,11 @@ public class PryEffect {
                 performRegular(attacker, item, itemStack, damageMultiplier, effectLevel, target, isSatiated, comboPoints);
             }
 
-            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.8f, 0.8f);
 
             boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
-            attacker.addExhaustion(overextended ? 6f : 0.5f);
-            attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+            attacker.causeFoodExhaustion(overextended ? 6f : 0.5f);
+            attacker.getCooldowns().addCooldown(item, getCooldown(item, itemStack));
 
             int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
             if (echoLevel > 0) {
@@ -83,7 +83,7 @@ public class PryEffect {
 
         int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
         if (exhilarationLevel > 0) {
-            int amp = Optional.ofNullable(target.getActivePotionEffect(PriedPotionEffect.instance))
+            int amp = Optional.ofNullable(target.getEffect(PriedPotionEffect.instance))
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1) + 1;
             if (amp > 0) {
@@ -94,19 +94,19 @@ public class PryEffect {
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
-            int currentAmplifier = Optional.ofNullable(target.getActivePotionEffect(PriedPotionEffect.instance))
+            int currentAmplifier = Optional.ofNullable(target.getEffect(PriedPotionEffect.instance))
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1);
 
             double comboEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityCombo);
-            if (comboEfficiency > 0 && attacker.getEntityWorld().getRandom().nextFloat() < (comboEfficiency * comboPoints / 100f)) {
+            if (comboEfficiency > 0 && attacker.getCommandSenderWorld().getRandom().nextFloat() < (comboEfficiency * comboPoints / 100f)) {
                 amplifier++;
 
-                if (!target.getEntityWorld().isRemote) {
-                    Random rand = target.getEntityWorld().getRandom();
-                    ((ServerWorld) target.getEntityWorld()).spawnParticle(ParticleTypes.CRIT,
-                            target.getPosX(), target.getPosY() + target.getHeight() / 2, target.getPosZ(), 10,
-                            rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
+                if (!target.getCommandSenderWorld().isClientSide) {
+                    Random rand = target.getCommandSenderWorld().getRandom();
+                    ((ServerWorld) target.getCommandSenderWorld()).sendParticles(ParticleTypes.CRIT,
+                            target.getX(), target.getY() + target.getBbHeight() / 2, target.getZ(), 10,
+                            rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getBbHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
                 }
             }
 
@@ -119,17 +119,17 @@ public class PryEffect {
                 amplifier++;
             }
 
-            target.addPotionEffect(new EffectInstance(PriedPotionEffect.instance, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),
+            target.addEffect(new EffectInstance(PriedPotionEffect.instance, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),
                     currentAmplifier + amplifier, false, false));
 
-            if (!target.getEntityWorld().isRemote) {
-                ParticleHelper.spawnArmorParticles((ServerWorld) target.getEntityWorld(), target);
+            if (!target.getCommandSenderWorld().isClientSide) {
+                ParticleHelper.spawnArmorParticles((ServerWorld) target.getCommandSenderWorld(), target);
             }
 
             int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
             if (momentumLevel > 0 && currentAmplifier > -1) {
                 int duration = momentumLevel * (currentAmplifier + 1);
-                target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                target.addEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
             }
         }
 
@@ -140,14 +140,14 @@ public class PryEffect {
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, 0.5, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
-            target.addPotionEffect(new EffectInstance(Effects.WEAKNESS, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20),
+            target.addEffect(new EffectInstance(Effects.WEAKNESS, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20),
                     item.getEffectLevel(itemStack, ItemEffect.abilityDefensive) - 1, false, true));
 
-            if (!target.getEntityWorld().isRemote) {
+            if (!target.getCommandSenderWorld().isClientSide) {
                 if (target.hasItemInSlot(EquipmentSlotType.MAINHAND)) {
-                    ParticleHelper.spawnArmorParticles((ServerWorld) target.getEntityWorld(), target, EquipmentSlotType.MAINHAND);
+                    ParticleHelper.spawnArmorParticles((ServerWorld) target.getCommandSenderWorld(), target, EquipmentSlotType.MAINHAND);
                 } else if (target.hasItemInSlot(EquipmentSlotType.OFFHAND)) {
-                    ParticleHelper.spawnArmorParticles((ServerWorld) target.getEntityWorld(), target, EquipmentSlotType.OFFHAND);
+                    ParticleHelper.spawnArmorParticles((ServerWorld) target.getCommandSenderWorld(), target, EquipmentSlotType.OFFHAND);
                 }
             }
         }

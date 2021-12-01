@@ -37,19 +37,19 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
     public ForgedContainerScreen(ForgedContainerContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title);
 
-        this.xSize = 179;
-        this.ySize = 176;
+        this.imageWidth = 179;
+        this.imageHeight = 176;
 
         this.tileEntity = container.getTile();
         this.container = container;
 
-        guiRoot = new GuiElement(0, 0, xSize, ySize);
+        guiRoot = new GuiElement(0, 0, imageWidth, imageHeight);
         guiRoot.addChild(new GuiTexture(0, -13, 179, 128, containerTexture));
         guiRoot.addChild(new GuiTexture(0, 103, 179, 106, GuiTextures.playerInventory));
 
         compartmentButtons = new VerticalTabGroupGui(10, 26, this::changeCompartment, containerTexture, 0, 128,
                 IntStream.range(0, ForgedContainerTile.compartmentCount)
-                        .mapToObj(i -> I18n.format("tetra.forged_container.compartment_" + i))
+                        .mapToObj(i -> I18n.get("tetra.forged_container.compartment_" + i))
                         .toArray(String[]::new));
         guiRoot.addChild(compartmentButtons);
 
@@ -113,20 +113,20 @@ public class ForgedContainerScreen extends ContainerScreen<ForgedContainerContai
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        renderTooltip(matrixStack, mouseX, mouseY);
 
-        drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
+        renderLabels(matrixStack, mouseX, mouseY);
     }
 
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        int x = (width - xSize) / 2;
-        int y = (height - ySize) / 2;
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
 
         guiRoot.draw(matrixStack, x, y, width, height, mouseX, mouseY, 1);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) { }
+    protected void renderLabels(MatrixStack matrixStack, int x, int y) { }
 }

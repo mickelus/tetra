@@ -39,11 +39,11 @@ public class InteractiveBlockOverlay {
         if (event.getTarget().getType().equals(RayTraceResult.Type.BLOCK)) {
             BlockRayTraceResult rayTrace = (BlockRayTraceResult) event.getTarget();
 
-            World world = Minecraft.getInstance().world;
-            VoxelShape shape = world.getBlockState(rayTrace.getPos()).getShape(Minecraft.getInstance().world, rayTrace.getPos(), ISelectionContext.forEntity(mc.player));
+            World world = Minecraft.getInstance().level;
+            VoxelShape shape = world.getBlockState(rayTrace.getBlockPos()).getShape(Minecraft.getInstance().level, rayTrace.getBlockPos(), ISelectionContext.of(mc.player));
 
-            BlockPos blockPos = rayTrace.getPos();
-            Direction face = rayTrace.getFace();
+            BlockPos blockPos = rayTrace.getBlockPos();
+            Direction face = rayTrace.getDirection();
 
             BlockState blockState = world.getBlockState(blockPos);
 
@@ -59,7 +59,7 @@ public class InteractiveBlockOverlay {
                     isDirty = false;
                 }
 
-                gui.draw(event.getMatrix(), event.getInfo().getProjectedView(), rayTrace, shape);
+                gui.draw(event.getMatrix(), event.getInfo().getPosition(), rayTrace, shape);
             }
         }
     }

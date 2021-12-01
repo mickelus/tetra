@@ -17,7 +17,7 @@ public class TooltipGetterAttackSpeed implements ITooltipGetter {
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         double speed = statGetter.getValue(player, itemStack);
-        return I18n.format(localizationKey, String.format("%.2f", 1 / speed), String.format("%.2f", speed * 0.5 + 0.5));
+        return I18n.get(localizationKey, String.format("%.2f", 1 / speed), String.format("%.2f", speed * 0.5 + 0.5));
     }
 
     @Override
@@ -27,6 +27,6 @@ public class TooltipGetterAttackSpeed implements ITooltipGetter {
 
     @Override
     public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("tetra.stats.speed.tooltip_extended");
+        return I18n.get("tetra.stats.speed.tooltip_extended");
     }
 }

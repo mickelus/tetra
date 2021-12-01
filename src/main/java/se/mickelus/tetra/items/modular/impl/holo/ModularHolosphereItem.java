@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import net.minecraft.item.Item.Properties;
+
 public class ModularHolosphereItem extends ModularItem {
     private static final String unlocalizedName = "holo";
 
@@ -51,9 +53,9 @@ public class ModularHolosphereItem extends ModularItem {
 
     public ModularHolosphereItem() {
         super(new Properties()
-                .maxStackSize(1)
-                .group(TetraItemGroup.instance)
-                .isImmuneToFire());
+                .stacksTo(1)
+                .tab(TetraItemGroup.instance)
+                .fireResistant());
 
         canHone = false;
 
@@ -81,8 +83,8 @@ public class ModularHolosphereItem extends ModularItem {
     }
 
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if (isInGroup(group)) {
+    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+        if (allowdedIn(group)) {
             ItemStack itemStack = new ItemStack(this);
 
             IModularItem.putModuleInSlot(itemStack, coreKey, "holo/core", "frame/dim");
@@ -93,13 +95,13 @@ public class ModularHolosphereItem extends ModularItem {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip1").mergeStyle(TextFormatting.GRAY));
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip1").withStyle(TextFormatting.GRAY));
         tooltip.add(new StringTextComponent(" "));
 
         if (ScannerOverlayGui.instance != null && ScannerOverlayGui.instance.isAvailable()) {
             tooltip.add(new TranslationTextComponent("tetra.holo.scan.status", ScannerOverlayGui.instance.getStatus())
-                    .mergeStyle(TextFormatting.GRAY));
+                    .withStyle(TextFormatting.GRAY));
 
             tooltip.add(new StringTextComponent(" "));
             tooltip.add(new TranslationTextComponent("tetra.holo.scan.snooze"));
@@ -107,12 +109,12 @@ public class ModularHolosphereItem extends ModularItem {
 
         tooltip.add(new TranslationTextComponent("item.tetra.holo.tooltip2"));
 
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        if (world.isRemote) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        if (world.isClientSide) {
             if (player.isCrouching() && ScannerOverlayGui.instance.isAvailable()) {
                 ScannerOverlayGui.instance.toggleSnooze();
             } else {
@@ -120,14 +122,14 @@ public class ModularHolosphereItem extends ModularItem {
             }
         }
 
-        return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
+        return new ActionResult<>(ActionResultType.SUCCESS, player.getItemInHand(hand));
     }
 
     @OnlyIn(Dist.CLIENT)
     private void showGui() {
         HoloGui gui = HoloGui.getInstance();
 
-        Minecraft.getInstance().displayGuiScreen(gui);
+        Minecraft.getInstance().setScreen(gui);
         gui.onShow();
     }
 
@@ -142,8 +144,8 @@ public class ModularHolosphereItem extends ModularItem {
 
     public static ItemStack findHolosphere(PlayerEntity player) {
         return Stream.of(
-                player.inventory.offHandInventory.stream(),
-                player.inventory.mainInventory.stream(),
+                player.inventory.offhand.stream(),
+                player.inventory.items.stream(),
                 ToolbeltHelper.getToolbeltItems(player).stream())
                 .flatMap(Function.identity())
                 .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)

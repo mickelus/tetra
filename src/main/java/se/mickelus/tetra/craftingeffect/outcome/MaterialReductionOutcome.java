@@ -17,10 +17,10 @@ public class MaterialReductionOutcome implements CraftingEffectOutcome {
             Map<ToolType, Integer> tools, World world, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials) {
         if (consumeResources
                 && !preMaterials[0].isEmpty()
-                && (ItemStack.areItemsEqual(preMaterials[0], postMaterials[0]) || postMaterials[0].isEmpty())
+                && (ItemStack.isSame(preMaterials[0], postMaterials[0]) || postMaterials[0].isEmpty())
                 && preMaterials[0].getCount() > postMaterials[0].getCount() + 1) {
             if (world.getRandom().nextFloat() < probability) {
-                if (ItemStack.areItemsEqual(preMaterials[0], postMaterials[0])) {
+                if (ItemStack.isSame(preMaterials[0], postMaterials[0])) {
                     postMaterials[0].setCount(postMaterials[0].getCount() + 1);
                 } else {
                     ItemStack clone = preMaterials[0].copy();

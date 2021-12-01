@@ -21,7 +21,7 @@ public class PotionsInventory extends ToolbeltInventory {
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack itemStack) {
+    public boolean canPlaceItem(int index, ItemStack itemStack) {
         return isItemValid(itemStack);
     }
 
@@ -32,15 +32,15 @@ public class PotionsInventory extends ToolbeltInventory {
         }
 
         // attempt to merge the itemstack with itemstacks in the inventory
-        for (int i = 0; i < getSizeInventory(); i++) {
-            ItemStack storedStack = getStackInSlot(i);
-            if (ItemStack.areItemsEqual(storedStack, itemStack)
-                    && ItemStack.areItemStackTagsEqual(storedStack, itemStack)
+        for (int i = 0; i < getContainerSize(); i++) {
+            ItemStack storedStack = getItem(i);
+            if (ItemStack.isSame(storedStack, itemStack)
+                    && ItemStack.tagMatches(storedStack, itemStack)
                     && storedStack.getCount() < 64) {
 
                 int moveCount = Math.min(itemStack.getCount(), 64 - storedStack.getCount());
                 storedStack.grow(moveCount);
-                setInventorySlotContents(i, storedStack);
+                setItem(i, storedStack);
                 itemStack.shrink(moveCount);
 
                 if (itemStack.isEmpty()) {
@@ -50,9 +50,9 @@ public class PotionsInventory extends ToolbeltInventory {
         }
 
         // put item in the first empty slot
-        for (int i = 0; i < getSizeInventory(); i++) {
-            if (getStackInSlot(i).isEmpty()) {
-                setInventorySlotContents(i, itemStack);
+        for (int i = 0; i < getContainerSize(); i++) {
+            if (getItem(i).isEmpty()) {
+                setItem(i, itemStack);
                 return true;
             }
         }
@@ -60,25 +60,25 @@ public class PotionsInventory extends ToolbeltInventory {
     }
 
     public ItemStack takeItemStack(int index) {
-        ItemStack itemStack = getStackInSlot(index);
+        ItemStack itemStack = getItem(index);
         itemStack = itemStack.split(itemStack.getMaxStackSize());
-        if (getStackInSlot(index).isEmpty()) {
-            setInventorySlotContents(index, ItemStack.EMPTY);
+        if (getItem(index).isEmpty()) {
+            setItem(index, ItemStack.EMPTY);
         } else {
-            markDirty();
+            setChanged();
         }
         return itemStack;
     }
 
     @Override
     public void emptyOverflowSlots(PlayerEntity player) {
-        for (int i = getSizeInventory(); i < maxSize; i++) {
-            ItemStack itemStack = getStackInSlot(i);
+        for (int i = getContainerSize(); i < maxSize; i++) {
+            ItemStack itemStack = getItem(i);
             while (!itemStack.isEmpty()) {
                 moveStackToPlayer(itemStack.split(itemStack.getMaxStackSize()), player);
             }
         }
-        markDirty();
+        setChanged();
     }
 
 

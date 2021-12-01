@@ -37,9 +37,9 @@ public class BasicStatSorter implements IStatSorter {
     @Override
     public String getName() {
         if (suffix != null) {
-            return I18n.format(name) + " " + I18n.format(suffix);
+            return I18n.get(name) + " " + I18n.get(suffix);
         }
-        return I18n.format(name);
+        return I18n.get(name);
     }
 
     @Override

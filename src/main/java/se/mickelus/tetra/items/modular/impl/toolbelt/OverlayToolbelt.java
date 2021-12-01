@@ -61,11 +61,11 @@ public class OverlayToolbelt {
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if (restockBinding.isKeyDown()) {
+        if (restockBinding.isDown()) {
             equipToolbeltItem(ToolbeltSlotType.quickslot, -1, Hand.OFF_HAND);
-        } else if (openBinding.isKeyDown()) {
+        } else if (openBinding.isDown()) {
             openToolbelt();
-        } else if (accessBinding.isKeyDown() && mc.isGameFocused() && !isActive) {
+        } else if (accessBinding.isDown() && mc.isWindowActive() && !isActive) {
             showView();
         }
     }
@@ -77,7 +77,7 @@ public class OverlayToolbelt {
             return;
         }
 
-        if (!accessBinding.isKeyDown() && isActive) {
+        if (!accessBinding.isDown() && isActive) {
             hideView();
         }
 
@@ -87,7 +87,7 @@ public class OverlayToolbelt {
     private void showView() {
         boolean canOpen = updateGuiData();
         if (canOpen) {
-            mc.mouseHelper.ungrabMouse();
+            mc.mouseHandler.releaseMouse();
             isActive = true;
             openTime = System.currentTimeMillis();
         }
@@ -95,7 +95,7 @@ public class OverlayToolbelt {
 
     private void hideView() {
         gui.setVisible(false);
-        mc.mouseHelper.grabMouse();
+        mc.mouseHandler.grabMouse();
         isActive = false;
 
         int focusIndex = findIndex();
@@ -114,16 +114,16 @@ public class OverlayToolbelt {
         } else {
             boolean storeItemSuccess = ToolbeltHelper.storeItemInToolbelt(mc.player);
             if (!storeItemSuccess) {
-                mc.player.sendStatusMessage(new TranslationTextComponent("tetra.toolbelt.full"), true);
+                mc.player.displayClientMessage(new TranslationTextComponent("tetra.toolbelt.full"), true);
             }
         }
     }
 
     private void quickEquip() {
-        if (mc.objectMouseOver.getType() == RayTraceResult.Type.BLOCK) {
-            BlockRayTraceResult raytrace = (BlockRayTraceResult) mc.objectMouseOver;
-            BlockState blockState = mc.world.getBlockState(raytrace.getPos());
-            int index = ToolbeltHelper.getQuickAccessSlotIndex(mc.player, mc.objectMouseOver, blockState);
+        if (mc.hitResult.getType() == RayTraceResult.Type.BLOCK) {
+            BlockRayTraceResult raytrace = (BlockRayTraceResult) mc.hitResult;
+            BlockState blockState = mc.level.getBlockState(raytrace.getBlockPos());
+            int index = ToolbeltHelper.getQuickAccessSlotIndex(mc.player, mc.hitResult, blockState);
 
             if (index > -1) {
                 equipToolbeltItem(ToolbeltSlotType.quickslot, index, Hand.MAIN_HAND);

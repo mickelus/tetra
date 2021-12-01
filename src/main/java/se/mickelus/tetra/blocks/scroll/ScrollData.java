@@ -65,7 +65,7 @@ public class ScrollData {
     }
 
     public static int readMaterialFast(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getChildTag("BlockEntityTag"))
+        return Optional.ofNullable(itemStack.getTagElement("BlockEntityTag"))
                 .map(tag -> tag.getList("data", Constants.NBT.TAG_COMPOUND))
                 .filter(list -> list.size() > 0)
                 .map(list -> list.getCompound(0))
@@ -74,7 +74,7 @@ public class ScrollData {
     }
 
     public static int readRibbonFast(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getChildTag("BlockEntityTag"))
+        return Optional.ofNullable(itemStack.getTagElement("BlockEntityTag"))
                 .map(tag -> tag.getList("data", Constants.NBT.TAG_COMPOUND))
                 .filter(list -> list.size() > 0)
                 .map(list -> list.getCompound(0))
@@ -84,7 +84,7 @@ public class ScrollData {
     }
 
     public static ScrollData read(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getChildTag("BlockEntityTag"))
+        return Optional.ofNullable(itemStack.getTagElement("BlockEntityTag"))
                 .map(ScrollData::read)
                 .filter(data -> data.length > 0)
                 .map(data -> data[0])
@@ -92,7 +92,7 @@ public class ScrollData {
     }
 
     public void write(ItemStack itemStack) {
-        itemStack.setTagInfo("BlockEntityTag", ScrollData.write(new ScrollData[] { this }, new CompoundNBT()));
+        itemStack.addTagElement("BlockEntityTag", ScrollData.write(new ScrollData[] { this }, new CompoundNBT()));
     }
 
     public static ScrollData[] read(CompoundNBT tag) {

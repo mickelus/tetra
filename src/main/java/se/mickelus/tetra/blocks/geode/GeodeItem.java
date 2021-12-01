@@ -15,6 +15,8 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class GeodeItem extends TetraItem {
     private static final String unlocalizedName = "geode";
 
@@ -22,12 +24,12 @@ public class GeodeItem extends TetraItem {
     public static GeodeItem instance;
 
     public GeodeItem() {
-        super(new Properties().group(TetraItemGroup.instance));
+        super(new Properties().tab(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("item.tetra.geode.tooltip").mergeStyle(TextFormatting.GRAY));
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(new TranslationTextComponent("item.tetra.geode.tooltip").withStyle(TextFormatting.GRAY));
     }
 }

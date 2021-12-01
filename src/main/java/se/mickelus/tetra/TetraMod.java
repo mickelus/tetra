@@ -328,24 +328,24 @@ public class TetraMod {
 
     @SubscribeEvent
     public void serverStarting(FMLServerStartingEvent event) {
-        ModuleDevCommand.register(event.getServer().getCommandManager().getDispatcher());
-        TGenCommand.register(event.getServer().getCommandManager().getDispatcher());
+        ModuleDevCommand.register(event.getServer().getCommands().getDispatcher());
+        TGenCommand.register(event.getServer().getCommands().getDispatcher());
     }
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void provideTextures(final TextureStitchEvent.Pre event) {
         // todo 1.15: Move this to ModularItemModel.getTextures?
-        if (AtlasTexture.LOCATION_BLOCKS_TEXTURE.equals(event.getMap().getTextureLocation())) {
-            Minecraft.getInstance().getResourceManager().getAllResourceLocations("textures/items/module", s -> s.endsWith(".png")).stream()
+        if (AtlasTexture.LOCATION_BLOCKS.equals(event.getMap().location())) {
+            Minecraft.getInstance().getResourceManager().listResources("textures/items/module", s -> s.endsWith(".png")).stream()
                     .filter(resourceLocation -> MOD_ID.equals(resourceLocation.getNamespace()))
                     // 9 is the length of "textures/" & 4 is the length of ".png"
                     .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
                     .forEach(event::addSprite);
 
-            event.addSprite(ForgedContainerRenderer.material.getTextureLocation());
-            event.addSprite(HammerBaseRenderer.material.getTextureLocation());
-            event.addSprite(ScrollRenderer.material.getTextureLocation());
+            event.addSprite(ForgedContainerRenderer.material.texture());
+            event.addSprite(HammerBaseRenderer.material.texture());
+            event.addSprite(ScrollRenderer.material.texture());
         }
     }
 
@@ -451,48 +451,48 @@ public class TetraMod {
 
         @SubscribeEvent
         public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
-            event.getRegistry().register(TileEntityType.Builder.create(WorkbenchTile::new,
+            event.getRegistry().register(TileEntityType.Builder.of(WorkbenchTile::new,
                     BasicWorkbenchBlock.instance, ForgedWorkbenchBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, WorkbenchTile.unlocalizedName));
 
-            event.getRegistry().register(TileEntityType.Builder.create(HammerBaseTile::new, HammerBaseBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.of(HammerBaseTile::new, HammerBaseBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, HammerBaseBlock.unlocalizedName));
 
-            event.getRegistry().register(TileEntityType.Builder.create(HammerHeadTile::new, HammerHeadBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.of(HammerHeadTile::new, HammerHeadBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, HammerHeadBlock.unlocalizedName));
 
-            event.getRegistry().register(TileEntityType.Builder.create(TransferUnitTile::new, TransferUnitBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.of(TransferUnitTile::new, TransferUnitBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, TransferUnitBlock.unlocalizedName));
 
-            event.getRegistry().register(TileEntityType.Builder.create(CoreExtractorBaseTile::new, CoreExtractorBaseBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.of(CoreExtractorBaseTile::new, CoreExtractorBaseBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, CoreExtractorBaseBlock.unlocalizedName));
 
-            event.getRegistry().register(TileEntityType.Builder.create(CoreExtractorPistonTile::new, CoreExtractorPistonBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.of(CoreExtractorPistonTile::new, CoreExtractorPistonBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, CoreExtractorPistonBlock.unlocalizedName));
 
-            event.getRegistry().register(TileEntityType.Builder.create(ForgedContainerTile::new, ForgedContainerBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.of(ForgedContainerTile::new, ForgedContainerBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName));
 
-            event.getRegistry().register(TileEntityType.Builder.create(ChthonicExtractorTile::new, ChthonicExtractorBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.of(ChthonicExtractorTile::new, ChthonicExtractorBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, ChthonicExtractorBlock.unlocalizedName));
 
-            event.getRegistry().register(TileEntityType.Builder.create(FracturedBedrockTile::new, FracturedBedrockBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.of(FracturedBedrockTile::new, FracturedBedrockBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, FracturedBedrockBlock.unlocalizedName));
 
-            event.getRegistry().register(TileEntityType.Builder.create(RackTile::new, RackBlock.instance)
+            event.getRegistry().register(TileEntityType.Builder.of(RackTile::new, RackBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, RackBlock.unlocalizedName));
 
-            event.getRegistry().register(TileEntityType.Builder.create(ScrollTile::new,
+            event.getRegistry().register(TileEntityType.Builder.of(ScrollTile::new,
                     OpenScrollBlock.instance, WallScrollBlock.instance, RolledScrollBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, ScrollTile.unlocalizedName));
@@ -501,17 +501,17 @@ public class TetraMod {
         @SubscribeEvent
         public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
             event.getRegistry().registerAll(
-                    EntityType.Builder.<ThrownModularItemEntity>create(ThrownModularItemEntity::new, EntityClassification.MISC)
+                    EntityType.Builder.<ThrownModularItemEntity>of(ThrownModularItemEntity::new, EntityClassification.MISC)
                             .setCustomClientFactory(ThrownModularItemEntity::new)
-                            .size(0.5F, 0.5F)
+                            .sized(0.5F, 0.5F)
                             .build(ThrownModularItemEntity.unlocalizedName)
                             .setRegistryName(MOD_ID, ThrownModularItemEntity.unlocalizedName)
             );
 
             event.getRegistry().registerAll(
-                    EntityType.Builder.<ExtractorProjectileEntity>create(ExtractorProjectileEntity::new, EntityClassification.MISC)
+                    EntityType.Builder.<ExtractorProjectileEntity>of(ExtractorProjectileEntity::new, EntityClassification.MISC)
                             .setCustomClientFactory(ExtractorProjectileEntity::new)
-                            .size(0.5F, 0.5F)
+                            .sized(0.5F, 0.5F)
                             .build(ExtractorProjectileEntity.unlocalizedName)
                             .setRegistryName(MOD_ID, ExtractorProjectileEntity.unlocalizedName)
             );

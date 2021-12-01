@@ -23,14 +23,14 @@ public class  TooltipGetterBlockingDuration implements ITooltipGetter {
                 double baseCooldown = CastOptional.cast(itemStack.getItem(), ItemModularHandheld.class)
                         .map(item -> item.getCooldownBase(itemStack))
                         .orElse(1d);
-                return I18n.format("tetra.stats.blocking_duration_cooldown.tooltip",
+                return I18n.get("tetra.stats.blocking_duration_cooldown.tooltip",
                         String.format("%.1f", durationGetter.getValue(player, itemStack)),
                         String.format("%.2f", cooldownMultiplier),
                         String.format("%.1f", cooldownMultiplier * baseCooldown));
             }
-            return I18n.format("tetra.stats.blocking_duration.tooltip", String.format("%.1f", durationGetter.getValue(player, itemStack)));
+            return I18n.get("tetra.stats.blocking_duration.tooltip", String.format("%.1f", durationGetter.getValue(player, itemStack)));
         }
-        return I18n.format("tetra.stats.blocking.tooltip");
+        return I18n.get("tetra.stats.blocking.tooltip");
     }
 
     @Override
@@ -40,6 +40,6 @@ public class  TooltipGetterBlockingDuration implements ITooltipGetter {
 
     @Override
     public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("tetra.stats.blocking.tooltip_extended");
+        return I18n.get("tetra.stats.blocking.tooltip_extended");
     }
 }

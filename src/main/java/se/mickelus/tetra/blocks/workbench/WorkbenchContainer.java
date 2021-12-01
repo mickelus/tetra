@@ -55,7 +55,7 @@ public class WorkbenchContainer extends Container {
 
     @OnlyIn(Dist.CLIENT)
     public static WorkbenchContainer create(int windowId, BlockPos pos, PlayerInventory inv) {
-        WorkbenchTile te = (WorkbenchTile) Minecraft.getInstance().world.getTileEntity(pos);
+        WorkbenchTile te = (WorkbenchTile) Minecraft.getInstance().level.getBlockEntity(pos);
         return new WorkbenchContainer(windowId, te, inv, Minecraft.getInstance().player);
     }
 
@@ -66,12 +66,12 @@ public class WorkbenchContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity player) {
-        BlockPos pos = workbench.getPos();
+    public boolean stillValid(PlayerEntity player) {
+        BlockPos pos = workbench.getBlockPos();
 
         // based on Container.isWithinUsableDistance but with more generic blockcheck
-        if (workbench.getWorld().getBlockState(workbench.getPos()).getBlock() instanceof AbstractWorkbenchBlock) {
-            return player.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
+        if (workbench.getLevel().getBlockState(workbench.getBlockPos()).getBlock() instanceof AbstractWorkbenchBlock) {
+            return player.distanceToSqr((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
         }
 
         return false;
@@ -81,31 +81,31 @@ public class WorkbenchContainer extends Container {
      * Take a stack from the specified inventory slot.
      */
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(PlayerEntity player, int index) {
         ItemStack resultStack = ItemStack.EMPTY;
 
-        Slot slot = inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack slotStack = slot.getStack();
+        Slot slot = slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
 
             resultStack = slotStack.copy();
 
             if (index < getSlots()) {
-                if (!mergeItemStack(slotStack, getSlots(), this.inventorySlots.size(), true)) {
+                if (!moveItemStackTo(slotStack, getSlots(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!mergeItemStack(slotStack, 0, getSlots(), false)) {
+            } else if (!moveItemStackTo(slotStack, 0, getSlots(), false)) {
                 return ItemStack.EMPTY;
             }
 
             if (slotStack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
         }
 
-        workbench.markDirty();
+        workbench.setChanged();
         return resultStack;
     }
 

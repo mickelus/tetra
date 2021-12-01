@@ -32,7 +32,7 @@ public class HowlingOverlay {
         }
 
         int amplifier = Optional.ofNullable(mc.player)
-                .map(player -> player.getActivePotionEffect(HowlingPotionEffect.instance))
+                .map(player -> player.getEffect(HowlingPotionEffect.instance))
                 .map(EffectInstance::getAmplifier)
                 .orElse(-1);
 

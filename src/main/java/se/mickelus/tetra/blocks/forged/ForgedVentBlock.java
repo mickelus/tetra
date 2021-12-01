@@ -93,15 +93,15 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(propRotation, propX, propBroken);
     }
 
     private static boolean breakBolt(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
-        world.setBlockState(pos, world.getBlockState(pos).with(propBroken, true), 2);
+        world.setBlock(pos, world.getBlockState(pos).setValue(propBroken, true), 2);
 
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             ServerWorld serverWorld = (ServerWorld) world;
             if (player != null) {
                 BlockInteraction.dropLoot(ventLootTable, player, hand, serverWorld, blockState);
@@ -109,28 +109,28 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
                 BlockInteraction.dropLoot(ventLootTable, serverWorld, pos, blockState);
             }
 
-            serverWorld.playSound(null, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 0.4f, 0.5f);
+            serverWorld.playSound(null, pos, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 0.4f, 0.5f);
         }
 
         return true;
     }
 
     private static boolean breakBeam(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace) {
-        List<BlockPos> connectedVents = getConnectedBlocks(world, pos, new LinkedList<>(), blockState.get(propX));
+        List<BlockPos> connectedVents = getConnectedBlocks(world, pos, new LinkedList<>(), blockState.getValue(propX));
 
-        if (connectedVents.stream().anyMatch(blockPos -> !world.getBlockState(blockPos).get(propBroken))) {
-            if (!world.isRemote) {
-                world.playSound(null, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.4f, 2);
+        if (connectedVents.stream().anyMatch(blockPos -> !world.getBlockState(blockPos).getValue(propBroken))) {
+            if (!world.isClientSide) {
+                world.playSound(null, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.4f, 2);
             }
             return false;
         }
 
         connectedVents.forEach(blockPos -> {
-            world.playEvent(null, 2001, blockPos, Block.getStateId(world.getBlockState(blockPos)));
-            world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
+            world.levelEvent(null, 2001, blockPos, Block.getId(world.getBlockState(blockPos)));
+            world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
         });
 
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             ServerWorld serverWorld = (ServerWorld) world;
             if (player != null) {
                 BlockInteraction.dropLoot(ventLootTable, player, hand, serverWorld, blockState);
@@ -146,8 +146,8 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
         if (!visited.contains(pos) && world.getBlockState(pos).getBlock() instanceof ForgedVentBlock) {
             visited.add(pos);
 
-            getConnectedBlocks(world, pos.up(), visited, isXAxis);
-            getConnectedBlocks(world, pos.down(), visited, isXAxis);
+            getConnectedBlocks(world, pos.above(), visited, isXAxis);
+            getConnectedBlocks(world, pos.below(), visited, isXAxis);
 
             if (isXAxis) {
                 getConnectedBlocks(world, pos.east(), visited, isXAxis);
@@ -164,17 +164,17 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
     @Override
     public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.get(propX) ? Direction.EAST : Direction.SOUTH, face, tools))
+                .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.getValue(propX) ? Direction.EAST : Direction.SOUTH, face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace) {
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, rayTrace);
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
@@ -183,10 +183,10 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         BlockState blockState = super.getStateForPlacement(context);
 
-        Direction playerFacing = context.getPlayer() != null ? context.getPlayer().getHorizontalFacing() : Direction.NORTH;
+        Direction playerFacing = context.getPlayer() != null ? context.getPlayer().getDirection() : Direction.NORTH;
 
-        blockState = blockState != null ? blockState : getDefaultState();
-        blockState = blockState.with(propX, Direction.Axis.X.equals(playerFacing.getAxis()));
+        blockState = blockState != null ? blockState : defaultBlockState();
+        blockState = blockState.setValue(propX, Direction.Axis.X.equals(playerFacing.getAxis()));
 
         int rotation = 0;
 
@@ -194,43 +194,43 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
             rotation = 2;
         }
 
-        if (context.getFace() != Direction.UP
-                && (context.getFace() == Direction.DOWN || context.getHitVec().y - context.getPos().getY() > 0.5)) {
+        if (context.getClickedFace() != Direction.UP
+                && (context.getClickedFace() == Direction.DOWN || context.getClickLocation().y - context.getClickedPos().getY() > 0.5)) {
             rotation++;
         }
 
         blockState = blockState
-                .with(propRotation, rotation)
-                .with(propBroken, false);
+                .setValue(propRotation, rotation)
+                .setValue(propBroken, false);
 
         return  blockState;
     }
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
-        boolean isXAxis = state.get(propX);
+        boolean isXAxis = state.getValue(propX);
         if (rot.equals(Rotation.CLOCKWISE_90) || rot.equals(Rotation.COUNTERCLOCKWISE_90)) {
-            state = state.with(propX, !isXAxis);
+            state = state.setValue(propX, !isXAxis);
         }
         if (rot.equals(Rotation.CLOCKWISE_180)
                 || (!isXAxis && rot.equals(Rotation.CLOCKWISE_90))
                 || (isXAxis && rot.equals(Rotation.COUNTERCLOCKWISE_90))) {
-            return state.with(propRotation, state.get(propRotation) ^ 2);
+            return state.setValue(propRotation, state.getValue(propRotation) ^ 2);
         }
 
-        return state.with(propRotation, state.get(propRotation));
+        return state.setValue(propRotation, state.getValue(propRotation));
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext contex) {
-        if (state.get(propX)) {
-            return makeCuboidShape(0, 0, 7, 16, 16, 9);
+        if (state.getValue(propX)) {
+            return box(0, 0, 7, 16, 16, 9);
         }
-        return makeCuboidShape(7, 0, 0, 9, 16, 16);
+        return box(7, 0, 0, 9, 16, 16);
     }
 
     @Override
-    public int getOpacity(BlockState state, IBlockReader world, BlockPos pos) {
+    public int getLightBlock(BlockState state, IBlockReader world, BlockPos pos) {
         return 0;
     }
 }

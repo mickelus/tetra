@@ -36,6 +36,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import net.minecraft.item.Item.Properties;
+
 public abstract class ModularItem extends TetraItem implements IModularItem, IToolProvider {
     private static final Logger logger = LogManager.getLogger();
 
@@ -55,8 +57,8 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     protected SynergyData[] synergies = new SynergyData[0];
 
-    public static final UUID attackDamageModifier = Item.ATTACK_DAMAGE_MODIFIER;
-    public static final UUID attackSpeedModifier = Item.ATTACK_SPEED_MODIFIER;
+    public static final UUID attackDamageModifier = Item.BASE_ATTACK_DAMAGE_UUID;
+    public static final UUID attackSpeedModifier = Item.BASE_ATTACK_SPEED_UUID;
 
     private Cache<String, Multimap<Attribute, AttributeModifier>> attributeCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
@@ -168,7 +170,7 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
      * @return
      */
     protected ToolData getToolDataRaw(ItemStack itemStack) {
-        logger.debug("Gathering tool data for {} ({})", getDisplayName(itemStack).getString(), getDataCacheKey(itemStack));
+        logger.debug("Gathering tool data for {} ({})", getName(itemStack).getString(), getDataCacheKey(itemStack));
         return Stream.concat(
                 getAllModules(itemStack).stream()
                         .map(module -> module.getToolData(itemStack)),
@@ -179,12 +181,12 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     }
 
     @Override
-    public ITextComponent getDisplayName(ItemStack stack) {
+    public ITextComponent getName(ItemStack stack) {
         return new StringTextComponent(getItemName(stack));
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
         tooltip.addAll(getTooltip(stack, world, flag));
     }
 
@@ -208,11 +210,11 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-        return Math.min(stack.getMaxDamage() - stack.getDamage() - 1, amount);
+        return Math.min(stack.getMaxDamage() - stack.getDamageValue() - 1, amount);
     }
 
     @Override
-    public void onCreated(ItemStack itemStack, World world, PlayerEntity player) {
+    public void onCraftedBy(ItemStack itemStack, World world, PlayerEntity player) {
         IModularItem.updateIdentifier(itemStack);
     }
 
@@ -222,7 +224,7 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
      * @return true if should display glint
      */
     @Override
-    public boolean hasEffect(@Nonnull ItemStack itemStack) {
+    public boolean isFoil(@Nonnull ItemStack itemStack) {
         if (ConfigHandler.enableGlint.get()) {
             return Arrays.stream(getImprovements(itemStack))
                     .anyMatch(improvement -> improvement.enchantment);

@@ -51,18 +51,18 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
     public ExtractorProjectileEntity(World world, LivingEntity shooter, ItemStack itemStack) {
         super(type, shooter, world);
 
-        damage = itemStack.getDamage();
+        damage = itemStack.getDamageValue();
 
-        setHitSound(SoundEvents.BLOCK_NETHERITE_BLOCK_HIT);
-        setDamage(0.5);
-        setKnockbackStrength(3);
+        setSoundEvent(SoundEvents.NETHERITE_BLOCK_HIT);
+        setBaseDamage(0.5);
+        setKnockback(3);
         setPierceLevel(Byte.MAX_VALUE);
     }
 
     public ExtractorProjectileEntity(EntityType<? extends ExtractorProjectileEntity> type, World worldIn) {
         super(type, worldIn);
-        setDamage(0.5);
-        setKnockbackStrength(3);
+        setBaseDamage(0.5);
+        setKnockback(3);
         setPierceLevel(Byte.MAX_VALUE);
     }
 
@@ -70,40 +70,40 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
     @OnlyIn(Dist.CLIENT)
     public ExtractorProjectileEntity(World worldIn, double x, double y, double z) {
         super(type, x, y, z, worldIn);
-        setDamage(0.5);
-        setKnockbackStrength(3);
+        setBaseDamage(0.5);
+        setKnockback(3);
         setPierceLevel(Byte.MAX_VALUE);
     }
 
     public ExtractorProjectileEntity(FMLPlayMessages.SpawnEntity packet, World worldIn) {
         super(type, worldIn);
-        setDamage(0.5);
-        setKnockbackStrength(3);
+        setBaseDamage(0.5);
+        setKnockback(3);
         setPierceLevel(Byte.MAX_VALUE);
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
+    protected void defineSynchedData() {
+        super.defineSynchedData();
     }
 
     @Override
-    protected void onImpact(RayTraceResult rayTraceResult) {
-        if (!world.isRemote
+    protected void onHit(RayTraceResult rayTraceResult) {
+        if (!level.isClientSide
                 && rayTraceResult.getType() == RayTraceResult.Type.BLOCK
-                && getMotion().lengthSquared() > 0.95) {
-            ServerPlayerEntity shooter = CastOptional.cast(func_234616_v_(), ServerPlayerEntity.class).orElse(null);
-            BlockPos pos = ((BlockRayTraceResult) rayTraceResult).getPos();
+                && getDeltaMovement().lengthSqr() > 0.95) {
+            ServerPlayerEntity shooter = CastOptional.cast(getOwner(), ServerPlayerEntity.class).orElse(null);
+            BlockPos pos = ((BlockRayTraceResult) rayTraceResult).getBlockPos();
 
-            if (shooter != null && breakBlock(world, pos, shooter)) {
-                breakAround(world, pos, ((BlockRayTraceResult) rayTraceResult).getFace(), shooter);
-                setMotion(getMotion().scale(0.95f));
+            if (shooter != null && breakBlock(level, pos, shooter)) {
+                breakAround(level, pos, ((BlockRayTraceResult) rayTraceResult).getDirection(), shooter);
+                setDeltaMovement(getDeltaMovement().scale(0.95f));
                 hitAdditional();
                 return;
             }
         }
 
-        super.onImpact(rayTraceResult);
+        super.onHit(rayTraceResult);
     }
 
     /**
@@ -111,62 +111,62 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
      * This is called recursively
      */
     private void hitAdditional() {
-        Vector3d position = getPositionVec();
-        Vector3d target = position.add(getMotion());
-        RayTraceResult rayTraceResult = world.rayTraceBlocks(
+        Vector3d position = position();
+        Vector3d target = position.add(getDeltaMovement());
+        RayTraceResult rayTraceResult = level.clip(
                 new RayTraceContext(position, target, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
 
         if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK
                 && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
-            onImpact(rayTraceResult);
+            onHit(rayTraceResult);
         }
     }
 
     private void breakAround(World world, BlockPos pos, Direction face, ServerPlayerEntity shooter) {
-        Vector3i axis1 = RotationHelper.shiftAxis(face.getDirectionVec());
+        Vector3i axis1 = RotationHelper.shiftAxis(face.getNormal());
         Vector3i axis2 = RotationHelper.shiftAxis(axis1);
         ServerScheduler.schedule(2, () -> {
-                breakBlock(world, pos.add(axis1), shooter);
+                breakBlock(world, pos.offset(axis1), shooter);
                 breakBlock(world, pos.subtract(axis1), shooter);
         });
         ServerScheduler.schedule(4, () -> {
-                breakBlock(world, pos.add(axis2), shooter);
+                breakBlock(world, pos.offset(axis2), shooter);
                 breakBlock(world, pos.subtract(axis2), shooter);
         });
         ServerScheduler.schedule(6, () -> {
-                breakBlock(world, pos.add(axis1).add(axis2), shooter);
+                breakBlock(world, pos.offset(axis1).offset(axis2), shooter);
                 breakBlock(world, pos.subtract(axis1).subtract(axis2), shooter);
         });
         ServerScheduler.schedule(8, () -> {
-                breakBlock(world, pos.add(axis1).subtract(axis2), shooter);
-                breakBlock(world, pos.subtract(axis1).add(axis2), shooter);
+                breakBlock(world, pos.offset(axis1).subtract(axis2), shooter);
+                breakBlock(world, pos.subtract(axis1).offset(axis2), shooter);
         });
     }
 
     private boolean breakBlock(World world, BlockPos pos, ServerPlayerEntity shooter) {
         ServerWorld serverWorld = (ServerWorld) world;
-        GameType gameType = shooter.interactionManager.getGameType();
+        GameType gameType = shooter.gameMode.getGameModeForPlayer();
         BlockState blockState = world.getBlockState(pos);
 
-        TileEntity tileEntity = world.getTileEntity(pos);
+        TileEntity tileEntity = world.getBlockEntity(pos);
 
-        if (blockState.getBlockHardness(world, pos) != -1
+        if (blockState.getDestroySpeed(world, pos) != -1
                 && isAlive()
                 && !shooter.blockActionRestricted(world, pos, gameType)
                 && FracturedBedrockTile.breakMaterials.contains(blockState.getMaterial())
                 && blockState.getBlock().removedByPlayer(blockState, world, pos, shooter, true, world.getFluidState(pos))
                 && ForgeHooks.onBlockBreakEvent(world, gameType, shooter, pos) != -1) {
 
-            blockState.getBlock().harvestBlock(world, shooter, pos, blockState, tileEntity, ItemStack.EMPTY);
-            blockState.getBlock().onPlayerDestroy(world, pos, blockState);
-            world.playEvent(null, 2001, pos, Block.getStateId(blockState));
+            blockState.getBlock().playerDestroy(world, shooter, pos, blockState, tileEntity, ItemStack.EMPTY);
+            blockState.getBlock().destroy(world, pos, blockState);
+            world.levelEvent(null, 2001, pos, Block.getId(blockState));
             damage++;
             heat += 10;
 
             // custom exp drop check since player is not holding an item that can harvest the block
             int exp = blockState.getExpDrop(world, pos, 0, 0);
             if (exp > 0) {
-                blockState.getBlock().dropXpOnBlockBreak(serverWorld, pos, exp);
+                blockState.getBlock().popExperience(serverWorld, pos, exp);
             }
 
 
@@ -182,28 +182,28 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
 
     private void destroyExtractor() {
         remove();
-        world.createExplosion(func_234616_v_(), getPosX(), getPosY(), getPosZ(), 4, Explosion.Mode.BREAK);
+        level.explode(getOwner(), getX(), getY(), getZ(), 4, Explosion.Mode.BREAK);
     }
 
     @Override
     public void tick() {
         super.tick();
 
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             if (isOnGround() && heat > 0) {
                 int cooldown = isInWater() ? 10 : 1;
-                if (ticksExisted % 10 == 0) {
-                    Vector3d pos = getPositionVec().add(getLookVec().scale(-Math.random()));
-                    ((ServerWorld) world).spawnParticle(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, cooldown, 0,
+                if (tickCount % 10 == 0) {
+                    Vector3d pos = position().add(getLookAngle().scale(-Math.random()));
+                    ((ServerWorld) level).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, cooldown, 0,
                             0.01, 0, 0.01D);
 
-                    ((ServerWorld) world).spawnParticle(ParticleTypes.FLAME, pos.x, pos.y + 0.1, pos.z, 1, 0,
+                    ((ServerWorld) level).sendParticles(ParticleTypes.FLAME, pos.x, pos.y + 0.1, pos.z, 1, 0,
                             0.01, 0, 0.01D);
                 }
 
                 if (cooldown > 1 && !extinguishing) {
-                    world.playSound(null, getPosX(), getPosY(), getPosZ(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 0.2f, 0.9f);
-                    ((ServerWorld) world).spawnParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, getPosX(), getPosY(), getPosZ(), 12, 0,
+                    level.playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 0.2f, 0.9f);
+                    ((ServerWorld) level).sendParticles(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, getX(), getY(), getZ(), 12, 0,
                             0.01, 0, 0.01D);
 
                     extinguishing = true;
@@ -211,9 +211,9 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
 
                 heat -= cooldown;
             } else {
-                if (ticksExisted % 40 == 0) {
-                    Vector3d pos = getPositionVec().add(getLookVec().scale(-Math.random()));
-                    ((ServerWorld) world).spawnParticle(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, 1, 0,
+                if (tickCount % 40 == 0) {
+                    Vector3d pos = position().add(getLookAngle().scale(-Math.random()));
+                    ((ServerWorld) level).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, 1, 0,
                             0.01, 0, 0.01D);
                 }
             }
@@ -222,39 +222,39 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
 
     @Override
     public boolean isOnGround() {
-        return timeInGround > 0;
+        return inGroundTime > 0;
     }
 
     @Override
-    protected ItemStack getArrowStack() {
+    protected ItemStack getPickupItem() {
         if (damage == 0) {
             return new ItemStack(ChthonicExtractorBlock.item);
         }
 
         ItemStack itemStack = new ItemStack(ChthonicExtractorBlock.usedItem);
-        itemStack.setDamage(damage);
+        itemStack.setDamageValue(damage);
         return itemStack;
     }
 
     @Override
-    protected void func_230299_a_(BlockRayTraceResult rayTraceResult) {
-        super.func_230299_a_(rayTraceResult);
-        this.setHitSound(SoundEvents.BLOCK_NETHERITE_BLOCK_HIT);
+    protected void onHitBlock(BlockRayTraceResult rayTraceResult) {
+        super.onHitBlock(rayTraceResult);
+        this.setSoundEvent(SoundEvents.NETHERITE_BLOCK_HIT);
     }
 
     @Override
-    protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
-        super.onEntityHit(p_213868_1_);
-        setMotion(getMotion().normalize().scale(-0.1));
+    protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
+        super.onHitEntity(p_213868_1_);
+        setDeltaMovement(getDeltaMovement().normalize().scale(-0.1));
     }
 
     /**
      * Called by a player entity when they collide with an entity
      */
     @Override
-    public void onCollideWithPlayer(PlayerEntity player) {
+    public void playerTouch(PlayerEntity player) {
         if (inGround) {
-            super.onCollideWithPlayer(player);
+            super.playerTouch(player);
 
             // this should mean that it has been picked up
             if (!isAlive()) {
@@ -264,68 +264,68 @@ public class ExtractorProjectileEntity extends AbstractArrowEntity implements IE
     }
 
     @Override
-    public boolean canBeCollidedWith() {
+    public boolean isPickable() {
         return true;
     }
 
     // pretty much the same as a regular pickup but attempts to place it in the offhand first
     @Override
-    public ActionResultType applyPlayerInteraction(PlayerEntity player, Vector3d vec, Hand hand) {
-        if (!world.isRemote
+    public ActionResultType interactAt(PlayerEntity player, Vector3d vec, Hand hand) {
+        if (!level.isClientSide
                 && isOnGround()
                 && isAlive()
-                && pickupStatus == AbstractArrowEntity.PickupStatus.ALLOWED) {
+                && pickup == AbstractArrowEntity.PickupStatus.ALLOWED) {
 
-            ItemStack itemStack = getArrowStack();
+            ItemStack itemStack = getPickupItem();
             boolean success = false;
 
-            if (player.getHeldItemMainhand().isEmpty()) {
-                player.setHeldItem(Hand.MAIN_HAND, itemStack);
+            if (player.getMainHandItem().isEmpty()) {
+                player.setItemInHand(Hand.MAIN_HAND, itemStack);
                 success = true;
-            } else if (player.getHeldItemOffhand().isEmpty()) {
-                player.setHeldItem(Hand.OFF_HAND, itemStack);
+            } else if (player.getOffhandItem().isEmpty()) {
+                player.setItemInHand(Hand.OFF_HAND, itemStack);
                 success = true;
-            } else if (player.inventory.addItemStackToInventory(itemStack)) {
+            } else if (player.inventory.add(itemStack)) {
                 success = true;
             }
 
             if (success) {
-                player.onItemPickup(this, 1);
+                player.take(this, 1);
                 ignitePlayer(player);
                 remove();
 
                 return ActionResultType.SUCCESS;
             }
         }
-        return super.applyPlayerInteraction(player, vec, hand);
+        return super.interactAt(player, vec, hand);
     }
 
     private void ignitePlayer(PlayerEntity player) {
         if (!isAlive() && heat > 10) {
-            player.setFire(3 + heat / 20);
+            player.setSecondsOnFire(3 + heat / 20);
         }
     }
 
     // possibly stops this from being removed after sitting around for too long
     @Override
-    public void func_225516_i_() { }
+    public void tickDespawn() { }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundNBT compound) {
+        super.readAdditionalSaveData(compound);
 
         damage = compound.getInt(damageKey);
         heat = compound.getInt(heatKey);
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundNBT compound) {
+        super.addAdditionalSaveData(compound);
 
         compound.putInt(damageKey, damage);
         compound.putInt(heatKey, heat);

@@ -31,7 +31,7 @@ public class HoneProgressGui extends GuiElement {
     public HoneProgressGui(int x, int y) {
         super(x, y, 45, 12);
 
-        labelString = new GuiStringSmall(0, 0, I18n.format("item.tetra.modular.hone_progress.label"));
+        labelString = new GuiStringSmall(0, 0, I18n.get("item.tetra.modular.hone_progress.label"));
         addChild(labelString);
 
         valueString = new GuiStringSmall(0, 0, "");
@@ -59,16 +59,16 @@ public class HoneProgressGui extends GuiElement {
 
             String factorString = String.format("%.0f%%", (100f * factor));
 
-            String tooltipBase = I18n.format("item.tetra.modular.hone_progress.description",
+            String tooltipBase = I18n.get("item.tetra.modular.hone_progress.description",
                     progress, limit, factorString, item.getHoneBase(), item.getHoningIntegrityPenalty(itemStack));
 
             if (workableFactor < 0) {
-                tooltipBase += I18n.format("item.tetra.modular.hone_progress.description_workable", String.format("%.0f%%", workableFactor));
+                tooltipBase += I18n.get("item.tetra.modular.hone_progress.description_workable", String.format("%.0f%%", workableFactor));
             }
 
             tooltip = Collections.singletonList(tooltipBase + "\n \n" + Tooltips.expand.getString());
             extendedTooltip = Collections.singletonList(tooltipBase + "\n \n" + Tooltips.expanded.getString()
-                    + "\n" + TextFormatting.GRAY.toString() + I18n.format("item.tetra.modular.hone_progress.description_extended"));
+                    + "\n" + TextFormatting.GRAY.toString() + I18n.get("item.tetra.modular.hone_progress.description_extended"));
 
             valueString.setString(factorString);
 

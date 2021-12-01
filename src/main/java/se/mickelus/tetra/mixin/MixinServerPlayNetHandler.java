@@ -16,7 +16,7 @@ public abstract class MixinServerPlayNetHandler {
 
     @Inject(at = @At("TAIL"), method = "processPlayer")
     private void processPlayer(CPlayerPacket packet, CallbackInfo callback) {
-        if (getInstance().player.isPotionActive(SuspendPotionEffect.instance)) {
+        if (getInstance().player.hasEffect(SuspendPotionEffect.instance)) {
             setFloating(false);
         }
     }

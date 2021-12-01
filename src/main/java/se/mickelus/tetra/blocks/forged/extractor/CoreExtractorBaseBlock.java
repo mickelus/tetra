@@ -40,19 +40,19 @@ import static net.minecraft.fluid.Fluids.WATER;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
 public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
-    public static final DirectionProperty facingProp = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty facingProp = HorizontalBlock.FACING;
 
-    private static final VoxelShape capShape = makeCuboidShape(3, 14, 3, 13, 16, 13);
-    private static final VoxelShape shaftShape = makeCuboidShape(4, 13, 4, 12, 14, 12);
-    private static final VoxelShape smallCoverShapeZ = makeCuboidShape(1, 0, 0, 15, 12, 16);
-    private static final VoxelShape largeCoverShapeZ = makeCuboidShape(0, 0, 1, 16, 13, 15);
-    private static final VoxelShape smallCoverShapeX = makeCuboidShape(0, 0, 1, 16, 12, 15);
-    private static final VoxelShape largeCoverShapeX = makeCuboidShape(1, 0, 0, 15, 13, 16);
+    private static final VoxelShape capShape = box(3, 14, 3, 13, 16, 13);
+    private static final VoxelShape shaftShape = box(4, 13, 4, 12, 14, 12);
+    private static final VoxelShape smallCoverShapeZ = box(1, 0, 0, 15, 12, 16);
+    private static final VoxelShape largeCoverShapeZ = box(0, 0, 1, 16, 13, 15);
+    private static final VoxelShape smallCoverShapeX = box(0, 0, 1, 16, 12, 15);
+    private static final VoxelShape largeCoverShapeX = box(1, 0, 0, 15, 13, 16);
 
     private static final VoxelShape combinedShapeZ
-            = VoxelShapes.or(VoxelShapes.combine(smallCoverShapeZ, largeCoverShapeZ, IBooleanFunction.OR), capShape, shaftShape);
+            = VoxelShapes.or(VoxelShapes.joinUnoptimized(smallCoverShapeZ, largeCoverShapeZ, IBooleanFunction.OR), capShape, shaftShape);
     private static final VoxelShape combinedShapeX
-            = VoxelShapes.or(VoxelShapes.combine(smallCoverShapeX, largeCoverShapeX, IBooleanFunction.OR), capShape, shaftShape);
+            = VoxelShapes.or(VoxelShapes.joinUnoptimized(smallCoverShapeX, largeCoverShapeX, IBooleanFunction.OR), capShape, shaftShape);
 
     public static final String unlocalizedName = "core_extractor";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -67,7 +67,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if (Direction.Axis.X.equals(state.get(facingProp).getAxis())) {
+        if (Direction.Axis.X.equals(state.getValue(facingProp).getAxis())) {
             return combinedShapeX;
         }
 
@@ -75,24 +75,24 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
         tooltip.add(new StringTextComponent(" "));
         tooltip.add(new TranslationTextComponent("block.multiblock_hint.1x2x1")
-                .mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
+                .withStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
     }
 
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block fromBlock, BlockPos fromPos, boolean isMoving) {
-        if (!pos.offset(world.getBlockState(pos).get(facingProp)).equals(fromPos)) {
+        if (!pos.relative(world.getBlockState(pos).getValue(facingProp)).equals(fromPos)) {
             TileEntityOptional.from(world, pos, CoreExtractorBaseTile.class)
                     .ifPresent(CoreExtractorBaseTile::updateTransferState);
         }
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(facingProp);
     }
 
@@ -108,27 +108,27 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
         if (Direction.UP.equals(facing) && !CoreExtractorPistonBlock.instance.equals(facingState.getBlock())) {
-            return state.get(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
+            return state.getValue(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
         }
 
-        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+        return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
     }
 
     // based on same method implementation in BedBlock
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        BlockState pistonState = CoreExtractorPistonBlock.instance.getDefaultState()
-                .with(WATERLOGGED, world.getFluidState(pos.up()).getFluid() == WATER);
-        world.setBlockState(pos.up(), pistonState, 3);
+    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        BlockState pistonState = CoreExtractorPistonBlock.instance.defaultBlockState()
+                .setValue(WATERLOGGED, world.getFluidState(pos.above()).getType() == WATER);
+        world.setBlock(pos.above(), pistonState, 3);
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(final BlockItemUseContext context) {
-        if (context.getWorld().getBlockState(context.getPos().up()).isReplaceable(context)) {
+        if (context.getLevel().getBlockState(context.getClickedPos().above()).canBeReplaced(context)) {
             return super.getStateForPlacement(context)
-                    .with(facingProp, context.getPlacementHorizontalFacing().getOpposite());
+                    .setValue(facingProp, context.getHorizontalDirection().getOpposite());
         }
 
         // returning null here stops the block from being placed
@@ -137,11 +137,11 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock {
 
     @Override
     public BlockState rotate(BlockState state, Rotation direction) {
-        return state.with(facingProp, direction.rotate(state.get(facingProp)));
+        return state.setValue(facingProp, direction.rotate(state.getValue(facingProp)));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.toRotation(state.get(facingProp)));
+        return state.rotate(mirror.getRotation(state.getValue(facingProp)));
     }
 }

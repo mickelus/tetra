@@ -21,7 +21,7 @@ public class SmallHealthPotionEffect extends Effect {
 
         setRegistryName("small_health");
 
-        addAttributesModifier(Attributes.MAX_HEALTH, "c89b4203-0804-4607-b320-f6b8daf2d272", 1, AttributeModifier.Operation.ADDITION);
+        addAttributeModifier(Attributes.MAX_HEALTH, "c89b4203-0804-4607-b320-f6b8daf2d272", 1, AttributeModifier.Operation.ADDITION);
 
         instance = this;
     }
@@ -33,6 +33,6 @@ public class SmallHealthPotionEffect extends Effect {
 
         int amount = effect.getAmplifier() + 1;
         EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new StringTextComponent(I18n.format("effect.tetra.small_health.tooltip", amount)));
+                new StringTextComponent(I18n.get("effect.tetra.small_health.tooltip", amount)));
     }
 }

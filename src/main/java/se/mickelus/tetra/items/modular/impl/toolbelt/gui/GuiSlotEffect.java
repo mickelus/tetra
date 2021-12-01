@@ -19,7 +19,7 @@ public class GuiSlotEffect extends GuiElement {
     public GuiSlotEffect(int x, int y, SlotType slotType, ItemEffect effect) {
         super(x, y, 8, 8);
 
-        tooltip = I18n.format(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType.toString(), effect.getKey()));
+        tooltip = I18n.get(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType.toString(), effect.getKey()));
 
         if (ItemEffect.quickAccess.equals(effect)) {
             addChild(new GuiTexture(0, 0, 8, 8, 0, 64, GuiTextures.toolbelt).setColor(0xbbbbbb));

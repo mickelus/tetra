@@ -34,7 +34,7 @@ public class GuiSchematicList extends GuiElement {
         buttonForward = new GuiButton(width - 20, height + 4, 30, 12, "Next >", () -> setPage(getPage() + 1));
         addChild(buttonForward);
 
-        emptyStateText = new GuiText(10, 23, 204, TextFormatting.GRAY + I18n.format("tetra.workbench.schematic_list.empty"));
+        emptyStateText = new GuiText(10, 23, 204, TextFormatting.GRAY + I18n.get("tetra.workbench.schematic_list.empty"));
         addChild(emptyStateText);
 
         this.schematicSelectionConsumer = schematicSelectionConsumer;

@@ -33,12 +33,12 @@ public class TetraBlock extends Block implements ITetraBlock {
                         for (int i = 0; i < cap.getSlots(); i++) {
                             ItemStack itemStack = cap.getStackInSlot(i);
                             if (!itemStack.isEmpty()) {
-                                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack.copy());
+                                InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack.copy());
                             }
                         }
                     });
 
-            TileEntityOptional.from(world, pos, TileEntity.class).ifPresent(TileEntity::remove);
+            TileEntityOptional.from(world, pos, TileEntity.class).ifPresent(TileEntity::setRemoved);
         }
     }
 }

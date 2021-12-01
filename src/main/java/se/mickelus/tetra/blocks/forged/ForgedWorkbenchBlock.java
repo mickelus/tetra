@@ -32,9 +32,9 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
     public static AbstractWorkbenchBlock instance;
 
     private static final VoxelShape shape = VoxelShapes.or(
-            makeCuboidShape(3, 0, 1, 13, 2, 15),
-            makeCuboidShape(4, 2, 2, 12, 9, 14),
-            makeCuboidShape(2, 9, 0, 14, 16, 16));
+            box(3, 0, 1, 13, 2, 15),
+            box(4, 2, 2, 12, 9, 14),
+            box(2, 9, 0, 14, 16, 16));
 
     public ForgedWorkbenchBlock() {
         super(ForgedBlockCommon.propertiesSolid);
@@ -43,11 +43,11 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
 
         hasItem = true;
 
-        setDefaultState(getDefaultState().with(WATERLOGGED, false));
+        registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
@@ -57,31 +57,31 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
 
         builder.add(WATERLOGGED);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? WATER.getStillFluidState(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return getDefaultState()
-                .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == WATER);
+        return defaultBlockState()
+                .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == WATER);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
             BlockPos currentPos, BlockPos facingPos) {
-        if (stateIn.get(WATERLOGGED)) {
-            worldIn.getPendingFluidTicks().scheduleTick(currentPos, WATER, WATER.getTickRate(worldIn));
+        if (stateIn.getValue(WATERLOGGED)) {
+            worldIn.getLiquidTicks().scheduleTick(currentPos, WATER, WATER.getTickDelay(worldIn));
         }
 
-        return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 }

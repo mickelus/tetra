@@ -46,7 +46,7 @@ public class OverlayGuiQuickslot extends GuiElement {
         guiItem.setItem(itemStack);
         addChild(guiItem);
 
-        label = new GuiStringOutline(61, 6, itemStack.getDisplayName().getString());
+        label = new GuiStringOutline(61, 6, itemStack.getHoverName().getString());
         label.setColor(GuiColors.hover);
         label.setOpacity(0);
         addChild(label);
@@ -110,7 +110,7 @@ public class OverlayGuiQuickslot extends GuiElement {
     }
 
     public Hand getHand() {
-        return (Minecraft.getInstance().player.getPrimaryHand() == HandSide.RIGHT) == hitRight.hasFocus()
+        return (Minecraft.getInstance().player.getMainArm() == HandSide.RIGHT) == hitRight.hasFocus()
                 ? Hand.MAIN_HAND
                 : Hand.OFF_HAND;
     }

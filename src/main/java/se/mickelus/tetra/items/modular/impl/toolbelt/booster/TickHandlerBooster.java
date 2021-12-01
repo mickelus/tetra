@@ -24,7 +24,7 @@ public class TickHandlerBooster {
     public void tickItem(PlayerEntity player, ItemStack stack, int level) {
         CompoundNBT tag = stack.getOrCreateTag();
         boolean charged = tag.getBoolean(UtilBooster.chargedKey);
-        if (!player.isInWater() && player.getRidingEntity() == null && UtilBooster.isActive(tag) && UtilBooster.hasFuel(tag, charged)) {
+        if (!player.isInWater() && player.getVehicle() == null && UtilBooster.isActive(tag) && UtilBooster.hasFuel(tag, charged)) {
             if (charged) {
                 UtilBooster.boostPlayerCharged(player, tag, level);
             } else {

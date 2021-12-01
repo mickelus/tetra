@@ -29,10 +29,10 @@ public class CoreExtractorPistonTile extends TileEntity implements ITickableTile
 
     public void activate() {
         if (!isActive()) {
-            endTime = world.getGameTime() + activationDuration;
+            endTime = level.getGameTime() + activationDuration;
 
-            if (!world.isRemote) {
-                TetraMod.packetHandler.sendToAllPlayersNear(new CoreExtractorPistonUpdatePacket(pos, endTime), pos, 64, world.getDimensionKey());
+            if (!level.isClientSide) {
+                TetraMod.packetHandler.sendToAllPlayersNear(new CoreExtractorPistonUpdatePacket(worldPosition, endTime), worldPosition, 64, level.dimension());
             }
         }
     }
@@ -47,36 +47,36 @@ public class CoreExtractorPistonTile extends TileEntity implements ITickableTile
 
     public float getProgress(float partialTicks) {
         if (isActive()) {
-            return Math.min(1, Math.max(0, (world.getGameTime() + activationDuration - endTime + partialTicks) / activationDuration));
+            return Math.min(1, Math.max(0, (level.getGameTime() + activationDuration - endTime + partialTicks) / activationDuration));
         }
         return 0;
     }
 
     @Override
     public void tick() {
-        if (endTime < world.getGameTime()) {
+        if (endTime < level.getGameTime()) {
             endTime = Long.MAX_VALUE;
-            if (!world.isRemote) {
-                TileEntityOptional.from(world, pos.offset(Direction.DOWN), CoreExtractorBaseTile.class)
+            if (!level.isClientSide) {
+                TileEntityOptional.from(level, worldPosition.relative(Direction.DOWN), CoreExtractorBaseTile.class)
                         .ifPresent(base -> base.fill(fillAmount));
 
                 runEndEffects();
-                markDirty();
+                setChanged();
             }
         }
     }
 
     private void runEndEffects() {
-        if (world instanceof ServerWorld) {
-            ((ServerWorld) world).spawnParticle(ParticleTypes.LARGE_SMOKE,
-                    pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5,
+        if (level instanceof ServerWorld) {
+            ((ServerWorld) level).sendParticles(ParticleTypes.LARGE_SMOKE,
+                    worldPosition.getX() + 0.5, worldPosition.getY() + 0.1, worldPosition.getZ() + 0.5,
                     5,  0, 0, 0, 0.02f);
         }
 
-        world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS,
+        level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS,
                 0.1f, 1);
 
-        world.playSound(null, pos, SoundEvents.BLOCK_METAL_FALL, SoundCategory.BLOCKS,
+        level.playSound(null, worldPosition, SoundEvents.METAL_FALL, SoundCategory.BLOCKS,
                 0.2f, 0.5f);
     }
 }

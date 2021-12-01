@@ -192,9 +192,9 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         LinkedList<String> result = new LinkedList<>();
 
         if (item != null) {
-            result.add(I18n.format("tetra.holo.craft.breadcrumb.root"));
+            result.add(I18n.get("tetra.holo.craft.breadcrumb.root"));
 
-            result.add(I18n.format("tetra.holo.craft." + item.getItem().getRegistryName().getPath()));
+            result.add(I18n.get("tetra.holo.craft." + item.getItem().getRegistryName().getPath()));
 
             if (slot != null) {
                 result.add(getSlotName());
@@ -208,8 +208,8 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
                 result.add(openVariant.variantName);
             }
         } else if (showingMaterials) {
-            result.add(I18n.format("tetra.holo.craft.breadcrumb.root"));
-            result.add(I18n.format("tetra.holo.craft.breadcrumb.materials"));
+            result.add(I18n.get("tetra.holo.craft.breadcrumb.root"));
+            result.add(I18n.get("tetra.holo.craft.breadcrumb.materials"));
         }
 
         depth = result.size() - 1;

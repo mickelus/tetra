@@ -54,18 +54,18 @@ public class RackBlock extends TetraWaterloggedBlock {
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static RackBlock instance;
 
-    public static final DirectionProperty facingProp = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty facingProp = HorizontalBlock.FACING;
 
     private static final Map<Direction, VoxelShape> shapes = Maps.newEnumMap(ImmutableMap.of(
-            Direction.NORTH, Block.makeCuboidShape(0.0, 11.0, 14.0, 16.0, 14.0, 16.0),
-            Direction.SOUTH, Block.makeCuboidShape(0.0, 11.0, 0.0, 16.0, 14.0, 2.0),
-            Direction.WEST, Block.makeCuboidShape(14.0, 11.0, 0.0, 16.0, 14.0, 16.0),
-            Direction.EAST, Block.makeCuboidShape( 0.0, 11.0, 0.0, 2.0, 14.0, 16.0)));
+            Direction.NORTH, Block.box(0.0, 11.0, 14.0, 16.0, 14.0, 16.0),
+            Direction.SOUTH, Block.box(0.0, 11.0, 0.0, 16.0, 14.0, 2.0),
+            Direction.WEST, Block.box(14.0, 11.0, 0.0, 16.0, 14.0, 16.0),
+            Direction.EAST, Block.box( 0.0, 11.0, 0.0, 2.0, 14.0, 16.0)));
 
 
     public RackBlock() {
-        super(Block.Properties.create(Material.WOOD, MaterialColor.WOOD)
-                .hardnessAndResistance(1.0F)
+        super(Block.Properties.of(Material.WOOD, MaterialColor.WOOD)
+                .strength(1.0F)
                 .sound(SoundType.WOOD));
 
         hasItem = true;
@@ -79,8 +79,8 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(facingProp);
     }
 
@@ -96,11 +96,11 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        Direction facing = blockState.get(facingProp);
-        AxisAlignedBB boundingBox = blockState.getShape(player.world, pos).getBoundingBox();
-        if (facing == hit.getFace()) {
-            Vector3d hitVec = hit.getHitVec();
+    public ActionResultType use(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        Direction facing = blockState.getValue(facingProp);
+        AxisAlignedBB boundingBox = blockState.getShape(player.level, pos).bounds();
+        if (facing == hit.getDirection()) {
+            Vector3d hitVec = hit.getLocation();
             int slot = getHitX(facing, boundingBox,
                     (float) hitVec.x - pos.getX(),
                     (float) hitVec.y - pos.getY(),
@@ -110,7 +110,7 @@ public class RackBlock extends TetraWaterloggedBlock {
             TileEntityOptional.from(world, pos, RackTile.class)
                     .ifPresent(tile -> tile.slotInteract(slot, player, hand));
 
-            return ActionResultType.func_233537_a_(world.isRemote);
+            return ActionResultType.sidedSuccess(world.isClientSide);
         }
 
         return ActionResultType.PASS;
@@ -132,9 +132,9 @@ public class RackBlock extends TetraWaterloggedBlock {
 
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        if (Direction.Axis.Y != context.getFace().getAxis()) {
-            return Optional.of(getDefaultState().with(facingProp, context.getFace()))
-                    .filter(blockState -> blockState.isValidPosition(context.getWorld(), context.getPos()))
+        if (Direction.Axis.Y != context.getClickedFace().getAxis()) {
+            return Optional.of(defaultBlockState().setValue(facingProp, context.getClickedFace()))
+                    .filter(blockState -> blockState.canSurvive(context.getLevel(), context.getClickedPos()))
                     .orElse(null);
         }
 
@@ -142,42 +142,42 @@ public class RackBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.offset(state.get(facingProp).getOpposite())).getMaterial().isSolid();
+    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        return worldIn.getBlockState(pos.relative(state.getValue(facingProp).getOpposite())).getMaterial().isSolid();
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         dropBlockInventory(this, world, pos, newState);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return facing.getOpposite() == stateIn.get(facingProp) && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : stateIn;
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        return facing.getOpposite() == stateIn.getValue(facingProp) && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : stateIn;
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return shapes.get(state.get(facingProp));
+        return shapes.get(state.getValue(facingProp));
     }
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
-        return state.with(facingProp, rot.rotate(state.get(facingProp)));
+        return state.setValue(facingProp, rot.rotate(state.getValue(facingProp)));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(facingProp)));
+        return state.rotate(mirrorIn.getRotation(state.getValue(facingProp)));
     }
 
 
     @Override
-    public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip,
+    public void appendHoverText(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip,
             final ITooltipFlag advanced) {
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
-            tooltip.add(new TranslationTextComponent("block.tetra.rack.description").mergeStyle(TextFormatting.GRAY));
+            tooltip.add(new TranslationTextComponent("block.tetra.rack.description").withStyle(TextFormatting.GRAY));
         } else {
             tooltip.add(Tooltips.expand);
         }
@@ -190,7 +190,7 @@ public class RackBlock extends TetraWaterloggedBlock {
 
     @Override
     public Collection<ToolType> getTools(World world, BlockPos pos, BlockState blockState) {
-        return Optional.ofNullable(world.getTileEntity(pos))
+        return Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new)
@@ -200,7 +200,7 @@ public class RackBlock extends TetraWaterloggedBlock {
 
     @Override
     public int getToolLevel(World world, BlockPos pos, BlockState blockState, ToolType toolType) {
-        return Optional.ofNullable(world.getTileEntity(pos))
+        return Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new)
@@ -213,7 +213,7 @@ public class RackBlock extends TetraWaterloggedBlock {
             PlayerEntity player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
 
 
-        Optional<IInventory> optional = Optional.ofNullable(world.getTileEntity(pos))
+        Optional<IInventory> optional = Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new);
@@ -238,7 +238,7 @@ public class RackBlock extends TetraWaterloggedBlock {
     @Override
     public ItemStack onActionConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
-        Optional<ItemHandlerWrapper> optional = Optional.ofNullable(world.getTileEntity(pos))
+        Optional<ItemHandlerWrapper> optional = Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new);
@@ -271,20 +271,20 @@ public class RackBlock extends TetraWaterloggedBlock {
      */
     private void spawnConsumeParticle(World world, BlockPos pos, BlockState blockState, IInventory inventory, ItemStack providerStack) {
         if (world instanceof ServerWorld) {
-            Direction facing = blockState.get(RackBlock.facingProp);
-            Vector3d particlePos = Vector3d.copy(pos).add(0.5f, 0.75f, 0.5f).add(Vector3d.copy(facing.getDirectionVec()).scale(-0.3));
+            Direction facing = blockState.getValue(RackBlock.facingProp);
+            Vector3d particlePos = Vector3d.atLowerCornerOf(pos).add(0.5f, 0.75f, 0.5f).add(Vector3d.atLowerCornerOf(facing.getNormal()).scale(-0.3));
 
-            ItemStack firstSlot = inventory.getStackInSlot(0);
+            ItemStack firstSlot = inventory.getItem(0);
             firstSlot = Optional.of(ItemUpgradeRegistry.instance.getReplacement(firstSlot))
                     .filter(itemStack -> !itemStack.isEmpty())
                     .orElse(firstSlot);
-            if (ItemStack.areItemStacksEqual(providerStack, firstSlot)) {
-                particlePos = particlePos.add(Vector3d.copy(facing.rotateYCCW().getDirectionVec()).scale(-0.25));
+            if (ItemStack.matches(providerStack, firstSlot)) {
+                particlePos = particlePos.add(Vector3d.atLowerCornerOf(facing.getCounterClockWise().getNormal()).scale(-0.25));
             } else {
-                particlePos = particlePos.add(Vector3d.copy(facing.rotateYCCW().getDirectionVec()).scale(0.25));
+                particlePos = particlePos.add(Vector3d.atLowerCornerOf(facing.getCounterClockWise().getNormal()).scale(0.25));
             }
 
-            ((ServerWorld) world).spawnParticle(new RedstoneParticleData(0.0f, 0.66f, 0.66f, 1f), particlePos.getX(), particlePos.getY(), particlePos.getZ(), 2, 0, 0, 0, 0f);
+            ((ServerWorld) world).sendParticles(new RedstoneParticleData(0.0f, 0.66f, 0.66f, 1f), particlePos.x(), particlePos.y(), particlePos.z(), 2, 0, 0, 0, 0f);
         }
     }
 }

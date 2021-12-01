@@ -26,18 +26,18 @@ public class TooltipGetterInteger implements ITooltipGetter {
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         if (absolute) {
-            return I18n.format(localizationKey, Math.round(Math.abs(statGetter.getValue(player, itemStack))));
+            return I18n.get(localizationKey, Math.round(Math.abs(statGetter.getValue(player, itemStack))));
         }
-        return I18n.format(localizationKey, Math.round(statGetter.getValue(player, itemStack)));
+        return I18n.get(localizationKey, Math.round(statGetter.getValue(player, itemStack)));
     }
 
     @Override
     public boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
-        return I18n.hasKey(localizationKey + "_extended");
+        return I18n.exists(localizationKey + "_extended");
     }
 
     @Override
     public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format(localizationKey + "_extended");
+        return I18n.get(localizationKey + "_extended");
     }
 }

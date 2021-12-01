@@ -14,7 +14,7 @@ public class TooltipGetterBlockingReflect implements ITooltipGetter {
 
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("tetra.stats.blocking_reflect.tooltip", String.format("%.0f%%", levelGetter.getValue(player, itemStack)),
+        return I18n.get("tetra.stats.blocking_reflect.tooltip", String.format("%.0f%%", levelGetter.getValue(player, itemStack)),
                         String.format("%.0f%%", efficiencyGetter.getValue(player, itemStack) * 100));
     }
 }

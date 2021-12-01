@@ -28,26 +28,26 @@ public class SeveredPotionEffect extends Effect {
 
         setRegistryName("severed");
 
-        addAttributesModifier(Attributes.MAX_HEALTH, "7e68e993-e133-41c0-aea3-703afc401831", -0.1, AttributeModifier.Operation.MULTIPLY_TOTAL);
-        addAttributesModifier(Attributes.ATTACK_DAMAGE, "3ca939c9-62fe-41a6-a722-22235066f808", -0.05, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        addAttributeModifier(Attributes.MAX_HEALTH, "7e68e993-e133-41c0-aea3-703afc401831", -0.1, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        addAttributeModifier(Attributes.ATTACK_DAMAGE, "3ca939c9-62fe-41a6-a722-22235066f808", -0.05, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
         instance = this;
     }
 
-    public void performEffect(LivingEntity entity, int amplifier) {
-        if (!entity.getEntityWorld().isRemote) {
-            Random rand = entity.getRNG();
-            ((ServerWorld) entity.world).spawnParticle(new RedstoneParticleData(0.5f, 0, 0, 0.5f),
-                    entity.getPosX() + entity.getWidth() * (0.3 + rand.nextGaussian() * 0.4),
-                    entity.getPosY() + entity.getHeight() * (0.2 + rand.nextGaussian() * 0.4),
-                    entity.getPosZ() + entity.getWidth() * (0.3 + rand.nextGaussian() * 0.4),
+    public void applyEffectTick(LivingEntity entity, int amplifier) {
+        if (!entity.getCommandSenderWorld().isClientSide) {
+            Random rand = entity.getRandom();
+            ((ServerWorld) entity.level).sendParticles(new RedstoneParticleData(0.5f, 0, 0, 0.5f),
+                    entity.getX() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
+                    entity.getY() + entity.getBbHeight() * (0.2 + rand.nextGaussian() * 0.4),
+                    entity.getZ() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
                     20,
                     0, 0, 0, 0f);
         }
     }
 
     @Override
-    public boolean isReady(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration % 10 == 0;
     }
 
@@ -58,6 +58,6 @@ public class SeveredPotionEffect extends Effect {
 
         int amp = effect.getAmplifier() + 1;
         EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new StringTextComponent(I18n.format("effect.tetra.severed.tooltip", String.format("%d", amp * 10), String.format("%d", amp * 5))));
+                new StringTextComponent(I18n.get("effect.tetra.severed.tooltip", String.format("%d", amp * 10), String.format("%d", amp * 5))));
     }
 }

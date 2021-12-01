@@ -44,7 +44,7 @@ public class GuiIntegrityBar extends GuiElement {
 
         setAttachmentPoint(GuiAttachment.topCenter);
 
-        tooltip = Collections.singletonList(I18n.format("tetra.stats.integrity_usage.tooltip"));
+        tooltip = Collections.singletonList(I18n.get("tetra.stats.integrity_usage.tooltip"));
     }
 
     public void setItemStack(ItemStack itemStack, ItemStack previewStack) {
@@ -60,9 +60,9 @@ public class GuiIntegrityBar extends GuiElement {
             }
 
             if (integrityGain - integrityCost < 0) {
-                label.setString(TextFormatting.RED + I18n.format("tetra.stats.integrity_usage", integrityCost, integrityGain));
+                label.setString(TextFormatting.RED + I18n.get("tetra.stats.integrity_usage", integrityCost, integrityGain));
             } else {
-                label.setString(I18n.format("tetra.stats.integrity_usage", integrityCost, integrityGain));
+                label.setString(I18n.get("tetra.stats.integrity_usage", integrityCost, integrityGain));
             }
 
             if (integrityGain > 7) {

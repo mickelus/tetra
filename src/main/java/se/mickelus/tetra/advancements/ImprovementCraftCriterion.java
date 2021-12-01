@@ -49,11 +49,11 @@ public class ImprovementCraftCriterion extends CriterionInstance {
     public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String improvement, int improvementLevel,
             ToolType toolType, int toolLevel) {
 
-        if (this.before != null && !this.before.test(before)) {
+        if (this.before != null && !this.before.matches(before)) {
             return false;
         }
 
-        if (this.after != null && !this.after.test(after)) {
+        if (this.after != null && !this.after.matches(after)) {
             return false;
         }
 
@@ -77,7 +77,7 @@ public class ImprovementCraftCriterion extends CriterionInstance {
             return false;
         }
 
-        if (!this.toolLevel.test(toolLevel)) {
+        if (!this.toolLevel.matches(toolLevel)) {
             return false;
         }
 
@@ -87,10 +87,10 @@ public class ImprovementCraftCriterion extends CriterionInstance {
     private static ImprovementCraftCriterion deserialize(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
         return new ImprovementCraftCriterion(entityPredicate,
                 JsonOptional.field(json, "before")
-                        .map(ItemPredicate::deserialize)
+                        .map(ItemPredicate::fromJson)
                         .orElse(null),
                 JsonOptional.field(json, "after")
-                        .map(ItemPredicate::deserialize)
+                        .map(ItemPredicate::fromJson)
                         .orElse(null),
                 JsonOptional.field(json, "schematic")
                         .map(JsonElement::getAsString)
@@ -110,6 +110,6 @@ public class ImprovementCraftCriterion extends CriterionInstance {
                         .orElse(null),
                 JsonOptional.field(json, "toolLevel")
                         .map(MinMaxBounds.IntBound::fromJson)
-                        .orElse(MinMaxBounds.IntBound.UNBOUNDED));
+                        .orElse(MinMaxBounds.IntBound.ANY));
     }
 }

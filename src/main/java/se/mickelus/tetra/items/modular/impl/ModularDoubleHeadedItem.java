@@ -69,7 +69,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     public static ModularDoubleHeadedItem instance;
 
     public ModularDoubleHeadedItem() {
-        super(new Item.Properties().maxStackSize(1).group(TetraItemGroup.instance).isImmuneToFire());
+        super(new Item.Properties().stacksTo(1).tab(TetraItemGroup.instance).fireResistant());
         setRegistryName(unlocalizedName);
 
         entityHitDamage = 2;
@@ -97,8 +97,8 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     }
 
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if (isInGroup(group)) {
+    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+        if (allowdedIn(group)) {
             items.add(setupHammerStack("oak", "stick"));
             items.add(setupHammerStack("stone", "stick"));
             items.add(setupHammerStack("iron", "spruce"));
@@ -123,14 +123,14 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
         PlayerEntity player = context.getPlayer();
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
+        World world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
         Hand hand = context.getHand();
         if (player != null
                 && !player.isCrouching()
                 && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
-                && getToolLevel(player.getHeldItem(hand), ToolTypes.hammer) > 0) {
-            return BasicWorkbenchBlock.upgradeWorkbench(player, world, pos, hand, context.getFace());
+                && getToolLevel(player.getItemInHand(hand), ToolTypes.hammer) > 0) {
+            return BasicWorkbenchBlock.upgradeWorkbench(player, world, pos, hand, context.getClickedFace());
         }
         return super.onItemUseFirst(stack, context);
     }
@@ -143,8 +143,8 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
                 .orElse("");
         return Arrays.stream(getImprovements(itemStack))
                 .map(improvement -> improvement.key + ".prefix")
-                .filter(I18n::hasKey)
-                .map(I18n::format)
+                .filter(I18n::exists)
+                .map(I18n::get)
                 .findFirst()
                 .map(prefix -> prefix + " " + modulePrefix)
                 .orElse(modulePrefix);
@@ -180,7 +180,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     // overridden to not stack the tool level/efficiency attribute between heads
     @Override
     public ToolData getToolDataRaw(ItemStack itemStack) {
-        logger.debug("Gathering tool data for {} ({})", getDisplayName(itemStack).getString(), getDataCacheKey(itemStack));
+        logger.debug("Gathering tool data for {} ({})", getName(itemStack).getString(), getDataCacheKey(itemStack));
         ToolData result = ToolData.retainMax(Stream.of(getModuleFromSlot(itemStack, headLeftKey), getModuleFromSlot(itemStack, headRightKey))
                 .filter(Objects::nonNull)
                 .map(module -> module.getToolData(itemStack))
@@ -211,7 +211,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
     @Override
     public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
-        if (entity != null && itemStack.equals(entity.getActiveItemStack())) {
+        if (entity != null && itemStack.equals(entity.getUseItem())) {
             return Optional.ofNullable(getChargeableAbility(itemStack))
                     .map(ChargedAbilityEffect::getModelTransform)
                     .map(transform -> super.getModelCacheKey(itemStack, entity) + ":" + transform)
@@ -225,7 +225,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     @OnlyIn(Dist.CLIENT)
     public String getTransformVariant(ItemStack itemStack, @Nullable LivingEntity entity) {
         ChargedAbilityEffect ability = getChargeableAbility(itemStack);
-        if (entity != null && ability != null && itemStack.equals(entity.getActiveItemStack())) {
+        if (entity != null && ability != null && itemStack.equals(entity.getUseItem())) {
             return ability.getModelTransform();
         }
 

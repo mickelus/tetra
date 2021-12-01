@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class HoloSortButton extends GuiElement {
-    private final List<String> tooltip = Collections.singletonList(I18n.format("tetra.holo.craft.variants_sort"));
+    private final List<String> tooltip = Collections.singletonList(I18n.get("tetra.holo.craft.variants_sort"));
 
     Consumer<IStatSorter> onSelect;
 

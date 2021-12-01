@@ -35,7 +35,7 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
     }
 
     public boolean canRefill() {
-        return getPiston().isPresent() && CoreExtractorPipeBlock.isPowered(world, pos.down());
+        return getPiston().isPresent() && CoreExtractorPipeBlock.isPowered(level, worldPosition.below());
     }
 
     @Override
@@ -123,13 +123,13 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
 
     @Override
     public void tick() {
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             if (isSending) {
-                if (world.getGameTime() % 5 == 0) {
+                if (level.getGameTime() % 5 == 0) {
                     transfer();
                 }
             } else if (currentCharge > 0) {
-                if (world.getGameTime() % 20 == 0) {
+                if (level.getGameTime() % 20 == 0) {
                     currentCharge = Math.max(0, currentCharge - drainAmount);
                 }
             }
@@ -166,7 +166,7 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
                                 fill(overfill);
                             }
 
-                            markDirty();
+                            setChanged();
                         } else {
 
                             setSending(false);
@@ -189,26 +189,26 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
     }
 
     private void notifyBlockUpdate() {
-        markDirty();
-        BlockState state = world.getBlockState(pos);
-        world.notifyBlockUpdate(pos, state, state,3);
+        setChanged();
+        BlockState state = level.getBlockState(worldPosition);
+        level.sendBlockUpdated(worldPosition, state, state,3);
     }
 
     public Direction getFacing() {
-        return getBlockState().get(CoreExtractorBaseBlock.facingProp);
+        return getBlockState().getValue(CoreExtractorBaseBlock.facingProp);
     }
 
     private Optional<IHeatTransfer> getConnectedUnit() {
-        return TileEntityOptional.from(world, pos.offset(getFacing()), IHeatTransfer.class);
+        return TileEntityOptional.from(level, worldPosition.relative(getFacing()), IHeatTransfer.class);
     }
 
     private Optional<CoreExtractorPistonTile> getPiston() {
-        return TileEntityOptional.from(world, pos.offset(Direction.UP), CoreExtractorPistonTile.class);
+        return TileEntityOptional.from(level, worldPosition.relative(Direction.UP), CoreExtractorPistonTile.class);
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compound) {
-        super.read(blockState, compound);
+    public void load(BlockState blockState, CompoundNBT compound) {
+        super.load(blockState, compound);
 
         if (compound.contains(chargeKey)) {
             currentCharge = compound.getInt(chargeKey);
@@ -218,8 +218,8 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
 
         compound.putInt(chargeKey, currentCharge);
 
@@ -229,17 +229,17 @@ public class CoreExtractorBaseTile extends TileEntity implements ITickableTileEn
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, 0, getUpdateTag());
+        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return write(new CompoundNBT());
+        return save(new CompoundNBT());
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
-        this.read(getBlockState(), packet.getNbtCompound());
+        this.load(getBlockState(), packet.getTag());
 //        BlockState state = getBlockState();
 
 //        world.notifyBlockUpdate(pos, state, state,3);

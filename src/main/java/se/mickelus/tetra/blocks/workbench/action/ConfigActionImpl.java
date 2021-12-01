@@ -26,7 +26,7 @@ import java.util.Map;
 public class ConfigActionImpl extends ConfigAction {
 
     private static final LootParameterSet lootParameters = new LootParameterSet.Builder()
-            .required(LootParameters.field_237457_g_)
+            .required(LootParameters.ORIGIN)
             .optional(LootParameters.TOOL)
             .optional(LootParameters.THIS_ENTITY)
             .build();
@@ -38,7 +38,7 @@ public class ConfigActionImpl extends ConfigAction {
 
     @Override
     public boolean canPerformOn(PlayerEntity player, WorkbenchTile tile, ItemStack itemStack) {
-        return requirement.test(itemStack);
+        return requirement.matches(itemStack);
     }
 
     @Override
@@ -58,9 +58,9 @@ public class ConfigActionImpl extends ConfigAction {
 
     @Override
     public void perform(PlayerEntity player, ItemStack targetStack, WorkbenchTile workbench) {
-        if (player != null && !player.world.isRemote) {
-            ServerWorld world = (ServerWorld) player.world;
-            LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
+        if (player != null && !player.level.isClientSide) {
+            ServerWorld world = (ServerWorld) player.level;
+            LootTable table = world.getServer().getLootTables().get(lootTable);
             ItemStack toolStack = requiredTools.getLevelMap().entrySet().stream()
                     .min(Map.Entry.comparingByValue())
                     .map(entry -> {
@@ -78,20 +78,20 @@ public class ConfigActionImpl extends ConfigAction {
                     .withLuck(player.getLuck())
                     .withParameter(LootParameters.TOOL, toolStack)
                     .withParameter(LootParameters.THIS_ENTITY, player)
-                    .withParameter(LootParameters.field_237457_g_, player.getPositionVec())
-                    .build(lootParameters);
+                    .withParameter(LootParameters.ORIGIN, player.position())
+                    .create(lootParameters);
 
-            table.generate(context).forEach(itemStack -> {
-                if (!player.inventory.addItemStackToInventory(itemStack)) {
-                    player.dropItem(itemStack, false);
+            table.getRandomItems(context).forEach(itemStack -> {
+                if (!player.inventory.add(itemStack)) {
+                    player.drop(itemStack, false);
                 }
             });
 
-            BlockPos pos = workbench.getPos();
-            world.playSound(null, pos, SoundEvents.BLOCK_STONE_BREAK, player.getSoundCategory(),
+            BlockPos pos = workbench.getBlockPos();
+            world.playSound(null, pos, SoundEvents.STONE_BREAK, player.getSoundSource(),
                     1.0F, 1.5f + (float) Math.random() * 0.5f);
 
-            world.spawnParticle(new ItemParticleData(ParticleTypes.ITEM, targetStack),
+            world.sendParticles(new ItemParticleData(ParticleTypes.ITEM, targetStack),
                     pos.getX() + 0.5d, pos.getY() + 1.1d, pos.getZ() + 0.5d,
                     4, 0, 0, 0,
                     0.1f);
@@ -100,28 +100,28 @@ public class ConfigActionImpl extends ConfigAction {
             CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, targetStack);
 
             targetStack.setCount(targetStack.getCount() - 1);
-            workbench.markDirty();
-        } else if (!workbench.getWorld().isRemote) {
-            ServerWorld world = (ServerWorld) workbench.getWorld();
-            LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(lootTable);
+            workbench.setChanged();
+        } else if (!workbench.getLevel().isClientSide) {
+            ServerWorld world = (ServerWorld) workbench.getLevel();
+            LootTable table = world.getServer().getLootTables().get(lootTable);
 
             LootContext context = new LootContext.Builder(world)
-                    .withParameter(LootParameters.field_237457_g_, Vector3d.copyCenteredWithVerticalOffset(workbench.getPos(), 1.1f))
-                    .build(lootParameters);
+                    .withParameter(LootParameters.ORIGIN, Vector3d.upFromBottomCenterOf(workbench.getBlockPos(), 1.1f))
+                    .create(lootParameters);
 
-            table.generate(context).forEach(itemStack -> Block.spawnAsEntity(world, workbench.getPos().up(), itemStack));
+            table.getRandomItems(context).forEach(itemStack -> Block.popResource(world, workbench.getBlockPos().above(), itemStack));
 
-            BlockPos pos = workbench.getPos();
-            world.playSound(null, pos, SoundEvents.BLOCK_STONE_BREAK, SoundCategory.BLOCKS,
+            BlockPos pos = workbench.getBlockPos();
+            world.playSound(null, pos, SoundEvents.STONE_BREAK, SoundCategory.BLOCKS,
                     1.0F, 1.5f + (float) Math.random() * 0.5f);
 
-            world.spawnParticle(new ItemParticleData(ParticleTypes.ITEM, targetStack),
+            world.sendParticles(new ItemParticleData(ParticleTypes.ITEM, targetStack),
                     pos.getX() + 0.5d, pos.getY() + 1.1d, pos.getZ() + 0.5d,
                     4, 0, 0, 0,
                     0.1f);
 
             targetStack.setCount(targetStack.getCount() - 1);
-            workbench.markDirty();
+            workbench.setChanged();
         }
     }
 

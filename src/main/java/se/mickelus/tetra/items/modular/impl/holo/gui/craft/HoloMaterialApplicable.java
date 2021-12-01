@@ -35,7 +35,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class HoloMaterialApplicable extends GuiElement {
-    private final List<String> emptyTooltip = Collections.singletonList(I18n.format("tetra.holo.craft.empty_applicable_materials"));
+    private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_applicable_materials"));
     private List<String> tooltip;
 
     private GuiTexture icon;
@@ -72,30 +72,30 @@ public class HoloMaterialApplicable extends GuiElement {
             String materialsString = Arrays.stream(materials)
                     .map(mat -> {
                         if (mat.startsWith("#")) {
-                            return I18n.format("tetra.variant_category." + mat.substring(1) + ".label");
+                            return I18n.get("tetra.variant_category." + mat.substring(1) + ".label");
                         } else if (mat.startsWith("!")) {
-                            return I18n.format("tetra.material." + mat.substring(1));
+                            return I18n.get("tetra.material." + mat.substring(1));
                         }
                         return Optional.ofNullable(ForgeRegistries.ITEMS.getValue(new ResourceLocation(mat)))
-                                .map(Item::getName)
+                                .map(Item::getDescription)
                                 .map(ITextComponent::getString)
                                 .orElse(mat);
                     })
                     .collect(Collectors.joining(", "));
 
-            tooltipBuilder.add(I18n.format("tetra.holo.craft.applicable_materials"), TextFormatting.GRAY + materialsString);
+            tooltipBuilder.add(I18n.get("tetra.holo.craft.applicable_materials"), TextFormatting.GRAY + materialsString);
 
             tooltipBuilder.add(" ");
 
             if ((schematic.getType() != SchematicType.major && schematic.getType() != SchematicType.minor)
                     || schematic.getRarity() != SchematicRarity.basic) {
-                tooltipBuilder.add(I18n.format("tetra.holo.craft.holosphere_shortcut_disabled"));
-                tooltipBuilder.add(TextFormatting.DARK_GRAY + I18n.format("tetra.holo.craft.holosphere_shortcut_unavailable"));
+                tooltipBuilder.add(I18n.get("tetra.holo.craft.holosphere_shortcut_disabled"));
+                tooltipBuilder.add(TextFormatting.DARK_GRAY + I18n.get("tetra.holo.craft.holosphere_shortcut_unavailable"));
             } else if (ModularHolosphereItem.findHolosphere(playerEntity).isEmpty() || !(itemStack.getItem() instanceof IModularItem)) {
-                tooltipBuilder.add(I18n.format("tetra.holo.craft.holosphere_shortcut_disabled"));
-                tooltipBuilder.add(TextFormatting.DARK_GRAY + I18n.format("tetra.holo.craft.holosphere_shortcut_missing"));
+                tooltipBuilder.add(I18n.get("tetra.holo.craft.holosphere_shortcut_disabled"));
+                tooltipBuilder.add(TextFormatting.DARK_GRAY + I18n.get("tetra.holo.craft.holosphere_shortcut_missing"));
             } else {
-                tooltipBuilder.add(I18n.format("tetra.holo.craft.holosphere_shortcut"));
+                tooltipBuilder.add(I18n.get("tetra.holo.craft.holosphere_shortcut"));
                 this.item = (IModularItem) itemStack.getItem();
                 this.slot = slot;
                 this.schematic = schematic;
@@ -111,11 +111,11 @@ public class HoloMaterialApplicable extends GuiElement {
     @Override
     public boolean onMouseClick(int x, int y, int button) {
         if (hasFocus() && item != null) {
-            Screen currentScreen = Minecraft.getInstance().currentScreen;
+            Screen currentScreen = Minecraft.getInstance().screen;
             HoloGui gui = HoloGui.getInstance();
 
-            Minecraft.getInstance().displayGuiScreen(gui);
-            gui.openSchematic(item, slot, schematic, () -> ClientScheduler.schedule(0, () -> Minecraft.getInstance().displayGuiScreen(currentScreen)));
+            Minecraft.getInstance().setScreen(gui);
+            gui.openSchematic(item, slot, schematic, () -> ClientScheduler.schedule(0, () -> Minecraft.getInstance().setScreen(currentScreen)));
             return true;
         }
 

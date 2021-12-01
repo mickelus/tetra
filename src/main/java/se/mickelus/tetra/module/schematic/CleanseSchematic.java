@@ -40,12 +40,12 @@ public class CleanseSchematic implements UpgradeSchematic {
 
     @Override
     public String getName() {
-        return I18n.format(localizationPrefix + key + nameSuffix);
+        return I18n.get(localizationPrefix + key + nameSuffix);
     }
 
     @Override
     public String getDescription(ItemStack itemStack) {
-        return I18n.format(localizationPrefix + key + descriptionSuffix);
+        return I18n.get(localizationPrefix + key + descriptionSuffix);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class CleanseSchematic implements UpgradeSchematic {
 
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
-        return I18n.format(slotLabel);
+        return I18n.get(slotLabel);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CleanseSchematic implements UpgradeSchematic {
 
     @Override
     public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack) {
-        return materialStack.getItem().isIn(Tags.Items.GEMS_LAPIS);
+        return materialStack.getItem().is(Tags.Items.GEMS_LAPIS);
     }
 
     @Override

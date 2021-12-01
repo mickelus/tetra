@@ -26,10 +26,10 @@ public class OpenScrollBlock extends ScrollBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
+        Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
         return RotationHelper.rotateDirection(VoxelShapes.or(
-                Block.makeCuboidShape(0.0, 0.0, 1.0, 2.0, 2.0, 15.0),
-                Block.makeCuboidShape(14.0, 0.0, 1.0, 16.0, 2.0, 15.0),
-                Block.makeCuboidShape(2.0, 0.0, 1.0, 14.0, 0.1, 15.0)), facing);
+                Block.box(0.0, 0.0, 1.0, 2.0, 2.0, 15.0),
+                Block.box(14.0, 0.0, 1.0, 16.0, 2.0, 15.0),
+                Block.box(2.0, 0.0, 1.0, 14.0, 0.1, 15.0)), facing);
     }
 }

@@ -103,19 +103,19 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public static String getName(String moduleKey, String variantKey) {
-        if (I18n.hasKey("tetra.variant." + variantKey)) {
-            return I18n.format("tetra.variant." + variantKey);
+        if (I18n.exists("tetra.variant." + variantKey)) {
+            return I18n.get("tetra.variant." + variantKey);
         }
 
-        if (I18n.hasKey("tetra.module." + moduleKey + ".material_name")) {
+        if (I18n.exists("tetra.module." + moduleKey + ".material_name")) {
             String variant = variantKey.substring(variantKey.indexOf('/') + 1);
-            if (I18n.hasKey("tetra.material." + variant + ".prefix")) {
-                return StringUtils.capitalize(I18n.format("tetra.module." + moduleKey + ".material_name",
-                        I18n.format("tetra.material." + variant + ".prefix")).toLowerCase());
+            if (I18n.exists("tetra.material." + variant + ".prefix")) {
+                return StringUtils.capitalize(I18n.get("tetra.module." + moduleKey + ".material_name",
+                        I18n.get("tetra.material." + variant + ".prefix")).toLowerCase());
             }
         }
 
-        return I18n.format("tetra.variant." + variantKey);
+        return I18n.get("tetra.variant." + variantKey);
     }
 
     public String getName(ItemStack itemStack) {
@@ -125,21 +125,21 @@ public abstract class ItemModule implements IToolProvider {
 
     public String getDescription(ItemStack itemStack) {
         String descriptionKey = "tetra.variant." + getVariantData(itemStack).key + ".description";
-        if (I18n.hasKey(descriptionKey)) {
-            return I18n.format(descriptionKey);
+        if (I18n.exists(descriptionKey)) {
+            return I18n.get(descriptionKey);
         }
-        return I18n.format("tetra.module." + getUnlocalizedName() + ".description");
+        return I18n.get("tetra.module." + getUnlocalizedName() + ".description");
     }
 
     public String getItemName(ItemStack itemStack) {
         String variantItemNameKey = "tetra.variant." + getVariantData(itemStack).key + ".item_name";
-        if (I18n.hasKey(variantItemNameKey)) {
-            return I18n.format(variantItemNameKey);
+        if (I18n.exists(variantItemNameKey)) {
+            return I18n.get(variantItemNameKey);
         }
 
         String moduleItemNameKey = "tetra.module." + getUnlocalizedName() + ".item_name";
-        if (I18n.hasKey(moduleItemNameKey)) {
-            return I18n.format(moduleItemNameKey);
+        if (I18n.exists(moduleItemNameKey)) {
+            return I18n.get(moduleItemNameKey);
         }
 
         return null;
@@ -152,19 +152,19 @@ public abstract class ItemModule implements IToolProvider {
     public String getItemPrefix(ItemStack itemStack) {
         String key = getVariantData(itemStack).key;
         String variantPrefixKey = "tetra.variant." + key + ".prefix";
-        if (I18n.hasKey(variantPrefixKey)) {
-            return I18n.format(variantPrefixKey);
+        if (I18n.exists(variantPrefixKey)) {
+            return I18n.get(variantPrefixKey);
         }
 
         String modulePrefixKey = "tetra.module." + getUnlocalizedName() + ".prefix";
-        if (I18n.hasKey(modulePrefixKey)) {
-            String prefix = I18n.format(modulePrefixKey);
+        if (I18n.exists(modulePrefixKey)) {
+            String prefix = I18n.get(modulePrefixKey);
 
             // for when module should derive the prefix from the material, slight hack
             if (prefix.startsWith("Format error:")) {
                 String variant = key.substring(key.indexOf('/') + 1);
                 return StringUtils.capitalize(
-                        I18n.format(modulePrefixKey, I18n.format("tetra.material." + variant + ".prefix").toLowerCase()));
+                        I18n.get(modulePrefixKey, I18n.get("tetra.material." + variant + ".prefix").toLowerCase()));
             }
 
             return prefix;
@@ -246,7 +246,7 @@ public abstract class ItemModule implements IToolProvider {
     public RepairDefinition getRepairDefinition(ItemStack itemStack, ItemStack materialStack) {
         return RepairRegistry.instance.getDefinitions(getVariantData(itemStack).key).stream()
                 .filter(definition -> definition.material.isValid())
-                .filter(definition -> definition.material.getPredicate().test(materialStack))
+                .filter(definition -> definition.material.getPredicate().matches(materialStack))
                 .findFirst()
                 .orElse(null);
     }

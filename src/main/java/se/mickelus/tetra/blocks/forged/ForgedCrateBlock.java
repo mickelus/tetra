@@ -42,12 +42,14 @@ import static net.minecraft.fluid.Fluids.WATER;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInteractiveBlock, IWaterLoggable {
     static final String unlocalizedName = "forged_crate";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ForgedCrateBlock instance;
 
-    public static final DirectionProperty propFacing = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty propFacing = HorizontalBlock.FACING;
     public static final BooleanProperty propStacked = BooleanProperty.create("stacked");
     public static final IntegerProperty propIntegrity = IntegerProperty.create("integrity", 0, 3);
 
@@ -65,41 +67,41 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
 
     public static final ResourceLocation interactionLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/crate_content");
 
-    private static final VoxelShape shape = makeCuboidShape(1, 0, 1, 15, 14, 15);
+    private static final VoxelShape shape = box(1, 0, 1, 15, 14, 15);
     private static final VoxelShape[] shapesNormal = new VoxelShape[4];
     private static final VoxelShape[] shapesOffset = new VoxelShape[4];
     static {
         for (Direction dir : Direction.Plane.HORIZONTAL) {
-            shapesNormal[dir.getHorizontalIndex()] = shape.withOffset(dir.getXOffset() / 16f, dir.getYOffset() / 16f, dir.getZOffset() / 16f);
-            shapesOffset[dir.getHorizontalIndex()] = shapesNormal[dir.getHorizontalIndex()].withOffset(0, -1 / 8f, 0);
+            shapesNormal[dir.get2DDataValue()] = shape.move(dir.getStepX() / 16f, dir.getStepY() / 16f, dir.getStepZ() / 16f);
+            shapesOffset[dir.get2DDataValue()] = shapesNormal[dir.get2DDataValue()].move(0, -1 / 8f, 0);
         }
     }
 
     public ForgedCrateBlock() {
-        super(Properties.create(ForgedBlockCommon.forgedMaterial)
+        super(Properties.of(ForgedBlockCommon.forgedMaterial)
                 .sound(SoundType.METAL)
-                .hardnessAndResistance(5));
+                .strength(5));
 
         setRegistryName(unlocalizedName);
 
-        this.setDefaultState(getDefaultState()
-                .with(propFacing, Direction.EAST)
-                .with(propStacked, false)
-                .with(propIntegrity, 3)
-                .with(WATERLOGGED, false));
+        this.registerDefaultState(defaultBlockState()
+                .setValue(propFacing, Direction.EAST)
+                .setValue(propStacked, false)
+                .setValue(propIntegrity, 3)
+                .setValue(WATERLOGGED, false));
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     private static boolean attemptBreakHammer(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
-        return attemptBreak(world, pos, blockState, player, hand, player.getHeldItem(hand), ToolTypes.hammer, 2, 1);
+        return attemptBreak(world, pos, blockState, player, hand, player.getItemInHand(hand), ToolTypes.hammer, 2, 1);
     }
 
     private static boolean attemptBreakPry(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
-        return attemptBreak(world, pos, blockState, player, hand, player.getHeldItem(hand), ToolTypes.pry, 0, 2);
+        return attemptBreak(world, pos, blockState, player, hand, player.getItemInHand(hand), ToolTypes.pry, 0, 2);
     }
 
     private static boolean attemptBreak(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand,
@@ -109,7 +111,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
             return false;
         }
 
-        int integrity = blockState.get(propIntegrity);
+        int integrity = blockState.getValue(propIntegrity);
 
         int progress = CastOptional.cast(itemStack.getItem(), IToolProvider.class)
                 .map(item -> item.getToolLevel(itemStack, toolType))
@@ -118,17 +120,17 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
 
         if (integrity - progress >= 0) {
             if (ToolTypes.hammer.equals(toolType)) {
-                world.playSound(player, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1, 0.5f);
+                world.playSound(player, pos, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1, 0.5f);
             } else {
-                world.playSound(player, pos, SoundEvents.BLOCK_LADDER_STEP, SoundCategory.PLAYERS, 0.7f, 2f);
+                world.playSound(player, pos, SoundEvents.LADDER_STEP, SoundCategory.PLAYERS, 0.7f, 2f);
             }
 
-            world.setBlockState(pos, blockState.with(propIntegrity, integrity - progress));
+            world.setBlockAndUpdate(pos, blockState.setValue(propIntegrity, integrity - progress));
         } else {
             boolean didBreak = EffectHelper.breakBlock(world, player, itemStack, pos, blockState, false);
             if (didBreak && world instanceof ServerWorld) {
                 BlockInteraction.getLoot(interactionLootTable, player, hand, (ServerWorld) world, blockState)
-                        .forEach(lootStack -> spawnAsEntity(world, pos, lootStack));
+                        .forEach(lootStack -> popResource(world, pos, lootStack));
             }
         }
 
@@ -141,61 +143,61 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(propFacing, propStacked, propIntegrity, WATERLOGGED);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? WATER.getStillFluidState(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return super.getStateForPlacement(context)
-                .with(propFacing, context.getPlacementHorizontalFacing())
-                .with(propStacked, equals(context.getWorld().getBlockState(context.getPos().down()).getBlock()))
-                .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == WATER);
+                .setValue(propFacing, context.getHorizontalDirection())
+                .setValue(propStacked, equals(context.getLevel().getBlockState(context.getClickedPos().below()).getBlock()))
+                .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == WATER);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos,
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos,
             BlockPos facingPos) {
-        if (state.get(WATERLOGGED)) {
-            world.getPendingFluidTicks().scheduleTick(currentPos, WATER, WATER.getTickRate(world));
+        if (state.getValue(WATERLOGGED)) {
+            world.getLiquidTicks().scheduleTick(currentPos, WATER, WATER.getTickDelay(world));
         }
 
         if (Direction.DOWN.equals(facing)) {
-            return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos)
-                    .with(propStacked, equals(facingState.getBlock()));
+            return super.updateShape(state, facing, facingState, world, currentPos, facingPos)
+                    .setValue(propStacked, equals(facingState.getBlock()));
         }
 
-        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+        return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-        if (!state.get(propStacked)) {
-            return shapesNormal[state.get(propFacing).getHorizontalIndex()];
+        if (!state.getValue(propStacked)) {
+            return shapesNormal[state.getValue(propFacing).get2DDataValue()];
         }
-        return shapesOffset[state.get(propFacing).getHorizontalIndex()];
+        return shapesOffset[state.getValue(propFacing).get2DDataValue()];
     }
 
     @Override
     public BlockState rotate(final BlockState state, final Rotation rotation) {
-        return state.with(propFacing, rotation.rotate(state.get(propFacing)));
+        return state.setValue(propFacing, rotation.rotate(state.getValue(propFacing)));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.toRotation(state.get(propFacing)));
+        return state.rotate(mirror.getRotation(state.getValue(propFacing)));
     }
 
     @Override

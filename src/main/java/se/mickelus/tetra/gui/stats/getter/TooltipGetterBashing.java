@@ -15,7 +15,7 @@ public class TooltipGetterBashing implements ITooltipGetter {
 
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("tetra.stats.bashing.tooltip",
+        return I18n.get("tetra.stats.bashing.tooltip",
                 String.format("%d", (int) levelGetter.getValue(player, itemStack)),
                 String.format("%.1f", efficiencyGetter.getValue(player, itemStack)));
     }

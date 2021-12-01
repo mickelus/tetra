@@ -63,7 +63,7 @@ public class WorkbenchPacketTweak extends BlockPosPacket {
 
     @Override
     public void handle(PlayerEntity player) {
-        CastOptional.cast(player.world.getTileEntity(pos), WorkbenchTile.class)
+        CastOptional.cast(player.level.getBlockEntity(pos), WorkbenchTile.class)
                 .ifPresent(workbench -> workbench.tweak(player, slot, tweaks));
     }
 }

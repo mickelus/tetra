@@ -14,23 +14,23 @@ import java.util.Random;
 
 public class SeveringEffect {
     public static void perform(ItemStack itemStack, int effectLevel, LivingEntity attacker, LivingEntity target) {
-        if (attacker.getRNG().nextFloat() < effectLevel / 100f) {
+        if (attacker.getRandom().nextFloat() < effectLevel / 100f) {
             int stackCap = (int) EffectHelper.getEffectEfficiency(itemStack, ItemEffect.severing) - 1;
 
-            int currentAmplifier = Optional.ofNullable(target.getActivePotionEffect(SeveredPotionEffect.instance))
+            int currentAmplifier = Optional.ofNullable(target.getEffect(SeveredPotionEffect.instance))
                     .map(EffectInstance::getAmplifier)
                     .orElse(-1);
 
-            target.addPotionEffect(new EffectInstance(SeveredPotionEffect.instance, 1200, Math.min(currentAmplifier + 1, stackCap), false, false));
+            target.addEffect(new EffectInstance(SeveredPotionEffect.instance, 1200, Math.min(currentAmplifier + 1, stackCap), false, false));
 
-            if (!target.world.isRemote) {
-                Random rand = target.getRNG();
-                target.getEntityWorld().playSound(null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG,
+            if (!target.level.isClientSide) {
+                Random rand = target.getRandom();
+                target.getCommandSenderWorld().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.PLAYER_ATTACK_STRONG,
                         SoundCategory.PLAYERS, 0.8f, 0.9f);
-                ((ServerWorld) target.getEntityWorld()).spawnParticle(new RedstoneParticleData(0.5f, 0, 0, 0.5f),
-                        target.getPosX() + target.getWidth() * (0.3 + rand.nextGaussian() * 0.4),
-                        target.getPosY() + target.getHeight() * (0.2 + rand.nextGaussian() * 0.4),
-                        target.getPosZ() + target.getWidth() * (0.3 + rand.nextGaussian() * 0.4),
+                ((ServerWorld) target.getCommandSenderWorld()).sendParticles(new RedstoneParticleData(0.5f, 0, 0, 0.5f),
+                        target.getX() + target.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
+                        target.getY() + target.getBbHeight() * (0.2 + rand.nextGaussian() * 0.4),
+                        target.getZ() + target.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
                         20,
                         0, 0, 0, 0f);
             }

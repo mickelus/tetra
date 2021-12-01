@@ -23,28 +23,28 @@ public class ExtractorProjectileRenderer extends EntityRenderer<ExtractorProject
     public ExtractorProjectileRenderer(EntityRendererManager manager) {
         super(manager);
 
-        blockRenderer = Minecraft.getInstance().getBlockRendererDispatcher();
+        blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }
 
     @Override
     public void render(ExtractorProjectileEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int packedLightIn) {
-        matrixStack.push();
+        matrixStack.pushPose();
 
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationYaw, entity.rotationYaw) - 90.0F));
-        matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch) + 90.0F));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.yRotO, entity.yRot) - 90.0F));
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot) + 90.0F));
         matrixStack.translate(-.3f, -.1f, -.45f);
 
-        IBakedModel model = blockRenderer.getBlockModelShapes().getModel(ChthonicExtractorBlock.instance.getDefaultState());
-        blockRenderer.getBlockModelRenderer().renderModel(matrixStack.getLast(), renderTypeBuffer.getBuffer(Atlases.getSolidBlockType()),
-                ChthonicExtractorBlock.instance.getDefaultState(), model, 1, 1, 1, packedLightIn, OverlayTexture.NO_OVERLAY,
+        IBakedModel model = blockRenderer.getBlockModelShaper().getBlockModel(ChthonicExtractorBlock.instance.defaultBlockState());
+        blockRenderer.getModelRenderer().renderModel(matrixStack.last(), renderTypeBuffer.getBuffer(Atlases.solidBlockSheet()),
+                ChthonicExtractorBlock.instance.defaultBlockState(), model, 1, 1, 1, packedLightIn, OverlayTexture.NO_OVERLAY,
                 EmptyModelData.INSTANCE);
 
-        matrixStack.pop();
+        matrixStack.popPose();
         super.render(entity, entityYaw, partialTicks, matrixStack, renderTypeBuffer, packedLightIn);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ExtractorProjectileEntity entity) {
+    public ResourceLocation getTextureLocation(ExtractorProjectileEntity entity) {
         return null;
     }
 }

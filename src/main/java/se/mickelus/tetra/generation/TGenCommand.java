@@ -27,8 +27,8 @@ import java.util.concurrent.CompletableFuture;
 public class TGenCommand {
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         dispatcher.register(Commands.literal("tgen")
-                .requires(source -> source.hasPermissionLevel(2))
-                .then(Commands.argument("feature", ResourceLocationArgument.resourceLocation())
+                .requires(source -> source.hasPermission(2))
+                .then(Commands.argument("feature", ResourceLocationArgument.id())
                         .suggests(TGenCommand::getFeatureSuggestions)
                         .executes(TGenCommand::generateAtPlayer)
                         .then(Commands.argument("pos", BlockPosArgument.blockPos())
@@ -36,21 +36,21 @@ public class TGenCommand {
     }
 
     private static CompletableFuture<Suggestions> getFeatureSuggestions(final CommandContext context, final SuggestionsBuilder builder) {
-        return ISuggestionProvider.suggestIterable(DataManager.featureData.getData().keySet(), builder);
+        return ISuggestionProvider.suggestResource(DataManager.featureData.getData().keySet(), builder);
     }
 
     private static int generateAtPlayer(CommandContext<CommandSource> context) {
-        BlockPos pos = new BlockPos(context.getSource().getPos());
+        BlockPos pos = new BlockPos(context.getSource().getPosition());
 
-        generate(ResourceLocationArgument.getResourceLocation(context, "feature"), context.getSource().getWorld(), pos,
-                context.getSource().getWorld().getSeed());
+        generate(ResourceLocationArgument.getId(context, "feature"), context.getSource().getLevel(), pos,
+                context.getSource().getLevel().getSeed());
 
         return 1;
     }
 
     private static int generateAtPos(CommandContext<CommandSource> context) throws CommandSyntaxException{
-        generate(ResourceLocationArgument.getResourceLocation(context, "feature"), context.getSource().getWorld(),
-                BlockPosArgument.getBlockPos(context, "pos"), context.getSource().getWorld().getSeed());
+        generate(ResourceLocationArgument.getId(context, "feature"), context.getSource().getLevel(),
+                BlockPosArgument.getOrLoadBlockPos(context, "pos"), context.getSource().getLevel().getSeed());
 
         return 1;
     }

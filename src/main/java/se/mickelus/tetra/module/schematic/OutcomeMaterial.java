@@ -65,12 +65,12 @@ public class OutcomeMaterial {
     // todo: this is rather hacky, networked tags are required on clients in multiplayer, but that's not always available
     protected static ITagCollection<Item> getTagCollection() {
         if (FMLEnvironment.dist.isClient()) {
-            if (Minecraft.getInstance().world != null) {
-                return Minecraft.getInstance().world.getTags().getItemTags();
+            if (Minecraft.getInstance().level != null) {
+                return Minecraft.getInstance().level.getTagManager().getItems();
             }
         }
 
-        return TagCollectionManager.getManager().getItemTags();
+        return TagCollectionManager.getInstance().getItems();
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -78,13 +78,13 @@ public class OutcomeMaterial {
         if (getPredicate() == null) {
             return new ITextComponent[] {new StringTextComponent("Unknown material")};
         } else if (itemStack != null) {
-            return new ITextComponent[] {itemStack.getDisplayName()};
+            return new ITextComponent[] {itemStack.getHoverName()};
         } else if (tagLocation != null) {
             return getTagCollection()
-                    .getTagByID(tagLocation)
-                    .getAllElements()
+                    .getTagOrEmpty(tagLocation)
+                    .getValues()
                     .stream()
-                    .map(item -> item.getDisplayName(item.getDefaultInstance()))
+                    .map(item -> item.getName(item.getDefaultInstance()))
                     .toArray(ITextComponent[]::new);
         }
 
@@ -98,8 +98,8 @@ public class OutcomeMaterial {
             return new ItemStack[] { itemStack };
         } else if (tagLocation != null) {
             return getTagCollection()
-                    .getTagByID(tagLocation)
-                    .getAllElements()
+                    .getTagOrEmpty(tagLocation)
+                    .getValues()
                     .stream()
                     .map(Item::getDefaultInstance)
                     .map(this::setCount)
@@ -134,20 +134,20 @@ public class OutcomeMaterial {
             OutcomeMaterial material = new OutcomeMaterial();
 
             if (element != null && !element.isJsonNull()) {
-                JsonObject jsonObject = JSONUtils.getJsonObject(element, "material");
+                JsonObject jsonObject = JSONUtils.convertToJsonObject(element, "material");
 
-                material.count = JSONUtils.getInt(jsonObject, "count", 1);
+                material.count = JSONUtils.getAsInt(jsonObject, "count", 1);
                 jsonObject.remove("count");
 
                 if (jsonObject.has("item")) {
                     try {
-                        Item item = JSONUtils.getItem(jsonObject, "item");
+                        Item item = JSONUtils.getAsItem(jsonObject, "item");
                         material.itemStack = new ItemStack(item, material.count);
                     } catch (JsonSyntaxException e) {}
 
                     if (material.itemStack != null && jsonObject.has("nbt")) {
                         try {
-                            CompoundNBT compoundnbt = JsonToNBT.getTagFromJson(JSONUtils.getString(jsonObject.get("nbt"), "nbt"));
+                            CompoundNBT compoundnbt = JsonToNBT.parseTag(JSONUtils.convertToString(jsonObject.get("nbt"), "nbt"));
                             material.itemStack.setTag(compoundnbt);
                         } catch (CommandSyntaxException exception) {
                             throw new JsonSyntaxException("Encountered invalid nbt tag when parsing material: " + exception.getMessage());
@@ -155,7 +155,7 @@ public class OutcomeMaterial {
                     }
 
                 } else if (jsonObject.has("tag")) {
-                    material.tagLocation = new ResourceLocation(JSONUtils.getString(jsonObject, "tag"));
+                    material.tagLocation = new ResourceLocation(JSONUtils.getAsString(jsonObject, "tag"));
                 }
 
                 if (!jsonObject.has("type") && jsonObject.has("tag")) {
@@ -169,10 +169,10 @@ public class OutcomeMaterial {
 
         // todo: workaround as vanilla predicates always use the non-networked tag manager
         private ItemPredicate deserializeTagPredicate(@Nullable JsonElement element) {
-            JsonObject jsonObject = JSONUtils.getJsonObject(element, "item");
+            JsonObject jsonObject = JSONUtils.convertToJsonObject(element, "item");
 
-            ResourceLocation resourceLocation = new ResourceLocation(JSONUtils.getString(jsonObject, "tag"));
-            ITag<Item> tag = getTagCollection().get(resourceLocation);
+            ResourceLocation resourceLocation = new ResourceLocation(JSONUtils.getAsString(jsonObject, "tag"));
+            ITag<Item> tag = getTagCollection().getTag(resourceLocation);
 
             if (tag == null) {
                 logger.debug("Failed to parse outcome material predicate for \"{}\": Unknown tag '{}'", jsonObject.toString(), resourceLocation);
@@ -181,9 +181,9 @@ public class OutcomeMaterial {
 
             MinMaxBounds.IntBound count = MinMaxBounds.IntBound.fromJson(jsonObject.get("count"));
             MinMaxBounds.IntBound durability = MinMaxBounds.IntBound.fromJson(jsonObject.get("durability"));
-            EnchantmentPredicate[] enchantments = EnchantmentPredicate.deserializeArray(jsonObject.get("enchantments"));
-            EnchantmentPredicate[] storedEnchantments = EnchantmentPredicate.deserializeArray(jsonObject.get("stored_enchantments"));
-            NBTPredicate nbt = NBTPredicate.deserialize(jsonObject.get("nbt"));
+            EnchantmentPredicate[] enchantments = EnchantmentPredicate.fromJsonArray(jsonObject.get("enchantments"));
+            EnchantmentPredicate[] storedEnchantments = EnchantmentPredicate.fromJsonArray(jsonObject.get("stored_enchantments"));
+            NBTPredicate nbt = NBTPredicate.fromJson(jsonObject.get("nbt"));
 
             return new ItemPredicate(tag, null, count, durability, enchantments, storedEnchantments, null, nbt);
         }

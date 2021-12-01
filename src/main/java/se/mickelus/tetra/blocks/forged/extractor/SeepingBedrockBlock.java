@@ -29,12 +29,12 @@ public class SeepingBedrockBlock extends TetraBlock {
     public static SeepingBedrockBlock instance;
 
     public SeepingBedrockBlock() {
-        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F).noDrops());
+        super(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
         setRegistryName(unlocalizedName);
 
         hasItem = true;
 
-        setDefaultState(getDefaultState().with(activeProp, 1));
+        registerDefaultState(defaultBlockState().setValue(activeProp, 1));
     }
 
     public static boolean isActive(World world, BlockPos pos) {
@@ -42,22 +42,22 @@ public class SeepingBedrockBlock extends TetraBlock {
     }
 
     public static boolean isActive(BlockState blockState) {
-        return instance.equals(blockState.getBlock()) && blockState.get(activeProp) > 0;
+        return instance.equals(blockState.getBlock()) && blockState.getValue(activeProp) > 0;
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(activeProp);
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return getDefaultState().with(activeProp, context.getPlayer().isCrouching() ? 0 : 1);
+        return defaultBlockState().setValue(activeProp, context.getPlayer().isCrouching() ? 0 : 1);
     }
 }

@@ -11,15 +11,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class VibrationDebuffer {
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (!event.player.world.isRemote && event.player.world.getGameTime() % 20 == 0
+        if (!event.player.level.isClientSide && event.player.level.getGameTime() % 20 == 0
                 && hasApplicableItem(event.player)) {
-            event.player.addPotionEffect(new EffectInstance(Effects.NAUSEA, 80, 1));
+            event.player.addEffect(new EffectInstance(Effects.CONFUSION, 80, 1));
         }
     }
 
     private boolean hasApplicableItem(PlayerEntity player) {
-        Item mainHandItem = player.getHeldItemMainhand().getItem();
-        Item offHandItem = player.getHeldItemOffhand().getItem();
+        Item mainHandItem = player.getMainHandItem().getItem();
+        Item offHandItem = player.getOffhandItem().getItem();
         return EarthpiercerItem.instance.equals(mainHandItem) || EarthpiercerItem.instance.equals(offHandItem)
                 || StonecutterItem.instance != null && (StonecutterItem.instance.equals(mainHandItem) || StonecutterItem.instance.equals(offHandItem));
     }

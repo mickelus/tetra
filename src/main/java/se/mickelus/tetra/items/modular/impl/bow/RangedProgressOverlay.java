@@ -27,7 +27,7 @@ public class RangedProgressOverlay {
             return;
         }
 
-        ItemStack activeStack = mc.player.getActiveItemStack();
+        ItemStack activeStack = mc.player.getUseItem();
 
         if (activeStack.getItem() instanceof ModularBowItem) {
             ModularBowItem item = (ModularBowItem) activeStack.getItem();

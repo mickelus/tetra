@@ -133,7 +133,7 @@ public class ScannerBarGui extends GuiElement {
     }
 
     public static double getDegreesPerUnit() {
-        return Minecraft.getInstance().gameSettings.fov * unitWidth / Minecraft.getInstance().getMainWindow().getScaledWidth();
+        return Minecraft.getInstance().options.fov * unitWidth / Minecraft.getInstance().getWindow().getGuiScaledWidth();
     }
 
     public void setHorizontalSpread(int horizontalSpread) {

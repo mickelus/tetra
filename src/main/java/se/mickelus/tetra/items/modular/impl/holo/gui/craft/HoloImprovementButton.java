@@ -23,7 +23,7 @@ public class HoloImprovementButton extends GuiClickable {
     public HoloImprovementButton(int x, int y, Runnable onClick) {
         super(x, y, 0,  19, onClick);
 
-        label = new GuiStringOutline(0, 0, I18n.format("tetra.holo.craft.improvement_button", "00"));
+        label = new GuiStringOutline(0, 0, I18n.get("tetra.holo.craft.improvement_button", "00"));
         label.setAttachment(GuiAttachment.middleCenter);
         width = label.getWidth() + 16;
 
@@ -78,7 +78,7 @@ public class HoloImprovementButton extends GuiClickable {
     }
 
     public void updateCount(int count) {
-        label.setString(I18n.format("tetra.holo.craft.improvement_button", count));
+        label.setString(I18n.get("tetra.holo.craft.improvement_button", count));
 
         hasImprovements = count > 0;
         label.setColor(hasImprovements ? GuiColors.normal : GuiColors.muted);

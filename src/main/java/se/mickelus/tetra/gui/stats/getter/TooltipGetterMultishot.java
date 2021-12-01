@@ -13,7 +13,7 @@ public class TooltipGetterMultishot implements ITooltipGetter {
 
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("tetra.stats.multishot.tooltip",
+        return I18n.get("tetra.stats.multishot.tooltip",
                 String.format("%.0f", levelGetter.getValue(player, itemStack)),
                 String.format("%.1f", efficiencyGetter.getValue(player, itemStack)));
     }

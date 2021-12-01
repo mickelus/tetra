@@ -24,16 +24,16 @@ public class RolledScrollBlock extends ScrollBlock {
     public static ScrollBlock instance;
 
     private final VoxelShape[] baseShapes = new VoxelShape[] {
-            Block.makeCuboidShape(6.0, 0.0, 1.0, 9.0, 3.0, 15.0),
-            Block.makeCuboidShape(4.0, 0.0, 1.0, 11.0, 3.0, 15.0),
-            Block.makeCuboidShape(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-            VoxelShapes.or(Block.makeCuboidShape(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-                    Block.makeCuboidShape(8.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
-            VoxelShapes.or(Block.makeCuboidShape(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-                    Block.makeCuboidShape(4.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
-            VoxelShapes.or(Block.makeCuboidShape(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-                    Block.makeCuboidShape(4.0, 3.0, 1.0, 11.0, 6.0, 15.0),
-                    Block.makeCuboidShape(6.0, 6.0, 1.0, 9.0, 9.0, 15.0))
+            Block.box(6.0, 0.0, 1.0, 9.0, 3.0, 15.0),
+            Block.box(4.0, 0.0, 1.0, 11.0, 3.0, 15.0),
+            Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+            VoxelShapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+                    Block.box(8.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
+            VoxelShapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+                    Block.box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
+            VoxelShapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+                    Block.box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0),
+                    Block.box(6.0, 6.0, 1.0, 9.0, 9.0, 15.0))
     };
     private final Map<Direction, VoxelShape[]> shapes;
 
@@ -42,7 +42,7 @@ public class RolledScrollBlock extends ScrollBlock {
 
         shapes = new EnumMap<>(Direction.class);
         for (int i = 0; i < 4; i++) {
-            Direction direction = Direction.byHorizontalIndex(i);
+            Direction direction = Direction.from2DDataValue(i);
 
             VoxelShape[] result = new VoxelShape[baseShapes.length];
             for (int j = 0; j < result.length; j++) {
@@ -56,7 +56,7 @@ public class RolledScrollBlock extends ScrollBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
+        Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
         int index = TileEntityOptional.from(worldIn, pos, ScrollTile.class)
                 .map(ScrollTile::getScrolls)
                 .map(scrolls -> scrolls.length - 1)

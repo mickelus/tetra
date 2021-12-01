@@ -63,9 +63,9 @@ public class ModuleBuilder {
         this.fallbackReference = fallbackReference;
 
         harvestMap = new HashMap<>();
-        harvestMap.put(ToolType.AXE, Blocks.OAK_LOG.getDefaultState());
-        harvestMap.put(ToolType.PICKAXE, Blocks.STONE.getDefaultState());
-        harvestMap.put(ToolType.SHOVEL, Blocks.DIRT.getDefaultState());
+        harvestMap.put(ToolType.AXE, Blocks.OAK_LOG.defaultBlockState());
+        harvestMap.put(ToolType.PICKAXE, Blocks.STONE.defaultBlockState());
+        harvestMap.put(ToolType.SHOVEL, Blocks.DIRT.defaultBlockState());
     }
 
     public ModuleBuilder offsetOutcome(int countMultiplier, int toolOffset) {

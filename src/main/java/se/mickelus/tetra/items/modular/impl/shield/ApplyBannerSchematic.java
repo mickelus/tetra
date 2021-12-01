@@ -43,12 +43,12 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
 
     @Override
     public String getName() {
-        return I18n.format(localizationPrefix + key + nameSuffix);
+        return I18n.get(localizationPrefix + key + nameSuffix);
     }
 
     @Override
     public String getDescription(ItemStack itemStack) {
-        return I18n.format(localizationPrefix + key + descriptionSuffix);
+        return I18n.get(localizationPrefix + key + descriptionSuffix);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
 
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
-        return I18n.format(localizationPrefix + key + slotSuffix);
+        return I18n.get(localizationPrefix + key + slotSuffix);
     }
 
     @Override
@@ -116,12 +116,12 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
                         if (module.acceptsImprovementLevel(ModularShieldItem.bannerImprovementKey, 0)) {
                             module.addImprovement(upgradedStack, ModularShieldItem.bannerImprovementKey, 0);
 
-                            CompoundNBT bannerTag = Optional.ofNullable(bannerStack.getChildTag("BlockEntityTag"))
+                            CompoundNBT bannerTag = Optional.ofNullable(bannerStack.getTagElement("BlockEntityTag"))
                                     .map(CompoundNBT::copy)
                                     .orElse(new CompoundNBT());
 
                             bannerTag.putInt("Base", ((BannerItem) bannerStack.getItem()).getColor().getId());
-                            upgradedStack.setTagInfo("BlockEntityTag", bannerTag.copy());
+                            upgradedStack.addTagElement("BlockEntityTag", bannerTag.copy());
 
                             if (consumeMaterials) {
                                 materials[0].shrink(1);

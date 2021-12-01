@@ -37,7 +37,7 @@ public class ScrollTile extends TileEntity {
     public boolean addScroll(ItemStack itemStack) {
         if (scrolls.length < 6) {
             scrolls = ArrayUtils.add(scrolls, ScrollData.read(itemStack));
-            markDirty();
+            setChanged();
             return true;
         }
         return false;
@@ -76,35 +76,35 @@ public class ScrollTile extends TileEntity {
 
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
-        return VoxelShapes.fullCube().getBoundingBox().offset(pos);
+        return VoxelShapes.block().bounds().move(worldPosition);
     }
 
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, 0, getUpdateTag());
+        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return write(new CompoundNBT());
+        return save(new CompoundNBT());
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(getBlockState(), pkt.getNbtCompound());
+        load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compound) {
-        super.read(blockState, compound);
+    public void load(BlockState blockState, CompoundNBT compound) {
+        super.load(blockState, compound);
 
         scrolls = ScrollData.read(compound);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
 
         return ScrollData.write(scrolls, compound);
     }

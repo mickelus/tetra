@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class HoloFilterButton extends GuiElement {
-    private final List<String> tooltip = Collections.singletonList(I18n.format("tetra.holo.craft.variants_filter"));
+    private final List<String> tooltip = Collections.singletonList(I18n.get("tetra.holo.craft.variants_filter"));
     private boolean inputFocused = false;
     private String filter = "";
     private Consumer<String> onChange;

@@ -29,27 +29,27 @@ public class WorkbenchTESR extends TileEntityRenderer<WorkbenchTile> {
     public void render(WorkbenchTile workbenchTile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         ItemStack itemStack = workbenchTile.getTargetItemStack();
         if (itemStack != null && !itemStack.isEmpty()) {
-            matrixStack.push();
+            matrixStack.pushPose();
 
-            IBakedModel model = itemRenderer.getItemModelWithOverrides(itemStack, workbenchTile.getWorld(), null);
+            IBakedModel model = itemRenderer.getModel(itemStack, workbenchTile.getLevel(), null);
             if (itemStack.getItem() instanceof ModularShieldItem) {
                 matrixStack.translate(0.375, 0.9125, 0.5);
-                matrixStack.rotate(Vector3f.XP.rotationDegrees(90.0F));
+                matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
 //                matrixStack.scale(0.5f, 0.5f, 0.5f);
             } else if (model.isGui3d()) {
                 matrixStack.translate(0.5, 1.125, 0.5);
                 matrixStack.scale(.5f, .5f, .5f);
             } else {
                 matrixStack.translate(0.5, 1.0125, 0.5);
-                matrixStack.rotate(Vector3f.XP.rotationDegrees(90.0F));
+                matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
                 matrixStack.scale(0.5f, 0.5f, 0.5f);
             }
 
-            Minecraft.getInstance().getItemRenderer().renderItem(itemStack, ItemCameraTransforms.TransformType.FIXED,
-                    WorldRenderer.getCombinedLight(workbenchTile.getWorld(), workbenchTile.getPos().up()),
+            Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemCameraTransforms.TransformType.FIXED,
+                    WorldRenderer.getLightColor(workbenchTile.getLevel(), workbenchTile.getBlockPos().above()),
                     combinedOverlay, matrixStack, buffer);
 
-            matrixStack.pop();
+            matrixStack.popPose();
         }
     }
 }

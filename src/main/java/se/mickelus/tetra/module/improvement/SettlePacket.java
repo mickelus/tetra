@@ -21,14 +21,14 @@ public class SettlePacket extends AbstractPacket {
 
     @Override
     public void toBytes(PacketBuffer buffer) {
-        buffer.writeItemStack(itemStack);
-        buffer.writeString(slot);
+        buffer.writeItem(itemStack);
+        buffer.writeUtf(slot);
     }
 
     @Override
     public void fromBytes(PacketBuffer buffer) {
-        itemStack = buffer.readItemStack();
-        slot = buffer.readString();
+        itemStack = buffer.readItem();
+        slot = buffer.readUtf();
     }
 
     @Override

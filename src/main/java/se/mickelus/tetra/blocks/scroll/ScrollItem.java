@@ -35,6 +35,8 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import net.minecraft.item.Item.Properties;
+
 public class ScrollItem extends BlockItem {
     static final String identifier = "scroll_rolled";
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
@@ -58,7 +60,7 @@ public class ScrollItem extends BlockItem {
     public static ItemStack howlingBlade;
 
     public ScrollItem(Block block) {
-        super(block, new Properties().group(TetraItemGroup.instance).maxStackSize(1));
+        super(block, new Properties().tab(TetraItemGroup.instance).stacksTo(1));
 
         setRegistryName(TetraMod.MOD_ID, identifier);
 
@@ -85,13 +87,13 @@ public class ScrollItem extends BlockItem {
     @OnlyIn(Dist.CLIENT)
     public static void clientPostInit() {
         Minecraft.getInstance().getItemColors().register(new ScrollItemColor(), instance);
-        ItemModelsProperties.registerProperty(instance, new ResourceLocation(TetraMod.MOD_ID, "scroll_mat"),
+        ItemModelsProperties.register(instance, new ResourceLocation(TetraMod.MOD_ID, "scroll_mat"),
                 (itemStack, world, livingEntity) -> ScrollData.readMaterialFast(itemStack));
     }
 
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if (isInGroup(group)) {
+    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+        if (allowdedIn(group)) {
             items.add(gemExpertise);
             items.add(metalExpertise);
             items.add(woodExpertise);
@@ -149,12 +151,12 @@ public class ScrollItem extends BlockItem {
     }
 
     @Override
-    public ITextComponent getDisplayName(ItemStack stack) {
+    public ITextComponent getName(ItemStack stack) {
         String key = ScrollData.read(stack).key;
         // sometimes called on the server, need to check before calling I18n
         if (!Environment.get().getDist().isDedicatedServer()) {
             String prefixKey = "item.tetra.scroll." + key + ".prefix";
-            if (I18n.hasKey(prefixKey)) {
+            if (I18n.exists(prefixKey)) {
                 return new TranslationTextComponent("item.tetra.scroll." + key + ".prefix")
                         .append(new StringTextComponent(": "))
                         .append(new TranslationTextComponent("item.tetra.scroll." + key + ".name"));
@@ -165,25 +167,25 @@ public class ScrollItem extends BlockItem {
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack itemStack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         ScrollData data = ScrollData.read(itemStack);
         StringJoiner attributes = new StringJoiner(" ");
 
         if (!ScrollData.read(itemStack).schematics.isEmpty()) {
-            attributes.add(TextFormatting.DARK_PURPLE + I18n.format("item.tetra.scroll.schematics"));
+            attributes.add(TextFormatting.DARK_PURPLE + I18n.get("item.tetra.scroll.schematics"));
         }
 
         if (!ScrollData.read(itemStack).craftingEffects.isEmpty()) {
-            attributes.add(TextFormatting.DARK_AQUA + I18n.format("item.tetra.scroll.effects"));
+            attributes.add(TextFormatting.DARK_AQUA + I18n.get("item.tetra.scroll.effects"));
         }
 
         if (data.isIntricate) {
-            attributes.add(TextFormatting.GOLD + I18n.format("item.tetra.scroll.intricate"));
+            attributes.add(TextFormatting.GOLD + I18n.get("item.tetra.scroll.intricate"));
         }
 
         tooltip.add(new StringTextComponent(attributes.toString()));
         tooltip.add(new StringTextComponent(" "));
-        tooltip.add(new TranslationTextComponent("item.tetra.scroll." + data.key + ".description").mergeStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent("item.tetra.scroll." + data.key + ".description").withStyle(TextFormatting.GRAY));
         tooltip.add(new StringTextComponent(" "));
 
         if (Screen.hasShiftDown()) {
@@ -191,28 +193,28 @@ public class ScrollItem extends BlockItem {
 
             if (!ScrollData.read(itemStack).schematics.isEmpty()) {
                 tooltip.add(new StringTextComponent(" "));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.schematics").mergeStyle(TextFormatting.UNDERLINE, TextFormatting.DARK_PURPLE));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.schematics.description").mergeStyle(TextFormatting.GRAY));
+                tooltip.add(new TranslationTextComponent("item.tetra.scroll.schematics").withStyle(TextFormatting.UNDERLINE, TextFormatting.DARK_PURPLE));
+                tooltip.add(new TranslationTextComponent("item.tetra.scroll.schematics.description").withStyle(TextFormatting.GRAY));
             }
 
             if (!ScrollData.read(itemStack).craftingEffects.isEmpty()) {
                 tooltip.add(new StringTextComponent(" "));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.effects").mergeStyle(TextFormatting.UNDERLINE, TextFormatting.DARK_AQUA));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.effects.description").mergeStyle(TextFormatting.GRAY));
+                tooltip.add(new TranslationTextComponent("item.tetra.scroll.effects").withStyle(TextFormatting.UNDERLINE, TextFormatting.DARK_AQUA));
+                tooltip.add(new TranslationTextComponent("item.tetra.scroll.effects.description").withStyle(TextFormatting.GRAY));
             }
 
             if (data.isIntricate) {
                 tooltip.add(new StringTextComponent(" "));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.intricate").mergeStyle(TextFormatting.UNDERLINE, TextFormatting.GOLD));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.intricate.description").mergeStyle(TextFormatting.GRAY));
+                tooltip.add(new TranslationTextComponent("item.tetra.scroll.intricate").withStyle(TextFormatting.UNDERLINE, TextFormatting.GOLD));
+                tooltip.add(new TranslationTextComponent("item.tetra.scroll.intricate.description").withStyle(TextFormatting.GRAY));
             } else {
                 tooltip.add(new StringTextComponent(" "));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll.range.description").mergeStyle(TextFormatting.GRAY));
+                tooltip.add(new TranslationTextComponent("item.tetra.scroll.range.description").withStyle(TextFormatting.GRAY));
             }
 
-            if (I18n.hasKey("item.tetra.scroll." + data.key + ".description_extended")) {
+            if (I18n.exists("item.tetra.scroll." + data.key + ".description_extended")) {
                 tooltip.add(new StringTextComponent(" "));
-                tooltip.add(new TranslationTextComponent("item.tetra.scroll." + data.key + ".description_extended").mergeStyle(TextFormatting.GRAY));
+                tooltip.add(new TranslationTextComponent("item.tetra.scroll." + data.key + ".description_extended").withStyle(TextFormatting.GRAY));
             }
         } else {
             tooltip.add(Tooltips.expand);
@@ -239,28 +241,28 @@ public class ScrollItem extends BlockItem {
     @OnlyIn(Dist.CLIENT)
     private void showDetailsScreen(String detailsKey) {
         ScrollScreen screen = new ScrollScreen(detailsKey);
-        Minecraft.getInstance().displayGuiScreen(screen);
+        Minecraft.getInstance().setScreen(screen);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack itemstack = player.getHeldItem(hand);
-        if (openScroll(player.getHeldItem(hand), world.isRemote)) {
-            return ActionResult.func_233538_a_(itemstack, world.isRemote());
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        if (openScroll(player.getItemInHand(hand), world.isClientSide)) {
+            return ActionResult.sidedSuccess(itemstack, world.isClientSide());
         }
-        return ActionResult.resultPass(itemstack);
+        return ActionResult.pass(itemstack);
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
-        ItemStack itemStack = context.getItem();
+    public ActionResultType useOn(ItemUseContext context) {
+        World world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        ItemStack itemStack = context.getItemInHand();
         PlayerEntity player = context.getPlayer();
-        Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
+        Block block = context.getLevel().getBlockState(context.getClickedPos()).getBlock();
 
-        if (!(block instanceof AbstractWorkbenchBlock) && player != null && player.isCrouching() && openScroll(itemStack, world.isRemote)) {
-            return ActionResultType.func_233537_a_(world.isRemote);
+        if (!(block instanceof AbstractWorkbenchBlock) && player != null && player.isCrouching() && openScroll(itemStack, world.isClientSide)) {
+            return ActionResultType.sidedSuccess(world.isClientSide);
         }
 
         // add scroll to an existing stack of rolled up scrolls
@@ -270,30 +272,30 @@ public class ScrollItem extends BlockItem {
                     .orElse(false);
 
             if (success) {
-                if (player == null || !player.abilities.isCreativeMode) {
+                if (player == null || !player.abilities.instabuild) {
                     itemStack.shrink(1);
                 }
-                return ActionResultType.func_233537_a_(world.isRemote);
+                return ActionResultType.sidedSuccess(world.isClientSide);
             }
         }
 
-        return tryPlace(new BlockItemUseContext(context));
+        return place(new BlockItemUseContext(context));
     }
 
     @Nullable
     @Override
-    protected BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState state = getBlock().getDefaultState();
+    protected BlockState getPlacementState(BlockItemUseContext context) {
+        BlockState state = getBlock().defaultBlockState();
 
-        if (context.getFace().getAxis().getPlane() == Direction.Plane.HORIZONTAL) {
-            state = WallScrollBlock.instance.getDefaultState()
-                    .with(BlockStateProperties.HORIZONTAL_FACING, context.getFace());
+        if (context.getClickedFace().getAxis().getPlane() == Direction.Plane.HORIZONTAL) {
+            state = WallScrollBlock.instance.defaultBlockState()
+                    .setValue(BlockStateProperties.HORIZONTAL_FACING, context.getClickedFace());
         } else {
-            if (context.getWorld().getBlockState(context.getPos().offset(context.getFace().getOpposite())).getBlock() instanceof AbstractWorkbenchBlock) {
-                state = OpenScrollBlock.instance.getDefaultState();
+            if (context.getLevel().getBlockState(context.getClickedPos().relative(context.getClickedFace().getOpposite())).getBlock() instanceof AbstractWorkbenchBlock) {
+                state = OpenScrollBlock.instance.defaultBlockState();
             }
 
-            state = state.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+            state = state.setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection());
         }
 
         return canPlace(context, state) ? state : null;

@@ -23,7 +23,7 @@ public class HoloMaterialImprovementGui extends GuiElement {
 
         String improvementName = IModularItem.getImprovementName(key, 0);
 
-        tooltip = ImmutableList.of(I18n.format("tetra.holo.craft.materials.stat_modifier.tooltip", improvementName),
+        tooltip = ImmutableList.of(I18n.get("tetra.holo.craft.materials.stat_modifier.tooltip", improvementName),
                 TextFormatting.DARK_GRAY + IModularItem.getImprovementDescription(key));
 
         backdrop = new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench);
@@ -38,7 +38,7 @@ public class HoloMaterialImprovementGui extends GuiElement {
             value.setColor(preview ? GuiColors.add : GuiColors.remove);
         }
 
-        label = new GuiStringOutline(0, -3, I18n.format("tetra.holo.craft.materials.stat_modifier"));
+        label = new GuiStringOutline(0, -3, I18n.get("tetra.holo.craft.materials.stat_modifier"));
         label.setColor(GuiColors.muted);
         label.setAttachment(GuiAttachment.bottomCenter);
         addChild(label);

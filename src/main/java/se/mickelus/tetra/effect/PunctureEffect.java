@@ -25,10 +25,10 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
-        if (!attacker.world.isRemote) {
-            int armorBefore = target.getTotalArmorValue();
+        if (!attacker.level.isClientSide) {
+            int armorBefore = target.getArmorValue();
             int comboPoints = ComboPoints.get(attacker);
-            boolean isSatiated = !attacker.getFoodStats().needFood();
+            boolean isSatiated = !attacker.getFoodData().needsFood();
 
             AbilityUseResult result;
             if (isDefensive(item, itemStack, hand)) {
@@ -38,11 +38,11 @@ public class PunctureEffect extends ChargedAbilityEffect {
             }
 
             boolean overextended = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend) > 0;
-            attacker.addExhaustion(overextended ? 6f : 1f);
+            attacker.causeFoodExhaustion(overextended ? 6f : 1f);
 
             // trigger no cooldown with the exhilaration mod if puncture brought the target's armor below 6
-            if (!(item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration) > 0 && armorBefore >= 6 && target.getTotalArmorValue() < 6)) {
-                attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack) + target.getTotalArmorValue() * 10);
+            if (!(item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration) > 0 && armorBefore >= 6 && target.getArmorValue() < 6)) {
+                attacker.getCooldowns().addCooldown(item, getCooldown(item, itemStack) + target.getArmorValue() * 10);
             }
 
             item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
@@ -63,14 +63,14 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
     public AbilityUseResult performRegular(PlayerEntity attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks,
             boolean isSatiated, int comboPoints) {
-        int armor = target.getTotalArmorValue();
+        int armor = target.getArmorValue();
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, 1, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
-            boolean isPunctured = target.getActivePotionEffect(PuncturedPotionEffect.instance) != null;
-            boolean reversal = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge) > 0 && armor > attacker.getTotalArmorValue();
+            boolean isPunctured = target.getEffect(PuncturedPotionEffect.instance) != null;
+            boolean reversal = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge) > 0 && armor > attacker.getArmorValue();
 
             if (armor < 6 || isPunctured || reversal) {
                 int duration = 80;
@@ -94,7 +94,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
                     duration += exhilarationLevel;
                 }
 
-                target.addPotionEffect(new EffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
+                target.addEffect(new EffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
             }
 
             if (!(armor < 6 || isPunctured) || reversal) {
@@ -110,7 +110,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
                     amplifier += overextendLevel;
                 }
 
-                target.addPotionEffect(new EffectInstance(PuncturedPotionEffect.instance, duration, amplifier, false, false));
+                target.addEffect(new EffectInstance(PuncturedPotionEffect.instance, duration, amplifier, false, false));
             }
 
             if (!isPunctured) {
@@ -118,24 +118,24 @@ public class PunctureEffect extends ChargedAbilityEffect {
                 if (momentumLevel > 0) {
                     double velocity = momentumLevel / 100d + item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum) * armor;
                     velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
-                    target.addVelocity(0, velocity, 0);
+                    target.push(0, velocity, 0);
                 }
             }
 
-            target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1, 0.8f);
         } else {
-            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
         }
 
         return result;
     }
 
     public AbilityUseResult performDefensive(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
-        int armor = target.getTotalArmorValue();
+        int armor = target.getArmorValue();
 
         float knockbackMultiplier = 0.3f;
 
-        boolean isPunctured = target.getActivePotionEffect(PuncturedPotionEffect.instance) != null;
+        boolean isPunctured = target.getEffect(PuncturedPotionEffect.instance) != null;
         if (armor < 6 || isPunctured) {
             knockbackMultiplier += 0.6f;
         }
@@ -143,12 +143,12 @@ public class PunctureEffect extends ChargedAbilityEffect {
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, 0.3, 0.8f, knockbackMultiplier);
 
         if (result != AbilityUseResult.fail) {
-            target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20),
+            target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20),
                     item.getEffectLevel(itemStack, ItemEffect.abilityDefensive), false, true));
 
-            target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.8f);
         } else {
-            target.getEntityWorld().playSound(attacker, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1, 0.8f);
         }
 
         return result;

@@ -133,7 +133,7 @@ public class HoloVariantDetailGui extends GuiElement {
         if (selectedOutcome != null || hoveredOutcome != null) {
             OutcomePreview baseOutcome = hoveredOutcome != null ? hoveredOutcome : selectedOutcome;
 
-            variantLabel.setString(I18n.format(ItemModule.getName(baseOutcome.moduleKey, baseOutcome.variantKey)));
+            variantLabel.setString(I18n.get(ItemModule.getName(baseOutcome.moduleKey, baseOutcome.variantKey)));
 
             synergyIndicator.update(baseOutcome.itemStack, slot);
 
@@ -275,7 +275,7 @@ public class HoloVariantDetailGui extends GuiElement {
             if (hasFocus()) {
                 List<String> tooltip = super.getTooltipLines();
                 if (tooltip != null && tooltip.size() > 0) {
-                    return ImmutableList.of(I18n.format("tetra.holo.craft.material_requirement", tooltip.get(0)));
+                    return ImmutableList.of(I18n.get("tetra.holo.craft.material_requirement", tooltip.get(0)));
                 }
             }
             return null;

@@ -24,8 +24,8 @@ public class ForgedCrateProcessor extends StructureProcessor {
             Random random = placementSettings.getRandom(blockInfo.pos);
 
             BlockState blockState = blockInfo.state
-                    .with(ForgedCrateBlock.propIntegrity, random.nextInt(4))
-                    .with(ForgedCrateBlock.propFacing, Direction.byHorizontalIndex(random.nextInt(4)));
+                    .setValue(ForgedCrateBlock.propIntegrity, random.nextInt(4))
+                    .setValue(ForgedCrateBlock.propFacing, Direction.from2DDataValue(random.nextInt(4)));
 
             return new Template.BlockInfo(blockInfo.pos, blockState, blockInfo.nbt);
         }

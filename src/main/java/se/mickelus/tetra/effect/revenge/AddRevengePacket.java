@@ -9,7 +9,7 @@ public class AddRevengePacket extends AbstractPacket {
     private int entityId = -1;
 
     public AddRevengePacket(Entity attacker) {
-        this.entityId = attacker.getEntityId();
+        this.entityId = attacker.getId();
     }
 
     public AddRevengePacket() {}

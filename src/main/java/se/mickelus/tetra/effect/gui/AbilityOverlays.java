@@ -37,16 +37,16 @@ public class AbilityOverlays extends GuiRoot {
 
         chargeBar.update(mc.player);
         comboPoints.update(mc.player);
-        revengeIndicator.update(mc.player, mc.objectMouseOver);
+        revengeIndicator.update(mc.player, mc.hitResult);
 
         draw(event.getMatrixStack());
     }
 
     public void draw(MatrixStack matrixStack) {
         if (isVisible()) {
-            MainWindow window = mc.getMainWindow();
-            int width = window.getScaledWidth();
-            int height = window.getScaledHeight();
+            MainWindow window = mc.getWindow();
+            int width = window.getGuiScaledWidth();
+            int height = window.getGuiScaledHeight();
 
             this.drawChildren(matrixStack, width / 2, height / 2, 0, 0, 0, 0, 1.0F);
         }

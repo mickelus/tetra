@@ -19,19 +19,19 @@ import java.util.stream.Stream;
 
 public class HauntedEffect {
     public static void perform(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        if (!entity.world.isRemote) {
+        if (!entity.level.isClientSide) {
             double effectProbability = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.haunted);
             if (effectProbability > 0) {
-                if (entity.getRNG().nextDouble() < effectProbability * multiplier) {
+                if (entity.getRandom().nextDouble() < effectProbability * multiplier) {
                     int effectLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.haunted);
 
-                    VexEntity vex = EntityType.VEX.create(entity.world);
+                    VexEntity vex = EntityType.VEX.create(entity.level);
                     vex.setLimitedLife(effectLevel * 20);
-                    vex.setLocationAndAngles(entity.getPosX(), entity.getPosY() + 1, entity.getPosZ(), entity.rotationYaw, 0.0F);
-                    vex.setHeldItem(Hand.MAIN_HAND, itemStack.copy());
+                    vex.moveTo(entity.getX(), entity.getY() + 1, entity.getZ(), entity.yRot, 0.0F);
+                    vex.setItemInHand(Hand.MAIN_HAND, itemStack.copy());
                     vex.setDropChance(EquipmentSlotType.MAINHAND, 0);
-                    vex.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 2000 + effectLevel * 20));
-                    entity.world.addEntity(vex);
+                    vex.addEffect(new EffectInstance(Effects.INVISIBILITY, 2000 + effectLevel * 20));
+                    entity.level.addFreshEntity(vex);
 
                     // todo: use temporary modules for this instead once implemented
                     CastOptional.cast(itemStack.getItem(), IModularItem.class)
@@ -49,7 +49,7 @@ public class HauntedEffect {
                                 }
                             });
 
-                    entity.world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_WITCH_AMBIENT, SoundCategory.PLAYERS, 2f, 2);
+                    entity.level.playSound(null, entity.blockPosition(), SoundEvents.WITCH_AMBIENT, SoundCategory.PLAYERS, 2f, 2);
                 }
             }
         }

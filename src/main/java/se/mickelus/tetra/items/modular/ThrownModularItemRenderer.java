@@ -27,9 +27,9 @@ public class ThrownModularItemRenderer extends EntityRenderer<ThrownModularItemE
 
     @Override
     public void render(ThrownModularItemEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int packedLightIn) {
-        matrixStack.push();
+        matrixStack.pushPose();
 
-        Item item = entity.getArrowStack().getItem();
+        Item item = entity.getPickupItem().getItem();
         if (item instanceof ModularSingleHeadedItem) {
             transformSingleHeaded(entity, partialTicks, matrixStack);
         } else if (item instanceof ModularDoubleHeadedItem) {
@@ -40,52 +40,52 @@ public class ThrownModularItemRenderer extends EntityRenderer<ThrownModularItemE
             transformShield(entity, partialTicks, matrixStack);
         }
 
-        Minecraft.getInstance().getItemRenderer().renderItem(entity.getArrowStack(), ItemCameraTransforms.TransformType.FIXED, packedLightIn, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer);
+        Minecraft.getInstance().getItemRenderer().renderStatic(entity.getPickupItem(), ItemCameraTransforms.TransformType.FIXED, packedLightIn, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer);
 
-        matrixStack.pop();
+        matrixStack.popPose();
         super.render(entity, entityYaw, partialTicks, matrixStack, renderTypeBuffer, packedLightIn);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ThrownModularItemEntity entity) {
+    public ResourceLocation getTextureLocation(ThrownModularItemEntity entity) {
         return null;
     }
 
     private void transformSingleHeaded(ThrownModularItemEntity entity, float partialTicks, MatrixStack matrixStack) {
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationYaw, entity.rotationYaw) - 90.0F));
-        matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch) + 135.0F));
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(180.0F));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.yRotO, entity.yRot) - 90.0F));
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot) + 135.0F));
+        matrixStack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
         matrixStack.translate(.3f, -.3f, 0);
     }
 
     private void transformDoubleHeaded(ThrownModularItemEntity entity, float partialTicks, MatrixStack matrixStack) {
         if (entity.hasDealtDamage()) {
-            matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch) + 135.0F));
+            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot) + 135.0F));
         } else {
-            matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch) + entity.ticksExisted + partialTicks));
+            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot) + entity.tickCount + partialTicks));
         }
 
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationYaw, entity.rotationYaw) - 90.0F));
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(180.0F));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.yRotO, entity.yRot) - 90.0F));
+        matrixStack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
         matrixStack.translate(.3f, -.3f, 0);
     }
 
     private void transformBlade(ThrownModularItemEntity entity, float partialTicks, MatrixStack matrixStack) {
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationYaw, entity.rotationYaw) - 90.0F));
-        matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch) + 135.0F));
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(180.0F));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.yRotO, entity.yRot) - 90.0F));
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot) + 135.0F));
+        matrixStack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
     }
 
     private void transformShield(ThrownModularItemEntity entity, float partialTicks, MatrixStack matrixStack) {
-        matrixStack.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch)));
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot)));
 
         if (entity.isOnGround()) {
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationYaw, entity.rotationYaw) - 90.0F));
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.yRotO, entity.yRot) - 90.0F));
         } else {
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.prevRotationYaw, entity.rotationYaw) + (entity.ticksExisted + partialTicks) * 100));
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.yRotO, entity.yRot) + (entity.tickCount + partialTicks) * 100));
         }
 
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(90.0F));
+        matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
         matrixStack.translate(-0.2, 0, 0);
     }
 }

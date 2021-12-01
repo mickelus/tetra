@@ -16,7 +16,7 @@ public class TooltipGetterSweeping implements ITooltipGetter {
 
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("tetra.stats.sweeping.tooltip",
+        return I18n.get("tetra.stats.sweeping.tooltip",
                 String.format("%.1f", efficiencyGetter.getValue(player, itemStack)),
                 String.format("%.1f%%", levelGetter.getValue(player, itemStack)));
     }
@@ -28,6 +28,6 @@ public class TooltipGetterSweeping implements ITooltipGetter {
 
     @Override
     public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("tetra.stats.sweeping.tooltip_extended");
+        return I18n.get("tetra.stats.sweeping.tooltip_extended");
     }
 }

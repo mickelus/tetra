@@ -28,16 +28,16 @@ public class TooltipGetterMultiValue implements ITooltipGetter {
         for (int i = 0; i < statGetter.length; i++) {
             values[i] = formatters[i].get(statGetter[i].getValue(player, itemStack));
         }
-        return I18n.format(localizationKey, values);
+        return I18n.get(localizationKey, values);
     }
 
     @Override
     public boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
-        return I18n.hasKey(localizationKey + "_extended");
+        return I18n.exists(localizationKey + "_extended");
     }
 
     @Override
     public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format(localizationKey + "_extended");
+        return I18n.get(localizationKey + "_extended");
     }
 }

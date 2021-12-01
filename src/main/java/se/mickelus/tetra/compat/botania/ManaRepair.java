@@ -33,12 +33,12 @@ public class ManaRepair {
     }
 
     public static void itemInventoryTick(ItemStack itemStack, World world, Entity entity) {
-        if (!world.isRemote && world.getGameTime() % 20 == 0 && BotaniaCompat.isLoaded) {
+        if (!world.isClientSide && world.getGameTime() % 20 == 0 && BotaniaCompat.isLoaded) {
             int manaRepairLevel = EffectHelper.getEffectLevel(itemStack, effect);
-            if (manaRepairLevel > 0 && itemStack.getDamage() > 0) {
+            if (manaRepairLevel > 0 && itemStack.getDamageValue() > 0) {
                 CastOptional.cast(entity, PlayerEntity.class)
                         .filter(player -> ManaItemHandler.instance().requestManaExactForTool(itemStack, player, manaRepairLevel * 2, true))
-                        .ifPresent(player -> itemStack.setDamage(itemStack.getDamage() - 1));
+                        .ifPresent(player -> itemStack.setDamageValue(itemStack.getDamageValue() - 1));
             }
         }
     }

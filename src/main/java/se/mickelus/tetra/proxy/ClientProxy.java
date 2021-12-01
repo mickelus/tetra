@@ -44,7 +44,7 @@ public class ClientProxy implements IProxy {
 
         // these are registered here as there are multiple instances of workbench blocks
         ClientRegistry.bindTileEntityRenderer(WorkbenchTile.type, WorkbenchTESR::new);
-        ScreenManager.registerFactory(WorkbenchTile.containerType, WorkbenchScreen::new);
+        ScreenManager.register(WorkbenchTile.containerType, WorkbenchScreen::new);
         ClientRegistry.bindTileEntityRenderer(ScrollTile.type, ScrollRenderer::new);
 
         MinecraftForge.EVENT_BUS.register(new HowlingOverlay(Minecraft.getInstance()));

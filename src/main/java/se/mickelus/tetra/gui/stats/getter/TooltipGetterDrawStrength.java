@@ -15,7 +15,7 @@ public class TooltipGetterDrawStrength implements ITooltipGetter {
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         double drawStrength = getter.getValue(player, itemStack);
-        return I18n.format("tetra.stats.draw_strength.tooltip",
+        return I18n.get("tetra.stats.draw_strength.tooltip",
                 String.format("%.1f", drawStrength),
                 String.format("%.1f", 1.5 * drawStrength + 1), // max damage including "crit" bonus is this
                 String.format("%.1f", 3 * ModularBowItem.getArrowVelocity(20, drawStrength, 0, false)));
@@ -28,6 +28,6 @@ public class TooltipGetterDrawStrength implements ITooltipGetter {
 
     @Override
     public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("tetra.stats.draw_strength.tooltip_extended");
+        return I18n.get("tetra.stats.draw_strength.tooltip_extended");
     }
 }

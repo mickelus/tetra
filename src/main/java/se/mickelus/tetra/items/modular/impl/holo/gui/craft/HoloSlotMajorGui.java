@@ -33,7 +33,7 @@ public class HoloSlotMajorGui extends GuiClickable {
         addChild(slotString);
 
         if ("".equals(label)) {
-            slotString.setString(I18n.format("tetra.holo.craft.slot"));
+            slotString.setString(I18n.get("tetra.holo.craft.slot"));
         }
 
         width = slotString.getWidth() + 18;

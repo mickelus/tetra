@@ -83,7 +83,7 @@ public class ToolbeltInventory implements IInventory {
             int slot = itemTag.getByte(slotKey) & 255;
 
             if (0 <= slot && slot < maxSize) {
-                inventoryContents.set(slot, ItemStack.read(itemTag));
+                inventoryContents.set(slot, ItemStack.of(itemTag));
             }
         }
     }
@@ -92,9 +92,9 @@ public class ToolbeltInventory implements IInventory {
         ListNBT items = new ListNBT();
 
         for (int i = 0; i < maxSize; i++) {
-            if (getStackInSlot(i) != null) {
+            if (getItem(i) != null) {
                 CompoundNBT compound = new CompoundNBT();
-                getStackInSlot(i).write(compound);
+                getItem(i).save(compound);
                 compound.putByte(slotKey, (byte)i);
                 items.add(compound);
             }
@@ -104,14 +104,14 @@ public class ToolbeltInventory implements IInventory {
     }
 
     @Override
-    public int getSizeInventory() {
+    public int getContainerSize() {
         return numSlots;
     }
 
     @Override
     public boolean isEmpty() {
-        for (int i = 0; i < getSizeInventory(); i++) {
-            if (!getStackInSlot(i).isEmpty()) {
+        for (int i = 0; i < getContainerSize(); i++) {
+            if (!getItem(i).isEmpty()) {
                 return false;
             }
         }
@@ -119,23 +119,23 @@ public class ToolbeltInventory implements IInventory {
     }
 
     @Override
-    public ItemStack getStackInSlot(int index) {
+    public ItemStack getItem(int index) {
         return inventoryContents.get(index);
     }
 
     @Override
-    public ItemStack decrStackSize(int index, int count) {
-        ItemStack itemstack = ItemStackHelper.getAndSplit(this.inventoryContents, index, count);
+    public ItemStack removeItem(int index, int count) {
+        ItemStack itemstack = ItemStackHelper.removeItem(this.inventoryContents, index, count);
 
         if (!itemstack.isEmpty()) {
-            this.markDirty();
+            this.setChanged();
         }
 
         return itemstack;
     }
 
     @Override
-    public ItemStack removeStackFromSlot(int index) {
+    public ItemStack removeItemNoUpdate(int index) {
         ItemStack itemStack = this.inventoryContents.get(index);
 
         if (itemStack.isEmpty()) {
@@ -147,25 +147,25 @@ public class ToolbeltInventory implements IInventory {
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         this.inventoryContents.set(index, stack);
 
-        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
-            stack.setCount(this.getInventoryStackLimit());
+        if (!stack.isEmpty() && stack.getCount() > this.getMaxStackSize()) {
+            stack.setCount(this.getMaxStackSize());
         }
 
-        this.markDirty();
+        this.setChanged();
     }
 
     @Override
-    public int getInventoryStackLimit() {
+    public int getMaxStackSize() {
         return 64;
     }
 
     @Override
-    public void markDirty() {
-        for (int i = 0; i < getSizeInventory(); ++i) {
-            if (getStackInSlot(i).getCount() == 0) {
+    public void setChanged() {
+        for (int i = 0; i < getContainerSize(); ++i) {
+            if (getItem(i).getCount() == 0) {
                 inventoryContents.set(i, ItemStack.EMPTY);
             }
         }
@@ -174,49 +174,49 @@ public class ToolbeltInventory implements IInventory {
     }
 
     @Override
-    public boolean isUsableByPlayer(PlayerEntity player) {
+    public boolean stillValid(PlayerEntity player) {
         return true;
     }
 
     @Override
-    public void openInventory(PlayerEntity player) {}
+    public void startOpen(PlayerEntity player) {}
 
     @Override
-    public void closeInventory(PlayerEntity player) {}
+    public void stopOpen(PlayerEntity player) {}
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
+    public boolean canPlaceItem(int index, ItemStack stack) {
         return isItemValid(stack);
     }
 
     @Override
-    public void clear() {
+    public void clearContent() {
         inventoryContents.clear();
     }
 
     public ItemStack takeItemStack(int index) {
-        ItemStack itemStack = getStackInSlot(index);
-        setInventorySlotContents(index, ItemStack.EMPTY);
+        ItemStack itemStack = getItem(index);
+        setItem(index, ItemStack.EMPTY);
         return itemStack;
     }
 
     public void emptyOverflowSlots(PlayerEntity player) {
-        for (int i = getSizeInventory(); i < maxSize; i++) {
-            moveStackToPlayer(removeStackFromSlot(i), player);
+        for (int i = getContainerSize(); i < maxSize; i++) {
+            moveStackToPlayer(removeItemNoUpdate(i), player);
         }
-        this.markDirty();
+        this.setChanged();
     }
 
     protected void moveStackToPlayer(ItemStack itemStack, PlayerEntity player) {
         if (!itemStack.isEmpty()) {
-            if (!player.inventory.addItemStackToInventory(itemStack)) {
-                player.dropItem(itemStack, false);
+            if (!player.inventory.add(itemStack)) {
+                player.drop(itemStack, false);
             }
         }
     }
 
     public boolean isItemValid(ItemStack itemStack) {
-        return !ModularToolbeltItem.instance.equals(itemStack.getItem()) && predicate.test(itemStack);
+        return !ModularToolbeltItem.instance.equals(itemStack.getItem()) && predicate.matches(itemStack);
     }
 
     public boolean storeItemInInventory(ItemStack itemStack) {
@@ -225,15 +225,15 @@ public class ToolbeltInventory implements IInventory {
         }
 
         // attempt to merge the itemstack with itemstacks in the toolbelt
-        for (int i = 0; i < getSizeInventory(); i++) {
-            ItemStack storedStack = getStackInSlot(i);
-            if (ItemStack.areItemsEqual(itemStack, storedStack)
-                    && ItemStack.areItemStackTagsEqual(itemStack, storedStack)
+        for (int i = 0; i < getContainerSize(); i++) {
+            ItemStack storedStack = getItem(i);
+            if (ItemStack.isSame(itemStack, storedStack)
+                    && ItemStack.tagMatches(itemStack, storedStack)
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());
                 storedStack.grow(moveCount);
-                setInventorySlotContents(i, storedStack);
+                setItem(i, storedStack);
                 itemStack.shrink(moveCount);
 
                 if (itemStack.isEmpty()) {
@@ -243,9 +243,9 @@ public class ToolbeltInventory implements IInventory {
         }
 
         // put item in the first empty slot
-        for (int i = 0; i < getSizeInventory(); i++) {
-            if (getStackInSlot(i).isEmpty()) {
-                setInventorySlotContents(i, itemStack);
+        for (int i = 0; i < getContainerSize(); i++) {
+            if (getItem(i).isEmpty()) {
+                setItem(i, itemStack);
                 return true;
             }
         }

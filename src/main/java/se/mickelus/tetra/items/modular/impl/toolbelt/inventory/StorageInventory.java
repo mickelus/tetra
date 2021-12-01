@@ -29,15 +29,15 @@ public class StorageInventory extends ToolbeltInventory {
 
         List<Collection<ItemEffect>> effects = getSlotEffects();
         // attempt to merge the itemstack with itemstacks in the toolbelt
-        for (int i = 0; i < getSizeInventory(); i++) {
-            ItemStack storedStack = getStackInSlot(i);
+        for (int i = 0; i < getContainerSize(); i++) {
+            ItemStack storedStack = getItem(i);
             if (effects.get(i).contains(ItemEffect.quickAccess)
-                    && storedStack.isItemEqual(itemStack)
+                    && storedStack.sameItem(itemStack)
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());
                 storedStack.grow(moveCount);
-                setInventorySlotContents(i, storedStack);
+                setItem(i, storedStack);
                 itemStack.shrink(moveCount);
 
                 if (itemStack.isEmpty()) {
@@ -47,9 +47,9 @@ public class StorageInventory extends ToolbeltInventory {
         }
 
         // put item in the first empty slot
-        for (int i = 0; i < getSizeInventory(); i++) {
-            if (effects.get(i).contains(ItemEffect.quickAccess) && getStackInSlot(i).isEmpty()) {
-                setInventorySlotContents(i, itemStack);
+        for (int i = 0; i < getContainerSize(); i++) {
+            if (effects.get(i).contains(ItemEffect.quickAccess) && getItem(i).isEmpty()) {
+                setItem(i, itemStack);
                 return true;
             }
         }

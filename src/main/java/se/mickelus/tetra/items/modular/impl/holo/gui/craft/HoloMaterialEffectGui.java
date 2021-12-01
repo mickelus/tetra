@@ -21,14 +21,14 @@ public class HoloMaterialEffectGui extends GuiElement {
         super(x, y, 29, 29);
 
         tooltip = ImmutableList.of(
-                I18n.format("tetra.holo.craft.materials.stat_effect.tooltip", I18n.format("tetra.stats." + key)),
-                TextFormatting.GRAY + I18n.format("tetra.stats." + key + ".tooltip_short"));
+                I18n.get("tetra.holo.craft.materials.stat_effect.tooltip", I18n.get("tetra.stats." + key)),
+                TextFormatting.GRAY + I18n.get("tetra.stats." + key + ".tooltip_short"));
 
         backdrop = new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench);
         backdrop.setColor(0x222222);
         addChild(backdrop);
 
-        value = new GuiStringOutline(0, 8, I18n.format("tetra.stats." + key));
+        value = new GuiStringOutline(0, 8, I18n.get("tetra.stats." + key));
         value.setAttachment(GuiAttachment.topCenter);
         addChild(value);
 
@@ -36,7 +36,7 @@ public class HoloMaterialEffectGui extends GuiElement {
             value.setColor(preview ? GuiColors.add : GuiColors.remove);
         }
 
-        label = new GuiStringOutline(0, -3, I18n.format("tetra.holo.craft.materials.stat_effect"));
+        label = new GuiStringOutline(0, -3, I18n.get("tetra.holo.craft.materials.stat_effect"));
         label.setColor(GuiColors.muted);
         label.setAttachment(GuiAttachment.bottomCenter);
         addChild(label);

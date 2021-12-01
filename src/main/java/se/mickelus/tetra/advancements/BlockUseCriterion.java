@@ -56,7 +56,7 @@ public class BlockUseCriterion extends CriterionInstance {
             return false;
         }
 
-        if (item != null && !item.test(usedItem)) {
+        if (item != null && !item.matches(usedItem)) {
             return false;
         }
 
@@ -80,7 +80,7 @@ public class BlockUseCriterion extends CriterionInstance {
                         .map(PropertyMatcher::deserialize)
                         .orElse(null),
                 JsonOptional.field(json, "item")
-                        .map(ItemPredicate::deserialize)
+                        .map(ItemPredicate::fromJson)
                         .orElse(null),
                 JsonOptional.field(json, "data")
                         .map(JsonElement::getAsJsonObject)

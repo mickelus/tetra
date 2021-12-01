@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import net.minecraft.item.Item.Properties;
+
 public class ModularToolbeltItem extends ModularItem implements INamedContainerProvider {
     public final static String unlocalizedName = "modular_toolbelt";
 
@@ -68,9 +70,9 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
 
     public ModularToolbeltItem() {
         super(new Properties()
-                .maxStackSize(1)
-                .group(TetraItemGroup.instance)
-                .isImmuneToFire());
+                .stacksTo(1)
+                .tab(TetraItemGroup.instance)
+                .fireResistant());
 
         canHone = false;
 
@@ -105,12 +107,12 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
         MinecraftForge.EVENT_BUS.register(new JumpHandlerSuspend(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getInstance()));
-        ScreenManager.registerFactory(ModularToolbeltItem.containerType, ToolbeltGui::new);
+        ScreenManager.register(ModularToolbeltItem.containerType, ToolbeltGui::new);
     }
 
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if (isInGroup(group)) {
+    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+        if (allowdedIn(group)) {
             items.add(createStack("belt/rope"));
             items.add(createStack("belt/inlaid"));
         }
@@ -124,12 +126,12 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        if (!world.isRemote) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        if (!world.isClientSide) {
             NetworkHooks.openGui((ServerPlayerEntity) player, this);
         }
 
-        return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
+        return new ActionResult<>(ActionResultType.SUCCESS, player.getItemInHand(hand));
     }
 
     @Override
@@ -140,9 +142,9 @@ public class ModularToolbeltItem extends ModularItem implements INamedContainerP
     @Nullable
     @Override
     public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
-        ItemStack itemStack = player.getHeldItemMainhand();
+        ItemStack itemStack = player.getMainHandItem();
         if (!this.equals(itemStack.getItem())) {
-            itemStack = player.getHeldItemOffhand();
+            itemStack = player.getOffhandItem();
         }
 
         if (!this.equals(itemStack.getItem())) {

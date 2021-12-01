@@ -76,7 +76,7 @@ public class HoloGui extends Screen {
 
         if (ConfigHandler.development.get() && !hasListener) {
             DataManager.featureData.onReload(() -> {
-                Minecraft.getInstance().runImmediately(HoloGui::onReload);
+                Minecraft.getInstance().executeBlocking(HoloGui::onReload);
             });
             hasListener = true;
         }
@@ -90,8 +90,8 @@ public class HoloGui extends Screen {
     }
 
     @Override
-    public void onClose() {
-        super.onClose();
+    public void removed() {
+        super.removed();
         if (closeCallback != null) {
             // onClose is called in Minecarft.displayGuiScreen, pre-null-assignement prevents gui chaining from getting stuck in recursion
             Runnable callback = closeCallback;
@@ -193,14 +193,14 @@ public class HoloGui extends Screen {
             switch (typedChar) {
                 case 'r':
                     instance = null;
-                    Minecraft.getInstance().displayGuiScreen(null);
+                    Minecraft.getInstance().setScreen(null);
 
                     HoloGui gui = HoloGui.getInstance();
-                    Minecraft.getInstance().displayGuiScreen(gui);
+                    Minecraft.getInstance().setScreen(gui);
                     gui.onShow();
                     break;
                 case 't':
-                    getMinecraft().player.sendChatMessage("/reload");
+                    getMinecraft().player.chat("/reload");
                     spinner.setVisible(true);
                     break;
             }
@@ -210,7 +210,7 @@ public class HoloGui extends Screen {
     }
 
     private static void onReload() {
-        if (instance != null && instance.getMinecraft().currentScreen == instance) {
+        if (instance != null && instance.getMinecraft().screen == instance) {
             logger.info("Refreshing holosphere gui data");
             instance.spinner.setVisible(false);
             if (instance.currentPage != null) {

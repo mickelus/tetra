@@ -37,20 +37,20 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
     }
 
     public boolean canRecieve() {
-        return TransferUnitBlock.getEffectPowered(world, pos, getBlockState()).equals(EnumTransferEffect.receive)
+        return TransferUnitBlock.getEffectPowered(level, worldPosition, getBlockState()).equals(EnumTransferEffect.receive)
                 && hasCell()
                 && getCharge() < ItemCellMagmatic.maxCharge;
     }
 
     public boolean canSend() {
-        return TransferUnitBlock.getEffectPowered(world, pos, getBlockState()).equals(EnumTransferEffect.send)
+        return TransferUnitBlock.getEffectPowered(level, worldPosition, getBlockState()).equals(EnumTransferEffect.send)
                 && hasCell()
                 && getCharge() > 0;
     }
 
     @Override
     public void setReceiving(boolean receiving) {
-        TransferUnitBlock.setReceiving(world, pos, getBlockState(), receiving);
+        TransferUnitBlock.setReceiving(level, worldPosition, getBlockState(), receiving);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
 
     @Override
     public void setSending(boolean sending) {
-        TransferUnitBlock.setSending(world, pos, getBlockState(), sending);
+        TransferUnitBlock.setSending(level, worldPosition, getBlockState(), sending);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
         ItemStack removedCell = cell;
         cell = ItemStack.EMPTY;
 
-        TransferUnitBlock.updateCellProp(world, pos, hasCell(), getCharge());
+        TransferUnitBlock.updateCellProp(level, worldPosition, hasCell(), getCharge());
         updateTransferState();
         return removedCell;
     }
@@ -89,7 +89,7 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
         if (itemStack.getItem() instanceof ItemCellMagmatic) {
             cell = itemStack;
 
-            TransferUnitBlock.updateCellProp(world, pos, hasCell(), getCharge());
+            TransferUnitBlock.updateCellProp(level, worldPosition, hasCell(), getCharge());
             updateTransferState();
             return true;
         }
@@ -97,7 +97,7 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
     }
 
     private Optional<IHeatTransfer> getConnectedUnit() {
-        return TileEntityOptional.from(world, pos.offset(TransferUnitBlock.getFacing(getBlockState())), IHeatTransfer.class);
+        return TileEntityOptional.from(level, worldPosition.relative(TransferUnitBlock.getFacing(getBlockState())), IHeatTransfer.class);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
                     int drained = item.drainCharge(cell, amount);
 
                     if (item.getCharge(cell) == 0) {
-                        TransferUnitBlock.updateCellProp(world, pos, hasCell(), 0);
+                        TransferUnitBlock.updateCellProp(level, worldPosition, hasCell(), 0);
                         runDrainedEffects();
                     }
 
@@ -151,10 +151,10 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
                     }
 
                     if (initialCharge == 0) {
-                        TransferUnitBlock.updateCellProp(world, pos, hasCell(), getCharge());
+                        TransferUnitBlock.updateCellProp(level, worldPosition, hasCell(), getCharge());
                     }
 
-                    markDirty();
+                    setChanged();
                     return overfill;
                 })
                 .orElse(0);
@@ -162,8 +162,8 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
 
     @Override
     public void tick() {
-        if (!world.isRemote
-                && world.getGameTime() % 5 == 0
+        if (!level.isClientSide
+                && level.getGameTime() % 5 == 0
                 && TransferUnitBlock.isSending(getBlockState())) {
             transfer();
         }
@@ -181,7 +181,7 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
                                 fill(overfill);
                             }
 
-                            markDirty();
+                            setChanged();
                         } else {
                             setSending(false);
                             connected.setReceiving(false);
@@ -194,28 +194,28 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
     }
 
     private void runDrainedEffects() {
-        if (world instanceof ServerWorld) {
-            ((ServerWorld) world).spawnParticle(ParticleTypes.SMOKE,
-                    pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
+        if (level instanceof ServerWorld) {
+            ((ServerWorld) level).sendParticles(ParticleTypes.SMOKE,
+                    worldPosition.getX() + 0.5, worldPosition.getY() + 0.7, worldPosition.getZ() + 0.5,
                     10,  0, 0, 0, 0.02f);
-            world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS,
+            level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS,
                     0.2f, 1);
         }
     }
 
     private void runFilledEffects() {
-        if (world instanceof ServerWorld) {
-            ((ServerWorld) world).spawnParticle(ParticleTypes.FLAME,
-                    pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
+        if (level instanceof ServerWorld) {
+            ((ServerWorld) level).sendParticles(ParticleTypes.FLAME,
+                    worldPosition.getX() + 0.5, worldPosition.getY() + 0.7, worldPosition.getZ() + 0.5,
                     5,  0, 0, 0, 0.02f);
-            world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS,
+            level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS,
                     0.2f, 1);
         }
     }
 
     @Override
     public void updateTransferState() {
-        switch (TransferUnitBlock.getEffectPowered(world, pos, getBlockState())) {
+        switch (TransferUnitBlock.getEffectPowered(level, worldPosition, getBlockState())) {
             case send:
                 getConnectedUnit().ifPresent(connected -> {
                     boolean canTransfer = canSend() && connected.canRecieve();
@@ -246,15 +246,15 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
                 });
                 break;
         }
-        markDirty();
+        setChanged();
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compound) {
-        super.read(blockState, compound);
+    public void load(BlockState blockState, CompoundNBT compound) {
+        super.load(blockState, compound);
 
         if (compound.contains("cell")) {
-            cell = ItemStack.read(compound.getCompound("cell"));
+            cell = ItemStack.of(compound.getCompound("cell"));
         } else {
             cell = ItemStack.EMPTY;
         }
@@ -263,14 +263,14 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
     public static final void writeCell(CompoundNBT compound, ItemStack cell) {
         if (!cell.isEmpty()) {
             CompoundNBT cellNBT = new CompoundNBT();
-            cell.write(cellNBT);
+            cell.save(cellNBT);
             compound.put("cell", cellNBT);
         }
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
 
         writeCell(compound, cell);
 
@@ -280,16 +280,16 @@ public class TransferUnitTile extends TileEntity implements ITickableTileEntity,
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, 0, getUpdateTag());
+        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return write(new CompoundNBT());
+        return save(new CompoundNBT());
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
-        this.read(getBlockState(), packet.getNbtCompound());
+        this.load(getBlockState(), packet.getTag());
     }
 }

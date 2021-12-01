@@ -41,7 +41,7 @@ public class OverlayGuiQuiverSlot extends GuiElement {
         }
 
         if (fontRenderer == null) {
-            fontRenderer = mc.fontRenderer;
+            fontRenderer = mc.font;
         }
 
         backdrop  = new GuiTexture(0, 0, 23, 23, 32, 28, GuiTextures.toolbelt);
@@ -54,7 +54,7 @@ public class OverlayGuiQuiverSlot extends GuiElement {
             addChild(count);
             count.setVisible(false);
 
-            hoverLabel = new GuiString(-5, 0, itemStack.getDisplayName().getString());
+            hoverLabel = new GuiString(-5, 0, itemStack.getHoverName().getString());
             hoverLabel.setAttachmentPoint(GuiAttachment.middleRight);
             hoverLabel.setAttachmentAnchor(GuiAttachment.middleLeft);
             addChild(hoverLabel);
@@ -100,11 +100,11 @@ public class OverlayGuiQuiverSlot extends GuiElement {
         RenderSystem.pushMatrix();
         RenderSystem.enableDepthTest();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        RenderHelper.enableStandardItemLighting();
+        RenderHelper.turnBackOn();
 
-        mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
-        mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, "");
-        RenderHelper.disableStandardItemLighting();
+        mc.getItemRenderer().renderAndDecorateItem(itemStack, x, y);
+        mc.getItemRenderer().renderGuiItemDecorations(fontRenderer, itemStack, x, y, "");
+        RenderHelper.turnOff();
         RenderSystem.disableDepthTest();
         RenderSystem.popMatrix();
     }

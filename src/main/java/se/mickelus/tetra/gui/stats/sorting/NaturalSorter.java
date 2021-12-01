@@ -11,7 +11,7 @@ import java.util.function.Function;
 public class NaturalSorter implements IStatSorter {
     @Override
     public String getName() {
-        return I18n.format("tetra.stats.sorting.none");
+        return I18n.get("tetra.stats.sorting.none");
     }
 
     @Override

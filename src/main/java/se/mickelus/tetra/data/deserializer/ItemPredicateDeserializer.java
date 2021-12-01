@@ -19,7 +19,7 @@ public class ItemPredicateDeserializer implements JsonDeserializer<ItemPredicate
 
     public static ItemPredicate deserialize(JsonElement json) {
         try {
-            return ItemPredicate.deserialize(json);
+            return ItemPredicate.fromJson(json);
         } catch (JsonParseException e) {
             logger.debug("Failed to parse item predicate from \"{}\": '{}'", json, e.getMessage());
             // todo: debug level log

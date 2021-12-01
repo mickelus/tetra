@@ -22,7 +22,7 @@ public class TooltipGetterTool implements ITooltipGetter {
 
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format(localizationKey,
+        return I18n.get(localizationKey,
                 (int) levelGetter.getValue(player, itemStack),
                 String.format("%.2f", efficiencyGetter.getValue(player, itemStack)));
     }
@@ -32,6 +32,6 @@ public class TooltipGetterTool implements ITooltipGetter {
     }
 
     public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format("tetra.stats.tool.tooltip_extended");
+        return I18n.get("tetra.stats.tool.tooltip_extended");
     }
 }

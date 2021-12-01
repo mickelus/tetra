@@ -25,13 +25,13 @@ public class ScrollDataFunction extends LootFunction {
     }
 
     @Override
-    protected ItemStack doApply(ItemStack itemStack, LootContext context) {
+    protected ItemStack run(ItemStack itemStack, LootContext context) {
         data.write(itemStack);
         return itemStack;
     }
 
     @Override
-    public LootFunctionType getFunctionType() {
+    public LootFunctionType getType() {
         return type;
     }
 

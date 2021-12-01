@@ -21,7 +21,7 @@ public class SmallStrengthPotionEffect extends Effect {
 
         setRegistryName("small_strength");
 
-        addAttributesModifier(Attributes.ATTACK_DAMAGE, "fc8d272d-056c-43b4-9d18-f3d7f6cf3983", 1, AttributeModifier.Operation.ADDITION);
+        addAttributeModifier(Attributes.ATTACK_DAMAGE, "fc8d272d-056c-43b4-9d18-f3d7f6cf3983", 1, AttributeModifier.Operation.ADDITION);
 
         instance = this;
     }
@@ -33,6 +33,6 @@ public class SmallStrengthPotionEffect extends Effect {
 
         int amount = effect.getAmplifier() + 1;
         EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new StringTextComponent(I18n.format("effect.tetra.small_strength.tooltip", amount)));
+                new StringTextComponent(I18n.get("effect.tetra.small_strength.tooltip", amount)));
     }
 }

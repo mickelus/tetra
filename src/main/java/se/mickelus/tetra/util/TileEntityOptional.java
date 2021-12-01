@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public class TileEntityOptional {
     public static <T> Optional<T> from(IBlockReader world, BlockPos pos, Class<T> tileEntityClass) {
-        return CastOptional.cast(world.getTileEntity(pos), tileEntityClass);
+        return CastOptional.cast(world.getBlockEntity(pos), tileEntityClass);
     }
 }

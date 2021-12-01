@@ -18,7 +18,7 @@ import se.mickelus.tetra.TetraMod;
 // todo 1.15: ripped out
 @OnlyIn(Dist.CLIENT)
 public class ForgedContainerRenderer extends TileEntityRenderer<ForgedContainerTile> {
-    public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_container/forged_container"));
+    public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_container/forged_container"));
 
     public ModelRenderer lid;
     public ModelRenderer base;
@@ -32,24 +32,24 @@ public class ForgedContainerRenderer extends TileEntityRenderer<ForgedContainerT
 
         lid = new ModelRenderer(128, 64, 0, 0);
         lid.addBox(0, -3, -14, 30, 3, 14, 0);
-        lid.rotationPointX = 1;
-        lid.rotationPointY = 7;
-        lid.rotationPointZ = 15;
+        lid.x = 1;
+        lid.y = 7;
+        lid.z = 15;
 
         locks = new ModelRenderer[4];
         for (int i = 0; i < locks.length; i++) {
             locks[i] = new ModelRenderer(128, 64, 0, 0);
             locks[i].addBox(-2 + i * 6, -1, -14.03f, 2, 3, 1, 0);
-            locks[i].rotationPointX = 8;
-            locks[i].rotationPointY = 7;
-            locks[i].rotationPointZ = 15;
+            locks[i].x = 8;
+            locks[i].y = 7;
+            locks[i].z = 15;
         }
 
         base = new ModelRenderer(128, 64, 0, 17);
         base.addBox(0, 1, 0, 30, 9, 14, 0);
-        base.rotationPointX = 1;
-        base.rotationPointY = 6;
-        base.rotationPointZ = 1;
+        base.x = 1;
+        base.y = 6;
+        base.z = 1;
     }
 
     @Override
@@ -59,21 +59,21 @@ public class ForgedContainerRenderer extends TileEntityRenderer<ForgedContainerT
             return;
         }
 
-        if (tile.hasWorld()) {
-            matrixStack.push();
+        if (tile.hasLevel()) {
+            matrixStack.pushPose();
             matrixStack.translate(0.5F, 0.5F, 0.5F);
             // todo: why does the model render upside down by default?
-            matrixStack.rotate(Vector3f.ZP.rotationDegrees(180));
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(tile.getFacing().getHorizontalAngle()));
+            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180));
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(tile.getFacing().toYRot()));
             matrixStack.translate(-0.5F, -0.5F, -0.5F);
 
-            IVertexBuilder vertexBuilder = material.getBuffer(renderTypeBuffer, RenderType::getEntitySolid);
+            IVertexBuilder vertexBuilder = material.buffer(renderTypeBuffer, RenderType::entitySolid);
 
             renderLid(tile, partialTicks, matrixStack, vertexBuilder, combinedLight, combinedOverlay);
             renderLocks(tile, partialTicks, matrixStack, vertexBuilder, combinedLight, combinedOverlay);
             base.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
 
-            matrixStack.pop();
+            matrixStack.popPose();
         }
     }
 
@@ -81,14 +81,14 @@ public class ForgedContainerRenderer extends TileEntityRenderer<ForgedContainerT
             int combinedLight, int combinedOverlay) {
         if (tile.isOpen()) {
             float progress = Math.min(1, (System.currentTimeMillis() - tile.openTime) / openDuration);
-            lid.rotateAngleY = (progress * 0.1f * ((float) Math.PI / 2F));
+            lid.yRot = (progress * 0.1f * ((float) Math.PI / 2F));
 
             matrixStack.translate(0,0, 0.3f * progress);
             lid.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
             matrixStack.translate(0,0, -0.3f * progress);
 
         } else {
-            lid.rotateAngleY = 0;
+            lid.yRot = 0;
             lid.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
         }
     }

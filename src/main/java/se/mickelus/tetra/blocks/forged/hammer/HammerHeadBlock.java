@@ -52,8 +52,8 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
 
     public static final String unlocalizedName = "hammer_head";
 
-    public static final VoxelShape shape = makeCuboidShape(2, 14, 2, 14, 16, 14);
-    public static final VoxelShape jamShape = makeCuboidShape(2, 4, 2, 14, 16, 14);
+    public static final VoxelShape shape = box(2, 14, 2, 14, 16, 14);
+    public static final VoxelShape jamShape = box(2, 4, 2, 14, 16, 14);
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static HammerHeadBlock instance;
@@ -73,7 +73,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     @Override
-    public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip,
+    public void appendHoverText(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip,
             final ITooltipFlag advanced) {
         tooltip.add(locationTooltip);
     }
@@ -84,17 +84,17 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
 
     private static boolean unjam(World world, BlockPos pos, PlayerEntity playerEntity) {
         TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(tile -> tile.setJammed(false));
-        world.playSound(playerEntity, pos, SoundEvents.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1, 0.5f);
+        world.playSound(playerEntity, pos, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundCategory.PLAYERS, 1, 0.5f);
         return true;
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
     }
 
     private boolean isFunctional(World world, BlockPos pos) {
-        BlockPos basePos = pos.up();
+        BlockPos basePos = pos.above();
         boolean functionalBase = CastOptional.cast(world.getBlockState(basePos).getBlock(), HammerBaseBlock.class)
                 .map(base -> base.isFunctional(world, basePos))
                 .orElse(false);
@@ -104,7 +104,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
 
     @Override
     public boolean canProvideTools(World world, BlockPos pos, BlockPos targetPos) {
-        return pos.equals(targetPos.up());
+        return pos.equals(targetPos.above());
     }
 
     @Override
@@ -118,7 +118,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     @Override
     public int getToolLevel(World world, BlockPos pos, BlockState blockState, ToolType toolType) {
         if (ToolTypes.hammer.equals(toolType) && isFunctional(world, pos)) {
-            BlockPos basePos = pos.up();
+            BlockPos basePos = pos.above();
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
             return baseBlock.getHammerLevel(world, basePos);
         }
@@ -128,7 +128,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     @Override
     public ItemStack onCraftConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
-        BlockPos basePos = pos.up();
+        BlockPos basePos = pos.above();
         BlockState baseState = world.getBlockState(basePos);
         ItemStack upgradedStack = CastOptional.cast(baseState.getBlock(), HammerBaseBlock.class)
                 .map(base -> base.applyCraftEffects(world, basePos, baseState, targetStack, slot, isReplacing, player, requiredTool, requiredLevel, consumeResources))
@@ -136,7 +136,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
 
         if (consumeResources) {
             TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(HammerHeadTile::activate);
-            world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 0.2f, (float) (0.5 + Math.random() * 0.2));
+            world.playSound(player, pos, SoundEvents.ANVIL_LAND, SoundCategory.PLAYERS, 0.2f, (float) (0.5 + Math.random() * 0.2));
         }
 
         return upgradedStack;
@@ -155,7 +155,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     @Override
     public ItemStack onActionConsumeTool(World world, BlockPos pos, BlockState blockState, ItemStack targetStack, PlayerEntity player,
             ToolType requiredTool, int requiredLevel, boolean consumeResources) {
-        BlockPos basePos = pos.up();
+        BlockPos basePos = pos.above();
         BlockState baseState = world.getBlockState(basePos);
         ItemStack upgradedStack = CastOptional.cast(baseState.getBlock(), HammerBaseBlock.class)
                 .map(base -> base.applyActionEffects(world, basePos, baseState, targetStack, player, requiredTool, requiredLevel, consumeResources))
@@ -163,23 +163,23 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
 
         if (consumeResources) {
             TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(HammerHeadTile::activate);
-            world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
+            world.playSound(player, pos, SoundEvents.ANVIL_LAND, SoundCategory.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
         }
         return upgradedStack;
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
         if (Direction.UP.equals(facing) && !HammerBaseBlock.instance.equals(facingState.getBlock())) {
-            return state.get(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
+            return state.getValue(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
         }
 
-        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+        return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
     }
 
     @Override
     public VoxelShape getShape(final BlockState blockState, final IBlockReader world, final BlockPos pos, final ISelectionContext context) {
-        if (context == ISelectionContext.dummy()) {
+        if (context == ISelectionContext.empty()) {
             return jamShape;
         } else if (isJammed(world, pos)) {
             return jamShape;
@@ -199,7 +199,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderShape(BlockState state) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 

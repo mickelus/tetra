@@ -29,7 +29,7 @@ public class CrossbowOverlay {
             return;
         }
 
-        ItemStack activeStack = mc.player.getActiveItemStack();
+        ItemStack activeStack = mc.player.getUseItem();
 
         if (activeStack.getItem() instanceof ModularCrossbowItem) {
             ModularCrossbowItem item = (ModularCrossbowItem) activeStack.getItem();

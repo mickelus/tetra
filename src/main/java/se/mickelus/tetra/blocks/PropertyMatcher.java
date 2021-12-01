@@ -39,7 +39,7 @@ public class PropertyMatcher implements Predicate<BlockState> {
     }
 
     protected <T extends Comparable<T>> boolean matches(BlockState blockState, Property<T> property, Predicate<T> predicate) {
-        return predicate.test(blockState.get(property));
+        return predicate.test(blockState.getValue(property));
     }
 
     public <V extends Comparable<V>> PropertyMatcher where(Property<V> property, Predicate<? extends V> is) {
@@ -50,7 +50,7 @@ public class PropertyMatcher implements Predicate<BlockState> {
     public static PropertyMatcher deserialize(JsonElement json) {
         PropertyMatcher result = new PropertyMatcher();
         if (json.isJsonObject()) {
-            JsonObject jsonObject = JSONUtils.getJsonObject(json, "propertyMatcher");
+            JsonObject jsonObject = JSONUtils.convertToJsonObject(json, "propertyMatcher");
 
             if (jsonObject.has("block")) {
                 String blockString = jsonObject.get("block").getAsString();
@@ -64,21 +64,21 @@ public class PropertyMatcher implements Predicate<BlockState> {
 
 
             if (result.block != null && jsonObject.has("state")) {
-                StateContainer<Block, BlockState> stateContainer = result.block.getStateContainer();
+                StateContainer<Block, BlockState> stateContainer = result.block.getStateDefinition();
                 for (Map.Entry<String, JsonElement> entry : jsonObject.get("state").getAsJsonObject().entrySet()) {
                     Property<?> property = stateContainer.getProperty(entry.getKey());
 
                     if (property == null) {
                         throw new JsonSyntaxException("Unknown block state property '" + entry.getKey() + "' for block '"
-                                + result.block.getTranslationKey() + "'");
+                                + result.block.getDescriptionId() + "'");
                     }
 
-                    String s = JSONUtils.getString(entry.getValue(), entry.getKey());
-                    Optional<?> optional = property.parseValue(s);
+                    String s = JSONUtils.convertToString(entry.getValue(), entry.getKey());
+                    Optional<?> optional = property.getValue(s);
 
                     if (!optional.isPresent()) {
                         throw new JsonSyntaxException("Invalid block state value '" + s + "' for property '" + entry.getKey() + "' on block '"
-                                + result.block.getTranslationKey() + "'");
+                                + result.block.getDescriptionId() + "'");
                     }
 
                     result.propertyPredicates.put(property, Predicates.equalTo(optional.get()));

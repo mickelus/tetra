@@ -33,7 +33,7 @@ public class GuiStatBarIntegrity extends GuiStatBase {
     public GuiStatBarIntegrity(int x, int y) {
         super(x, y, StatsHelper.barLength, 12);
 
-        labelString = new GuiStringSmall(0, 0, I18n.format("tetra.stats.integrity"));
+        labelString = new GuiStringSmall(0, 0, I18n.get("tetra.stats.integrity"));
         addChild(labelString);
 
         valueString = new GuiStringSmall(0, 0, "");
@@ -87,7 +87,7 @@ public class GuiStatBarIntegrity extends GuiStatBase {
 
         updateValue(value, diffValue);
 
-        labelString.setString(I18n.format("tetra.stats.integrity"));
+        labelString.setString(I18n.get("tetra.stats.integrity"));
     }
 
     @Override

@@ -7,6 +7,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraSounds;
 
+import net.minecraft.client.audio.ISound.AttenuationType;
+
 @OnlyIn(Dist.CLIENT)
 public class ScannerSound extends TickableSound {
     private int activeCounter;
@@ -19,8 +21,8 @@ public class ScannerSound extends TickableSound {
         this.mc = mc;
 
         priority = true;
-        repeat = true;
-        attenuationType = AttenuationType.NONE;
+        looping = true;
+        attenuation = AttenuationType.NONE;
 
         volume = 0;
         pitch = 0.5f;
@@ -28,7 +30,7 @@ public class ScannerSound extends TickableSound {
 
     public void activate() {
         if (!hasStarted) {
-            mc.getSoundHandler().play(this);
+            mc.getSoundManager().play(this);
             hasStarted = true;
         }
 
@@ -36,7 +38,7 @@ public class ScannerSound extends TickableSound {
     }
 
     @Override
-    public boolean canBeSilent() {
+    public boolean canStartSilent() {
         return true;
     }
 

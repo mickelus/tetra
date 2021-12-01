@@ -26,6 +26,8 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.generation.FeatureEntry;
 import se.mickelus.tetra.network.PacketHandler;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class GeodeBlock extends TetraBlock {
 
     public static final String unlocalizedName = "block_geode";
@@ -36,11 +38,11 @@ public class GeodeBlock extends TetraBlock {
     private ConfiguredFeature configuredFeature;
 
     public GeodeBlock() {
-        super(Properties.create(Material.ROCK)
+        super(Properties.of(Material.STONE)
         .sound(SoundType.STONE)
         .harvestTool(ToolType.PICKAXE)
         .harvestLevel(0)
-        .hardnessAndResistance(1.5F, 6.0F));
+        .strength(1.5F, 6.0F));
 
         setRegistryName(unlocalizedName);
 
@@ -48,11 +50,11 @@ public class GeodeBlock extends TetraBlock {
         if (density > 0) {
             int size = 3;
             int maxHeight = 32;
-            OreFeatureConfig config = new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, getDefaultState(), size);
-            configuredFeature = Feature.ORE.withConfiguration(config)
+            OreFeatureConfig config = new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, defaultBlockState(), size);
+            configuredFeature = Feature.ORE.configured(config)
                     .range(maxHeight)
-                    .square()
-                    .func_242732_c(density);
+                    .squared()
+                    .countRandom(density);
         }
     }
 
@@ -70,7 +72,7 @@ public class GeodeBlock extends TetraBlock {
 
     public static void registerFeature(BiomeGenerationSettingsBuilder builder) {
         if (instance.configuredFeature != null) {
-            builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, instance.configuredFeature);
+            builder.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, instance.configuredFeature);
         }
     }
 }

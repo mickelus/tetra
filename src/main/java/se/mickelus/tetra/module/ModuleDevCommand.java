@@ -29,7 +29,7 @@ public class ModuleDevCommand {
 
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         dispatcher.register(Commands.literal("tmdev")
-                .requires(source -> source.hasPermissionLevel(2))
+                .requires(source -> source.hasPermission(2))
                 .then(Commands.argument("item", ItemArgument.item())
                         .then(Commands.argument("module", StringArgumentType.greedyString())
                                 .suggests(ModuleDevCommand::getModuleSuggestions)
@@ -37,10 +37,10 @@ public class ModuleDevCommand {
     }
 
     private static int run(CommandContext<CommandSource> context) throws CommandSyntaxException {
-        BlockPos pos = new BlockPos(context.getSource().getPos());
-        World world = context.getSource().getWorld();
+        BlockPos pos = new BlockPos(context.getSource().getPosition());
+        World world = context.getSource().getLevel();
 
-        ItemStack baseStack = ItemArgument.getItem(context, "item").createStack(1, false);
+        ItemStack baseStack = ItemArgument.getItem(context, "item").createItemStack(1, false);
 
         if (!(baseStack.getItem() instanceof IModularItem)) {
             baseStack = ItemUpgradeRegistry.instance.getReplacement(baseStack);
@@ -52,19 +52,19 @@ public class ModuleDevCommand {
 
         for (int i = 0; i < data.length; i++) {
             ItemStack itemStack = baseStack.copy();
-            module.addModule(itemStack, data[i].key, context.getSource().asPlayer());
+            module.addModule(itemStack, data[i].key, context.getSource().getPlayerOrException());
             IModularItem.updateIdentifier(itemStack);
-            plopFrame(world, pos.add(i / 5, i % 5, 0), itemStack, module.getName(itemStack));
+            plopFrame(world, pos.offset(i / 5, i % 5, 0), itemStack, module.getName(itemStack));
         }
 
         return 1;
     }
 
     private static void plopFrame(World world, BlockPos pos, ItemStack itemStack, String label) {
-        itemStack.setDisplayName(new StringTextComponent(label));
+        itemStack.setHoverName(new StringTextComponent(label));
         ItemFrameEntity itemFrame = new ItemFrameEntity(world, pos, Direction.SOUTH);
-        itemFrame.setDisplayedItem(itemStack);
-        world.addEntity(itemFrame);
+        itemFrame.setItem(itemStack);
+        world.addFreshEntity(itemFrame);
     }
 
     private static CompletableFuture<Suggestions> getModuleSuggestions(final CommandContext context, final SuggestionsBuilder builder) {

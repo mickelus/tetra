@@ -25,7 +25,7 @@ public class ChargedAbilityPacket extends BlockPosPacket {
     public ChargedAbilityPacket(LivingEntity target, BlockPos pos, Vector3d hitVec, Hand hand, int ticksUsed) {
         super(pos == null ? BlockPos.ZERO : pos);
         targetId = Optional.ofNullable(target)
-                .map(Entity::getEntityId)
+                .map(Entity::getId)
                 .orElse(-1);
 
         this.hand = hand;
@@ -63,7 +63,7 @@ public class ChargedAbilityPacket extends BlockPosPacket {
     public void handle(PlayerEntity player) {
         LivingEntity target = Optional.of(targetId)
                 .filter(id -> id != -1)
-                .map(id -> player.world.getEntityByID(id))
+                .map(id -> player.level.getEntity(id))
                 .filter(entity -> entity instanceof LivingEntity)
                 .map(entity -> (LivingEntity) entity)
                 .orElse(null);

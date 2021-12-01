@@ -50,7 +50,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
         Map<ResourceLocation, JsonElement> map = Maps.newHashMap();
         int i = this.directory.length() + 1;
 
-        for(ResourceLocation fullLocation : resourceManager.getAllResourceLocations(directory, rl -> rl.endsWith(".json"))) {
+        for(ResourceLocation fullLocation : resourceManager.listResources(directory, rl -> rl.endsWith(".json"))) {
             if (!TetraMod.MOD_ID.equals(fullLocation.getNamespace())) {
                 continue;
             }
@@ -148,7 +148,7 @@ public class DataStore<V> extends ReloadListener<Map<ResourceLocation, JsonEleme
         }
 
         JsonObject jsonObject = json.getAsJsonObject();
-        return !jsonObject.has("conditions") || CraftingHelper.processConditions(JSONUtils.getJsonArray(jsonObject, "conditions"));
+        return !jsonObject.has("conditions") || CraftingHelper.processConditions(JSONUtils.getAsJsonArray(jsonObject, "conditions"));
     }
 
     protected void processData() {

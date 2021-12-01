@@ -48,7 +48,7 @@ public class ScrollIngredient extends Ingredient {
     }
 
     @Override
-    public JsonElement serialize() {
+    public JsonElement toJson() {
         JsonObject json = new JsonObject();
         data.write(json);
 
@@ -72,13 +72,13 @@ public class ScrollIngredient extends Ingredient {
 
         @Override
         public ScrollIngredient parse(PacketBuffer buffer) {
-            ItemStack itemStack = buffer.readItemStack();
+            ItemStack itemStack = buffer.readItem();
             return new ScrollIngredient(itemStack, ScrollData.read(itemStack));
         }
 
         @Override
         public void write(PacketBuffer buffer, ScrollIngredient ingredient) {
-            buffer.writeItemStack(ingredient.itemStack);
+            buffer.writeItem(ingredient.itemStack);
         }
     }
 }

@@ -53,7 +53,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     private float spawnRatio = 0.5f;
     private int spawnYLimit = 4;
 
-    public static final Set<Material> breakMaterials = Sets.newHashSet(Material.ROCK, Material.CLAY, Material.EARTH);
+    public static final Set<Material> breakMaterials = Sets.newHashSet(Material.STONE, Material.CLAY, Material.DIRT);
 
     private static final String luckKey = "luck";
     private int luck = 0;
@@ -73,10 +73,10 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
 
     public void updateLuck(boolean wasSeeping) {
         if (spawnInfo == null) {
-            spawnInfo = world.getBiome(pos).getMobSpawnInfo();
+            spawnInfo = level.getBiome(worldPosition).getMobSettings();
         }
 
-        boolean spawnBonus = spawnInfo.getSpawners(EntityClassification.MONSTER).stream()
+        boolean spawnBonus = spawnInfo.getMobs(EntityClassification.MONSTER).stream()
                 .map(spawner -> spawner.type)
                 .anyMatch(type -> EntityType.HUSK.equals(type) || EntityType.STRAY.equals(type) || EntityType.WITCH.equals(type));
         if (spawnBonus) {
@@ -89,17 +89,17 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     }
 
     public void activate(int amount) {
-        if (!world.isRemote && activity <= 0) {
+        if (!level.isClientSide && activity <= 0) {
             playSound();
         }
 
         int preTier = getProjectedTier();
 
         activity += amount;
-        markDirty();
+        setChanged();
 
-        if (!world.isRemote && getProjectedTier() != preTier) {
-            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+        if (!level.isClientSide && getProjectedTier() != preTier) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         }
     }
 
@@ -156,7 +156,7 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
         double offsetRotation = 360d / steps * (i / 4) + i / 8f;
         float pitch = -(i % (steps * 16)) / steps * 5f;
 
-        return Vector3d.fromPitchYaw(pitch, (float) (directionRotation + offsetRotation)).mul(maxDistance, 4 + maxDistance / 2f, maxDistance);
+        return Vector3d.directionFromRotation(pitch, (float) (directionRotation + offsetRotation)).multiply(maxDistance, 4 + maxDistance / 2f, maxDistance);
     }
 
     private boolean isBedrock(Block block) {
@@ -171,53 +171,53 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     }
 
     private BlockPos raytrace(Vector3d origin, Vector3d target) {
-        return IBlockReader.doRayTrace(new RayTraceContext(origin, target, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, null), (ctx, blockPos) -> {
-            BlockState blockState = world.getBlockState(blockPos);
+        return IBlockReader.traverseBlocks(new RayTraceContext(origin, target, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, null), (ctx, blockPos) -> {
+            BlockState blockState = level.getBlockState(blockPos);
             Block block = blockState.getBlock();
 
             if (isBedrock(block) || canReplace(blockState)) {
                 return null;
             }
-            return blockPos.toImmutable();
+            return blockPos.immutable();
         }, ctx -> null);
     }
 
     private BlockPos traceDown(BlockPos blockPos) {
-        BlockPos.Mutable movePos = blockPos.toMutable();
+        BlockPos.Mutable movePos = blockPos.mutable();
 
         while (movePos.getY() >= 0) {
             movePos.move(Direction.DOWN);
-            BlockState blockState = world.getBlockState(movePos);
+            BlockState blockState = level.getBlockState(movePos);
 
             if (isBedrock(blockState.getBlock())) {
-                return movePos.move(Direction.UP).toImmutable();
+                return movePos.move(Direction.UP).immutable();
             }
 
-            if (!blockState.isAir(world, movePos)) {
-                return movePos.toImmutable();
+            if (!blockState.isAir(level, movePos)) {
+                return movePos.immutable();
             }
         }
 
-        return movePos.toImmutable();
+        return movePos.immutable();
     }
 
     public static boolean breakBlock(World world, BlockPos pos, BlockState blockState) {
         if (world instanceof ServerWorld
                 && !blockState.isAir(world, pos)
                 && breakMaterials.contains(blockState.getMaterial())
-                && blockState.getBlockHardness(world, pos) > -1) {
-            TileEntity tile = blockState.hasTileEntity() ? world.getTileEntity(pos) : null;
+                && blockState.getDestroySpeed(world, pos) > -1) {
+            TileEntity tile = blockState.hasTileEntity() ? world.getBlockEntity(pos) : null;
             LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world)
-                    .withRandom(world.rand)
-                    .withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(pos))
+                    .withRandom(world.random)
+                    .withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(pos))
                     .withParameter(LootParameters.TOOL, ItemStack.EMPTY)
-                    .withNullableParameter(LootParameters.BLOCK_ENTITY, tile)
-                    .withNullableParameter(LootParameters.THIS_ENTITY, null);
+                    .withOptionalParameter(LootParameters.BLOCK_ENTITY, tile)
+                    .withOptionalParameter(LootParameters.THIS_ENTITY, null);
 
-            blockState.getDrops(lootBuilder).forEach(itemStack -> Block.spawnAsEntity(world, pos, itemStack));
+            blockState.getDrops(lootBuilder).forEach(itemStack -> Block.popResource(world, pos, itemStack));
 
-            world.playEvent(null, 2001, pos, Block.getStateId(world.getBlockState(pos)));
-            world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+            world.levelEvent(null, 2001, pos, Block.getId(world.getBlockState(pos)));
+            world.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 
             return true;
         }
@@ -226,20 +226,20 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     }
 
     private void spawnOre(BlockPos pos) {
-        ServerWorld serverWorld = (ServerWorld) world;
-        LootTable table = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(lootTables[getTier()]);
-        LootContext context = new LootContext.Builder(serverWorld).withLuck(luck).build(LootParameterSets.EMPTY);
+        ServerWorld serverWorld = (ServerWorld) level;
+        LootTable table = serverWorld.getServer().getLootTables().get(lootTables[getTier()]);
+        LootContext context = new LootContext.Builder(serverWorld).withLuck(luck).create(LootParameterSets.EMPTY);
 
-        table.generate(context).stream()
+        table.getRandomItems(context).stream()
                 .filter(itemStack -> !itemStack.isEmpty())
                 .findAny()
                 .ifPresent(itemStack -> {
                     if (itemStack.getItem() instanceof BlockItem) {
-                        BlockState newState = ((BlockItem) itemStack.getItem()).getBlock().getDefaultState();
-                        world.playEvent(null, 2001, pos, Block.getStateId(newState));
-                        world.setBlockState(pos, newState, 2);
+                        BlockState newState = ((BlockItem) itemStack.getItem()).getBlock().defaultBlockState();
+                        level.levelEvent(null, 2001, pos, Block.getId(newState));
+                        level.setBlock(pos, newState, 2);
                     } else {
-                        Block.spawnAsEntity(world, pos, itemStack);
+                        Block.popResource(level, pos, itemStack);
                     }
                 });
     }
@@ -250,76 +250,76 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
      */
     private void spawnMob(BlockPos pos) {
         if (spawnInfo == null) {
-            spawnInfo = world.getBiome(pos).getMobSpawnInfo();
+            spawnInfo = level.getBiome(pos).getMobSettings();
         }
 
-        if (getPos().distanceSq(pos) < 42 && world.getRandom().nextFloat() >= spawnInfo.getCreatureSpawnProbability() / 5) {
+        if (getBlockPos().distSqr(pos) < 42 && level.getRandom().nextFloat() >= spawnInfo.getCreatureProbability() / 5) {
             return;
         }
 
-        List<MobSpawnInfo.Spawners> spawners = spawnInfo.getSpawners(EntityClassification.MONSTER);
+        List<MobSpawnInfo.Spawners> spawners = spawnInfo.getMobs(EntityClassification.MONSTER);
 
         if (WeightedRandom.getTotalWeight(spawners) == 0) {
             return;
         }
 
-        MobSpawnInfo.Spawners mob = WeightedRandom.getRandomItem(world.getRandom(), spawners);
+        MobSpawnInfo.Spawners mob = WeightedRandom.getRandomItem(level.getRandom(), spawners);
 
-        ServerWorld serverWorld = (ServerWorld) world;
-        if (mob.type.isSummonable()
+        ServerWorld serverWorld = (ServerWorld) level;
+        if (mob.type.canSummon()
 //                && WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementType(mob.type), world, pos, mob.type)
-                && serverWorld.hasNoCollisions(mob.type.getBoundingBoxWithSizeApplied(pos.getX(), pos.getY(), pos.getZ()))
-                && EntitySpawnPlacementRegistry.canSpawnEntity(mob.type, serverWorld, SpawnReason.SPAWNER, pos, serverWorld.getRandom())) {
+                && serverWorld.noCollision(mob.type.getAABB(pos.getX(), pos.getY(), pos.getZ()))
+                && EntitySpawnPlacementRegistry.checkSpawnRules(mob.type, serverWorld, SpawnReason.SPAWNER, pos, serverWorld.getRandom())) {
 
             Entity entity;
             try {
-                entity = mob.type.create(serverWorld.getWorld());
+                entity = mob.type.create(serverWorld.getLevel());
             } catch (Exception exception) {
                 logger.warn("Failed to create mob", exception);
                 return;
             }
 
-            entity.setLocationAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
+            entity.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
             CastOptional.cast(entity, MobEntity.class)
                     .filter(e -> ForgeHooks.canEntitySpawn(e, serverWorld, pos.getX(), pos.getY(), pos.getZ(), null, SpawnReason.SPAWNER) != -1)
-                    .filter(e -> e.canSpawn(serverWorld, SpawnReason.CHUNK_GENERATION))
-                    .filter(e -> e.isNotColliding(serverWorld))
+                    .filter(e -> e.checkSpawnRules(serverWorld, SpawnReason.CHUNK_GENERATION))
+                    .filter(e -> e.checkSpawnObstruction(serverWorld))
                     .ifPresent(e -> {
-                        e.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(e.getPosition()), SpawnReason.CHUNK_GENERATION, null, null);
-                        serverWorld.func_242417_l(e);
+                        e.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(e.blockPosition()), SpawnReason.CHUNK_GENERATION, null, null);
+                        serverWorld.addFreshEntityWithPassengers(e);
 
                         // makes the mob angry at a nearby player
-                        serverWorld.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(getPos()).grow(24, 8, 24)).stream()
+                        serverWorld.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(getBlockPos()).inflate(24, 8, 24)).stream()
                                 .findAny()
-                                .ifPresent(e::setLastAttackedEntity);
+                                .ifPresent(e::setLastHurtMob);
                     });
         }
     }
 
     private void playSound() {
-        world.playSound(null, pos.down(pos.getY()), SoundEvents.BLOCK_BEACON_AMBIENT, SoundCategory.BLOCKS, 3f, 0.5f);
+        level.playSound(null, worldPosition.below(worldPosition.getY()), SoundEvents.BEACON_AMBIENT, SoundCategory.BLOCKS, 3f, 0.5f);
     }
 
     @Override
     public void tick() {
-        if (!world.isRemote && activity > 0 && world.getGameTime() % getRate() == 0) {
+        if (!level.isClientSide && activity > 0 && level.getGameTime() % getRate() == 0) {
             int intensity = getIntensity();
-            Vector3d origin = Vector3d.copyCentered(getPos());
+            Vector3d origin = Vector3d.atCenterOf(getBlockPos());
 
             for (int i = 0; i < intensity; i++) {
                 Vector3d target = getTarget(step + i);
                 BlockPos hitPos = raytrace(origin, origin.add(target));
 
                 if (hitPos != null) {
-                    BlockState blockState = world.getBlockState(hitPos);
+                    BlockState blockState = level.getBlockState(hitPos);
 
-                    breakBlock(world, hitPos, blockState);
+                    breakBlock(level, hitPos, blockState);
 
                     BlockPos spawnPos = traceDown(hitPos);
-                    BlockState spawnState = world.getBlockState(spawnPos);
+                    BlockState spawnState = level.getBlockState(spawnPos);
 
                     if (canReplace(spawnState)) {
-                        if (world.getRandom().nextFloat() < spawnRatio) {
+                        if (level.getRandom().nextFloat() < spawnRatio) {
                             if (spawnPos.getY() < spawnYLimit) {
                                 spawnOre(spawnPos);
                             }
@@ -327,31 +327,31 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
                             spawnMob(spawnPos);
                         }
                     } else {
-                        breakBlock(world, spawnPos, spawnState);
+                        breakBlock(level, spawnPos, spawnState);
                     }
                 }
             }
 
-            ((ServerWorld) world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.getDefaultState()),
-                    pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5,
-                    8, 0, world.rand.nextGaussian() * 0.1, 0, 0.1);
+            ((ServerWorld) level).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.defaultBlockState()),
+                    worldPosition.getX() + 0.5, worldPosition.getY() + 1.1, worldPosition.getZ() + 0.5,
+                    8, 0, level.random.nextGaussian() * 0.1, 0, 0.1);
 
             step += intensity;
             activity -= intensity;
 
             if (shouldDeplete()) {
-                world.setBlockState(getPos(), DepletedBedrockBlock.instance.getDefaultState(), 2);
+                level.setBlock(getBlockPos(), DepletedBedrockBlock.instance.defaultBlockState(), 2);
             }
         }
 
-        if (!world.isRemote  && activity > 0 && world.getGameTime() % 80 == 0) {
+        if (!level.isClientSide  && activity > 0 && level.getGameTime() % 80 == 0) {
             playSound();
         }
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compound) {
-        super.read(blockState, compound);
+    public void load(BlockState blockState, CompoundNBT compound) {
+        super.load(blockState, compound);
 
         if (compound.contains(activityKey)) {
             activity = compound.getInt(activityKey);
@@ -367,8 +367,8 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
 
         compound.putInt(activityKey, activity);
         compound.putInt(stepKey, step);
@@ -380,16 +380,16 @@ public class FracturedBedrockTile extends TileEntity implements ITickableTileEnt
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, 0, getUpdateTag());
+        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return write(new CompoundNBT());
+        return save(new CompoundNBT());
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
-        this.read(getBlockState(), packet.getNbtCompound());
+        this.load(getBlockState(), packet.getTag());
     }
 }

@@ -37,7 +37,7 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
         Map<ResourceLocation, JsonElement> map = Maps.newHashMap();
         int i = this.directory.length() + 1;
 
-        for(ResourceLocation fullLocation : resourceManager.getAllResourceLocations(directory, rl -> rl.endsWith(".json"))) {
+        for(ResourceLocation fullLocation : resourceManager.listResources(directory, rl -> rl.endsWith(".json"))) {
             if (!TetraMod.MOD_ID.equals(fullLocation.getNamespace())) {
                 continue;
             }
@@ -48,7 +48,7 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
             JsonArray allResources = new JsonArray();
 
             try {
-                for (IResource resource : resourceManager.getAllResources(fullLocation)) {
+                for (IResource resource : resourceManager.getResources(fullLocation)) {
                     try (
                             InputStream inputstream = resource.getInputStream();
                             Reader reader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8));
@@ -59,14 +59,14 @@ public abstract class MergingDataStore<V, U> extends DataStore<V> {
                             if (shouldLoad(json)) {
                                 allResources.add(json);
                             } else {
-                                logger.debug("Skipping data '{}' from '{}' due to condition", fullLocation, resource.getPackName());
+                                logger.debug("Skipping data '{}' from '{}' due to condition", fullLocation, resource.getSourceName());
                             }
                         } else {
                             logger.error("Couldn't load data from '{}' in data pack '{}' as it's empty or null",
-                                    fullLocation, resource.getPackName());
+                                    fullLocation, resource.getSourceName());
                         }
                     } catch (RuntimeException | IOException e) {
-                        logger.error("Couldn't load data from '{}' in data pack '{}'", fullLocation, resource.getPackName(), e);
+                        logger.error("Couldn't load data from '{}' in data pack '{}'", fullLocation, resource.getSourceName(), e);
                     } finally {
                         IOUtils.closeQuietly(resource);
                     }

@@ -51,20 +51,20 @@ public class ToolbeltHelper {
                 break;
         }
 
-        if (inventory.getSizeInventory() <= index || inventory.getStackInSlot(index).isEmpty()) {
+        if (inventory.getContainerSize() <= index || inventory.getItem(index).isEmpty()) {
             return;
         }
 
-        ItemStack heldItemStack = player.getHeldItem(hand);
-        player.setHeldItem(hand, inventory.takeItemStack(index));
+        ItemStack heldItemStack = player.getItemInHand(hand);
+        player.setItemInHand(hand, inventory.takeItemStack(index));
 
 
         if (!heldItemStack.isEmpty()) {
             if (!storeItemInToolbelt(toolbeltStack, heldItemStack)) {
-                if (!player.inventory.addItemStackToInventory(heldItemStack)) {
-                    inventory.storeItemInInventory(player.getHeldItem(hand));
-                    player.setHeldItem(hand, heldItemStack);
-                    player.sendStatusMessage(new TranslationTextComponent("tetra.toolbelt.blocked"), true);
+                if (!player.inventory.add(heldItemStack)) {
+                    inventory.storeItemInInventory(player.getItemInHand(hand));
+                    player.setItemInHand(hand, heldItemStack);
+                    player.displayClientMessage(new TranslationTextComponent("tetra.toolbelt.blocked"), true);
                 }
             }
         }
@@ -78,11 +78,11 @@ public class ToolbeltHelper {
      */
     public static boolean storeItemInToolbelt(PlayerEntity player) {
         ItemStack toolbeltStack = findToolbelt(player);
-        ItemStack itemStack = player.getHeldItem(Hand.OFF_HAND);
+        ItemStack itemStack = player.getItemInHand(Hand.OFF_HAND);
         Hand sourceHand = Hand.OFF_HAND;
 
         if (itemStack.isEmpty()) {
-            itemStack = player.getHeldItem(Hand.MAIN_HAND);
+            itemStack = player.getItemInHand(Hand.MAIN_HAND);
             sourceHand = Hand.MAIN_HAND;
         }
 
@@ -91,7 +91,7 @@ public class ToolbeltHelper {
         }
 
         if (storeItemInToolbelt(toolbeltStack, itemStack)) {
-            player.setHeldItem(sourceHand, ItemStack.EMPTY);
+            player.setItemInHand(sourceHand, ItemStack.EMPTY);
             return true;
         }
         return false;
@@ -133,8 +133,8 @@ public class ToolbeltHelper {
             }
         }
         PlayerInventory inventoryPlayer = player.inventory;
-        for (int i = 0; i < inventoryPlayer.mainInventory.size(); ++i) {
-            ItemStack itemStack = inventoryPlayer.getStackInSlot(i);
+        for (int i = 0; i < inventoryPlayer.items.size(); ++i) {
+            ItemStack itemStack = inventoryPlayer.getItem(i);
             if (ModularToolbeltItem.instance.equals(itemStack.getItem())) {
                 return itemStack;
             }
@@ -148,14 +148,14 @@ public class ToolbeltHelper {
                 .map(toolbeltStack -> {
                     QuickslotInventory quickslots = new QuickslotInventory(toolbeltStack);
                     StorageInventory storage = new StorageInventory(toolbeltStack);
-                    List<ItemStack> result = new ArrayList<>(quickslots.getSizeInventory() + storage.getSizeInventory());
+                    List<ItemStack> result = new ArrayList<>(quickslots.getContainerSize() + storage.getContainerSize());
 
-                    for (int i = 0; i < quickslots.getSizeInventory(); i++) {
-                        result.add(i, quickslots.getStackInSlot(i));
+                    for (int i = 0; i < quickslots.getContainerSize(); i++) {
+                        result.add(i, quickslots.getItem(i));
                     }
 
-                    for (int i = 0; i < storage.getSizeInventory(); i++) {
-                        result.add(quickslots.getSizeInventory() + i, storage.getStackInSlot(i));
+                    for (int i = 0; i < storage.getContainerSize(); i++) {
+                        result.add(quickslots.getContainerSize() + i, storage.getItem(i));
                     }
 
                     return result;
@@ -189,18 +189,18 @@ public class ToolbeltHelper {
 
         if (traceResult instanceof BlockRayTraceResult) {
             BlockRayTraceResult trace = (BlockRayTraceResult) traceResult;
-            Vector3d hitVector = trace.getHitVec();
-            BlockPos blockPos = trace.getPos();
+            Vector3d hitVector = trace.getLocation();
+            BlockPos blockPos = trace.getBlockPos();
 
             BlockInteraction blockInteraction = CastOptional.cast(blockState.getBlock(), IInteractiveBlock.class)
-                    .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, blockPos, trace.getFace(),
+                    .map(block -> BlockInteraction.getInteractionAtPoint(player, blockState, blockPos, trace.getDirection(),
                             (float) hitVector.x - blockPos.getX(),
                             (float) hitVector.y - blockPos.getY(),
                             (float) hitVector.z - blockPos.getZ()))
                     .orElse(null);
 
-            for (int i = 0; i < inventory.getSizeInventory(); i++) {
-                ItemStack itemStack = inventory.getStackInSlot(i);
+            for (int i = 0; i < inventory.getContainerSize(); i++) {
+                ItemStack itemStack = inventory.getItem(i);
                 if (effects.get(i).contains(ItemEffect.quickAccess) && !itemStack.isEmpty()) {
                     ToolType requiredTool = blockState.getHarvestTool();
                     ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(blockState);

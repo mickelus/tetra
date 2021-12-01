@@ -31,7 +31,7 @@ public class HoloVariantGroupGui extends GuiElement {
             Consumer<OutcomePreview> onVariantHover, Consumer<OutcomePreview> onVariantBlur, Consumer<OutcomePreview> onVariantSelect) {
         super(x, y, 0, 50);
 
-        GuiString label = new GuiStringSmall(0, 0, I18n.format("tetra.variant_category." + category + ".label"));
+        GuiString label = new GuiStringSmall(0, 0, I18n.get("tetra.variant_category." + category + ".label"));
         label.setColor(GuiColors.muted);
         addChild(label);
 

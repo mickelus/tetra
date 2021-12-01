@@ -84,7 +84,7 @@ public class PacketHandler {
     }
 
     public void sendTo(AbstractPacket message, ServerPlayerEntity player) {
-        channel.sendTo(message, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+        channel.sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public void sendToAllPlayers(AbstractPacket message) {

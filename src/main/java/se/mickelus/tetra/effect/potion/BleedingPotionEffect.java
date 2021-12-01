@@ -17,12 +17,12 @@ public class BleedingPotionEffect extends Effect {
     }
 
     @Override
-    public void performEffect(LivingEntity entity, int amplifier) {
-        entity.attackEntityFrom(DamageSource.GENERIC, amplifier);
+    public void applyEffectTick(LivingEntity entity, int amplifier) {
+        entity.hurt(DamageSource.GENERIC, amplifier);
     }
 
     @Override
-    public boolean isReady(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration % 10 == 0;
     }
 

@@ -15,7 +15,7 @@ public class TooltipGetterVelocity implements ITooltipGetter {
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         double velocityBonus = velocityGetter.getValue(player, itemStack);
         double drawStrength = drawStrengthGetter.getValue(player, itemStack);
-        return I18n.format("tetra.stats.velocity.tooltip",
+        return I18n.get("tetra.stats.velocity.tooltip",
                 String.format("%.0f%%", velocityBonus),
                 String.format("%.1f",
                         3 * (ModularBowItem.getArrowVelocity(20, drawStrength, (float) velocityBonus / 100f, false)

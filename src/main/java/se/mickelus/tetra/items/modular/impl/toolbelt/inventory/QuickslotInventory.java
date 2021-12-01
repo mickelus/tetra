@@ -37,8 +37,8 @@ public class QuickslotInventory extends ToolbeltInventory {
             CompoundNBT item = shadows.getCompound(i);
             int slot = item.getInt(slotKey);
 
-            if (0 <= slot && slot < getSizeInventory()) {
-                inventoryShadows.set(slot, ItemStack.read(item));
+            if (0 <= slot && slot < getContainerSize()) {
+                inventoryShadows.set(slot, ItemStack.of(item));
             }
         }
     }
@@ -50,7 +50,7 @@ public class QuickslotInventory extends ToolbeltInventory {
         for (int i = 0; i < maxSize; i++) {
                 CompoundNBT item = new CompoundNBT();
                 item.putInt(slotKey, i);
-                getShadowOfSlot(i).write(item);
+                getShadowOfSlot(i).save(item);
                 shadows.add(item);
         }
         tagcompound.put(shadowsKey, shadows);
@@ -61,16 +61,16 @@ public class QuickslotInventory extends ToolbeltInventory {
     }
 
     @Override
-    public void markDirty() {
-        for (int i = 0; i < getSizeInventory(); ++i) {
-            if (getStackInSlot(i).getCount() == 0) {
+    public void setChanged() {
+        for (int i = 0; i < getContainerSize(); ++i) {
+            if (getItem(i).getCount() == 0) {
                 inventoryContents.set(i, ItemStack.EMPTY);
             }
         }
 
-        for (int i = 0; i < getSizeInventory(); ++i) {
-            if (!getStackInSlot(i).isEmpty()) {
-                inventoryShadows.set(i, getStackInSlot(i).copy());
+        for (int i = 0; i < getContainerSize(); ++i) {
+            if (!getItem(i).isEmpty()) {
+                inventoryShadows.set(i, getItem(i).copy());
             }
         }
 
@@ -78,8 +78,8 @@ public class QuickslotInventory extends ToolbeltInventory {
     }
 
     private int getShadowIndex(ItemStack itemStack) {
-        for (int i = 0; i < getSizeInventory(); i++) {
-            if (itemStack.isItemEqual(getShadowOfSlot(i)) && getStackInSlot(i).isEmpty()) {
+        for (int i = 0; i < getContainerSize(); i++) {
+            if (itemStack.sameItem(getShadowOfSlot(i)) && getItem(i).isEmpty()) {
                 return i;
             }
         }
@@ -93,14 +93,14 @@ public class QuickslotInventory extends ToolbeltInventory {
         }
 
         // attempt to merge the itemstack with itemstacks in the toolbelt
-        for (int i = 0; i < getSizeInventory(); i++) {
-            ItemStack storedStack = getStackInSlot(i);
-            if (storedStack.isItemEqual(itemStack)
+        for (int i = 0; i < getContainerSize(); i++) {
+            ItemStack storedStack = getItem(i);
+            if (storedStack.sameItem(itemStack)
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());
                 storedStack.grow(moveCount);
-                setInventorySlotContents(i, storedStack);
+                setItem(i, storedStack);
                 itemStack.shrink(moveCount);
 
                 if (itemStack.isEmpty()) {
@@ -112,14 +112,14 @@ public class QuickslotInventory extends ToolbeltInventory {
         // attempt to put the itemstack back in a slot it's been in before
         int restockIndex = getShadowIndex(itemStack);
         if (restockIndex != -1) {
-            setInventorySlotContents(restockIndex, itemStack);
+            setItem(restockIndex, itemStack);
             return true;
         }
 
         // put item in the first empty slot
-        for (int i = 0; i < getSizeInventory(); i++) {
-            if (getStackInSlot(i).isEmpty()) {
-                setInventorySlotContents(i, itemStack);
+        for (int i = 0; i < getContainerSize(); i++) {
+            if (getItem(i).isEmpty()) {
+                setItem(i, itemStack);
                 return true;
             }
         }

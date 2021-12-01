@@ -39,12 +39,12 @@ public class EffectHelper {
             .build();
 
     public static void setCooledAttackStrength(PlayerEntity player, float strength) {
-        cooledAttackStrengthCache.put(player.getUniqueID(), strength);
+        cooledAttackStrengthCache.put(player.getUUID(), strength);
     }
 
     public static float getCooledAttackStrength(PlayerEntity player) {
         try {
-            return cooledAttackStrengthCache.get(player.getUniqueID(), () -> 0f);
+            return cooledAttackStrengthCache.get(player.getUUID(), () -> 0f);
         } catch (ExecutionException e) {
             return 0;
         }
@@ -56,12 +56,12 @@ public class EffectHelper {
             .build();
 
     public static void setSprinting(LivingEntity player, boolean isSprinting) {
-        sprintingCache.put(player.getUniqueID(), isSprinting);
+        sprintingCache.put(player.getUUID(), isSprinting);
     }
 
     public static boolean getSprinting(LivingEntity player) {
         try {
-            return sprintingCache.get(player.getUniqueID(), () -> false);
+            return sprintingCache.get(player.getUUID(), () -> false);
         } catch (ExecutionException e) {
             return false;
         }
@@ -93,14 +93,14 @@ public class EffectHelper {
      */
     public static boolean breakBlock(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState,
             boolean harvest) {
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             ServerWorld serverWorld = (ServerWorld) world;
             ServerPlayerEntity serverPlayer = (ServerPlayerEntity) breakingPlayer;
-            GameType gameType = serverPlayer.interactionManager.getGameType();
+            GameType gameType = serverPlayer.gameMode.getGameModeForPlayer();
 
             int exp = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, gameType, serverPlayer, pos);
 
-            TileEntity tileEntity = world.getTileEntity(pos);
+            TileEntity tileEntity = world.getBlockEntity(pos);
 
             if (exp != -1) {
                 boolean canRemove = !toolStack.onBlockStartBreak(pos, breakingPlayer)
@@ -109,13 +109,13 @@ public class EffectHelper {
                         && blockState.getBlock().removedByPlayer(blockState, world, pos, breakingPlayer, harvest, world.getFluidState(pos));
 
                 if (canRemove) {
-                    blockState.getBlock().onPlayerDestroy(world, pos, blockState);
+                    blockState.getBlock().destroy(world, pos, blockState);
 
                     if (harvest) {
-                        blockState.getBlock().harvestBlock(world, breakingPlayer, pos, blockState, tileEntity, toolStack);
+                        blockState.getBlock().playerDestroy(world, breakingPlayer, pos, blockState, tileEntity, toolStack);
 
                         if (exp > 0) {
-                            blockState.getBlock().dropXpOnBlockBreak(serverWorld, pos, exp);
+                            blockState.getBlock().popExperience(serverWorld, pos, exp);
                         }
                     }
                 }
@@ -137,7 +137,7 @@ public class EffectHelper {
      * @param data an integer representation of event data (e.g. Block.getStateId)
      */
     public static void sendEventToPlayer(ServerPlayerEntity player, int type, BlockPos pos, int data) {
-        player.connection.sendPacket(new SPlaySoundEventPacket(type, pos, data, false));
+        player.connection.send(new SPlaySoundEventPacket(type, pos, data, false));
     }
 
     /**
@@ -148,33 +148,33 @@ public class EffectHelper {
      */
     public static void applyEnchantmentHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
         EnchantmentHelper.getEnchantments(itemStack).forEach((enchantment, level) -> {
-            enchantment.onEntityDamaged(attacker, target, level);
+            enchantment.doPostAttack(attacker, target, level);
         });
 
         if (attacker != null) {
-            for (ItemStack equipment: attacker.getEquipmentAndArmor()) {
+            for (ItemStack equipment: attacker.getAllSlots()) {
                 EnchantmentHelper.getEnchantments(equipment).forEach((enchantment, level) -> {
-                    enchantment.onEntityDamaged(attacker, target, level);
+                    enchantment.doPostAttack(attacker, target, level);
                 });
             }
         }
 
         // fire aspect has to be applied separately :o
-        int fireAspectLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_ASPECT, itemStack);
+        int fireAspectLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, itemStack);
         if (fireAspectLevel > 0) {
-            target.setFire(fireAspectLevel * 4);
+            target.setSecondsOnFire(fireAspectLevel * 4);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void renderInventoryEffectTooltip(DisplayEffectsScreen<?> gui, MatrixStack mStack, int x, int y, Supplier<ITextComponent> tooltip) {
         Minecraft mc = Minecraft.getInstance();
-        MainWindow window = mc.getMainWindow();
+        MainWindow window = mc.getWindow();
 
-        int width = window.getScaledWidth();
-        int height = window.getScaledHeight();
-        int mouseX = (int) (mc.mouseHelper.getMouseX() * width / window.getWidth());
-        int mouseY = (int) (mc.mouseHelper.getMouseY() * height / window.getHeight());
+        int width = window.getGuiScaledWidth();
+        int height = window.getGuiScaledHeight();
+        int mouseX = (int) (mc.mouseHandler.xpos() * width / window.getScreenWidth());
+        int mouseY = (int) (mc.mouseHandler.ypos() * height / window.getScreenHeight());
 
         if (x < mouseX && mouseX < x + 120 && y < mouseY && mouseY < y + 32) {
             gui.renderTooltip(mStack, tooltip.get(), mouseX, mouseY);

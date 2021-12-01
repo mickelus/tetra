@@ -6,7 +6,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class Tooltips {
-    public static final ITextComponent reveal = new TranslationTextComponent("item.tetra.tooltip_reveal").mergeStyle(TextFormatting.GRAY);
+    public static final ITextComponent reveal = new TranslationTextComponent("item.tetra.tooltip_reveal").withStyle(TextFormatting.GRAY);
 
 
     public static final ITextComponent expand = new TranslationTextComponent("item.tetra.tooltip_expand");

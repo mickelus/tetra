@@ -15,7 +15,7 @@ public class TooltipGetterCounterweight implements ITooltipGetter {
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         int level = (int) levelGetter.getValue(player, itemStack);
-        return I18n.format("tetra.stats.counterweight.indicator_tooltip",
+        return I18n.get("tetra.stats.counterweight.indicator_tooltip",
                 String.format("%.2f", ItemModularHandheld.getCounterWeightBonus((int) levelGetter.getValue(player, itemStack),
                         IModularItem.getIntegrityCost(itemStack))), level);
     }

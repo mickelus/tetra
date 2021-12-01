@@ -16,22 +16,22 @@ public class JumpHandlerSuspend {
 
     public JumpHandlerSuspend(Minecraft mc) {
         this.mc = mc;
-        jumpKey = mc.gameSettings.keyBindJump;
+        jumpKey = mc.options.keyJump;
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if (mc.isGameFocused()) {
+        if (mc.isWindowActive()) {
             PlayerEntity player = mc.player;
-            if (jumpKey.isKeyDown() && !wasJumpKeyDown
+            if (jumpKey.isDown() && !wasJumpKeyDown
                     && !player.isOnGround() && !player.isCreative() && !player.isSpectator()) {
-                boolean isSuspended = player.isPotionActive(SuspendPotionEffect.instance);
-                if (!isSuspended || player.isSneaking()) {
+                boolean isSuspended = player.hasEffect(SuspendPotionEffect.instance);
+                if (!isSuspended || player.isShiftKeyDown()) {
                     SuspendEffect.toggleSuspend(player, !isSuspended);
                     TetraMod.packetHandler.sendToServer(new ToggleSuspendPacket(!isSuspended));
                 }
             }
-            wasJumpKeyDown = jumpKey.isKeyDown();
+            wasJumpKeyDown = jumpKey.isDown();
         }
     }
 

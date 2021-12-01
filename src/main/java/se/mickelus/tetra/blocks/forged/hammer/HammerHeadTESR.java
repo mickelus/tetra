@@ -25,7 +25,7 @@ public class HammerHeadTESR extends TileEntityRenderer<HammerHeadTile> {
     public HammerHeadTESR(TileEntityRendererDispatcher rendererDispatcher) {
         super(rendererDispatcher);
 
-        blockRenderer = Minecraft.getInstance().getBlockRendererDispatcher();
+        blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }
 
     // todo 1.15: ripped out
@@ -33,7 +33,7 @@ public class HammerHeadTESR extends TileEntityRenderer<HammerHeadTile> {
     public void render(HammerHeadTile tile, float v, MatrixStack matrixStack, IRenderTypeBuffer buffer,
             int combinedLight, int combinedOverlay) {
 
-        IBakedModel model = blockRenderer.getBlockModelShapes().getModel(HammerHeadBlock.instance.getDefaultState());
+        IBakedModel model = blockRenderer.getBlockModelShaper().getBlockModel(HammerHeadBlock.instance.defaultBlockState());
 
         double offset = MathHelper.clamp((1d * System.currentTimeMillis() - tile.getActivationTime()) / animationDuration, 0, 0.875);
 
@@ -45,8 +45,8 @@ public class HammerHeadTESR extends TileEntityRenderer<HammerHeadTile> {
 
         matrixStack.translate(0, offset, 0);
 
-        blockRenderer.getBlockModelRenderer().renderModel(matrixStack.getLast(), buffer.getBuffer(Atlases.getSolidBlockType()),
-                HammerHeadBlock.instance.getDefaultState(), model, 1f, 1f, 1f, combinedLight, combinedOverlay,
+        blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Atlases.solidBlockSheet()),
+                HammerHeadBlock.instance.defaultBlockState(), model, 1f, 1f, 1f, combinedLight, combinedOverlay,
                 EmptyModelData.INSTANCE);
     }
 }

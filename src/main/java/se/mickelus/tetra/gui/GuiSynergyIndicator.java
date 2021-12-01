@@ -47,7 +47,7 @@ public class GuiSynergyIndicator extends GuiElement {
         boolean hasActive = alwaysShowStats;
 
         tooltip = new ArrayList<>();
-        tooltip.add(TextFormatting.GRAY + I18n.format("item.tetra.modular.synergy_indicator.header"));
+        tooltip.add(TextFormatting.GRAY + I18n.get("item.tetra.modular.synergy_indicator.header"));
 
         if (itemStack.getItem() instanceof IModularItem) {
             IModularItem item = (IModularItem) itemStack.getItem();
@@ -74,7 +74,7 @@ public class GuiSynergyIndicator extends GuiElement {
 
 
         if (tooltip.size() <= 1) {
-            tooltip = Collections.singletonList(TextFormatting.GRAY + I18n.format("item.tetra.modular.synergy_indicator.empty"));
+            tooltip = Collections.singletonList(TextFormatting.GRAY + I18n.get("item.tetra.modular.synergy_indicator.empty"));
             indicator.setTextureCoordinates(emptyCoord, 0);
         } else if (!hasActive) {
             indicator.setTextureCoordinates(inactiveCoord, 0);
@@ -100,7 +100,7 @@ public class GuiSynergyIndicator extends GuiElement {
 
     private List<String> getVariantLines(boolean isActive, SynergyData data) {
         String header = Arrays.stream(data.moduleVariants)
-                .map(key -> I18n.format("tetra.variant." + key))
+                .map(key -> I18n.get("tetra.variant." + key))
                 .collect(Collectors.joining(" + "));
 
         if (isActive || alwaysShowStats) {
@@ -113,11 +113,11 @@ public class GuiSynergyIndicator extends GuiElement {
 
     private List<String> getModuleLines(boolean isActive, SynergyData data) {
         String header = Arrays.stream(data.modules)
-                .map(key -> I18n.format("tetra.module." + key + ".name"))
+                .map(key -> I18n.get("tetra.module." + key + ".name"))
                 .collect(Collectors.joining(" + "));
 
         if (data.sameVariant) {
-            header += " " + TextFormatting.DARK_GRAY + I18n.format("item.tetra.modular.synergy_indicator.variant_same");
+            header += " " + TextFormatting.DARK_GRAY + I18n.get("item.tetra.modular.synergy_indicator.variant_same");
         }
 
         if (isActive || alwaysShowStats) {
@@ -135,46 +135,46 @@ public class GuiSynergyIndicator extends GuiElement {
             data.attributes.forEach((attribute, modifier) -> {
                 double amount = modifier.getAmount();
                 if (modifier.getOperation() == AttributeModifier.Operation.ADDITION) {
-                    result.add(getValueDouble(amount, 0) + I18n.format(attribute.getAttributeName()));
+                    result.add(getValueDouble(amount, 0) + I18n.get(attribute.getDescriptionId()));
                 } else {
-                    result.add(getValueMultiplier(amount + 1) + I18n.format(attribute.getAttributeName()));
+                    result.add(getValueMultiplier(amount + 1) + I18n.get(attribute.getDescriptionId()));
                 }
             });
         }
 
         if (data.durability != 0) {
-            result.add(getValueInteger(data.durability, 0) + I18n.format("tetra.stats.durability"));
+            result.add(getValueInteger(data.durability, 0) + I18n.get("tetra.stats.durability"));
         }
         if (data.durabilityMultiplier != 1) {
-            result.add(getValueMultiplier(data.durabilityMultiplier) + I18n.format("tetra.stats.durability"));
+            result.add(getValueMultiplier(data.durabilityMultiplier) + I18n.get("tetra.stats.durability"));
         }
 
         if (data.integrity != 0) {
-            result.add(getValueInteger(data.integrity, 0) + I18n.format("tetra.stats.integrity"));
+            result.add(getValueInteger(data.integrity, 0) + I18n.get("tetra.stats.integrity"));
         }
         if (data.integrityMultiplier != 1) {
-            result.add(getValueMultiplier(data.integrityMultiplier) + I18n.format("tetra.stats.integrity"));
+            result.add(getValueMultiplier(data.integrityMultiplier) + I18n.get("tetra.stats.integrity"));
         }
 
         if (data.effects != null) {
             data.effects.getLevelMap().forEach((itemEffect, level) ->
-                    result.add(getValueInteger(level, 0) + I18n.format("tetra.stats." + itemEffect.getKey()) + " " + I18n.format("tetra.stats.level_suffix")));
+                    result.add(getValueInteger(level, 0) + I18n.get("tetra.stats." + itemEffect.getKey()) + " " + I18n.get("tetra.stats.level_suffix")));
 
             data.effects.efficiencyMap.forEach((itemEffect, efficiency) ->
-                    result.add(getValueDouble(efficiency, 0) + I18n.format("tetra.stats." + itemEffect.getKey()) + " " + I18n.format("tetra.stats.strength_suffix")));
+                    result.add(getValueDouble(efficiency, 0) + I18n.get("tetra.stats." + itemEffect.getKey()) + " " + I18n.get("tetra.stats.strength_suffix")));
         }
 
         if (data.tools != null) {
             data.tools.getLevelMap().forEach((tool, level) ->
-                    result.add(getValueInteger(level, 0) + I18n.format("tetra.tool." + tool.getName()) + " " + I18n.format("tetra.stats.tier_suffix")));
+                    result.add(getValueInteger(level, 0) + I18n.get("tetra.tool." + tool.getName()) + " " + I18n.get("tetra.stats.tier_suffix")));
 
             data.tools.efficiencyMap.forEach((tool, efficiency) ->
-                    result.add(getValueDouble(efficiency, 0) + I18n.format("tetra.tool." + tool.getName()) + " " + I18n.format("tetra.stats.efficiency_suffix")));
+                    result.add(getValueDouble(efficiency, 0) + I18n.get("tetra.tool." + tool.getName()) + " " + I18n.get("tetra.stats.efficiency_suffix")));
         }
 
 
         if (data.magicCapacity != 0) {
-            result.add(getValueDouble(data.integrity, 0) + I18n.format("tetra.stats.magicCapacity"));
+            result.add(getValueDouble(data.integrity, 0) + I18n.get("tetra.stats.magicCapacity"));
         }
 
         for (int i = 0; i < result.size(); i++) {

@@ -7,18 +7,20 @@ import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 
 import java.util.function.Predicate;
 
+import net.minecraft.item.Item.Properties;
+
 public class ShootableDummyItem extends ShootableItem {
 
-    public static final Predicate<ItemStack> ammoPredicate = ARROWS_OR_FIREWORKS
+    public static final Predicate<ItemStack> ammoPredicate = ARROW_OR_FIREWORK
             .or(stack -> stack.getItem() == ChthonicExtractorBlock.item)
             .or(stack -> stack.getItem() == ChthonicExtractorBlock.usedItem);
 
     public ShootableDummyItem() {
-        super(new Properties().maxStackSize(1));
+        super(new Properties().stacksTo(1));
     }
 
     @Override
-    public Predicate<ItemStack> getAmmoPredicate() {
+    public Predicate<ItemStack> getSupportedHeldProjectiles() {
         return ammoPredicate;
     }
 
@@ -26,12 +28,12 @@ public class ShootableDummyItem extends ShootableItem {
      * Get the predicate to match ammunition when searching the player's inventory, not their main/offhand
      */
     @Override
-    public Predicate<ItemStack> getInventoryAmmoPredicate() {
-        return ARROWS;
+    public Predicate<ItemStack> getAllSupportedProjectiles() {
+        return ARROW_ONLY;
     }
 
     @Override
-    public int func_230305_d_() {
+    public int getDefaultProjectileRange() {
         return 8;
     }
 }

@@ -54,8 +54,8 @@ public class EnchantmentProvider implements IDataProvider {
         setupEnchantment(Enchantments.BANE_OF_ARTHROPODS);
         setupEnchantment(Enchantments.KNOCKBACK);
         setupEnchantment(Enchantments.FIRE_ASPECT);
-        setupEnchantment(Enchantments.LOOTING);
-        setupEnchantment(Enchantments.SWEEPING)
+        setupEnchantment(Enchantments.MOB_LOOTING);
+        setupEnchantment(Enchantments.SWEEPING_EDGE)
                 .setApply(false)
                 .setCreateImprovements(false);
 
@@ -66,20 +66,20 @@ public class EnchantmentProvider implements IDataProvider {
         setupEnchantment(Enchantments.CHANNELING);
 
         // tools
-        setupEnchantment(Enchantments.EFFICIENCY)
+        setupEnchantment(Enchantments.BLOCK_EFFICIENCY)
                 .setApply(false)
                 .setCreateImprovements(false);
         setupEnchantment(Enchantments.SILK_TOUCH);
         setupEnchantment(Enchantments.UNBREAKING)
                 .setApply(false)
                 .setCreateImprovements(false);
-        setupEnchantment(Enchantments.FORTUNE);
+        setupEnchantment(Enchantments.BLOCK_FORTUNE);
 
         // bows
-        setupEnchantment(Enchantments.POWER);
-        setupEnchantment(Enchantments.PUNCH);
-        setupEnchantment(Enchantments.FLAME);
-        setupEnchantment(Enchantments.INFINITY);
+        setupEnchantment(Enchantments.POWER_ARROWS);
+        setupEnchantment(Enchantments.PUNCH_ARROWS);
+        setupEnchantment(Enchantments.FLAMING_ARROWS);
+        setupEnchantment(Enchantments.INFINITY_ARROWS);
 
         // armor
 //        setupEnchantment(Enchantments.PROTECTION);
@@ -226,7 +226,7 @@ public class EnchantmentProvider implements IDataProvider {
     }
 
     @Override
-    public void act(DirectoryCache cache) throws IOException {
+    public void run(DirectoryCache cache) throws IOException {
         setup();
         JsonObject localization = new JsonObject();
         JsonObject missingLocalization = new JsonObject();

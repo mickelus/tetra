@@ -34,9 +34,9 @@ public class ModularShieldISTER extends ItemStackTileEntityRenderer {
     public ModularShieldISTER() {}
 
     @Override
-    public void func_239207_a_(ItemStack itemStack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void renderByItem(ItemStack itemStack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
 //        boolean flag = itemStack.getChildTag("BlockEntityTag") != null;
-        matrixStack.push();
+        matrixStack.pushPose();
         matrixStack.scale(1.0F, -1.0F, -1.0F);
 
         Collection<ModuleModel> models = CastOptional.cast(itemStack.getItem(), ModularShieldItem.class)
@@ -48,13 +48,13 @@ public class ModularShieldISTER extends ItemStackTileEntityRenderer {
                 .forEach(modelData -> {
                     ModelRenderer modelRenderer = model.getModel(modelData.type);
                     if (model.bannerModel.isBannerModel(modelRenderer)) {
-                        if (itemStack.getChildTag("BlockEntityTag") != null) { // banner data is stored in a compound keyed with "BlockEntityTag"
+                        if (itemStack.getTagElement("BlockEntityTag") != null) { // banner data is stored in a compound keyed with "BlockEntityTag"
                             renderBanner(itemStack, modelRenderer, matrixStack, buffer, combinedLight, combinedOverlay);
                         }
                     } else if (modelRenderer != null) {
-                        RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, modelData.location);
-                        IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(
-                                ItemRenderer.getBuffer(buffer, model.getRenderType(material.getAtlasLocation()), false, itemStack.hasEffect()));
+                        RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, modelData.location);
+                        IVertexBuilder vertexBuilder = material.sprite().wrap(
+                                ItemRenderer.getFoilBuffer(buffer, model.renderType(material.atlasLocation()), false, itemStack.hasFoil()));
 
                         float r = ((modelData.tint >> 16) & 0xFF) / 255f; // red
                         float g = ((modelData.tint >>  8) & 0xFF) / 255f; // green
@@ -70,32 +70,32 @@ public class ModularShieldISTER extends ItemStackTileEntityRenderer {
 
 
 
-        matrixStack.pop();
+        matrixStack.popPose();
     }
 
     private void renderBanner(ItemStack itemStack, ModelRenderer modelRenderer, MatrixStack matrixStack, IRenderTypeBuffer buffer,
             int combinedLight, int combinedOverlay) {
-        List<Pair<BannerPattern, DyeColor>> list = BannerTileEntity.getPatternColorData(ShieldItem.getColor(itemStack), BannerTileEntity.getPatternData(itemStack));
+        List<Pair<BannerPattern, DyeColor>> list = BannerTileEntity.createPatterns(ShieldItem.getColor(itemStack), BannerTileEntity.getItemPatterns(itemStack));
 
         for(int i = 0; i < 17 && i < list.size(); ++i) {
             Pair<BannerPattern, DyeColor> pair = list.get(i);
-            float[] tint = pair.getSecond().getColorComponentValues();
-            RenderMaterial material = new RenderMaterial(Atlases.SHIELD_ATLAS, pair.getFirst().getTextureLocation(false));
-            IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(buffer, RenderType.getEntitySmoothCutout(material.getAtlasLocation()), false, itemStack.hasEffect()));
+            float[] tint = pair.getSecond().getTextureDiffuseColors();
+            RenderMaterial material = new RenderMaterial(Atlases.SHIELD_SHEET, pair.getFirst().location(false));
+            IVertexBuilder vertexBuilder = material.sprite().wrap(ItemRenderer.getFoilBuffer(buffer, RenderType.entitySmoothCutout(material.atlasLocation()), false, itemStack.hasFoil()));
             modelRenderer.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, tint[0], tint[1], tint[2], 1.0f);
         }
     }
 
     private void renderEtching(ItemStack itemStack, ModelRenderer modelRenderer, MatrixStack matrixStack, IRenderTypeBuffer buffer,
             int combinedLight, int combinedOverlay) {
-        List<Pair<BannerPattern, DyeColor>> list = BannerTileEntity.getPatternColorData(ShieldItem.getColor(itemStack), BannerTileEntity.getPatternData(itemStack));
+        List<Pair<BannerPattern, DyeColor>> list = BannerTileEntity.createPatterns(ShieldItem.getColor(itemStack), BannerTileEntity.getItemPatterns(itemStack));
 
         for(int i = 0; i < 17 && i < list.size(); ++i) {
             Pair<BannerPattern, DyeColor> pair = list.get(i);
             if (!pair.getFirst().equals(BannerPattern.BASE)) {
-                float[] tint = pair.getSecond().getColorComponentValues();
-                RenderMaterial material = new RenderMaterial(Atlases.SHIELD_ATLAS, pair.getFirst().getTextureLocation(false));
-                IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(buffer, RenderType.getEntityNoOutline(material.getAtlasLocation()), false, itemStack.hasEffect()));
+                float[] tint = pair.getSecond().getTextureDiffuseColors();
+                RenderMaterial material = new RenderMaterial(Atlases.SHIELD_SHEET, pair.getFirst().location(false));
+                IVertexBuilder vertexBuilder = material.sprite().wrap(ItemRenderer.getFoilBuffer(buffer, RenderType.entityNoOutline(material.atlasLocation()), false, itemStack.hasFoil()));
                 modelRenderer.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, tint[0], tint[1], tint[2], 0.7f);
             }
         }

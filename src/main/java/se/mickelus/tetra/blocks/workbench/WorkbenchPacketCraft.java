@@ -14,7 +14,7 @@ public class WorkbenchPacketCraft extends BlockPosPacket {
 
     @Override
     public void handle(PlayerEntity player) {
-        WorkbenchTile workbench = (WorkbenchTile) player.world.getTileEntity(pos);
+        WorkbenchTile workbench = (WorkbenchTile) player.level.getBlockEntity(pos);
         if (workbench != null) {
             workbench.craft(player);
         }

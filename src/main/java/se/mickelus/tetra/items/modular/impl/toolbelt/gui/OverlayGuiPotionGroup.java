@@ -29,7 +29,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
     public void setInventory(PotionsInventory inventory) {
         clearChildren();
         this.inventory = inventory;
-        int numSlots = inventory.getSizeInventory();
+        int numSlots = inventory.getContainerSize();
         slots = new OverlayGuiPotionSlot[numSlots];
 
         focusSlot.setString("");
@@ -47,7 +47,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
         }
 
         for (int i = 0; i < numSlots; i++) {
-            ItemStack itemStack = inventory.getStackInSlot(i);
+            ItemStack itemStack = inventory.getItem(i);
             if (!itemStack.isEmpty()) {
                 if (i > 6) {
                     slots[i] = new OverlayGuiPotionSlot(22, 22, itemStack, i, true);
@@ -83,7 +83,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
 
         int focus = getFocus();
         if (focus != -1) {
-            focusSlot.setString(inventory.getStackInSlot(focus).getDisplayName().getString());
+            focusSlot.setString(inventory.getItem(focus).getHoverName().getString());
         } else {
             focusSlot.setString("");
         }

@@ -30,39 +30,39 @@ public class CritEffect {
             .build();
 
     public static boolean critBlock(World world, PlayerEntity breakingPlayer, BlockPos pos, BlockState blockState, ItemStack itemStack, int critLevel) {
-        BlockPos recentCritPos = critBlockCache.getIfPresent(breakingPlayer.getUniqueID());
+        BlockPos recentCritPos = critBlockCache.getIfPresent(breakingPlayer.getUUID());
 
         // this avoids some log spam from when the client attempts to abort breaking of a critted block
         if (pos.equals(recentCritPos)) {
             return true;
         }
 
-        if (breakingPlayer.getRNG().nextFloat() < critLevel * 0.01
+        if (breakingPlayer.getRandom().nextFloat() < critLevel * 0.01
                 && recentCritPos == null
-                && blockState.getBlockHardness(world, pos) > -1
-                && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getBlockHardness(world, pos)) {
+                && blockState.getDestroySpeed(world, pos) > -1
+                && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getDestroySpeed(world, pos)) {
 
             ToolType tool = blockState.getHarvestTool();
             int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
 
-            if (( toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState) ) || itemStack.canHarvestBlock(blockState)) {
+            if (( toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState) ) || itemStack.isCorrectToolForDrops(blockState)) {
                 EffectHelper.breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
-                itemStack.getItem().onBlockDestroyed(itemStack, world, blockState, pos, breakingPlayer);
+                itemStack.getItem().mineBlock(itemStack, world, blockState, pos, breakingPlayer);
 
-                critBlockCache.put(breakingPlayer.getUniqueID(), pos);
+                critBlockCache.put(breakingPlayer.getUUID(), pos);
 
                 CastOptional.cast(breakingPlayer, ServerPlayerEntity.class)
-                        .ifPresent(serverPlayer -> EffectHelper.sendEventToPlayer(serverPlayer, 2001, pos, Block.getStateId(blockState)));
+                        .ifPresent(serverPlayer -> EffectHelper.sendEventToPlayer(serverPlayer, 2001, pos, Block.getId(blockState)));
 
                 if (world instanceof ServerWorld) {
-                    ((ServerWorld) world).spawnParticle(ParticleTypes.ENCHANTED_HIT,
+                    ((ServerWorld) world).sendParticles(ParticleTypes.ENCHANTED_HIT,
                             pos.getX() + 0.5, // world.rand.nextGaussian(),
                             pos.getY() + 0.5, // world.rand.nextGaussian(),
                             pos.getZ() + 0.5, // world.rand.nextGaussian(),
                             12,
-                            (world.rand.nextDouble() * 2.0D - 1.0D) * 0.3D,
-                            0.3D + world.rand.nextDouble() * 0.3D,
-                            (world.rand.nextDouble() * 2.0D - 1.0D) * 0.3D,
+                            (world.random.nextDouble() * 2.0D - 1.0D) * 0.3D,
+                            0.3D + world.random.nextDouble() * 0.3D,
+                            (world.random.nextDouble() * 2.0D - 1.0D) * 0.3D,
                             0.3);
                 }
 
@@ -74,11 +74,11 @@ public class CritEffect {
     }
 
     public static void onBlockBreak(LivingEntity entity) {
-        critBlockCache.invalidate(entity.getUniqueID());
+        critBlockCache.invalidate(entity.getUUID());
     }
 
     public static void critEntity(CriticalHitEvent event, ItemStack itemStack, int critLevel) {
-        if (event.getEntityLiving().getRNG().nextFloat() < critLevel * 0.01) {
+        if (event.getEntityLiving().getRandom().nextFloat() < critLevel * 0.01) {
             event.setDamageModifier(Math.max((float) EffectHelper.getEffectEfficiency(itemStack, ItemEffect.criticalStrike), event.getDamageModifier()));
             event.setResult(Event.Result.ALLOW);
         }

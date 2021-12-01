@@ -47,9 +47,9 @@ public class TransferUnitProcessor extends StructureProcessor {
             // randomize configuration & plate
             EnumTransferConfig[] configs = EnumTransferConfig.values();
             BlockState newState = blockInfo.state
-                    .with(TransferUnitBlock.cellProp, cellState)
-                    .with(TransferUnitBlock.configProp, configs[random.nextInt(configs.length)])
-                    .with(TransferUnitBlock.plateProp, random.nextBoolean());
+                    .setValue(TransferUnitBlock.cellProp, cellState)
+                    .setValue(TransferUnitBlock.configProp, configs[random.nextInt(configs.length)])
+                    .setValue(TransferUnitBlock.plateProp, random.nextBoolean());
 
             return new Template.BlockInfo(blockInfo.pos, newState, newCompound);
         }

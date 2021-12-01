@@ -29,7 +29,7 @@ public class ClientScheduler {
 
         for (Iterator<Task> it = queue.iterator(); it.hasNext();) {
             Task task = it.next();
-            if (task.getScheduledTime() < counter) {
+            if (task.getTick() < counter) {
                 task.run();
                 it.remove();
             }

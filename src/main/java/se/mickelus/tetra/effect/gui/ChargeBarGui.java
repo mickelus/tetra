@@ -80,7 +80,7 @@ public class ChargeBarGui extends GuiElement {
 
     public void update(PlayerEntity player) {
 
-        ItemStack activeStack = player.getActiveItemStack();
+        ItemStack activeStack = player.getUseItem();
         ItemModularHandheld item = CastOptional.cast(activeStack.getItem(), ItemModularHandheld.class).orElse(null);
         ChargedAbilityEffect ability = Optional.ofNullable(item).map(i -> i.getChargeableAbility(activeStack)).orElse(null);
 
@@ -92,7 +92,7 @@ public class ChargeBarGui extends GuiElement {
     }
 
     private float getProgress(PlayerEntity player, ItemModularHandheld item, ItemStack itemStack, ChargedAbilityEffect ability) {
-        return ability != null ? (itemStack.getUseDuration() - player.getItemInUseCount()) * 1f / ability.getChargeTime(player, item, itemStack) : 0;
+        return ability != null ? (itemStack.getUseDuration() - player.getUseItemRemainingTicks()) * 1f / ability.getChargeTime(player, item, itemStack) : 0;
     }
 
     static class Bar extends GuiElement {

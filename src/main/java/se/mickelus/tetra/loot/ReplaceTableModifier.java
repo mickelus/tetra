@@ -25,17 +25,17 @@ public class ReplaceTableModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        LootContext newContext = new LootContext.Builder(context.getWorld())
+        LootContext newContext = new LootContext.Builder(context.getLevel())
                 .withRandom(context.getRandom())
                 .withLuck(context.getLuck())
-                .build(LootParameterSets.EMPTY);
+                .create(LootParameterSets.EMPTY);
         newContext.setQueriedLootTableId(table);
 
-        return context.getWorld()
+        return context.getLevel()
                 .getServer()
-                .getLootTableManager()
-                .getLootTableFromLocation(table)
-                .generate(newContext);
+                .getLootTables()
+                .get(table)
+                .getRandomItems(newContext);
     }
 
     public static class Serializer extends GlobalLootModifierSerializer<ReplaceTableModifier> {

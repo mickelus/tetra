@@ -49,8 +49,8 @@ public class ActionInteraction extends BlockInteraction {
 
     @Override
     public void applyOutcome(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace) {
-        if (!world.isRemote) {
-            CastOptional.cast(world.getTileEntity(pos), WorkbenchTile.class)
+        if (!world.isClientSide) {
+            CastOptional.cast(world.getBlockEntity(pos), WorkbenchTile.class)
                     .ifPresent(tile -> {
                         if (player != null) {
                             tile.performAction(player, actionKey);

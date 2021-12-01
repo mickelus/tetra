@@ -14,17 +14,17 @@ import java.util.List;
 
 public class EnderReverbEffect {
     public static void perform(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        if (!entity.world.isRemote) {
+        if (!entity.level.isClientSide) {
             double effectProbability = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.enderReverb);
             if (effectProbability > 0
                     && !CastOptional.cast(entity, PlayerEntity.class).map(PlayerEntity::isCreative).orElse(false)
-                    && entity.getRNG().nextDouble() < effectProbability * multiplier) {
-                AxisAlignedBB aabb = new AxisAlignedBB(entity.getPosition()).grow(24);
-                List<LivingEntity> nearbyTargets = entity.world.getEntitiesWithinAABB(LivingEntity.class, aabb,
+                    && entity.getRandom().nextDouble() < effectProbability * multiplier) {
+                AxisAlignedBB aabb = new AxisAlignedBB(entity.blockPosition()).inflate(24);
+                List<LivingEntity> nearbyTargets = entity.level.getEntitiesOfClass(LivingEntity.class, aabb,
                         target -> target instanceof EndermanEntity || target instanceof EndermiteEntity
                                 || target instanceof ShulkerEntity || target instanceof EnderDragonEntity);
                 if (nearbyTargets.size() > 0) {
-                    nearbyTargets.get(entity.getRNG().nextInt(nearbyTargets.size())).setRevengeTarget(entity);
+                    nearbyTargets.get(entity.getRandom().nextInt(nearbyTargets.size())).setLastHurtByMob(entity);
                 }
             }
         }

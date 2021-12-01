@@ -22,10 +22,10 @@ public class TileEntityOutcome<T extends TileEntity> implements InteractionOutco
 
     @Override
     public boolean apply(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
-        TileEntity tileEntity = world.getTileEntity(pos);
+        TileEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntityClass.isInstance(tileEntity)) {
             boolean result = outcome.apply(tileEntityClass.cast(tileEntity));
-            world.notifyBlockUpdate(pos, blockState, blockState, 3);
+            world.sendBlockUpdated(pos, blockState, blockState, 3);
             return result;
         }
         return false;

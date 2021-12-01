@@ -116,7 +116,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             @Override
             protected void onContentsChanged(int slot) {
                 ItemStack itemStack = getStackInSlot(slot);
-                if (slot == 0 && (itemStack.isEmpty() || !ItemStack.areItemStacksEqual(getTargetItemStack(), itemStack))) {
+                if (slot == 0 && (itemStack.isEmpty() || !ItemStack.matches(getTargetItemStack(), itemStack))) {
                     currentSchematic = null;
                     currentSlot = null;
 
@@ -127,8 +127,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                     interaction = ActionInteraction.create(WorkbenchTile.this);
                 }
 
-                markDirty();
-                world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+                setChanged();
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
             }
 
             @Override
@@ -149,12 +149,12 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     }
 
     public void performAction(PlayerEntity player, String actionKey) {
-        if (world.isRemote) {
-            TetraMod.packetHandler.sendToServer(new WorkbenchActionPacket(pos, actionKey));
+        if (level.isClientSide) {
+            TetraMod.packetHandler.sendToServer(new WorkbenchActionPacket(worldPosition, actionKey));
             return;
         }
 
-        BlockState blockState = world.getBlockState(getPos());
+        BlockState blockState = level.getBlockState(getBlockPos());
         ItemStack targetStack = getTargetItemStack();
 
         Arrays.stream(actions)
@@ -179,15 +179,15 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                             // consume blocks
                             if (toolbeltResult == null) {
                                 CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                        .ifPresent(block -> block.onActionConsumeTool(world, getPos(), blockState, targetStack, player,
+                                        .ifPresent(block -> block.onActionConsumeTool(level, getBlockPos(), blockState, targetStack, player,
                                                 requiredTool, requiredLevel, true));
                             }
                         }
                     });
 
                     action.perform(player, targetStack, this);
-                    markDirty();
-                    world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+                    setChanged();
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
                 });
     }
 
@@ -196,7 +196,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
      * @param actionKey
      */
     public void performAction(String actionKey) {
-        BlockState blockState = world.getBlockState(getPos());
+        BlockState blockState = level.getBlockState(getBlockPos());
         ItemStack targetStack = getTargetItemStack();
 
         Arrays.stream(actions)
@@ -207,27 +207,27 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
                 .ifPresent(action -> {
                     action.getRequiredTools(targetStack).forEach((requiredTool, requiredLevel) -> {
                             CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                                    .ifPresent(block -> block.onActionConsumeTool(world, getPos(), blockState, targetStack, null,
+                                    .ifPresent(block -> block.onActionConsumeTool(level, getBlockPos(), blockState, targetStack, null,
                                             requiredTool, requiredLevel, true));
                     });
 
                     action.perform(null, targetStack, this);
-                    markDirty();
-                    world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+                    setChanged();
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
                 });
     }
 
     private boolean checkActionTools(PlayerEntity player, WorkbenchAction action, ItemStack itemStack) {
         return action.getRequiredTools(itemStack).entrySet().stream()
                 .allMatch(requirement ->
-                        PropertyHelper.getCombinedToolLevel(player, getWorld(), getPos(), world.getBlockState(getPos()), requirement.getKey())
+                        PropertyHelper.getCombinedToolLevel(player, getLevel(), getBlockPos(), level.getBlockState(getBlockPos()), requirement.getKey())
                         >= requirement.getValue());
     }
 
     private boolean checkActionTools(WorkbenchAction action, ItemStack itemStack) {
         return action.getRequiredTools(itemStack).entrySet().stream()
                 .allMatch(requirement ->
-                        PropertyHelper.getBlockToolLevel(getWorld(), getPos(), world.getBlockState(getPos()), requirement.getKey())
+                        PropertyHelper.getBlockToolLevel(getLevel(), getBlockPos(), level.getBlockState(getBlockPos()), requirement.getKey())
                                 >= requirement.getValue());
     }
 
@@ -278,11 +278,11 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     }
 
     private void sync() {
-        if (world.isRemote) {
-            TetraMod.packetHandler.sendToServer(new WorkbenchPacketUpdate(pos, currentSchematic, currentSlot));
+        if (level.isClientSide) {
+            TetraMod.packetHandler.sendToServer(new WorkbenchPacketUpdate(worldPosition, currentSchematic, currentSlot));
         } else {
-            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
-            markDirty();
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            setChanged();
         }
     }
 
@@ -320,8 +320,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     }
 
     public void initiateCrafting(PlayerEntity player) {
-        if (world.isRemote) {
-            TetraMod.packetHandler.sendToServer(new WorkbenchPacketCraft(pos));
+        if (level.isClientSide) {
+            TetraMod.packetHandler.sendToServer(new WorkbenchPacketCraft(worldPosition));
         }
 
         craft(player);
@@ -336,7 +336,7 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
         BlockState blockState = getBlockState();
 
-        Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, getWorld(), getPos(), blockState);
+        Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, getLevel(), getBlockPos(), blockState);
 
         ItemStack[] materials = getMaterials();
         ItemStack[] materialsAltered = Arrays.stream(getMaterials()).map(ItemStack::copy).toArray(ItemStack[]::new);
@@ -346,20 +346,20 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             boolean willReplace = currentSchematic.willReplace(targetStack, materialsAltered, currentSlot);
 
             // store durability and honing factor so that it can be restored after the schematic is applied
-            double durabilityFactor = upgradedStack.isDamageable() ? upgradedStack.getDamage() * 1d / upgradedStack.getMaxDamage() : 0;
+            double durabilityFactor = upgradedStack.isDamageableItem() ? upgradedStack.getDamageValue() * 1d / upgradedStack.getMaxDamage() : 0;
             double honingFactor = MathHelper.clamp(item.getHoningProgress(upgradedStack) * 1d / item.getHoningLimit(upgradedStack), 0, 1);
 
             Map<ToolType, Integer> tools = currentSchematic.getRequiredToolLevels(targetStack, materials);
 
             upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
-            upgradedStack = applyCraftingBonusEffects(upgradedStack, currentSlot, willReplace, player, materials, materialsAltered, tools, world, pos, blockState, true);
+            upgradedStack = applyCraftingBonusEffects(upgradedStack, currentSlot, willReplace, player, materials, materialsAltered, tools, level, worldPosition, blockState, true);
 
             for (Map.Entry<ToolType, Integer> entry : tools.entrySet()) {
-                upgradedStack = consumeCraftingToolEffects(upgradedStack, currentSlot, willReplace, entry.getKey(), entry.getValue(), player, world, pos, blockState, true);
+                upgradedStack = consumeCraftingToolEffects(upgradedStack, currentSlot, willReplace, entry.getKey(), entry.getValue(), player, level, worldPosition, blockState, true);
             }
 
-            item.assemble(upgradedStack, world, severity);
+            item.assemble(upgradedStack, level, severity);
 
             // remove or restore honing progression
             if (currentSchematic.isHoning()) {
@@ -370,17 +370,17 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
             // restore durability damage
             // todo: hacky check if repair schematic
-            if (upgradedStack.isDamageable() && !(currentSchematic instanceof RepairSchematic) ) {
+            if (upgradedStack.isDamageableItem() && !(currentSchematic instanceof RepairSchematic) ) {
                 if (durabilityFactor > 0 && willReplace && currentSlot.equals(item.getRepairSlot(upgradedStack))) {
                     item.repair(upgradedStack);
                 } else {
-                    upgradedStack.setDamage((int) Math.ceil(durabilityFactor * upgradedStack.getMaxDamage()));
+                    upgradedStack.setDamageValue((int) Math.ceil(durabilityFactor * upgradedStack.getMaxDamage()));
                 }
             }
 
             int xpCost = currentSchematic.getExperienceCost(targetStack, materials, currentSlot);
             if (!player.isCreative() && xpCost > 0) {
-                player.addExperienceLevel(-xpCost);
+                player.giveExperienceLevels(-xpCost);
             }
         }
 
@@ -439,13 +439,13 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
 
     public ResourceLocation[] getUnlockedSchematics() {
         return CastOptional.cast(getBlockState().getBlock(), AbstractWorkbenchBlock.class)
-                .map(block -> block.getSchematics(world, pos, getBlockState()))
+                .map(block -> block.getSchematics(level, worldPosition, getBlockState()))
                 .orElse(new ResourceLocation[0]);
     }
 
     public void applyTweaks(PlayerEntity player, String slot, Map<String, Integer> tweaks) {
-        if (world.isRemote) {
-            TetraMod.packetHandler.sendToServer(new WorkbenchPacketTweak(pos, slot, tweaks));
+        if (level.isClientSide) {
+            TetraMod.packetHandler.sendToServer(new WorkbenchPacketTweak(worldPosition, slot, tweaks));
         }
 
         tweak(player, slot, tweaks);
@@ -472,10 +472,10 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     }
 
     @Override
-    public void markDirty() {
-        super.markDirty();
+    public void setChanged() {
+        super.setChanged();
 
-        if (world != null && world.isRemote) {
+        if (level != null && level.isClientSide) {
             // TODO: this is called several times everytime a change occurs
 
             changeListeners.values().forEach(Runnable::run);
@@ -485,22 +485,22 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, 0, getUpdateTag());
+        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return write(new CompoundNBT());
+        return save(new CompoundNBT());
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(getBlockState(), pkt.getNbtCompound());
+        load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compound) {
-        super.read(blockState, compound);
+    public void load(BlockState blockState, CompoundNBT compound) {
+        super.load(blockState, compound);
 
         handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
 
@@ -514,14 +514,14 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         interaction = ActionInteraction.create(this);
 
         // todo : due to the null check perhaps this is not the right place to do this
-        if (world != null && world.isRemote) {
+        if (level != null && level.isClientSide) {
             changeListeners.values().forEach(Runnable::run);
         }
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
 
         handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
 
@@ -545,8 +545,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
             for (int i = 1; i < handler.getSlots(); i++) {
                 transferStackToPlayer(player, i);
             }
-            markDirty();
-            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+            setChanged();
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         });
     }
 
@@ -555,13 +555,13 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
      */
     private void emptyMaterialSlots() {
         handler.ifPresent(handler -> {
-            if (!world.isRemote) {
+            if (!level.isClientSide) {
                 for (int i = 1; i < inventorySlots; i++) {
                     ItemStack materialStack = handler.extractItem(i, handler.getSlotLimit(i), false);
                     if (!materialStack.isEmpty()) {
-                        ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5, (double)pos.getY() + 1.1, (double)pos.getZ() + 0.5, materialStack);
-                        itemEntity.setDefaultPickupDelay();
-                        world.addEntity(itemEntity);
+                        ItemEntity itemEntity = new ItemEntity(level, (double)worldPosition.getX() + 0.5, (double)worldPosition.getY() + 1.1, (double)worldPosition.getZ() + 0.5, materialStack);
+                        itemEntity.setDefaultPickUpDelay();
+                        level.addFreshEntity(itemEntity);
                     }
                 }
             } else {
@@ -576,8 +576,8 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         handler.ifPresent(handler -> {
             ItemStack itemStack = handler.extractItem(index, handler.getSlotLimit(index), false);
             if (!itemStack.isEmpty()) {
-                if (!player.inventory.addItemStackToInventory(itemStack)) {
-                    player.dropItem(itemStack, false);
+                if (!player.inventory.add(itemStack)) {
+                    player.drop(itemStack, false);
                 }
             }
         });

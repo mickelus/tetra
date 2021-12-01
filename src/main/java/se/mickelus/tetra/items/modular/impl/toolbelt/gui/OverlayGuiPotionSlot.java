@@ -44,7 +44,7 @@ public class OverlayGuiPotionSlot extends GuiElement {
         }
 
         if (fontRenderer == null) {
-            fontRenderer = mc.fontRenderer;
+            fontRenderer = mc.font;
         }
 
         backdrop  = new GuiTexture(0, 0, 23, 23, 32, 28, GuiTextures.toolbelt);
@@ -80,16 +80,16 @@ public class OverlayGuiPotionSlot extends GuiElement {
 
     private void drawItemStack(ItemStack itemStack, int x, int y) {
         RenderSystem.pushMatrix();
-        GlStateManager.enableDepthTest();
+        GlStateManager._enableDepthTest();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        RenderHelper.enableStandardItemLighting();
+        RenderHelper.turnBackOn();
 
-        mc.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
-        mc.getItemRenderer().renderItemOverlayIntoGUI(fontRenderer, itemStack, x, y, "");
-        GlStateManager.disableDepthTest();
+        mc.getItemRenderer().renderAndDecorateItem(itemStack, x, y);
+        mc.getItemRenderer().renderGuiItemDecorations(fontRenderer, itemStack, x, y, "");
+        GlStateManager._disableDepthTest();
 
         RenderSystem.popMatrix();
-        RenderHelper.disableStandardItemLighting();
+        RenderHelper.turnOff();
     }
 
 

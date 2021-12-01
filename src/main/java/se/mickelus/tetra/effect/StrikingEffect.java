@@ -125,13 +125,13 @@ public class StrikingEffect {
 
         if (strikingLevel > 0) {
             int sweepingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.sweepingStrike);
-            if (breakingPlayer.getCooledAttackStrength(0) > 0.9 && blockState.getBlockHardness(world, pos) != -1) {
+            if (breakingPlayer.getAttackStrengthScale(0) > 0.9 && blockState.getDestroySpeed(world, pos) != -1) {
                 if (sweepingLevel > 0) {
                     breakBlocksAround(world, breakingPlayer, itemStack, pos, tool, sweepingLevel);
                 } else {
                     int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, tool, breakingPlayer, blockState);
                     if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
-                            || itemStack.canHarvestBlock(blockState)) {
+                            || itemStack.isCorrectToolForDrops(blockState)) {
                         EffectHelper.breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
                     }
                 }
@@ -139,7 +139,7 @@ public class StrikingEffect {
                 item.applyUsageEffects(breakingPlayer, itemStack, 1);
                 item.applyDamage(item.getBlockDestroyDamage(), itemStack, breakingPlayer);
             }
-            breakingPlayer.resetCooldown();
+            breakingPlayer.resetAttackStrengthTicker();
             return true;
         }
 
@@ -175,12 +175,12 @@ public class StrikingEffect {
      */
     private static void breakBlocksAround(World world, PlayerEntity breakingPlayer, ItemStack toolStack, BlockPos originPos, ToolType tool,
             int sweepingLevel) {
-        if (world.isRemote) {
+        if (world.isClientSide) {
             return;
         }
 
-        Direction facing = breakingPlayer.getHorizontalFacing();
-        final int strikeCounter = getStrikeCounter(breakingPlayer.getUniqueID());
+        Direction facing = breakingPlayer.getDirection();
+        final int strikeCounter = getStrikeCounter(breakingPlayer.getUUID());
         final boolean alternate = strikeCounter % 2 == 0;
 
         double efficiency = CastOptional.cast(toolStack.getItem(), ItemModularHandheld.class)
@@ -188,16 +188,16 @@ public class StrikingEffect {
                 .orElse(0f);
 
         double critMultiplier = CastOptional.cast(toolStack.getItem(), ItemModularHandheld.class)
-                .map(item -> CritEffect.rollMultiplier(breakingPlayer.getRNG(), item, toolStack))
+                .map(item -> CritEffect.rollMultiplier(breakingPlayer.getRandom(), item, toolStack))
                 .orElse(1d);
 
         if (critMultiplier != 1) {
             efficiency *= critMultiplier;
-            ((ServerWorld) world).spawnParticle(ParticleTypes.ENCHANTED_HIT,
+            ((ServerWorld) world).sendParticles(ParticleTypes.ENCHANTED_HIT,
                     originPos.getX() + .5f, originPos.getY() + .5f, originPos.getZ() + .5f, 15, 0.2D, 0.2D, 0.2D, 0.0D);
         }
 
-        breakingPlayer.spawnSweepParticles();
+        breakingPlayer.sweepAttack();
 
         int[] delays = Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
                 .map(BlockPos::getX)
@@ -206,15 +206,15 @@ public class StrikingEffect {
 
         List<BlockPos> positions = Arrays.stream((strikeCounter / 2) % 2 == 0 ? sweep1 : sweep2)
                 .map(pos -> (alternate ? new BlockPos(-pos.getX(), pos.getY(), pos.getZ()) : pos))
-                .map(pos -> RotationHelper.rotatePitch(pos, breakingPlayer.rotationPitch))
+                .map(pos -> RotationHelper.rotatePitch(pos, breakingPlayer.xRot))
                 .map(pos -> RotationHelper.rotateDirection(pos, facing))
-                .map(originPos::add)
+                .map(originPos::offset)
                 .collect(Collectors.toList());
 
         for (int i = 0; i < positions.size(); i++) {
             BlockPos pos = positions.get(i);
             BlockState blockState = world.getBlockState(pos);
-            float blockHardness = blockState.getBlockHardness(world, pos);
+            float blockHardness = blockState.getDestroySpeed(world, pos);
 
             // make sure that only blocks which require the same tool are broken
             if (ItemModularHandheld.isToolEffective(tool, blockState) && blockHardness != -1) {
@@ -222,7 +222,7 @@ public class StrikingEffect {
                 // check that the tool level is high enough and break the block
                 int toolLevel = toolStack.getItem().getHarvestLevel(toolStack, tool, breakingPlayer, blockState);
                 if ((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
-                        || toolStack.canHarvestBlock(blockState)) {
+                        || toolStack.isCorrectToolForDrops(blockState)) {
 
                     // adds a fixed amount to make blocks like grass still "consume" some efficiency
                     efficiency -= blockHardness + 0.5;
@@ -231,7 +231,7 @@ public class StrikingEffect {
                 } else {
                     break;
                 }
-            } else if (blockState.isSolid()) {
+            } else if (blockState.canOcclude()) {
                 efficiency -= Math.abs(blockHardness);
             }
 
@@ -245,10 +245,10 @@ public class StrikingEffect {
             int toolLevel, int delay) {
         ServerScheduler.schedule(delay, () -> {
             if (((toolLevel >= 0 && toolLevel >= blockState.getBlock().getHarvestLevel(blockState))
-                    || itemStack.canHarvestBlock(blockState))
+                    || itemStack.isCorrectToolForDrops(blockState))
                     && ItemModularHandheld.isToolEffective(tool, blockState)) {
                 if (EffectHelper.breakBlock(world, player, itemStack, pos, blockState, true)) {
-                    EffectHelper.sendEventToPlayer((ServerPlayerEntity) player, 2001, pos, Block.getStateId(blockState));
+                    EffectHelper.sendEventToPlayer((ServerPlayerEntity) player, 2001, pos, Block.getId(blockState));
                 }
             }
         });

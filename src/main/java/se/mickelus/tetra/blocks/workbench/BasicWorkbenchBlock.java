@@ -21,14 +21,16 @@ import se.mickelus.tetra.advancements.BlockUseCriterion;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
     public static final String unlocalizedName = "basic_workbench";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static AbstractWorkbenchBlock instance;
 
     public BasicWorkbenchBlock() {
-        super(Properties.create(Material.WOOD)
-                .hardnessAndResistance(2.5f)
+        super(Properties.of(Material.WOOD)
+                .strength(2.5f)
                 .sound(SoundType.WOOD));
 
         setRegistryName(unlocalizedName);
@@ -37,26 +39,26 @@ public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        tooltip.add(new TranslationTextComponent("block.tetra.basic_workbench.description").mergeStyle(TextFormatting.GRAY));
+    public void appendHoverText(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+        tooltip.add(new TranslationTextComponent("block.tetra.basic_workbench.description").withStyle(TextFormatting.GRAY));
     }
 
     public static ActionResultType upgradeWorkbench(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing) {
-        ItemStack itemStack = player.getHeldItem(hand);
-        if (!player.canPlayerEdit(pos.offset(facing), facing, itemStack)) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (!player.mayUseItemAt(pos.relative(facing), facing, itemStack)) {
             return ActionResultType.FAIL;
         }
 
         if (world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)) {
 
-            world.playSound(player, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 0.5F);
+            world.playSound(player, pos, SoundEvents.WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 0.5F);
 
-            if (!world.isRemote) {
-                world.setBlockState(pos, instance.getDefaultState());
+            if (!world.isClientSide) {
+                world.setBlockAndUpdate(pos, instance.defaultBlockState());
 
-                BlockUseCriterion.trigger((ServerPlayerEntity) player, instance.getDefaultState(), ItemStack.EMPTY);
+                BlockUseCriterion.trigger((ServerPlayerEntity) player, instance.defaultBlockState(), ItemStack.EMPTY);
             }
-            return ActionResultType.func_233537_a_(world.isRemote);
+            return ActionResultType.sidedSuccess(world.isClientSide);
         }
 
         return ActionResultType.PASS;

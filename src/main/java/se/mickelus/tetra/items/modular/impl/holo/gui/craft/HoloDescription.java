@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class HoloDescription extends GuiElement {
-    private final List<String> emptyTooltip = Collections.singletonList(I18n.format("tetra.holo.craft.empty_description"));
+    private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_description"));
     private List<String> tooltip;
 
     private GuiTexture icon;
@@ -32,8 +32,8 @@ public class HoloDescription extends GuiElement {
     public void update(OutcomePreview[] previews) {
         tooltip = Arrays.stream(previews)
                 .map(preview -> "tetra.module." + preview.moduleKey + ".description")
-                .filter(I18n::hasKey)
-                .map(I18n::format)
+                .filter(I18n::exists)
+                .map(I18n::get)
 //                .map(description -> TextFormatting.GRAY + description)
 //                .map(description -> description.replace("\n", "\n" + TextFormatting.GRAY))
 //                .map(description -> description.replace(TextFormatting.RESET.toString(), TextFormatting.RESET.toString() + TextFormatting.GRAY))

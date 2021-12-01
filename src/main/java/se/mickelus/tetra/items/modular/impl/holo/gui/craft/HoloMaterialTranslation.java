@@ -20,8 +20,8 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import java.util.*;
 
 public class HoloMaterialTranslation extends GuiElement {
-    private final List<String> emptyTooltipImprovement = Collections.singletonList(I18n.format("tetra.holo.craft.empty_translation_improvement"));
-    private final List<String> emptyTooltip = Collections.singletonList(I18n.format("tetra.holo.craft.empty_translation_module"));
+    private final List<String> emptyTooltipImprovement = Collections.singletonList(I18n.get("tetra.holo.craft.empty_translation_improvement"));
+    private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_translation_module"));
     private List<String> tooltip;
 
     private GuiTexture icon;
@@ -60,9 +60,9 @@ public class HoloMaterialTranslation extends GuiElement {
             ImmutableList.Builder<String> result = new ImmutableList.Builder<>();
 
             if (schematic.getType() == SchematicType.improvement) {
-                result.add(I18n.format("tetra.holo.craft.translation_improvement"));
+                result.add(I18n.get("tetra.holo.craft.translation_improvement"));
             } else {
-                result.add(I18n.format("tetra.holo.craft.translation_module"));
+                result.add(I18n.get("tetra.holo.craft.translation_module"));
             }
 
             if (translation.durability != null || translation.integrity != null) {
@@ -81,17 +81,17 @@ public class HoloMaterialTranslation extends GuiElement {
 
             if (!primary.isEmpty()) {
                 result.add(" ");
-                result.add(TextFormatting.WHITE + I18n.format("tetra.holo.craft.materials.stat.primary") + ":");
+                result.add(TextFormatting.WHITE + I18n.get("tetra.holo.craft.materials.stat.primary") + ":");
                 result.addAll(primary);
             }
             if (!secondary.isEmpty()) {
                 result.add(" ");
-                result.add(TextFormatting.WHITE + I18n.format("tetra.holo.craft.materials.stat.secondary") + ":");
+                result.add(TextFormatting.WHITE + I18n.get("tetra.holo.craft.materials.stat.secondary") + ":");
                 result.addAll(secondary);
             }
             if (!tertiary.isEmpty()) {
                 result.add(" ");
-                result.add(TextFormatting.WHITE + I18n.format("tetra.holo.craft.materials.stat.tertiary") + ":");
+                result.add(TextFormatting.WHITE + I18n.get("tetra.holo.craft.materials.stat.tertiary") + ":");
                 result.addAll(tertiary);
             }
 
@@ -110,14 +110,14 @@ public class HoloMaterialTranslation extends GuiElement {
     }
 
     private String getStatLine(String unlocalizedStat, int value, String unlocalizedSuffix) {
-        if (I18n.hasKey(unlocalizedStat)) {
+        if (I18n.exists(unlocalizedStat)) {
             StringBuilder line = new StringBuilder(TextFormatting.GRAY.toString());
 
-            line.append(I18n.format(unlocalizedStat));
+            line.append(I18n.get(unlocalizedStat));
 
             if (unlocalizedSuffix != null) {
                 line.append(" ");
-                line.append(I18n.format(unlocalizedSuffix));
+                line.append(I18n.get(unlocalizedSuffix));
             }
 
             if (value < 0) {
@@ -128,7 +128,7 @@ public class HoloMaterialTranslation extends GuiElement {
                 line.append(" +");
             }
 
-            line.append(I18n.format("enchantment.level." + (Math.abs(value))));
+            line.append(I18n.get("enchantment.level." + (Math.abs(value))));
 
             return line.toString();
         }
@@ -138,7 +138,7 @@ public class HoloMaterialTranslation extends GuiElement {
     private void extractAttributes(Multimap<Attribute, AttributeModifier> attributes, List<String> result) {
         if (attributes != null) {
             attributes.entries().stream()
-                    .map(entry -> getStatLine(entry.getKey().getAttributeName(), (int) entry.getValue().getAmount(),
+                    .map(entry -> getStatLine(entry.getKey().getDescriptionId(), (int) entry.getValue().getAmount(),
                             entry.getValue().getOperation() != AttributeModifier.Operation.ADDITION ? "tetra.attribute.multiplier" : null))
                     .filter(Objects::nonNull)
                     .map(line -> "  " + line)
@@ -166,7 +166,7 @@ public class HoloMaterialTranslation extends GuiElement {
         int level = effects.getLevel(effect);
         if (level != 0) {
             String levelKey = "tetra.stats." + effect.getKey() + ".level";
-            return getStatLine(I18n.hasKey(levelKey) ? levelKey : "tetra.stats." + effect.getKey(), level);
+            return getStatLine(I18n.exists(levelKey) ? levelKey : "tetra.stats." + effect.getKey(), level);
         }
 
         return null;

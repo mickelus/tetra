@@ -30,19 +30,19 @@ public class PriedPotionEffect extends Effect {
 
         setRegistryName("pried");
 
-        addAttributesModifier(Attributes.ARMOR, "8ce1d367-cb9f-48a3-a748-e6b73ef686e2", -1, AttributeModifier.Operation.ADDITION);
+        addAttributeModifier(Attributes.ARMOR, "8ce1d367-cb9f-48a3-a748-e6b73ef686e2", -1, AttributeModifier.Operation.ADDITION);
 
         instance = this;
     }
 
-    public void performEffect(LivingEntity entity, int amplifier) {
-        if (!entity.getEntityWorld().isRemote) {
-            ParticleHelper.spawnArmorParticles(((ServerWorld) entity.world), entity);
+    public void applyEffectTick(LivingEntity entity, int amplifier) {
+        if (!entity.getCommandSenderWorld().isClientSide) {
+            ParticleHelper.spawnArmorParticles(((ServerWorld) entity.level), entity);
         }
     }
 
     @Override
-    public boolean isReady(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration % 10 == 0;
     }
 
@@ -53,6 +53,6 @@ public class PriedPotionEffect extends Effect {
 
         int amount = effect.getAmplifier() + 1;
         EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new StringTextComponent(I18n.format("effect.tetra.pried.tooltip", amount)));
+                new StringTextComponent(I18n.get("effect.tetra.pried.tooltip", amount)));
     }
 }

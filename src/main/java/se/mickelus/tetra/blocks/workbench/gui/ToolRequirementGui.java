@@ -57,13 +57,13 @@ public class ToolRequirementGui extends GuiTool {
     public List<String> getTooltipLines() {
         if (hasFocus() && showTooltip) {
             if (showTooltipRequirement) {
-                return Collections.singletonList(I18n.format(requirementTooltip, requiredLevel) + "\n \n"
+                return Collections.singletonList(I18n.get(requirementTooltip, requiredLevel) + "\n \n"
                         + (requiredLevel > availableLevel ? TextFormatting.RED : TextFormatting.GREEN)
-                        + I18n.format( "tetra.tool.available", availableLevel));
+                        + I18n.get( "tetra.tool.available", availableLevel));
 
             }
 
-            return Collections.singletonList(I18n.format(requirementTooltip, requiredLevel));
+            return Collections.singletonList(I18n.get(requirementTooltip, requiredLevel));
         }
         return super.getTooltipLines();
     }

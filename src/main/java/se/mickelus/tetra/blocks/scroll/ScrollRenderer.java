@@ -29,7 +29,7 @@ import se.mickelus.tetra.blocks.rack.RackBlock;
 import se.mickelus.tetra.util.RotationHelper;
 
 public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
-    public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, new ResourceLocation(TetraMod.MOD_ID,"blocks/scroll"));
+    public static final RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/scroll"));
 
     private ModelRenderer[] rolledModel;
     private ModelRenderer ribbonModel;
@@ -94,16 +94,16 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
 
     @Override
     public void render(ScrollTile tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        IVertexBuilder vertexBuilder = material.getBuffer(buffer, rl -> RenderType.getEntityCutout(rl));
+        IVertexBuilder vertexBuilder = material.buffer(buffer, rl -> RenderType.entityCutout(rl));
 
         ScrollData[] scrolls = tile.getScrolls();
         ScrollBlock.Arrangement arrangement = ((ScrollBlock) tile.getBlockState().getBlock()).getArrangement();
-        Direction direction = tile.getBlockState().get(RackBlock.facingProp);
+        Direction direction = tile.getBlockState().getValue(RackBlock.facingProp);
 
-        matrixStack.push();
+        matrixStack.pushPose();
         matrixStack.translate(0.5, 0, 0.5);
-        matrixStack.rotate(direction.getRotation());
-        matrixStack.rotate(Vector3f.XN.rotationDegrees(90));
+        matrixStack.mulPose(direction.getRotation());
+        matrixStack.mulPose(Vector3f.XN.rotationDegrees(90));
         matrixStack.translate(-0.5, 0, -0.5);
 
 
@@ -119,32 +119,32 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
                 break;
         }
 
-        matrixStack.pop();
+        matrixStack.popPose();
 
-        if (shouldDrawLabel(scrolls, tile.getPos())) {
-            matrixStack.push();
+        if (shouldDrawLabel(scrolls, tile.getBlockPos())) {
+            matrixStack.pushPose();
             matrixStack.translate(0.5, 0, 0.5);
             if (arrangement == ScrollBlock.Arrangement.wall) {
-                matrixStack.rotate(direction.getOpposite().getRotation());
-                matrixStack.rotate(Vector3f.XN.rotationDegrees(90));
+                matrixStack.mulPose(direction.getOpposite().getRotation());
+                matrixStack.mulPose(Vector3f.XN.rotationDegrees(90));
                 matrixStack.translate(0, 0.55, 0.4);
                 drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
             } else if (arrangement == ScrollBlock.Arrangement.open) {
-                double angle = RotationHelper.getHorizontalAngle(Minecraft.getInstance().getRenderViewEntity().getEyePosition(partialTicks),
-                        Vector3d.copyCentered(tile.getPos()));
+                double angle = RotationHelper.getHorizontalAngle(Minecraft.getInstance().getCameraEntity().getEyePosition(partialTicks),
+                        Vector3d.atCenterOf(tile.getBlockPos()));
                 Quaternion rotation = new Quaternion(0.0F, 0.0F, 0.0F, 1.0F);
-                rotation.multiply(Vector3f.YP.rotationDegrees((float) (angle / Math.PI * 180 + 180)));
-                matrixStack.rotate(rotation);
+                rotation.mul(Vector3f.YP.rotationDegrees((float) (angle / Math.PI * 180 + 180)));
+                matrixStack.mulPose(rotation);
                 matrixStack.translate(0, 0.4f, 0.4);
                 drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
             }
-            matrixStack.pop();
+            matrixStack.popPose();
         }
     }
 
     private void renderRolled(ScrollData[] scrolls, MatrixStack matrixStack, int combinedLight, int combinedOverlay, IVertexBuilder vertexBuilder) {
         matrixStack.translate(0.5, 0, 0.5);
-        matrixStack.rotate(Vector3f.YN.rotationDegrees(90));
+        matrixStack.mulPose(Vector3f.YN.rotationDegrees(90));
         matrixStack.translate(-0.5, 0, -0.5);
         int offset = Math.min(scrolls.length, 3) - 1;
         if (offset > 0) {
@@ -153,9 +153,9 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
 
         for (int i = 0; i < scrolls.length; i++) {
             int mat = getMaterial(scrolls, i);
-            float red = ColorHelper.PackedColor.getRed(scrolls[i].ribbon) / 255f;
-            float green = ColorHelper.PackedColor.getGreen(scrolls[i].ribbon) / 255f;
-            float blue = ColorHelper.PackedColor.getBlue(scrolls[i].ribbon) / 255f;
+            float red = ColorHelper.PackedColor.red(scrolls[i].ribbon) / 255f;
+            float green = ColorHelper.PackedColor.green(scrolls[i].ribbon) / 255f;
+            float blue = ColorHelper.PackedColor.blue(scrolls[i].ribbon) / 255f;
 
             rolledModel[mat].render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
             ribbonModel.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, red, green, blue, 1);
@@ -173,9 +173,9 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
     private void renderWall(ScrollData[] scrolls, MatrixStack matrixStack, int combinedLight, int combinedOverlay, IVertexBuilder vertexBuilder) {
         int mat = getMaterial(scrolls, 0);
         int color = getGlyphColor(mat);
-        float red = ColorHelper.PackedColor.getRed(color) / 255f;
-        float green = ColorHelper.PackedColor.getGreen(color) / 255f;
-        float blue = ColorHelper.PackedColor.getBlue(color) / 255f;
+        float red = ColorHelper.PackedColor.red(color) / 255f;
+        float green = ColorHelper.PackedColor.green(color) / 255f;
+        float blue = ColorHelper.PackedColor.blue(color) / 255f;
 
         wallModel[mat].render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
         for (int i = 0; i < wallGlyphs.length; i++) {
@@ -187,12 +187,12 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
     private void renderOpen(ScrollData[] scrolls, MatrixStack matrixStack, int combinedLight, int combinedOverlay, IVertexBuilder vertexBuilder) {
         int mat = getMaterial(scrolls, 0);
         int color = getGlyphColor(mat);
-        float red = ColorHelper.PackedColor.getRed(color) / 255f;
-        float green = ColorHelper.PackedColor.getGreen(color) / 255f;
-        float blue = ColorHelper.PackedColor.getBlue(color) / 255f;
+        float red = ColorHelper.PackedColor.red(color) / 255f;
+        float green = ColorHelper.PackedColor.green(color) / 255f;
+        float blue = ColorHelper.PackedColor.blue(color) / 255f;
 
         matrixStack.translate(0.5, 0, 0.5);
-        matrixStack.rotate(Vector3f.YN.rotationDegrees(90));
+        matrixStack.mulPose(Vector3f.YN.rotationDegrees(90));
         matrixStack.translate(-0.5, 0, -0.5);
 
         openModel[mat].render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
@@ -200,7 +200,7 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
         for (int i = 0; i < openGlyphs.length; i++) {
             if (i == 2) {
                 matrixStack.translate(0.5, 0, 0.5);
-                matrixStack.rotate(Vector3f.YN.rotationDegrees(180));
+                matrixStack.mulPose(Vector3f.YN.rotationDegrees(180));
                 matrixStack.translate(-0.5, 0, -0.5);
             }
 
@@ -241,25 +241,25 @@ public class ScrollRenderer extends TileEntityRenderer<ScrollTile> {
     }
 
     private boolean shouldDrawLabel(ScrollData[] scrolls, BlockPos pos) {
-        RayTraceResult mouseover = Minecraft.getInstance().objectMouseOver;
+        RayTraceResult mouseover = Minecraft.getInstance().hitResult;
         return scrolls != null && scrolls.length > 0
                 && mouseover != null && mouseover.getType() == RayTraceResult.Type.BLOCK
-                && pos.equals(((BlockRayTraceResult) mouseover).getPos());
+                && pos.equals(((BlockRayTraceResult) mouseover).getBlockPos());
     }
 
     private void drawLabel(ScrollData scroll, MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight) {
-        String label = I18n.format("item.tetra.scroll." + scroll.key + ".name");
+        String label = I18n.get("item.tetra.scroll." + scroll.key + ".name");
 
         matrixStack.scale(-0.0125f, -0.0125f, 0.0125f);
-        Matrix4f matrix4f = matrixStack.getLast().getMatrix();
-        FontRenderer fontrenderer = renderDispatcher.fontRenderer;
-        float x = -fontrenderer.getStringWidth(label) / 2f;
-        fontrenderer.func_238411_a_(label, x + 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
-        fontrenderer.func_238411_a_(label, x - 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
-        fontrenderer.func_238411_a_(label, x, -1, 0, false, matrix4f, buffer, false, 0, packedLight, false);
-        fontrenderer.func_238411_a_(label, x, 1, 0, false, matrix4f, buffer, false, 0, packedLight, false);
+        Matrix4f matrix4f = matrixStack.last().pose();
+        FontRenderer fontrenderer = renderer.font;
+        float x = -fontrenderer.width(label) / 2f;
+        fontrenderer.drawInBatch(label, x + 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
+        fontrenderer.drawInBatch(label, x - 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
+        fontrenderer.drawInBatch(label, x, -1, 0, false, matrix4f, buffer, false, 0, packedLight, false);
+        fontrenderer.drawInBatch(label, x, 1, 0, false, matrix4f, buffer, false, 0, packedLight, false);
 
         matrixStack.translate(0, 0, -0.0125f);
-        fontrenderer.func_238411_a_(label, x, 0, -1, false, matrix4f, buffer, false, 0, packedLight, false);
+        fontrenderer.drawInBatch(label, x, 0, -1, false, matrix4f, buffer, false, 0, packedLight, false);
     }
 }

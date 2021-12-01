@@ -44,7 +44,7 @@ import java.util.List;
 import static com.google.common.base.Predicates.equalTo;
 
 public class TransferUnitBlock extends TetraWaterloggedBlock implements IInteractiveBlock {
-    public static final DirectionProperty facingProp = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty facingProp = HorizontalBlock.FACING;
     public static final BooleanProperty plateProp = BooleanProperty.create("plate");
     public static final IntegerProperty cellProp = IntegerProperty.create("cell", 0, 2);
     public static final EnumProperty<EnumTransferConfig> configProp = EnumProperty.create("config", EnumTransferConfig.class);
@@ -61,10 +61,10 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
                     TransferUnitBlock::reconfigure),
     };
 
-    private static final VoxelShape eastShape =  makeCuboidShape(16, 0, 1,  3, 12, 15);
-    private static final VoxelShape northShape = makeCuboidShape(1, 0, 0,  15, 12, 13);
-    private static final VoxelShape westShape =  makeCuboidShape(0, 0, 1,  13, 12, 15);
-    private static final VoxelShape southShape = makeCuboidShape(1, 0, 16, 15, 12, 3);
+    private static final VoxelShape eastShape =  box(16, 0, 1,  3, 12, 15);
+    private static final VoxelShape northShape = box(1, 0, 0,  15, 12, 13);
+    private static final VoxelShape westShape =  box(0, 0, 1,  13, 12, 15);
+    private static final VoxelShape southShape = box(1, 0, 16, 15, 12, 3);
 
     public static final String unlocalizedName = "transfer_unit";
 
@@ -78,20 +78,20 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
 
         hasItem = true;
 
-        setDefaultState(getDefaultState()
-                .with(plateProp, false)
-                .with(cellProp, 0)
-                .with(configProp, EnumTransferConfig.a)
-                .with(transferProp, EnumTransferState.none));
+        registerDefaultState(defaultBlockState()
+                .setValue(plateProp, false)
+                .setValue(cellProp, 0)
+                .setValue(configProp, EnumTransferConfig.a)
+                .setValue(transferProp, EnumTransferState.none));
     }
 
     @Override
     public void clientInit() {
-        RenderTypeLookup.setRenderLayer(this, RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(this, RenderType.cutout());
     }
 
     public static boolean removePlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction hitFace) {
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             if (player != null) {
                 BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerWorld) world, blockState);
             } else {
@@ -99,24 +99,24 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
             }
         }
 
-        world.playSound(player, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
-        world.setBlockState(pos, blockState.with(plateProp, false), 3);
+        world.playSound(player, pos, SoundEvents.SHIELD_BREAK, SoundCategory.PLAYERS, 1, 0.5f);
+        world.setBlock(pos, blockState.setValue(plateProp, false), 3);
 
         return true;
     }
 
     public static boolean attachPlate(World world, BlockPos pos, BlockState blockState, PlayerEntity player) {
-        world.playSound(player, pos, SoundEvents.BLOCK_METAL_PLACE, SoundCategory.PLAYERS, 0.5f, 1);
-        world.setBlockState(pos, blockState.with(plateProp, true), 3);
+        world.playSound(player, pos, SoundEvents.METAL_PLACE, SoundCategory.PLAYERS, 0.5f, 1);
+        world.setBlock(pos, blockState.setValue(plateProp, true), 3);
 
         return true;
     }
 
     public static boolean reconfigure(World world, BlockPos pos, BlockState blockState, @Nullable PlayerEntity player, @Nullable Hand hand, Direction hitFace) {
-        EnumTransferConfig config = EnumTransferConfig.getNextConfiguration(blockState.get(configProp));
+        EnumTransferConfig config = EnumTransferConfig.getNextConfiguration(blockState.getValue(configProp));
 
-        world.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);
-        world.setBlockState(pos, blockState.with(configProp, config), 3);
+        world.playSound(player, pos, SoundEvents.ANVIL_HIT, SoundCategory.PLAYERS, 1, 1);
+        world.setBlock(pos, blockState.setValue(configProp, config), 3);
 
         TileEntityOptional.from(world, pos, TransferUnitTile.class).ifPresent(TransferUnitTile::updateTransferState);
 
@@ -129,15 +129,15 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
      * @return the effect with redstone power taken into consideration
      */
     public static EnumTransferEffect getEffectPowered(World world, BlockPos pos, BlockState blockState) {
-        EnumTransferEffect effect = EnumTransferEffect.fromConfig(blockState.get(configProp), 0);
+        EnumTransferEffect effect = EnumTransferEffect.fromConfig(blockState.getValue(configProp), 0);
         if (effect.equals(EnumTransferEffect.redstone)) {
-            Direction facing = blockState.get(facingProp);
+            Direction facing = blockState.getValue(facingProp);
 
-            if (world.isSidePowered(pos.offset(facing.rotateY()), facing.rotateY())) {
+            if (world.hasSignal(pos.relative(facing.getClockWise()), facing.getClockWise())) {
                 return EnumTransferEffect.send;
             }
 
-            if (world.isSidePowered(pos.offset(facing.rotateYCCW()), facing.rotateYCCW())) {
+            if (world.hasSignal(pos.relative(facing.getCounterClockWise()), facing.getCounterClockWise())) {
                 return EnumTransferEffect.receive;
             }
         }
@@ -149,7 +149,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     public static boolean isReceiving(BlockState blockState) {
-        return EnumTransferState.receiving.equals(blockState.get(transferProp));
+        return EnumTransferState.receiving.equals(blockState.getValue(transferProp));
     }
 
     public static void setSending(World world, BlockPos pos, BlockState blockState, boolean sending) {
@@ -157,77 +157,77 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     public static boolean isSending(BlockState blockState) {
-        return EnumTransferState.sending.equals(blockState.get(transferProp));
+        return EnumTransferState.sending.equals(blockState.getValue(transferProp));
     }
 
     public static boolean hasPlate(BlockState blockState) {
-        return blockState.get(plateProp);
+        return blockState.getValue(plateProp);
     }
 
     public static void updateCellProp(World world, BlockPos pos, boolean hasCell, int cellCharge) {
         BlockState blockState = world.getBlockState(pos);
-        world.setBlockState(pos, blockState.with(cellProp, hasCell ? cellCharge > 0 ? 2 : 1 : 0), 3);
+        world.setBlock(pos, blockState.setValue(cellProp, hasCell ? cellCharge > 0 ? 2 : 1 : 0), 3);
     }
 
     public static Direction getFacing(BlockState blockState) {
-        return blockState.get(facingProp);
+        return blockState.getValue(facingProp);
     }
 
     @Override
     public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(world, pos, blockState, blockState.get(facingProp), face, tools))
+                .filter(interaction -> interaction.isPotentialInteraction(world, pos, blockState, blockState.getValue(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        Direction blockFacing = state.get(facingProp);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        Direction blockFacing = state.getValue(facingProp);
         TransferUnitTile tile = TileEntityOptional.from(world, pos, TransferUnitTile.class).orElse(null);
-        ItemStack heldStack = player.getHeldItem(hand);
+        ItemStack heldStack = player.getItemInHand(hand);
 
         if (tile == null) {
             return ActionResultType.FAIL;
         }
 
-        if (hit.getFace().equals(Direction.UP)) {
+        if (hit.getDirection().equals(Direction.UP)) {
             if (tile.hasCell()) { // remove cell
                 ItemStack cell = tile.removeCell();
-                if (player.inventory.addItemStackToInventory(cell)) {
-                    player.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, 1);
+                if (player.inventory.add(cell)) {
+                    player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
                 } else {
-                    spawnAsEntity(world, pos.up(), cell);
+                    popResource(world, pos.above(), cell);
                 }
 
-                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
+                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.6f);
 
-                world.notifyBlockUpdate(pos, state, state, 3);
+                world.sendBlockUpdated(pos, state, state, 3);
 
-                if (!player.world.isRemote) {
+                if (!player.level.isClientSide) {
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, state, ItemStack.EMPTY);
                 }
 
                 return ActionResultType.SUCCESS;
             } else if (heldStack.getItem() instanceof ItemCellMagmatic) { // put cell
                 tile.putCell(heldStack);
-                player.setHeldItem(hand, ItemStack.EMPTY);
-                world.playSound(player, pos, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
-                world.notifyBlockUpdate(pos, state, state, 3);
+                player.setItemInHand(hand, ItemStack.EMPTY);
+                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundCategory.PLAYERS, 0.5f, 0.5f);
+                world.sendBlockUpdated(pos, state, state, 3);
 
-                if (!player.world.isRemote) {
+                if (!player.level.isClientSide) {
                     BlockUseCriterion.trigger((ServerPlayerEntity) player, state, ItemStack.EMPTY);
                 }
 
                 return ActionResultType.SUCCESS;
             }
-        } else if (blockFacing.equals(hit.getFace().getOpposite()) // attach plate
+        } else if (blockFacing.equals(hit.getDirection().getOpposite()) // attach plate
                 && heldStack.getItem() instanceof InsulatedPlateItem
-                && !state.get(plateProp)) {
+                && !state.getValue(plateProp)) {
 
             attachPlate(world, pos, state, player);
             heldStack.shrink(1);
 
-            if (!player.world.isRemote) {
+            if (!player.level.isClientSide) {
                 BlockUseCriterion.trigger((ServerPlayerEntity) player, state, ItemStack.EMPTY);
             }
 
@@ -238,22 +238,22 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
             TileEntityOptional.from(world, pos, TransferUnitTile.class)
                     .ifPresent(tile -> {
                         if (tile.hasCell()) {
-                            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), tile.getCell().copy());
+                            InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), tile.getCell().copy());
                         }
                     });
 
-            TileEntityOptional.from(world, pos, TransferUnitTile.class).ifPresent(TileEntity::remove);
+            TileEntityOptional.from(world, pos, TransferUnitTile.class).ifPresent(TileEntity::setRemoved);
         }
     }
 
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block fromBlock, BlockPos fromPos, boolean isMoving) {
-        if (!pos.offset(world.getBlockState(pos).get(facingProp)).equals(fromPos)) {
+        if (!pos.relative(world.getBlockState(pos).getValue(facingProp)).equals(fromPos)) {
             TileEntityOptional.from(world, pos, TransferUnitTile.class)
                     .ifPresent(TransferUnitTile::updateTransferState);
         }
@@ -261,7 +261,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-        Direction facing = state.get(facingProp);
+        Direction facing = state.getValue(facingProp);
 
         switch (facing) {
             case NORTH:
@@ -278,8 +278,8 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(facingProp, configProp, plateProp, cellProp, transferProp);
     }
 
@@ -298,22 +298,22 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return super.getStateForPlacement(context)
-                .with(facingProp, context.getPlacementHorizontalFacing());
+                .setValue(facingProp, context.getHorizontalDirection());
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
 
     @Override
     public BlockState rotate(final BlockState state, final Rotation rotation) {
-        return state.with(facingProp, rotation.rotate(state.get(facingProp)));
+        return state.setValue(facingProp, rotation.rotate(state.getValue(facingProp)));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.toRotation(state.get(facingProp)));
+        return state.rotate(mirror.getRotation(state.getValue(facingProp)));
     }
 }

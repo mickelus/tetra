@@ -27,7 +27,7 @@ public class GenericTrigger<T extends CriterionInstance> extends AbstractCriteri
     }
 
     @Override
-    protected T deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+    protected T createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
         return deserializer.apply(json, entityPredicate, conditionsParser);
     }
 
@@ -37,7 +37,7 @@ public class GenericTrigger<T extends CriterionInstance> extends AbstractCriteri
      * @param validationPredicate A predicate used to check which criterion will be fulfilled
      */
     public void fulfillCriterion(ServerPlayerEntity player, Predicate<T> validationPredicate) {
-        triggerListeners(player, validationPredicate);
+        trigger(player, validationPredicate);
     }
 
     public static interface TriggerDeserializer<T> {

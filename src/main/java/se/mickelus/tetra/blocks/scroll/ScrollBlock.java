@@ -27,21 +27,23 @@ import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class ScrollBlock extends TetraBlock {
 
     private Arrangement arrangement;
 
-    public static final Material material = new Material.Builder(MaterialColor.WOOL).notSolid().build();
-    public static final SoundType sound = new SoundType(0.8F, 1.3F, SoundEvents.ITEM_BOOK_PAGE_TURN, SoundEvents.ITEM_BOOK_PAGE_TURN,
-            SoundEvents.ITEM_BOOK_PAGE_TURN, SoundEvents.ITEM_BOOK_PAGE_TURN, SoundEvents.ITEM_BOOK_PAGE_TURN);
+    public static final Material material = new Material.Builder(MaterialColor.WOOL).nonSolid().build();
+    public static final SoundType sound = new SoundType(0.8F, 1.3F, SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN,
+            SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN);
 
     public ScrollBlock(String registryName, Arrangement arrangement) {
-        super(Properties.create(material).sound(sound));
+        super(Properties.of(material).sound(sound));
 
         setRegistryName(TetraMod.MOD_ID, registryName);
 
         this.arrangement = arrangement;
-        this.setDefaultState(this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST));
+        this.registerDefaultState(this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST));
     }
 
     public Arrangement getArrangement() {
@@ -51,7 +53,7 @@ public class ScrollBlock extends TetraBlock {
     @Override
     public boolean canUnlockSchematics(World world, BlockPos pos, BlockPos targetPos) {
         boolean isIntricate = TileEntityOptional.from(world, pos, ScrollTile.class).map(ScrollTile::isIntricate).orElse(false);
-        return !isIntricate || targetPos.up().equals(pos);
+        return !isIntricate || targetPos.above().equals(pos);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class ScrollBlock extends TetraBlock {
     @Override
     public boolean canUnlockCraftingEffects(World world, BlockPos pos, BlockPos targetPos) {
         boolean isIntricate = TileEntityOptional.from(world, pos, ScrollTile.class).map(ScrollTile::isIntricate).orElse(false);
-        return !isIntricate || targetPos.up().equals(pos);
+        return !isIntricate || targetPos.above().equals(pos);
     }
 
     @Override
@@ -71,55 +73,55 @@ public class ScrollBlock extends TetraBlock {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (arrangement == Arrangement.open) {
-            BlockState offsetState = world.getBlockState(pos.down());
+            BlockState offsetState = world.getBlockState(pos.below());
 
             if (offsetState.getBlock()  instanceof AbstractWorkbenchBlock) {
-                return offsetState.onBlockActivated(world, player, hand, new BlockRayTraceResult(Vector3d.ZERO, Direction.UP, pos.down(), true));
+                return offsetState.use(world, player, hand, new BlockRayTraceResult(Vector3d.ZERO, Direction.UP, pos.below(), true));
             }
         }
 
-        return super.onBlockActivated(state, world, pos, player, hand, hit);
+        return super.use(state, world, pos, player, hand, hit);
     }
 
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
+    public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
         Direction facing = Direction.UP;
         if (getArrangement() == Arrangement.wall) {
-            facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
+            facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
         }
 
-        BlockPos offsetPos = pos.offset(facing.getOpposite());
+        BlockPos offsetPos = pos.relative(facing.getOpposite());
         BlockState offsetState = world.getBlockState(offsetPos);
 
         if (getArrangement() == Arrangement.open) {
             return offsetState.getBlock() instanceof AbstractWorkbenchBlock;
         }
 
-        return offsetState.isSolidSide(world, offsetPos, facing);
+        return offsetState.isFaceSturdy(world, offsetPos, facing);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState blockState, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
-        if (!blockState.isValidPosition(world, currentPos)) {
-            if (!world.isRemote() && world.getWorldInfo().getGameRulesInstance().getBoolean(GameRules.DO_TILE_DROPS) && world instanceof World) {
+    public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+        if (!blockState.canSurvive(world, currentPos)) {
+            if (!world.isClientSide() && world.getLevelData().getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && world instanceof World) {
                 dropScrolls((World) world, currentPos);
             }
-            return Blocks.AIR.getDefaultState();
+            return Blocks.AIR.defaultBlockState();
         }
 
         return blockState;
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderShape(BlockState state) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
@@ -135,10 +137,10 @@ public class ScrollBlock extends TetraBlock {
     }
 
     @Override
-    public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        super.onBlockHarvested(world, pos, state, player);
+    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        super.playerWillDestroy(world, pos, state, player);
 
-        if (!world.isRemote && !player.isCreative() && world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)) {
+        if (!world.isClientSide && !player.isCreative() && world.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
             dropScrolls(world, pos);
         }
     }
@@ -148,11 +150,11 @@ public class ScrollBlock extends TetraBlock {
                 .ifPresent(tile -> {
                     for (CompoundNBT nbt: tile.getItemTags()) {
                         ItemStack itemStack = new ItemStack(ScrollItem.instance);
-                        itemStack.setTagInfo("BlockEntityTag", nbt);
+                        itemStack.addTagElement("BlockEntityTag", nbt);
 
                         ItemEntity entity = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack);
-                        entity.setDefaultPickupDelay();
-                        world.addEntity(entity);
+                        entity.setDefaultPickUpDelay();
+                        world.addFreshEntity(entity);
                     }
                 });
     }

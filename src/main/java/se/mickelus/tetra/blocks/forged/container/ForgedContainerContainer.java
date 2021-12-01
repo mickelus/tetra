@@ -71,7 +71,7 @@ public class ForgedContainerContainer extends Container {
 
     @OnlyIn(Dist.CLIENT)
     public static ForgedContainerContainer create(int windowId, BlockPos pos, PlayerInventory inv) {
-        ForgedContainerTile te = (ForgedContainerTile) Minecraft.getInstance().world.getTileEntity(pos);
+        ForgedContainerTile te = (ForgedContainerTile) Minecraft.getInstance().level.getBlockEntity(pos);
         return new ForgedContainerContainer(windowId, te, inv, Minecraft.getInstance().player);
     }
 
@@ -82,7 +82,7 @@ public class ForgedContainerContainer extends Container {
             Arrays.stream(compartmentSlots[i]).forEach(slot -> slot.toggle(enabled));
         }
 
-        if (tile.getWorld().isRemote) {
+        if (tile.getLevel().isClientSide) {
             TetraMod.packetHandler.sendToServer(new ChangeCompartmentPacket(compartmentIndex));
         }
     }
@@ -97,36 +97,36 @@ public class ForgedContainerContainer extends Container {
      * Take a stack from the specified inventory slot.
      */
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(PlayerEntity player, int index) {
         ItemStack resultStack = ItemStack.EMPTY;
 
-        Slot slot = inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack slotStack = slot.getStack();
+        Slot slot = slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
 
             resultStack = slotStack.copy();
 
             if (index < getSlots()) {
-                if (!mergeItemStack(slotStack, getSlots(), this.inventorySlots.size(), true)) {
+                if (!moveItemStackTo(slotStack, getSlots(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!mergeItemStack(slotStack, currentCompartment * ForgedContainerTile.compartmentSize,
+            } else if (!moveItemStackTo(slotStack, currentCompartment * ForgedContainerTile.compartmentSize,
                     ( currentCompartment + 1) * ForgedContainerTile.compartmentSize, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (slotStack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
         }
 
         return resultStack;
     }
 
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerIn, ForgedContainerBlock.instance);
+    public boolean stillValid(PlayerEntity playerIn) {
+        return stillValid(IWorldPosCallable.create(tile.getLevel(), tile.getBlockPos()), playerIn, ForgedContainerBlock.instance);
     }
 
     public ForgedContainerTile getTile() {

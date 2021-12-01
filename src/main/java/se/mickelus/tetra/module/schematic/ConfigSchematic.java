@@ -67,7 +67,7 @@ public class ConfigSchematic extends BaseSchematic {
     private Optional<OutcomeDefinition> getOutcomeFromMaterial(ItemStack materialStack, int slot) {
         return Arrays.stream(definition.outcomes)
                 .filter(outcome -> outcome.materialSlot == slot)
-                .filter(outcome -> outcome.material.getPredicate() != null && outcome.material.getPredicate().test(materialStack))
+                .filter(outcome -> outcome.material.getPredicate() != null && outcome.material.getPredicate().matches(materialStack))
                 .reduce((a, b) -> b); // returns the last element, there's no findLast :c
     }
 
@@ -79,17 +79,17 @@ public class ConfigSchematic extends BaseSchematic {
     @Override
     public String getName() {
         if (definition.localizationKey != null) {
-            return I18n.format(localizationPrefix + definition.localizationKey + nameSuffix);
+            return I18n.get(localizationPrefix + definition.localizationKey + nameSuffix);
         }
-        return I18n.format(localizationPrefix + definition.key + nameSuffix);
+        return I18n.get(localizationPrefix + definition.key + nameSuffix);
     }
 
     @Override
     public String getDescription(ItemStack itemStack) {
         if (definition.localizationKey != null) {
-            return I18n.format(localizationPrefix + definition.localizationKey + descriptionSuffix);
+            return I18n.get(localizationPrefix + definition.localizationKey + descriptionSuffix);
         }
-        return I18n.format(localizationPrefix + definition.key + descriptionSuffix);
+        return I18n.get(localizationPrefix + definition.key + descriptionSuffix);
     }
 
     @Nullable
@@ -112,9 +112,9 @@ public class ConfigSchematic extends BaseSchematic {
     @Override
     public String getSlotName(ItemStack itemStack, int index) {
         if (definition.localizationKey != null) {
-            return I18n.format(localizationPrefix + definition.localizationKey + slotSuffix + (index + 1));
+            return I18n.get(localizationPrefix + definition.localizationKey + slotSuffix + (index + 1));
         }
-        return I18n.format(localizationPrefix + definition.key + slotSuffix + (index + 1));
+        return I18n.get(localizationPrefix + definition.key + slotSuffix + (index + 1));
     }
 
     @Override
@@ -158,7 +158,7 @@ public class ConfigSchematic extends BaseSchematic {
             return ((ItemPredicateModular) definition.requirement).test(itemStack, moduleSlot);
         }
 
-        return definition.requirement.test(itemStack);
+        return definition.requirement.matches(itemStack);
     }
 
     @Override
@@ -184,7 +184,7 @@ public class ConfigSchematic extends BaseSchematic {
         if (definition.materialRevealSlot > -1) {
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 4; y++) {
-                    if (getOutcomeFromMaterial(player.inventory.getStackInSlot(y * 9 + x), definition.materialRevealSlot).isPresent()) {
+                    if (getOutcomeFromMaterial(player.inventory.getItem(y * 9 + x), definition.materialRevealSlot).isPresent()) {
                         return true;
                     }
                 }

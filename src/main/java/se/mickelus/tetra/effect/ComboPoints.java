@@ -20,7 +20,7 @@ public class ComboPoints {
             .build();
 
     private static int getIdentifier(Entity entity) {
-        return entity.world.isRemote ? -entity.getEntityId() : entity.getEntityId();
+        return entity.level.isClientSide ? -entity.getId() : entity.getId();
     }
 
     public static void increment(Entity entity) {
@@ -60,7 +60,7 @@ public class ComboPoints {
     }
 
     public static boolean canSpend(LivingEntity entity) {
-        return Stream.of(entity.getHeldItemMainhand(), entity.getHeldItemOffhand())
+        return Stream.of(entity.getMainHandItem(), entity.getOffhandItem())
                 .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
                 .anyMatch(itemStack -> canSpend((IModularItem) itemStack.getItem(), itemStack));
     }
@@ -71,9 +71,9 @@ public class ComboPoints {
     }
 
     public static void onAttackEntity(AttackEntityEvent event) {
-        if (event.getTarget().canBeAttackedWithItem()
+        if (event.getTarget().isAttackable()
                 && canSpend(event.getPlayer())
-                && event.getPlayer().getCooledAttackStrength(0) > 0.9) {
+                && event.getPlayer().getAttackStrengthScale(0) > 0.9) {
             increment(event.getPlayer());
         }
     }

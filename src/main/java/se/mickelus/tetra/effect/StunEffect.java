@@ -16,14 +16,14 @@ import java.util.Random;
 
 public class StunEffect {
     public static void perform(ItemStack itemStack, int effectLevel, LivingEntity attacker, LivingEntity target) {
-        if (!attacker.world.isRemote && attacker.getRNG().nextFloat() < effectLevel / 100f) {
+        if (!attacker.level.isClientSide && attacker.getRandom().nextFloat() < effectLevel / 100f) {
             int duration = (int) (EffectHelper.getEffectEfficiency(itemStack, ItemEffect.stun) * 20);
 
-            target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
-            target.getEntityWorld().playSound(null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_STRONG,
+            target.addEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+            target.getCommandSenderWorld().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.PLAYER_ATTACK_STRONG,
                     SoundCategory.PLAYERS, 0.8f, 0.9f);
 
-            ((ServerWorld) target.getEntityWorld()).spawnParticle(ParticleTypes.ENTITY_EFFECT, target.getPosX(), target.getPosYEye(), target.getPosZ(),
+            ((ServerWorld) target.getCommandSenderWorld()).sendParticles(ParticleTypes.ENTITY_EFFECT, target.getX(), target.getEyeY(), target.getZ(),
                     5, 0, 0, 0, 0);
         }
     }

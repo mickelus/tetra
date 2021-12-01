@@ -41,13 +41,13 @@ public class CoreExtractorPipeBlock extends TetraBlock {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     public static boolean isPowered(World world, BlockPos pos) {
         BlockState pipeState = world.getBlockState(pos);
-        return instance.equals(pipeState.getBlock()) && pipeState.get(poweredProp);
+        return instance.equals(pipeState.getBlock()) && pipeState.getValue(poweredProp);
     }
 
     private boolean shouldGetPower(World world, BlockPos pos, Direction blockFacing) {
@@ -55,29 +55,29 @@ public class CoreExtractorPipeBlock extends TetraBlock {
         // pipe opposite of this pipes facing
         for (Direction facing : Direction.values()) {
             if (!facing.equals(blockFacing)) {
-                BlockState adjacent = world.getBlockState(pos.offset(facing));
+                BlockState adjacent = world.getBlockState(pos.relative(facing));
                 if (adjacent.getBlock().equals(this)
-                        && facing.equals(adjacent.get(facingProp).getOpposite())
-                        && adjacent.get(poweredProp)) {
+                        && facing.equals(adjacent.getValue(facingProp).getOpposite())
+                        && adjacent.getValue(poweredProp)) {
                     return true;
                 }
             }
         }
 
-        return SeepingBedrockBlock.isActive(world, pos.offset(blockFacing.getOpposite()));
+        return SeepingBedrockBlock.isActive(world, pos.relative(blockFacing.getOpposite()));
     }
 
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block fromBlock, BlockPos fromPos, boolean isMoving) {
-        boolean getsPowered = shouldGetPower(world, pos, state.get(facingProp));
+        boolean getsPowered = shouldGetPower(world, pos, state.getValue(facingProp));
 
-        if (state.get(poweredProp) != getsPowered) {
-            world.setBlockState(pos, state.with(poweredProp, getsPowered));
+        if (state.getValue(poweredProp) != getsPowered) {
+            world.setBlockAndUpdate(pos, state.setValue(poweredProp, getsPowered));
         }
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(facingProp, poweredProp);
     }
 
@@ -85,17 +85,17 @@ public class CoreExtractorPipeBlock extends TetraBlock {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return super.getStateForPlacement(context)
-                .with(facingProp, context.getFace())
-                .with(poweredProp, shouldGetPower(context.getWorld(), context.getPos(), context.getFace()));
+                .setValue(facingProp, context.getClickedFace())
+                .setValue(poweredProp, shouldGetPower(context.getLevel(), context.getClickedPos(), context.getClickedFace()));
     }
 
     @Override
     public BlockState rotate(BlockState state, Rotation direction) {
-        return state.with(facingProp, direction.rotate(state.get(facingProp)));
+        return state.setValue(facingProp, direction.rotate(state.getValue(facingProp)));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.toRotation(state.get(facingProp)));
+        return state.rotate(mirror.getRotation(state.getValue(facingProp)));
     }
 }

@@ -57,7 +57,7 @@ public class ModularOverrideList extends ItemOverrideList {
 
     @Nullable
     @Override
-    public IBakedModel getOverrideModel(IBakedModel originalModel, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
+    public IBakedModel resolve(IBakedModel originalModel, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
         CompoundNBT baseTag = stack.getTag();
         IBakedModel result = originalModel;
 

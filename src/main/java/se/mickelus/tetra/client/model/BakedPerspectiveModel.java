@@ -36,7 +36,7 @@ public class BakedPerspectiveModel extends BakedItemModel {
     }
 
     @Override
-    public ItemCameraTransforms getItemCameraTransforms() {
+    public ItemCameraTransforms getTransforms() {
         return cameraTransforms;
     }
 }

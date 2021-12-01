@@ -65,7 +65,7 @@ public class GuiSlotDetail extends GuiElement {
 
         tabGroup = new VerticalTabGroupGui(1, 6, this::changeTab, GuiTextures.workbench, 128, 32,
                 IntStream.range(0, 3)
-                        .mapToObj(i -> I18n.format(labels[i]))
+                        .mapToObj(i -> I18n.get(labels[i]))
                         .toArray(String[]::new));
         tabGroup.setHasContent(1, true);
         addChild(tabGroup);
@@ -125,8 +125,8 @@ public class GuiSlotDetail extends GuiElement {
         if (currentSchematic == null) {
             updateSchematicList(player, tileEntity, selectedSlot);
         } else {
-            World world = tileEntity.getWorld();
-            BlockPos pos = tileEntity.getPos();
+            World world = tileEntity.getLevel();
+            BlockPos pos = tileEntity.getBlockPos();
             Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, world, pos, world.getBlockState(pos));
             ItemStack[] materials = tileEntity.getMaterials();
 

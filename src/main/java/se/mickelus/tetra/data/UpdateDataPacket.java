@@ -28,21 +28,21 @@ public class UpdateDataPacket extends AbstractPacket {
 
     @Override
     public void toBytes(PacketBuffer buffer) {
-        buffer.writeString(directory);
+        buffer.writeUtf(directory);
         buffer.writeInt(data.size());
         data.forEach((resourceLocation, data) -> {
             buffer.writeResourceLocation(resourceLocation);
-            buffer.writeString(data);
+            buffer.writeUtf(data);
         });
     }
 
     @Override
     public void fromBytes(PacketBuffer buffer) {
-        directory = buffer.readString();
+        directory = buffer.readUtf();
         int count = buffer.readInt();
         data = new HashMap<>();
         for (int i = 0; i < count; i++) {
-            data.put(buffer.readResourceLocation(), buffer.readString());
+            data.put(buffer.readResourceLocation(), buffer.readUtf());
         }
     }
 

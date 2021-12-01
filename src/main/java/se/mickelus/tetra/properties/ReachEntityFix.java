@@ -50,32 +50,32 @@ public class ReachEntityFix {
 
     private static void raytraceTarget() {
         Minecraft mc = Minecraft.getInstance();
-        double reach = mc.playerController.getBlockReachDistance() - 1.5f; // subtract as default entity reach is 3
-        if (mc.objectMouseOver != null
-                && mc.objectMouseOver.getType() != RayTraceResult.Type.ENTITY
+        double reach = mc.gameMode.getPickRange() - 1.5f; // subtract as default entity reach is 3
+        if (mc.hitResult != null
+                && mc.hitResult.getType() != RayTraceResult.Type.ENTITY
                 && reach > (ForgeMod.REACH_DISTANCE.get().getDefaultValue() - 2f)) {
 
-            Entity entity = mc.getRenderViewEntity();
+            Entity entity = mc.getCameraEntity();
             Vector3d eyePos = entity.getEyePosition(1);
-            Vector3d lookVec = entity.getLook(1);
+            Vector3d lookVec = entity.getViewVector(1);
             Vector3d targetVec = eyePos.add(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
 
-            AxisAlignedBB traceBox = entity.getBoundingBox().expand(lookVec.scale(reach)).grow(1.0D, 1.0D, 1.0D);
+            AxisAlignedBB traceBox = entity.getBoundingBox().expandTowards(lookVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
 
-            if (mc.objectMouseOver.getType() != RayTraceResult.Type.MISS) {
-                reach = mc.objectMouseOver.getHitVec().squareDistanceTo(eyePos);
+            if (mc.hitResult.getType() != RayTraceResult.Type.MISS) {
+                reach = mc.hitResult.getLocation().distanceToSqr(eyePos);
             } else {
                 reach = reach * reach;
             }
 
-            EntityRayTraceResult rayTraceResult = ProjectileHelper.rayTraceEntities(entity, eyePos, targetVec, traceBox,
-                    hit -> !hit.isSpectator() && hit.canBeCollidedWith(), reach);
+            EntityRayTraceResult rayTraceResult = ProjectileHelper.getEntityHitResult(entity, eyePos, targetVec, traceBox,
+                    hit -> !hit.isSpectator() && hit.isPickable(), reach);
 
             if (rayTraceResult != null) {
-                mc.objectMouseOver = rayTraceResult;
+                mc.hitResult = rayTraceResult;
                 Entity hitEntity = rayTraceResult.getEntity();
                 if (hitEntity instanceof LivingEntity || hitEntity instanceof ItemFrameEntity) {
-                    mc.pointedEntity = hitEntity;
+                    mc.crosshairPickEntity = hitEntity;
                 }
             }
         }

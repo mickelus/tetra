@@ -5,6 +5,8 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class DepletedBedrockBlock extends TetraBlock {
     public static final String unlocalizedName = "depleted_bedrock";
 
@@ -12,7 +14,7 @@ public class DepletedBedrockBlock extends TetraBlock {
     public static DepletedBedrockBlock instance;
 
     public DepletedBedrockBlock() {
-        super(Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F).noDrops());
+        super(Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
         setRegistryName(unlocalizedName);
     }
 }

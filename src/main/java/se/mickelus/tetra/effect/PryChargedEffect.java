@@ -25,7 +25,7 @@ public class PryChargedEffect extends ChargedAbilityEffect {
     @Override
     public void perform(PlayerEntity attacker, Hand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vector3d hitVec, int chargedTicks) {
 
-        if (!target.world.isRemote) {
+        if (!target.level.isClientSide) {
             int amplifier = item.getEffectLevel(itemStack, ItemEffect.pry);
             amplifier += (int) (getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
 
@@ -33,7 +33,7 @@ public class PryChargedEffect extends ChargedAbilityEffect {
             damageMultiplier += getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) / 100d;
 
             int comboPoints = ComboPoints.get(attacker);
-            boolean isSatiated = !attacker.getFoodStats().needFood();
+            boolean isSatiated = !attacker.getFoodData().needsFood();
 
             AbilityUseResult result = PryEffect.performRegular(attacker, item, itemStack, damageMultiplier, amplifier, target, isSatiated, comboPoints);
             item.tickProgression(attacker, itemStack, result == AbilityUseResult.fail ? 1 : 2);
@@ -44,9 +44,9 @@ public class PryChargedEffect extends ChargedAbilityEffect {
             }
         }
 
-        attacker.addExhaustion(1f);
+        attacker.causeFoodExhaustion(1f);
         attacker.swing(hand, false);
-        attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+        attacker.getCooldowns().addCooldown(item, getCooldown(item, itemStack));
 
         if (ComboPoints.canSpend(item, itemStack)) {
             ComboPoints.reset(attacker);

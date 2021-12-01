@@ -88,10 +88,10 @@ public class ScannerOverlayGui extends GuiRoot {
     public void toggleSnooze() {
         if (isSnoozed()) {
             snooze = -1;
-            mc.getSoundHandler().play(SimpleSound.master(SoundEvents.BLOCK_GRINDSTONE_USE, 2f, 0.3f));
+            mc.getSoundManager().play(SimpleSound.forUI(SoundEvents.GRINDSTONE_USE, 2f, 0.3f));
         } else {
             snooze = ticks + snoozeLength;
-            mc.getSoundHandler().play(SimpleSound.master(SoundEvents.BLOCK_GRINDSTONE_USE, 1.6f, 0.3f));
+            mc.getSoundManager().play(SimpleSound.forUI(SoundEvents.GRINDSTONE_USE, 1.6f, 0.3f));
         }
     }
 
@@ -104,12 +104,12 @@ public class ScannerOverlayGui extends GuiRoot {
             int seconds = Math.round((snooze - ticks) / 20f);
 
             if (seconds > 60) {
-                return I18n.format("tetra.holo.scan.snoozed", String.format("%02d", seconds / 60), String.format("%02d", seconds % 60));
+                return I18n.get("tetra.holo.scan.snoozed", String.format("%02d", seconds / 60), String.format("%02d", seconds % 60));
             }
 
-            return I18n.format("tetra.holo.scan.snoozed", String.format("%02d", seconds / 60), String.format("%02d", seconds % 60));
+            return I18n.get("tetra.holo.scan.snoozed", String.format("%02d", seconds / 60), String.format("%02d", seconds % 60));
         } else {
-            return I18n.format("tetra.holo.scan.active");
+            return I18n.get("tetra.holo.scan.active");
         }
     }
 
@@ -133,7 +133,7 @@ public class ScannerOverlayGui extends GuiRoot {
     }
 
     private void updateGuiVisibility() {
-        int scannerRange = Stream.of(mc.player.getHeldItemMainhand(), mc.player.getHeldItemOffhand())
+        int scannerRange = Stream.of(mc.player.getMainHandItem(), mc.player.getOffhandItem())
                 .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)
                 .map(stack -> ((IModularItem) stack.getItem()).getEffectLevel(stack, ItemEffect.scannerRange))
                 .findFirst()
@@ -153,19 +153,19 @@ public class ScannerOverlayGui extends GuiRoot {
 
     @SubscribeEvent
     public void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        mc.getSoundHandler().stop(sound);
+        mc.getSoundManager().stop(sound);
         sound = new ScannerSound(mc);
     }
 
     @SubscribeEvent
     public void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        mc.getSoundHandler().stop(sound);
+        mc.getSoundManager().stop(sound);
         sound = new ScannerSound(mc);
     }
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        World world = mc.world;
+        World world = mc.level;
         PlayerEntity player = mc.player;
 
         if (world == null || player == null || TickEvent.Phase.START != event.phase) {
@@ -236,14 +236,14 @@ public class ScannerOverlayGui extends GuiRoot {
     @Nullable
     private BlockPos getPositions(PlayerEntity player, World world, int pitchOffset, int yawOffset) {
         Vector3d eyePosition = player.getEyePosition(0);
-        Vector3d lookVector = getVectorForRotation(player.getPitch(1) + pitchOffset, player.getYaw(1) + yawOffset);
+        Vector3d lookVector = getVectorForRotation(player.getViewXRot(1) + pitchOffset, player.getViewYRot(1) + yawOffset);
         Vector3d endVector = eyePosition.add(lookVector.x * range, lookVector.y * range, lookVector.z * range);
 
-        return IBlockReader.doRayTrace(new RayTraceContext(eyePosition, endVector, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player), (ctx, blockPos) -> {
+        return IBlockReader.traverseBlocks(new RayTraceContext(eyePosition, endVector, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player), (ctx, blockPos) -> {
             BlockState blockState = world.getBlockState(blockPos);
 
             if (blockState.getBlock().getTags().contains(tag)) {
-                return blockPos.toImmutable();
+                return blockPos.immutable();
             }
             return null;
         }, ctx -> null);
@@ -269,12 +269,12 @@ public class ScannerOverlayGui extends GuiRoot {
     @Override
     public void draw() {
         if (isVisible()) {
-            MainWindow window = mc.getMainWindow();
-            width = window.getScaledWidth();
-            height = window.getScaledHeight();
+            MainWindow window = mc.getWindow();
+            width = window.getGuiScaledWidth();
+            height = window.getGuiScaledHeight();
 
-            int mouseX = (int) (mc.mouseHelper.getMouseX() * width / window.getWidth());
-            int mouseY = (int) (mc.mouseHelper.getMouseY() * height / window.getHeight());
+            int mouseX = (int) (mc.mouseHandler.xpos() * width / window.getScreenWidth());
+            int mouseY = (int) (mc.mouseHandler.ypos() * height / window.getScreenHeight());
 
             this.drawChildren(new MatrixStack(), 0, 0, width, height, mouseX, mouseY, 1.0F);
 

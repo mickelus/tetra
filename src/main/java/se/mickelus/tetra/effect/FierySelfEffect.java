@@ -6,13 +6,13 @@ import net.minecraft.util.math.BlockPos;
 
 public class FierySelfEffect {
     public static void perform(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        if (!entity.world.isRemote) {
+        if (!entity.level.isClientSide) {
             double fierySelfEfficiency = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.fierySelf);
             if (fierySelfEfficiency > 0) {
-                BlockPos pos = entity.getPosition();
-                float temperature = entity.world.getBiome(pos).getTemperature(pos);
-                if (entity.getRNG().nextDouble() < fierySelfEfficiency * temperature * multiplier) {
-                    entity.setFire(EffectHelper.getEffectLevel(itemStack, ItemEffect.fierySelf));
+                BlockPos pos = entity.blockPosition();
+                float temperature = entity.level.getBiome(pos).getTemperature(pos);
+                if (entity.getRandom().nextDouble() < fierySelfEfficiency * temperature * multiplier) {
+                    entity.setSecondsOnFire(EffectHelper.getEffectLevel(itemStack, ItemEffect.fierySelf));
                 }
             }
         }

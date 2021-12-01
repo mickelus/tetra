@@ -27,22 +27,22 @@ public class ScannerDebugRenderer {
 
         if (player != null && player.isCreative()) {
             MatrixStack matrixStack = event.getMatrixStack();
-            IVertexBuilder vertexBuilder = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource().getBuffer(RenderType.getLines());
+            IVertexBuilder vertexBuilder = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
             Vector3d eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTicks());
 
-            GlStateManager.lineWidth(3);
+            GlStateManager._lineWidth(3);
             if (overlayGui.upHighlight != null) drawDebugBox(overlayGui.upHighlight, eyePos, matrixStack, vertexBuilder, 1, 0, 0, 0.5f);
             if (overlayGui.midHighlight != null) drawDebugBox(overlayGui.midHighlight, eyePos, matrixStack, vertexBuilder, 0, 1, 0, 0.5f);
             if (overlayGui.downHighlight != null) drawDebugBox(overlayGui.downHighlight, eyePos, matrixStack, vertexBuilder, 0, 0, 1, 0.5f);
-            GlStateManager.lineWidth(1.0F);
+            GlStateManager._lineWidth(1.0F);
         }
     }
 
     private void drawDebugBox(BlockPos blockPos, Vector3d eyePos, MatrixStack matrixStack, IVertexBuilder vertexBuilder, float red, float green, float blue, float alpha) {
-        Vector3d pos = Vector3d.copy(blockPos).subtract(eyePos);
+        Vector3d pos = Vector3d.atLowerCornerOf(blockPos).subtract(eyePos);
         AxisAlignedBB aabb = new AxisAlignedBB(pos, pos.add(1, 1, 1));
 
         // draw center box
-        WorldRenderer.drawBoundingBox(matrixStack, vertexBuilder, aabb.grow(0.0030000000949949026D), red, green, blue, alpha);
+        WorldRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.0030000000949949026D), red, green, blue, alpha);
     }
 }

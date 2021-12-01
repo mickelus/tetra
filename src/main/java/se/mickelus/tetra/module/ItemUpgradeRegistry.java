@@ -54,9 +54,9 @@ public class ItemUpgradeRegistry {
      */
     public ItemStack getReplacement(ItemStack itemStack) {
         for (ReplacementDefinition replacementDefinition: replacementDefinitions) {
-            if (replacementDefinition.predicate.test(itemStack)) {
+            if (replacementDefinition.predicate.matches(itemStack)) {
                 ItemStack replacementStack = replacementDefinition.itemStack.copy();
-                replacementStack.setDamage(itemStack.getDamage());
+                replacementStack.setDamageValue(itemStack.getDamageValue());
                 transferEnchantments(itemStack, replacementStack);
 
                 for (BiFunction<ItemStack, ItemStack, ItemStack> hook: replacementHooks) {
@@ -87,7 +87,7 @@ public class ItemUpgradeRegistry {
                 if (modules.length > 0) {
 
                     // since efficiency doesn't stack on double headed items it should be fully applied to a single module instead of being split
-                    if (Enchantments.EFFICIENCY.equals(enchantment)) {
+                    if (Enchantments.BLOCK_EFFICIENCY.equals(enchantment)) {
                         float level = 1f * enchantmentLevel / mapping.multiplier;
                         for (ItemModuleMajor module : modules) {
                             if (module.acceptsImprovementLevel(mapping.improvement, (int) level)) {

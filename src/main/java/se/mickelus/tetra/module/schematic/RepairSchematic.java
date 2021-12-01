@@ -48,7 +48,7 @@ public class RepairSchematic extends BaseSchematic {
 
     @Override
     public String getName() {
-        return I18n.format(localizationPrefix + key + nameSuffix);
+        return I18n.get(localizationPrefix + key + nameSuffix);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class RepairSchematic extends BaseSchematic {
                     }
                     return null;
                 })
-                .map(cycle -> I18n.format(localizationPrefix + key + extendedDescriptionSuffix, cycle))
-                .orElseGet(() -> I18n.format(localizationPrefix + key + descriptionSuffix));
+                .map(cycle -> I18n.get(localizationPrefix + key + extendedDescriptionSuffix, cycle))
+                .orElseGet(() -> I18n.get(localizationPrefix + key + descriptionSuffix));
     }
 
     @Override
@@ -79,7 +79,7 @@ public class RepairSchematic extends BaseSchematic {
 
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
-        return I18n.format(localizationPrefix + key + slotSuffix);
+        return I18n.get(localizationPrefix + key + slotSuffix);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class RepairSchematic extends BaseSchematic {
                     .map(Collection::stream)
                     .orElse(Stream.empty())
                     .map(definition -> definition.material.getPredicate())
-                    .anyMatch(predicate -> predicate.test(materialStack));
+                    .anyMatch(predicate -> predicate.matches(materialStack));
         }
         return false;
     }

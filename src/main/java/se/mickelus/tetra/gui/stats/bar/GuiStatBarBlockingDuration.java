@@ -12,7 +12,7 @@ public class GuiStatBarBlockingDuration extends GuiStatBar {
     private static final IStatGetter cooldownGetter = new StatGetterEffectEfficiency(ItemEffect.blocking, 1);
 
     public GuiStatBarBlockingDuration(int x, int y, int width) {
-        super(x, y, width, I18n.format("tetra.stats.blocking"), 0, ItemModularHandheld.blockingDurationLimit,
+        super(x, y, width, I18n.get("tetra.stats.blocking"), 0, ItemModularHandheld.blockingDurationLimit,
                 false, durationGetter, LabelGetterBasic.integerLabel, new TooltipGetterBlockingDuration(durationGetter, cooldownGetter));
 
         setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.blocking_reflect", 2, new StatGetterEffectLevel(ItemEffect.blockingReflect, 1), new TooltipGetterBlockingReflect()));

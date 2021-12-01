@@ -16,19 +16,21 @@ import se.mickelus.tetra.Tooltips;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class ReverberatingPearlItem extends TetraItem {
     private static final String unlocalizedName = "reverberating_pearl";
 //    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
 //    public static ReverberatingPearlItem instance;
 
     public ReverberatingPearlItem() {
-        super(new Properties().group(TetraItemGroup.instance));
+        super(new Properties().tab(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
         tooltip.add(new TranslationTextComponent("item." + unlocalizedName + ".tooltip"));
         tooltip.add(new StringTextComponent(" "));
 

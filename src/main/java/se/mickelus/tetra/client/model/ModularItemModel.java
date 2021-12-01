@@ -85,7 +85,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
         ImmutableMap<ItemCameraTransforms.TransformType, TransformationMatrix> transforms = PerspectiveMapWrapper.getTransforms(modelTransform);
         for(int i = 0; i < moduleModels.size(); i++) {
             ModuleModel model = moduleModels.get(i);
-            TextureAtlasSprite sprite = spriteGetter.apply(new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, model.location));
+            TextureAtlasSprite sprite = spriteGetter.apply(new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, model.location));
             builder.addAll(getQuadsForSprite(i, sprite, rotationTransform, model.tint));
 
             particle = sprite;
@@ -100,21 +100,21 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
             ItemCameraTransforms variant = transformVariants.get(transformVariant);
 
             return new ItemCameraTransforms(
-            variant.hasCustomTransform(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND) ?
-                variant.thirdperson_left : cameraTransforms.thirdperson_left,
-            variant.hasCustomTransform(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND) ?
-                variant.thirdperson_right : cameraTransforms.thirdperson_right,
-            variant.hasCustomTransform(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND) ?
-                variant.firstperson_left : cameraTransforms.firstperson_left,
-            variant.hasCustomTransform(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) ?
-                variant.firstperson_right : cameraTransforms.firstperson_right,
-            variant.hasCustomTransform(ItemCameraTransforms.TransformType.HEAD) ?
+            variant.hasTransform(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND) ?
+                variant.thirdPersonLeftHand : cameraTransforms.thirdPersonLeftHand,
+            variant.hasTransform(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND) ?
+                variant.thirdPersonRightHand : cameraTransforms.thirdPersonRightHand,
+            variant.hasTransform(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND) ?
+                variant.firstPersonLeftHand : cameraTransforms.firstPersonLeftHand,
+            variant.hasTransform(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) ?
+                variant.firstPersonRightHand : cameraTransforms.firstPersonRightHand,
+            variant.hasTransform(ItemCameraTransforms.TransformType.HEAD) ?
                 variant.head : cameraTransforms.head,
-            variant.hasCustomTransform(ItemCameraTransforms.TransformType.GUI) ?
+            variant.hasTransform(ItemCameraTransforms.TransformType.GUI) ?
                 variant.gui : cameraTransforms.gui,
-            variant.hasCustomTransform(ItemCameraTransforms.TransformType.GROUND) ?
+            variant.hasTransform(ItemCameraTransforms.TransformType.GROUND) ?
                 variant.ground : cameraTransforms.ground,
-            variant.hasCustomTransform(ItemCameraTransforms.TransformType.FIXED) ?
+            variant.hasTransform(ItemCameraTransforms.TransformType.FIXED) ?
                 variant.fixed : cameraTransforms.fixed
             );
         }
@@ -141,17 +141,17 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
 
         // front
         builder.add(buildQuad(transform, Direction.NORTH, sprite, tintIndex, color,
-                0, 0, 7.5f / 16f, sprite.getMinU(), sprite.getMaxV(),
-                0, 1, 7.5f / 16f, sprite.getMinU(), sprite.getMinV(),
-                1, 1, 7.5f / 16f, sprite.getMaxU(), sprite.getMinV(),
-                1, 0, 7.5f / 16f, sprite.getMaxU(), sprite.getMaxV()
+                0, 0, 7.5f / 16f, sprite.getU0(), sprite.getV1(),
+                0, 1, 7.5f / 16f, sprite.getU0(), sprite.getV0(),
+                1, 1, 7.5f / 16f, sprite.getU1(), sprite.getV0(),
+                1, 0, 7.5f / 16f, sprite.getU1(), sprite.getV1()
         ));
         // back
         builder.add(buildQuad(transform, Direction.SOUTH, sprite, tintIndex, color,
-                0, 0, 8.5f / 16f, sprite.getMinU(), sprite.getMaxV(),
-                1, 0, 8.5f / 16f, sprite.getMaxU(), sprite.getMaxV(),
-                1, 1, 8.5f / 16f, sprite.getMaxU(), sprite.getMinV(),
-                0, 1, 8.5f / 16f, sprite.getMinU(), sprite.getMinV()
+                0, 0, 8.5f / 16f, sprite.getU0(), sprite.getV1(),
+                1, 0, 8.5f / 16f, sprite.getU1(), sprite.getV1(),
+                1, 1, 8.5f / 16f, sprite.getU1(), sprite.getV0(),
+                0, 1, 8.5f / 16f, sprite.getU0(), sprite.getV0()
         ));
 
         return builder.build();
@@ -198,8 +198,8 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
                 throw new IllegalArgumentException("can't handle z-oriented side");
         }
 
-        float dx = side.getDirectionVec().getX() * eps / width;
-        float dy = side.getDirectionVec().getY() * eps / height;
+        float dx = side.getNormal().getX() * eps / width;
+        float dy = side.getNormal().getY() * eps / height;
 
         float u0 = 16f * (x0 - dx);
         float u1 = 16f * (x1 - dx);
@@ -208,10 +208,10 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
 
         return buildQuad(
                 transform, remap(side), sprite, tintIndex, color,
-                x0, y0, z0, sprite.getInterpolatedU(u0), sprite.getInterpolatedV(v0),
-                x1, y1, z0, sprite.getInterpolatedU(u1), sprite.getInterpolatedV(v1),
-                x1, y1, z1, sprite.getInterpolatedU(u1), sprite.getInterpolatedV(v1),
-                x0, y0, z1, sprite.getInterpolatedU(u0), sprite.getInterpolatedV(v0)
+                x0, y0, z0, sprite.getU(u0), sprite.getV(v0),
+                x1, y1, z0, sprite.getU(u1), sprite.getV(v1),
+                x1, y1, z1, sprite.getU(u1), sprite.getV(v1),
+                x0, y0, z1, sprite.getU(u0), sprite.getV(v0)
         );
     }
 
@@ -260,9 +260,9 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
                     consumer.put(e, r, g, b, a);
                     break;
                 case NORMAL:
-                    float offX = (float) side.getXOffset();
-                    float offY = (float) side.getYOffset();
-                    float offZ = (float) side.getZOffset();
+                    float offX = (float) side.getStepX();
+                    float offY = (float) side.getStepY();
+                    float offZ = (float) side.getStepZ();
                     consumer.put(e, offX, offY, offZ, 0f);
                     break;
                 case UV:

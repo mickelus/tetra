@@ -31,11 +31,11 @@ public class BlockstateProvider extends BlockStateProvider {
     }
 
     private ConfiguredModel[] directionalBlock(BlockState state, ModelFile model) {
-        Direction dir = state.get(BlockStateProperties.FACING);
+        Direction dir = state.getValue(BlockStateProperties.FACING);
         return ConfiguredModel.builder()
                 .modelFile(model)
                 .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
-                .rotationY(dir.getAxis().isVertical() ? 0 : (int) dir.getHorizontalAngle() % 360)
+                .rotationY(dir.getAxis().isVertical() ? 0 : (int) dir.toYRot() % 360)
                 .build();
     }
 

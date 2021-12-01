@@ -18,20 +18,20 @@ import java.util.stream.Stream;
 
 public class SuspendEffect {
     private static final Set<Effect> enablingEffects = Stream.concat(
-            Arrays.stream(BeaconTileEntity.EFFECTS_LIST).flatMap(Arrays::stream),
+            Arrays.stream(BeaconTileEntity.BEACON_EFFECTS).flatMap(Arrays::stream),
             Stream.of(Effects.CONDUIT_POWER)
     ).collect(Collectors.toSet());
 
     public static void toggleSuspend(PlayerEntity entity, boolean toggleOn) {
         if (toggleOn) {
             if (canSuspend(entity)) {
-                Vector3d motion = entity.getMotion();
-                entity.setMotion(motion.x, 0, motion.z);
-                entity.velocityChanged = true;
-                entity.addPotionEffect(new EffectInstance(SuspendPotionEffect.instance, 100, 0, false, false));
+                Vector3d motion = entity.getDeltaMovement();
+                entity.setDeltaMovement(motion.x, 0, motion.z);
+                entity.hurtMarked = true;
+                entity.addEffect(new EffectInstance(SuspendPotionEffect.instance, 100, 0, false, false));
             }
         } else {
-            entity.removePotionEffect(SuspendPotionEffect.instance);
+            entity.removeEffect(SuspendPotionEffect.instance);
         }
     }
 
@@ -39,9 +39,9 @@ public class SuspendEffect {
         ItemStack itemStack = ToolbeltHelper.findToolbelt(entity);
         boolean hasEffect = !itemStack.isEmpty() && ((IModularItem) itemStack.getItem()).getEffectLevel(itemStack, ItemEffect.suspendSelf) > 0;
 
-        return hasEffect && entity.getActivePotionEffects().stream()
+        return hasEffect && entity.getActiveEffects().stream()
                 .filter(EffectInstance::isAmbient)
-                .map(EffectInstance::getPotion)
+                .map(EffectInstance::getEffect)
                 .anyMatch(enablingEffects::contains);
     }
 }

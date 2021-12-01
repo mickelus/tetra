@@ -36,7 +36,7 @@ public class CraftButtonGui extends GuiClickable {
         backdrop.setAttachment(GuiAttachment.middleCenter);
         addChild(backdrop);
 
-        label = new GuiStringOutline(0, 1, I18n.format("tetra.workbench.schematic_detail.craft"));
+        label = new GuiStringOutline(0, 1, I18n.get("tetra.workbench.schematic_detail.craft"));
         label.setAttachment(GuiAttachment.middleCenter);
         addChild(label);
 
@@ -62,7 +62,7 @@ public class CraftButtonGui extends GuiClickable {
 
                 if (!destabilizationChance.isEmpty()) {
                     backdropColor = GuiColors.destabilized;
-                    tooltip = TextFormatting.GRAY + I18n.format("tetra.workbench.schematic_detail.destabilize_tooltip") + "\n";
+                    tooltip = TextFormatting.GRAY + I18n.get("tetra.workbench.schematic_detail.destabilize_tooltip") + "\n";
                     tooltip += String.join("\n", destabilizationChance);
                 }
             } else {
@@ -72,7 +72,7 @@ public class CraftButtonGui extends GuiClickable {
                         .orElse(false);
 
                 if (willRepair) {
-                    tooltip = I18n.format("tetra.workbench.schematic_detail.repair_tooltip");
+                    tooltip = I18n.get("tetra.workbench.schematic_detail.repair_tooltip");
                 }
             }
 
@@ -83,22 +83,22 @@ public class CraftButtonGui extends GuiClickable {
             tooltip = "";
             if (!schematic.isMaterialsValid(itemStack, slot, materials)) {
                 if (hasEmptyMaterial(schematic, materials)) {
-                    tooltip += I18n.format("tetra.workbench.schematic_detail.no_material_tooltip");
+                    tooltip += I18n.get("tetra.workbench.schematic_detail.no_material_tooltip");
                     backdropColor = GuiColors.muted;
                 } else if (hasInsufficientQuantities(schematic, itemStack, slot, materials)) {
-                    tooltip += I18n.format("tetra.workbench.schematic_detail.material_count_tooltip");
+                    tooltip += I18n.get("tetra.workbench.schematic_detail.material_count_tooltip");
                 } else {
-                    tooltip += I18n.format("tetra.workbench.schematic_detail.material_tooltip");
+                    tooltip += I18n.get("tetra.workbench.schematic_detail.material_tooltip");
                 }
             } else {
                 if (schematic.isIntegrityViolation(player, itemStack, materials, slot)) {
-                    tooltip += I18n.format("tetra.workbench.schematic_detail.integrity_tooltip");
+                    tooltip += I18n.get("tetra.workbench.schematic_detail.integrity_tooltip");
                 }
                 if (!schematic.checkTools(itemStack, materials, availableTools)) {
-                    tooltip += I18n.format("tetra.workbench.schematic_detail.tools_tooltip");
+                    tooltip += I18n.get("tetra.workbench.schematic_detail.tools_tooltip");
                 }
                 if (!player.isCreative() && player.experienceLevel < schematic.getExperienceCost(itemStack, materials, slot)) {
-                    tooltip += I18n.format("tetra.workbench.schematic_detail.level_tooltip");
+                    tooltip += I18n.get("tetra.workbench.schematic_detail.level_tooltip");
                 }
             }
         }

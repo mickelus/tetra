@@ -30,11 +30,11 @@ public class RevengeTracker {
             .build();
 
     private static int getIdentifier(Entity entity) {
-        return entity.world.isRemote ? -entity.getEntityId() : entity.getEntityId();
+        return entity.level.isClientSide ? -entity.getId() : entity.getId();
     }
 
     public static boolean canRevenge(LivingEntity entity) {
-        return Stream.of(entity.getHeldItemMainhand(), entity.getHeldItemOffhand())
+        return Stream.of(entity.getMainHandItem(), entity.getOffhandItem())
                 .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
                 .anyMatch(itemStack -> canRevenge((IModularItem) itemStack.getItem(), itemStack));
     }
@@ -46,14 +46,14 @@ public class RevengeTracker {
 
     public static boolean canRevenge(Entity entity, Entity enemy) {
         return Optional.ofNullable(cache.getIfPresent(getIdentifier(entity)))
-                .map(enemies -> enemies.contains(enemy.getEntityId()))
+                .map(enemies -> enemies.contains(enemy.getId()))
                 .orElse(false);
     }
 
     public static void onAttackEntity(LivingAttackEvent event) {
         Entity entity = event.getEntity();
-        if (!event.getEntity().getEntityWorld().isRemote() && EntityType.PLAYER.equals(entity.getType())) {
-            Entity enemy = event.getSource().getTrueSource();
+        if (!event.getEntity().getCommandSenderWorld().isClientSide() && EntityType.PLAYER.equals(entity.getType())) {
+            Entity enemy = event.getSource().getEntity();
             if (enemy != null) {
                 addEnemy(entity, enemy);
 
@@ -72,12 +72,12 @@ public class RevengeTracker {
      * @param enemy
      */
     public static void removeEnemySynced(ServerPlayerEntity entity, Entity enemy) {
-        removeEnemy(entity, enemy.getEntityId());
+        removeEnemy(entity, enemy.getId());
         TetraMod.packetHandler.sendTo(new RemoveRevengePacket(enemy), entity);
     }
 
     public static void removeEnemy(Entity entity, Entity enemy) {
-        removeEnemy(entity, enemy.getEntityId());
+        removeEnemy(entity, enemy.getId());
     }
 
     public static void removeEnemy(Entity entity, int enemyId) {
@@ -86,7 +86,7 @@ public class RevengeTracker {
     }
 
     public static void addEnemy(Entity entity, Entity enemy) {
-        addEnemy(entity, enemy.getEntityId());
+        addEnemy(entity, enemy.getId());
     }
 
     public static void addEnemy(Entity entity, int enemyId) {

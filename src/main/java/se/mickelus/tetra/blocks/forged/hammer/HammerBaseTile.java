@@ -150,7 +150,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
     }
 
     public void consumeFuel() {
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             int fuelUsage = fuelUsage();
 
             for (int i = 0; i < slots.length; i++) {
@@ -175,10 +175,10 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
     }
 
     public void updateRedstonePower() {
-        if (world != null) {
+        if (level != null) {
             int updatedPower = 0;
             for(Direction direction : Direction.values()) {
-                updatedPower += world.getRedstonePower(pos.offset(direction), direction);
+                updatedPower += level.getSignal(worldPosition.relative(direction), direction);
             }
 
             if (updatedPower != redstonePower){
@@ -195,33 +195,33 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
 
     @Override
     public void tick() {
-        if (redstonePower > 0 && world.getGameTime() % tickrate() == 0 && world.isBlockPowered(pos) && isFunctional()) {
-            BlockPos targetPos = pos.down(2);
-            BlockState targetState = world.getBlockState(targetPos);
+        if (redstonePower > 0 && level.getGameTime() % tickrate() == 0 && level.hasNeighborSignal(worldPosition) && isFunctional()) {
+            BlockPos targetPos = worldPosition.below(2);
+            BlockState targetState = level.getBlockState(targetPos);
 
-            HammerHeadTile head = TileEntityOptional.from(world, pos.down(), HammerHeadTile.class).orElse(null);
+            HammerHeadTile head = TileEntityOptional.from(level, worldPosition.below(), HammerHeadTile.class).orElse(null);
 
             if (head == null || head.isJammed()) {
                 return;
             }
 
             CastOptional.cast(targetState.getBlock(), IInteractiveBlock.class)
-                    .map(block -> block.getPotentialInteractions(world, targetPos, targetState, Direction.UP, Collections.singletonList(ToolTypes.hammer)))
+                    .map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(ToolTypes.hammer)))
                     .map(Arrays::stream)
                     .orElseGet(Stream::empty)
                     .filter(interaction -> ToolTypes.hammer.equals(interaction.requiredTool))
                     .filter(interaction -> getHammerLevel() >= interaction.requiredLevel)
                     .findFirst()
                     .ifPresent(interaction -> {
-                        interaction.applyOutcome(world, targetPos, targetState, null, null, Direction.UP);
+                        interaction.applyOutcome(level, targetPos, targetState, null, null, Direction.UP);
 
                         // the workbench triggers the hammer on the server side, so no need to consume fuel and play sounds
                         if (!(targetState.getBlock() instanceof AbstractWorkbenchBlock)) {
-                            if (!world.isRemote) {
+                            if (!level.isClientSide) {
                                 consumeFuel();
                             } else {
                                 head.activate();
-                                world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
+                                level.playSound(null, worldPosition, SoundEvents.ANVIL_LAND, SoundCategory.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
                             }
                         } else {
                             head.activate();
@@ -234,19 +234,19 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
      * Applies effects in the world when the hammer is used. Should only be called serverside as it contains random elements
      */
     private void applyConsumeEffect() {
-        Direction facing = getWorld().getBlockState(getPos()).get(HammerBaseBlock.facingProp);
-        Vector3d pos = Vector3d.copyCentered(getPos());
+        Direction facing = getLevel().getBlockState(getBlockPos()).getValue(HammerBaseBlock.facingProp);
+        Vector3d pos = Vector3d.atCenterOf(getBlockPos());
 
-        Vector3d oppositePos = pos.add(Vector3d.copy(facing.getOpposite().getDirectionVec()).scale(0.55));
-        pos = pos.add(Vector3d.copy(facing.getDirectionVec()).scale(0.55));
+        Vector3d oppositePos = pos.add(Vector3d.atLowerCornerOf(facing.getOpposite().getNormal()).scale(0.55));
+        pos = pos.add(Vector3d.atLowerCornerOf(facing.getNormal()).scale(0.55));
 
         if (hasEffect(HammerEffect.power)) {
-            spawnParticle(ParticleTypes.ENCHANTED_HIT, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
+            spawnParticle(ParticleTypes.ENCHANTED_HIT, Vector3d.atLowerCornerOf(getBlockPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
         }
 
         if (hasEffect(HammerEffect.power)) {
-            spawnParticle(ParticleTypes.WHITE_ASH, Vector3d.copy(getPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
-            int count = world.rand.nextInt(2 + getEffectLevel(HammerEffect.power) * 4);
+            spawnParticle(ParticleTypes.WHITE_ASH, Vector3d.atLowerCornerOf(getBlockPos()).add(0.5, -0.9, 0.5), 15, 0.1f);
+            int count = level.random.nextInt(2 + getEffectLevel(HammerEffect.power) * 4);
 
             if (count > 2) {
                 // particles cell 1
@@ -262,8 +262,8 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
                 for (int x = -3; x < 3; x++) {
                     for (int y = -3; y < 2; y++) {
                         for (int z = -3; z < 3; z++) {
-                            BlockPos firePos = getPos().add(x, y, z);
-                            if (world.isAirBlock(firePos)) {
+                            BlockPos firePos = getBlockPos().offset(x, y, z);
+                            if (level.isEmptyBlock(firePos)) {
                                 flammableBlocks.add(firePos);
                             }
                         }
@@ -274,15 +274,15 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
                 Collections.shuffle(flammableBlocks);
                 flammableBlocks.stream()
                         .limit(count)
-                        .forEach(blockPos -> world.setBlockState(blockPos, Blocks.FIRE.getDefaultState(), 11));
+                        .forEach(blockPos -> level.setBlock(blockPos, Blocks.FIRE.defaultBlockState(), 11));
             }
         }
 
-        if (world.rand.nextFloat() < getJamChance()) {
-            TileEntityOptional.from(world, getPos().down(), HammerHeadTile.class).ifPresent(head -> head.setJammed(true));
-            world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(getPos()).grow(10, 5, 10))
+        if (level.random.nextFloat() < getJamChance()) {
+            TileEntityOptional.from(level, getBlockPos().below(), HammerHeadTile.class).ifPresent(head -> head.setJammed(true));
+            level.getEntitiesOfClass(ServerPlayerEntity.class, new AxisAlignedBB(getBlockPos()).inflate(10, 5, 10))
                     .forEach(player -> BlockUseCriterion.trigger(player, getBlockState(), ItemStack.EMPTY));
-            world.playSound(null, getPos(), SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.BLOCKS, 0.8f, 0.5f);
+            level.playSound(null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundCategory.BLOCKS, 0.8f, 0.5f);
         }
     }
 
@@ -347,34 +347,34 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
      * Utility for spawning particles on the server
      */
     private void spawnParticle(IParticleData particle, Vector3d pos, int count, float speed) {
-        if (world instanceof ServerWorld) {
-            ((ServerWorld) world).spawnParticle(particle, pos.x, pos.y, pos.z, count, 0, 0, 0, speed);
+        if (level instanceof ServerWorld) {
+            ((ServerWorld) level).sendParticles(particle, pos.x, pos.y, pos.z, count, 0, 0, 0, speed);
         }
     }
 
     public Direction getFacing() {
-        return getBlockState().get(HammerBaseBlock.facingProp);
+        return getBlockState().getValue(HammerBaseBlock.facingProp);
     }
 
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
+        return new SUpdateTileEntityPacket(this.worldPosition, 0, this.getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return write(new CompoundNBT());
+        return save(new CompoundNBT());
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(getBlockState(), pkt.getNbtCompound());
+        this.load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compound) {
-        super.read(blockState, compound);
+    public void load(BlockState blockState, CompoundNBT compound) {
+        super.load(blockState, compound);
 
         slots = new ItemStack[2];
         if (compound.contains(slotsKey)) {
@@ -385,7 +385,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
                 int slot = itemCompound.getByte(indexKey) & 255;
 
                 if (slot < this.slots.length) {
-                    this.slots[slot] = ItemStack.read(itemCompound);
+                    this.slots[slot] = ItemStack.of(itemCompound);
                 }
             }
         }
@@ -410,13 +410,13 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
     }
 
     private void sync() {
-        world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
-        markDirty();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        setChanged();
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
 
         writeCells(compound, slots);
 
@@ -444,7 +444,7 @@ public class HammerBaseTile extends TileEntity implements ITickableTileEntity {
                 CompoundNBT nbttagcompound = new CompoundNBT();
 
                 nbttagcompound.putByte(indexKey, (byte) i);
-                cells[i].write(nbttagcompound);
+                cells[i].save(nbttagcompound);
 
                 nbttaglist.add(nbttagcompound);
             }

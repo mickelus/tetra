@@ -30,21 +30,21 @@ public class PuncturedPotionEffect extends Effect {
 
         setRegistryName("punctured");
 
-        addAttributesModifier(Attributes.ARMOR, "69967662-e7e9-4671-8f48-81d0de9d2098", -0.05, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        addAttributeModifier(Attributes.ARMOR, "69967662-e7e9-4671-8f48-81d0de9d2098", -0.05, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
         instance = this;
     }
 
-    public void performEffect(LivingEntity entity, int amplifier) {
-        if (!entity.getEntityWorld().isRemote) {
-            Random rand = entity.getRNG();
+    public void applyEffectTick(LivingEntity entity, int amplifier) {
+        if (!entity.getCommandSenderWorld().isClientSide) {
+            Random rand = entity.getRandom();
             EquipmentSlotType slot = EquipmentSlotType.values()[2 + rand.nextInt(4)];
-            ItemStack itemStack = entity.getItemStackFromSlot(slot);
+            ItemStack itemStack = entity.getItemBySlot(slot);
             if (!itemStack.isEmpty()) {
-                ((ServerWorld) entity.world).spawnParticle(new ItemParticleData(ParticleTypes.ITEM, itemStack),
-                        entity.getPosX() + entity.getWidth() * (0.3 + rand.nextGaussian() * 0.4),
-                        entity.getPosY() + entity.getHeight() * (0.2 + rand.nextGaussian() * 0.4),
-                        entity.getPosZ() + entity.getWidth() * (0.3 + rand.nextGaussian() * 0.4),
+                ((ServerWorld) entity.level).sendParticles(new ItemParticleData(ParticleTypes.ITEM, itemStack),
+                        entity.getX() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
+                        entity.getY() + entity.getBbHeight() * (0.2 + rand.nextGaussian() * 0.4),
+                        entity.getZ() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
                         10,
                         0, 0, 0, 0f);
             }
@@ -52,7 +52,7 @@ public class PuncturedPotionEffect extends Effect {
     }
 
     @Override
-    public boolean isReady(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration % 10 == 0;
     }
 
@@ -62,9 +62,9 @@ public class PuncturedPotionEffect extends Effect {
         super.renderInventoryEffect(effect, gui, mStack, x, y, z);
 
         int amp = effect.getAmplifier() + 1;
-        double armor = gui.getMinecraft().player.getTotalArmorValue();
+        double armor = gui.getMinecraft().player.getArmorValue();
         double armorReduction =  armor / (1 - amp * 0.1) - armor;
         EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new StringTextComponent(I18n.format("effect.tetra.punctured.tooltip", String.format("%d", amp * 10), String.format("%.1f", armorReduction))));
+                new StringTextComponent(I18n.get("effect.tetra.punctured.tooltip", String.format("%d", amp * 10), String.format("%.1f", armorReduction))));
     }
 }

@@ -18,7 +18,7 @@ public class PredicateSlot extends Slot {
     }
 
     @Override
-    public boolean isItemValid(@Nullable ItemStack itemStack) {
+    public boolean mayPlace(@Nullable ItemStack itemStack) {
         return itemStack != null && predicate.test(itemStack);
     }
 }

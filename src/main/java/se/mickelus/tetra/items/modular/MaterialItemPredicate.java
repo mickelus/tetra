@@ -18,11 +18,11 @@ public class MaterialItemPredicate extends ItemPredicate {
     }
 
     @Override
-    public boolean test(ItemStack itemStack) {
+    public boolean matches(ItemStack itemStack) {
         MaterialData materialData = DataManager.materialData.getData().values().stream()
                 .sorted(Comparator.comparing(data -> data.material.isTagged()))
                 .filter(data -> data.material.isValid())
-                .filter(data -> data.material.getPredicate().test(itemStack))
+                .filter(data -> data.material.getPredicate().matches(itemStack))
                 .findFirst()
                 .orElse(null);
         if (materialData != null) {

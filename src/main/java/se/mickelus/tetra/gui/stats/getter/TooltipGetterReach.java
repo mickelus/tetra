@@ -16,9 +16,9 @@ public class TooltipGetterReach implements ITooltipGetter {
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
         double reach = getter.getValue(player, itemStack);
         if (ConfigHandler.enableReach.get()) {
-            return I18n.format("tetra.stats.reach.tooltip", String.format("%.1f", reach), String.format("%.1f", reach - 1.5));
+            return I18n.get("tetra.stats.reach.tooltip", String.format("%.1f", reach), String.format("%.1f", reach - 1.5));
         }
 
-        return I18n.format("tetra.stats.reach.tooltip_block", String.format("%.1f", reach));
+        return I18n.get("tetra.stats.reach.tooltip_block", String.format("%.1f", reach));
     }
 }

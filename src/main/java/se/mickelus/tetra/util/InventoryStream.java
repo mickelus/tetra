@@ -11,12 +11,12 @@ import java.util.stream.StreamSupport;
 
 public class InventoryStream {
     public static Stream<ItemStack> of(IInventory inventory) {
-        return StreamSupport.stream(new Spliterators.AbstractSpliterator<ItemStack>(inventory.getSizeInventory(), Spliterator.NONNULL | Spliterator.SIZED) {
+        return StreamSupport.stream(new Spliterators.AbstractSpliterator<ItemStack>(inventory.getContainerSize(), Spliterator.NONNULL | Spliterator.SIZED) {
             int index = 0;
 
             public boolean tryAdvance(Consumer<? super ItemStack> consumer) {
-                if (index < inventory.getSizeInventory()) {
-                    consumer.accept(inventory.getStackInSlot(index++));
+                if (index < inventory.getContainerSize()) {
+                    consumer.accept(inventory.getItem(index++));
                     return true;
                 } else {
                     return false;

@@ -33,16 +33,16 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     public ToolbeltGui(ToolbeltContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title);
 
-        this.xSize = 179;
-        this.ySize = 240;
+        this.imageWidth = 179;
+        this.imageHeight = 240;
 
-        int numQuickslots = container.getQuickslotInventory().getSizeInventory();
-        int numStorageSlots = container.getStorageInventory().getSizeInventory();
-        int numPotionSlots = container.getPotionInventory().getSizeInventory();
-        int numQuiverSlots = container.getQuiverInventory().getSizeInventory();
+        int numQuickslots = container.getQuickslotInventory().getContainerSize();
+        int numStorageSlots = container.getStorageInventory().getContainerSize();
+        int numPotionSlots = container.getPotionInventory().getContainerSize();
+        int numQuiverSlots = container.getQuiverInventory().getContainerSize();
         int offset = 0;
 
-        defaultGui = new GuiElement(0, 0, xSize, ySize);
+        defaultGui = new GuiElement(0, 0, imageWidth, imageHeight);
 
         // inventory background
         defaultGui.addChild(new GuiTexture(0, 129, 179, 91, GuiTextures.playerInventory));
@@ -91,15 +91,15 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        renderTooltip(matrixStack, mouseX, mouseY);
 
-        drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
+        renderLabels(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        int x = (width - xSize) / 2;
-        int y = (height - ySize) / 2;
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
 
         keybindGui.setWidth(width);
         keybindGui.draw(matrixStack, 0, height - keybindGui.getHeight(), width, height, mouseX, mouseY, 1);
@@ -107,8 +107,8 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     }
 
     @Override
-    protected void renderHoveredTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
-        super.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+    protected void renderTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.renderTooltip(matrixStack, mouseX, mouseY);
         List<String> tooltipLines = defaultGui.getTooltipLines();
 
         if (tooltipLines != null) {
@@ -123,7 +123,7 @@ public class ToolbeltGui extends ContainerScreen<ToolbeltContainer> {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) { }
+    protected void renderLabels(MatrixStack matrixStack, int x, int y) { }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {

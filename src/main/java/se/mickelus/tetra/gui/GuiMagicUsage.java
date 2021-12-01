@@ -26,7 +26,7 @@ public class GuiMagicUsage extends GuiElement {
     public GuiMagicUsage(int x, int y, int barLength) {
         super(x, y, barLength, 12);
 
-        addChild(new GuiStringSmall(0, 0, I18n.format("item.tetra.modular.magic_capacity.label")));
+        addChild(new GuiStringSmall(0, 0, I18n.get("item.tetra.modular.magic_capacity.label")));
 
         valueString = new GuiStringSmall(0, 0, "");
         valueString.setAttachment(GuiAttachment.topRight);
@@ -51,15 +51,15 @@ public class GuiMagicUsage extends GuiElement {
             bar.setMax(Math.max(max + diffMax, max));
 
             tooltip = Arrays.asList(
-                    I18n.format("item.tetra.modular.magic_capacity.description", max, value + diffValue, xpCost, risk),
+                    I18n.get("item.tetra.modular.magic_capacity.description", max, value + diffValue, xpCost, risk),
                     " ",
                     Tooltips.expand.getString());
 
             tooltipExtended = Arrays.asList(
-                    I18n.format("item.tetra.modular.magic_capacity.description", max, value + diffValue, xpCost, risk),
+                    I18n.get("item.tetra.modular.magic_capacity.description", max, value + diffValue, xpCost, risk),
                     " ",
                     Tooltips.expanded.getString(),
-                    I18n.format("item.tetra.modular.magic_capacity.description_extended"));
+                    I18n.get("item.tetra.modular.magic_capacity.description_extended"));
 
             if (diffMax != 0) {
                 bar.setValue(max, max + diffMax);
@@ -81,15 +81,15 @@ public class GuiMagicUsage extends GuiElement {
             int xpCost = getExperienceCost(itemStack, slot);
 
             tooltip = Arrays.asList(
-                    I18n.format("item.tetra.modular.magic_capacity.description", max, value, xpCost, risk),
+                    I18n.get("item.tetra.modular.magic_capacity.description", max, value, xpCost, risk),
                     " ",
                     Tooltips.expand.getString());
 
             tooltipExtended = Arrays.asList(
-                    I18n.format("item.tetra.modular.magic_capacity.description", max, value, xpCost, risk),
+                    I18n.get("item.tetra.modular.magic_capacity.description", max, value, xpCost, risk),
                     " ",
                     Tooltips.expanded.getString(),
-                    I18n.format("item.tetra.modular.magic_capacity.description_extended"));
+                    I18n.get("item.tetra.modular.magic_capacity.description_extended"));
             valueString.setString(String.format("%d/%d", max - value, max));
 
             bar.setMax(max);

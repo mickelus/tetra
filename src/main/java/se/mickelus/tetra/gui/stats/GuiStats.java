@@ -224,7 +224,7 @@ public class GuiStats {
                 0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("tetra.stats.knockback.tooltip", knockbackGetter));
 
-    public static final IStatGetter lootingGetter = new StatGetterEnchantmentLevel(Enchantments.LOOTING, 1);
+    public static final IStatGetter lootingGetter = new StatGetterEnchantmentLevel(Enchantments.MOB_LOOTING, 1);
     public static final GuiStatBar looting = new GuiStatBar(0, 0, barLength, "tetra.stats.looting",
                 0, 20, false, lootingGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.looting.tooltip", lootingGetter));
@@ -259,22 +259,22 @@ public class GuiStats {
                 0, 1, false, silkTouchGetter, LabelGetterBasic.noLabel,
             new TooltipGetterDecimal("tetra.stats.silkTouch.tooltip", silkTouchGetter));
 
-    public static final IStatGetter fortuneGetter = new StatGetterEnchantmentLevel(Enchantments.FORTUNE, 1);
+    public static final IStatGetter fortuneGetter = new StatGetterEnchantmentLevel(Enchantments.BLOCK_FORTUNE, 1);
     public static final GuiStatBar fortune = new GuiStatBar(0, 0, barLength, "tetra.stats.fortune",
                 0, 20, false, fortuneGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.fortune.tooltip", fortuneGetter));
 
-    public static final IStatGetter infinityGetter = new StatGetterEnchantmentLevel(Enchantments.INFINITY, 1);
+    public static final IStatGetter infinityGetter = new StatGetterEnchantmentLevel(Enchantments.INFINITY_ARROWS, 1);
     public static final GuiStatBar infinity = new GuiStatBar(0, 0, barLength, "tetra.stats.infinity",
             0, 1, false, infinityGetter, LabelGetterBasic.noLabel,
             new TooltipGetterInteger("tetra.stats.infinity.tooltip", infinityGetter));
 
-    public static final IStatGetter flameGetter = new StatGetterEnchantmentLevel(Enchantments.FLAME, 4);
+    public static final IStatGetter flameGetter = new StatGetterEnchantmentLevel(Enchantments.FLAMING_ARROWS, 4);
     public static final GuiStatBar flame = new GuiStatBar(0, 0, barLength, "tetra.stats.flame",
             0, 2, false, flameGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.flame.tooltip", flameGetter));
 
-    public static final IStatGetter punchGetter = new StatGetterEnchantmentLevel(Enchantments.PUNCH, 1);
+    public static final IStatGetter punchGetter = new StatGetterEnchantmentLevel(Enchantments.PUNCH_ARROWS, 1);
     public static final GuiStatBar punch = new GuiStatBar(0, 0, barLength, "tetra.stats.punch",
             0, 4, false, punchGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.punch.tooltip", punchGetter));

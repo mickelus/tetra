@@ -43,7 +43,7 @@ public class GuiExperience extends GuiElement {
         levelString.setColor(positive ? positiveColor : negativeColor);
 
         if (unlocalizedTooltip != null) {
-            formattedTooltip = Collections.singletonList(I18n.format(unlocalizedTooltip, level));
+            formattedTooltip = Collections.singletonList(I18n.get(unlocalizedTooltip, level));
         }
     }
 

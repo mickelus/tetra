@@ -26,7 +26,7 @@ public class ChthonicExtractorTile extends TileEntity {
 
     public void setDamage(int damage) {
         this.damage = damage;
-        markDirty();
+        setChanged();
     }
 
     public void damage(int amount) {
@@ -35,15 +35,15 @@ public class ChthonicExtractorTile extends TileEntity {
         if (newDamage < ChthonicExtractorBlock.maxDamage) {
             setDamage(newDamage);
         } else {
-            world.playEvent(null, 2001, getPos(), Block.getStateId(world.getBlockState(getPos())));
-            world.setBlockState(getPos(), Blocks.AIR.getDefaultState(), 2);
+            level.levelEvent(null, 2001, getBlockPos(), Block.getId(level.getBlockState(getBlockPos())));
+            level.setBlock(getBlockPos(), Blocks.AIR.defaultBlockState(), 2);
         }
     }
 
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compound) {
-        super.read(blockState, compound);
+    public void load(BlockState blockState, CompoundNBT compound) {
+        super.load(blockState, compound);
 
         if (compound.contains(damageKey)) {
             damage = compound.getInt(damageKey);
@@ -51,8 +51,8 @@ public class ChthonicExtractorTile extends TileEntity {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
 
         compound.putInt(damageKey, damage);
 

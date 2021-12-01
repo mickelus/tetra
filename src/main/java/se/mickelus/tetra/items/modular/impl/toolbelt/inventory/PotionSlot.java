@@ -8,22 +8,22 @@ public class PotionSlot extends PredicateSlot {
     }
 
     @Override
-    public int getSlotStackLimit() {
+    public int getMaxStackSize() {
         return 64;
     }
 
     @Override
-    public int getItemStackLimit(ItemStack stack) {
+    public int getMaxStackSize(ItemStack stack) {
         return 64;
     }
 
     @Override
-    public ItemStack decrStackSize(int amount) {
-        ItemStack currentItem = getStack();
+    public ItemStack remove(int amount) {
+        ItemStack currentItem = getItem();
         if (!currentItem.isEmpty()) {
-            return super.decrStackSize(Math.min(currentItem.getMaxStackSize(), amount));
+            return super.remove(Math.min(currentItem.getMaxStackSize(), amount));
         }
-        return super.decrStackSize(amount);
+        return super.remove(amount);
     }
 
     //    @Override

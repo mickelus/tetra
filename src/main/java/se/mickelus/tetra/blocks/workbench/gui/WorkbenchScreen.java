@@ -67,13 +67,13 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     public WorkbenchScreen(WorkbenchContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title);
 
-        this.xSize = 320;
-        this.ySize = 240;
+        this.imageWidth = 320;
+        this.imageHeight = 240;
 
         this.tileEntity = container.getTileEntity();
         this.container = container;
 
-        defaultGui = new GuiElement(0, 0, xSize, ySize);
+        defaultGui = new GuiElement(0, 0, imageWidth, imageHeight);
         defaultGui.addChild(new GuiTextureOffset(134, 40, 51, 51, GuiTextures.workbench));
         defaultGui.addChild(new GuiTexture(72, 153, 179, 106, GuiTextures.playerInventory));
 
@@ -129,24 +129,24 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     public void render(MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
         this.renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        int x = (width - xSize) / 2;
-        int y = (height - ySize) / 2;
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
 
         defaultGui.draw(new MatrixStack(), x, y, width, height, mouseX, mouseY, 1);
     }
 
     // override this to stop titles from rendering
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) { }
+    protected void renderLabels(MatrixStack matrixStack, int x, int y) { }
 
     @Override
-    protected void renderHoveredTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
-        super.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+    protected void renderTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.renderTooltip(matrixStack, mouseX, mouseY);
 
         List<String> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
@@ -231,8 +231,8 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
             newPreview = buildPreviewStack(newSchematic, newTarget, currentSlot, tileEntity.getMaterials());
         }
 
-        boolean targetItemChanged = !ItemStack.areItemStacksEqual(currentTarget, newTarget);
-        boolean previewChanged = !ItemStack.areItemStacksEqual(currentPreview, newPreview);
+        boolean targetItemChanged = !ItemStack.matches(currentTarget, newTarget);
+        boolean previewChanged = !ItemStack.matches(currentPreview, newPreview);
         boolean schematicChanged = !Objects.equals(currentSchematic, newSchematic);
         boolean materialsChanged = diffMaterials(tileEntity.getMaterials());
 
@@ -240,7 +240,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         currentSchematic = newSchematic;
 
         if (targetItemChanged) {
-            ItemStack.areItemStacksEqual(currentTarget, newTarget);
+            ItemStack.matches(currentTarget, newTarget);
             currentTarget = newTarget.copy();
             selectedSlot = null;
         }
@@ -299,7 +299,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
     private boolean diffMaterials(ItemStack[] newMaterials) {
         boolean isDiff = false;
         for (int i = 0; i < newMaterials.length; i++) {
-            if (!ItemStack.areItemStacksEqual(newMaterials[i], currentMaterials[i])) {
+            if (!ItemStack.matches(newMaterials[i], currentMaterials[i])) {
                 isDiff = true;
                 break;
             }
@@ -318,12 +318,12 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
         inventoryInfo.update(tileEntity.getCurrentSchematic(), tileEntity.getCurrentSlot(), currentTarget);
 
-        World world = tileEntity.getWorld();
+        World world = tileEntity.getLevel();
         if (isDirty) {
             onTileEntityChange();
             isDirty = false;
         } else if (world != null && world.getGameTime() % 20 == 0) {
-            BlockPos pos = tileEntity.getPos();
+            BlockPos pos = tileEntity.getBlockPos();
             Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(viewingPlayer, world, pos, world.getBlockState(pos));
 
             if (tileEntity.getCurrentSchematic() != null && slotDetail.isVisible()) {
@@ -366,14 +366,14 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
         Slot hoveredSlot = getSlotUnderMouse();
         UpgradeSchematic currentSchematic = tileEntity.getCurrentSchematic();
         ItemStack targetStack = tileEntity.getTargetItemStack();
-        if (currentSchematic != null && hoveredSlot != null && hoveredSlot.getHasStack()) {
+        if (currentSchematic != null && hoveredSlot != null && hoveredSlot.hasItem()) {
             newPreviewMaterialSlot = hoveredSlot.getSlotIndex();
         }
 
         if (newPreviewMaterialSlot != previewMaterialSlot && targetStack.getItem() instanceof IModularItem) {
             ItemStack[] materials = tileEntity.getMaterials();
             if (newPreviewMaterialSlot != -1 && Arrays.stream(materials).allMatch(ItemStack::isEmpty)) {
-                ItemStack previewStack = buildPreviewStack(currentSchematic, targetStack, selectedSlot, new ItemStack[]{hoveredSlot.getStack()});
+                ItemStack previewStack = buildPreviewStack(currentSchematic, targetStack, selectedSlot, new ItemStack[]{hoveredSlot.getItem()});
                 updateItemDisplay(targetStack, previewStack);
             } else {
                 ItemStack previewStack = ItemStack.EMPTY;
@@ -396,11 +396,11 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
 
             for (Map.Entry<ToolType, Integer> entry: tools.entrySet()) {
                 result = WorkbenchTile.consumeCraftingToolEffects(result, slot, willReplace, entry.getKey(), entry.getValue(), viewingPlayer,
-                        tileEntity.getWorld(), tileEntity.getPos(), tileEntity.getBlockState(), false);
+                        tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), false);
             }
 
             result = WorkbenchTile.applyCraftingBonusEffects(result, slot, willReplace, viewingPlayer, materials, materials, tools,
-                    tileEntity.getWorld(), tileEntity.getPos(), tileEntity.getBlockState(), false);
+                    tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), false);
 
             IModularItem.updateIdentifier(result);
             return result;

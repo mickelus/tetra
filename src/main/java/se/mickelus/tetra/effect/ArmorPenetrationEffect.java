@@ -21,19 +21,19 @@ public class ArmorPenetrationEffect {
      */
     public static void onLivingHurt(LivingHurtEvent event, int effectLevel) {
         Optional.of(event.getEntityLiving())
-                .map(LivingEntity::getAttributeManager)
-                .filter(manager -> manager.hasAttributeInstance(Attributes.ARMOR))
-                .map(manager -> manager.createInstanceIfAbsent(Attributes.ARMOR))
+                .map(LivingEntity::getAttributes)
+                .filter(manager -> manager.hasAttribute(Attributes.ARMOR))
+                .map(manager -> manager.getInstance(Attributes.ARMOR))
                 .filter(instance -> instance.getModifier(uuid) == null)
-                .ifPresent(instance -> instance.applyNonPersistentModifier(
+                .ifPresent(instance -> instance.addTransientModifier(
                         new AttributeModifier(uuid, "tetra_armor_pen", effectLevel * -0.01, AttributeModifier.Operation.MULTIPLY_TOTAL)));
     }
 
     public static void onLivingDamage(LivingDamageEvent event) {
         Optional.of(event.getEntityLiving())
-                .map(LivingEntity::getAttributeManager)
-                .filter(manager -> manager.hasAttributeInstance(Attributes.ARMOR))
-                .map(manager -> manager.createInstanceIfAbsent(Attributes.ARMOR))
+                .map(LivingEntity::getAttributes)
+                .filter(manager -> manager.hasAttribute(Attributes.ARMOR))
+                .map(manager -> manager.getInstance(Attributes.ARMOR))
                 .ifPresent(instance -> instance.removeModifier(uuid));
     }
 }

@@ -63,8 +63,8 @@ public class LungeEffect extends ChargedAbilityEffect {
             @Nullable LivingEntity target, @Nullable BlockPos targetPos,@Nullable Vector3d hitVec, int chargedTicks) {
         if (attacker.isOnGround()) {
             float damageMultiplierOffset = 0;
-            float strength = 1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
-            Vector3d lookVector = attacker.getLookVec();
+            float strength = 1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
+            Vector3d lookVector = attacker.getLookAngle();
             double verticalVelocityFactor = 0.8;
             float hitCooldown = 0.7f;
             float exhaustDuration = 0;
@@ -87,7 +87,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             }
 
             int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
-            if (overextendLevel > 0 && !attacker.getFoodStats().needFood()) {
+            if (overextendLevel > 0 && !attacker.getFoodData().needsFood()) {
                 damageMultiplierOffset += overextendLevel / 100d;
                 strength += item.getEffectEfficiency(itemStack, ItemEffect.abilityOverextend);
                 verticalVelocityFactor += 0.1;
@@ -106,26 +106,26 @@ public class LungeEffect extends ChargedAbilityEffect {
             }
 
             if (isDefensive(item, itemStack, hand)) {
-                lookVector = lookVector.mul(-1.2, 0, -1.2).add(0, 0.4, 0);
+                lookVector = lookVector.multiply(-1.2, 0, -1.2).add(0, 0.4, 0);
             } else {
                 activeCache.put(getIdentifier(attacker), new LungeData(itemStack, damageMultiplierOffset, hitCooldown, exhaustDuration, echoLevel, echoStrength));
             }
 
             // current velocity projected onto the look vector
-            attacker.setMotion(lookVector.scale(attacker.getMotion().dotProduct(lookVector) / lookVector.dotProduct(lookVector)));
+            attacker.setDeltaMovement(lookVector.scale(attacker.getDeltaMovement().dot(lookVector) / lookVector.dot(lookVector)));
 
-            attacker.addVelocity(
+            attacker.push(
                     lookVector.x * strength,
                     MathHelper.clamp(lookVector.y * strength * verticalVelocityFactor + 0.3, 0.3, verticalVelocityFactor),
                     lookVector.z * strength);
-            attacker.velocityChanged = true;
+            attacker.hurtMarked = true;
 
             attacker.move(MoverType.SELF, new Vector3d(0, 0.4, 0));
 
-            attacker.addExhaustion(overextendLevel > 0 ? 6 : 1);
-            attacker.getCooldownTracker().setCooldown(item, getCooldown(item, itemStack));
+            attacker.causeFoodExhaustion(overextendLevel > 0 ? 6 : 1);
+            attacker.getCooldowns().addCooldown(item, getCooldown(item, itemStack));
 
-            attacker.getEntityWorld().playSound(attacker, new BlockPos(attacker.getPositionVec().add(attacker.getMotion())), SoundEvents.UI_TOAST_IN,
+            attacker.getCommandSenderWorld().playSound(attacker, new BlockPos(attacker.position().add(attacker.getDeltaMovement())), SoundEvents.UI_TOAST_IN,
                     SoundCategory.PLAYERS, 1, 1.3f);
 
         }
@@ -139,12 +139,12 @@ public class LungeEffect extends ChargedAbilityEffect {
         LungeData data = activeCache.getIfPresent(getIdentifier(player));
         if (data != null && !player.isPassenger()) {
             if (!player.isOnGround()) {
-                AxisAlignedBB axisalignedbb = player.getBoundingBox().grow(0.2, 0, 0.2).offset(player.getMotion());
+                AxisAlignedBB axisalignedbb = player.getBoundingBox().inflate(0.2, 0, 0.2).move(player.getDeltaMovement());
 
-                player.world.getEntitiesWithinAABB(LivingEntity.class, axisalignedbb).stream()
+                player.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb).stream()
                         .filter(Entity::isAlive)
-                        .filter(Entity::canBeCollidedWith)
-                        .filter(Entity::canBeAttackedWithItem)
+                        .filter(Entity::isPickable)
+                        .filter(Entity::isAttackable)
                         .filter(entity -> !player.equals(entity))
                         .findAny()
                         .ifPresent(entity -> onEntityImpact(player, entity, data));
@@ -152,7 +152,7 @@ public class LungeEffect extends ChargedAbilityEffect {
                 activeCache.invalidate(getIdentifier(player));
 
                 if (data.exhaustDuration > 0) {
-                    player.addPotionEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (data.exhaustDuration * 20), 4, false, true));
+                    player.addEffect(new EffectInstance(ExhaustedPotionEffect.instance, (int) (data.exhaustDuration * 20), 4, false, true));
                 }
             }
         }
@@ -162,9 +162,9 @@ public class LungeEffect extends ChargedAbilityEffect {
         ItemStack itemStack = data.itemStack;
         ItemModularHandheld item = CastOptional.cast(itemStack.getItem(), ItemModularHandheld.class).orElse(null);
 
-        Vector3d bounceVector = player.getPositionVec().subtract(target.getPositionVec()).normalize().scale(0.1f);
-        player.setMotion(bounceVector);
-        player.velocityChanged = true;
+        Vector3d bounceVector = player.position().subtract(target.position()).normalize().scale(0.1f);
+        player.setDeltaMovement(bounceVector);
+        player.hurtMarked = true;
 
         float cooldownMultiplier = data.hitCooldown;
 
@@ -175,7 +175,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             RevengeTracker.removeEnemy(player, target);
         }
 
-        if (!player.world.isRemote) {
+        if (!player.level.isClientSide) {
             double bonusDamage = 0;
 
             if (momentumLevel > 0) {
@@ -189,12 +189,12 @@ public class LungeEffect extends ChargedAbilityEffect {
             if (result != AbilityUseResult.fail) {
                 if (momentumLevel > 0) {
                     int duration = 10 + (int) (Math.min(momentumLevel, player.fallDistance) * item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum) * 20);
-                    target.addPotionEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                    target.addEffect(new EffectInstance(StunPotionEffect.instance, duration, 0, false, false));
                     spawnMomentumParticles(target, bonusDamage);
                 }
             }
 
-            target.getEntityWorld().playSound(null, target.getPosition(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.8f);
+            target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1, 0.8f);
             player.swing(Hand.MAIN_HAND, true);
         }
 
@@ -205,18 +205,18 @@ public class LungeEffect extends ChargedAbilityEffect {
         item.tickProgression(player, itemStack, 2);
         item.applyDamage(2, itemStack, player);
 
-        player.getCooldownTracker().setCooldown(item, (int) (instance.getCooldown(item, itemStack) * cooldownMultiplier));
+        player.getCooldowns().addCooldown(item, (int) (instance.getCooldown(item, itemStack) * cooldownMultiplier));
 
         activeCache.invalidate(getIdentifier(player));
     }
 
     private static void spawnMomentumParticles(LivingEntity target, double bonus) {
-        BlockPos pos = new BlockPos(target.getPosX(), target.getPosY() - 0.2, target.getPosZ());
-        BlockState blockState = target.world.getBlockState(pos);
+        BlockPos pos = new BlockPos(target.getX(), target.getY() - 0.2, target.getZ());
+        BlockState blockState = target.level.getBlockState(pos);
 
-        if (!blockState.isAir(target.world, pos)) {
-            ((ServerWorld)target.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState), target.getPosX(), target.getPosY(),
-                    target.getPosZ(), (int) (bonus * 8) + 20, 0.0D, 0.0D, 0.0D, 0.15);
+        if (!blockState.isAir(target.level, pos)) {
+            ((ServerWorld)target.level).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, blockState), target.getX(), target.getY(),
+                    target.getZ(), (int) (bonus * 8) + 20, 0.0D, 0.0D, 0.0D, 0.15);
         }
     }
 
@@ -246,8 +246,8 @@ public class LungeEffect extends ChargedAbilityEffect {
     }
 
     public static void echo(PlayerEntity entity, LungeData data, boolean isVertical) {
-        Vector3d lookVector = entity.getLookVec();
-        entity.setMotion(lookVector.scale(entity.getMotion().dotProduct(lookVector) / lookVector.dotProduct(lookVector)));
+        Vector3d lookVector = entity.getLookAngle();
+        entity.setDeltaMovement(lookVector.scale(entity.getDeltaMovement().dot(lookVector) / lookVector.dot(lookVector)));
 
         double strength = data.echoStrength;
 
@@ -255,36 +255,36 @@ public class LungeEffect extends ChargedAbilityEffect {
             strength *= 0.3;
         }
 
-        entity.addVelocity(
+        entity.push(
                 lookVector.x * strength,
                 lookVector.y * strength,
                 lookVector.z * strength);
 
         if (entity.isCrouching()) {
-            entity.setMotion(entity.getMotion().scale(-0.8));
+            entity.setDeltaMovement(entity.getDeltaMovement().scale(-0.8));
         }
 
         if (isVertical) {
-            Vector3d motion = entity.getMotion();
+            Vector3d motion = entity.getDeltaMovement();
             double vertical = motion.y > 0 ? motion.y + strength * 0.5 : strength * 0.5;
-            entity.setMotion(motion.x, vertical, motion.z);
+            entity.setDeltaMovement(motion.x, vertical, motion.z);
         }
 
-        if (entity.getMotion().y > 0) {
+        if (entity.getDeltaMovement().y > 0) {
             entity.fallDistance = 0;
         }
 
-        entity.velocityChanged = true;
+        entity.hurtMarked = true;
 
-        entity.getEntityWorld().playSound(entity, new BlockPos(entity.getPositionVec().add(entity.getMotion())), SoundEvents.UI_TOAST_IN,
+        entity.getCommandSenderWorld().playSound(entity, new BlockPos(entity.position().add(entity.getDeltaMovement())), SoundEvents.UI_TOAST_IN,
                 SoundCategory.PLAYERS, 1, 1.3f);
 
-        if (!entity.world.isRemote) {
-            Random rand = entity.getRNG();
-            ((ServerWorld) entity.world).spawnParticle(ParticleTypes.WITCH,
-                    entity.getPosX() + (rand.nextGaussian() - 0.5) * 0.5,
-                    entity.getPosY(),
-                    entity.getPosZ() + (rand.nextGaussian() - 0.5) * 0.5,
+        if (!entity.level.isClientSide) {
+            Random rand = entity.getRandom();
+            ((ServerWorld) entity.level).sendParticles(ParticleTypes.WITCH,
+                    entity.getX() + (rand.nextGaussian() - 0.5) * 0.5,
+                    entity.getY(),
+                    entity.getZ() + (rand.nextGaussian() - 0.5) * 0.5,
                     5, rand.nextFloat() * 0.2, -0.2 + rand.nextFloat() * -0.6, rand.nextFloat() * 0.2, 0);
         }
 
@@ -292,7 +292,7 @@ public class LungeEffect extends ChargedAbilityEffect {
     }
 
     private static int getIdentifier(PlayerEntity entity) {
-        return entity.world.isRemote ? -entity.getEntityId() : entity.getEntityId();
+        return entity.level.isClientSide ? -entity.getId() : entity.getId();
     }
 
     static class LungeData {

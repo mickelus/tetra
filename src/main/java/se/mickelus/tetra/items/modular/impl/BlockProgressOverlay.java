@@ -33,7 +33,7 @@ public class BlockProgressOverlay {
             return;
         }
 
-        ItemStack activeStack = mc.player.getActiveItemStack();
+        ItemStack activeStack = mc.player.getUseItem();
 
         gui.setProgress(
                 CastOptional.cast(activeStack.getItem(), ItemModularHandheld.class)

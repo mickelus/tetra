@@ -37,7 +37,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
 
     public static final net.minecraft.state.BooleanProperty hackProp = BooleanProperty.create("hack");
 
-    public static final VoxelShape boundingBox = makeCuboidShape(5, 0, 5, 11, 16, 11);
+    public static final VoxelShape boundingBox = box(5, 0, 5, 11, 16, 11);
 
     public CoreExtractorPistonBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
@@ -77,12 +77,12 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
         if (Direction.DOWN.equals(facing) && !CoreExtractorBaseBlock.instance.equals(facingState.getBlock())) {
-            return state.get(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
+            return state.getValue(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
         }
 
-        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+        return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderShape(BlockState state) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
@@ -107,8 +107,8 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(hackProp);
     }
 }

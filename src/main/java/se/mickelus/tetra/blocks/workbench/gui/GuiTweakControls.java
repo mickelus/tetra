@@ -28,7 +28,7 @@ public class GuiTweakControls extends GuiElement {
     public GuiTweakControls(int x, int y, Consumer<Map<String, Integer>> previewTweak, Consumer<Map<String, Integer>> applyTweak) {
         super(x, y, 224, 67);
 
-        untweakableLabel = new GuiString(0, -3, TextFormatting.DARK_GRAY + I18n.format("tetra.workbench.module_detail.not_tweakable"));
+        untweakableLabel = new GuiString(0, -3, TextFormatting.DARK_GRAY + I18n.get("tetra.workbench.module_detail.not_tweakable"));
         untweakableLabel.setAttachment(GuiAttachment.middleCenter);
         addChild(untweakableLabel);
 
@@ -36,7 +36,7 @@ public class GuiTweakControls extends GuiElement {
         tweakControls.setAttachment(GuiAttachment.middleLeft);
         addChild(tweakControls);
 
-        applyButton = new GuiButton(0, -10, I18n.format("tetra.workbench.slot_detail.tweak_apply"), () -> applyTweak.accept(tweaks));
+        applyButton = new GuiButton(0, -10, I18n.get("tetra.workbench.slot_detail.tweak_apply"), () -> applyTweak.accept(tweaks));
         applyButton.setAttachment(GuiAttachment.bottomCenter);
         addChild(applyButton);
 

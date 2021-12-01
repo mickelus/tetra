@@ -14,16 +14,16 @@ public class TooltipGetterNone implements ITooltipGetter {
 
     @Override
     public String getTooltipBase(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format(localizationKey);
+        return I18n.get(localizationKey);
     }
 
     @Override
     public boolean hasExtendedTooltip(PlayerEntity player, ItemStack itemStack) {
-        return I18n.hasKey(localizationKey + "_extended");
+        return I18n.exists(localizationKey + "_extended");
     }
 
     @Override
     public String getTooltipExtension(PlayerEntity player, ItemStack itemStack) {
-        return I18n.format(localizationKey + "_extended");
+        return I18n.get(localizationKey + "_extended");
     }
 }

@@ -18,6 +18,8 @@ import se.mickelus.tetra.network.PacketHandler;
 import javax.annotation.Nullable;
 
 
+import net.minecraft.item.Item.Properties;
+
 public class ModularSingleHeadedItem extends ItemModularHandheld {
 
     public final static String headKey = "single/head";
@@ -34,7 +36,7 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
     public static ModularSingleHeadedItem instance;
 
     public ModularSingleHeadedItem() {
-        super(new Properties().maxStackSize(1).isImmuneToFire());
+        super(new Properties().stacksTo(1).fireResistant());
         setRegistryName(unlocalizedName);
 
         entityHitDamage = 1;

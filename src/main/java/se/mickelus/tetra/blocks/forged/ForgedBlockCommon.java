@@ -15,32 +15,32 @@ import se.mickelus.tetra.ToolTypes;
 
 public class ForgedBlockCommon {
 
-    public static final Material forgedMaterial = new Material(MaterialColor.IRON, false, true, true, true, false, false, PushReaction.BLOCK);
-    public static final Material forgedMaterialNotSolid = new Material(MaterialColor.IRON, false, false, true, false, false, false, PushReaction.BLOCK);
+    public static final Material forgedMaterial = new Material(MaterialColor.METAL, false, true, true, true, false, false, PushReaction.BLOCK);
+    public static final Material forgedMaterialNotSolid = new Material(MaterialColor.METAL, false, false, true, false, false, false, PushReaction.BLOCK);
 
-    public static final Block.Properties propertiesSolid = Block.Properties.create(forgedMaterial, MaterialColor.GRAY)
+    public static final Block.Properties propertiesSolid = Block.Properties.of(forgedMaterial, MaterialColor.COLOR_GRAY)
             .harvestTool(ToolTypes.hammer)
             .harvestLevel(5)
-            .setRequiresTool()
-            .sound(SoundType.NETHERITE)
-            .hardnessAndResistance(12F, 2400.0F);
+            .requiresCorrectToolForDrops()
+            .sound(SoundType.NETHERITE_BLOCK)
+            .strength(12F, 2400.0F);
 
-    public static final Block.Properties propertiesNotSolid = Block.Properties.create(forgedMaterialNotSolid, MaterialColor.GRAY)
+    public static final Block.Properties propertiesNotSolid = Block.Properties.of(forgedMaterialNotSolid, MaterialColor.COLOR_GRAY)
             .harvestTool(ToolTypes.hammer)
             .harvestLevel(5)
-            .setRequiresTool()
-            .notSolid()
-            .sound(SoundType.NETHERITE)
-            .setOpaque(ForgedBlockCommon::notSolid)
-            .setSuffocates(ForgedBlockCommon::notSolid)
-            .setBlocksVision(ForgedBlockCommon::notSolid)
-            .hardnessAndResistance(12F, 600.0F);
+            .requiresCorrectToolForDrops()
+            .noOcclusion()
+            .sound(SoundType.NETHERITE_BLOCK)
+            .isRedstoneConductor(ForgedBlockCommon::notSolid)
+            .isSuffocating(ForgedBlockCommon::notSolid)
+            .isViewBlocking(ForgedBlockCommon::notSolid)
+            .strength(12F, 600.0F);
 
     public static final ITextComponent locationTooltip = new TranslationTextComponent("item.tetra.forged_description")
-            .mergeStyle(TextFormatting.GRAY);
+            .withStyle(TextFormatting.GRAY);
 
     public static final ITextComponent unsettlingTooltip = new TranslationTextComponent("item.tetra.forged_unsettling")
-            .mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC);
+            .withStyle(TextFormatting.GRAY, TextFormatting.ITALIC);
 
     private static boolean notSolid(BlockState state, IBlockReader reader, BlockPos pos) {
         return false;

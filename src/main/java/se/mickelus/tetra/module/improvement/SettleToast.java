@@ -21,6 +21,8 @@ import se.mickelus.tetra.util.CastOptional;
 import java.util.Optional;
 
 
+import net.minecraft.client.gui.toasts.IToast.Visibility;
+
 public class SettleToast implements IToast {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/toasts.png");
 
@@ -48,19 +50,19 @@ public class SettleToast implements IToast {
     }
 
     @Override
-    public Visibility func_230444_a_(MatrixStack matrixStack, ToastGui toastGui, long delta) {
+    public Visibility render(MatrixStack matrixStack, ToastGui toastGui, long delta) {
 
 
         if (itemStack != null) {
-            toastGui.getMinecraft().getTextureManager().bindTexture(texture);
+            toastGui.getMinecraft().getTextureManager().bind(texture);
             RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             toastGui.blit(matrixStack, 0, 0, 0, 0, 160, 32);
 
             if (!this.hasPlayedSound && delta > 0L) {
                 this.hasPlayedSound = true;
 
-                toastGui.getMinecraft().getSoundHandler()
-                        .play(SimpleSound.master(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 2F, 0.7F));
+                toastGui.getMinecraft().getSoundManager()
+                        .play(SimpleSound.forUI(SoundEvents.EXPERIENCE_ORB_PICKUP, 2F, 0.7F));
             }
 
             if (glyph != null) {
@@ -68,12 +70,12 @@ public class SettleToast implements IToast {
                 glyph.draw(new MatrixStack(), 19, 14, 260, 43, -1, -1, 1);
             }
 
-            toastGui.getMinecraft().fontRenderer.drawString(matrixStack, I18n.format(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchematicRarity.hone.tint);
-            toastGui.getMinecraft().fontRenderer.drawString(matrixStack, toastGui.getMinecraft().fontRenderer.func_238412_a_(moduleName, 118), 37, 18, GuiColors.muted);
+            toastGui.getMinecraft().font.draw(matrixStack, I18n.get(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchematicRarity.hone.tint);
+            toastGui.getMinecraft().font.draw(matrixStack, toastGui.getMinecraft().font.plainSubstrByWidth(moduleName, 118), 37, 18, GuiColors.muted);
 
 
-            RenderHelper.enableStandardItemLighting();
-            toastGui.getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(null, itemStack, 8, 8);
+            RenderHelper.turnBackOn();
+            toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(null, itemStack, 8, 8);
 
             return delta > 5000 ? Visibility.HIDE : Visibility.SHOW;
         }

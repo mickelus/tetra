@@ -21,7 +21,7 @@ public class UnwaveringPotionEffect extends Effect {
 
         setRegistryName("unwavering");
 
-        addAttributesModifier(Attributes.KNOCKBACK_RESISTANCE, "6531461a-9c46-4fb9-8c84-002f0b37def1", 1, AttributeModifier.Operation.ADDITION);
+        addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, "6531461a-9c46-4fb9-8c84-002f0b37def1", 1, AttributeModifier.Operation.ADDITION);
 
         instance = this;
     }
@@ -32,6 +32,6 @@ public class UnwaveringPotionEffect extends Effect {
         super.renderInventoryEffect(effect, gui, mStack, x, y, z);
 
         EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new StringTextComponent(I18n.format("effect.tetra.unwavering.tooltip")));
+                new StringTextComponent(I18n.get("effect.tetra.unwavering.tooltip")));
     }
 }

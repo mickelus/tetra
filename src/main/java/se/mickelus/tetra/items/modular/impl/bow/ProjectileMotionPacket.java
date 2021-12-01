@@ -17,9 +17,9 @@ public class ProjectileMotionPacket extends AbstractPacket {
     public ProjectileMotionPacket() {}
 
     public ProjectileMotionPacket(ProjectileEntity target) {
-        entityId = target.getEntityId();
+        entityId = target.getId();
 
-        Vector3d motion = target.getMotion();
+        Vector3d motion = target.getDeltaMovement();
         motionX = (float) motion.x;
         motionY = (float) motion.y;
         motionZ = (float) motion.z;
@@ -45,7 +45,7 @@ public class ProjectileMotionPacket extends AbstractPacket {
     public void handle(PlayerEntity player) {
         Optional.of(entityId)
                 .filter(id -> id != -1)
-                .map(id -> player.world.getEntityByID(id))
-                .ifPresent(entity -> entity.setMotion(motionX, motionY, motionZ));
+                .map(id -> player.level.getEntity(id))
+                .ifPresent(entity -> entity.setDeltaMovement(motionX, motionY, motionZ));
     }
 }

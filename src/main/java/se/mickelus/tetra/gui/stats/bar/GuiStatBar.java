@@ -115,7 +115,7 @@ public class GuiStatBar extends GuiStatBase {
         double diffValue;
 
         if (labelKey != null) {
-            labelString.setString(I18n.format(labelKey));
+            labelString.setString(I18n.get(labelKey));
         }
         labelString.setVisible(labelKey != null);
 

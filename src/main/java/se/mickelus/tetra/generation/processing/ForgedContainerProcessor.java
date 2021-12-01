@@ -25,8 +25,8 @@ public class ForgedContainerProcessor extends StructureProcessor {
             Random random;
 
             // this ensures that both blockstates for the container gets generated from the same seed, then there's no need to sync later
-            if (blockInfo.state.get(ForgedContainerBlock.flippedProp)) {
-                random = placementSettings.getRandom(blockInfo.pos.offset(blockInfo.state.get(ForgedContainerBlock.facingProp).rotateYCCW()));
+            if (blockInfo.state.getValue(ForgedContainerBlock.flippedProp)) {
+                random = placementSettings.getRandom(blockInfo.pos.relative(blockInfo.state.getValue(ForgedContainerBlock.facingProp).getCounterClockWise()));
             } else {
                 random = placementSettings.getRandom(blockInfo.pos);
             }

@@ -50,7 +50,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ForgedContainerBlock instance;
 
-    public static final DirectionProperty facingProp = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty facingProp = HorizontalBlock.FACING;
     public static final BooleanProperty flippedProp = BooleanProperty.create("flipped");
     public static final BooleanProperty locked1Prop = BooleanProperty.create("locked1");
     public static final BooleanProperty locked2Prop = BooleanProperty.create("locked2");
@@ -84,14 +84,14 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
                     ForgedContainerBlock::open)
     };
 
-    private static final VoxelShape shapeZ1 =     makeCuboidShape(1,   0, -15, 15, 12, 15);
-    private static final VoxelShape shapeZ2 =     makeCuboidShape(1,   0, 1,   15, 12, 31);
-    private static final VoxelShape shapeX1 =     makeCuboidShape(-15, 0, 1,   15, 12, 15);
-    private static final VoxelShape shapeX2 =     makeCuboidShape(1,   0, 1,   31, 12, 15);
-    private static final VoxelShape shapeZ1Open = makeCuboidShape(1,   0, -15, 15,  9, 15);
-    private static final VoxelShape shapeZ2Open = makeCuboidShape(1,   0, 1,   15,  9, 31);
-    private static final VoxelShape shapeX1Open = makeCuboidShape(-15, 0, 1,   15,  9, 15);
-    private static final VoxelShape shapeX2Open = makeCuboidShape(1,   0, 1,   31,  9, 15);
+    private static final VoxelShape shapeZ1 =     box(1,   0, -15, 15, 12, 15);
+    private static final VoxelShape shapeZ2 =     box(1,   0, 1,   15, 12, 31);
+    private static final VoxelShape shapeX1 =     box(-15, 0, 1,   15, 12, 15);
+    private static final VoxelShape shapeX2 =     box(1,   0, 1,   31, 12, 15);
+    private static final VoxelShape shapeZ1Open = box(1,   0, -15, 15,  9, 15);
+    private static final VoxelShape shapeZ2Open = box(1,   0, 1,   15,  9, 31);
+    private static final VoxelShape shapeX1Open = box(-15, 0, 1,   15,  9, 15);
+    private static final VoxelShape shapeX2Open = box(1,   0, 1,   31,  9, 15);
 
     public ForgedContainerBlock() {
         super(ForgedBlockCommon.propertiesSolid);
@@ -100,20 +100,20 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
 
         hasItem = true;
 
-        setDefaultState(getDefaultState()
-                .with(facingProp, Direction.EAST)
-                .with(flippedProp, false)
-                .with(openProp, true)
-                .with(locked1Prop, false)
-                .with(locked2Prop, false)
-                .with(anyLockedProp, false));
+        registerDefaultState(defaultBlockState()
+                .setValue(facingProp, Direction.EAST)
+                .setValue(flippedProp, false)
+                .setValue(openProp, true)
+                .setValue(locked1Prop, false)
+                .setValue(locked2Prop, false)
+                .setValue(anyLockedProp, false));
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
         ClientRegistry.bindTileEntityRenderer(ForgedContainerTile.type, ForgedContainerRenderer::new);
-        ScreenManager.registerFactory(ForgedContainerContainer.type, ForgedContainerScreen::new);
+        ScreenManager.register(ForgedContainerContainer.type, ForgedContainerScreen::new);
     }
 
     @Override
@@ -122,12 +122,12 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     private static boolean breakLock(World world, BlockPos pos, @Nullable PlayerEntity player, int index, @Nullable Hand hand) {
-        ForgedContainerTile te = (ForgedContainerTile) world.getTileEntity(pos);
+        ForgedContainerTile te = (ForgedContainerTile) world.getBlockEntity(pos);
         if (te != null) {
             te.getOrDelegate().breakLock(player, index, hand);
         }
@@ -136,7 +136,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     private static boolean open(World world, BlockPos pos, BlockState blockState, PlayerEntity player, Hand hand, Direction facing) {
-        ForgedContainerTile te = (ForgedContainerTile) world.getTileEntity(pos);
+        ForgedContainerTile te = (ForgedContainerTile) world.getBlockEntity(pos);
         if (te != null) {
             te.getOrDelegate().open(player);
         }
@@ -147,49 +147,49 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     @Override
     public BlockInteraction[] getPotentialInteractions(World world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
         return Arrays.stream(interactions)
-                .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.get(facingProp), face, tools))
+                .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.getValue(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ActionResultType didInteract = BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
 
         if (didInteract != ActionResultType.SUCCESS) {
-            if (!world.isRemote) {
+            if (!world.isClientSide) {
                 TileEntityOptional.from(world, pos, ForgedContainerTile.class)
                         .ifPresent(te -> {
                             ForgedContainerTile delegate = te.getOrDelegate();
                             if (delegate.isOpen()) {
-                                NetworkHooks.openGui((ServerPlayerEntity) player, delegate, delegate.getPos());
+                                NetworkHooks.openGui((ServerPlayerEntity) player, delegate, delegate.getBlockPos());
                             }
                         });
             }
         } else {
-            world.notifyBlockUpdate(pos, state, state, 3);
+            world.sendBlockUpdated(pos, state, state, 3);
         }
 
         return ActionResultType.SUCCESS;
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
             // only drop loot from open, primary/unflipped chests
-            if (state.get(openProp) && !state.get(flippedProp)) {
+            if (state.getValue(openProp) && !state.getValue(flippedProp)) {
                 dropBlockInventory(this, world, pos, newState);
             } else {
-                TileEntityOptional.from(world, pos, ForgedContainerTile.class).ifPresent(TileEntity::remove);
+                TileEntityOptional.from(world, pos, ForgedContainerTile.class).ifPresent(TileEntity::setRemoved);
             }
         }
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Direction facing = state.get(facingProp);
-        boolean flipped = state.get(flippedProp);
+        Direction facing = state.getValue(facingProp);
+        boolean flipped = state.getValue(flippedProp);
 
-        if (state.get(openProp)) {
+        if (state.getValue(openProp)) {
             if (flipped) {
                 switch (facing) {
                     case NORTH:
@@ -243,8 +243,8 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(facingProp, flippedProp, locked1Prop, locked2Prop, anyLockedProp, openProp);
     }
 
@@ -262,8 +262,8 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     @Nullable
     @Override
     public BlockState getStateForPlacement(final BlockItemUseContext context) {
-        if (context.getWorld().getBlockState(context.getPos().offset(context.getPlacementHorizontalFacing().rotateY())).isReplaceable(context)) {
-            return super.getStateForPlacement(context).with(facingProp, context.getPlacementHorizontalFacing());
+        if (context.getLevel().getBlockState(context.getClickedPos().relative(context.getHorizontalDirection().getClockWise())).canBeReplaced(context)) {
+            return super.getStateForPlacement(context).setValue(facingProp, context.getHorizontalDirection());
         }
 
         // returning null here stops the block from being placed
@@ -271,48 +271,48 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     // based on same method implementation in BedBlock
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        Direction facing = state.get(facingProp);
-        world.setBlockState(pos.offset(facing.rotateY()), getDefaultState().with(flippedProp, true).with(facingProp, facing), 3);
+    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        Direction facing = state.getValue(facingProp);
+        world.setBlock(pos.relative(facing.getClockWise()), defaultBlockState().setValue(flippedProp, true).setValue(facingProp, facing), 3);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos,
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos,
             BlockPos facingPos) {
-        Direction pairedFacing = state.get(facingProp);
-        if (state.get(flippedProp)) {
-            pairedFacing = pairedFacing.rotateYCCW();
+        Direction pairedFacing = state.getValue(facingProp);
+        if (state.getValue(flippedProp)) {
+            pairedFacing = pairedFacing.getCounterClockWise();
         } else {
-            pairedFacing = pairedFacing.rotateY();
+            pairedFacing = pairedFacing.getClockWise();
         }
 
         if (pairedFacing == facing && !equals(facingState.getBlock())) {
-            return state.get(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
+            return state.getValue(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
         }
 
-        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+        return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderShape(BlockState state) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
-        Direction facing = state.get(facingProp);
+        Direction facing = state.getValue(facingProp);
 
         if (Rotation.CLOCKWISE_180.equals(rot)
                 || Rotation.CLOCKWISE_90.equals(rot) && ( Direction.NORTH.equals(facing) || Direction.SOUTH.equals(facing))
                 || Rotation.COUNTERCLOCKWISE_90.equals(rot) && ( Direction.EAST.equals(facing) || Direction.WEST.equals(facing))) {
-            state = state.with(flippedProp, state.get(flippedProp));
+            state = state.setValue(flippedProp, state.getValue(flippedProp));
         }
 
-        return state.with(facingProp, rot.rotate(facing));
+        return state.setValue(facingProp, rot.rotate(facing));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.toRotation(state.get(facingProp)));
+        return state.rotate(mirror.getRotation(state.getValue(facingProp)));
     }
 }

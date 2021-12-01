@@ -15,16 +15,16 @@ public class GuiKeybinding extends GuiElement {
 
     public GuiKeybinding(int x, int y, KeyBinding keyBinding) {
         this(x, y,
-                keyBinding.getKey().func_237520_d_().getString(),
+                keyBinding.getKey().getDisplayName().getString(),
                 keyBinding.getKeyModifier() != KeyModifier.NONE ? keyBinding.getKeyModifier().toString() : null,
-                I18n.format(keyBinding.getKeyDescription()));
+                I18n.get(keyBinding.getName()));
     }
 
     public GuiKeybinding(int x, int y, KeyBinding keyBinding, GuiAttachment attachment) {
         this(x, y,
-                keyBinding.getKey().func_237520_d_().getString(),
+                keyBinding.getKey().getDisplayName().getString(),
                 keyBinding.getKeyModifier() != KeyModifier.NONE ? keyBinding.getKeyModifier().toString() : null,
-                I18n.format(keyBinding.getKeyDescription()),
+                I18n.get(keyBinding.getName()),
                 attachment);
     }
 
@@ -78,9 +78,9 @@ public class GuiKeybinding extends GuiElement {
 
             // todo 1.16: does this break width for single character elements
             if (key.length() == 1) {
-                width = Minecraft.getInstance().fontRenderer.getStringWidth(key) + 5;
+                width = Minecraft.getInstance().font.width(key) + 5;
             } else {
-                width = Minecraft.getInstance().fontRenderer.getStringWidth(key);
+                width = Minecraft.getInstance().font.width(key);
             }
 
             addChild(new GuiRect(0, 1, 1, height - 2, GuiColors.muted));

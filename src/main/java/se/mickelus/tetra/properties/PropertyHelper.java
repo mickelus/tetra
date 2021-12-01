@@ -46,7 +46,7 @@ public class PropertyHelper {
     }
 
     public static int getPlayerEffectLevel(PlayerEntity player, ItemEffect effect) {
-        return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
+        return Stream.concat(player.inventory.offhand.stream(), player.inventory.items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
@@ -56,7 +56,7 @@ public class PropertyHelper {
     }
 
     public static double getPlayerEffectEfficiency(PlayerEntity player, ItemEffect effect) {
-        return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
+        return Stream.concat(player.inventory.offhand.stream(), player.inventory.items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
@@ -66,7 +66,7 @@ public class PropertyHelper {
     }
 
     public static int getPlayerToolLevel(PlayerEntity player, ToolType tool) {
-        return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
+        return Stream.concat(player.inventory.offhand.stream(), player.inventory.items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
@@ -76,7 +76,7 @@ public class PropertyHelper {
     }
 
     public static Set<ToolType> getPlayerTools(PlayerEntity player) {
-        return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
+        return Stream.concat(player.inventory.offhand.stream(), player.inventory.items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
@@ -85,7 +85,7 @@ public class PropertyHelper {
     }
 
     public static Map<ToolType, Integer> getPlayerToolLevels(PlayerEntity player) {
-        return Stream.concat(player.inventory.offHandInventory.stream(), player.inventory.mainInventory.stream())
+        return Stream.concat(player.inventory.offhand.stream(), player.inventory.items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
@@ -97,9 +97,9 @@ public class PropertyHelper {
 
     public static int getInventoryToolLevel(IInventory inventory, ToolType tool) {
         int result = 0;
-        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
             int comparisonLevel = result;
-            result = Optional.of(inventory.getStackInSlot(i))
+            result = Optional.of(inventory.getItem(i))
                     .filter(itemStack -> !itemStack.isEmpty())
                     .map(PropertyHelper::getReplacement)
                     .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
@@ -113,8 +113,8 @@ public class PropertyHelper {
 
     public static Set<ToolType> getInventoryTools(IInventory inventory) {
         Set<ToolType> result = new HashSet<>();
-        for (int i = 0; i < inventory.getSizeInventory(); i++) {
-            Optional.of(inventory.getStackInSlot(i))
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            Optional.of(inventory.getItem(i))
                     .filter(itemStack -> !itemStack.isEmpty())
                     .map(PropertyHelper::getReplacement)
                     .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
@@ -138,8 +138,8 @@ public class PropertyHelper {
     }
 
     public static ItemStack getInventoryProvidingItemStack(IInventory inventory, ToolType tool, int level) {
-        for (int i = 0; i < inventory.getSizeInventory(); i++) {
-            ItemStack result = Optional.of(inventory.getStackInSlot(i))
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            ItemStack result = Optional.of(inventory.getItem(i))
                     .filter(itemStack -> !itemStack.isEmpty())
                     .map(PropertyHelper::getReplacement)
                     .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
@@ -156,7 +156,7 @@ public class PropertyHelper {
 
     public static ItemStack getPlayerProvidingItemStack(ToolType tool, int level, Entity entity) {
         return CastOptional.cast(entity, PlayerEntity.class)
-                .map(player -> Stream.concat(Stream.of(player.getHeldItemMainhand(), player.getHeldItemOffhand()), player.inventory.mainInventory.stream()))
+                .map(player -> Stream.concat(Stream.of(player.getMainHandItem(), player.getOffhandItem()), player.inventory.items.stream()))
                 .orElse(Stream.empty())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
@@ -260,14 +260,14 @@ public class PropertyHelper {
                     QuickslotInventory quickslotInventory = new QuickslotInventory(toolbeltStack);
                     ItemStack result = consumeCraftToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
-                        quickslotInventory.markDirty();
+                        quickslotInventory.setChanged();
                         return result;
                     }
 
                     StorageInventory storageInventory = new StorageInventory(toolbeltStack);
                     result = consumeCraftToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
-                        storageInventory.markDirty();
+                        storageInventory.setChanged();
                         return result;
                     }
 
@@ -284,14 +284,14 @@ public class PropertyHelper {
                     QuickslotInventory quickslotInventory = new QuickslotInventory(toolbeltStack);
                     ItemStack result = consumeActionToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
-                        quickslotInventory.markDirty();
+                        quickslotInventory.setChanged();
                         return result;
                     }
 
                     StorageInventory storageInventory = new StorageInventory(toolbeltStack);
                     result = consumeActionToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
-                        storageInventory.markDirty();
+                        storageInventory.setChanged();
                         return result;
                     }
 

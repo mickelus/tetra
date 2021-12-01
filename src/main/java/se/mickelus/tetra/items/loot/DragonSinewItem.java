@@ -18,6 +18,8 @@ import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.item.Item.Properties;
+
 public class DragonSinewItem extends TetraItem {
     private static final String unlocalizedName = "dragon_sinew";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -27,7 +29,7 @@ public class DragonSinewItem extends TetraItem {
     private static final ResourceLocation sinewLootTable = new ResourceLocation(TetraMod.MOD_ID, "entities/ender_dragon_extended");
 
     public DragonSinewItem() {
-        super(new Properties().group(TetraItemGroup.instance));
+        super(new Properties().tab(TetraItemGroup.instance));
         setRegistryName(unlocalizedName);
 
         MinecraftForge.EVENT_BUS.register(new LootTableHandler());
@@ -48,10 +50,10 @@ public class DragonSinewItem extends TetraItem {
 
     @Override
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
-        entity.setMotion(entity.getMotion().scale(0.8f));
-        if (entity.world.isRemote && entity.getAge() % 20 == 0) {
-            entity.world.addParticle(ParticleTypes.DRAGON_BREATH, entity.getPosXRandom(.2d), entity.getPosYRandom() + 0.2, entity.getPosZRandom(0.2),
-                    entity.world.getRandom().nextFloat() * 0.02f - 0.01f, -0.01f -entity.world.getRandom().nextFloat() * 0.01f, entity.world.getRandom().nextFloat() * 0.02f - 0.01f);
+        entity.setDeltaMovement(entity.getDeltaMovement().scale(0.8f));
+        if (entity.level.isClientSide && entity.getAge() % 20 == 0) {
+            entity.level.addParticle(ParticleTypes.DRAGON_BREATH, entity.getRandomX(.2d), entity.getRandomY() + 0.2, entity.getRandomZ(0.2),
+                    entity.level.getRandom().nextFloat() * 0.02f - 0.01f, -0.01f -entity.level.getRandom().nextFloat() * 0.01f, entity.level.getRandom().nextFloat() * 0.02f - 0.01f);
         }
         return false;
     }
@@ -60,9 +62,9 @@ public class DragonSinewItem extends TetraItem {
         @SubscribeEvent
         public void onLootTableLoad(final LootTableLoadEvent event) {
             if (event.getName().equals(dragonLootTable)) {
-                event.getTable().addPool(LootPool.builder()
+                event.getTable().addPool(LootPool.lootPool()
                         .name(TetraMod.MOD_ID + ":" + unlocalizedName)
-                        .addEntry(TableLootEntry.builder(sinewLootTable)).build());
+                        .add(TableLootEntry.lootTableReference(sinewLootTable)).build());
             }
         }
     }

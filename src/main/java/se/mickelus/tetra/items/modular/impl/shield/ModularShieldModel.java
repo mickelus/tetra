@@ -37,9 +37,9 @@ public class ModularShieldModel extends Model {
     public static final String bucklerBannerModelType = "banner_buckler";
 
     public ModularShieldModel() {
-        super(RenderType::getEntityTranslucent);
-        textureWidth = 32;
-        textureHeight = 32;
+        super(RenderType::entityTranslucent);
+        texWidth = 32;
+        texHeight = 32;
 
         towerPlate = new ModelRenderer(this, 0, 0);
         towerPlate.addBox(-6.0F, -11.0F, -2.0F, 12.0F, 22.0F, 1.0F, 0.0F);
@@ -49,7 +49,7 @@ public class ModularShieldModel extends Model {
 
         bucklerPlate = new ModelRenderer(this, 0, 0);
         bucklerPlate.addBox(-5.0F, -5.0F, -2.0F, 10.0F, 10.0F, 1.0F, 0.0F);
-        bucklerPlate.rotateAngleZ = (float) (- Math.PI / 4);
+        bucklerPlate.zRot = (float) (- Math.PI / 4);
 
         grip = new ModelRenderer(this, 0, 0);
         grip.addBox(-1.0F, -3.0F, -1.0F, 2.0F, 6.0F, 6.0F, 0.0F);
@@ -89,7 +89,7 @@ public class ModularShieldModel extends Model {
         return null;
     }
 
-    public void render(MatrixStack matrixStack, IVertexBuilder vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {
         this.towerPlate.render(matrixStack, vertexBuilder, light, overlay, red, green, blue, alpha);
         this.grip.render(matrixStack, vertexBuilder, light, overlay, red, green, blue, alpha);
     }

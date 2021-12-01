@@ -16,7 +16,7 @@ import java.util.stream.StreamSupport;
 
 public class ItemHandlerStream {
     public static Stream<ItemStack> of(IBlockReader world, BlockPos pos) {
-        return of(world.getTileEntity(pos));
+        return of(world.getBlockEntity(pos));
     }
 
     public static Stream<ItemStack> of(TileEntity tileEntity) {

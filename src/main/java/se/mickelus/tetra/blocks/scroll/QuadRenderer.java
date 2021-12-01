@@ -77,7 +77,7 @@ public class QuadRenderer {
                 break;
         }
 
-        this.normal = direction.toVector3f();
+        this.normal = direction.step();
         if (mirror) {
             this.normal.mul(-1.0F, 1.0F, 1.0F);
         }
@@ -85,24 +85,24 @@ public class QuadRenderer {
     }
 
     public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        matrixStack.push();
-        MatrixStack.Entry last = matrixStack.getLast();
-        Matrix4f matrix = last.getMatrix();
-        Matrix3f normal = last.getNormal();
+        matrixStack.pushPose();
+        MatrixStack.Entry last = matrixStack.last();
+        Matrix4f matrix = last.pose();
+        Matrix3f normal = last.normal();
 
         Vector3f vector3f = this.normal.copy();
         vector3f.transform(normal);
-        float originX = vector3f.getX();
-        float originY = vector3f.getY();
-        float originZ = vector3f.getZ();
+        float originX = vector3f.x();
+        float originY = vector3f.y();
+        float originZ = vector3f.z();
 
         for (Vertex vertex : vertexPositions) {
-            Vector4f pos = new Vector4f(vertex.pos.getX() / 16.0F, vertex.pos.getY() / 16.0F, vertex.pos.getZ() / 16.0F, 1.0F);
+            Vector4f pos = new Vector4f(vertex.pos.x() / 16.0F, vertex.pos.y() / 16.0F, vertex.pos.z() / 16.0F, 1.0F);
             pos.transform(matrix);
-            buffer.addVertex(pos.getX(), pos.getY(), pos.getZ(), red, green, blue, alpha, vertex.u, vertex.v, packedOverlay,
+            buffer.vertex(pos.x(), pos.y(), pos.z(), red, green, blue, alpha, vertex.u, vertex.v, packedOverlay,
                     packedLight, originX, originY, originZ);
         }
-        matrixStack.pop();
+        matrixStack.popPose();
     }
 
     static class Vertex {

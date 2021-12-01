@@ -14,6 +14,8 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
 
+import net.minecraft.client.gui.toasts.IToast.Visibility;
+
 public class HoneToast implements IToast {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/toasts.png");
 
@@ -25,24 +27,24 @@ public class HoneToast implements IToast {
     }
 
     @Override
-    public Visibility func_230444_a_(MatrixStack matrixStack, ToastGui toastGui, long delta) {
+    public Visibility render(MatrixStack matrixStack, ToastGui toastGui, long delta) {
         if (itemStack != null) {
-            toastGui.getMinecraft().getTextureManager().bindTexture(texture);
+            toastGui.getMinecraft().getTextureManager().bind(texture);
             RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             toastGui.blit(matrixStack, 0, 0, 0, 0, 160, 32);
 
-            String itemName = toastGui.getMinecraft().fontRenderer.func_238412_a_(itemStack.getDisplayName().getString(), 125);
-            toastGui.getMinecraft().fontRenderer.drawString(matrixStack, I18n.format("tetra.hone.available"), 30, 7, SchematicRarity.hone.tint);
-            toastGui.getMinecraft().fontRenderer.drawString(matrixStack, itemName, 30, 18, GuiColors.muted);
+            String itemName = toastGui.getMinecraft().font.plainSubstrByWidth(itemStack.getHoverName().getString(), 125);
+            toastGui.getMinecraft().font.draw(matrixStack, I18n.get("tetra.hone.available"), 30, 7, SchematicRarity.hone.tint);
+            toastGui.getMinecraft().font.draw(matrixStack, itemName, 30, 18, GuiColors.muted);
 
             if (!this.hasPlayedSound && delta > 0L) {
                 this.hasPlayedSound = true;
-                toastGui.getMinecraft().getSoundHandler()
-                        .play(SimpleSound.master(SoundEvents.ENTITY_PLAYER_LEVELUP, 0.6F, 0.7F));
+                toastGui.getMinecraft().getSoundManager()
+                        .play(SimpleSound.forUI(SoundEvents.PLAYER_LEVELUP, 0.6F, 0.7F));
             }
 
-            RenderHelper.enableStandardItemLighting();
-            toastGui.getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(null, itemStack, 8, 8);
+            RenderHelper.turnBackOn();
+            toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(null, itemStack, 8, 8);
 
             return delta > 5000 ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;
         }

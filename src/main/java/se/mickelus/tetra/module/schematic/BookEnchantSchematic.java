@@ -43,12 +43,12 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     @Override
     public String getName() {
-        return I18n.format(localizationPrefix + key + nameSuffix);
+        return I18n.get(localizationPrefix + key + nameSuffix);
     }
 
     @Override
     public String getDescription(ItemStack itemStack) {
-        return I18n.format(localizationPrefix + key + descriptionSuffix);
+        return I18n.get(localizationPrefix + key + descriptionSuffix);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     @Override
     public String getSlotName(final ItemStack itemStack, final int index) {
-        return I18n.format(localizationPrefix + key + slotSuffix);
+        return I18n.get(localizationPrefix + key + slotSuffix);
     }
 
     @Override
