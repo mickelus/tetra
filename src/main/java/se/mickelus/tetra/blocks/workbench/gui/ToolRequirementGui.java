@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.gui.GuiColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -19,10 +19,10 @@ public class ToolRequirementGui extends GuiTool {
 
     String requirementTooltip;
 
-    public ToolRequirementGui(int x, int y, ToolType toolType) {
-        this(x, y, toolType, "tetra.tool." + toolType.getName() + ".requirement");
+    public ToolRequirementGui(int x, int y, ToolAction toolType) {
+        this(x, y, toolType, "tetra.tool." + toolType.name() + ".requirement");
     }
-    public ToolRequirementGui(int x, int y, ToolType toolType, String requirementTooltip) {
+    public ToolRequirementGui(int x, int y, ToolAction toolType, String requirementTooltip) {
         super(x, y, toolType);
 
         this.requirementTooltip = requirementTooltip;

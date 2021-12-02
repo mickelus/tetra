@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui.stats.sorting;
 
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.ToolTypes;
 import se.mickelus.tetra.gui.stats.GuiStats;
 import se.mickelus.tetra.gui.stats.getter.StatFormat;
@@ -67,18 +67,18 @@ public class StatSorters {
             new BasicStatSorter(GuiStats.scannerHorizontalSpreadGetter, "tetra.stats.holo.scannerHorizontalSpread", StatFormat.noDecimal),
             new BasicStatSorter(GuiStats.scannerVerticalSpreadGetter, "tetra.stats.holo.scannerVerticalSpread", StatFormat.noDecimal),
             new BasicStatSorter(new StatGetterToolLevel(ToolTypes.hammer), "tetra.tool.hammer", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-            new BasicStatSorter(new StatGetterToolLevel(ToolType.AXE), "tetra.tool.axe", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-            new BasicStatSorter(new StatGetterToolLevel(ToolType.PICKAXE), "tetra.tool.pickaxe", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-            new BasicStatSorter(new StatGetterToolLevel(ToolType.SHOVEL), "tetra.tool.shovel", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+            new BasicStatSorter(new StatGetterToolLevel(ToolActions.AXE_DIG), "tetra.tool.axe", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+            new BasicStatSorter(new StatGetterToolLevel(ToolActions.PICKAXE_DIG), "tetra.tool.pickaxe", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+            new BasicStatSorter(new StatGetterToolLevel(ToolActions.SHOVEL_DIG), "tetra.tool.shovel", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
             new BasicStatSorter(new StatGetterToolLevel(ToolTypes.cut), "tetra.tool.cut", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
             new BasicStatSorter(new StatGetterToolLevel(ToolTypes.pry), "tetra.tool.pry", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-            new BasicStatSorter(new StatGetterToolLevel(ToolType.HOE), "tetra.tool.hoe", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+            new BasicStatSorter(new StatGetterToolLevel(ToolActions.HOE_DIG), "tetra.tool.hoe", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
             new BasicStatSorter(new StatGetterToolEfficiency(ToolTypes.hammer), "tetra.tool.hammer", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
-            new BasicStatSorter(new StatGetterToolEfficiency(ToolType.AXE), "tetra.tool.axe", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
-            new BasicStatSorter(new StatGetterToolEfficiency(ToolType.PICKAXE), "tetra.tool.pickaxe", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
-            new BasicStatSorter(new StatGetterToolEfficiency(ToolType.SHOVEL), "tetra.tool.shovel", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
+            new BasicStatSorter(new StatGetterToolEfficiency(ToolActions.AXE_DIG), "tetra.tool.axe", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
+            new BasicStatSorter(new StatGetterToolEfficiency(ToolActions.PICKAXE_DIG), "tetra.tool.pickaxe", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
+            new BasicStatSorter(new StatGetterToolEfficiency(ToolActions.SHOVEL_DIG), "tetra.tool.shovel", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
             new BasicStatSorter(new StatGetterToolEfficiency(ToolTypes.cut), "tetra.tool.cut", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
             new BasicStatSorter(new StatGetterToolEfficiency(ToolTypes.pry), "tetra.tool.pry", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
-            new BasicStatSorter(new StatGetterToolEfficiency(ToolType.HOE), "tetra.tool.hoe", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix")
+            new BasicStatSorter(new StatGetterToolEfficiency(ToolActions.HOE_DIG), "tetra.tool.hoe", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix")
     ));
 }

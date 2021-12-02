@@ -147,7 +147,7 @@ dependencies {
 //    compile fg.deobf("curse.maven:cursed:2913022")
 //    compile fg.deobf("curse.maven:cursed-bookshelf:2935828")
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 jar {

@@ -2,7 +2,7 @@ package se.mickelus.tetra.gui.stats.bar;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -21,11 +21,11 @@ public class GuiStatBarTool extends GuiStatBar {
 
     private boolean efficiencyVisibility;
 
-    public GuiStatBarTool(int x, int y, int width, ToolType toolType) {
+    public GuiStatBarTool(int x, int y, int width, ToolAction toolType) {
         this(x, y, width, toolType, false);
     }
 
-    public GuiStatBarTool(int x, int y, int width, ToolType toolType, boolean efficiencyVisibility) {
+    public GuiStatBarTool(int x, int y, int width, ToolAction toolType, boolean efficiencyVisibility) {
         super(x, y, width, null, 0, efficiencyMax,
                 false, new StatGetterToolEfficiency(toolType), LabelGetterBasic.decimalLabel,
                 new TooltipGetterTool(toolType));

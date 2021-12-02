@@ -19,7 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
@@ -47,7 +47,7 @@ public class ExtractorEffect {
                     : Direction.orderedByNearest(entity)[0];
 
             float refHardness = state.getDestroySpeed(world, pos);
-            ToolType refTool = ItemModularHandheld.getEffectiveTool(state);
+            ToolAction refTool = ItemModularHandheld.getEffectiveTool(state);
 
             double critMultiplier = CritEffect.rollMultiplier(entity.getRandom(), item, itemStack);
             if (critMultiplier != 1) {
@@ -64,7 +64,7 @@ public class ExtractorEffect {
         }
     }
 
-    private static void breakRecursive(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool, int remaining) {
+    private static void breakRecursive(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolAction refTool, int remaining) {
         if (remaining > 0) {
             ServerScheduler.schedule(2, () -> breakInner(world, player, item, itemStack, direction, pos, refHardness, refTool));
         }
@@ -81,7 +81,7 @@ public class ExtractorEffect {
         }
     }
 
-    private static void breakInner(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool) {
+    private static void breakInner(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolAction refTool) {
         Vec3i axis1 = RotationHelper.shiftAxis(direction.getNormal());
         Vec3i axis2 = RotationHelper.shiftAxis(axis1);
         breakBlock(world, player, item, itemStack, pos.offset(axis1), refHardness, refTool);
@@ -90,7 +90,7 @@ public class ExtractorEffect {
         breakBlock(world, player, item, itemStack, pos.subtract(axis2), refHardness, refTool);
     }
 
-    private static void breakOuter(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool) {
+    private static void breakOuter(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolAction refTool) {
         Vec3i axis1 = RotationHelper.shiftAxis(direction.getNormal());
         Vec3i axis2 = RotationHelper.shiftAxis(axis1);
         breakBlock(world, player, item, itemStack, pos.offset(axis1).offset(axis2), refHardness, refTool);
@@ -100,9 +100,9 @@ public class ExtractorEffect {
     }
 
 
-    private static boolean breakBlock(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, BlockPos pos, float refHardness, ToolType refTool) {
+    private static boolean breakBlock(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, BlockPos pos, float refHardness, ToolAction refTool) {
         BlockState offsetState = world.getBlockState(pos);
-        ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
+        ToolAction effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
 
         float blockHardness = offsetState.getDestroySpeed(world, pos);
         int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, effectiveTool, player, offsetState);

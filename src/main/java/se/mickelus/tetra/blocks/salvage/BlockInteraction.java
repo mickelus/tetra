@@ -22,7 +22,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.advancements.BlockInteractionCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -41,7 +41,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 @ParametersAreNonnullByDefault
 public class BlockInteraction {
-    public ToolType requiredTool;
+    public ToolAction requiredTool;
     public int requiredLevel;
 
     // if false the player needs to have an item that provides the required tool in their inventory for the interaction to be visible
@@ -60,7 +60,7 @@ public class BlockInteraction {
     // if this interaction should apply tool usage effects (honing, reverb, self fiery etc)
     protected boolean applyUsageEffects = true;
 
-    public <V extends Comparable<V>> BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face,
+    public <V extends Comparable<V>> BlockInteraction(ToolAction requiredTool, int requiredLevel, Direction face,
             float minX, float maxX, float minY, float maxY, InteractionOutcome outcome) {
 
         this.requiredTool = requiredTool;
@@ -74,14 +74,14 @@ public class BlockInteraction {
         this.outcome = outcome;
     }
 
-    public BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face, float minX, float maxX, float minY,
+    public BlockInteraction(ToolAction requiredTool, int requiredLevel, Direction face, float minX, float maxX, float minY,
             float maxY, Predicate<BlockState> predicate, InteractionOutcome outcome) {
         this(requiredTool, requiredLevel, face, minX, maxX, minY, maxY, outcome);
 
         this.predicate = predicate;
     }
 
-    public <V extends Comparable<V>> BlockInteraction(ToolType requiredTool, int requiredLevel, Direction face,
+    public <V extends Comparable<V>> BlockInteraction(ToolAction requiredTool, int requiredLevel, Direction face,
             float minX, float maxX, float minY, float maxY, Property<V> property, V propertyValue, InteractionOutcome outcome) {
         this(requiredTool, requiredLevel, face, minX, maxX, minY, maxY, new PropertyMatcher().where(property, Predicates.equalTo(propertyValue)),
                 outcome);
@@ -95,12 +95,12 @@ public class BlockInteraction {
         return minX <= x && x <= maxX && minY <= y && y <= maxY;
     }
 
-    public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction hitFace, Collection<ToolType> availableTools) {
+    public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction hitFace, Collection<ToolAction> availableTools) {
         return isPotentialInteraction(world, pos, blockState, Direction.NORTH, hitFace, availableTools);
     }
 
     public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction blockFacing, Direction hitFace,
-            Collection<ToolType> availableTools) {
+            Collection<ToolAction> availableTools) {
         return applicableForBlock(world, pos, blockState)
                 && RotationHelper.rotationFromFacing(blockFacing).rotate(face).equals(hitFace)
                 && (alwaysReveal || availableTools.contains(requiredTool));
@@ -113,7 +113,7 @@ public class BlockInteraction {
     public static InteractionResult attemptInteraction(Level world, BlockState blockState, BlockPos pos, Player player, InteractionHand hand,
             BlockHitResult rayTrace) {
         ItemStack heldStack = player.getItemInHand(hand);
-        Collection<ToolType> availableTools = PropertyHelper.getItemTools(heldStack);
+        Collection<ToolAction> availableTools = PropertyHelper.getItemTools(heldStack);
 
         AABB boundingBox = blockState.getShape(world, pos, CollisionContext.of(player)).bounds();
         double hitU = 16 * getHitU(rayTrace.getDirection(), boundingBox,

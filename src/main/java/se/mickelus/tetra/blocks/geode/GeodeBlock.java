@@ -3,6 +3,7 @@ package se.mickelus.tetra.blocks.geode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +17,8 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
@@ -38,7 +40,7 @@ public class GeodeBlock extends TetraBlock {
     public GeodeBlock() {
         super(Properties.of(Material.STONE)
         .sound(SoundType.STONE)
-        .harvestTool(ToolType.PICKAXE)
+        .harvestTool(ToolActions.PICKAXE_DIG)
         .harvestLevel(0)
         .strength(1.5F, 6.0F));
 
@@ -48,7 +50,7 @@ public class GeodeBlock extends TetraBlock {
         if (density > 0) {
             int size = 3;
             int maxHeight = 32;
-            OreConfiguration config = new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, defaultBlockState(), size);
+            OreConfiguration config = new OreConfiguration(OreFeatures.NATURAL_STONE, defaultBlockState(), size);
             configuredFeature = Feature.ORE.configured(config)
                     .range(maxHeight)
                     .squared()

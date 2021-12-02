@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -22,7 +22,6 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.util.CastOptional;
-import top.theillusivec4.curios.api.CuriosApi;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -125,7 +124,7 @@ public class ToolbeltHelper {
      */
     public static ItemStack findToolbelt(Player player) {
         if (CuriosCompat.isLoaded) {
-            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance, player);
+            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = Optional.empty(); // FIXME CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance, player);
             if (maybeToolbelt.isPresent()) {
                 return maybeToolbelt.get().right;
             }
@@ -203,8 +202,8 @@ public class ToolbeltHelper {
             for (int i = 0; i < inventory.getContainerSize(); i++) {
                 ItemStack itemStack = inventory.getItem(i);
                 if (effects.get(i).contains(ItemEffect.quickAccess) && !itemStack.isEmpty()) {
-                    ToolType requiredTool = blockState.getHarvestTool();
-                    ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(blockState);
+                    ToolAction requiredTool = blockState.getHarvestTool();
+                    ToolAction effectiveTool = ItemModularHandheld.getEffectiveTool(blockState);
                     if (requiredTool != null
                             && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) >= blockState.getHarvestLevel()
                             || effectiveTool != null && itemStack.getItem().getToolTypes(itemStack).contains(effectiveTool)) {

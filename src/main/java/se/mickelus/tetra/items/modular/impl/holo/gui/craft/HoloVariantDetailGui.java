@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiItem;
@@ -41,7 +41,7 @@ public class HoloVariantDetailGui extends GuiElement {
 
     private HoloStatsGui stats;
 
-    private Map<ToolType, Integer> availableToolLevels;
+    private Map<ToolAction, Integer> availableToolLevels;
 
     private Runnable populateImprovements;
     private HoloImprovementButton improvementButton;
@@ -156,7 +156,7 @@ public class HoloVariantDetailGui extends GuiElement {
             requiredTools.clearChildren();
             baseOutcome.tools.getLevelMap().forEach((tool, level) -> {
                 ToolRequirementGui requirement = new ToolRequirementGui( requiredTools.getNumChildren() * 20, 0, tool,
-                        "tetra.tool." + tool.getName() + ".craft_requirement");
+                        "tetra.tool." + tool.name() + ".craft_requirement");
                 requirement.updateRequirement(level, availableToolLevels.getOrDefault(tool, 0));
                 requiredTools.addChild(requirement);
             });

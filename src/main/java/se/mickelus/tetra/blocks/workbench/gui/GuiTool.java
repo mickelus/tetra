@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import se.mickelus.mgui.gui.GuiElement;
 import se.mickelus.mgui.gui.GuiString;
 import se.mickelus.mgui.gui.GuiStringOutline;
@@ -12,11 +13,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class GuiTool extends GuiElement {
     public static final int width = 16;
-    protected ToolType toolType;
+    protected ToolAction toolType;
 
     private GuiString levelIndicator;
 
-    public GuiTool(int x, int y, ToolType toolType) {
+    public GuiTool(int x, int y, ToolAction toolType) {
         super(x, y, width, 16);
         this.toolType = toolType;
 
@@ -32,21 +33,21 @@ public class GuiTool extends GuiElement {
         levelIndicator.setColor(color);
     }
 
-    public ToolType getToolType() {
+    public ToolAction getToolType() {
         return toolType;
     }
 
-    protected int getOffset(ToolType tool) {
+    protected int getOffset(ToolAction tool) {
         if (ToolTypes.hammer.equals(tool)) {
             return 0;
         }
-        if (ToolType.AXE.equals(tool)) {
+        if (ToolActions.AXE_DIG.equals(tool)) {
             return 1;
         }
-        if (ToolType.PICKAXE.equals(tool)) {
+        if (ToolActions.PICKAXE_DIG.equals(tool)) {
             return 2;
         }
-        if (ToolType.SHOVEL.equals(tool)) {
+        if (ToolActions.SHOVEL_DIG.equals(tool)) {
             return 3;
         }
         if (ToolTypes.cut.equals(tool)) {
@@ -55,7 +56,7 @@ public class GuiTool extends GuiElement {
         if (ToolTypes.pry.equals(tool)) {
             return 5;
         }
-        if (ToolType.HOE.equals(tool)) {
+        if (ToolActions.HOE_DIG.equals(tool)) {
             return 6;
         }
 

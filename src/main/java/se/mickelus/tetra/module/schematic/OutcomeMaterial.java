@@ -7,6 +7,7 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
@@ -58,11 +59,11 @@ public class OutcomeMaterial {
     protected static TagCollection<Item> getTagCollection() {
         if (FMLEnvironment.dist.isClient()) {
             if (Minecraft.getInstance().level != null) {
-                return Minecraft.getInstance().level.getTagManager().getItems();
+                return Minecraft.getInstance().level.getTagManager().getOrEmpty(Registry.ITEM_REGISTRY);
             }
         }
 
-        return SerializationTags.getInstance().getItems();
+        return SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY);
     }
 
     @OnlyIn(Dist.CLIENT)

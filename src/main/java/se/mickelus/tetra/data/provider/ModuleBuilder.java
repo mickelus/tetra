@@ -15,7 +15,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -50,7 +51,7 @@ public class ModuleBuilder {
 
     private ArrayList<Variant> variants = new ArrayList<>();
 
-    private Map<ToolType, BlockState> harvestMap;
+    private Map<ToolAction, BlockState> harvestMap;
 
     public ModuleBuilder(String module, String prefix, String localization, JsonObject referenceModule, String fallbackReference, String schematicPath) {
         this.module = module;
@@ -64,9 +65,9 @@ public class ModuleBuilder {
         this.fallbackReference = fallbackReference;
 
         harvestMap = new HashMap<>();
-        harvestMap.put(ToolType.AXE, Blocks.OAK_LOG.defaultBlockState());
-        harvestMap.put(ToolType.PICKAXE, Blocks.STONE.defaultBlockState());
-        harvestMap.put(ToolType.SHOVEL, Blocks.DIRT.defaultBlockState());
+        harvestMap.put(ToolActions.AXE_DIG, Blocks.OAK_LOG.defaultBlockState());
+        harvestMap.put(ToolActions.PICKAXE_DIG, Blocks.STONE.defaultBlockState());
+        harvestMap.put(ToolActions.SHOVEL_DIG, Blocks.DIRT.defaultBlockState());
     }
 
     public ModuleBuilder offsetOutcome(int countMultiplier, int toolOffset) {
@@ -199,7 +200,7 @@ public class ModuleBuilder {
 
             if (result.has("tools")) {
                 JsonObject toolsJson = result.getAsJsonObject("tools");
-                Set<ToolType> toolTypes = itemStack.getToolTypes();
+                Set<ToolAction> toolTypes = itemStack.getToolTypes();
 
                 if (toolsJson.size() == toolTypes.size()) {
                     toolTypes.forEach(toolType -> {
@@ -209,7 +210,7 @@ public class ModuleBuilder {
                         value.add(itemStack.getHarvestLevel(toolType, null, blockState));
                         value.add(blockState != null ? item.getDestroySpeed(itemStack, blockState) / ( attackSpeed + 4 ): 0);
 
-                        toolsJson.add(toolType.getName(), value);
+                        toolsJson.add(toolType.name(), value);
                     });
                 } else {
                     long averageLevel = Math.round(toolTypes.stream()
@@ -325,14 +326,14 @@ public class ModuleBuilder {
         String type;
         String itemId;
         int count;
-        ToolType toolType;
+        ToolAction toolType;
         int toolLevel;
         Pair<String, Integer>[] improvements = new Pair[0];
 
         String[] references = new String[0];
 
         public Material(String key, String localization, int tint, int materialTint, int integrity, int magicCapacity, String type,
-                String itemId, int count, ToolType toolType, int toolLevel, String[] references) {
+                String itemId, int count, ToolAction toolType, int toolLevel, String[] references) {
             this.key = key;
             this.localization = localization;
             this.tint = tint;
@@ -350,7 +351,7 @@ public class ModuleBuilder {
         }
 
         public Material(String key, String localization, int tint, int materialTint, int integrity, int magicCapacity, String type,
-                String itemId, int count, ToolType toolType, int toolLevel, String[] references, Pair<String, Integer> ... improvements) {
+                String itemId, int count, ToolAction toolType, int toolLevel, String[] references, Pair<String, Integer> ... improvements) {
             this(key, localization, tint, materialTint, integrity, magicCapacity, type, itemId, count, toolType, toolLevel, references);
 
             this.improvements = improvements;

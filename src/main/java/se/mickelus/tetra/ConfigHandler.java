@@ -14,7 +14,6 @@ import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
-
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
@@ -248,39 +247,19 @@ public class ConfigHandler {
         spec.setConfig(configData);
 
     }
-
-    /**
-     * Will only be called if ModLoadingContext.registerConfig is used to register the config as a server config
-     * @param configEvent
-     */
+/*
     @SubscribeEvent
     public static void onLoad(final ModConfig.Loading configEvent) {
-        ModularBladedItem.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
-        ModularDoubleHeadedItem.instance.updateConfig(honedoubleBase.get(), honedoubleIntegrityMultiplier.get());
-
-        if (ModularBowItem.instance != null) {
-            ModularBowItem.instance.updateConfig(honeBowBase.get(), honeBowIntegrityMultiplier.get());
-        }
-
-        if (ModularCrossbowItem.instance != null) {
-            ModularCrossbowItem.instance.updateConfig(honeCrossbowBase.get(), honeCrossbowIntegrityMultiplier.get());
-        }
-
-        if (ModularSingleHeadedItem.instance != null) {
-            ModularSingleHeadedItem.instance.updateConfig(honeSingleBase.get(), honeSingleIntegrityMultiplier.get());
-        }
-
-        if (ModularShieldItem.instance != null) {
-            ModularShieldItem.instance.updateConfig(honeShieldBase.get(), honeShieldIntegrityMultiplier.get());
-        }
+        onModConfigLoad();
     }
 
-    /**
-     * Will only be called if ModLoadingContext.registerConfig is used to register the config as a server config
-     * @param configEvent
-     */
     @SubscribeEvent
     public static void onReload(final ModConfig.Reloading configEvent) {
+        onModConfigLoad();
+    }
+ */
+
+    private static void onModConfigLoad() {
         ModularBladedItem.instance.updateConfig(honeSwordBase.get(), honeSwordIntegrityMultiplier.get());
         ModularDoubleHeadedItem.instance.updateConfig(honedoubleBase.get(), honedoubleIntegrityMultiplier.get());
 

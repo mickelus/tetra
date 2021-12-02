@@ -4,7 +4,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -203,7 +203,7 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public Map<ToolType, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
+    public Map<ToolAction, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
         if (definition.materialSlotCount > 0) {
             return IntStream.range(0, materials.length)
                     .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))
@@ -220,7 +220,7 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public int getRequiredToolLevel(ItemStack targetStack, ItemStack[] materials, ToolType toolType) {
+    public int getRequiredToolLevel(ItemStack targetStack, ItemStack[] materials, ToolAction toolType) {
         if (definition.materialSlotCount > 0) {
             return IntStream.range(0, materials.length)
                     .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))

@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.forged.chthonic;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -33,6 +35,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
@@ -88,7 +91,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     public static final int maxDamage = 1024;
 
     public ChthonicExtractorBlock() {
-        super(Block.Properties.of(ForgedBlockCommon.forgedMaterialNotSolid, MaterialColor.COLOR_GRAY)
+        super(BlockBehaviour.Properties.of(ForgedBlockCommon.forgedMaterialNotSolid, MaterialColor.COLOR_GRAY)
                 .sound(SoundType.NETHERITE_BLOCK)
                 .strength(4F, 2400.0F));
 
@@ -99,7 +102,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
 
     @Override
     public void clientInit() {
-        RenderingRegistry.registerEntityRenderingHandler(ExtractorProjectileEntity.type, ExtractorProjectileRenderer::new);
+        EntityRenderers.register(ExtractorProjectileEntity.type, ExtractorProjectileRenderer::new);
     }
 
     @Override
@@ -200,7 +203,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolAction> tools) {
         int tier = getTier(world, pos);
 
         // todo: this could be less hacky

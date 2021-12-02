@@ -2,7 +2,8 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import se.mickelus.mgui.gui.GuiAlignment;
 import se.mickelus.mgui.gui.GuiAttachment;
 import se.mickelus.mgui.gui.GuiElement;
@@ -93,12 +94,12 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.workable,
             GuiStats.stability,
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.hammer),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.AXE),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.PICKAXE),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.SHOVEL),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.AXE_DIG),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.PICKAXE_DIG),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.SHOVEL_DIG),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.cut),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolTypes.pry),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolType.HOE)
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.HOE_DIG)
     ));
     private GuiElement barGroup;
 

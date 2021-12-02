@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -17,7 +18,7 @@ public class TetraBlock extends Block implements ITetraBlock {
 
     protected boolean hasItem = false;
 
-    public TetraBlock(Block.Properties properties) {
+    public TetraBlock(BlockBehaviour.Properties properties) {
         super(properties);
     }
 

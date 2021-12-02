@@ -3,6 +3,7 @@ package se.mickelus.tetra.mixin;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
+import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @Mixin(ItemStack.class)
 public class MixinItemStack {
 
-    @Inject(at = @At("HEAD"), method = "addEnchantment(Lnet/minecraft/enchantment/Enchantment;I)V", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "enchant(Lnet/minecraft/world/item/enchantment/Enchantment;I)V", cancellable = true)
     private void addEnchantment(Enchantment enchantment, int level, CallbackInfo callback) {
         if (getItem() instanceof IModularItem) {
             ItemStack itemStack = getInstance();

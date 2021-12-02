@@ -2,7 +2,7 @@ package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 
 public abstract class BaseSchematic implements UpgradeSchematic {
     @Override
-    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolType, Integer> availableTools) {
+    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolAction, Integer> availableTools) {
         return isMaterialsValid(itemStack, slot, materials)
                 && !isIntegrityViolation(player, itemStack, materials, slot)
                 && checkTools(itemStack, materials, availableTools)
@@ -27,7 +27,7 @@ public abstract class BaseSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean checkTools(final ItemStack targetStack, final ItemStack[] materials, Map<ToolType, Integer> availableTools) {
+    public boolean checkTools(final ItemStack targetStack, final ItemStack[] materials, Map<ToolAction, Integer> availableTools) {
         return getRequiredToolLevels(targetStack, materials).entrySet().stream()
                 .allMatch(entry -> availableTools.getOrDefault(entry.getKey(), 0) >= entry.getValue());
     }

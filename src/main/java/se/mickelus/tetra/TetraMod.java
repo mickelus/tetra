@@ -25,6 +25,7 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
@@ -117,8 +118,8 @@ import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
 import se.mickelus.tetra.trades.TradeHandler;
 
-import java.util.Arrays;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)
@@ -338,7 +339,7 @@ public class TetraMod {
     @OnlyIn(Dist.CLIENT)
     public static void provideTextures(final TextureStitchEvent.Pre event) {
         // todo 1.15: Move this to ModularItemModel.getTextures?
-        if (TextureAtlas.LOCATION_BLOCKS.equals(event.getMap().location())) {
+        if (TextureAtlas.LOCATION_BLOCKS.equals(event.getAtlas().location())) {
             Minecraft.getInstance().getResourceManager().listResources("textures/items/module", s -> s.endsWith(".png")).stream()
                     .filter(resourceLocation -> MOD_ID.equals(resourceLocation.getNamespace()))
                     // 9 is the length of "textures/" & 4 is the length of ".png"
@@ -415,20 +416,20 @@ public class TetraMod {
         @SubscribeEvent
         public static void registerContainerTypes(final RegistryEvent.Register<MenuType<?>> event) {
             // toolbelt
-            MenuType toolbeltContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
+            MenuType toolbeltContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
                 return ToolbeltContainer.create(windowId, inv);
             })).setRegistryName(MOD_ID, ModularToolbeltItem.unlocalizedName);
             event.getRegistry().register(toolbeltContainerType);
 
             // workbench
-            MenuType workbenchContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
+            MenuType workbenchContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 return WorkbenchContainer.create(windowId, pos, inv);
             })).setRegistryName(MOD_ID, WorkbenchTile.unlocalizedName);
             event.getRegistry().register(workbenchContainerType);
 
             // forged container
-            MenuType forgedContainerContainerType = IForgeContainerType.create(((windowId, inv, data) -> {
+            MenuType forgedContainerContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 return ForgedContainerContainer.create(windowId, pos, inv);
             })).setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName);

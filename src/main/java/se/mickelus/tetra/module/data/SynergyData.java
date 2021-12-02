@@ -4,6 +4,7 @@ package se.mickelus.tetra.module.data;
  * Data structure for synergy bonuses. Synergies may either apply based on a set of module variants or a set of modules. This extends
  * ModuleVariantData and all fields inherited that have been set will be applied to the item if the synergy bonus is active.
  */
+
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class SynergyData extends VariantData {

@@ -8,6 +8,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -30,7 +31,7 @@ public class SeepingBedrockBlock extends TetraBlock {
     public static SeepingBedrockBlock instance;
 
     public SeepingBedrockBlock() {
-        super(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
+        super(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
         setRegistryName(unlocalizedName);
 
         hasItem = true;

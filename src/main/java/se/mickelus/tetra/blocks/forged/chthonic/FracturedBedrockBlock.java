@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.ObjectHolder;
@@ -23,7 +24,7 @@ public class FracturedBedrockBlock extends TetraBlock implements EntityBlock {
     public static FracturedBedrockBlock instance;
 
     public FracturedBedrockBlock() {
-        super(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
+        super(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
         setRegistryName(unlocalizedName);
     }
 
