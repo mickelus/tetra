@@ -28,11 +28,11 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
@@ -59,13 +59,13 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     public static final IntegerProperty propIntegrity = IntegerProperty.create("integrity", 0, 3);
 
     static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(ToolTypes.pry, 1, Direction.EAST, 6, 8, 6, 8,
+            new BlockInteraction(TetraToolActions.pry, 1, Direction.EAST, 6, 8, 6, 8,
                     BlockStatePredicate.ANY,
                     ForgedCrateBlock::attemptBreakPry),
-            new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 1, 4, 1, 4,
+            new BlockInteraction(TetraToolActions.hammer, 3, Direction.EAST, 1, 4, 1, 4,
                     BlockStatePredicate.ANY,
                     ForgedCrateBlock::attemptBreakHammer),
-            new BlockInteraction(ToolTypes.hammer, 3, Direction.EAST, 10, 13, 10, 13,
+            new BlockInteraction(TetraToolActions.hammer, 3, Direction.EAST, 10, 13, 10, 13,
                     BlockStatePredicate.ANY,
                     ForgedCrateBlock::attemptBreakHammer),
     };
@@ -102,15 +102,15 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     private static boolean attemptBreakHammer(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction facing) {
-        return attemptBreak(world, pos, blockState, player, hand, player.getItemInHand(hand), ToolTypes.hammer, 2, 1);
+        return attemptBreak(world, pos, blockState, player, hand, player.getItemInHand(hand), TetraToolActions.hammer, 2, 1);
     }
 
     private static boolean attemptBreakPry(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction facing) {
-        return attemptBreak(world, pos, blockState, player, hand, player.getItemInHand(hand), ToolTypes.pry, 0, 2);
+        return attemptBreak(world, pos, blockState, player, hand, player.getItemInHand(hand), TetraToolActions.pry, 0, 2);
     }
 
     private static boolean attemptBreak(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand,
-            ItemStack itemStack, ToolType toolType, int min, int multiplier) {
+            ItemStack itemStack, ToolAction ToolAction, int min, int multiplier) {
 
         if (player == null) {
             return false;
@@ -119,12 +119,12 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
         int integrity = blockState.getValue(propIntegrity);
 
         int progress = CastOptional.cast(itemStack.getItem(), IToolProvider.class)
-                .map(item -> item.getToolLevel(itemStack, toolType))
+                .map(item -> item.getToolLevel(itemStack, ToolAction))
                 .map(level -> ( level - min ) * multiplier)
                 .orElse(1);
 
         if (integrity - progress >= 0) {
-            if (ToolTypes.hammer.equals(toolType)) {
+            if (TetraToolActions.hammer.equals(ToolAction)) {
                 world.playSound(player, pos, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundSource.PLAYERS, 1, 0.5f);
             } else {
                 world.playSound(player, pos, SoundEvents.LADDER_STEP, SoundSource.PLAYERS, 0.7f, 2f);
@@ -143,7 +143,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ToolType> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ToolAction> tools) {
             return interactions;
     }
 

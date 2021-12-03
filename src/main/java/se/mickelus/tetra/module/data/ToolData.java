@@ -1,7 +1,7 @@
 package se.mickelus.tetra.module.data;
 
 import com.google.gson.*;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 @ParametersAreNonnullByDefault
-public class ToolData extends TierData<ToolType> {
+public class ToolData extends TierData<ToolAction> {
     public static class Deserializer implements JsonDeserializer<ToolData> {
         @Override
         public ToolData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -20,15 +20,15 @@ public class ToolData extends TierData<ToolType> {
 
             jsonObject.entrySet().forEach(entry -> {
                 JsonElement entryValue = entry.getValue();
-                ToolType toolType = ToolType.get(entry.getKey());
+                ToolAction toolAction = ToolAction.get(entry.getKey());
                 if (entryValue.isJsonArray()) {
                     JsonArray entryArray = entryValue.getAsJsonArray();
                     if (entryArray.size() == 2) {
-                        data.levelMap.put(toolType, entryArray.get(0).getAsFloat());
-                        data.efficiencyMap.put(toolType, entryArray.get(1).getAsFloat());
+                        data.levelMap.put(toolAction, entryArray.get(0).getAsFloat());
+                        data.efficiencyMap.put(toolAction, entryArray.get(1).getAsFloat());
                     }
                 } else {
-                    data.levelMap.put(toolType, entryValue.getAsFloat());
+                    data.levelMap.put(toolAction, entryValue.getAsFloat());
                 }
             });
 

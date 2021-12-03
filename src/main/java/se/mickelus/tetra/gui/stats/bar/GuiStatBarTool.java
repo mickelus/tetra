@@ -2,8 +2,8 @@ package se.mickelus.tetra.gui.stats.bar;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
-import se.mickelus.mgui.gui.GuiAlignment;
+import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.gui.GuiAlignment;
 import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiColors;
@@ -21,27 +21,27 @@ public class GuiStatBarTool extends GuiStatBar {
 
     private boolean efficiencyVisibility;
 
-    public GuiStatBarTool(int x, int y, int width, ToolType toolType) {
-        this(x, y, width, toolType, false);
+    public GuiStatBarTool(int x, int y, int width, ToolAction toolAction) {
+        this(x, y, width, toolAction, false);
     }
 
-    public GuiStatBarTool(int x, int y, int width, ToolType toolType, boolean efficiencyVisibility) {
+    public GuiStatBarTool(int x, int y, int width, ToolAction toolAction, boolean efficiencyVisibility) {
         super(x, y, width, null, 0, efficiencyMax,
-                false, new StatGetterToolEfficiency(toolType), LabelGetterBasic.decimalLabel,
-                new TooltipGetterTool(toolType));
+                false, new StatGetterToolEfficiency(toolAction), LabelGetterBasic.decimalLabel,
+                new TooltipGetterTool(toolAction));
 
         this.efficiencyVisibility = efficiencyVisibility;
 
         bar.setWidth(width - 16);
         bar.setX(16);
 
-        levelGetter = new StatGetterToolLevel(toolType);
-        icon = new GuiTool(-3, -3, toolType);
+        levelGetter = new StatGetterToolLevel(toolAction);
+        icon = new GuiTool(-3, -3, toolAction);
         addChild(icon);
 
         StatGetterEffectLevel extractorGetter = new StatGetterEffectLevel(ItemEffect.extractor, 4.5);
         setIndicators(
-                new StrikingStatIndicatorGui(toolType),
+                new StrikingStatIndicatorGui(toolAction),
                 new GuiStatIndicator(0, 0, "tetra.stats.tool.extractor", 7, extractorGetter,
                         new TooltipGetterInteger("tetra.stats.tool.extractor.tooltip", extractorGetter)));
     }

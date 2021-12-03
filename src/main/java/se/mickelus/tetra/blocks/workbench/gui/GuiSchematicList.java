@@ -2,9 +2,9 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
-import se.mickelus.mgui.gui.GuiButton;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiText;
+import se.mickelus.mutil.gui.GuiButton;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiText;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import se.mickelus.mgui.gui.GuiClickable;
-import se.mickelus.mgui.gui.GuiItem;
-import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mutil.gui.GuiClickable;
+import se.mickelus.mutil.gui.GuiItem;
+import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiTextures;

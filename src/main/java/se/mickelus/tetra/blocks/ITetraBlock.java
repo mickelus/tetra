@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.IForgeRegistry;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.network.PacketHandler;
@@ -48,26 +48,26 @@ public interface ITetraBlock {
         return false;
     }
 
-    default Collection<ToolType> getTools(Level world, BlockPos pos, BlockState blockState) {
+    default Collection<ToolAction> getTools(Level world, BlockPos pos, BlockState blockState) {
         return Collections.emptyList();
     }
 
-    default int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolType toolType) {
+    default int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolAction) {
         return -1;
     }
 
-    default Map<ToolType, Integer> getToolLevels(Level world, BlockPos pos, BlockState blockState) {
+    default Map<ToolAction, Integer> getToolLevels(Level world, BlockPos pos, BlockState blockState) {
         return getTools(world, pos, blockState).stream()
-                .collect(Collectors.toMap(Function.identity(), toolType -> getToolLevel(world, pos, blockState, toolType)));
+                .collect(Collectors.toMap(Function.identity(), toolAction -> getToolLevel(world, pos, blockState, toolAction)));
     }
 
     default ItemStack onCraftConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
-            Player player, ToolType requiredTool, int requiredLevel, boolean consumeResources) {
+            Player player, ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
         return null;
     }
 
     default ItemStack onActionConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
-            ToolType requiredTool, int requiredLevel, boolean consumeResources) {
+            ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
         return null;
     }
 

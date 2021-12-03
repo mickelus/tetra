@@ -17,7 +17,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
@@ -50,12 +50,12 @@ public class PiercingEffect {
                     : Direction.orderedByNearest(entity)[0];
 
             float refHardness = state.getDestroySpeed(world, pos);
-            ToolType refTool = ItemModularHandheld.getEffectiveTool(state);
+            ToolAction refTool = ItemModularHandheld.getEffectiveTool(state);
 
 //            for (int i = 0; i < pierceAmount; i++) {
 //                BlockPos offsetPos = pos.offset(facing, i + 1);
 //                BlockState offsetState = world.getBlockState(offsetPos);
-//                ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
+//                ToolAction effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
 //
 //                int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, effectiveTool, player, offsetState);
 //                if (((toolLevel >= 0 && toolLevel >= offsetState.getBlock().getHarvestLevel(offsetState))
@@ -74,10 +74,10 @@ public class PiercingEffect {
         }
     }
 
-    private static void enqueueBlockBreak(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolType refTool, int remaining) {
+    private static void enqueueBlockBreak(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolAction refTool, int remaining) {
         ServerScheduler.schedule(1, () -> {
             BlockState offsetState = world.getBlockState(pos);
-            ToolType effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
+            ToolAction effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
 
             float blockHardness = offsetState.getDestroySpeed(world, pos);
             int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, effectiveTool, player, offsetState);

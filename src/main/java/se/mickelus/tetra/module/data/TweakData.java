@@ -3,7 +3,7 @@ package se.mickelus.tetra.module.data;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.properties.AttributeHelper;
 
@@ -39,7 +39,7 @@ public class TweakData {
         return step * properties.effects.getLevel(effect);
     }
 
-    public int getToolLevel(ToolType tool, int step) {
+    public int getToolLevel(ToolAction tool, int step) {
         return step * properties.tools.getLevel(tool);
     }
 }

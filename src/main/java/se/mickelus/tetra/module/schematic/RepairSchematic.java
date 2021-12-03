@@ -4,7 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -153,16 +153,16 @@ public class RepairSchematic extends BaseSchematic {
     }
 
     @Override
-    public Map<ToolType, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
+    public Map<ToolAction, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
         return CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getRepairRequiredToolLevels(targetStack, materials[0]))
                 .orElseGet(Collections::emptyMap);
     }
 
     @Override
-    public int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolType toolType) {
+    public int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolAction toolAction) {
         return CastOptional.cast(targetStack.getItem(), IModularItem.class)
-                .map(item -> item.getRepairRequiredToolLevel(targetStack, materials[0], toolType))
+                .map(item -> item.getRepairRequiredToolLevel(targetStack, materials[0], toolAction))
                 .orElse(0);
     }
 

@@ -1,9 +1,9 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.GuiStringOutline;
-import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiString;
+import se.mickelus.mutil.gui.GuiStringOutline;
+import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schematic.OutcomePreview;

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.stats.bar;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import se.mickelus.mgui.gui.GuiAlignment;
+import se.mickelus.mutil.gui.GuiAlignment;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

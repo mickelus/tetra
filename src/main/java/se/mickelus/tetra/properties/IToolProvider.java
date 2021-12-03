@@ -2,7 +2,7 @@ package se.mickelus.tetra.properties;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.module.data.ToolData;
@@ -19,7 +19,7 @@ public interface IToolProvider {
     public ToolData getToolData(ItemStack itemStack);
 
 
-    default int getToolLevel(ItemStack itemStack, ToolType tool) {
+    default int getToolLevel(ItemStack itemStack, ToolAction tool) {
         if (!canProvideTools(itemStack)) {
             return -1;
         }
@@ -27,7 +27,7 @@ public interface IToolProvider {
         return getToolData(itemStack).getLevel(tool);
     }
 
-    default float getToolEfficiency(ItemStack itemStack, ToolType tool) {
+    default float getToolEfficiency(ItemStack itemStack, ToolAction tool) {
         if (!canProvideTools(itemStack)) {
             return 0;
         }
@@ -39,7 +39,7 @@ public interface IToolProvider {
         return getToolData(itemStack).getEfficiency(tool);
     }
 
-    default Set<ToolType> getTools(ItemStack itemStack) {
+    default Set<ToolAction> getTools(ItemStack itemStack) {
         if (!canProvideTools(itemStack)) {
             return Collections.emptySet();
         }
@@ -47,7 +47,7 @@ public interface IToolProvider {
         return getToolData(itemStack).getValues();
     }
 
-    default Map<ToolType, Integer> getToolLevels(ItemStack itemStack) {
+    default Map<ToolAction, Integer> getToolLevels(ItemStack itemStack) {
         if (!canProvideTools(itemStack)) {
             return Collections.emptyMap();
         }
@@ -65,7 +65,7 @@ public interface IToolProvider {
      * @param toolLevel The level of the used tool
      * @param consumeResources
      */
-    public default ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, Player player, ToolType tool, int toolLevel,
+    public default ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, Player player, ToolAction tool, int toolLevel,
             boolean consumeResources) {
         ItemStack result = targetStack.copy();
 
@@ -82,7 +82,7 @@ public interface IToolProvider {
      * @param toolLevel The level of the used tool
      * @param consumeResources
      */
-    public default ItemStack onActionConsume(ItemStack providerStack, ItemStack targetStack, Player player, ToolType tool, int toolLevel,
+    public default ItemStack onActionConsume(ItemStack providerStack, ItemStack targetStack, Player player, ToolAction tool, int toolLevel,
             boolean consumeResources) {
         ItemStack result = targetStack.copy();
 

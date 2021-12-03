@@ -5,14 +5,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolType;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiItem;
-import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
+import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiItem;
+import se.mickelus.mutil.gui.GuiString;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiSynergyIndicator;
@@ -41,7 +41,7 @@ public class HoloVariantDetailGui extends GuiElement {
 
     private HoloStatsGui stats;
 
-    private Map<ToolType, Integer> availableToolLevels;
+    private Map<ToolAction, Integer> availableToolLevels;
 
     private Runnable populateImprovements;
     private HoloImprovementButton improvementButton;

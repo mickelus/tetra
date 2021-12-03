@@ -20,7 +20,6 @@ import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
-import se.mickelus.tetra.generation.ExtendedStructureTESR;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.ThrownModularItemRenderer;
@@ -39,8 +38,6 @@ public class ClientProxy implements IProxy {
     public void init(FMLCommonSetupEvent event, ITetraItem[] items, ITetraBlock[] blocks) {
         Arrays.stream(items).forEach(ITetraItem::clientInit);
         Arrays.stream(blocks).forEach(ITetraBlock::clientInit);
-
-        RenderingRegistry.registerEntityRenderingHandler(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
 
         // these are registered here as there are multiple instances of workbench blocks
         ClientRegistry.bindTileEntityRenderer(WorkbenchTile.type, WorkbenchTESR::new);

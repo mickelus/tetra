@@ -5,14 +5,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
-import se.mickelus.mgui.gui.GuiButton;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiRect;
-import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.mgui.gui.animation.AnimationChain;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.gui.GuiButton;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiRect;
+import se.mickelus.mutil.gui.GuiTexture;
+import se.mickelus.mutil.gui.animation.AnimationChain;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.VerticalTabGroupGui;
@@ -128,7 +128,7 @@ public class GuiSlotDetail extends GuiElement {
         } else {
             Level world = tileEntity.getLevel();
             BlockPos pos = tileEntity.getBlockPos();
-            Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, world, pos, world.getBlockState(pos));
+            Map<ToolAction, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, world, pos, world.getBlockState(pos));
             ItemStack[] materials = tileEntity.getMaterials();
 
             ItemStack previewStack = currentSchematic.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player);
@@ -153,7 +153,7 @@ public class GuiSlotDetail extends GuiElement {
         tabGroup.setActive(tab);
     }
 
-    public void update(Player player, WorkbenchTile tileEntity, Map<ToolType, Integer> availableTools) {
+    public void update(Player player, WorkbenchTile tileEntity, Map<ToolAction, Integer> availableTools) {
         schematicDetail.updateAvailableTools(availableTools);
 
         ItemStack currentStack = tileEntity.getTargetItemStack().copy();

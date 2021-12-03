@@ -1,10 +1,10 @@
 package se.mickelus.tetra.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiClickable;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiRect;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiClickable;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiRect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;

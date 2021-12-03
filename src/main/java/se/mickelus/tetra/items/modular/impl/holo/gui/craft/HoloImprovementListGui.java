@@ -1,11 +1,11 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
-import se.mickelus.mgui.gui.impl.GuiHorizontalScrollable;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.mutil.gui.impl.GuiHorizontalScrollable;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 

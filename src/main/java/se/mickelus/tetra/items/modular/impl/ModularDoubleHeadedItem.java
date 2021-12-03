@@ -26,7 +26,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ChargedAbilityEffect;
@@ -129,7 +129,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         if (player != null
                 && !player.isCrouching()
                 && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
-                && getToolLevel(player.getItemInHand(hand), ToolTypes.hammer) > 0) {
+                && getToolLevel(player.getItemInHand(hand), TetraToolActions.hammer) > 0) {
             return BasicWorkbenchBlock.upgradeWorkbench(player, world, pos, hand, context.getClickedFace());
         }
         return super.onItemUseFirst(stack, context);

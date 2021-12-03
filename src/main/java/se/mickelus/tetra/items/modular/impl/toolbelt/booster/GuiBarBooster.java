@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.animation.VisibilityFilter;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.animation.VisibilityFilter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

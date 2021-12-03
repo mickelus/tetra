@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
@@ -23,8 +24,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class ExtractorProjectileRenderer extends EntityRenderer<ExtractorProjectileEntity> {
     private static BlockRenderDispatcher blockRenderer;
 
-    public ExtractorProjectileRenderer(EntityRenderDispatcher manager) {
-        super(manager);
+    public ExtractorProjectileRenderer(EntityRendererProvider.Context renderContext) {
+        super(renderContext);
 
         blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }

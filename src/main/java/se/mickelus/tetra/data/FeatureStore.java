@@ -1,7 +1,6 @@
 package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
-import se.mickelus.tetra.generation.FeatureParameters;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

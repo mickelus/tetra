@@ -13,12 +13,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.client.gui.GuiUtils;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.mgui.gui.GuiTextureOffset;
+import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiTexture;
+import se.mickelus.mutil.gui.GuiTextureOffset;
 import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
@@ -29,14 +28,9 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.util.CastOptional;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.*;
+import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer> {
@@ -124,9 +118,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
     }
 
     @Override
-    public void init(Minecraft minecraft, int width, int height) {
-        super.init(minecraft, width, height);
-
+    public void init() {
         viewingPlayer = minecraft.player;
     }
 
@@ -161,7 +153,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
                     .map(TextComponent::new)
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 280, font);
+            renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, mouseY);
         }
 
         updateMaterialHoverPreview();
@@ -318,9 +310,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
     }
 
     @Override
-    public void tick() {
-        super.tick();
-
+    protected void containerTick() {
         inventoryInfo.update(tileEntity.getCurrentSchematic(), tileEntity.getCurrentSlot(), currentTarget);
 
         Level world = tileEntity.getLevel();
@@ -329,7 +319,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
             isDirty = false;
         } else if (world != null && world.getGameTime() % 20 == 0) {
             BlockPos pos = tileEntity.getBlockPos();
-            Map<ToolType, Integer> availableTools = PropertyHelper.getCombinedToolLevels(viewingPlayer, world, pos, world.getBlockState(pos));
+            Map<ToolAction, Integer> availableTools = PropertyHelper.getCombinedToolLevels(viewingPlayer, world, pos, world.getBlockState(pos));
 
             if (tileEntity.getCurrentSchematic() != null && slotDetail.isVisible()) {
                 slotDetail.update(viewingPlayer, tileEntity, availableTools);
@@ -397,9 +387,9 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
 
             boolean willReplace = schematic.willReplace(targetStack, materials, slot);
 
-            Map<ToolType, Integer> tools = schematic.getRequiredToolLevels(targetStack, materials);
+            Map<ToolAction, Integer> tools = schematic.getRequiredToolLevels(targetStack, materials);
 
-            for (Map.Entry<ToolType, Integer> entry: tools.entrySet()) {
+            for (Map.Entry<ToolAction, Integer> entry: tools.entrySet()) {
                 result = WorkbenchTile.consumeCraftingToolEffects(result, slot, willReplace, entry.getKey(), entry.getValue(), viewingPlayer,
                         tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), false);
             }

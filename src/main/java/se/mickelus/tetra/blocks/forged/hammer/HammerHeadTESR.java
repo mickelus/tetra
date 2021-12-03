@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
@@ -22,8 +23,7 @@ public class HammerHeadTESR implements BlockEntityRenderer<HammerHeadTile> {
     private static final float animationDuration = 400;
     private static final float unjamDuration = 800;
 
-    public HammerHeadTESR(BlockEntityRenderDispatcher rendererDispatcher) {
-
+    public HammerHeadTESR(BlockEntityRendererProvider.Context context) {
         blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }
 

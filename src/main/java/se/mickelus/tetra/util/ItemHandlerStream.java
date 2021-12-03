@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Spliterator;
@@ -20,7 +21,7 @@ public class ItemHandlerStream {
         return of(world.getBlockEntity(pos));
     }
 
-    public static Stream<ItemStack> of(BlockEntity tileEntity) {
+    public static Stream<ItemStack> of(@Nullable BlockEntity tileEntity) {
         return Optional.ofNullable(tileEntity)
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())

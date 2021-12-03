@@ -3,10 +3,10 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiButton;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiButton;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.TweakData;
 

@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @ParametersAreNonnullByDefault
 public class PropertyHelper {
 
-    public static int getItemToolLevel(ItemStack itemStack, ToolType tool) {
+    public static int getItemToolLevel(ItemStack itemStack, ToolAction tool) {
         return Optional.of(itemStack)
                 .filter(stack -> !stack.isEmpty())
                 .map(PropertyHelper::getReplacement)
@@ -37,7 +37,7 @@ public class PropertyHelper {
                 .orElse(0);
     }
 
-    public static Set<ToolType> getItemTools(ItemStack itemStack) {
+    public static Set<ToolAction> getItemTools(ItemStack itemStack) {
         return Optional.of(itemStack)
                 .filter(stack -> !stack.isEmpty())
                 .map(PropertyHelper::getReplacement)
@@ -66,7 +66,7 @@ public class PropertyHelper {
                 .orElse(0d);
     }
 
-    public static int getPlayerToolLevel(Player player, ToolType tool) {
+    public static int getPlayerToolLevel(Player player, ToolAction tool) {
         return Stream.concat(player.getInventory().offhand.stream(), player.getInventory().items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
@@ -76,7 +76,7 @@ public class PropertyHelper {
                 .orElse(0);
     }
 
-    public static Set<ToolType> getPlayerTools(Player player) {
+    public static Set<ToolAction> getPlayerTools(Player player) {
         return Stream.concat(player.getInventory().offhand.stream(), player.getInventory().items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
@@ -85,7 +85,7 @@ public class PropertyHelper {
                 .collect(Collectors.toSet());
     }
 
-    public static Map<ToolType, Integer> getPlayerToolLevels(Player player) {
+    public static Map<ToolAction, Integer> getPlayerToolLevels(Player player) {
         return Stream.concat(player.getInventory().offhand.stream(), player.getInventory().items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
@@ -96,7 +96,7 @@ public class PropertyHelper {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Math::max));
     }
 
-    public static int getInventoryToolLevel(Container inventory, ToolType tool) {
+    public static int getInventoryToolLevel(Container inventory, ToolAction tool) {
         int result = 0;
         for (int i = 0; i < inventory.getContainerSize(); i++) {
             int comparisonLevel = result;
@@ -112,8 +112,8 @@ public class PropertyHelper {
 
     }
 
-    public static Set<ToolType> getInventoryTools(Container inventory) {
-        Set<ToolType> result = new HashSet<>();
+    public static Set<ToolAction> getInventoryTools(Container inventory) {
+        Set<ToolAction> result = new HashSet<>();
         for (int i = 0; i < inventory.getContainerSize(); i++) {
             Optional.of(inventory.getItem(i))
                     .filter(itemStack -> !itemStack.isEmpty())
@@ -127,7 +127,7 @@ public class PropertyHelper {
         return result;
     }
 
-    public static Map<ToolType, Integer> getInventoryToolLevels(Container inventory) {
+    public static Map<ToolAction, Integer> getInventoryToolLevels(Container inventory) {
         return InventoryStream.of(inventory)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
@@ -138,7 +138,7 @@ public class PropertyHelper {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Math::max));
     }
 
-    public static ItemStack getInventoryProvidingItemStack(Container inventory, ToolType tool, int level) {
+    public static ItemStack getInventoryProvidingItemStack(Container inventory, ToolAction tool, int level) {
         for (int i = 0; i < inventory.getContainerSize(); i++) {
             ItemStack result = Optional.of(inventory.getItem(i))
                     .filter(itemStack -> !itemStack.isEmpty())
@@ -155,7 +155,7 @@ public class PropertyHelper {
         return ItemStack.EMPTY;
     }
 
-    public static ItemStack getPlayerProvidingItemStack(ToolType tool, int level, Entity entity) {
+    public static ItemStack getPlayerProvidingItemStack(ToolAction tool, int level, Entity entity) {
         return CastOptional.cast(entity, Player.class)
                 .map(player -> Stream.concat(Stream.of(player.getMainHandItem(), player.getOffhandItem()), player.getInventory().items.stream()))
                 .orElse(Stream.empty())
@@ -168,7 +168,7 @@ public class PropertyHelper {
     }
 
     public static ItemStack consumeCraftToolInventory(Container inventory, Player player, ItemStack targetStack,
-            ToolType tool, int level,  boolean consumeResources) {
+            ToolAction tool, int level,  boolean consumeResources) {
         ItemStack itemStack = getInventoryProvidingItemStack(inventory, tool, level);
         if (itemStack.getItem() instanceof IToolProvider) {
             return ((IToolProvider) itemStack.getItem())
@@ -179,7 +179,7 @@ public class PropertyHelper {
     }
 
     public static ItemStack consumeActionToolInventory(Container inventory, Player player, ItemStack targetStack,
-            ToolType tool, int level,  boolean consumeResources) {
+            ToolAction tool, int level,  boolean consumeResources) {
         ItemStack itemStack = getInventoryProvidingItemStack(inventory, tool, level);
         if (itemStack.getItem() instanceof IToolProvider) {
             return ((IToolProvider) itemStack.getItem())
@@ -197,7 +197,7 @@ public class PropertyHelper {
         return itemStack;
     }
 
-    public static int getBlockToolLevel(Level world, BlockPos pos, BlockState blockStateIn, ToolType tool) {
+    public static int getBlockToolLevel(Level world, BlockPos pos, BlockState blockStateIn, ToolAction tool) {
         return Optional.of(blockStateIn)
                 .filter(blockState -> blockState.getBlock() instanceof ITetraBlock)
                 .map(blockState -> (ITetraBlock) blockState.getBlock())
@@ -205,7 +205,7 @@ public class PropertyHelper {
                 .orElse(0);
     }
 
-    public static Collection<ToolType> getBlockTools(Level world, BlockPos pos, BlockState blockStateIn) {
+    public static Collection<ToolAction> getBlockTools(Level world, BlockPos pos, BlockState blockStateIn) {
         return Optional.of(blockStateIn)
                 .filter(blockState -> blockState.getBlock() instanceof ITetraBlock)
                 .map(blockState -> (ITetraBlock) blockState.getBlock())
@@ -213,7 +213,7 @@ public class PropertyHelper {
                 .orElse(Collections.emptyList());
     }
 
-    public static Map<ToolType, Integer> getBlockToolLevels(Level world, BlockPos pos, BlockState blockStateIn) {
+    public static Map<ToolAction, Integer> getBlockToolLevels(Level world, BlockPos pos, BlockState blockStateIn) {
         return Optional.of(blockStateIn)
                 .filter(blockState -> blockState.getBlock() instanceof ITetraBlock)
                 .map(blockState -> (ITetraBlock) blockState.getBlock())
@@ -221,7 +221,7 @@ public class PropertyHelper {
                 .orElse(Collections.emptyMap());
     }
 
-    public static int getToolbeltToolLevel(Player player, ToolType tool) {
+    public static int getToolbeltToolLevel(Player player, ToolAction tool) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> Math.max(
@@ -230,17 +230,17 @@ public class PropertyHelper {
                 .orElse(0);
     }
 
-    public static Set<ToolType> getToolbeltTools(Player player) {
+    public static Set<ToolAction> getToolbeltTools(Player player) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
-                .map(toolbeltStack -> (Set<ToolType>) Sets.union(
+                .map(toolbeltStack -> (Set<ToolAction>) Sets.union(
                         getInventoryTools(new QuickslotInventory(toolbeltStack)),
                         getInventoryTools(new StorageInventory(toolbeltStack))))
                 .orElse(Collections.emptySet());
 
     }
 
-    public static Map<ToolType, Integer> getToolbeltToolLevels(Player player) {
+    public static Map<ToolAction, Integer> getToolbeltToolLevels(Player player) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> Stream.of(
@@ -254,7 +254,7 @@ public class PropertyHelper {
     }
 
     @Nullable
-    public static ItemStack consumeCraftToolToolbelt(Player player, ItemStack targetStack, ToolType tool, int level,  boolean consumeResources) {
+    public static ItemStack consumeCraftToolToolbelt(Player player, ItemStack targetStack, ToolAction tool, int level,  boolean consumeResources) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> {
@@ -278,7 +278,7 @@ public class PropertyHelper {
 
     }
 
-    public static ItemStack consumeActionToolToolbelt(Player player, ItemStack targetStack, ToolType tool, int level,  boolean consumeResources) {
+    public static ItemStack consumeActionToolToolbelt(Player player, ItemStack targetStack, ToolAction tool, int level,  boolean consumeResources) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> {
@@ -302,7 +302,7 @@ public class PropertyHelper {
 
     }
 
-    public static ItemStack getToolbeltProvidingItemStack(ToolType tool, int level, Player player) {
+    public static ItemStack getToolbeltProvidingItemStack(ToolAction tool, int level, Player player) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(toolbeltStack -> {
@@ -317,7 +317,7 @@ public class PropertyHelper {
                 .orElse(ItemStack.EMPTY);
     }
 
-    public static int getCombinedToolLevel(Player player, Level world, BlockPos pos, BlockState blockStateIn, ToolType tool) {
+    public static int getCombinedToolLevel(Player player, Level world, BlockPos pos, BlockState blockStateIn, ToolAction tool) {
         return IntStream.of(
                 getPlayerToolLevel(player, tool),
                 getToolbeltToolLevel(player, tool),
@@ -326,7 +326,7 @@ public class PropertyHelper {
                 .orElse(0);
     }
 
-    public static Map<ToolType, Integer> getCombinedToolLevels(Player player, Level world, BlockPos pos, BlockState blockStateIn) {
+    public static Map<ToolAction, Integer> getCombinedToolLevels(Player player, Level world, BlockPos pos, BlockState blockStateIn) {
         return Stream.of(
                 getInventoryToolLevels(player.getInventory()),
                 getToolbeltToolLevels(player),
