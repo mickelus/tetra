@@ -2,10 +2,10 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
-import se.mickelus.mgui.gui.*;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.mutil.gui.*;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiItemRolling;
@@ -131,7 +131,7 @@ public class HoloMaterialDetailGui extends GuiElement {
                     .map(Map::entrySet)
                     .map(Collection::stream)
                     .orElseGet(Stream::empty)
-                    .map(entry -> new ToolRequirementGui(0, 0, entry.getKey(), "tetra.tool." + entry.getKey().getName() + ".material_requirement")
+                    .map(entry -> new ToolRequirementGui(0, 0, entry.getKey(), "tetra.tool." + entry.getKey().name() + ".material_requirement")
                             .setTooltipRequirementVisibility(false)
                             .updateRequirement(entry.getValue(), 0))
                     .forEach(requiredTools::addChild);

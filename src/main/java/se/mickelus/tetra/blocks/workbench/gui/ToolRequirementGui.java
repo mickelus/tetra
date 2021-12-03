@@ -19,11 +19,11 @@ public class ToolRequirementGui extends GuiTool {
 
     String requirementTooltip;
 
-    public ToolRequirementGui(int x, int y, ToolAction toolType) {
-        this(x, y, toolType, "tetra.tool." + toolType.name() + ".requirement");
+    public ToolRequirementGui(int x, int y, ToolAction toolAction) {
+        this(x, y, toolAction, "tetra.tool." + toolAction.name() + ".requirement");
     }
-    public ToolRequirementGui(int x, int y, ToolAction toolType, String requirementTooltip) {
-        super(x, y, toolType);
+    public ToolRequirementGui(int x, int y, ToolAction toolAction, String requirementTooltip) {
+        super(x, y, toolAction);
 
         this.requirementTooltip = requirementTooltip;
     }

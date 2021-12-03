@@ -52,13 +52,13 @@ public interface ITetraBlock {
         return Collections.emptyList();
     }
 
-    default int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolType) {
+    default int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolAction) {
         return -1;
     }
 
     default Map<ToolAction, Integer> getToolLevels(Level world, BlockPos pos, BlockState blockState) {
         return getTools(world, pos, blockState).stream()
-                .collect(Collectors.toMap(Function.identity(), toolType -> getToolLevel(world, pos, blockState, toolType)));
+                .collect(Collectors.toMap(Function.identity(), toolAction -> getToolLevel(world, pos, blockState, toolAction)));
     }
 
     default ItemStack onCraftConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,

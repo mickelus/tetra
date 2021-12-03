@@ -17,7 +17,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.mgui.gui.ToggleableSlot;
+import se.mickelus.mutil.gui.ToggleableSlot;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;

@@ -3,7 +3,6 @@ package se.mickelus.tetra.blocks.geode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +26,9 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.network.PacketHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import static net.minecraft.data.worldgen.features.OreFeatures.NATURAL_STONE;
+
 @ParametersAreNonnullByDefault
 public class GeodeBlock extends TetraBlock {
 
@@ -50,7 +52,7 @@ public class GeodeBlock extends TetraBlock {
         if (density > 0) {
             int size = 3;
             int maxHeight = 32;
-            OreConfiguration config = new OreConfiguration(OreFeatures.NATURAL_STONE, defaultBlockState(), size);
+            OreConfiguration config = new OreConfiguration(NATURAL_STONE, defaultBlockState(), size);
             configuredFeature = Feature.ORE.configured(config)
                     .range(maxHeight)
                     .squared()

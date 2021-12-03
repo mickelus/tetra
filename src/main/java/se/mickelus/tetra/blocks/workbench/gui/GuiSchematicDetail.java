@@ -6,7 +6,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
-import se.mickelus.mgui.gui.*;
+import se.mickelus.mutil.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiMagicUsage;

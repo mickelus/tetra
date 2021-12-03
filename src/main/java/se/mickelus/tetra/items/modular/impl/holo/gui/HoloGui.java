@@ -9,7 +9,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiSpinner;

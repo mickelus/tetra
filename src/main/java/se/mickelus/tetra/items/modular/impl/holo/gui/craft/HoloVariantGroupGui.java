@@ -2,11 +2,11 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.GuiStringSmall;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiString;
+import se.mickelus.mutil.gui.GuiStringSmall;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 import se.mickelus.tetra.module.schematic.OutcomePreview;

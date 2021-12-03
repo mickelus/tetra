@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
@@ -138,7 +138,7 @@ public class RemoveSchematic extends BaseSchematic {
 
     @Override
     public Map<ToolAction, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
-        return Collections.singletonMap(ToolTypes.hammer, 1);
+        return Collections.singletonMap(TetraToolActions.hammer, 1);
     }
 
     @Override

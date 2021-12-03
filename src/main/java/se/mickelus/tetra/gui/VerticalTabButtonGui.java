@@ -1,13 +1,13 @@
 package se.mickelus.tetra.gui;
 
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiClickable;
-import se.mickelus.mgui.gui.GuiRect;
-import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.animation.AnimationChain;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.mgui.gui.impl.GuiColors;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiClickable;
+import se.mickelus.mutil.gui.GuiRect;
+import se.mickelus.mutil.gui.GuiString;
+import se.mickelus.mutil.gui.animation.AnimationChain;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.impl.GuiColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
@@ -33,7 +33,7 @@ public class VerticalTabButtonGui extends GuiClickable {
 
         setAttachmentPoint(GuiAttachment.topRight);
 
-        indicator = new GuiRect(0, 0, 1, 15, se.mickelus.mgui.gui.impl.GuiColors.normal);
+        indicator = new GuiRect(0, 0, 1, 15, GuiColors.normal);
         indicator.setAttachment(GuiAttachment.topRight);
         addChild(indicator);
         indicatorFlash = new AnimationChain(
@@ -72,7 +72,7 @@ public class VerticalTabButtonGui extends GuiClickable {
             indicator.setOpacity(0.25f);
         }
 
-        indicator.setColor(hasFocus() ? se.mickelus.mgui.gui.impl.GuiColors.hover : GuiColors.normal);
+        indicator.setColor(hasFocus() ? GuiColors.hover : GuiColors.normal);
     }
 
     public void setHasContent(boolean hasContent) {

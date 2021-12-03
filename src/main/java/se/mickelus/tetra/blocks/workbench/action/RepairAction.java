@@ -38,12 +38,12 @@ public class RepairAction implements WorkbenchAction {
     }
 
     @Override
-    public Collection<ToolAction> getRequiredToolTypes(ItemStack itemStack) {
+    public Collection<ToolAction> getRequiredToolActions(ItemStack itemStack) {
         return Collections.emptySet();
     }
 
     @Override
-    public int getRequiredToolLevel(ItemStack itemStack, ToolAction toolType) {
+    public int getRequiredToolLevel(ItemStack itemStack, ToolAction toolAction) {
         return 0;
     }
 

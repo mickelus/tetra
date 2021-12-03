@@ -3,11 +3,11 @@ package se.mickelus.tetra.effect.howling;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiRoot;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiRoot;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.InvertColorGui;
 
 import javax.annotation.ParametersAreNonnullByDefault;

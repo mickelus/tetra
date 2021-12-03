@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.resources.ResourceLocation;
-import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.module.data.GlyphData;
 
 import javax.annotation.ParametersAreNonnullByDefault;

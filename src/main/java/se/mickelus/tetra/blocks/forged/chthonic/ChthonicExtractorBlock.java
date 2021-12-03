@@ -26,7 +26,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -35,12 +34,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraBlock;
@@ -67,13 +67,13 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     public static final String extendedDescription = "block.tetra.chthonic_extractor.description_extended";
 
     static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(ToolTypes.hammer, 4, Direction.UP, 0, 4, 0, 4,
+            new BlockInteraction(TetraToolActions.hammer, 4, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand)),
-            new BlockInteraction(ToolTypes.hammer, 5, Direction.UP, 0, 4, 0, 4,
+            new BlockInteraction(TetraToolActions.hammer, 5, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand)),
-            new BlockInteraction(ToolTypes.hammer, 6, Direction.UP, 0, 4, 0, 4,
+            new BlockInteraction(TetraToolActions.hammer, 6, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand)),
-            new BlockInteraction(ToolTypes.hammer, 7, Direction.UP, 0, 4, 0, 4,
+            new BlockInteraction(TetraToolActions.hammer, 7, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand))
     };
 
@@ -91,7 +91,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     public static final int maxDamage = 1024;
 
     public ChthonicExtractorBlock() {
-        super(BlockBehaviour.Properties.of(ForgedBlockCommon.forgedMaterialNotSolid, MaterialColor.COLOR_GRAY)
+        super(Block.Properties.of(ForgedBlockCommon.forgedMaterialNotSolid, MaterialColor.COLOR_GRAY)
                 .sound(SoundType.NETHERITE_BLOCK)
                 .strength(4F, 2400.0F));
 
@@ -140,7 +140,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
             int amount = Optional.ofNullable(playerEntity)
                     .map(player -> player.getItemInHand(hand))
                     .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
-                    .map(itemStack -> ((IToolProvider) itemStack.getItem()).getToolEfficiency(itemStack, ToolTypes.hammer))
+                    .map(itemStack -> ((IToolProvider) itemStack.getItem()).getToolEfficiency(itemStack, TetraToolActions.hammer))
                     .map(Math::round)
                     .orElse(4);
 

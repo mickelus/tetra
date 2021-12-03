@@ -160,9 +160,9 @@ public class RepairSchematic extends BaseSchematic {
     }
 
     @Override
-    public int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolAction toolType) {
+    public int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolAction toolAction) {
         return CastOptional.cast(targetStack.getItem(), IModularItem.class)
-                .map(item -> item.getRepairRequiredToolLevel(targetStack, materials[0], toolType))
+                .map(item -> item.getRepairRequiredToolLevel(targetStack, materials[0], toolAction))
                 .orElse(0);
     }
 

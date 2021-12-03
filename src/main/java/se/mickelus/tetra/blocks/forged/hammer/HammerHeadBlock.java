@@ -1,6 +1,5 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -30,7 +29,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -50,7 +49,7 @@ import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 @ParametersAreNonnullByDefault
 public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteractiveBlock, EntityBlock {
     static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new TileBlockInteraction<>(ToolTypes.hammer, 4, Direction.EAST, 1, 11, 7, 11,
+            new TileBlockInteraction<>(TetraToolActions.hammer, 4, Direction.EAST, 1, 11, 7, 11,
                     HammerHeadTile.class, HammerHeadTile::isJammed,
                     (world, pos, blockState, player, hand, hitFace) -> unjam(world, pos, player))
     };
@@ -69,12 +68,6 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
         setRegistryName(unlocalizedName);
 
         hasItem = false;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void clientInit() {
-        BlockEntityRenderers.register(HammerHeadTile.type, HammerHeadTESR::new);
     }
 
     @Override
@@ -115,19 +108,19 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     @Override
     public Collection<ToolAction> getTools(Level world, BlockPos pos, BlockState blockState) {
         if (isFunctional(world, pos)) {
-            return Collections.singletonList(ToolTypes.hammer);
+            return Collections.singletonList(TetraToolActions.hammer);
         }
         return super.getTools(world, pos, blockState);
     }
 
     @Override
-    public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolType) {
-        if (ToolTypes.hammer.equals(toolType) && isFunctional(world, pos)) {
+    public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolAction) {
+        if (TetraToolActions.hammer.equals(toolAction) && isFunctional(world, pos)) {
             BlockPos basePos = pos.above();
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
             return baseBlock.getHammerLevel(world, basePos);
         }
-        return super.getToolLevel(world, pos, blockState, toolType);
+        return super.getToolLevel(world, pos, blockState, toolAction);
     }
 
     @Override

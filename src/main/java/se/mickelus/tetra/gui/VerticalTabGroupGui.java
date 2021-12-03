@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui;
 
 import net.minecraft.resources.ResourceLocation;
-import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiElement;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;

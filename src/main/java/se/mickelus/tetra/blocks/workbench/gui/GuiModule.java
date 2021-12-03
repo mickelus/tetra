@@ -1,12 +1,12 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiClickable;
-import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.GuiTextureOffset;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiClickable;
+import se.mickelus.mutil.gui.GuiString;
+import se.mickelus.mutil.gui.GuiTextureOffset;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.ItemModule;

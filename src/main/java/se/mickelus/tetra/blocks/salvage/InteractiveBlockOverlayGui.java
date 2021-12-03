@@ -5,7 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import se.mickelus.mgui.gui.hud.GuiRootHud;
+import se.mickelus.mutil.gui.hud.GuiRootHud;
 import se.mickelus.tetra.properties.PropertyHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;

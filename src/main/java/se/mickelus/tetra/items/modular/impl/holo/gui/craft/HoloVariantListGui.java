@@ -2,9 +2,9 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
-import se.mickelus.mgui.gui.impl.GuiHorizontalScrollable;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.mutil.gui.impl.GuiHorizontalScrollable;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 import se.mickelus.tetra.gui.stats.sorting.StatSorters;

@@ -206,7 +206,7 @@ public class ToolbeltHelper {
                     ToolAction effectiveTool = ItemModularHandheld.getEffectiveTool(blockState);
                     if (requiredTool != null
                             && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) >= blockState.getHarvestLevel()
-                            || effectiveTool != null && itemStack.getItem().getToolTypes(itemStack).contains(effectiveTool)) {
+                            || effectiveTool != null && itemStack.getItem().getToolActions(itemStack).contains(effectiveTool)) {
                         return i;
                     }
 

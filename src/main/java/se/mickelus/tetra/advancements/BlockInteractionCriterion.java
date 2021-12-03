@@ -15,30 +15,30 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class BlockInteractionCriterion extends AbstractCriterionTriggerInstance {
     private final PropertyMatcher after;
-    private final ToolAction toolType;
+    private final ToolAction toolAction;
     private int toolLevel;
 
     public static final GenericTrigger<BlockInteractionCriterion> trigger = new GenericTrigger<>("tetra:block_interaction", BlockInteractionCriterion::deserialize);
 
-    public BlockInteractionCriterion(EntityPredicate.Composite playerCondition, PropertyMatcher after, ToolAction toolType, int toolLevel) {
+    public BlockInteractionCriterion(EntityPredicate.Composite playerCondition, PropertyMatcher after, ToolAction toolAction, int toolLevel) {
         super(trigger.getId(), playerCondition);
         this.after = after;
-        this.toolType = toolType;
+        this.toolAction = toolAction;
         this.toolLevel = toolLevel;
     }
 
-    public static void trigger(ServerPlayer player, BlockState state, ToolAction usedToolType, int usedToolLevel) {
-        trigger.fulfillCriterion(player, criterion -> criterion.test(state, usedToolType, usedToolLevel));
+    public static void trigger(ServerPlayer player, BlockState state, ToolAction usedToolAction, int usedToolLevel) {
+        trigger.fulfillCriterion(player, criterion -> criterion.test(state, usedToolAction, usedToolLevel));
 
 
     }
 
-    public boolean test(BlockState state, ToolAction usedToolType, int usedToolLevel) {
+    public boolean test(BlockState state, ToolAction usedToolAction, int usedToolLevel) {
         if (after != null && !after.test(state)) {
             return false;
         }
 
-        if (this.toolType != null && !this.toolType.equals(usedToolType)) {
+        if (this.toolAction != null && !this.toolAction.equals(usedToolAction)) {
             return false;
         }
 

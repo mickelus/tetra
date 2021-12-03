@@ -25,7 +25,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
@@ -207,10 +207,10 @@ public class HammerBaseTile extends BlockEntity implements BlockEntityTicker<Ham
             }
 
             CastOptional.cast(targetState.getBlock(), IInteractiveBlock.class)
-                    .map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(ToolTypes.hammer)))
+                    .map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(TetraToolActions.hammer)))
                     .map(Arrays::stream)
                     .orElseGet(Stream::empty)
-                    .filter(interaction -> ToolTypes.hammer.equals(interaction.requiredTool))
+                    .filter(interaction -> TetraToolActions.hammer.equals(interaction.requiredTool))
                     .filter(interaction -> getHammerLevel() >= interaction.requiredLevel)
                     .findFirst()
                     .ifPresent(interaction -> {

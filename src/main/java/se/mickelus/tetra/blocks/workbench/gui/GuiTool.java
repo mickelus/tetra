@@ -2,26 +2,26 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.GuiStringOutline;
-import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiString;
+import se.mickelus.mutil.gui.GuiStringOutline;
+import se.mickelus.mutil.gui.GuiTexture;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class GuiTool extends GuiElement {
     public static final int width = 16;
-    protected ToolAction toolType;
+    protected ToolAction toolAction;
 
     private GuiString levelIndicator;
 
-    public GuiTool(int x, int y, ToolAction toolType) {
+    public GuiTool(int x, int y, ToolAction toolAction) {
         super(x, y, width, 16);
-        this.toolType = toolType;
+        this.toolAction = toolAction;
 
-        addChild(new GuiTexture(0, 0, 16, 16, getOffset(toolType) * 16, 52, GuiTextures.workbench));
+        addChild(new GuiTexture(0, 0, 16, 16, getOffset(toolAction) * 16, 52, GuiTextures.workbench));
 
         levelIndicator = new GuiStringOutline(10, 8, "");
         addChild(levelIndicator);
@@ -33,12 +33,12 @@ public class GuiTool extends GuiElement {
         levelIndicator.setColor(color);
     }
 
-    public ToolAction getToolType() {
-        return toolType;
+    public ToolAction getToolAction() {
+        return toolAction;
     }
 
     protected int getOffset(ToolAction tool) {
-        if (ToolTypes.hammer.equals(tool)) {
+        if (TetraToolActions.hammer.equals(tool)) {
             return 0;
         }
         if (ToolActions.AXE_DIG.equals(tool)) {
@@ -50,10 +50,10 @@ public class GuiTool extends GuiElement {
         if (ToolActions.SHOVEL_DIG.equals(tool)) {
             return 3;
         }
-        if (ToolTypes.cut.equals(tool)) {
+        if (TetraToolActions.cut.equals(tool)) {
             return 4;
         }
-        if (ToolTypes.pry.equals(tool)) {
+        if (TetraToolActions.pry.equals(tool)) {
             return 5;
         }
         if (ToolActions.HOE_DIG.equals(tool)) {

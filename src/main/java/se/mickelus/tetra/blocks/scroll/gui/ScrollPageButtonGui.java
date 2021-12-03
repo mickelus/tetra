@@ -2,8 +2,8 @@ package se.mickelus.tetra.blocks.scroll.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.resources.ResourceLocation;
-import se.mickelus.mgui.gui.GuiClickable;
-import se.mickelus.mgui.gui.GuiTexture;
+import se.mickelus.mutil.gui.GuiClickable;
+import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.effect.howling;
 
-import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.GuiTexture;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;

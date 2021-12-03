@@ -43,13 +43,13 @@ public class ConfigActionImpl extends ConfigAction {
     }
 
     @Override
-    public Collection<ToolAction> getRequiredToolTypes(ItemStack itemStack) {
+    public Collection<ToolAction> getRequiredToolActions(ItemStack itemStack) {
         return requiredTools.getValues();
     }
 
     @Override
-    public int getRequiredToolLevel(ItemStack itemStack, ToolAction toolType) {
-        return requiredTools.getLevel(toolType);
+    public int getRequiredToolLevel(ItemStack itemStack, ToolAction toolAction) {
+        return requiredTools.getLevel(toolAction);
     }
 
     @Override

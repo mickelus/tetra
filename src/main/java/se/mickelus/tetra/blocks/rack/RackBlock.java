@@ -25,7 +25,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -68,7 +67,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
 
 
     public RackBlock() {
-        super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD)
+        super(Block.Properties.of(Material.WOOD, MaterialColor.WOOD)
                 .strength(1.0F)
                 .sound(SoundType.WOOD));
 
@@ -192,12 +191,12 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
     }
 
     @Override
-    public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolType) {
+    public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolAction) {
         return Optional.ofNullable(world.getBlockEntity(pos))
                 .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new)
-                .map(inv -> PropertyHelper.getInventoryToolLevel(inv, toolType))
+                .map(inv -> PropertyHelper.getInventoryToolLevel(inv, toolAction))
                 .orElse(-1);
     }
 

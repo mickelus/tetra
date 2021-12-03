@@ -1,10 +1,10 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import org.lwjgl.glfw.GLFW;
-import se.mickelus.mgui.gui.*;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
-import se.mickelus.mgui.gui.impl.GuiVerticalLayoutGroup;
+import se.mickelus.mutil.gui.*;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.impl.GuiVerticalLayoutGroup;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiKeybinding;
 import se.mickelus.tetra.gui.stats.sorting.IStatSorter;

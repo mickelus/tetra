@@ -33,7 +33,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
@@ -64,10 +64,10 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     public static HammerBaseBlock instance;
 
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new TileBlockInteraction<>(ToolTypes.pry, 1, Direction.EAST, 5, 11, 10, 12,
+            new TileBlockInteraction<>(TetraToolActions.pry, 1, Direction.EAST, 5, 11, 10, 12,
                     HammerBaseTile.class, tile -> tile.getEffect(true) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, true)),
-            new TileBlockInteraction<>(ToolTypes.pry, 1, Direction.WEST, 5, 11, 10, 12,
+            new TileBlockInteraction<>(TetraToolActions.pry, 1, Direction.WEST, 5, 11, 10, 12,
                     HammerBaseTile.class, tile -> tile.getEffect(false) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, false))
     };

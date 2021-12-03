@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import se.mickelus.mgui.gui.DisabledSlot;
+import se.mickelus.mutil.gui.DisabledSlot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;

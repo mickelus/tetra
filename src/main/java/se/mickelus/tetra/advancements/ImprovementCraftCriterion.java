@@ -6,7 +6,7 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
-import se.mickelus.tetra.util.JsonOptional;
+import se.mickelus.mutil.util.JsonOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
@@ -20,12 +20,12 @@ public class ImprovementCraftCriterion extends AbstractCriterionTriggerInstance 
     private final String improvement;
     private final int improvementLevel;
 
-    private final ToolAction toolType;
+    private final ToolAction toolAction;
     private final MinMaxBounds.Ints toolLevel;
 
     public static final GenericTrigger<ImprovementCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_improvement", ImprovementCraftCriterion::deserialize);
 
-    public ImprovementCraftCriterion(EntityPredicate.Composite playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolAction toolType, MinMaxBounds.Ints toolLevel) {
+    public ImprovementCraftCriterion(EntityPredicate.Composite playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolAction toolAction, MinMaxBounds.Ints toolLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -33,18 +33,18 @@ public class ImprovementCraftCriterion extends AbstractCriterionTriggerInstance 
         this.slot = slot;
         this.improvement = improvement;
         this.improvementLevel = improvementLevel;
-        this.toolType = toolType;
+        this.toolAction = toolAction;
         this.toolLevel = toolLevel;
     }
 
     public static void trigger(ServerPlayer player, ItemStack before, ItemStack after, String schematic, String slot, String improvement,
-            int improvementLevel, ToolAction toolType, int toolLevel) {
+            int improvementLevel, ToolAction toolAction, int toolLevel) {
         trigger.fulfillCriterion(player,
-                criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, toolType, toolLevel));
+                criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, toolAction, toolLevel));
     }
 
     public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String improvement, int improvementLevel,
-            ToolAction toolType, int toolLevel) {
+            ToolAction toolAction, int toolLevel) {
 
         if (this.before != null && !this.before.matches(before)) {
             return false;
@@ -70,7 +70,7 @@ public class ImprovementCraftCriterion extends AbstractCriterionTriggerInstance 
             return false;
         }
 
-        if (this.toolType != null && !this.toolType.equals(toolType)) {
+        if (this.toolAction != null && !this.toolAction.equals(toolAction)) {
             return false;
         }
 

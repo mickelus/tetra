@@ -1,12 +1,12 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiRect;
-import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.mgui.gui.animation.AnimationChain;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiRect;
+import se.mickelus.mutil.gui.GuiTexture;
+import se.mickelus.mutil.gui.animation.AnimationChain;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 

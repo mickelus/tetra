@@ -220,15 +220,15 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public int getRequiredToolLevel(ItemStack targetStack, ItemStack[] materials, ToolAction toolType) {
+    public int getRequiredToolLevel(ItemStack targetStack, ItemStack[] materials, ToolAction toolAction) {
         if (definition.materialSlotCount > 0) {
             return IntStream.range(0, materials.length)
                     .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .map(outcome -> outcome.requiredTools)
-                    .filter(tools -> tools.contains(toolType))
-                    .map(tools -> tools.getLevel(toolType))
+                    .filter(tools -> tools.contains(toolAction))
+                    .map(tools -> tools.getLevel(toolAction))
                     .sorted()
                     .findFirst()
                     .orElse(0);
@@ -236,8 +236,8 @@ public class ConfigSchematic extends BaseSchematic {
             return Arrays.stream(definition.outcomes)
                     .findFirst()
                     .map(outcome -> outcome.requiredTools)
-                    .filter(tools -> tools.contains(toolType))
-                    .map(tools -> tools.getLevel(toolType))
+                    .filter(tools -> tools.contains(toolAction))
+                    .map(tools -> tools.getLevel(toolAction))
                     .orElse(0);
         }
 

@@ -2,7 +2,6 @@ package se.mickelus.tetra.blocks.forged.container;
 
 
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -29,11 +28,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
@@ -63,25 +63,25 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     public static final BooleanProperty openProp = BooleanProperty.create("open");
 
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
-            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 5, 7, 2, 5,
+            new BlockInteraction(TetraToolActions.hammer, 3, Direction.SOUTH, 5, 7, 2, 5,
                     new PropertyMatcher().where(locked1Prop, equalTo(true)).where(flippedProp, equalTo(false)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 0, hand)),
-            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 11, 13, 2, 5,
+            new BlockInteraction(TetraToolActions.hammer, 3, Direction.SOUTH, 11, 13, 2, 5,
                     new PropertyMatcher().where(locked2Prop, equalTo(true)).where(flippedProp, equalTo(false)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 1, hand)),
-            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 17, 19, 2, 5,
+            new BlockInteraction(TetraToolActions.hammer, 3, Direction.SOUTH, 17, 19, 2, 5,
                     new PropertyMatcher().where(locked1Prop, equalTo(true)).where(flippedProp, equalTo(true)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 2, hand)),
-            new BlockInteraction(ToolTypes.hammer, 3, Direction.SOUTH, 23, 25, 2, 5,
+            new BlockInteraction(TetraToolActions.hammer, 3, Direction.SOUTH, 23, 25, 2, 5,
                     new PropertyMatcher().where(locked2Prop, equalTo(true)).where(flippedProp, equalTo(true)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 3, hand)),
-            new BlockInteraction(ToolTypes.pry, 1, Direction.SOUTH, 1, 15, 3, 4,
+            new BlockInteraction(TetraToolActions.pry, 1, Direction.SOUTH, 1, 15, 3, 4,
                     new PropertyMatcher()
                             .where(anyLockedProp, equalTo(false))
                             .where(openProp, equalTo(false))
                             .where(flippedProp, equalTo(false)),
                     ForgedContainerBlock::open),
-            new BlockInteraction(ToolTypes.pry, 1, Direction.SOUTH, 15, 28, 3, 4,
+            new BlockInteraction(TetraToolActions.pry, 1, Direction.SOUTH, 15, 28, 3, 4,
                     new PropertyMatcher()
                             .where(anyLockedProp, equalTo(false))
                             .where(openProp, equalTo(false))
@@ -117,7 +117,6 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-       BlockEntityRenderers.register(ForgedContainerTile.type, ForgedContainerRenderer::new);
         MenuScreens.register(ForgedContainerContainer.type, ForgedContainerScreen::new);
     }
 

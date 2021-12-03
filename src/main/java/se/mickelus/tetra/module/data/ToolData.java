@@ -20,15 +20,15 @@ public class ToolData extends TierData<ToolAction> {
 
             jsonObject.entrySet().forEach(entry -> {
                 JsonElement entryValue = entry.getValue();
-                ToolAction toolType = ToolAction.get(entry.getKey());
+                ToolAction toolAction = ToolAction.get(entry.getKey());
                 if (entryValue.isJsonArray()) {
                     JsonArray entryArray = entryValue.getAsJsonArray();
                     if (entryArray.size() == 2) {
-                        data.levelMap.put(toolType, entryArray.get(0).getAsFloat());
-                        data.efficiencyMap.put(toolType, entryArray.get(1).getAsFloat());
+                        data.levelMap.put(toolAction, entryArray.get(0).getAsFloat());
+                        data.efficiencyMap.put(toolAction, entryArray.get(1).getAsFloat());
                     }
                 } else {
-                    data.levelMap.put(toolType, entryValue.getAsFloat());
+                    data.levelMap.put(toolAction, entryValue.getAsFloat());
                 }
             });
 

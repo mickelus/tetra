@@ -112,8 +112,8 @@ public interface UpgradeSchematic {
     public default Collection<ToolAction> getRequiredTools(final ItemStack targetStack, final ItemStack[] materials) {
         return getRequiredToolLevels(targetStack, materials).keySet();
     }
-    public default int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolAction toolType) {
-        return getRequiredToolLevels(targetStack, materials).getOrDefault(toolType, 0);
+    public default int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolAction toolAction) {
+        return getRequiredToolLevels(targetStack, materials).getOrDefault(toolAction, 0);
     }
 
     public default int getExperienceCost(final ItemStack targetStack, final ItemStack[] materials, String slot) {

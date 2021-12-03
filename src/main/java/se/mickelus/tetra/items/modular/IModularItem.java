@@ -592,10 +592,10 @@ public interface IModularItem {
                 .orElseGet(Collections::emptyMap);
     }
 
-    default int getRepairRequiredToolLevel(ItemStack itemStack, ItemStack materialStack, ToolAction toolType) {
+    default int getRepairRequiredToolLevel(ItemStack itemStack, ItemStack materialStack, ToolAction toolAction) {
         return getRepairModule(itemStack)
-                .filter(module -> module.getRepairRequiredTools(itemStack, materialStack).contains(toolType))
-                .map(module -> module.getRepairRequiredToolLevel(itemStack, materialStack, toolType))
+                .filter(module -> module.getRepairRequiredTools(itemStack, materialStack).contains(toolAction))
+                .map(module -> module.getRepairRequiredToolLevel(itemStack, materialStack, toolAction))
                 .map(level -> Math.max(1, level))
                 .orElse(0);
     }

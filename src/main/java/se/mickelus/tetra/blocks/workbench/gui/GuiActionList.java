@@ -3,10 +3,10 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
-import se.mickelus.mgui.gui.GuiAlignment;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.GuiAlignment;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 

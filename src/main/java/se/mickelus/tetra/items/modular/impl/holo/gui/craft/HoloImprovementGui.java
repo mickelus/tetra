@@ -1,10 +1,10 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.GuiTexture;
-import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiString;
+import se.mickelus.mutil.gui.GuiTexture;
+import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;

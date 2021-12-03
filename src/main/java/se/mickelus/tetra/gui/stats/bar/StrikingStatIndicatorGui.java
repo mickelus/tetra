@@ -4,7 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
-import se.mickelus.tetra.ToolTypes;
+import net.minecraftforge.common.ToolActions;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.stats.getter.StatGetterEffectLevel;
@@ -18,22 +19,22 @@ public class StrikingStatIndicatorGui extends GuiStatIndicator {
     GuiStatIndicator sweeping;
     GuiStatIndicator current;
 
-    public StrikingStatIndicatorGui(ToolAction toolType) {
+    public StrikingStatIndicatorGui(ToolAction toolAction) {
         super(0, 0, "", 0, null, null);
 
-        if (toolType == ToolActions.AXE_DIG) {
+        if (toolAction == ToolActions.AXE_DIG) {
             striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
                     new StatGetterEffectLevel(ItemEffect.strikingAxe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolActions.PICKAXE_DIG) {
+        } else if (toolAction == ToolActions.PICKAXE_DIG) {
             striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
                     new StatGetterEffectLevel(ItemEffect.strikingPickaxe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolTypes.cut) {
+        } else if (toolAction == TetraToolActions.cut) {
             striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
                     new StatGetterEffectLevel(ItemEffect.strikingCut, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolActions.SHOVEL_DIG) {
+        } else if (toolAction == ToolActions.SHOVEL_DIG) {
             striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
                     new StatGetterEffectLevel(ItemEffect.strikingShovel, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
-        } else if (toolType == ToolActions.HOE_DIG) {
+        } else if (toolAction == ToolActions.HOE_DIG) {
             striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,
                     new StatGetterEffectLevel(ItemEffect.strikingHoe, 1), new TooltipGetterNone("tetra.stats.tool.striking.tooltip"));
         }

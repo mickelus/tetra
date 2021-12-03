@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.mgui.gui.GuiRoot;
+import se.mickelus.mutil.gui.GuiRoot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;

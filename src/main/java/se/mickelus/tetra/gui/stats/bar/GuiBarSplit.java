@@ -1,10 +1,10 @@
 package se.mickelus.tetra.gui.stats.bar;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import se.mickelus.mgui.gui.GuiAlignment;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiRect;
+import se.mickelus.mutil.gui.GuiAlignment;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiRect;
 import se.mickelus.tetra.gui.GuiColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;

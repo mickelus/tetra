@@ -14,6 +14,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.EmptyModelData;
 
+
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
@@ -23,8 +24,7 @@ public class HammerHeadTESR implements BlockEntityRenderer<HammerHeadTile> {
     private static final float unjamDuration = 800;
 
     public HammerHeadTESR(BlockEntityRendererProvider.Context context) {
-
-        blockRenderer = context.getBlockRenderDispatcher();
+        blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }
 
     // todo 1.15: ripped out

@@ -51,7 +51,7 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
@@ -216,7 +216,7 @@ public class ItemModularHandheld extends ModularItem {
             ToolData toolData = getToolData(itemStack);
             Collection<ToolAction> tools = toolData.getValues().stream()
                     .filter(tool -> toolData.getLevel(tool) > 0)
-                    .sorted(player.isCrouching() ? Comparator.comparing(ToolAction::name).reversed() : Comparator.comparing(ToolAction::name))
+                    .sorted(player.isCrouching() ? Comparator.comparing(ToolAction::getName).reversed() : Comparator.comparing(ToolAction::getName))
                     .collect(Collectors.toList());
 
             for (ToolAction tool: tools) {
@@ -799,7 +799,7 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     @Override
-    public Set<ToolAction> getToolTypes(ItemStack stack) {
+    public Set<ToolAction> getToolActions(ItemStack stack) {
         if (!isBroken(stack)) {
             return getTools(stack);
         }
@@ -840,15 +840,15 @@ public class ItemModularHandheld extends ModularItem {
             if (tool != null) {
                 speed *= getToolEfficiency(itemStack, tool);
             } else {
-                speed *= getToolTypes(itemStack).stream()
+                speed *= getToolActions(itemStack).stream()
                         .filter(blockState::isToolEffective)
-                        .map(toolType -> getToolEfficiency(itemStack, toolType))
+                        .map(toolAction -> getToolEfficiency(itemStack, toolAction))
                         .max(Comparator.naturalOrder())
                         .orElse(0f);
             }
 
             // todo: need a better way to handle how swords break stuff faster
-            if (getToolLevel(itemStack, ToolTypes.cut) > 0) {
+            if (getToolLevel(itemStack, TetraToolActions.cut) > 0) {
                 if (blockState.getBlock().equals(Blocks.COBWEB)) {
                     speed *= 10;
                 }
@@ -866,27 +866,27 @@ public class ItemModularHandheld extends ModularItem {
         return 1;
     }
 
-    public static boolean isToolEffective(ToolAction toolType, BlockState blockState) {
-        if (ToolTypes.cut.equals(toolType)
+    public static boolean isToolEffective(ToolAction toolAction, BlockState blockState) {
+        if (TetraToolActions.cut.equals(toolAction)
                 && (cuttingHarvestBlocks.contains(blockState.getBlock())
                     || cuttingDestroyMaterials.contains(blockState.getMaterial())
-                    || cuttingDestroyTags.stream().anyMatch(blockState::is))) {
+                    || cuttingDestroyTags.stream().anyMatch(tag -> blockState.getBlock().is(tag)))) {
             return true;
         }
 
-        if (ToolActions.HOE_DIG.equals(toolType) && hoeBonusMaterials.contains(blockState.getMaterial())) {
+        if (ToolActions.HOE_DIG.equals(toolAction) && hoeBonusMaterials.contains(blockState.getMaterial())) {
             return true;
         }
 
-        if (ToolActions.AXE_DIG.equals(toolType) && axeMaterials.contains(blockState.getMaterial())) {
+        if (ToolActions.AXE_DIG.equals(toolAction) && axeMaterials.contains(blockState.getMaterial())) {
             return true;
         }
 
-        if (ToolActions.PICKAXE_DIG.equals(toolType) && pickaxeMaterials.contains(blockState.getMaterial())) {
+        if (ToolActions.PICKAXE_DIG.equals(toolAction) && pickaxeMaterials.contains(blockState.getMaterial())) {
             return true;
         }
 
-        return toolType.equals(blockState.getHarvestTool());
+        return toolAction.equals(blockState.getHarvestTool());
     }
 
     public static ToolAction getEffectiveTool(BlockState blockState) {
@@ -898,8 +898,8 @@ public class ItemModularHandheld extends ModularItem {
 
         if (cuttingHarvestBlocks.contains(blockState.getBlock())
                 || cuttingDestroyMaterials.contains(blockState.getMaterial())
-                || cuttingDestroyTags.stream().anyMatch(blockState::is)) {
-            return ToolTypes.cut;
+                || cuttingDestroyTags.stream().anyMatch(tag -> blockState.getBlock().is(tag))) {
+            return TetraToolActions.cut;
         }
 
         if (axeMaterials.contains(blockState.getMaterial())) {

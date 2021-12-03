@@ -3,10 +3,10 @@ package se.mickelus.tetra;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -17,9 +17,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -28,7 +28,6 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -73,7 +72,6 @@ import se.mickelus.tetra.craftingeffect.outcome.MaterialReductionOutcome;
 import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
-import se.mickelus.tetra.data.provider.ModuleProvider;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.LungeEchoPacket;
 import se.mickelus.tetra.effect.TruesweepPacket;
@@ -82,8 +80,6 @@ import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.effect.revenge.AddRevengePacket;
 import se.mickelus.tetra.effect.revenge.RemoveRevengePacket;
-import se.mickelus.tetra.generation.FeatureEntry;
-import se.mickelus.tetra.generation.TGenCommand;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
@@ -118,8 +114,8 @@ import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
 import se.mickelus.tetra.trades.TradeHandler;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)
@@ -320,19 +316,11 @@ public class TetraMod {
 
         DestabilizationEffect.init();
         SchematicRegistry.instance.registerSchematic(new CleanseSchematic());
-
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(MOD_ID, FeatureEntry.key), FeatureEntry.configuredInstance);
-    }
-
-    @SubscribeEvent
-    public void serverStarting(ServerAboutToStartEvent event) {
-        FeatureEntry.instance.setup(event.getServer());
     }
 
     @SubscribeEvent
     public void serverStarting(ServerStartingEvent event) {
         ModuleDevCommand.register(event.getServer().getCommands().getDispatcher());
-        TGenCommand.register(event.getServer().getCommands().getDispatcher());
     }
 
     @SubscribeEvent
@@ -359,31 +347,39 @@ public class TetraMod {
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(ForgedContainerRenderer.layer, ForgedContainerRenderer::createLayer);
+        event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
+    }
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ExtractorProjectileEntity.type, ExtractorProjectileRenderer::new);
+        event.registerEntityRenderer(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
+
+        event.registerBlockEntityRenderer(ForgedContainerTile.type, ForgedContainerRenderer::new);
+        event.registerBlockEntityRenderer(CoreExtractorPistonTile.type, CoreExtractorPistonRenderer::new);
+        event.registerBlockEntityRenderer(HammerBaseTile.type, HammerBaseRenderer::new);
+        event.registerBlockEntityRenderer(HammerHeadTile.type, HammerHeadTESR::new);
+    }
+
+    @SubscribeEvent
     public static void onGatherData(final GatherDataEvent event) {
         DataGenerator dataGenerator = event.getGenerator();
         if(event.includeServer()) {
 //            dataGenerator.addProvider(new BlockstateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
-//            dataGenerator.addProvider(new EnchantmentProvider(dataGenerator, event.getExistingFileHelper()));
-            dataGenerator.addProvider(new ModuleProvider(dataGenerator, event.getExistingFileHelper()));
         }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onBiomeLoading(BiomeLoadingEvent event) {
         GeodeBlock.registerFeature(event.getGeneration());
-
-        if (ConfigHandler.generateFeatures.get()) {
-            FeatureEntry.instance.registerFeatures(event);
-        }
     }
 
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
-        @SubscribeEvent
-        public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
-            event.getRegistry().register(FeatureEntry.instance);
-        }
-
         @SubscribeEvent
         public static void registerModifierSerializers(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
             event.getRegistry().register(new ReplaceTableModifier.Serializer().setRegistryName(new ResourceLocation(MOD_ID,"replace_table")));
@@ -416,20 +412,20 @@ public class TetraMod {
         @SubscribeEvent
         public static void registerContainerTypes(final RegistryEvent.Register<MenuType<?>> event) {
             // toolbelt
-            MenuType toolbeltContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
+            MenuType<?> toolbeltContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
                 return ToolbeltContainer.create(windowId, inv);
             })).setRegistryName(MOD_ID, ModularToolbeltItem.unlocalizedName);
             event.getRegistry().register(toolbeltContainerType);
 
             // workbench
-            MenuType workbenchContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
+            MenuType<?> workbenchContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 return WorkbenchContainer.create(windowId, pos, inv);
             })).setRegistryName(MOD_ID, WorkbenchTile.unlocalizedName);
             event.getRegistry().register(workbenchContainerType);
 
             // forged container
-            MenuType forgedContainerContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
+            MenuType<?> forgedContainerContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 return ForgedContainerContainer.create(windowId, pos, inv);
             })).setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName);

@@ -2,25 +2,33 @@ package se.mickelus.tetra.blocks.forged.extractor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.EmptyModelData;
+import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class CoreExtractorPistonTESR implements BlockEntityRenderer<CoreExtractorPistonTile> {
+public class CoreExtractorPistonRenderer implements BlockEntityRenderer<CoreExtractorPistonTile> {
     private static BlockRenderDispatcher blockRenderer;
 
-    public CoreExtractorPistonTESR(BlockEntityRendererProvider.Context context) {
+    public CoreExtractorPistonRenderer(BlockEntityRendererProvider.Context context) {
         blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }
 

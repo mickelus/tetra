@@ -4,9 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
-import se.mickelus.mgui.gui.*;
+import se.mickelus.mutil.gui.*;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.ToolTypes;
+import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -96,9 +96,9 @@ public class GuiActionButton extends GuiElement {
         iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench));
         addChild(iconClickable);
 
-        ToolAction requiredTool = action.getRequiredToolTypes(targetStack).stream()
+        ToolAction requiredTool = action.getRequiredToolActions(targetStack).stream()
                 .findFirst()
-                .orElse(ToolTypes.hammer);
+                .orElse(TetraToolActions.hammer);
         toolIndicator = new ToolRequirementGui(6, 7, requiredTool);
         iconClickable.addChild(toolIndicator);
     }

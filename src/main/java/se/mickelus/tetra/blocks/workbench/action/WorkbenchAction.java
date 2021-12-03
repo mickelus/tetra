@@ -13,8 +13,8 @@ public interface WorkbenchAction {
 
     public String getKey();
     public boolean canPerformOn(@Nullable Player player, WorkbenchTile tile, ItemStack itemStack);
-    public Collection<ToolAction> getRequiredToolTypes(ItemStack itemStack);
-    public int getRequiredToolLevel(ItemStack itemStack, ToolAction toolType);
+    public Collection<ToolAction> getRequiredToolActions(ItemStack itemStack);
+    public int getRequiredToolLevel(ItemStack itemStack, ToolAction toolAction);
     public Map<ToolAction, Integer> getRequiredTools(ItemStack itemStack);
     public void perform(Player player, ItemStack itemStack, WorkbenchTile workbench);
 

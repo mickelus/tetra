@@ -2,8 +2,8 @@ package se.mickelus.tetra.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiItem;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;

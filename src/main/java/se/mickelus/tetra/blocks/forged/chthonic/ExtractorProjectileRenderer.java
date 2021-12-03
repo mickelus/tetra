@@ -17,14 +17,15 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.EmptyModelData;
 
+
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ExtractorProjectileRenderer extends EntityRenderer<ExtractorProjectileEntity> {
     private static BlockRenderDispatcher blockRenderer;
 
-    public ExtractorProjectileRenderer(EntityRendererProvider.Context manager) {
-        super(manager);
+    public ExtractorProjectileRenderer(EntityRendererProvider.Context renderContext) {
+        super(renderContext);
 
         blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }

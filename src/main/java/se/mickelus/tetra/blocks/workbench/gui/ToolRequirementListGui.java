@@ -2,8 +2,8 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -39,7 +39,7 @@ public class ToolRequirementListGui extends GuiElement {
     public void updateAvailableTools(Map<ToolAction, Integer> availableTools) {
         getChildren(ToolRequirementGui.class).forEach(indicator ->
                 indicator.updateRequirement(
-                        requiredTools.getOrDefault(indicator.getToolType(), 0),
-                        availableTools.getOrDefault(indicator.getToolType(), 0)));
+                        requiredTools.getOrDefault(indicator.getToolAction(), 0),
+                        availableTools.getOrDefault(indicator.getToolAction(), 0)));
     }
 }

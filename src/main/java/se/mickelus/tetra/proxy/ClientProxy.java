@@ -3,7 +3,6 @@ package se.mickelus.tetra.proxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,51 +21,48 @@ import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
 import se.mickelus.tetra.generation.ExtendedStructureTESR;
 import se.mickelus.tetra.items.ITetraItem;
-import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
-import se.mickelus.tetra.items.modular.ThrownModularItemRenderer;
 import se.mickelus.tetra.properties.ReachEntityFix;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+
 @ParametersAreNonnullByDefault
 public class ClientProxy implements IProxy {
 
-    @Override
-    public void preInit(ITetraItem[] items, ITetraBlock[] blocks) {
-    }
+	@Override
+	public void preInit(ITetraItem[] items, ITetraBlock[] blocks) {
+	}
 
-    @Override
-    public void init(FMLCommonSetupEvent event, ITetraItem[] items, ITetraBlock[] blocks) {
-        Arrays.stream(items).forEach(ITetraItem::clientInit);
-        Arrays.stream(blocks).forEach(ITetraBlock::clientInit);
+	@Override
+	public void init(FMLCommonSetupEvent event, ITetraItem[] items, ITetraBlock[] blocks) {
+		Arrays.stream(items).forEach(ITetraItem::clientInit);
+		Arrays.stream(blocks).forEach(ITetraBlock::clientInit);
 
-        EntityRenderers.register(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
+		// these are registered here as there are multiple instances of workbench blocks
+		BlockEntityRenderers.register(WorkbenchTile.type, WorkbenchTESR::new);
+		MenuScreens.register(WorkbenchTile.containerType, WorkbenchScreen::new);
+		BlockEntityRenderers.register(ScrollTile.type, ScrollRenderer::new);
 
-        // these are registered here as there are multiple instances of workbench blocks
-        BlockEntityRenderers.register(WorkbenchTile.type, WorkbenchTESR::new);
-        MenuScreens.register(WorkbenchTile.containerType, WorkbenchScreen::new);
-        BlockEntityRenderers.register(ScrollTile.type, ScrollRenderer::new);
+		MinecraftForge.EVENT_BUS.register(new HowlingOverlay(Minecraft.getInstance()));
+		MinecraftForge.EVENT_BUS.register(new AbilityOverlays(Minecraft.getInstance()));
 
-        MinecraftForge.EVENT_BUS.register(new HowlingOverlay(Minecraft.getInstance()));
-        MinecraftForge.EVENT_BUS.register(new AbilityOverlays(Minecraft.getInstance()));
+		if (ConfigHandler.development.get()) {
+			BlockEntityRenderers.register(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureTESR::new);
+		}
 
-        if (ConfigHandler.development.get()) {
-            BlockEntityRenderers.register(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureTESR::new);
-        }
+		BotaniaCompat.clientInit();
 
-        BotaniaCompat.clientInit();
+		MinecraftForge.EVENT_BUS.register(ReachEntityFix.class);
+	}
 
-        MinecraftForge.EVENT_BUS.register(ReachEntityFix.class);
-    }
+	@Override
+	public void postInit() {
+		MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
+		ScrollItem.clientPostInit();
+	}
 
-    @Override
-    public void postInit() {
-        MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
-        ScrollItem.clientPostInit();
-    }
-
-    @Override
-    public Player getClientPlayer() {
-        return Minecraft.getInstance().player;
-    }
+	@Override
+	public Player getClientPlayer() {
+		return Minecraft.getInstance().player;
+	}
 }

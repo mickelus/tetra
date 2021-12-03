@@ -5,12 +5,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.mgui.gui.GuiElement;
-import se.mickelus.mgui.gui.GuiItem;
-import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.GuiStringOutline;
-import se.mickelus.mgui.gui.animation.Applier;
-import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.gui.GuiElement;
+import se.mickelus.mutil.gui.GuiItem;
+import se.mickelus.mutil.gui.GuiString;
+import se.mickelus.mutil.gui.GuiStringOutline;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;

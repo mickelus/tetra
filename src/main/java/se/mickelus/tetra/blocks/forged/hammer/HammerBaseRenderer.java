@@ -3,7 +3,11 @@ package se.mickelus.tetra.blocks.forged.hammer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
@@ -21,55 +25,63 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @OnlyIn(Dist.CLIENT)
 public class HammerBaseRenderer implements BlockEntityRenderer<HammerBaseTile> {
     public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_hammer/base_sheet"));
+    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, HammerBaseBlock.unlocalizedName), "main");
 
-    private final ModelPart unpowered;
-    private final ModelPart powered;
+    private /*final*/ ModelPart unpowered;
+    private /*final*/ ModelPart powered;
 
-    private final ModelPart[] modulesA;
-    private final ModelPart[] modulesB;
+    private /*final*/ ModelPart[] modulesA;
+    private /*final*/ ModelPart[] modulesB;
 
 
-    private final ModelPart cellAunpowered;
-    private final ModelPart cellBunpowered;
-    private final ModelPart cellApowered;
-    private final ModelPart cellBpowered;
+    private /*final*/ ModelPart cellAunpowered;
+    private /*final*/ ModelPart cellBunpowered;
+    private /*final*/ ModelPart cellApowered;
+    private /*final*/ ModelPart cellBpowered;
 
     public HammerBaseRenderer(BlockEntityRendererProvider.Context context) {
 
-        unpowered = new ModelPart(128, 64, 0, 0);
-        unpowered.addBox(0, 0, 0, 16, 16, 16, 0);
+    }
 
-        powered = new ModelPart(128, 64, 64, 0);
-        powered.addBox(0, 0, 0, 16, 16, 16, 0);
+    public static LayerDefinition createLayer() {
+        MeshDefinition mesh = new MeshDefinition();
+        PartDefinition parts = mesh.getRoot();
+//        unpowered = new ModelPart(128, 64, 0, 0);
+//        unpowered.addBox(0, 0, 0, 16, 16, 16, 0);
+//
+//        powered = new ModelPart(128, 64, 64, 0);
+//        powered.addBox(0, 0, 0, 16, 16, 16, 0);
+//
+//        HammerEffect[] effects = HammerEffect.values();
+//        modulesA = new ModelPart[effects.length];
+//        for (int i = 0; i < effects.length; i++) {
+//            modulesA[i] = new ModelPart(128, 64, i * 16, 32);
+//            modulesA[i].addBox(0, 0, -16, 16, 16, 0, 0.03f);
+//            modulesA[i].yRot = (float) -Math.PI / 2f;
+//        }
+//
+//        modulesB = new ModelPart[effects.length];
+//        for (int i = 0; i < effects.length; i++) {
+//            modulesB[i] = new ModelPart(128, 64, i * 16, 32);
+//            modulesB[i].addBox(-16, 0, 0, 16, 16, 0, 0.03f);
+//            modulesB[i].yRot = (float) Math.PI / 2f;
+//        }
+//
+//        cellAunpowered = new ModelPart(128, 64, 48, 0);
+//        cellAunpowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
+//        cellAunpowered.xRot = (float) -Math.PI / 2f;
+//        cellApowered = new ModelPart(128, 64, 48, 8);
+//        cellApowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
+//        cellApowered.xRot = (float) -Math.PI / 2f;
+//
+//        cellBunpowered = new ModelPart(128, 64, 48, 0);
+//        cellBunpowered.addBox(5.5f, -3, -10f, 5, 3, 5, 0);
+//        cellBunpowered.xRot = (float) Math.PI / 2f;
+//        cellBpowered = new ModelPart(128, 64, 48, 8);
+//        cellBpowered.addBox(5.5f, -3, -10f, 5, 3, 5, 0);
+//        cellBpowered.xRot = (float) Math.PI / 2f;
 
-        HammerEffect[] effects = HammerEffect.values();
-        modulesA = new ModelPart[effects.length];
-        for (int i = 0; i < effects.length; i++) {
-            modulesA[i] = new ModelPart(128, 64, i * 16, 32);
-            modulesA[i].addBox(0, 0, -16, 16, 16, 0, 0.03f);
-            modulesA[i].yRot = (float) -Math.PI / 2f;
-        }
-
-        modulesB = new ModelPart[effects.length];
-        for (int i = 0; i < effects.length; i++) {
-            modulesB[i] = new ModelPart(128, 64, i * 16, 32);
-            modulesB[i].addBox(-16, 0, 0, 16, 16, 0, 0.03f);
-            modulesB[i].yRot = (float) Math.PI / 2f;
-        }
-
-        cellAunpowered = new ModelPart(128, 64, 48, 0);
-        cellAunpowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
-        cellAunpowered.xRot = (float) -Math.PI / 2f;
-        cellApowered = new ModelPart(128, 64, 48, 8);
-        cellApowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
-        cellApowered.xRot = (float) -Math.PI / 2f;
-
-        cellBunpowered = new ModelPart(128, 64, 48, 0);
-        cellBunpowered.addBox(5.5f, -3, -10f, 5, 3, 5, 0);
-        cellBunpowered.xRot = (float) Math.PI / 2f;
-        cellBpowered = new ModelPart(128, 64, 48, 8);
-        cellBpowered.addBox(5.5f, -3, -10f, 5, 3, 5, 0);
-        cellBpowered.xRot = (float) Math.PI / 2f;
+        return LayerDefinition.create(mesh, 128, 64);
     }
 
     @Override

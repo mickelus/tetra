@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.system;
 
 import net.minecraft.ChatFormatting;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiString;
+import se.mickelus.mutil.gui.GuiAttachment;
+import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloRootBaseGui;
 
 import javax.annotation.ParametersAreNonnullByDefault;

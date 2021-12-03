@@ -52,7 +52,7 @@ public class SettleToast implements Toast {
 
 
         if (itemStack != null) {
-            toastGui.getMinecraft().getTextureManager().bind(texture);
+            toastGui.getMinecraft().getTextureManager().bindForSetup(texture);
             RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             toastGui.blit(matrixStack, 0, 0, 0, 0, 160, 32);
 

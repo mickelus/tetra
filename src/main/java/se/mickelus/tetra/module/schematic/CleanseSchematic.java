@@ -69,7 +69,7 @@ public class CleanseSchematic implements UpgradeSchematic {
 
     @Override
     public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack) {
-        return materialStack.getItem().is(Tags.Items.GEMS_LAPIS);
+        return materialStack.is(Tags.Items.GEMS_LAPIS);
     }
 
     @Override
