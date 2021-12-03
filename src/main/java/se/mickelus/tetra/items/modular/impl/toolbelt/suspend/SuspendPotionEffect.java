@@ -7,9 +7,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.EffectRenderer;
 import net.minecraftforge.common.ForgeMod;
+import se.mickelus.tetra.effect.gui.EffectUnRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class SuspendPotionEffect extends MobEffect {
     public static SuspendPotionEffect instance;
@@ -54,12 +60,9 @@ public class SuspendPotionEffect extends MobEffect {
     }
 
     @Override
-    public boolean shouldRender(MobEffectInstance effect) {
-        return false;
-    }
-
-    @Override
-    public boolean shouldRenderHUD(MobEffectInstance effect) {
-        return false;
+    @OnlyIn(Dist.CLIENT)
+    public void initializeClient(Consumer<EffectRenderer> consumer) {
+        super.initializeClient(consumer);
+        consumer.accept(EffectUnRenderer.INSTANCE);
     }
 }

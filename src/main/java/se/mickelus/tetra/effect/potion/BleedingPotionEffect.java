@@ -3,10 +3,15 @@ package se.mickelus.tetra.effect.potion;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.EffectRenderer;
+import se.mickelus.tetra.effect.gui.EffectUnRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class BleedingPotionEffect extends MobEffect {
     public static BleedingPotionEffect instance;
@@ -28,13 +33,11 @@ public class BleedingPotionEffect extends MobEffect {
         return duration % 10 == 0;
     }
 
-    @Override
-    public boolean shouldRender(MobEffectInstance effect) {
-        return false;
-    }
 
     @Override
-    public boolean shouldRenderHUD(MobEffectInstance effect) {
-        return false;
+    @OnlyIn(Dist.CLIENT)
+    public void initializeClient(Consumer<EffectRenderer> consumer) {
+        super.initializeClient(consumer);
+        consumer.accept(EffectUnRenderer.INSTANCE);
     }
 }

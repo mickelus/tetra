@@ -1,6 +1,7 @@
 package se.mickelus.tetra.effect.howling;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,9 +15,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.EffectRenderer;
 import se.mickelus.tetra.effect.EffectHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HowlingPotionEffect extends MobEffect {
     public static HowlingPotionEffect instance;
@@ -51,10 +55,21 @@ public class HowlingPotionEffect extends MobEffect {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void renderInventoryEffect(MobEffectInstance effect, EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, float z) {
-        int amp = effect.getAmplifier() + 1;
-        EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new TextComponent(I18n.get("effect.tetra.howling.tooltip",
+    public void initializeClient(Consumer<EffectRenderer> consumer) {
+        super.initializeClient(consumer);
+        consumer.accept(new EffectRenderer() {
+            @Override
+            public void renderInventoryEffect(MobEffectInstance effect, EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, float z) {
+                int amp = effect.getAmplifier() + 1;
+                EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
+                    new TextComponent(I18n.get("effect.tetra.howling.tooltip",
                         String.format("%d", amp * -5), String.format("%.01f", Math.min(amp * 12.5, 100)), String.format("%.01f", amp * 2.5))));
+            }
+
+            @Override
+            public void renderHUDEffect(MobEffectInstance effect, GuiComponent gui, PoseStack mStack, int x, int y, float z, float alpha) {
+
+            }
+        });
     }
 }

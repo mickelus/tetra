@@ -64,7 +64,7 @@ public class ReapEffect extends ChargedAbilityEffect {
             if (target != null) {
                 targetVec = hitVec;
             } else {
-                targetVec = Vec3.directionFromRotation(attacker.xRot, attacker.yRot)
+                targetVec = Vec3.directionFromRotation(attacker.getXRot(), attacker.getYRot())
                         .normalize()
                         .scale(range)
                         .add(attacker.getEyePosition(0));
