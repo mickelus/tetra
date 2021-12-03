@@ -124,7 +124,8 @@ sourceSets.main.resources {
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    implementation files("mgui-1.18-3.3.0-deobf.jar")
+//    implementation files("mgui-1.18-3.3.0-deobf.jar")
+    implementation fg.deobf("se.mickelus.mutil:mutil:${mutil_version}")
     /*
     if (findProject(':mgui') != null) {
         implementation project(':mgui')
