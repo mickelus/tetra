@@ -39,11 +39,12 @@ public class GeodeBlock extends TetraBlock {
 
     private ConfiguredFeature configuredFeature;
 
+    // todo 1.18: tag with pickaxe break tag
     public GeodeBlock() {
         super(Properties.of(Material.STONE)
         .sound(SoundType.STONE)
-        .harvestTool(ToolActions.PICKAXE_DIG)
-        .harvestLevel(0)
+//        .harvestTool(ToolActions.PICKAXE_DIG)
+//        .harvestLevel(0)
         .strength(1.5F, 6.0F));
 
         setRegistryName(unlocalizedName);
@@ -52,11 +53,13 @@ public class GeodeBlock extends TetraBlock {
         if (density > 0) {
             int size = 3;
             int maxHeight = 32;
+
+            // todo 1.18: fix worldgen
             OreConfiguration config = new OreConfiguration(NATURAL_STONE, defaultBlockState(), size);
-            configuredFeature = Feature.ORE.configured(config)
-                    .range(maxHeight)
-                    .squared()
-                    .countRandom(density);
+//            configuredFeature = Feature.ORE.configured(config)
+//                    .range(maxHeight)
+//                    .squared()
+//                    .countRandom(density);
         }
     }
 
@@ -74,7 +77,7 @@ public class GeodeBlock extends TetraBlock {
 
     public static void registerFeature(BiomeGenerationSettingsBuilder builder) {
         if (instance.configuredFeature != null) {
-            builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, instance.configuredFeature);
+//            builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, instance.configuredFeature);
         }
     }
 }
