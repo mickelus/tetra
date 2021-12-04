@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
-import se.mickelus.tetra.TetraToolActions;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

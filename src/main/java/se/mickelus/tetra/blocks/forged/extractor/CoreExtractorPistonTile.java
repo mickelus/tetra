@@ -8,16 +8,16 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.util.ITetraTicker;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
-public class CoreExtractorPistonTile extends BlockEntity implements BlockEntityTicker<CoreExtractorPistonTile> {
+public class CoreExtractorPistonTile extends BlockEntity implements ITetraTicker {
     @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorPistonBlock.unlocalizedName)
     public static BlockEntityType<CoreExtractorPistonTile> type;
 
@@ -56,23 +56,9 @@ public class CoreExtractorPistonTile extends BlockEntity implements BlockEntityT
         return 0;
     }
 
-    @Override
-    public void tick(Level p_155253_, BlockPos p_155254_, BlockState p_155255_, CoreExtractorPistonTile p_155256_) {
-        if (endTime < level.getGameTime()) {
-            endTime = Long.MAX_VALUE;
-            if (!level.isClientSide) {
-                TileEntityOptional.from(level, worldPosition.relative(Direction.DOWN), CoreExtractorBaseTile.class)
-                        .ifPresent(base -> base.fill(fillAmount));
-
-                runEndEffects();
-                setChanged();
-            }
-        }
-    }
-
     private void runEndEffects() {
-        if (level instanceof ServerLevel) {
-            ((ServerLevel) level).sendParticles(ParticleTypes.LARGE_SMOKE,
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE,
                     worldPosition.getX() + 0.5, worldPosition.getY() + 0.1, worldPosition.getZ() + 0.5,
                     5,  0, 0, 0, 0.02f);
         }
@@ -83,4 +69,18 @@ public class CoreExtractorPistonTile extends BlockEntity implements BlockEntityT
         level.playSound(null, worldPosition, SoundEvents.METAL_FALL, SoundSource.BLOCKS,
                 0.2f, 0.5f);
     }
+
+	@Override
+	public void tick(Level level, BlockPos pos, BlockState state) {
+		if (endTime < level.getGameTime()) {
+			endTime = Long.MAX_VALUE;
+			if (!level.isClientSide) {
+				TileEntityOptional.from(level, pos.relative(Direction.DOWN), CoreExtractorBaseTile.class)
+					.ifPresent(base -> base.fill(fillAmount));
+
+				runEndEffects();
+				setChanged();
+			}
+		}
+	}
 }

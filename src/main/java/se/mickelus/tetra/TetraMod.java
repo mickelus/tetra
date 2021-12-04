@@ -3,7 +3,6 @@ package se.mickelus.tetra;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -114,8 +113,8 @@ import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
 import se.mickelus.tetra.trades.TradeHandler;
 
-import java.util.Arrays;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)

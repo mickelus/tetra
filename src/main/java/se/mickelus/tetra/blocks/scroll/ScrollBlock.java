@@ -28,6 +28,7 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.util.TileEntityOptional;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class ScrollBlock extends TetraBlock implements EntityBlock {
@@ -149,7 +150,7 @@ public class ScrollBlock extends TetraBlock implements EntityBlock {
                 });
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
         return new ScrollTile(p_153215_, p_153216_);

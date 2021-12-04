@@ -18,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -31,6 +30,7 @@ import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.tetra.util.ITetraTicker;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
@@ -38,10 +38,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.stream.Stream;
-@ParametersAreNonnullByDefault
-public class HammerBaseTile extends BlockEntity implements BlockEntityTicker<HammerBaseTile> {
 
+@ParametersAreNonnullByDefault
+public class HammerBaseTile extends BlockEntity implements ITetraTicker {
     @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.unlocalizedName)
     public static BlockEntityType<HammerBaseTile> type;
 
@@ -192,43 +191,6 @@ public class HammerBaseTile extends BlockEntity implements BlockEntityTicker<Ham
     private int tickrate() {
         // one powered side = 40 tickrate, two powered sides = 20 tickrate
         return redstonePower != 0 ? (int) Math.max(600f / redstonePower, 10) : 20;
-    }
-
-    @Override
-    public void tick(Level level, BlockPos pos, BlockState state, HammerBaseTile self) {
-        if (redstonePower > 0 && level.getGameTime() % tickrate() == 0 && level.hasNeighborSignal(worldPosition) && isFunctional()) {
-            BlockPos targetPos = worldPosition.below(2);
-            BlockState targetState = level.getBlockState(targetPos);
-
-            HammerHeadTile head = TileEntityOptional.from(level, worldPosition.below(), HammerHeadTile.class).orElse(null);
-
-            if (head == null || head.isJammed()) {
-                return;
-            }
-
-            CastOptional.cast(targetState.getBlock(), IInteractiveBlock.class)
-                    .map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(TetraToolActions.hammer)))
-                    .map(Arrays::stream)
-                    .orElseGet(Stream::empty)
-                    .filter(interaction -> TetraToolActions.hammer.equals(interaction.requiredTool))
-                    .filter(interaction -> getHammerLevel() >= interaction.requiredLevel)
-                    .findFirst()
-                    .ifPresent(interaction -> {
-                        interaction.applyOutcome(level, targetPos, targetState, null, null, Direction.UP);
-
-                        // the workbench triggers the hammer on the server side, so no need to consume fuel and play sounds
-                        if (!(targetState.getBlock() instanceof AbstractWorkbenchBlock)) {
-                            if (!level.isClientSide) {
-                                consumeFuel();
-                            } else {
-                                head.activate();
-                                level.playSound(null, worldPosition, SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
-                            }
-                        } else {
-                            head.activate();
-                        }
-                    });
-        }
     }
 
     /**
@@ -452,4 +414,41 @@ public class HammerBaseTile extends BlockEntity implements BlockEntityTicker<Ham
         }
         compound.put(slotsKey, nbttaglist);
     }
+
+	@Override
+	public void tick(Level level, BlockPos pos, BlockState state) {
+		if (redstonePower > 0 && level.getGameTime() % tickrate() == 0 && level.hasNeighborSignal(pos) && isFunctional()) {
+			BlockPos targetPos = pos.below(2);
+			BlockState targetState = level.getBlockState(targetPos);
+
+			HammerHeadTile head = TileEntityOptional.from(level, pos.below(), HammerHeadTile.class).orElse(null);
+
+			if (head == null || head.isJammed()) {
+				return;
+			}
+
+			CastOptional.cast(targetState.getBlock(), IInteractiveBlock.class)
+				.map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(TetraToolActions.hammer)))
+				.stream()
+				.flatMap(Arrays::stream)
+				.filter(interaction -> TetraToolActions.hammer.equals(interaction.requiredTool))
+				.filter(interaction -> getHammerLevel() >= interaction.requiredLevel)
+				.findFirst()
+				.ifPresent(interaction -> {
+					interaction.applyOutcome(level, targetPos, targetState, null, null, Direction.UP);
+
+					// the workbench triggers the hammer on the server side, so no need to consume fuel and play sounds
+					if (!(targetState.getBlock() instanceof AbstractWorkbenchBlock)) {
+						if (!level.isClientSide) {
+							consumeFuel();
+						} else {
+							head.activate();
+							level.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
+						}
+					} else {
+						head.activate();
+					}
+				});
+		}
+	}
 }

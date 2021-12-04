@@ -280,7 +280,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
         }
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
         return new RackTile(p_153215_, p_153216_);

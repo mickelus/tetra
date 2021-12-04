@@ -10,7 +10,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -164,7 +163,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
         return new BlockInteraction[0];
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
         return new WorkbenchTile(p_153215_, p_153216_);

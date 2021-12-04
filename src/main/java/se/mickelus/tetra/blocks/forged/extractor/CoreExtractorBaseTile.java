@@ -7,19 +7,19 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
+import se.mickelus.tetra.util.ITetraTicker;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 @ParametersAreNonnullByDefault
-public class CoreExtractorBaseTile extends BlockEntity implements BlockEntityTicker<CoreExtractorBaseTile>, IHeatTransfer {
+public class CoreExtractorBaseTile extends BlockEntity implements ITetraTicker, IHeatTransfer {
     @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.unlocalizedName)
     public static BlockEntityType<CoreExtractorBaseTile> type;
 
@@ -122,21 +122,6 @@ public class CoreExtractorBaseTile extends BlockEntity implements BlockEntityTic
     @Override
     public float getEfficiency() {
         return 1;
-    }
-
-    @Override
-    public void tick(Level p_155253_, BlockPos p_155254_, BlockState p_155255_, CoreExtractorBaseTile p_155256_) {
-        if (!level.isClientSide) {
-            if (isSending) {
-                if (level.getGameTime() % 5 == 0) {
-                    transfer();
-                }
-            } else if (currentCharge > 0) {
-                if (level.getGameTime() % 20 == 0) {
-                    currentCharge = Math.max(0, currentCharge - drainAmount);
-                }
-            }
-        }
     }
 
     @Override
@@ -247,4 +232,17 @@ public class CoreExtractorBaseTile extends BlockEntity implements BlockEntityTic
 
 //        world.notifyBlockUpdate(pos, state, state,3);
     }
+
+	@Override
+	public void tick(Level level, BlockPos pos, BlockState state) {
+		if (!level.isClientSide) {
+			if (isSending) {
+				if (level.getGameTime() % 5 == 0) {
+					transfer();
+				}
+			} else if (currentCharge > 0 && level.getGameTime() % 20 == 0) {
+					currentCharge = Math.max(0, currentCharge - drainAmount);
+			}
+		}
+	}
 }

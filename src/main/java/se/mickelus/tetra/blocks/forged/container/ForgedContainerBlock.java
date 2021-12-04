@@ -28,7 +28,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
@@ -309,7 +308,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
         return state.rotate(mirror.getRotation(state.getValue(facingProp)));
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
         return new ForgedContainerTile(p_153215_, p_153216_);

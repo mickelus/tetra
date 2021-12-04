@@ -1,6 +1,5 @@
 package se.mickelus.tetra.gui.stats.sorting;
 
-import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.gui.stats.GuiStats;

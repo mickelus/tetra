@@ -11,7 +11,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
@@ -19,13 +18,14 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.tetra.util.ITetraTicker;
 import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 @ParametersAreNonnullByDefault
-public class TransferUnitTile extends BlockEntity implements BlockEntityTicker<TransferUnitTile>, IHeatTransfer {
+public class TransferUnitTile extends BlockEntity implements ITetraTicker, IHeatTransfer {
     @ObjectHolder(TetraMod.MOD_ID + ":" + TransferUnitBlock.unlocalizedName)
     public static BlockEntityType<TransferUnitTile> type;
 
@@ -164,10 +164,10 @@ public class TransferUnitTile extends BlockEntity implements BlockEntityTicker<T
     }
 
     @Override
-    public void tick(Level p_155253_, BlockPos p_155254_, BlockState p_155255_, TransferUnitTile p_155256_) {
+    public void tick(Level level, BlockPos pos, BlockState blockState) {
         if (!level.isClientSide
                 && level.getGameTime() % 5 == 0
-                && TransferUnitBlock.isSending(getBlockState())) {
+                && TransferUnitBlock.isSending(blockState)) {
             transfer();
         }
     }

@@ -34,7 +34,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
@@ -219,7 +218,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
         return new ChthonicExtractorTile(p_153215_, p_153216_);

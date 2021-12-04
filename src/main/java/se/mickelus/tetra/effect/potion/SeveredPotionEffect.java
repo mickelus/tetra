@@ -1,23 +1,17 @@
 package se.mickelus.tetra.effect.potion;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.EffectRenderer;
-import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.gui.EffectTooltipRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;

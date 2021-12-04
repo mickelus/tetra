@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ToolAction;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;

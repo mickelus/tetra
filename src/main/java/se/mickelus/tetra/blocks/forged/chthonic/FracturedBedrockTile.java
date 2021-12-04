@@ -18,16 +18,13 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ClipBlockStateContext;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -46,13 +43,14 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
 import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.tetra.util.ITetraTicker;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Set;
 @ParametersAreNonnullByDefault
-public class FracturedBedrockTile extends BlockEntity implements BlockEntityTicker<FracturedBedrockTile> {
+public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
     @ObjectHolder(TetraMod.MOD_ID + ":" + FracturedBedrockBlock.unlocalizedName)
     public static BlockEntityType<FracturedBedrockTile> type;
 
@@ -242,8 +240,8 @@ public class FracturedBedrockTile extends BlockEntity implements BlockEntityTick
                 .filter(itemStack -> !itemStack.isEmpty())
                 .findAny()
                 .ifPresent(itemStack -> {
-                    if (itemStack.getItem() instanceof BlockItem) {
-                        BlockState newState = ((BlockItem) itemStack.getItem()).getBlock().defaultBlockState();
+                    if (itemStack.getItem() instanceof BlockItem blockItem) {
+                        BlockState newState = blockItem.getBlock().defaultBlockState();
                         level.levelEvent(null, 2001, pos, Block.getId(newState));
                         level.setBlock(pos, newState, 2);
                     } else {
@@ -307,56 +305,6 @@ public class FracturedBedrockTile extends BlockEntity implements BlockEntityTick
     }
 
     @Override
-    public void tick(Level level, BlockPos blockPos, BlockState blockState, FracturedBedrockTile tile) {
-        if (!this.level.isClientSide && activity > 0 && this.level.getGameTime() % getRate() == 0) {
-            int intensity = getIntensity();
-            Vec3 origin = Vec3.atCenterOf(getBlockPos());
-
-            for (int i = 0; i < intensity; i++) {
-                Vec3 target = getTarget(step + i);
-                BlockHitResult result = raytrace(level, origin, origin.add(target));
-
-                if (result.getType() != HitResult.Type.MISS) {
-                    BlockPos hitPos = result.getBlockPos();
-                    BlockState hitState = this.level.getBlockState(hitPos);
-
-                    breakBlock(this.level, hitPos, hitState);
-
-                    BlockPos spawnPos = traceDown(hitPos);
-                    BlockState spawnState = this.level.getBlockState(spawnPos);
-
-                    if (canReplace(spawnState)) {
-                        if (this.level.getRandom().nextFloat() < spawnRatio) {
-                            if (spawnPos.getY() < spawnYLimit) {
-                                spawnOre(spawnPos);
-                            }
-                        } else {
-                            spawnMob(spawnPos);
-                        }
-                    } else {
-                        breakBlock(this.level, spawnPos, spawnState);
-                    }
-                }
-            }
-
-            ((ServerLevel) this.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.defaultBlockState()),
-                    worldPosition.getX() + 0.5, worldPosition.getY() + 1.1, worldPosition.getZ() + 0.5,
-                    8, 0, this.level.random.nextGaussian() * 0.1, 0, 0.1);
-
-            step += intensity;
-            activity -= intensity;
-
-            if (shouldDeplete()) {
-                this.level.setBlock(getBlockPos(), DepletedBedrockBlock.instance.defaultBlockState(), 2);
-            }
-        }
-
-        if (!this.level.isClientSide  && activity > 0 && this.level.getGameTime() % 80 == 0) {
-            playSound();
-        }
-    }
-
-    @Override
     public void load(CompoundTag compound) {
         super.load(compound);
 
@@ -404,4 +352,54 @@ public class FracturedBedrockTile extends BlockEntity implements BlockEntityTick
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
         this.load(packet.getTag());
     }
+
+	@Override
+	public void tick(Level level, BlockPos pos, BlockState state) {
+		if (!this.level.isClientSide && activity > 0 && this.level.getGameTime() % getRate() == 0) {
+			int intensity = getIntensity();
+			Vec3 origin = Vec3.atCenterOf(getBlockPos());
+
+			for (int i = 0; i < intensity; i++) {
+				Vec3 target = getTarget(step + i);
+				BlockHitResult result = raytrace(level, origin, origin.add(target));
+
+				if (result.getType() != HitResult.Type.MISS) {
+					BlockPos hitPos = result.getBlockPos();
+					BlockState hitState = this.level.getBlockState(hitPos);
+
+					breakBlock(this.level, hitPos, hitState);
+
+					BlockPos spawnPos = traceDown(hitPos);
+					BlockState spawnState = this.level.getBlockState(spawnPos);
+
+					if (canReplace(spawnState)) {
+						if (this.level.getRandom().nextFloat() < spawnRatio) {
+							if (spawnPos.getY() < spawnYLimit) {
+								spawnOre(spawnPos);
+							}
+						} else {
+							spawnMob(spawnPos);
+						}
+					} else {
+						breakBlock(this.level, spawnPos, spawnState);
+					}
+				}
+			}
+
+			((ServerLevel) this.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.defaultBlockState()),
+				worldPosition.getX() + 0.5, worldPosition.getY() + 1.1, worldPosition.getZ() + 0.5,
+				8, 0, this.level.random.nextGaussian() * 0.1, 0, 0.1);
+
+			step += intensity;
+			activity -= intensity;
+
+			if (shouldDeplete()) {
+				this.level.setBlock(getBlockPos(), DepletedBedrockBlock.instance.defaultBlockState(), 2);
+			}
+		}
+
+		if (!this.level.isClientSide  && activity > 0 && this.level.getGameTime() % 80 == 0) {
+			playSound();
+		}
+	}
 }
