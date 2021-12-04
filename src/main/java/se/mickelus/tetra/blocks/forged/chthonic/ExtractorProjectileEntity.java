@@ -190,7 +190,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     }
 
     private void destroyExtractor() {
-        remove();
+        discard();
         level.explode(getOwner(), getX(), getY(), getZ(), 4, Explosion.BlockInteraction.BREAK);
     }
 
@@ -301,7 +301,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
             if (success) {
                 player.take(this, 1);
                 ignitePlayer(player);
-                remove();
+                discard();
 
                 return InteractionResult.SUCCESS;
             }

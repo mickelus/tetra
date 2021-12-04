@@ -126,7 +126,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
                     spawnAtLocation(getPickupItem(), 0.1f);
                 }
 
-                remove();
+                discard();
             } else if (loyaltyLevel > 0) {
                 setNoPhysics(true);
                 Vec3 Vector3d = new Vec3(shooter.getX() - getX(), shooter.getEyeY() - getY(), shooter.getZ() - getZ());
