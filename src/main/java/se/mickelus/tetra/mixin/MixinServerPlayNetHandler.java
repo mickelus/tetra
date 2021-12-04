@@ -15,7 +15,7 @@ public abstract class MixinServerPlayNetHandler {
     @Inject(at = @At("TAIL"), method = "handleMovePlayer")
     private void processPlayer(ServerboundMovePlayerPacket packet, CallbackInfo callback) {
         if (getInstance().player.hasEffect(SuspendPotionEffect.instance)) {
-			setclientIsFloating(false);
+            setClientIsFloating(false);
         }
     }
 
@@ -24,5 +24,5 @@ public abstract class MixinServerPlayNetHandler {
     }
 
     @Accessor
-    public abstract void setclientIsFloating(boolean floating);
+    public abstract void setClientIsFloating(boolean floating);
 }
