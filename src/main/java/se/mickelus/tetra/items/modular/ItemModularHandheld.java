@@ -60,43 +60,33 @@ import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class ItemModularHandheld extends ModularItem {
-
+    public static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
+    // if the blocking level exceeds this value the item has an infinite blocking duration
+    public static final int blockingDurationLimit = 16;
     /**
      * Below are lists of blocks, materials and tags that describe what different tools can harvest and efficiently destroy. Note that these
      * are copies of what the vanilla tool counterparts explicitly state that they can destroy and harvest, some blocks (and required tiers)
      * are not listed here as that's part of that block's implementation.
      */
 
-    private static final Set<Material> hoeBonusMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT, Material.CORAL);
-
-    private static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD, Material.NETHER_WOOD, Material.PLANT, Material.REPLACEABLE_PLANT, Material.BAMBOO, Material.VEGETABLE);
-    private static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.METAL, Material.HEAVY_METAL, Material.STONE);
-
+    // FIXME add 1.18 materials
+    public static final Set<Material> hoeBonusMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT);
+    public static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD, Material.NETHER_WOOD, Material.PLANT, Material.REPLACEABLE_PLANT, Material.BAMBOO, Material.VEGETABLE);
+    public static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.METAL, Material.HEAVY_METAL, Material.STONE);
     // copy of hardcoded values in SwordItem, materials & tag that it explicitly state it can efficiently DESTROY
-    private static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT, Material.CORAL, Material.VEGETABLE, Material.WEB, Material.BAMBOO);
-    private static final Set<Tag.Named<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
-
+    public static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT, Material.VEGETABLE, Material.WEB, Material.BAMBOO);
+    public static final Set<Tag.Named<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
     // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
-    private static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
-
-    public static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
-
-    // the base amount of damage the item should take after destroying a block
-    protected int blockDestroyDamage = 1;
-
-    // the base amount of damage the item should take after hitting an entity
-    protected int entityHitDamage = 1;
-
-    // if the blocking level exceeds this value the item has an infinite blocking duration
-    public static final int blockingDurationLimit = 16;
-
+    public static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
     static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[] {
             ExecuteEffect.instance,
             LungeEffect.instance,
@@ -106,9 +96,57 @@ public class ItemModularHandheld extends ModularItem {
             ReapEffect.instance,
             PryChargedEffect.instance
     };
+    // the base amount of damage the item should take after destroying a block
+    protected int blockDestroyDamage = 1;
+    // the base amount of damage the item should take after hitting an entity
+    protected int entityHitDamage = 1;
 
     public ItemModularHandheld(Properties properties) {
         super(properties);
+    }
+
+    public static boolean canDenail(BlockState blockState) {
+        return blockState.getBlock().getTags().contains(nailedTag);
+    }
+
+    public static void handleChargedAbility(Player player, InteractionHand hand, @Nullable LivingEntity target, @Nullable BlockPos targetPos,
+                                            @Nullable Vec3 hitVec, int ticksUsed) {
+        ItemStack activeStack = player.getItemInHand(hand);
+
+        if (!activeStack.isEmpty() && activeStack.getItem() instanceof ItemModularHandheld) {
+            ItemModularHandheld item = (ItemModularHandheld) activeStack.getItem();
+
+            Arrays.stream(abilities)
+                .filter(ability -> ability.canPerform(player, item, activeStack, target, targetPos, ticksUsed))
+                .findFirst()
+                .ifPresent(ability -> ability.perform(player, hand, item, activeStack, target, targetPos, hitVec, ticksUsed));
+
+            player.stopUsingItem();
+        }
+    }
+
+    public static void handleSecondaryAbility(Player player, InteractionHand hand, @Nullable LivingEntity target) {
+        ItemStack activeStack = player.getItemInHand(hand);
+
+        if (!activeStack.isEmpty() && activeStack.getItem() instanceof ItemModularHandheld item && target != null) {
+            item.itemInteractionForEntitySecondary(activeStack, player, target, hand);
+
+            player.stopUsingItem();
+            player.getCooldowns().addCooldown(item, (int) Math.round(item.getCooldownBase(activeStack) * 20 * 1.5));
+            player.swing(hand);
+        }
+    }
+
+    public static double getCounterWeightBonus(int counterWeightLevel, int integrityCost) {
+        return Math.max(0, 0.15 - Math.abs(counterWeightLevel - integrityCost) * 0.05);
+    }
+
+    public static boolean isToolEffective(ToolAction toolAction, BlockState blockState) {
+        return ToolActionHelper.isEffectiveOn(toolAction, blockState);
+    }
+
+    public static ToolAction getEffectiveTool(BlockState blockState) {
+        return ToolActionHelper.getAppropriateTool(blockState);
     }
 
     public int getBlockDestroyDamage() {
@@ -216,7 +254,7 @@ public class ItemModularHandheld extends ModularItem {
             ToolData toolData = getToolData(itemStack);
             Collection<ToolAction> tools = toolData.getValues().stream()
                     .filter(tool -> toolData.getLevel(tool) > 0)
-                    .sorted(player.isCrouching() ? Comparator.comparing(ToolAction::getName).reversed() : Comparator.comparing(ToolAction::getName))
+                    .sorted(player.isCrouching() ? Comparator.comparing(ToolAction::name).reversed() : Comparator.comparing(ToolAction::name))
                     .collect(Collectors.toList());
 
             for (ToolAction tool: tools) {
@@ -322,7 +360,7 @@ public class ItemModularHandheld extends ModularItem {
      * Helper for hitting entities with abilities
      */
     public AbilityUseResult hitEntity(ItemStack itemStack, Player player, LivingEntity target, double damageMultiplier,
-            float knockbackBase, float knockbackMultiplier) {
+                                      float knockbackBase, float knockbackMultiplier) {
         return hitEntity(itemStack, player, target, damageMultiplier, 0, knockbackBase, knockbackMultiplier);
     }
 
@@ -330,11 +368,11 @@ public class ItemModularHandheld extends ModularItem {
      * Helper for hitting entities with abilities
      */
     public AbilityUseResult hitEntity(ItemStack itemStack, Player player, LivingEntity target, double damageMultiplier, double damageBonus,
-            float knockbackBase, float knockbackMultiplier) {
+                                      float knockbackBase, float knockbackMultiplier) {
         float targetModifier = EnchantmentHelper.getDamageBonus(itemStack, target.getMobType());
         float critMultiplier = Optional.ofNullable(ForgeHooks.getCriticalHit(player, target, false, 1.5f))
-                .map(CriticalHitEvent::getDamageModifier)
-                .orElse(1f);
+            .map(CriticalHitEvent::getDamageModifier)
+            .orElse(1f);
 
         double damage = (1 + getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier * damageMultiplier + damageBonus;
 
@@ -350,7 +388,7 @@ public class ItemModularHandheld extends ModularItem {
             // knocks back the target based on effect level + knockback enchantment level
             float knockbackFactor = knockbackBase + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
             target.knockback(knockbackFactor * knockbackMultiplier,
-                    player.getX() - target.getX(), player.getZ() - target.getZ());
+                player.getX() - target.getX(), player.getZ() - target.getZ());
 
             if (targetModifier > 1) {
                 player.magicCrit(target);
@@ -412,7 +450,7 @@ public class ItemModularHandheld extends ModularItem {
                 player.getInventory().removeItem(stack);
             }
 
-            projectileEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.5F + (float)riptideLevel * 0.5F, 1.0F);
+            projectileEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.5F + (float) riptideLevel * 0.5F, 1.0F);
             world.addFreshEntity(projectileEntity);
 
             if (this instanceof ModularSingleHeadedItem) {
@@ -430,9 +468,9 @@ public class ItemModularHandheld extends ModularItem {
     public void causeRiptideEffect(Player player, int riptideLevel) {
         float yaw = player.getYRot();
         float pitch = player.getXRot();
-        float x = -Mth.sin(yaw * ((float)Math.PI / 180F)) * Mth.cos(pitch * ((float)Math.PI / 180F));
-        float y = -Mth.sin(pitch * ((float)Math.PI / 180F));
-        float z = Mth.cos(yaw * ((float)Math.PI / 180F)) * Mth.cos(pitch * ((float)Math.PI / 180F));
+        float x = -Mth.sin(yaw * ((float) Math.PI / 180F)) * Mth.cos(pitch * ((float) Math.PI / 180F));
+        float y = -Mth.sin(pitch * ((float) Math.PI / 180F));
+        float z = Mth.cos(yaw * ((float) Math.PI / 180F)) * Mth.cos(pitch * ((float) Math.PI / 180F));
 
         float velocityMultiplier = 3.0F * ((1.0F + riptideLevel) / 4.0F);
 
@@ -462,10 +500,11 @@ public class ItemModularHandheld extends ModularItem {
 
     /**
      * Instantly break plank based blocks.
+     *
      * @param player the responsible player entity
-     * @param world the world in which the action takes place
-     * @param pos the position in the world
-     * @param hand the hand holding the tool
+     * @param world  the world in which the action takes place
+     * @param pos    the position in the world
+     * @param hand   the hand holding the tool
      * @param facing the clicked face
      * @return true if the block can be (and was) denailed, otherwise false
      */
@@ -488,10 +527,6 @@ public class ItemModularHandheld extends ModularItem {
         return false;
     }
 
-    public static boolean canDenail(BlockState blockState) {
-        return blockState.getBlock().getTags().contains(nailedTag);
-    }
-
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
@@ -502,7 +537,7 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         if (getEffectLevel(stack, ItemEffect.throwable) > 0
-                || EnchantmentHelper.getRiptide(stack) > 0) {
+            || EnchantmentHelper.getRiptide(stack) > 0) {
             return UseAnim.SPEAR;
         }
 
@@ -516,6 +551,7 @@ public class ItemModularHandheld extends ModularItem {
 
     /**
      * Returns a value between 0 - 1 representing how long a blocking item has been raised
+     *
      * @param itemStack
      * @param entity
      * @return
@@ -539,6 +575,7 @@ public class ItemModularHandheld extends ModularItem {
                 .map(e -> e.getUseItemRemainingTicks() > 0)
                 .orElse(false);
     }
+
     public boolean isBlocking(ItemStack itemStack, @Nullable LivingEntity entity) {
         return UseAnim.BLOCK.equals(getUseAnimation(itemStack)) && Optional.ofNullable(entity)
                 .filter(e -> itemStack.equals(e.getUseItem()))
@@ -546,8 +583,7 @@ public class ItemModularHandheld extends ModularItem {
                 .orElse(false);
     }
 
-    @Override
-    public boolean isShield(ItemStack itemStack, @Nullable LivingEntity entity) {
+    public boolean isShield(ItemStack itemStack) {
         return getEffectLevel(itemStack, ItemEffect.blocking) > 0;
     }
 
@@ -602,6 +638,7 @@ public class ItemModularHandheld extends ModularItem {
 
     /**
      * Called when the player stops using/channeling an item, e.g. when throwing a trident.
+     *
      * @param itemStack
      * @param world
      * @param entityLiving
@@ -682,25 +719,9 @@ public class ItemModularHandheld extends ModularItem {
         }
     }
 
-    public static void handleChargedAbility(Player player, InteractionHand hand, @Nullable LivingEntity target, @Nullable BlockPos targetPos,
-            @Nullable Vec3 hitVec, int ticksUsed) {
-        ItemStack activeStack = player.getItemInHand(hand);
-
-        if (!activeStack.isEmpty() && activeStack.getItem() instanceof ItemModularHandheld) {
-            ItemModularHandheld item = (ItemModularHandheld) activeStack.getItem();
-
-            Arrays.stream(abilities)
-                    .filter(ability -> ability.canPerform(player, item, activeStack, target, targetPos, ticksUsed))
-                    .findFirst()
-                    .ifPresent(ability -> ability.perform(player, hand, item, activeStack, target, targetPos, hitVec, ticksUsed));
-
-            player.stopUsingItem();
-        }
-    }
-
     @OnlyIn(Dist.CLIENT)
     public void onPlayerStoppedUsingSecondary(ItemStack itemStack, Level world, LivingEntity entity, int timeLeft) {
-        if (entity instanceof Player) {
+        if (entity instanceof Player player) {
             LivingEntity target = Optional.ofNullable(Minecraft.getInstance().hitResult)
                     .filter(rayTraceResult -> rayTraceResult.getType() == HitResult.Type.ENTITY)
                     .map(rayTraceResult -> ((EntityHitResult)rayTraceResult).getEntity())
@@ -711,23 +732,7 @@ public class ItemModularHandheld extends ModularItem {
 
             TetraMod.packetHandler.sendToServer(new SecondaryAbilityPacket(target, activeHand));
 
-            handleSecondaryAbility((Player) entity, activeHand, target);
-        }
-    }
-
-    public static void handleSecondaryAbility(Player player, InteractionHand hand, LivingEntity target) {
-        ItemStack activeStack = player.getItemInHand(hand);
-
-        if (!activeStack.isEmpty() && activeStack.getItem() instanceof ItemModularHandheld) {
-            ItemModularHandheld item = (ItemModularHandheld) activeStack.getItem();
-
-            if (target != null) {
-                item.itemInteractionForEntitySecondary(activeStack, player, target, hand);
-
-                player.stopUsingItem();
-                player.getCooldowns().addCooldown(item, (int) Math.round(item.getCooldownBase(activeStack) * 20 * 1.5));
-                player.swing(hand);
-            }
+            handleSecondaryAbility(player, activeHand, target);
         }
     }
 
@@ -784,12 +789,9 @@ public class ItemModularHandheld extends ModularItem {
         return 0;
     }
 
-    public static double getCounterWeightBonus(int counterWeightLevel, int integrityCost) {
-        return Math.max(0, 0.15 - Math.abs(counterWeightLevel - integrityCost) * 0.05);
-    }
-
     /**
      * Base cooldown value for abilities/usages related to this item, in ticks
+     *
      * @param itemStack
      * @return
      */
@@ -798,12 +800,20 @@ public class ItemModularHandheld extends ModularItem {
         return 1 / Math.max(0.1, getAttributeValue(itemStack, Attributes.ATTACK_SPEED, 4) + getCounterWeightBonus(itemStack));
     }
 
-    @Override
     public Set<ToolAction> getToolActions(ItemStack stack) {
         if (!isBroken(stack)) {
             return getTools(stack);
         }
         return Collections.emptySet();
+    }
+
+    @Override
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+        if (getToolActions(stack).contains(toolAction))
+            return true;
+        if (ToolActions.DEFAULT_SHIELD_ACTIONS.contains(toolAction) && isShield(stack))
+            return true;
+        return super.canPerformAction(stack, toolAction);
     }
 
     @Override
@@ -841,7 +851,7 @@ public class ItemModularHandheld extends ModularItem {
                 speed *= getToolEfficiency(itemStack, tool);
             } else {
                 speed *= getToolActions(itemStack).stream()
-                        .filter(blockState::isToolEffective)
+                        .filter(toolAction -> ToolActionHelper.isEffectiveOn(toolAction, blockState))
                         .map(toolAction -> getToolEfficiency(itemStack, toolAction))
                         .max(Comparator.naturalOrder())
                         .orElse(0f);
@@ -864,53 +874,6 @@ public class ItemModularHandheld extends ModularItem {
             return speed;
         }
         return 1;
-    }
-
-    public static boolean isToolEffective(ToolAction toolAction, BlockState blockState) {
-        if (TetraToolActions.cut.equals(toolAction)
-                && (cuttingHarvestBlocks.contains(blockState.getBlock())
-                    || cuttingDestroyMaterials.contains(blockState.getMaterial())
-                    || cuttingDestroyTags.stream().anyMatch(tag -> blockState.getBlock().is(tag)))) {
-            return true;
-        }
-
-        if (ToolActions.HOE_DIG.equals(toolAction) && hoeBonusMaterials.contains(blockState.getMaterial())) {
-            return true;
-        }
-
-        if (ToolActions.AXE_DIG.equals(toolAction) && axeMaterials.contains(blockState.getMaterial())) {
-            return true;
-        }
-
-        if (ToolActions.PICKAXE_DIG.equals(toolAction) && pickaxeMaterials.contains(blockState.getMaterial())) {
-            return true;
-        }
-
-        return toolAction.equals(blockState.getHarvestTool());
-    }
-
-    public static ToolAction getEffectiveTool(BlockState blockState) {
-        ToolAction tool = blockState.getHarvestTool();
-
-        if (tool != null) {
-            return tool;
-        }
-
-        if (cuttingHarvestBlocks.contains(blockState.getBlock())
-                || cuttingDestroyMaterials.contains(blockState.getMaterial())
-                || cuttingDestroyTags.stream().anyMatch(tag -> blockState.getBlock().is(tag))) {
-            return TetraToolActions.cut;
-        }
-
-        if (axeMaterials.contains(blockState.getMaterial())) {
-            return ToolActions.AXE_DIG;
-        }
-
-        if (pickaxeMaterials.contains(blockState.getMaterial())) {
-            return ToolActions.PICKAXE_DIG;
-        }
-
-        return null;
     }
 
     @Override

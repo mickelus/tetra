@@ -25,6 +25,7 @@ import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
+
 @ParametersAreNonnullByDefault
 public class ToolbeltHelper {
     public static void equipItemFromToolbelt(Player player, ToolbeltSlotType slotType, int index, InteractionHand hand) {
@@ -73,6 +74,7 @@ public class ToolbeltHelper {
     /**
      * Attempts to store the given players offhand or mainhand item in the toolbelt. Attempts to grab the offhand item
      * first and grabs the mainhand item if the offhand is empty.
+     *
      * @param player A player
      * @return false if the toolbelt is full, otherwise true
      */
@@ -119,6 +121,7 @@ public class ToolbeltHelper {
 
     /**
      * Attempts to find the first itemstack containing a toolbelt in the given players inventory.
+     *
      * @param player A player
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
@@ -172,9 +175,10 @@ public class ToolbeltHelper {
 
     /**
      * Attempts to find a suitable tool from the players quick access quickslots to be used on the given blockstate.
-     * @param player The player
+     *
+     * @param player      The player
      * @param traceResult The raytrace result for where the cursor was when the event was triggered
-     * @param blockState A blockstate
+     * @param blockState  A blockstate
      * @return a quickslot inventory index if a suitable tool is found, otherwise -1
      */
     public static int getQuickAccessSlotIndex(Player player, HitResult traceResult, BlockState blockState) {
@@ -202,11 +206,7 @@ public class ToolbeltHelper {
             for (int i = 0; i < inventory.getContainerSize(); i++) {
                 ItemStack itemStack = inventory.getItem(i);
                 if (effects.get(i).contains(ItemEffect.quickAccess) && !itemStack.isEmpty()) {
-                    ToolAction requiredTool = blockState.getHarvestTool();
-                    ToolAction effectiveTool = ItemModularHandheld.getEffectiveTool(blockState);
-                    if (requiredTool != null
-                            && itemStack.getItem().getHarvestLevel(itemStack, requiredTool, player, blockState) >= blockState.getHarvestLevel()
-                            || effectiveTool != null && itemStack.getItem().getToolActions(itemStack).contains(effectiveTool)) {
+                    if (itemStack.isCorrectToolForDrops(blockState)) {
                         return i;
                     }
 

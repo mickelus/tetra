@@ -7,17 +7,19 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.network.AbstractPacket;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class SecondaryAbilityPacket extends AbstractPacket {
-
     private int targetId = -1;
     private InteractionHand hand;
 
-    public SecondaryAbilityPacket() {}
+    public SecondaryAbilityPacket() {
+    }
 
-    public SecondaryAbilityPacket(LivingEntity target, InteractionHand hand) {
+    public SecondaryAbilityPacket(@Nullable LivingEntity target, InteractionHand hand) {
         targetId = Optional.ofNullable(target)
                 .map(Entity::getId)
                 .orElse(-1);

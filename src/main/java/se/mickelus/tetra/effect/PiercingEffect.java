@@ -21,6 +21,7 @@ import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
@@ -77,11 +78,9 @@ public class PiercingEffect {
     private static void enqueueBlockBreak(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos, float refHardness, ToolAction refTool, int remaining) {
         ServerScheduler.schedule(1, () -> {
             BlockState offsetState = world.getBlockState(pos);
-            ToolAction effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
 
             float blockHardness = offsetState.getDestroySpeed(world, pos);
-            int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, effectiveTool, player, offsetState);
-            if (((toolLevel >= 0 && toolLevel >= offsetState.getBlock().getHarvestLevel(offsetState)) || itemStack.isCorrectToolForDrops(offsetState))
+            if (ToolActionHelper.playerCanDestroyBlock(player, offsetState, pos, itemStack)
                     && blockHardness != -1
                     && blockHardness <= refHardness
                     && ItemModularHandheld.isToolEffective(refTool, offsetState)) {

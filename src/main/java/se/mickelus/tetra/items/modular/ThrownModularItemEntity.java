@@ -44,26 +44,23 @@ import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Comparator;
+
 @ParametersAreNonnullByDefault
 public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
     public static final String unlocalizedName = "thrown_modular_item";
-
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static EntityType<ThrownModularItemEntity> type;
-
-    private ItemStack thrownStack = new ItemStack(Items.TRIDENT);
-
     public static final String stackKey = "stack";
     public static final String dealtDamageKey = "dealtDamage";
     private static final EntityDataAccessor<Byte> LOYALTY_LEVEL = SynchedEntityData.defineId(ThrownModularItemEntity.class, EntityDataSerializers.BYTE);
-
-    private boolean dealtDamage;
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static EntityType<ThrownModularItemEntity> type;
     public int returningTicks;
-
+    private ItemStack thrownStack = new ItemStack(Items.TRIDENT);
+    private boolean dealtDamage;
     private IntOpenHashSet hitEntities = new IntOpenHashSet(5);
     private int hitBlocks;
 
@@ -109,7 +106,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(LOYALTY_LEVEL, (byte)0);
+        entityData.define(LOYALTY_LEVEL, (byte) 0);
     }
 
     /**
@@ -133,7 +130,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
             } else if (loyaltyLevel > 0) {
                 setNoPhysics(true);
                 Vec3 Vector3d = new Vec3(shooter.getX() - getX(), shooter.getEyeY() - getY(), shooter.getZ() - getZ());
-                setPosRaw(getX(), getY() + Vector3d.y * 0.015 * (double)loyaltyLevel, getZ());
+                setPosRaw(getX(), getY() + Vector3d.y * 0.015 * (double) loyaltyLevel, getZ());
                 if (level.isClientSide) {
                     yOld = getY();
                 }
@@ -197,17 +194,15 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
             BlockState blockState = level.getBlockState(pos);
 
             ItemModularHandheld item = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class).orElse(null);
-            if (ForgeHooks.isToolEffective(level, pos, thrownStack)
-                    && shooter instanceof Player
-                    && item != null) {
+            if (ToolActionHelper.isEffectiveOn(thrownStack, blockState)	&& shooter instanceof Player player && item != null) {
                 double destroySpeed = item.getDestroySpeed(thrownStack, blockState) * item.getEffectEfficiency(thrownStack, ItemEffect.throwable);
 
                 if (destroySpeed > blockState.getDestroySpeed(level, pos)) {
-                    if (shooter instanceof ServerPlayer) {
-                        EffectHelper.sendEventToPlayer((ServerPlayer) shooter, 2001, pos, Block.getId(blockState));
+                    if (shooter instanceof ServerPlayer serverPlayer) {
+                        EffectHelper.sendEventToPlayer(serverPlayer, 2001, pos, Block.getId(blockState));
                     }
 
-                    item.applyBreakEffects(thrownStack, level, blockState, pos, (Player) shooter);
+                    item.applyBreakEffects(thrownStack, level, blockState, pos, player);
 
                     hitBlocks++;
                     boolean canPierce = getEffectLevel(ItemEffect.piercingHarvest) > 0 && hitBlocks < getPierceLevel();
@@ -218,7 +213,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
                         super.onHit(rayTraceResult);
                     }
 
-                    breakBlock((Player) shooter, pos, blockState);
+                    breakBlock(player, pos, blockState);
 
                     if (canPierce) {
                         hitAdditional();
@@ -239,8 +234,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     private void hitAdditional() {
         Vec3 position = position();
         Vec3 target = position.add(getDeltaMovement());
-        HitResult rayTraceResult = level.clip(
-                new ClipContext(position, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+        HitResult rayTraceResult = level.clip(new ClipContext(position, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 
         if (rayTraceResult.getType() == HitResult.Type.BLOCK
                 && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
@@ -294,7 +288,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
 
         ItemStack heldTemp = null;
         if (playerShooter != null) {
-             heldTemp = playerShooter.getMainHandItem();
+            heldTemp = playerShooter.getMainHandItem();
             playerShooter.setItemInHand(InteractionHand.MAIN_HAND, thrownStack);
         }
 
@@ -352,10 +346,10 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
             Vec3 hitPos = raytrace.getLocation();
             setPosRaw(hitPos.x(), hitPos.y(), hitPos.z());
             setDeltaMovement(level.getEntities(shooter, new AABB(target.blockPosition()).inflate(8d), entity ->
-                    !hitEntities.contains(entity.getId())
-                            && entity instanceof LivingEntity
-                            && !entity.isInvulnerableTo(damagesource)
-                            && (shooter == null || !entity.isAlliedTo(shooter)))
+                            !hitEntities.contains(entity.getId())
+                                    && entity instanceof LivingEntity
+                                    && !entity.isInvulnerableTo(damagesource)
+                                    && (shooter == null || !entity.isAlliedTo(shooter)))
                     .stream()
                     .map(entity -> entity.position().add(0, entity.getBbHeight() * 0.8, 0))
                     .map(pos -> pos.subtract(position()))
@@ -369,6 +363,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
 
     /**
      * Checks if this projectile can hit the provided target
+     *
      * @param target
      * @return
      */
@@ -399,7 +394,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
 
         dealtDamage = compound.getBoolean(dealtDamageKey);
 
-        entityData.set(LOYALTY_LEVEL, (byte)EnchantmentHelper.getLoyalty(thrownStack));
+        entityData.set(LOYALTY_LEVEL, (byte) EnchantmentHelper.getLoyalty(thrownStack));
 
         if (thrownStack.getItem() instanceof ModularSingleHeadedItem) {
             setSoundEvent(SoundEvents.TRIDENT_HIT_GROUND);

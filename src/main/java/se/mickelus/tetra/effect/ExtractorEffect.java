@@ -24,9 +24,11 @@ import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.util.CastOptional;
 import se.mickelus.tetra.util.RotationHelper;
+import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class ExtractorEffect {
     public static void breakBlocks(ItemModularHandheld item, ItemStack itemStack, int effectLevel, ServerLevel world, BlockState state, BlockPos pos, LivingEntity entity) {
@@ -102,11 +104,9 @@ public class ExtractorEffect {
 
     private static boolean breakBlock(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, BlockPos pos, float refHardness, ToolAction refTool) {
         BlockState offsetState = world.getBlockState(pos);
-        ToolAction effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
 
         float blockHardness = offsetState.getDestroySpeed(world, pos);
-        int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, effectiveTool, player, offsetState);
-        if (((toolLevel >= 0 && toolLevel >= offsetState.getBlock().getHarvestLevel(offsetState)) || itemStack.isCorrectToolForDrops(offsetState))
+        if (ToolActionHelper.playerCanDestroyBlock(player, offsetState, pos, itemStack)
                 && blockHardness != -1
                 && blockHardness <= refHardness
                 && ItemModularHandheld.isToolEffective(refTool, offsetState)) {
