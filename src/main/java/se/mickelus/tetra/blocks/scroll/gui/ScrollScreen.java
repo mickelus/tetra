@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.gui.GuiUtils;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiText;
@@ -20,6 +19,7 @@ import se.mickelus.tetra.TetraMod;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
@@ -78,7 +78,7 @@ public class ScrollScreen extends Screen {
                     .map(TextComponent::new)
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 280, font);
+            renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, mouseY);
         }
     }
 

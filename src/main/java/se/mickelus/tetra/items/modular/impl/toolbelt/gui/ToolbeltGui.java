@@ -21,6 +21,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
@@ -119,7 +120,7 @@ public class ToolbeltGui extends AbstractContainerScreen<ToolbeltContainer> {
                     .map(TextComponent::new)
                     .collect(Collectors.toList());
 
-            GuiUtils.drawHoveringText(matrixStack, textComponents, mouseX, mouseY, width, height, 280, font);
+            renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, mouseY);
         }
     }
 
