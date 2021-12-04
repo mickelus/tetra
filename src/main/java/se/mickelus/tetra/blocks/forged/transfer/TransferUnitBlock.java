@@ -74,10 +74,10 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
                     TransferUnitBlock::reconfigure),
     };
 
-    private static final VoxelShape eastShape =  box(16, 0, 1,  3, 12, 15);
+    private static final VoxelShape eastShape =  box(3, 0, 1,  16, 12, 15);
     private static final VoxelShape northShape = box(1, 0, 0,  15, 12, 13);
     private static final VoxelShape westShape =  box(0, 0, 1,  13, 12, 15);
-    private static final VoxelShape southShape = box(1, 0, 16, 15, 12, 3);
+    private static final VoxelShape southShape = box(1, 0, 3, 15, 12, 16);
 
     public static final String unlocalizedName = "transfer_unit";
 

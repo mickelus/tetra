@@ -66,7 +66,9 @@ public class RotationHelper {
         VoxelShape[] temp = new VoxelShape[] { shape.move(-0.5, 0, -0.5), Shapes.empty() };
 
         for (int i = 0; i < facing.get2DDataValue(); i++) {
-            temp[0].forAllBoxes((x1, y1, z1, x2, y2, z2) -> temp[1] = Shapes.or(temp[1], Shapes.box(-z1, y1, x1, -z2, y2, x2)));
+            temp[0].forAllBoxes((x1, y1, z1, x2, y2, z2) -> temp[1] = Shapes.or(temp[1],
+                    Shapes.box(Math.min(-z1, -z2), y1, Math.min(x1, x2),
+                            Math.max(-z1, -z2), y2, Math.max(x1, x2))));
             temp[0] = temp[1];
             temp[1] = Shapes.empty();
         }
