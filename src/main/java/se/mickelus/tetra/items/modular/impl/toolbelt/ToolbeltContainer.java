@@ -153,17 +153,18 @@ public class ToolbeltContainer extends AbstractContainerMenu {
         return false;
     }
 
+    // todo 1.18: changed significantly, needs verification
     @Override
-    public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
         if (clickTypeIn == ClickType.PICKUP && 0 <= slotId && slotId < potionsInventory.getContainerSize()) {
             Slot slot = getSlot(slotId);
             if (player.getInventory().getSelected().isEmpty()) {
-                player.getInventory().setCarried(slot.remove(64));
+                setCarried(slot.remove(64));
             } else {
                 if (slot.mayPlace(player.getInventory().getSelected())) {
                     if (slot.getItem().isEmpty()) {
                         slot.set(player.getInventory().getSelected());
-                        player.getInventory().setCarried(ItemStack.EMPTY);
+                        setCarried(ItemStack.EMPTY);
                     } else if (ItemStack.isSame(slot.getItem(), player.getInventory().getSelected())
                             && ItemStack.tagMatches(slot.getItem(), player.getInventory().getSelected())) {
                         int moveAmount = Math.min(player.getInventory().getSelected().getCount(), slot.getMaxStackSize() - slot.getItem().getCount());
@@ -172,13 +173,12 @@ public class ToolbeltContainer extends AbstractContainerMenu {
                     } else if (slot.getItem().getCount() <= slot.getItem().getMaxStackSize()) {
                         ItemStack tempStack = slot.getItem();
                         slot.set(player.getInventory().getSelected());
-                        player.getInventory().setCarried(tempStack);
+                        setCarried(tempStack);
                     }
                 }
             }
-            return ItemStack.EMPTY;
         } else {
-            return super.clicked(slotId, dragType, clickTypeIn, player);
+            super.clicked(slotId, dragType, clickTypeIn, player);
         }
     }
 

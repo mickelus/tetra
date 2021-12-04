@@ -18,6 +18,8 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
+// todo 1.18: can this be replaced with a capability?
 @ParametersAreNonnullByDefault
 public class ReachEntityFix {
 //    @OnlyIn(Dist.CLIENT)
@@ -85,7 +87,7 @@ public class ReachEntityFix {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRenderGameOverlay(RenderGameOverlayEvent.Pre event) {
-        if (event.getType() == RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
             raytraceTarget();
         }
     }

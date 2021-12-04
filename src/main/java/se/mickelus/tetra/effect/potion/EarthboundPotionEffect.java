@@ -50,7 +50,6 @@ public class EarthboundPotionEffect extends MobEffect {
             @Override
             public void renderHUDEffect(MobEffectInstance effect, GuiComponent gui, PoseStack matrixStack, int x, int y, float z, float alpha) {
                 Minecraft.getInstance().getTextureManager().bindForSetup(texture);
-                RenderSystem.color4f(1.0F, 1.0F, 1.0F, alpha);
                 GlStateManager._enableBlend();
                 gui.blit(matrixStack, x + 4, y + 4, 0, 0, 16, 16);
             }

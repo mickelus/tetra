@@ -816,7 +816,7 @@ public class ItemModularHandheld extends ModularItem {
         return super.canPerformAction(stack, toolAction);
     }
 
-    @Override
+    // todo 1.18: replace harvest checks
     public int getHarvestLevel(ItemStack stack, ToolAction tool, @Nullable Player player, @Nullable BlockState blockState) {
         if (!isBroken(stack)) {
             int toolTier = getToolLevel(stack, tool);
@@ -827,19 +827,20 @@ public class ItemModularHandheld extends ModularItem {
         return -1;
     }
 
-    @Override
-    public boolean canHarvestBlock(ItemStack stack, BlockState state) {
-        if (!state.requiresCorrectToolForDrops()) {
-            return true;
-        }
-
-        ToolAction requiredTool = state.getHarvestTool();
-        if (requiredTool == null) {
-            requiredTool = getEffectiveTool(state);
-        }
-
-        return requiredTool != null && getHarvestLevel(stack, requiredTool, null, state) >= Math.max(state.getHarvestLevel(), 0);
-    }
+    // todo 1.18: replace harvest checks
+//    public boolean canHarvestBlock(ItemStack stack, BlockState state) {
+//        if (!state.requiresCorrectToolForDrops()) {
+//            return true;
+//        }
+//
+//
+//        ToolAction requiredTool = state.getHarvestTool();
+//        if (requiredTool == null) {
+//            requiredTool = getEffectiveTool(state);
+//        }
+//
+//        return requiredTool != null && getHarvestLevel(stack, requiredTool, null, state) >= Math.max(state.getHarvestLevel(), 0);
+//    }
 
     @Override
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {

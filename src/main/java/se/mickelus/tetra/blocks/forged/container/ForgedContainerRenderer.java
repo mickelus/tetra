@@ -47,6 +47,7 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
         }
         this.base = modelpart.getChild("base");
     }
+
     public static LayerDefinition createLayer() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition parts = mesh.getRoot();

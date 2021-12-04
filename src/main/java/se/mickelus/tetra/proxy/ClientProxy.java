@@ -19,7 +19,7 @@ import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
-import se.mickelus.tetra.generation.ExtendedStructureTESR;
+import se.mickelus.tetra.generation.ExtendedStructureRenderer;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.properties.ReachEntityFix;
 
@@ -47,7 +47,7 @@ public class ClientProxy implements IProxy {
 		MinecraftForge.EVENT_BUS.register(new AbilityOverlays(Minecraft.getInstance()));
 
 		if (ConfigHandler.development.get()) {
-			BlockEntityRenderers.register(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureTESR::new);
+			BlockEntityRenderers.register(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureRenderer::new);
 		}
 
 		BotaniaCompat.clientInit();

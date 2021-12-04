@@ -75,7 +75,7 @@ public class OverlayToolbelt {
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
 
-        if (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR) {
+        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
             return;
         }
 

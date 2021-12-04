@@ -1,6 +1,7 @@
 package se.mickelus.tetra.generation;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
 import net.minecraft.client.Minecraft;
@@ -13,6 +14,7 @@ import net.minecraft.client.renderer.blockentity.StructureBlockRenderer;
 import net.minecraft.client.renderer.debug.DebugRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.StructureBlockEntity;
 import net.minecraft.world.phys.AABB;
@@ -25,11 +27,11 @@ import java.util.Arrays;
 import java.util.Optional;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class ExtendedStructureTESR extends StructureBlockRenderer {
+public class ExtendedStructureRenderer extends StructureBlockRenderer {
 
     private BlockEntityRendererProvider.Context dispatcher;
 
-    public ExtendedStructureTESR(BlockEntityRendererProvider.Context dispatcher) {
+    public ExtendedStructureRenderer(BlockEntityRendererProvider.Context dispatcher) {
         super(dispatcher);
         this.dispatcher = dispatcher;
     }
@@ -46,7 +48,7 @@ public class ExtendedStructureTESR extends StructureBlockRenderer {
 
     private void renderFeatureInfo(FeatureParameters feature, PoseStack matrixStack, MultiBufferSource buffer, double x, double y, double z) {
         VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.lines());
-        GlStateManager._lineWidth(3);
+        RenderSystem.lineWidth(3);
 
         BlockPos origin = feature.origin;
 
@@ -64,7 +66,7 @@ public class ExtendedStructureTESR extends StructureBlockRenderer {
 
         Arrays.stream(feature.loot).forEach(featureLoot -> renderLoot(featureLoot, matrixStack, vertexBuilder, x, y, z));
 
-        GlStateManager._lineWidth(1.0F);
+        RenderSystem.lineWidth(1.0F);
     }
 
     private void renderChild(FeatureChild featureChild, PoseStack matrixStack, MultiBufferSource buffer, float x, float y, float z) {
@@ -81,7 +83,8 @@ public class ExtendedStructureTESR extends StructureBlockRenderer {
         LevelRenderer.renderLineBox(matrixStack, vertexBuilder, aabb.inflate(0.5020000000949949026D), 1, 1, 0, 1);
 
         // build arrow
-        bufferBuilder.begin(3, DefaultVertexFormat.POSITION_COLOR);
+        // todo 1.18: this was an int (3), check that DEBUG_LINE_STRIP enum is correct
+        bufferBuilder.begin(VertexFormat.Mode.DEBUG_LINE_STRIP, DefaultVertexFormat.POSITION_COLOR);
         Vec3i facing = featureChild.facing.getNormal();
         vertexBuilder.vertex(matrix4f, x + offset.getX() + 0.5f, y + offset.getY() + 0.5f, z + offset.getZ() + 0.5f)
                 .color(0.0F, 0.0F, 0.0F, 0.0F)
@@ -135,15 +138,15 @@ public class ExtendedStructureTESR extends StructureBlockRenderer {
         matrixStackIn.translate(x, y, z);
         matrixStackIn.translate(0.5D, 0.9f, 0.5D);
 
-        matrixStackIn.mulPose(renderer.camera.rotation());
+        matrixStackIn.mulPose(dispatcher.getBlockEntityRenderDispatcher().camera.rotation());
         matrixStackIn.scale(-0.025F, -0.025F, 0.025F);
         Matrix4f matrix4f = matrixStackIn.last().pose();
-        float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
-        int j = (int) (f1 * 255.0F) << 24;
-        Font fontrenderer = dispatcher.getFont();
-        float f2 = (float) (-fontrenderer.width(label) / 2);
-        fontrenderer.draw(matrixStackIn, label, f2, 0, 553648127);
-        fontrenderer.drawInBatch(label, f2, 0, -1, true, matrix4f, bufferIn, false, j, packedLightIn, false);
+        float opacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
+        int opacityBits = (int) (opacity * 255.0F) << 24;
+        Font font = dispatcher.getFont();
+        float xOffset = (float) (-font.width(label) / 2);
+        font.draw(matrixStackIn, label, xOffset, 0, 553648127);
+        font.drawInBatch(label, xOffset, 0, -1, true, matrix4f, bufferIn, false, opacityBits, packedLightIn, false);
 
         matrixStackIn.popPose();
     }

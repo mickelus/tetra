@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.scan;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -32,11 +33,11 @@ public class ScannerDebugRenderer {
             VertexConsumer vertexBuilder = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
             Vec3 eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTick());
 
-            GlStateManager._lineWidth(3);
+            RenderSystem.lineWidth(3);
             if (overlayGui.upHighlight != null) drawDebugBox(overlayGui.upHighlight, eyePos, matrixStack, vertexBuilder, 1, 0, 0, 0.5f);
             if (overlayGui.midHighlight != null) drawDebugBox(overlayGui.midHighlight, eyePos, matrixStack, vertexBuilder, 0, 1, 0, 0.5f);
             if (overlayGui.downHighlight != null) drawDebugBox(overlayGui.downHighlight, eyePos, matrixStack, vertexBuilder, 0, 0, 1, 0.5f);
-            GlStateManager._lineWidth(1.0F);
+            RenderSystem.lineWidth(1.0F);
         }
     }
 

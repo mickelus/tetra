@@ -12,9 +12,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ClipBlockStateContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -195,7 +198,8 @@ public class ScannerOverlayGui extends GuiRoot {
                         upHighlight = IntStream.range(0, verticalSpread)
                                 .map(i -> i * -5 - 25)
                                 .mapToObj(pitch -> getPositions(player, world, pitch, yawOffset))
-                                .filter(Objects::nonNull)
+                                .filter(result -> result.getType() != HitResult.Type.MISS)
+                                .map(BlockHitResult::getBlockPos)
                                 .findAny()
                                 .orElse(null);
                         scanner.highlightUp(offset / 2, upHighlight != null);
@@ -206,7 +210,8 @@ public class ScannerOverlayGui extends GuiRoot {
                         downHighlight = IntStream.range(0, verticalSpread)
                                 .map(i -> i * 5 + 25)
                                 .mapToObj(pitch -> getPositions(player, world, pitch, yawOffset))
-                                .filter(Objects::nonNull)
+                                .filter(result -> result.getType() != HitResult.Type.MISS)
+                                .map(BlockHitResult::getBlockPos)
                                 .findAny()
                                 .orElse(null);
                         scanner.highlightDown(offset / 2, downHighlight != null);
@@ -218,7 +223,8 @@ public class ScannerOverlayGui extends GuiRoot {
                     midHighlight = IntStream.range(-1, 2)
                             .map(i -> i * 10)
                             .mapToObj(pitch -> getPositions(player, world, pitch, yawOffset))
-                            .filter(Objects::nonNull)
+                            .filter(result -> result.getType() != HitResult.Type.MISS)
+                            .map(BlockHitResult::getBlockPos)
                             .findAny()
                             .orElse(null);
 
@@ -232,20 +238,13 @@ public class ScannerOverlayGui extends GuiRoot {
         }
     }
 
-    @Nullable
-    private BlockPos getPositions(Player player, Level world, int pitchOffset, int yawOffset) {
+    private BlockHitResult getPositions(Player player, Level world, int pitchOffset, int yawOffset) {
         Vec3 eyePosition = player.getEyePosition(0);
         Vec3 lookVector = getVectorForRotation(player.getViewXRot(1) + pitchOffset, player.getViewYRot(1) + yawOffset);
         Vec3 endVector = eyePosition.add(lookVector.x * range, lookVector.y * range, lookVector.z * range);
 
-        return BlockGetter.traverseBlocks(new ClipContext(eyePosition, endVector, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player), (ctx, blockPos) -> {
-            BlockState blockState = world.getBlockState(blockPos);
-
-            if (blockState.getBlock().getTags().contains(tag)) {
-                return blockPos.immutable();
-            }
-            return null;
-        }, ctx -> null);
+        return world.isBlockInLine(new ClipBlockStateContext(eyePosition, endVector,
+                blockState -> blockState.getBlock().getTags().contains(tag)));
     }
 
     private Vec3 getVectorForRotation(float pitch, float yaw) {
@@ -260,7 +259,7 @@ public class ScannerOverlayGui extends GuiRoot {
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
             draw();
         }
     }

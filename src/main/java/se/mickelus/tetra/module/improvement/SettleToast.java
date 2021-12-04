@@ -53,7 +53,7 @@ public class SettleToast implements Toast {
 
         if (itemStack != null) {
             toastGui.getMinecraft().getTextureManager().bindForSetup(texture);
-            RenderSystem.color3f(1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             toastGui.blit(matrixStack, 0, 0, 0, 0, 160, 32);
 
             if (!this.hasPlayedSound && delta > 0L) {
@@ -72,8 +72,9 @@ public class SettleToast implements Toast {
             toastGui.getMinecraft().font.draw(matrixStack, toastGui.getMinecraft().font.plainSubstrByWidth(moduleName, 118), 37, 18, GuiColors.muted);
 
 
-            Lighting.turnBackOn();
-            toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(null, itemStack, 8, 8);
+            // todo 1.18: still lit correctly?
+//            Lighting.turnBackOn();
+            toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(itemStack, 8, 8);
 
             return delta > 5000 ? Visibility.HIDE : Visibility.SHOW;
         }

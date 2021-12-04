@@ -27,7 +27,7 @@ public class BlockProgressOverlay {
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
+        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
             return;
         }
 
