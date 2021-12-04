@@ -24,9 +24,9 @@ credits="red1854th: korean localization, Jeffku0107: chinese localization, Arvid
     ordering="NONE"
     side="BOTH"
 [[dependencies.tetra]]
-    modId="mgui"
+    modId="mutil"
     mandatory=true
-    versionRange="[3.3,]"
+    versionRange="[4.0,]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.tetra]]
