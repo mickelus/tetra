@@ -38,12 +38,12 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
     private static final float openDuration = 300;
 
     public ForgedContainerRenderer(BlockEntityRendererProvider.Context context) {
-        ModelPart modelpart = context.bakeLayer(ModelLayers.BANNER);
+        ModelPart modelpart = context.bakeLayer(layer);
         this.lid = modelpart.getChild("lid");
 
         locks = new ModelPart[4];
         for (int i = 0; i < 4; i++) {
-            this.locks[i] = modelpart.getChild("lid" + i);
+            this.locks[i] = modelpart.getChild("locks" + i);
         }
         this.base = modelpart.getChild("base");
     }

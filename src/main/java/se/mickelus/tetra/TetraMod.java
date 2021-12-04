@@ -350,7 +350,7 @@ public class TetraMod {
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ForgedContainerRenderer.layer, ForgedContainerRenderer::createLayer);
         event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
-        event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
+        event.registerLayerDefinition(ScrollRenderer.layer, ScrollRenderer::createLayer);
     }
 
     @SubscribeEvent

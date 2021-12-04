@@ -56,7 +56,7 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
     public ScrollRenderer(BlockEntityRendererProvider.Context context) {
         this.context = context;
 
-        model = context.bakeLayer(ModelLayers.BANNER);
+        model = context.bakeLayer(layer);
     }
 
     public static LayerDefinition createLayer() {
