@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.modular.impl.shield;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -10,6 +11,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
@@ -29,6 +33,8 @@ import se.mickelus.tetra.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class ModularShieldItem extends ItemModularHandheld {
     public final static String plateKey = "shield/plate";
@@ -45,8 +51,7 @@ public class ModularShieldItem extends ItemModularHandheld {
     public ModularShieldItem() {
         super(new Properties()
                 .stacksTo(1)
-                .fireResistant()
-                .setISTER(() -> ModularShieldISTER::new));
+                .fireResistant());
         setRegistryName(unlocalizedName);
 
         majorModuleKeys = new String[] {plateKey, gripKey };
@@ -63,6 +68,18 @@ public class ModularShieldItem extends ItemModularHandheld {
         ItemUpgradeRegistry.instance.registerReplacementHook(this::copyBanner);
 
         DispenserBlock.registerBehavior(this, ArmorItem.DISPENSE_ITEM_BEHAVIOR);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        super.initializeClient(consumer);
+        consumer.accept(new IItemRenderProperties() {
+            @Override
+            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                return new ModularShieldISTER(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+            }
+        });
     }
 
     @Override
