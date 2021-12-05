@@ -4,8 +4,8 @@
             "type": "forge:mod_loaded",
             "modid": "botania"
         }],
-        "predicate": {
-            "item": "botania:elementium_pickaxe"
+                "predicate": {
+            "items": "botania:elementium_pickaxe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -21,8 +21,8 @@
 
     },
     {
-        "predicate": {
-            "item": "botania:elementium_axe"
+                "predicate": {
+            "items": "botania:elementium_axe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -38,8 +38,8 @@
 
     },
     {
-        "predicate": {
-            "item": "botania:elementium_shovel"
+                "predicate": {
+            "items": "botania:elementium_shovel"
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -53,8 +53,8 @@
 
     },
     {
-        "predicate": {
-            "item": "botania:elementium_sword"
+                "predicate": {
+            "items": "botania:elementium_sword"
         },
         "item": "tetra:modular_sword",
         "modules": {

@@ -1,7 +1,7 @@
 [
     {
-        "predicate": {
-            "item": "minecraft:diamond_sword"
+                "predicate": {
+            "items": "minecraft:diamond_sword"
         },
         "item": "tetra:modular_sword",
         "modules": {
@@ -15,8 +15,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:diamond_shovel"
+                "predicate": {
+            "items": "minecraft:diamond_shovel"
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -28,8 +28,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:diamond_pickaxe"
+                "predicate": {
+            "items": "minecraft:diamond_pickaxe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -43,8 +43,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:diamond_hoe"
+                "predicate": {
+            "items": "minecraft:diamond_hoe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -58,8 +58,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:diamond_axe"
+                "predicate": {
+            "items": "minecraft:diamond_axe"
         },
         "item": "tetra:modular_double",
         "modules": {

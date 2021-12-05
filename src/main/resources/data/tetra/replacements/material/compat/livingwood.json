@@ -4,8 +4,8 @@
             "type": "forge:mod_loaded",
             "modid": "botania"
         }],
-        "predicate": {
-            "item": "botania:livingwood_bow"
+                "predicate": {
+            "items": "botania:livingwood_bow"
         },
         "item": "tetra:modular_bow",
         "modules": {

@@ -1,7 +1,7 @@
 [
     {
-        "predicate": {
-            "item": "minecraft:shield"
+                "predicate": {
+            "items": "minecraft:shield"
         },
         "item": "tetra:modular_shield",
         "modules": {

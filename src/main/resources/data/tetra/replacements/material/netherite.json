@@ -1,7 +1,7 @@
 [
     {
-        "predicate": {
-            "item": "minecraft:netherite_sword"
+                "predicate": {
+            "items": "minecraft:netherite_sword"
         },
         "item": "tetra:modular_sword",
         "modules": {
@@ -15,8 +15,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:netherite_shovel"
+                "predicate": {
+            "items": "minecraft:netherite_shovel"
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -28,8 +28,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:netherite_pickaxe"
+                "predicate": {
+            "items": "minecraft:netherite_pickaxe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -42,8 +42,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:netherite_hoe"
+                "predicate": {
+            "items": "minecraft:netherite_hoe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -56,8 +56,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:netherite_axe"
+                "predicate": {
+            "items": "minecraft:netherite_axe"
         },
         "item": "tetra:modular_double",
         "modules": {

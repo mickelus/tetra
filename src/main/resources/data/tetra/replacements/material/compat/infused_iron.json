@@ -4,8 +4,8 @@
             "type": "forge:mod_loaded",
             "modid": "naturesaura"
         }],
-        "predicate": {
-            "item": "naturesaura:infused_iron_pickaxe"
+                "predicate": {
+            "items": "naturesaura:infused_iron_pickaxe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -20,8 +20,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "naturesaura:infused_iron_axe"
+                "predicate": {
+            "items": "naturesaura:infused_iron_axe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -36,8 +36,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "naturesaura:infused_iron_hoe"
+                "predicate": {
+            "items": "naturesaura:infused_iron_hoe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -52,8 +52,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "naturesaura:infused_iron_shovel"
+                "predicate": {
+            "items": "naturesaura:infused_iron_shovel"
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -66,8 +66,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "naturesaura:infused_iron_sword"
+                "predicate": {
+            "items": "naturesaura:infused_iron_sword"
         },
         "item": "tetra:modular_sword",
         "modules": {

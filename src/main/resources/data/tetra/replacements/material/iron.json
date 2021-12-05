@@ -1,7 +1,7 @@
 [
     {
-        "predicate": {
-            "item": "minecraft:iron_sword"
+                "predicate": {
+            "items": "minecraft:iron_sword"
         },
         "item": "tetra:modular_sword",
         "modules": {
@@ -12,8 +12,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:iron_shovel"
+                "predicate": {
+            "items": "minecraft:iron_shovel"
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -22,8 +22,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:iron_pickaxe"
+                "predicate": {
+            "items": "minecraft:iron_pickaxe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -33,8 +33,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:iron_hoe"
+                "predicate": {
+            "items": "minecraft:iron_hoe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -44,8 +44,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "minecraft:iron_axe"
+                "predicate": {
+            "items": "minecraft:iron_axe"
         },
         "item": "tetra:modular_double",
         "modules": {

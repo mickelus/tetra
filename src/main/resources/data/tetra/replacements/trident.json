@@ -1,7 +1,7 @@
 [
     {
-        "predicate": {
-            "item": "minecraft:trident"
+                "predicate": {
+            "items": "minecraft:trident"
         },
         "item": "tetra:modular_single",
         "modules": {

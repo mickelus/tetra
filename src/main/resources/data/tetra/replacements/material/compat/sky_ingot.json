@@ -4,8 +4,8 @@
             "type": "forge:mod_loaded",
             "modid": "naturesaura"
         }],
-        "predicate": {
-            "item": "naturesaura:sky_pickaxe"
+                "predicate": {
+            "items": "naturesaura:sky_pickaxe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -20,8 +20,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "naturesaura:sky_axe"
+                "predicate": {
+            "items": "naturesaura:sky_axe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -36,8 +36,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "naturesaura:sky_hoe"
+                "predicate": {
+            "items": "naturesaura:sky_hoe"
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -52,8 +52,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "naturesaura:sky_shovel"
+                "predicate": {
+            "items": "naturesaura:sky_shovel"
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -66,8 +66,8 @@
         }
     },
     {
-        "predicate": {
-            "item": "naturesaura:sky_sword"
+                "predicate": {
+            "items": "naturesaura:sky_sword"
         },
         "item": "tetra:modular_sword",
         "modules": {
