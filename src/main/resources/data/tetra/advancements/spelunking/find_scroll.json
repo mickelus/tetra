@@ -18,9 +18,13 @@
         "find": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [{
-                    "item": "tetra:scroll_rolled"
-                }]
+              "items": [
+                {
+                  "items": [
+                    "tetra:scroll_rolled"
+                  ]
+                }
+              ]
             }
         }
     }

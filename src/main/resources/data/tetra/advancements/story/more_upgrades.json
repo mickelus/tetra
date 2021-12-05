@@ -19,11 +19,13 @@
         "hammer": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [
-                    {
-                        "item": "tetra:modular_double"
-                    }
-                ]
+              "items": [
+                {
+                  "items": [
+                    "tetra:modular_double"
+                  ]
+                }
+              ]
             }
         }
     }

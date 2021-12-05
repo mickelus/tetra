@@ -15,11 +15,13 @@
         "forged_bolt": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [
-                    {
-                        "item": "tetra:forged_bolt"
-                    }
-                ]
+              "items": [
+                {
+                  "items": [
+                    "tetra:forged_bolt"
+                  ]
+                }
+              ]
             }
         }
     }

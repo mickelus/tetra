@@ -16,11 +16,13 @@
         "toolbelt": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [
-                    {
-                        "item": "tetra:modular_toolbelt"
-                    }
-                ]
+              "items": [
+                {
+                  "items": [
+                    "tetra:modular_toolbelt"
+                  ]
+                }
+              ]
             }
         }
     }

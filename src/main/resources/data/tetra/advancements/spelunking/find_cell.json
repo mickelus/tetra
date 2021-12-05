@@ -16,11 +16,13 @@
         "get_cell": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [
-                    {
-                        "item": "tetra:magmatic_cell"
-                    }
-                ]
+              "items": [
+                {
+                  "items": [
+                    "tetra:magmatic_cell"
+                  ]
+                }
+              ]
             }
         }
     }

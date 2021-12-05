@@ -7,7 +7,13 @@
         "got_string": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [{ "item": "minecraft:string" }]
+              "items": [
+                {
+                  "items": [
+                    "minecraft:string"
+                  ]
+                }
+              ]
             }
         }
     }

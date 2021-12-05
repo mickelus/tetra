@@ -15,21 +15,25 @@
         "platform": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [
-                    {
-                        "item": "tetra:forged_platform"
-                    }
-                ]
+              "items": [
+                {
+                  "items": [
+                    "tetra:forged_platform"
+                  ]
+                }
+              ]
             }
         },
         "platform_slab": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [
-                    {
-                        "item": "tetra:forged_platform_slab"
-                    }
-                ]
+              "items": [
+                {
+                  "items": [
+                    "tetra:forged_platform_slab"
+                  ]
+                }
+              ]
             }
         }
     },

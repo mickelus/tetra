@@ -1,14 +1,22 @@
 {
-    "parent": "tetra:recipes/root",
-    "rewards": {
-        "recipes": ["tetra:earthpiercer"]
-    },
+  "parent": "tetra:recipes/root",
+  "rewards": {
+    "recipes": [
+      "tetra:earthpiercer"
+    ]
+  },
+  "criteria": {
     "criteria": {
-        "criteria": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [{ "item": "tetra:earthpiercer" }]
-            }
-        }
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tetra:earthpiercer"
+            ]
+          }
+        ]
+      }
     }
+  }
 }

@@ -17,7 +17,9 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:geode"
+                        "items": [
+                            "tetra:geode"
+                        ]
                     }
                 ]
             }
