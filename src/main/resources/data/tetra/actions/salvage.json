@@ -2,7 +2,7 @@
     {
         "key": "salvage_bolt_action",
         "requirement": {
-            "item": "tetra:forged_bolt"
+            "items": "tetra:forged_bolt"
         },
         "requiredTools": {
             "hammer": 3
@@ -12,7 +12,7 @@
     {
         "key": "salvage_beam_action",
         "requirement": {
-            "item": "tetra:forged_beam"
+            "items": "tetra:forged_beam"
         },
         "requiredTools": {
             "hammer": 4
@@ -22,7 +22,7 @@
     {
         "key": "salvage_mesh_action",
         "requirement": {
-            "item": "tetra:forged_mesh"
+            "items": "tetra:forged_mesh"
         },
         "requiredTools": {
             "hammer": 3
@@ -32,7 +32,7 @@
     {
         "key": "salvage_vent_plate_action",
         "requirement": {
-            "item": "tetra:vent_plate"
+            "items": "tetra:vent_plate"
         },
         "requiredTools": {
             "hammer": 3
@@ -42,7 +42,7 @@
     {
         "key": "salvage_metal_scrap_action",
         "requirement": {
-            "item": "tetra:metal_scrap"
+            "items": "tetra:metal_scrap"
         },
         "requiredTools": {
             "hammer": 3
@@ -52,7 +52,7 @@
     {
         "key": "salvage_quick_latch_action_hammer",
         "requirement": {
-            "item": "tetra:quick_latch"
+            "items": "tetra:quick_latch"
         },
         "requiredTools": {
             "hammer": 3
@@ -62,7 +62,7 @@
     {
         "key": "salvage_quick_latch_action_pry",
         "requirement": {
-            "item": "tetra:quick_latch"
+            "items": "tetra:quick_latch"
         },
         "requiredTools": {
             "pry": 1
@@ -72,7 +72,7 @@
     {
         "key": "salvage_stonecutter_action",
         "requirement": {
-            "item": "tetra:stonecutter"
+            "items": "tetra:stonecutter"
         },
         "requiredTools": {
             "hammer": 5
@@ -82,7 +82,7 @@
     {
         "key": "salvage_earthpiercer_action",
         "requirement": {
-            "item": "tetra:earthpiercer"
+            "items": "tetra:earthpiercer"
         },
         "requiredTools": {
             "hammer": 5

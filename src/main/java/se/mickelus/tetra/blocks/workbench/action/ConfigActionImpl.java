@@ -39,7 +39,7 @@ public class ConfigActionImpl extends ConfigAction {
 
     @Override
     public boolean canPerformOn(Player player, WorkbenchTile tile, ItemStack itemStack) {
-        return requirement.matches(itemStack);
+        return requirement != null && requirement.matches(itemStack);
     }
 
     @Override
