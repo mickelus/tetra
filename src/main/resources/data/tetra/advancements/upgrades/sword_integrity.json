@@ -16,19 +16,23 @@
         "module": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "module": "sword/basic_hilt",
-                "after": {
-                    "item": "tetra:modular_sword"
-                }
+              "module": "sword/basic_hilt",
+              "after": {
+                "items": [
+                  "tetra:modular_sword"
+                ]
+              }
             }
         },
         "improvement": {
             "trigger": "tetra:craft_improvement",
             "conditions": {
-                "improvement": "sword/binding",
-                "after": {
-                    "item": "tetra:modular_sword"
-                }
+              "improvement": "sword/binding",
+              "after": {
+                "items": [
+                  "tetra:modular_sword"
+                ]
+              }
             }
         }
     },

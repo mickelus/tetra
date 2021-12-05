@@ -16,17 +16,21 @@
         "module": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "after": {
-                    "item": "tetra:modular_bow"
-                }
+              "after": {
+                "items": [
+                  "tetra:modular_bow"
+                ]
+              }
             }
         },
         "improvement": {
             "trigger": "tetra:craft_improvement",
             "conditions": {
-                "after": {
-                    "item": "tetra:modular_bow"
-                }
+              "after": {
+                "items": [
+                  "tetra:modular_bow"
+                ]
+              }
             }
         }
     },

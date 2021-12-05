@@ -17,7 +17,9 @@
             "trigger": "tetra:craft_module",
             "conditions": {
                 "after": {
-                    "item": "tetra:modular_shield"
+                    "items": [
+                        "tetra:modular_shield"
+                    ]
                 }
             }
         },
@@ -25,7 +27,9 @@
             "trigger": "tetra:craft_improvement",
             "conditions": {
                 "after": {
-                    "item": "tetra:modular_shield"
+                    "items": [
+                        "tetra:modular_shield"
+                    ]
                 }
             }
         }

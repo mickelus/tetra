@@ -17,7 +17,9 @@
             "trigger": "tetra:craft_module",
             "conditions": {
                 "after": {
-                    "item": "tetra:modular_sword"
+                    "items": [
+                        "tetra:modular_sword"
+                    ]
                 }
             }
         },
@@ -25,7 +27,9 @@
             "trigger": "tetra:craft_improvement",
             "conditions": {
                 "after": {
-                    "item": "tetra:modular_sword"
+                    "items": [
+                        "tetra:modular_sword"
+                    ]
                 }
             }
         }
