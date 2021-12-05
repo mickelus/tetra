@@ -222,7 +222,7 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
 
     @Override
     public CompoundTag getUpdateTag() {
-        return save(new CompoundTag());
+        return saveWithoutMetadata();
     }
 
     @Override
@@ -244,15 +244,13 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
 
         handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
 
         writeLockData(compound, lockIntegrity);
         writeLidData(compound, lidIntegrity);
-
-        return compound;
     }
 
     public static void writeLockData(CompoundTag compound, int[] lockIntegrity) {

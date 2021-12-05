@@ -206,12 +206,9 @@ public class CoreExtractorBaseTile extends BlockEntity implements ITetraTicker, 
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
-
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt(chargeKey, currentCharge);
-
-        return compound;
     }
 
     @Nullable
@@ -222,7 +219,7 @@ public class CoreExtractorBaseTile extends BlockEntity implements ITetraTicker, 
 
     @Override
     public CompoundTag getUpdateTag() {
-        return save(new CompoundTag());
+        return saveWithoutMetadata();
     }
 
     @Override

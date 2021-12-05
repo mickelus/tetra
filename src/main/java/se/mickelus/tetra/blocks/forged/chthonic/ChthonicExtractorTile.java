@@ -54,11 +54,8 @@ public class ChthonicExtractorTile extends BlockEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
-
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt(damageKey, damage);
-
-        return compound;
     }
 }

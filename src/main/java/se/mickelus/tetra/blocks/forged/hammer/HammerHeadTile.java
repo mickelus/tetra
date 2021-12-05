@@ -63,7 +63,7 @@ public class HammerHeadTile extends BlockEntity {
 
     @Override
     public CompoundTag getUpdateTag() {
-        return save(super.getUpdateTag());
+        return saveWithoutMetadata();
     }
 
     @Override
@@ -78,13 +78,11 @@ public class HammerHeadTile extends BlockEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
 
         if (isJammed()) {
             compound.putBoolean(jamKey, true);
         }
-
-        return compound;
     }
 }

@@ -322,14 +322,12 @@ public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
 
         compound.putInt(activityKey, activity);
         compound.putInt(stepKey, step);
         compound.putInt(luckKey, luck);
-
-        return compound;
     }
 
     @Nullable
@@ -340,7 +338,7 @@ public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
 
     @Override
     public CompoundTag getUpdateTag() {
-        return save(new CompoundTag());
+        return saveWithoutMetadata();
     }
 
     @Override
@@ -355,9 +353,9 @@ public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
 
 	@Override
 	public void tick(Level level, BlockPos pos, BlockState state) {
-		if (!this.level.isClientSide && activity > 0 && this.level.getGameTime() % getRate() == 0) {
+		if (!level.isClientSide && activity > 0 && level.getGameTime() % getRate() == 0) {
 			int intensity = getIntensity();
-			Vec3 origin = Vec3.atCenterOf(getBlockPos());
+			Vec3 origin = Vec3.atCenterOf(pos);
 
 			for (int i = 0; i < intensity; i++) {
 				Vec3 target = getTarget(step + i);
@@ -365,15 +363,15 @@ public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
 
 				if (result.getType() != HitResult.Type.MISS) {
 					BlockPos hitPos = result.getBlockPos();
-					BlockState hitState = this.level.getBlockState(hitPos);
+					BlockState hitState = level.getBlockState(hitPos);
 
-					breakBlock(this.level, hitPos, hitState);
+					breakBlock(level, hitPos, hitState);
 
 					BlockPos spawnPos = traceDown(hitPos);
-					BlockState spawnState = this.level.getBlockState(spawnPos);
+					BlockState spawnState = level.getBlockState(spawnPos);
 
 					if (canReplace(spawnState)) {
-						if (this.level.getRandom().nextFloat() < spawnRatio) {
+						if (level.getRandom().nextFloat() < spawnRatio) {
 							if (spawnPos.getY() < spawnYLimit) {
 								spawnOre(spawnPos);
 							}
@@ -381,24 +379,24 @@ public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
 							spawnMob(spawnPos);
 						}
 					} else {
-						breakBlock(this.level, spawnPos, spawnState);
+						breakBlock(level, spawnPos, spawnState);
 					}
 				}
 			}
 
-			((ServerLevel) this.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.defaultBlockState()),
+			((ServerLevel) level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.defaultBlockState()),
 				worldPosition.getX() + 0.5, worldPosition.getY() + 1.1, worldPosition.getZ() + 0.5,
-				8, 0, this.level.random.nextGaussian() * 0.1, 0, 0.1);
+				8, 0, level.random.nextGaussian() * 0.1, 0, 0.1);
 
 			step += intensity;
 			activity -= intensity;
 
 			if (shouldDeplete()) {
-				this.level.setBlock(getBlockPos(), DepletedBedrockBlock.instance.defaultBlockState(), 2);
+				level.setBlock(getBlockPos(), DepletedBedrockBlock.instance.defaultBlockState(), 2);
 			}
 		}
 
-		if (!this.level.isClientSide  && activity > 0 && this.level.getGameTime() % 80 == 0) {
+		if (!level.isClientSide  && activity > 0 && this.level.getGameTime() % 80 == 0) {
 			playSound();
 		}
 	}

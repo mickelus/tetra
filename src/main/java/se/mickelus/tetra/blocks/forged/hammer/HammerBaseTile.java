@@ -327,7 +327,7 @@ public class HammerBaseTile extends BlockEntity implements ITetraTicker {
 
     @Override
     public CompoundTag getUpdateTag() {
-        return save(new CompoundTag());
+        return saveWithoutMetadata();
     }
 
     @Override
@@ -378,16 +378,14 @@ public class HammerBaseTile extends BlockEntity implements ITetraTicker {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
 
         writeCells(compound, slots);
 
         writeModules(compound, moduleA, moduleB);
 
         compound.putInt(redstoneKey, redstonePower);
-
-        return compound;
     }
 
     public static void writeModules(CompoundTag compound, HammerEffect moduleA, HammerEffect moduleB) {

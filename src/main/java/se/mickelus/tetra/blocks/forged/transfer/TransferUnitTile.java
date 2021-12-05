@@ -263,7 +263,7 @@ public class TransferUnitTile extends BlockEntity implements ITetraTicker, IHeat
         }
     }
 
-    public static final void writeCell(CompoundTag compound, ItemStack cell) {
+    public static void writeCell(CompoundTag compound, ItemStack cell) {
         if (!cell.isEmpty()) {
             CompoundTag cellNBT = new CompoundTag();
             cell.save(cellNBT);
@@ -272,12 +272,10 @@ public class TransferUnitTile extends BlockEntity implements ITetraTicker, IHeat
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
 
         writeCell(compound, cell);
-
-        return compound;
     }
 
     @Nullable
@@ -288,7 +286,7 @@ public class TransferUnitTile extends BlockEntity implements ITetraTicker, IHeat
 
     @Override
     public CompoundTag getUpdateTag() {
-        return save(new CompoundTag());
+        return saveWithoutMetadata();
     }
 
     @Override

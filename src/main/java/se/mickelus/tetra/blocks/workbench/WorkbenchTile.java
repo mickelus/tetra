@@ -490,7 +490,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
 
     @Override
     public CompoundTag getUpdateTag() {
-        return save(new CompoundTag());
+        return saveWithoutMetadata();
     }
 
     @Override
@@ -520,8 +520,8 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
 
         handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
 
@@ -532,8 +532,6 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
         if (currentSlot != null) {
             compound.putString(currentSlotKey, currentSlot);
         }
-
-        return compound;
     }
 
     /**

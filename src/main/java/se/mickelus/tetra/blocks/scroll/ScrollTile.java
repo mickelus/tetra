@@ -89,7 +89,7 @@ public class ScrollTile extends BlockEntity {
 
     @Override
     public CompoundTag getUpdateTag() {
-        return save(new CompoundTag());
+        return saveWithoutMetadata();
     }
 
     @Override
@@ -100,9 +100,9 @@ public class ScrollTile extends BlockEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
 
-        return ScrollData.write(scrolls, compound);
+        ScrollData.write(scrolls, compound);
     }
 }
