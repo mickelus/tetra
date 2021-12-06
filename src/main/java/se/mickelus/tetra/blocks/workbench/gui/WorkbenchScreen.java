@@ -1,8 +1,10 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -31,6 +33,7 @@ import se.mickelus.tetra.util.CastOptional;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer> {
@@ -119,6 +122,8 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
 
     @Override
     public void init() {
+        super.init();
+
         viewingPlayer = minecraft.player;
     }
 
@@ -131,10 +136,9 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        int x = (width - imageWidth) / 2;
-        int y = (height - imageHeight) / 2;
-
-        defaultGui.draw(new PoseStack(), x, y, width, height, mouseX, mouseY, 1);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        defaultGui.draw(matrixStack, this.leftPos, this.topPos, width, height, mouseX, mouseY, 1);
     }
 
     // override this to stop titles from rendering
