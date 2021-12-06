@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl;
 
 import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
@@ -75,6 +76,7 @@ public class GuiBlockProgress extends GuiRoot {
             int mouseY = (int)(mc.mouseHandler.ypos() * window.getGuiScaledHeight() / window.getScreenHeight());
 
             this.drawChildren(matrixStack, width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
         }
     }
 }

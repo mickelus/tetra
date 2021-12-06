@@ -1,6 +1,7 @@
 package se.mickelus.tetra.effect.gui;
 
 import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -33,12 +34,9 @@ public class AbilityOverlays extends GuiRoot {
 
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-        /*
-        if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
+        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
             return;
         }
-        FIXME: still required? then need to search for replacement
-         */
 
         chargeBar.update(mc.player);
         comboPoints.update(mc.player);
@@ -54,6 +52,7 @@ public class AbilityOverlays extends GuiRoot {
             int height = window.getGuiScaledHeight();
 
             this.drawChildren(matrixStack, width / 2, height / 2, 0, 0, 0, 0, 1.0F);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
         }
     }
 }

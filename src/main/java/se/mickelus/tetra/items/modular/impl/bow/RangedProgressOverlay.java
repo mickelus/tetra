@@ -25,12 +25,9 @@ public class RangedProgressOverlay {
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-        /*
-        if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
+        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
             return;
         }
-        FIXME: still needed? if so, search for ported way
-         */
 
         ItemStack activeStack = mc.player.getUseItem();
 
