@@ -106,7 +106,7 @@ import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.module.schematic.BookEnchantSchematic;
 import se.mickelus.tetra.module.schematic.CleanseSchematic;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
@@ -286,7 +286,7 @@ public class TetraMod {
                         .map(block -> (ITetraBlock) block).toArray(ITetraBlock[]::new));
 
 
-        packetHandler = new PacketHandler(MOD_ID, "main");
+        packetHandler = new PacketHandler(MOD_ID, "main", "1");
 
         Arrays.stream(items)
                 .filter(item -> item instanceof ITetraItem)

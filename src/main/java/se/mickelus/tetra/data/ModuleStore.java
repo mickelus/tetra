@@ -1,14 +1,16 @@
 package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
+import se.mickelus.mutil.data.DataDistributor;
+import se.mickelus.mutil.data.MergingDataStore;
 import se.mickelus.tetra.module.data.ModuleData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class ModuleStore extends MergingDataStore<ModuleData, ModuleData[]> {
 
-    public ModuleStore(Gson gson, String directory) {
-        super(gson, directory, ModuleData.class, ModuleData[].class);
+    public ModuleStore(Gson gson, String namespace, String directory, DataDistributor distributor) {
+        super(gson, namespace, directory, ModuleData.class, ModuleData[].class, distributor);
     }
 
     @Override

@@ -4,7 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.Vec3;
-import se.mickelus.tetra.network.AbstractPacket;
+import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;

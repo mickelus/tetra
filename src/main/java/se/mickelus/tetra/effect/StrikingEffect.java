@@ -17,8 +17,8 @@ import net.minecraftforge.common.ToolActions;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.util.CastOptional;
-import se.mickelus.tetra.util.RotationHelper;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;

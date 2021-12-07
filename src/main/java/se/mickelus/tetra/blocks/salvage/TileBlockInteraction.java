@@ -6,7 +6,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
-import se.mickelus.tetra.util.TileEntityOptional;
+import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Function;

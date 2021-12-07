@@ -16,7 +16,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

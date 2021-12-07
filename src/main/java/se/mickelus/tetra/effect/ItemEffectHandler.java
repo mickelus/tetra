@@ -48,7 +48,7 @@ import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;

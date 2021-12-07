@@ -12,7 +12,7 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;

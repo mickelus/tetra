@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;

@@ -11,7 +11,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.schematic.*;
-import se.mickelus.tetra.util.Filter;
+import se.mickelus.mutil.util.Filter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -32,7 +32,7 @@ public class SchematicRegistry {
         schematicMap = Collections.emptyMap();
         dynamicSchematics = new HashMap<>();
 
-        DataManager.schematicData.onReload(() -> setupSchematics(DataManager.schematicData.getData()));
+        DataManager.instance.schematicData.onReload(() -> setupSchematics(DataManager.instance.schematicData.getData()));
     }
 
     /**
@@ -144,8 +144,8 @@ public class SchematicRegistry {
     private Stream<OutcomeDefinition> expandMaterialOutcome(MaterialOutcomeDefinition source) {
         return Arrays.stream(source.materials)
                 .map(rl -> rl.getPath().endsWith("/")
-                        ? DataManager.materialData.getDataIn(rl)
-                        : Optional.ofNullable(DataManager.materialData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
+                        ? DataManager.instance.materialData.getDataIn(rl)
+                        : Optional.ofNullable(DataManager.instance.materialData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
                 .flatMap(Collection::stream)
                 .map(source::combine);
     }

@@ -25,7 +25,7 @@ public class RepairRegistry {
         repairMap = new HashMap<>();
         injectedRepairs = new LinkedList<>();
 
-        DataManager.repairData.onReload(() -> setupDefinitions(DataManager.repairData.getData()));
+        DataManager.instance.repairData.onReload(() -> setupDefinitions(DataManager.instance.repairData.getData()));
     }
 
     public void injectFromSchematics(Collection<SchematicDefinition> schematicDefinitions) {

@@ -1,14 +1,17 @@
 package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
+import se.mickelus.mutil.data.DataDistributor;
+import se.mickelus.mutil.data.MergingDataStore;
 import se.mickelus.tetra.craftingeffect.CraftingEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class CraftingEffectStore extends MergingDataStore<CraftingEffect, CraftingEffect[]> {
 
-    public CraftingEffectStore(Gson gson, String directory) {
-        super(gson, directory, CraftingEffect.class, CraftingEffect[].class);
+    public CraftingEffectStore(Gson gson, String namespace, String directory, DataDistributor distributor) {
+        super(gson, namespace, directory, CraftingEffect.class, CraftingEffect[].class, distributor);
     }
 
     @Override

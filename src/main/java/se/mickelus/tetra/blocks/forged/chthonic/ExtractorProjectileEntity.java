@@ -38,8 +38,8 @@ import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.util.CastOptional;
-import se.mickelus.tetra.util.RotationHelper;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.RotationHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

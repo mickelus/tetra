@@ -30,7 +30,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.rack.RackBlock;
-import se.mickelus.tetra.util.RotationHelper;
+import se.mickelus.mutil.util.RotationHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

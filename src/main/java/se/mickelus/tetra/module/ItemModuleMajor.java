@@ -16,7 +16,7 @@ import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Objects;

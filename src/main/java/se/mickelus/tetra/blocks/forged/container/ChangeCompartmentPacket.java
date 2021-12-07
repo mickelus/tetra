@@ -2,8 +2,8 @@ package se.mickelus.tetra.blocks.forged.container;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import se.mickelus.tetra.network.AbstractPacket;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.network.AbstractPacket;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

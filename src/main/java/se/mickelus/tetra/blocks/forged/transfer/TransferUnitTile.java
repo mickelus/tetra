@@ -17,9 +17,9 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.util.ITetraTicker;
-import se.mickelus.tetra.util.TileEntityOptional;
+import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

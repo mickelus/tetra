@@ -15,7 +15,7 @@ public class BasicModule extends ItemModule {
         variantData = data.variants;
 
         if (data.tweakKey != null) {
-            TweakData[] tweaks = DataManager.tweakData.getData(data.tweakKey);
+            TweakData[] tweaks = DataManager.instance.tweakData.getData(data.tweakKey);
             if (tweaks != null) {
                 this.tweaks = tweaks;
             } else {

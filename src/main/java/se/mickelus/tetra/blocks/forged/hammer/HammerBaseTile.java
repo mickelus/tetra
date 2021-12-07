@@ -29,9 +29,9 @@ import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.util.ITetraTicker;
-import se.mickelus.tetra.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

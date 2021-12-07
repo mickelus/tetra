@@ -11,7 +11,7 @@ import se.mickelus.mutil.gui.GuiStringSmall;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.gui.stats.bar.GuiBar;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;

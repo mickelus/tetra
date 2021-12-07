@@ -3,7 +3,7 @@ package se.mickelus.tetra.effect.revenge;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import se.mickelus.tetra.network.AbstractPacket;
+import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

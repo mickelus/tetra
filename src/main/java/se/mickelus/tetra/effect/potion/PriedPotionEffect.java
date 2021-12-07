@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.EffectRenderer;
 import se.mickelus.tetra.effect.gui.EffectTooltipRenderer;
-import se.mickelus.tetra.util.ParticleHelper;
+import se.mickelus.mutil.util.ParticleHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
@@ -32,7 +32,7 @@ public class PriedPotionEffect extends MobEffect {
 
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.getCommandSenderWorld().isClientSide) {
-            ParticleHelper.spawnArmorParticles(((ServerLevel) entity.level), entity);
+            ParticleHelper.spawnArmorParticles(entity);
         }
     }
 

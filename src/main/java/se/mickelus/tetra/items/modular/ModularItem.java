@@ -80,7 +80,7 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     public ModularItem(Properties properties) {
         super(properties);
 
-        DataManager.moduleData.onReload(this::clearCaches);
+        DataManager.instance.moduleData.onReload(this::clearCaches);
     }
 
     public void clearCaches() {

@@ -13,7 +13,7 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.tetra.util.HexCodec;
+import se.mickelus.mutil.util.HexCodec;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;

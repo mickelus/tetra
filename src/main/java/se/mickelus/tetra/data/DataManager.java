@@ -2,6 +2,7 @@ package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +16,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.mutil.data.DataDistributor;
+import se.mickelus.mutil.data.DataStore;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.workbench.action.ConfigActionImpl;
@@ -35,7 +38,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
 @ParametersAreNonnullByDefault
-public class DataManager {
+public class DataManager implements DataDistributor {
 
     private final Logger logger = LogManager.getLogger();
 
@@ -64,31 +67,45 @@ public class DataManager {
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
             .create();
 
-    public static DataStore<TweakData[]> tweakData = new DataStore<>(gson, "tweaks", TweakData[].class);
-    public static DataStore<MaterialData> materialData = new MaterialStore(gson, "materials");
-    public static DataStore<ImprovementData[]> improvementData = new ImprovementStore(gson, "improvements");
-    public static DataStore<ModuleData> moduleData = new ModuleStore(gson, "modules");
-    public static DataStore<RepairDefinition> repairData = new DataStore<>(gson, "repairs", RepairDefinition.class);
-    public static DataStore<EnchantmentMapping[]> enchantmentData = new DataStore<>(gson, "enchantments",
-            EnchantmentMapping[].class);
-    public static DataStore<SynergyData[]> synergyData = new DataStore<>(gson, "synergies", SynergyData[].class);
-    public static DataStore<ReplacementDefinition[]> replacementData = new DataStore<>(gson, "replacements",
-            ReplacementDefinition[].class);
-    public static SchematicStore schematicData = new SchematicStore(gson, "schematics");
-    public static DataStore<CraftingEffect> craftingEffectData = new CraftingEffectStore(gson, "crafting_effects");
-    public static DataStore<ItemPredicate[]> predicateData = new DataStore<>(gson, "predicatus", ItemPredicate[].class);
-    public static DataStore<ConfigActionImpl[]> actionData = new DataStore<>(gson, "actions", ConfigActionImpl[].class);
-    public static DataStore<DestabilizationEffect[]> destabilizationData = new DataStore<>(gson, "destabilization",
-            DestabilizationEffect[].class);
-    public static DataStore<FeatureParameters> featureData = new FeatureStore(gson, "structures");
+    public final DataStore<TweakData[]> tweakData;
+    public final MaterialStore materialData;
+    public final DataStore<ImprovementData[]> improvementData;
+    public final DataStore<ModuleData> moduleData;
+    public final DataStore<RepairDefinition> repairData;
+    public final DataStore<EnchantmentMapping[]> enchantmentData;
+    public final DataStore<SynergyData[]> synergyData;
+    public final DataStore<ReplacementDefinition[]> replacementData;
+    public final SchematicStore schematicData;
+    public final DataStore<CraftingEffect> craftingEffectData;
+    public final DataStore<ItemPredicate[]> predicateData;
+    public final DataStore<ConfigActionImpl[]> actionData;
+    public final DataStore<DestabilizationEffect[]> destabilizationData;
+    public final DataStore<FeatureParameters> featureData;
 
-    private final DataStore[] dataStores = new DataStore[] { tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
-            replacementData, schematicData, craftingEffectData, repairData, predicateData, actionData, destabilizationData, featureData };
+    private final DataStore[] dataStores;
 
     public static DataManager instance;
 
     public DataManager() {
         instance = this;
+
+        this.tweakData = new DataStore<>(gson, TetraMod.MOD_ID, "tweaks", TweakData[].class, this);
+        this.materialData = new MaterialStore(gson, TetraMod.MOD_ID, "materials", this);
+        this.improvementData = new ImprovementStore(gson, TetraMod.MOD_ID, "improvements", materialData,this);
+        this.moduleData = new ModuleStore(gson, TetraMod.MOD_ID, "modules", this);
+        this.repairData = new DataStore<>(gson, TetraMod.MOD_ID, "repairs", RepairDefinition.class, this);
+        this.enchantmentData = new DataStore<>(gson, TetraMod.MOD_ID, "enchantments", EnchantmentMapping[].class, this);
+        this.synergyData = new DataStore<>(gson, TetraMod.MOD_ID, "synergies", SynergyData[].class, this);
+        this.replacementData = new DataStore<>(gson, TetraMod.MOD_ID, "replacements", ReplacementDefinition[].class, this);
+        this.schematicData = new SchematicStore(gson, TetraMod.MOD_ID, "schematics", this);
+        this.craftingEffectData = new CraftingEffectStore(gson, TetraMod.MOD_ID, "crafting_effects", this);
+        this.predicateData = new DataStore<>(gson, TetraMod.MOD_ID, "predicatus", ItemPredicate[].class, this);
+        this.actionData = new DataStore<>(gson, TetraMod.MOD_ID, "actions", ConfigActionImpl[].class, this);
+        this.destabilizationData = new DataStore<>(gson, TetraMod.MOD_ID, "destabilization", DestabilizationEffect[].class, this);
+        this.featureData = new FeatureStore(gson, TetraMod.MOD_ID, "structures", this);
+
+        dataStores = new DataStore[] { tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
+                replacementData, schematicData, craftingEffectData, repairData, predicateData, actionData, destabilizationData, featureData };
     }
 
     @SubscribeEvent
@@ -132,5 +149,15 @@ public class DataManager {
             Arrays.sort(entry.modules);
         }
         return data;
+    }
+
+    @Override
+    public void sendToAll(String directory, Map<ResourceLocation, JsonElement> data) {
+        TetraMod.packetHandler.sendToAllPlayers(new UpdateDataPacket(directory, data));
+    }
+
+    @Override
+    public void sendToPlayer(ServerPlayer player, String directory, Map<ResourceLocation, JsonElement> data) {
+        TetraMod.packetHandler.sendTo(new UpdateDataPacket(directory, data), player);
     }
 }

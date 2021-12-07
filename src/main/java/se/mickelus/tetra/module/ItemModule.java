@@ -19,7 +19,7 @@ import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.IToolProvider;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import java.util.*;
 

@@ -1,14 +1,16 @@
 package se.mickelus.tetra.data;
 
 import com.google.gson.Gson;
+import se.mickelus.mutil.data.DataDistributor;
+import se.mickelus.mutil.data.MergingDataStore;
 import se.mickelus.tetra.module.schematic.SchematicDefinition;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class SchematicStore extends MergingDataStore<SchematicDefinition, SchematicDefinition[]> {
 
-    public SchematicStore(Gson gson, String directory) {
-        super(gson, directory, SchematicDefinition.class, SchematicDefinition[].class);
+    public SchematicStore(Gson gson, String namespace, String directory, DataDistributor distributor) {
+        super(gson, namespace, directory, SchematicDefinition.class, SchematicDefinition[].class, distributor);
     }
 
     @Override

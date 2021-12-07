@@ -45,7 +45,7 @@ import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.InsulatedPlateItem;
 import se.mickelus.tetra.util.TickProvider;
-import se.mickelus.tetra.util.TileEntityOptional;
+import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

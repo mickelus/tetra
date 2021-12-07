@@ -13,7 +13,7 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.mutil.network.PacketHandler;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -53,7 +53,7 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
 
     @Override
     public void init(PacketHandler packetHandler) {
-        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("single/"));
+        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("single/"));
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

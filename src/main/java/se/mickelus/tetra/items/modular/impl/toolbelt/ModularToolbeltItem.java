@@ -38,7 +38,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.JumpHandlerSuspend;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.ToggleSuspendPacket;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.mutil.network.PacketHandler;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -95,7 +95,7 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
 
         RemoveSchematic.registerRemoveSchematics(this);
 
-        DataManager.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("toolbelt/"));
+        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("toolbelt/"));
     }
 
     @Override

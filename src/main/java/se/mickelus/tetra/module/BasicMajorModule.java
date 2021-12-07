@@ -5,7 +5,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.TweakData;
-import se.mickelus.tetra.util.Filter;
+import se.mickelus.mutil.util.Filter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -22,8 +22,8 @@ public class BasicMajorModule extends ItemModuleMajor {
         if (data.improvements.length > 0) {
             improvements = Arrays.stream(data.improvements)
                     .map(rl -> rl.getPath().endsWith("/")
-                            ? DataManager.improvementData.getDataIn(rl)
-                            : Optional.ofNullable(DataManager.improvementData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
+                            ? DataManager.instance.improvementData.getDataIn(rl)
+                            : Optional.ofNullable(DataManager.instance.improvementData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
                     .flatMap(Collection::stream)
                     .filter(Objects::nonNull)
                     .flatMap(Arrays::stream)
@@ -38,7 +38,7 @@ public class BasicMajorModule extends ItemModuleMajor {
         }
 
         if (data.tweakKey != null) {
-            TweakData[] tweaks = DataManager.tweakData.getData(data.tweakKey);
+            TweakData[] tweaks = DataManager.instance.tweakData.getData(data.tweakKey);
             if (tweaks != null) {
                 this.tweaks = tweaks;
             } else {

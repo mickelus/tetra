@@ -53,7 +53,7 @@ public class ToolbeltInventory implements Container {
     }
 
     public static void initializePredicates() {
-        DataManager.predicateData.onReload(() -> {
+        DataManager.instance.predicateData.onReload(() -> {
             potionPredicate = getPredicate("potion");
             quickPredicate = getPredicate("quick");
             quiverPredicate = getPredicate("quiver");
@@ -62,7 +62,7 @@ public class ToolbeltInventory implements Container {
     }
 
     private static ItemPredicate getPredicate(String inventory) {
-        ItemPredicate[] predicates = Arrays.stream(DataManager.predicateData.getData(
+        ItemPredicate[] predicates = Arrays.stream(DataManager.instance.predicateData.getData(
                 new ResourceLocation(TetraMod.MOD_ID, String.format("toolbelt/%s", inventory))))
                 .filter(Objects::nonNull)
                 .toArray(ItemPredicate[]::new);

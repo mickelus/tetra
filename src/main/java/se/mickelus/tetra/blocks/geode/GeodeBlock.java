@@ -19,7 +19,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.mutil.network.PacketHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

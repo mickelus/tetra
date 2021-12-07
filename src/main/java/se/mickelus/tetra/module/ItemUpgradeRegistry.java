@@ -30,8 +30,8 @@ public class ItemUpgradeRegistry {
         replacementHooks = new ArrayList<> ();
 
         replacementDefinitions = Collections.emptyList();
-        DataManager.replacementData.onReload(() -> {
-            replacementDefinitions = DataManager.replacementData.getData().values().stream()
+        DataManager.instance.replacementData.onReload(() -> {
+            replacementDefinitions = DataManager.instance.replacementData.getData().values().stream()
                     .flatMap(Arrays::stream)
                     .filter(replacementDefinition -> replacementDefinition.predicate != null)
                     .collect(Collectors.toList());
@@ -117,7 +117,7 @@ public class ItemUpgradeRegistry {
     }
 
     public EnchantmentMapping[] getEnchantmentMappings() {
-        return DataManager.enchantmentData.getData().values().stream()
+        return DataManager.instance.enchantmentData.getData().values().stream()
                 .flatMap(Arrays::stream)
                 .filter(mapping -> mapping.enchantment != null)
                 .filter(mapping -> mapping.apply)
@@ -125,7 +125,7 @@ public class ItemUpgradeRegistry {
     }
 
     public EnchantmentMapping[] getEnchantmentMappings(String improvement) {
-        return DataManager.enchantmentData.getData().values().stream()
+        return DataManager.instance.enchantmentData.getData().values().stream()
                 .flatMap(Arrays::stream)
                 .filter(mapping -> mapping.enchantment != null)
                 .filter(mapping -> improvement.equals(mapping.improvement))
@@ -134,7 +134,7 @@ public class ItemUpgradeRegistry {
     }
 
     public EnchantmentMapping[] getEnchantmentMappings(Enchantment enchantment) {
-        return DataManager.enchantmentData.getData().values().stream()
+        return DataManager.instance.enchantmentData.getData().values().stream()
                 .flatMap(Arrays::stream)
                 .filter(mapping -> mapping.enchantment != null)
                 .filter(mapping -> enchantment.equals(mapping.enchantment))

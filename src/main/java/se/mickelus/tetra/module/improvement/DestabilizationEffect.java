@@ -25,8 +25,8 @@ public class DestabilizationEffect {
     public String improvementKey;
 
     public static void init() {
-        DataManager.destabilizationData.onReload(() -> {
-            effects = DataManager.destabilizationData.getData().values().stream()
+        DataManager.instance.destabilizationData.onReload(() -> {
+            effects = DataManager.instance.destabilizationData.getData().values().stream()
                     .flatMap(Arrays::stream)
                     .filter(effect -> effect.requiredMod == null || ModList.get().isLoaded(effect.requiredMod))
                     .toArray(DestabilizationEffect[]::new);

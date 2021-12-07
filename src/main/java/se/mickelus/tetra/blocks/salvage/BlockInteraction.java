@@ -28,8 +28,8 @@ import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.tetra.util.CastOptional;
-import se.mickelus.tetra.util.RotationHelper;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.RotationHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

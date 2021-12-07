@@ -10,7 +10,7 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
-import se.mickelus.tetra.util.Filter;
+import se.mickelus.mutil.util.Filter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;

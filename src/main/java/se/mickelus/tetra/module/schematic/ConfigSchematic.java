@@ -18,7 +18,7 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.MaterialMultiplier;
 import se.mickelus.tetra.module.data.VariantData;
-import se.mickelus.tetra.util.Filter;
+import se.mickelus.mutil.util.Filter;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

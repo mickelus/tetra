@@ -18,7 +18,7 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ToolData;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;

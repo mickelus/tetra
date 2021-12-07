@@ -4,12 +4,13 @@ import com.google.gson.JsonElement;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import se.mickelus.tetra.network.AbstractPacket;
+import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class UpdateDataPacket extends AbstractPacket {
 

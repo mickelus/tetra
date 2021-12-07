@@ -24,7 +24,7 @@ public class ModularModelLoader implements IModelLoader<ModularItemModel> {
 
     public ModularModelLoader() {
         // module data is the last data store that contains model information
-        DataManager.moduleData.onReload(ModularModelLoader::clearCaches);
+        DataManager.instance.moduleData.onReload(ModularModelLoader::clearCaches);
     }
 
     /**

@@ -5,7 +5,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
-import se.mickelus.tetra.network.AbstractPacket;
+import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;

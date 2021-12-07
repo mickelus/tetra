@@ -11,7 +11,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;

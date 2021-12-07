@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.util.JsonOptional;
+import se.mickelus.mutil.util.JsonOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

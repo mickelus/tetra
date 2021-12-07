@@ -11,7 +11,7 @@ import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.InteractionOutcome;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

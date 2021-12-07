@@ -20,7 +20,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;

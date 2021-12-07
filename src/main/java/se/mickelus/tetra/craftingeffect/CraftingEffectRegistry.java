@@ -43,7 +43,7 @@ public class CraftingEffectRegistry {
 
     public static CraftingEffect[] getEffects(ResourceLocation[] unlocks, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] materials, Map<ToolAction, Integer> tools, Level world, BlockPos pos, BlockState blockState) {
-        return DataManager.craftingEffectData.getData().values().stream()
+        return DataManager.instance.craftingEffectData.getData().values().stream()
                 .filter(effect -> effect.isApplicable(unlocks, upgradedStack, slot, isReplacing, player, materials, tools, world, pos, blockState))
                 .toArray(CraftingEffect[]::new);
     }

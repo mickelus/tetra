@@ -38,8 +38,8 @@ import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
-import se.mickelus.tetra.network.PacketHandler;
-import se.mickelus.tetra.util.TileEntityOptional;
+import se.mickelus.mutil.network.PacketHandler;
+import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

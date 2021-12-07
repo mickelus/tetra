@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.workbench;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
-import se.mickelus.tetra.network.BlockPosPacket;
+import se.mickelus.mutil.network.BlockPosPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

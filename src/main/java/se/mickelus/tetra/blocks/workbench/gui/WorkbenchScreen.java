@@ -28,7 +28,7 @@ import se.mickelus.tetra.gui.HoneProgressGui;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;

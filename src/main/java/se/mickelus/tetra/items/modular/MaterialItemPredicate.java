@@ -19,7 +19,7 @@ public class MaterialItemPredicate extends ItemPredicate {
 
     @Override
     public boolean matches(ItemStack itemStack) {
-        MaterialData materialData = DataManager.materialData.getData().values().stream()
+        MaterialData materialData = DataManager.instance.materialData.getData().values().stream()
                 .sorted(Comparator.comparing(data -> data.material.isTagged()))
                 .filter(data -> data.material.isValid())
                 .filter(data -> data.material.getPredicate().matches(itemStack))

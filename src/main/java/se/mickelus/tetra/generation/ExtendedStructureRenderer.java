@@ -42,7 +42,7 @@ public class ExtendedStructureRenderer extends StructureBlockRenderer {
 
         BlockPos rel = te.getStructurePos();
 
-        Optional.ofNullable(DataManager.featureData.getData(new ResourceLocation(te.getStructureName())))
+        Optional.ofNullable(DataManager.instance.featureData.getData(new ResourceLocation(te.getStructureName())))
                 .ifPresent(feature -> renderFeatureInfo(feature, matrixStack, buffer, rel.getX(), rel.getY(), rel.getZ()));
     }
 

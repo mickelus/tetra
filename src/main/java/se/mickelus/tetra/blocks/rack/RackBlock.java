@@ -45,8 +45,8 @@ import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.tetra.util.ItemHandlerWrapper;
-import se.mickelus.tetra.util.TileEntityOptional;
+import se.mickelus.mutil.util.ItemHandlerWrapper;
+import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

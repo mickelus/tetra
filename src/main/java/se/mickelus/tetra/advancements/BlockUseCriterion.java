@@ -10,7 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import se.mickelus.tetra.blocks.PropertyMatcher;
-import se.mickelus.tetra.util.JsonOptional;
+import se.mickelus.mutil.util.JsonOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;

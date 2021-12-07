@@ -40,10 +40,10 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -79,8 +79,8 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
 
     private static WorkbenchAction[] actions = new WorkbenchAction[0];
     static {
-        DataManager.actionData.onReload(() -> {
-            WorkbenchAction[] configActions = DataManager.actionData.getData().values().stream()
+        DataManager.instance.actionData.onReload(() -> {
+            WorkbenchAction[] configActions = DataManager.instance.actionData.getData().values().stream()
                     .flatMap(Arrays::stream).toArray(ConfigAction[]::new);
 
             actions = ArrayUtils.addAll(WorkbenchTile.defaultActions, configActions);

@@ -16,7 +16,7 @@ import se.mickelus.tetra.gui.stats.getter.ILabelGetter;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;

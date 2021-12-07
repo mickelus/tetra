@@ -15,7 +15,7 @@ import se.mickelus.tetra.effect.potion.PriedPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.util.ParticleHelper;
+import se.mickelus.mutil.util.ParticleHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
@@ -124,7 +124,7 @@ public class PryEffect {
                     currentAmplifier + amplifier, false, false));
 
             if (!target.getCommandSenderWorld().isClientSide) {
-                ParticleHelper.spawnArmorParticles((ServerLevel) target.getCommandSenderWorld(), target);
+                ParticleHelper.spawnArmorParticles(target);
             }
 
             int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
@@ -146,9 +146,9 @@ public class PryEffect {
 
             if (!target.getCommandSenderWorld().isClientSide) {
                 if (target.hasItemInSlot(EquipmentSlot.MAINHAND)) {
-                    ParticleHelper.spawnArmorParticles((ServerLevel) target.getCommandSenderWorld(), target, EquipmentSlot.MAINHAND);
+                    ParticleHelper.spawnArmorParticles(target, EquipmentSlot.MAINHAND);
                 } else if (target.hasItemInSlot(EquipmentSlot.OFFHAND)) {
-                    ParticleHelper.spawnArmorParticles((ServerLevel) target.getCommandSenderWorld(), target, EquipmentSlot.OFFHAND);
+                    ParticleHelper.spawnArmorParticles(target, EquipmentSlot.OFFHAND);
                 }
             }
         }

@@ -12,8 +12,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.util.RotationHelper;
-import se.mickelus.tetra.util.TileEntityOptional;
+import se.mickelus.mutil.util.RotationHelper;
+import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumMap;

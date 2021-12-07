@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items;
 
 import net.minecraft.world.item.Item;
-import se.mickelus.tetra.network.PacketHandler;
+import se.mickelus.mutil.network.PacketHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault

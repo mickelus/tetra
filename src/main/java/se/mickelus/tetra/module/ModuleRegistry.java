@@ -9,7 +9,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.MaterialVariantData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.VariantData;
-import se.mickelus.tetra.util.Filter;
+import se.mickelus.mutil.util.Filter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -31,7 +31,7 @@ public class ModuleRegistry {
         moduleConstructors = new HashMap<>();
         moduleMap = Collections.emptyMap();
 
-        DataManager.moduleData.onReload(() -> setupModules(DataManager.moduleData.getData()));
+        DataManager.instance.moduleData.onReload(() -> setupModules(DataManager.instance.moduleData.getData()));
     }
 
     private void setupModules(Map<ResourceLocation, ModuleData> data) {
@@ -103,8 +103,8 @@ public class ModuleRegistry {
     private Stream<VariantData> expandMaterialVariant(MaterialVariantData source) {
         return Arrays.stream(source.materials)
                 .map(rl -> rl.getPath().endsWith("/")
-                        ? DataManager.materialData.getDataIn(rl)
-                        : Optional.ofNullable(DataManager.materialData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
+                        ? DataManager.instance.materialData.getDataIn(rl)
+                        : Optional.ofNullable(DataManager.instance.materialData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
                 .flatMap(Collection::stream)
                 .map(source::combine);
     }

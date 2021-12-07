@@ -33,8 +33,8 @@ import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.salvage.TileBlockInteraction;
-import se.mickelus.tetra.util.CastOptional;
-import se.mickelus.tetra.util.TileEntityOptional;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

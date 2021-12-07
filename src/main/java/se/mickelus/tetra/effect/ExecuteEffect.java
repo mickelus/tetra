@@ -19,7 +19,7 @@ import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
 import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;

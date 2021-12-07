@@ -42,7 +42,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.util.ITetraTicker;
 
 import javax.annotation.Nullable;

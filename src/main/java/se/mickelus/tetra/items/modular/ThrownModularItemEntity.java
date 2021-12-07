@@ -42,7 +42,7 @@ import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.Nullable;

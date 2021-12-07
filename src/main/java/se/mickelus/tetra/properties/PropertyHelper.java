@@ -16,8 +16,8 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.tetra.util.CastOptional;
-import se.mickelus.tetra.util.InventoryStream;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.InventoryStream;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
