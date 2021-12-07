@@ -5,7 +5,7 @@
             "modid": "botania"
         }],
                 "predicate": {
-            "items": "botania:livingwood_bow"
+            "items": [ "botania:livingwood_bow" ]
         },
         "item": "tetra:modular_bow",
         "modules": {

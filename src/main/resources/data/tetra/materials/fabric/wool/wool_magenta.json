@@ -21,7 +21,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:magenta_wool"
+        "items": [ "minecraft:magenta_wool" ]
     },
     "requiredTools": {
         "cut": 1

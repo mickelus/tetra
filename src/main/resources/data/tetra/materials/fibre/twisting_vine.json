@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:twisting_vines"
+        "items": [ "minecraft:twisting_vines" ]
     },
     "effects": {
         "unstable": 10

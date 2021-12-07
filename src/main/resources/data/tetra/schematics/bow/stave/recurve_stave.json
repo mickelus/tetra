@@ -25,11 +25,11 @@
     "outcomes": [
         {
             "material": {
-                "item": "minecraft:stick",
+                "items": [ "minecraft:stick" ],
                 "count": 3
             },
             "requiredTools": {
-                "axe": 3
+                "axe_dig": 3
             },
             "moduleKey": "bow/recurve_stave",
             "moduleVariant": "recurve_stave/stick"

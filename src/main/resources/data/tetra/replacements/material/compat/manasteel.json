@@ -5,7 +5,7 @@
             "modid": "botania"
         }],
                 "predicate": {
-            "items": "botania:manasteel_pick"
+            "items": [ "botania:manasteel_pick" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -21,7 +21,7 @@
     },
     {
                 "predicate": {
-            "items": "botania:manasteel_axe"
+            "items": [ "botania:manasteel_axe" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -37,7 +37,7 @@
     },
     {
                 "predicate": {
-            "items": "botania:manasteel_shovel"
+            "items": [ "botania:manasteel_shovel" ]
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -51,7 +51,7 @@
     },
     {
                 "predicate": {
-            "items": "botania:manasteel_sword"
+            "items": [ "botania:manasteel_sword" ]
         },
         "item": "tetra:modular_sword",
         "modules": {

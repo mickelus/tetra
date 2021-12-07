@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:weeping_vines"
+        "items": [ "minecraft:weeping_vines" ]
     },
     "requiredTools": {
         "cut": 2

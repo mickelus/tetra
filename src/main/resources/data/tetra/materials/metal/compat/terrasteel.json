@@ -23,7 +23,7 @@
         "metal"
     ],
     "material": {
-        "item": "botania:terrasteel_ingot"
+        "items": [ "botania:terrasteel_ingot" ]
     },
     "improvements": {
         "mana_repair": 1

@@ -19,7 +19,7 @@
         "crude"
     ],
     "material": {
-        "item": "minecraft:diamond"
+        "items": [ "minecraft:diamond" ]
     },
     "improvements": {
         "arrested": 0

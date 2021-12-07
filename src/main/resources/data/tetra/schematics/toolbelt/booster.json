@@ -18,7 +18,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "minecraft:iron_ingot",
+                "items": [ "minecraft:iron_ingot" ],
                 "count": 8
             },
             "requiredTools": {

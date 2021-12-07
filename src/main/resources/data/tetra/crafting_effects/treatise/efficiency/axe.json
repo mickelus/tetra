@@ -8,7 +8,7 @@
         {
             "type": "tetra:tool",
             "tools": {
-                "axe": 1
+                "axe_dig": 1
             }
         }
     ],

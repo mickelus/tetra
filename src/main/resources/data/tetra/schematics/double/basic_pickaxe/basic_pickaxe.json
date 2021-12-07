@@ -18,7 +18,7 @@
             "generic.attack_damage": 3
         },
         "tools": {
-            "pickaxe": [3, 2]
+            "pickaxe_dig": [3, 2]
         },
         "durability": 2,
         "integrity": -3,

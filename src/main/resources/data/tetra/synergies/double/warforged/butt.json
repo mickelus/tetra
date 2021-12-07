@@ -4,9 +4,9 @@
         "matchSuffixed": true,
         "improvements": ["double/warforged"],
         "tools": {
-            "axe": -1,
+            "axe_dig": -1,
             "shovel": -1,
-            "pickaxe": -1,
+            "pickaxe_dig": -1,
             "hoe": -1,
             "cut": -1,
             "hammer": -1

@@ -23,7 +23,7 @@
         "default"
     ],
     "material": {
-        "item": "naturesaura:infused_iron"
+        "items": [ "naturesaura:infused_iron" ]
     },
     "improvements": {
         "naturesaura_aura_mending_innate": 1

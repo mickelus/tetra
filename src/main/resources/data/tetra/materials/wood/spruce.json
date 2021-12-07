@@ -19,9 +19,9 @@
         "wooden"
     ],
     "material": {
-        "item": "minecraft:spruce_planks"
+        "items": [ "minecraft:spruce_planks" ]
     },
     "requiredTools": {
-        "axe": 1
+        "axe_dig": 1
     }
 }

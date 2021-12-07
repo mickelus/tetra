@@ -23,7 +23,7 @@
         "default"
     ],
     "material": {
-        "item": "naturesaura:sky_ingot"
+        "items": [ "naturesaura:sky_ingot" ]
     },
     "improvements": {
         "naturesaura_aura_mending_innate": 1

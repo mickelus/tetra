@@ -27,7 +27,7 @@
         },
         {
             "material": {
-                "item": "tetra:metal_scrap",
+                "items": [ "tetra:metal_scrap" ],
                 "count": 8
             },
             "requiredTools": {

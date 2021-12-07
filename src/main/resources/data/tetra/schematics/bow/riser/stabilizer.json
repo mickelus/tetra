@@ -21,7 +21,7 @@
         },
         {
             "material": {
-                "item": "tetra:planar_stabilizer",
+                "items": [ "tetra:planar_stabilizer" ],
                 "count": 2
             },
             "requiredTools": {

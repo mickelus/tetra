@@ -1,7 +1,7 @@
 [
     {
                 "predicate": {
-            "items": "minecraft:wooden_sword"
+            "items": [ "minecraft:wooden_sword" ]
         },
         "item": "tetra:modular_sword",
         "modules": {
@@ -13,7 +13,7 @@
     },
     {
                 "predicate": {
-            "items": "minecraft:wooden_shovel"
+            "items": [ "minecraft:wooden_shovel" ]
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -23,7 +23,7 @@
     },
     {
                 "predicate": {
-            "items": "minecraft:wooden_pickaxe"
+            "items": [ "minecraft:wooden_pickaxe" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -34,7 +34,7 @@
     },
     {
                 "predicate": {
-            "items": "minecraft:wooden_hoe"
+            "items": [ "minecraft:wooden_hoe" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -45,7 +45,7 @@
     },
     {
                 "predicate": {
-            "items": "minecraft:wooden_axe"
+            "items": [ "minecraft:wooden_axe" ]
         },
         "item": "tetra:modular_double",
         "modules": {

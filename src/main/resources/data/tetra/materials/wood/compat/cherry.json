@@ -22,6 +22,6 @@
         "tag": "forge:planks/cherry"
     },
     "requiredTools": {
-        "axe": 3
+        "axe_dig": 3
     }
 }

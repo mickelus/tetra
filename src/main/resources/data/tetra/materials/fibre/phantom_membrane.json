@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:phantom_membrane"
+        "items": [ "minecraft:phantom_membrane" ]
     },
     "requiredTools": {
         "cut": 1

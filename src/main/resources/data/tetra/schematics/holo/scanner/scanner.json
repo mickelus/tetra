@@ -18,7 +18,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "minecraft:ender_eye"
+                "items": [ "minecraft:ender_eye" ]
             },
             "moduleKey": "holo/scanner",
             "moduleVariant": "scanner/scanner"

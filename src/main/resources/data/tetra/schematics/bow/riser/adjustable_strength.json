@@ -13,7 +13,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "tetra:forged_bolt",
+                "items": [ "tetra:forged_bolt" ],
                 "count": 2
             },
             "moduleKey": "bow/adjustable_strength",

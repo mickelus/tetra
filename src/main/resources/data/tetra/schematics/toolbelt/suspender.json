@@ -21,7 +21,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "tetra:planar_stabilizer"
+                "items": [ "tetra:planar_stabilizer" ]
             },
             "requiredTools": {
                 "hammer": 3

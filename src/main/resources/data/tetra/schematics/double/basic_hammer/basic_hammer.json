@@ -72,7 +72,7 @@
         },
         {
             "material": {
-                "item": "minecraft:netherite_ingot",
+                "items": [ "minecraft:netherite_ingot" ],
                 "count": 2
             },
             "requiredTools": {

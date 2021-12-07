@@ -21,7 +21,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:end_rod"
+        "items": [ "minecraft:end_rod" ]
     },
     "requiredTools": {
         "hammer": 1

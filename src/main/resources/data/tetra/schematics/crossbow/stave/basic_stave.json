@@ -23,7 +23,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "minecraft:stick",
+                "items": [ "minecraft:stick" ],
                 "count": 2
             },
             "moduleKey": "crossbow/basic_stave",

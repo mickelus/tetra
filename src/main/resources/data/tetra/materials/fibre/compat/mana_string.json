@@ -20,7 +20,7 @@
     },
     "textures": ["crude", "default"],
     "material": {
-        "item": "botania:mana_string"
+        "items": [ "botania:mana_string" ]
     },
     "improvements": {
         "mana_repair": 2

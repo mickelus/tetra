@@ -9,8 +9,8 @@
                 "**generic.attack_damage": 0.03
             },
             "tools": {
-                "axe": [0, 0.93],
-                "pickaxe": [0, 0.93],
+                "axe_dig": [0, 0.93],
+                "pickaxe_dig": [0, 0.93],
                 "shovel": [0, 0.93],
                 "cut": [0, 0.93],
                 "pry": [0, 0.93]

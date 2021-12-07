@@ -18,7 +18,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "minecraft:leather"
+                "items": [ "minecraft:leather" ]
             },
             "requiredTools": {
                 "cut": 1
@@ -28,7 +28,7 @@
         },
         {
             "material": {
-                "item": "minecraft:iron_ingot"
+                "items": [ "minecraft:iron_ingot" ]
             },
             "requiredTools": {
                 "hammer": 3

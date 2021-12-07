@@ -20,12 +20,12 @@
     },
     "textures": ["crude"],
     "material": {
-        "item": "botania:livingwood_planks"
+        "items": [ "botania:livingwood_planks" ]
     },
     "improvements": {
         "mana_repair": 3
     },
     "requiredTools": {
-        "axe": 2
+        "axe_dig": 2
     }
 }

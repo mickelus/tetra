@@ -19,7 +19,7 @@
         "crude"
     ],
     "material": {
-        "item": "minecraft:bone"
+        "items": [ "minecraft:bone" ]
     },
     "requiredTools": {
         "hammer": 1

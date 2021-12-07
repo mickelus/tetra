@@ -12,7 +12,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "tetra:pristine_diamond"
+                "items": [ "tetra:pristine_diamond" ]
             },
             "experienceCost": 3,
             "moduleKey": "sword/socket",
@@ -20,7 +20,7 @@
         },
         {
             "material": {
-                "item": "tetra:pristine_emerald"
+                "items": [ "tetra:pristine_emerald" ]
             },
             "experienceCost": 3,
             "moduleKey": "sword/socket",
@@ -28,7 +28,7 @@
         },
         {
             "material": {
-                "item": "tetra:pristine_lapis"
+                "items": [ "tetra:pristine_lapis" ]
             },
             "experienceCost": 3,
             "moduleKey": "sword/socket",

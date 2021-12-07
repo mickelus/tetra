@@ -23,7 +23,7 @@
         "metal"
     ],
     "material": {
-        "item": "botania:manasteel_ingot"
+        "items": [ "botania:manasteel_ingot" ]
     },
     "improvements": {
         "mana_repair": 3

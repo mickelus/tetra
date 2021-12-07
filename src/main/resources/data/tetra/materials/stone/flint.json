@@ -20,7 +20,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:flint"
+        "items": [ "minecraft:flint" ]
     },
     "improvements": {
         "workable": 1

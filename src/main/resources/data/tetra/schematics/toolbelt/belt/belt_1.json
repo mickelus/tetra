@@ -15,7 +15,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "minecraft:leather"
+                "items": [ "minecraft:leather" ]
             },
             "requiredTools": {
                 "cut": 2

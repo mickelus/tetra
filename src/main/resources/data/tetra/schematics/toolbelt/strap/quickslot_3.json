@@ -30,7 +30,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "tetra:quick_latch",
+                "items": [ "tetra:quick_latch" ],
                 "count": 3
             },
             "improvements": {

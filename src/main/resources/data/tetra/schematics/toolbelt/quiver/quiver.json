@@ -18,7 +18,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "tetra:forged_mesh",
+                "items": [ "tetra:forged_mesh" ],
                 "count": 2
             },
             "requiredTools": {
@@ -29,7 +29,7 @@
         },
         {
             "material": {
-                "item": "minecraft:leather",
+                "items": [ "minecraft:leather" ],
                 "count": 3
             },
             "requiredTools": {
@@ -51,7 +51,7 @@
         },
         {
             "material": {
-                "item": "minecraft:rabbit_hide",
+                "items": [ "minecraft:rabbit_hide" ],
                 "count": 7
             },
             "requiredTools": {

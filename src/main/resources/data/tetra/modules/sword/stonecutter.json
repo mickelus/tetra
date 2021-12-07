@@ -42,7 +42,7 @@
                 "generic.attack_speed": -2.8
             },
             "tools": {
-                "pickaxe": [3, 8]
+                "pickaxe_dig": [3, 8]
             },
             "effects": {
                 "strikingPickaxe": 1,

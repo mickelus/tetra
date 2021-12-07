@@ -1,6 +1,6 @@
 {
     "material": {
-        "item": "minecraft:prismarine_shard",
+        "items": [ "minecraft:prismarine_shard" ],
         "count": 3
     },
     "requiredTools": {

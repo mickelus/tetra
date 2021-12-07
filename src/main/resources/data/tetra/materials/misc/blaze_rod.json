@@ -21,7 +21,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:blaze_rod"
+        "items": [ "minecraft:blaze_rod" ]
     },
     "requiredTools": {
         "hammer": 1

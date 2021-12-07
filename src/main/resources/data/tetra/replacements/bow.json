@@ -1,7 +1,7 @@
 [
     {
                 "predicate": {
-            "items": "minecraft:bow"
+            "items": [ "minecraft:bow" ]
         },
         "item": "tetra:modular_bow",
         "modules": {

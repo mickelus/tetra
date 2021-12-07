@@ -40,7 +40,7 @@ import static net.minecraft.world.level.material.Fluids.WATER;
 @ParametersAreNonnullByDefault
 public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements EntityBlock {
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
-	public static final TickProvider<CoreExtractorBaseTile> TILE_TICK_PROVIDER = new TickProvider<>(CoreExtractorBaseTile.type, CoreExtractorBaseTile::new);
+    public static final TickProvider<CoreExtractorBaseTile> TILE_TICK_PROVIDER = new TickProvider<>(CoreExtractorBaseTile.type, CoreExtractorBaseTile::new);
     private static final VoxelShape capShape = box(3, 14, 3, 13, 16, 13);
     private static final VoxelShape shaftShape = box(4, 13, 4, 12, 14, 12);
     private static final VoxelShape smallCoverShapeZ = box(1, 0, 0, 15, 12, 16);

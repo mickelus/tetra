@@ -20,7 +20,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:andesite"
+        "items": [ "minecraft:andesite" ]
     },
     "requiredTools": {
         "hammer": 1

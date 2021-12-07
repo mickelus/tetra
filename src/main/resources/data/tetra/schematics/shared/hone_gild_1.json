@@ -49,7 +49,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "minecraft:gold_nugget",
+                "items": [ "minecraft:gold_nugget" ],
                 "count": 3
             },
             "requiredTools": {

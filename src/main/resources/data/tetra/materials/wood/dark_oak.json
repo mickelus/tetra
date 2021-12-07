@@ -19,9 +19,9 @@
         "wooden"
     ],
     "material": {
-        "item": "minecraft:dark_oak_planks"
+        "items": [ "minecraft:dark_oak_planks" ]
     },
     "requiredTools": {
-        "axe": 1
+        "axe_dig": 1
     }
 }

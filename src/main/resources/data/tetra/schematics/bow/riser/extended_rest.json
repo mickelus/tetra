@@ -24,7 +24,7 @@
         },
         {
             "material": {
-                "item": "tetra:forged_bolt"
+                "items": [ "tetra:forged_bolt" ]
             },
             "moduleKey": "bow/extended_rest",
             "moduleVariant": "extended_rest/bolt"

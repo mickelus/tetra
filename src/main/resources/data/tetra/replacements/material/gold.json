@@ -1,7 +1,7 @@
 [
     {
                 "predicate": {
-            "items": "minecraft:golden_sword"
+            "items": [ "minecraft:golden_sword" ]
         },
         "item": "tetra:modular_sword",
         "modules": {
@@ -13,7 +13,7 @@
     },
     {
                 "predicate": {
-            "items": "minecraft:golden_shovel"
+            "items": [ "minecraft:golden_shovel" ]
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -23,7 +23,7 @@
     },
     {
                 "predicate": {
-            "items": "minecraft:golden_pickaxe"
+            "items": [ "minecraft:golden_pickaxe" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -34,7 +34,7 @@
     },
     {
                 "predicate": {
-            "items": "minecraft:golden_hoe"
+            "items": [ "minecraft:golden_hoe" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -45,7 +45,7 @@
     },
     {
                 "predicate": {
-            "items": "minecraft:golden_axe"
+            "items": [ "minecraft:golden_axe" ]
         },
         "item": "tetra:modular_double",
         "modules": {

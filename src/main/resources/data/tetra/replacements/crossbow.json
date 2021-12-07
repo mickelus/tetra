@@ -1,7 +1,7 @@
 [
     {
                 "predicate": {
-            "items": "minecraft:crossbow"
+            "items": [ "minecraft:crossbow" ]
         },
         "item": "tetra:modular_crossbow",
         "modules": {

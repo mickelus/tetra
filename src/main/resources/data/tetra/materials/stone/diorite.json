@@ -20,7 +20,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:diorite"
+        "items": [ "minecraft:diorite" ]
     },
     "requiredTools": {
         "hammer": 1

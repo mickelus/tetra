@@ -20,7 +20,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "axe": 3
+                "axe_dig": 3
             },
             "improvements": {
                 "stave_hone/speed": 3

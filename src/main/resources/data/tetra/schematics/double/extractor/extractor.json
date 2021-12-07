@@ -13,7 +13,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "tetra:chthonic_extractor"
+                "items": [ "tetra:chthonic_extractor" ]
             },
             "requiredTools": {
                 "hammer": 4

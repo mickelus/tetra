@@ -20,7 +20,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:gold_ingot"
+        "items": [ "minecraft:gold_ingot" ]
     },
     "effects": {
         "stabilizing": 15

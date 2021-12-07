@@ -59,7 +59,7 @@ import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.tetra.util.CastOptional;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.Nullable;
@@ -828,19 +828,17 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     // todo 1.18: replace harvest checks
-//    public boolean canHarvestBlock(ItemStack stack, BlockState state) {
-//        if (!state.requiresCorrectToolForDrops()) {
-//            return true;
-//        }
-//
-//
-//        ToolAction requiredTool = state.getHarvestTool();
-//        if (requiredTool == null) {
-//            requiredTool = getEffectiveTool(state);
-//        }
-//
-//        return requiredTool != null && getHarvestLevel(stack, requiredTool, null, state) >= Math.max(state.getHarvestLevel(), 0);
-//    }
+    @Override
+    public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
+        if (!state.requiresCorrectToolForDrops()) {
+            return true;
+        }
+
+        ToolAction requiredTool = getEffectiveTool(state);
+
+        // todo 1.18: need taglevel map here
+        return requiredTool != null && getHarvestLevel(stack, requiredTool, null, state) >= Math.max(/* here */ 0, 0);
+    }
 
     @Override
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {

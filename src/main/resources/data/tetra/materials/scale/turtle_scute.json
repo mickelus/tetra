@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:scute"
+        "items": [ "minecraft:scute" ]
     },
     "requiredTools": {
         "cut": 2

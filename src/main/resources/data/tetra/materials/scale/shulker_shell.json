@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:shulker_shell"
+        "items": [ "minecraft:shulker_shell" ]
     },
     "requiredTools": {
         "cut": 3

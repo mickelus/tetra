@@ -17,7 +17,7 @@
         },
         {
             "material": {
-                "item": "tetra:forged_bolt"
+                "items": [ "tetra:forged_bolt" ]
             },
             "moduleKey": "single/binding",
             "moduleVariant": "single_binding/bolt"

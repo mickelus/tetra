@@ -21,7 +21,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:gray_wool"
+        "items": [ "minecraft:gray_wool" ]
     },
     "requiredTools": {
         "cut": 1

@@ -53,7 +53,7 @@
                     "generic.attack_damage": 1
                 },
                 "tools": {
-                    "axe": [0.6, 0.6],
+                    "axe_dig": [0.6, 0.6],
                     "shovel": [0.6, 0.6]
                 },
                 "durability": 0.5,

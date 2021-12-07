@@ -19,7 +19,7 @@
         "metal"
     ],
     "material": {
-        "item": "tetra:vent_plate"
+        "items": [ "tetra:vent_plate" ]
     },
     "requiredTools": {
         "hammer": 5

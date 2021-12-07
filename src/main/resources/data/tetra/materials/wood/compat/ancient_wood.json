@@ -23,12 +23,12 @@
         "wooden"
     ],
     "material": {
-        "item": "naturesaura:ancient_planks"
+        "items": [ "naturesaura:ancient_planks" ]
     },
     "improvements": {
         "naturesaura_aura_mending_innate": 1
     },
     "requiredTools": {
-        "axe": 2
+        "axe_dig": 2
     }
 }

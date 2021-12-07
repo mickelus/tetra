@@ -50,7 +50,7 @@
                 "generic.attack_speed": -1.2
             },
             "tools": {
-                "pickaxe": -1
+                "pickaxe_dig": -1
             },
             "durability": -10,
             "extract": {
@@ -58,7 +58,7 @@
                     "generic.attack_damage": 1
                 },
                 "tools": {
-                    "pickaxe": [1, 0.91]
+                    "pickaxe_dig": [1, 0.91]
                 },
                 "durability": 0.5,
                 "integrity": -1,

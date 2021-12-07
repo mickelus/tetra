@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:rabbit_hide",
+        "items": [ "minecraft:rabbit_hide" ],
         "count": 2
     },
     "requiredTools": {

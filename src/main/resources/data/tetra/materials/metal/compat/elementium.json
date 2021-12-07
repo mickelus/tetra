@@ -23,7 +23,7 @@
         "metal"
     ],
     "material": {
-        "item": "botania:elementium_ingot"
+        "items": [ "botania:elementium_ingot" ]
     },
     "improvements": {
         "mana_repair": 3

@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "item": "tetra:forged_beam"
+        "items": [ "tetra:forged_beam" ]
     },
     "requiredTools": {
         "hammer": 1

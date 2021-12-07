@@ -5,7 +5,7 @@
             "modid": "botania"
         }],
                 "predicate": {
-            "items": "botania:elementium_pickaxe"
+            "items": [ "botania:elementium_pickaxe" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -22,7 +22,7 @@
     },
     {
                 "predicate": {
-            "items": "botania:elementium_axe"
+            "items": [ "botania:elementium_axe" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -39,7 +39,7 @@
     },
     {
                 "predicate": {
-            "items": "botania:elementium_shovel"
+            "items": [ "botania:elementium_shovel" ]
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -54,7 +54,7 @@
     },
     {
                 "predicate": {
-            "items": "botania:elementium_sword"
+            "items": [ "botania:elementium_sword" ]
         },
         "item": "tetra:modular_sword",
         "modules": {

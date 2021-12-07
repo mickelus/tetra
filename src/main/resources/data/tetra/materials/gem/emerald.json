@@ -19,7 +19,7 @@
         "crude"
     ],
     "material": {
-        "item": "minecraft:emerald"
+        "items": [ "minecraft:emerald" ]
     },
     "improvements": {
         "arrested": 0

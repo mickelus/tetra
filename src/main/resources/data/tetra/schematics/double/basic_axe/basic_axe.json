@@ -21,7 +21,7 @@
             "generic.attack_damage": 1
         },
         "tools": {
-            "axe": [3, 3]
+            "axe_dig": [3, 3]
         },
         "durability": 2,
         "integrity": -3,

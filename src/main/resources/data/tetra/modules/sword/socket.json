@@ -14,9 +14,9 @@
                 "**generic.attack_damage": 0.1
             },
             "tools": {
-                "axe": [0, 1],
+                "axe_dig": [0, 1],
                 "shovel": [0, 1],
-                "pickaxe": [0, 1],
+                "pickaxe_dig": [0, 1],
                 "cut": [0, 1]
             },
             "glyph": {
@@ -93,9 +93,9 @@
                 "**generic.attack_damage": 0.2
             },
             "tools": {
-                "axe": [0, 4],
+                "axe_dig": [0, 4],
                 "shovel": [0, 4],
-                "pickaxe": [0, 4],
+                "pickaxe_dig": [0, 4],
                 "cut": [0, 4]
             },
             "glyph": {

@@ -20,7 +20,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:granite"
+        "items": [ "minecraft:granite" ]
     },
     "requiredTools": {
         "hammer": 1

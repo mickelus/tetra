@@ -18,7 +18,7 @@
         "default"
     ],
     "material": {
-        "item": "tetra:dragon_sinew"
+        "items": [ "tetra:dragon_sinew" ]
     },
     "requiredTools": {
         "cut": 3

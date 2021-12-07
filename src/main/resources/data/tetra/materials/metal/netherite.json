@@ -19,7 +19,7 @@
         "metal"
     ],
     "material": {
-        "item": "minecraft:netherite_ingot"
+        "items": [ "minecraft:netherite_ingot" ]
     },
     "requiredTools": {
         "hammer": 4

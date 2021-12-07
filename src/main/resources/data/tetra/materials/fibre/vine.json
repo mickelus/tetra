@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:vine"
+        "items": [ "minecraft:vine" ]
     },
     "requiredTools": {
         "cut": 1

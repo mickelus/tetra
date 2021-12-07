@@ -1,6 +1,6 @@
 {
     "material": {
-        "item": "minecraft:prismarine_crystals",
+        "items": [ "minecraft:prismarine_crystals" ],
         "count": 3
     },
     "requiredTools": {

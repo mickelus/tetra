@@ -28,10 +28,6 @@ public interface IToolProvider {
     }
 
     default float getToolEfficiency(ItemStack itemStack, ToolAction tool) {
-        if (!canProvideTools(itemStack)) {
-            return 0;
-        }
-
         if (getToolLevel(itemStack, tool) <= 0) {
             return 0;
         }

@@ -4,7 +4,7 @@
         "level": 1,
         "enchantment": true,
         "tools": {
-            "axe": [0, 1.5],
+            "axe_dig": [0, 1.5],
             "shovel": [0, 1.5]
         },
         "magicCapacity": -31
@@ -14,7 +14,7 @@
         "level": 2,
         "enchantment": true,
         "tools": {
-            "axe": [0, 3.75],
+            "axe_dig": [0, 3.75],
             "shovel": [0, 3.75]
         },
         "magicCapacity": -41
@@ -24,7 +24,7 @@
         "level": 3,
         "enchantment": true,
         "tools": {
-            "axe": [0, 7.5],
+            "axe_dig": [0, 7.5],
             "shovel": [0, 7.5]
         },
         "magicCapacity": -51
@@ -34,7 +34,7 @@
         "level": 4,
         "enchantment": true,
         "tools": {
-            "axe": [0, 12.75],
+            "axe_dig": [0, 12.75],
             "shovel": [0, 12.75]
         },
         "magicCapacity": -61
@@ -44,7 +44,7 @@
         "level": 5,
         "enchantment": true,
         "tools": {
-            "axe": [0, 19.5],
+            "axe_dig": [0, 19.5],
             "shovel": [0, 19.5]
         },
         "magicCapacity": -71
@@ -54,7 +54,7 @@
         "level": 6,
         "enchantment": true,
         "tools": {
-            "axe": [0, 27.75],
+            "axe_dig": [0, 27.75],
             "shovel": [0, 27.75]
         },
         "magicCapacity": -81
@@ -64,7 +64,7 @@
         "level": 7,
         "enchantment": true,
         "tools": {
-            "axe": [0, 37.5],
+            "axe_dig": [0, 37.5],
             "shovel": [0, 37.5]
         },
         "magicCapacity": -91
@@ -74,7 +74,7 @@
         "level": 8,
         "enchantment": true,
         "tools": {
-            "axe": [0, 48.75],
+            "axe_dig": [0, 48.75],
             "shovel": [0, 48.75]
         },
         "magicCapacity": -101
@@ -84,7 +84,7 @@
         "level": 9,
         "enchantment": true,
         "tools": {
-            "axe": [0, 61.5],
+            "axe_dig": [0, 61.5],
             "shovel": [0, 61.5]
         },
         "magicCapacity": -111
@@ -94,7 +94,7 @@
         "level": 10,
         "enchantment": true,
         "tools": {
-            "axe": [0, 75.75],
+            "axe_dig": [0, 75.75],
             "shovel": [0, 75.75]
         },
         "magicCapacity": -121
@@ -104,7 +104,7 @@
         "level": 11,
         "enchantment": true,
         "tools": {
-            "axe": [0, 91.5],
+            "axe_dig": [0, 91.5],
             "shovel": [0, 91.5]
         },
         "magicCapacity": -131
@@ -114,7 +114,7 @@
         "level": 12,
         "enchantment": true,
         "tools": {
-            "axe": [0, 108.75],
+            "axe_dig": [0, 108.75],
             "shovel": [0, 108.75]
         },
         "magicCapacity": -141
@@ -124,7 +124,7 @@
         "level": 13,
         "enchantment": true,
         "tools": {
-            "axe": [0, 127.5],
+            "axe_dig": [0, 127.5],
             "shovel": [0, 127.5]
         },
         "magicCapacity": -151
@@ -134,7 +134,7 @@
         "level": 14,
         "enchantment": true,
         "tools": {
-            "axe": [0, 147.75],
+            "axe_dig": [0, 147.75],
             "shovel": [0, 147.75]
         },
         "magicCapacity": -161
@@ -144,7 +144,7 @@
         "level": 15,
         "enchantment": true,
         "tools": {
-            "axe": [0, 169.5],
+            "axe_dig": [0, 169.5],
             "shovel": [0, 169.5]
         },
         "magicCapacity": -171
@@ -154,7 +154,7 @@
         "level": 1,
         "enchantment": true,
         "tools": {
-            "axe": [0, -1.5],
+            "axe_dig": [0, -1.5],
             "shovel": [0, -1.5]
         },
         "glyph": {
@@ -166,7 +166,7 @@
         "level": 2,
         "enchantment": true,
         "tools": {
-            "axe": [0, -3.75],
+            "axe_dig": [0, -3.75],
             "shovel": [0, -3.75]
         },
         "glyph": {
@@ -178,7 +178,7 @@
         "level": 3,
         "enchantment": true,
         "tools": {
-            "axe": [0, -7.5],
+            "axe_dig": [0, -7.5],
             "shovel": [0, -7.5]
         },
         "glyph": {
@@ -190,7 +190,7 @@
         "level": 4,
         "enchantment": true,
         "tools": {
-            "axe": [0, -12.75],
+            "axe_dig": [0, -12.75],
             "shovel": [0, -12.75]
         },
         "glyph": {

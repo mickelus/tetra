@@ -14,9 +14,9 @@
                 "**generic.attack_damage": 0.1
             },
             "tools": {
-                "axe": [0, 2],
+                "axe_dig": [0, 2],
                 "shovel": [0, 2],
-                "pickaxe": [0, 2],
+                "pickaxe_dig": [0, 2],
                 "hoe": [0, 2],
                 "cut": [0, 2]
             },
@@ -94,9 +94,9 @@
                 "**generic.attack_damage": 0.2
             },
             "tools": {
-                "axe": [0, 4],
+                "axe_dig": [0, 4],
                 "shovel": [0, 4],
-                "pickaxe": [0, 4],
+                "pickaxe_dig": [0, 4],
                 "hoe": [0, 4],
                 "cut": [0, 4]
             },

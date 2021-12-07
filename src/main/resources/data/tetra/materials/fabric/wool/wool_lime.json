@@ -21,7 +21,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:lime_wool"
+        "items": [ "minecraft:lime_wool" ]
     },
     "requiredTools": {
         "cut": 1

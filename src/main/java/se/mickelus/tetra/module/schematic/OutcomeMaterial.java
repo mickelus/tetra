@@ -29,13 +29,20 @@ import se.mickelus.tetra.data.deserializer.ItemPredicateDeserializer;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @ParametersAreNonnullByDefault
 public class OutcomeMaterial {
     private static final Logger logger = LogManager.getLogger();
+    private static final JsonArray emptyArray = new JsonArray();
 
     public int count = 1;
 
-    protected ItemStack itemStack;
+    protected Collection<ItemStack> itemStacks = Collections.emptyList();
     protected ResourceLocation tagLocation;
 
     private ItemPredicate predicate;
@@ -44,10 +51,10 @@ public class OutcomeMaterial {
         OutcomeMaterial result = new OutcomeMaterial();
         result.count = Math.round(count * multiplier) + offset;
 
-        if (itemStack != null) {
-            result.itemStack = itemStack.copy();
-            result.itemStack.setCount(result.count);
-        }
+        result.itemStacks = itemStacks.stream()
+                .map(ItemStack::copy)
+                .peek(result::setCount)
+                .collect(Collectors.toList());
 
         result.tagLocation = tagLocation;
         result.predicate = predicate;
@@ -70,8 +77,8 @@ public class OutcomeMaterial {
     public Component[] getDisplayNames() {
         if (getPredicate() == null) {
             return new Component[] {new TextComponent("Unknown material")};
-        } else if (itemStack != null) {
-            return new Component[] {itemStack.getHoverName()};
+        } else if (itemStacks != null) {
+            return itemStacks.stream().map(ItemStack::getHoverName).toArray(Component[]::new);
         } else if (tagLocation != null) {
             return getTagCollection()
                     .getTagOrEmpty(tagLocation)
@@ -87,8 +94,8 @@ public class OutcomeMaterial {
     public ItemStack[] getApplicableItemStacks() {
         if (getPredicate() == null) {
             return new ItemStack[0];
-        } else if (itemStack != null && !itemStack.isEmpty()) {
-            return new ItemStack[] { itemStack };
+        } else if (itemStacks != null && !itemStacks.isEmpty()) {
+            return itemStacks.toArray(ItemStack[]::new);
         } else if (tagLocation != null) {
             return getTagCollection()
                     .getTagOrEmpty(tagLocation)
@@ -132,16 +139,24 @@ public class OutcomeMaterial {
                 material.count = GsonHelper.getAsInt(jsonObject, "count", 1);
                 jsonObject.remove("count");
 
-                if (jsonObject.has("item")) {
+                if (jsonObject.has("items")) {
                     try {
-                        Item item = GsonHelper.getAsItem(jsonObject, "item");
-                        material.itemStack = new ItemStack(item, material.count);
-                    } catch (JsonSyntaxException e) {}
+                        material.itemStacks = StreamSupport.stream(GsonHelper.getAsJsonArray(jsonObject, "items", emptyArray).spliterator(), false)
+                                .map(jsonElement -> GsonHelper.convertToString(jsonElement, "item"))
+                                .map(ResourceLocation::new)
+                                .map(Registry.ITEM::getOptional)
+                                .filter(Optional::isPresent)
+                                .map(Optional::get)
+                                .map(item -> new ItemStack(item, material.count))
+                                .collect(Collectors.toList());
+                    } catch (JsonSyntaxException e) {
+                        material.itemStacks = Collections.emptyList();
+                    }
 
-                    if (material.itemStack != null && jsonObject.has("nbt")) {
+                    if (!material.itemStacks.isEmpty() && jsonObject.has("nbt")) {
                         try {
                             CompoundTag compoundnbt = TagParser.parseTag(GsonHelper.convertToString(jsonObject.get("nbt"), "nbt"));
-                            material.itemStack.setTag(compoundnbt);
+                            material.itemStacks.forEach(itemStack -> itemStack.setTag(compoundnbt));
                         } catch (CommandSyntaxException exception) {
                             throw new JsonSyntaxException("Encountered invalid nbt tag when parsing material: " + exception.getMessage());
                         }

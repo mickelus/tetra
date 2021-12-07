@@ -22,6 +22,6 @@
         "tag": "minecraft:planks"
     },
     "requiredTools": {
-        "axe": 1
+        "axe_dig": 1
     }
 }

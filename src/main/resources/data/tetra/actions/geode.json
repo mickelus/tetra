@@ -2,7 +2,7 @@
     {
         "key": "break_geode_action",
         "requirement": {
-            "items": "tetra:geode"
+            "items": [ "tetra:geode" ]
         },
         "requiredTools": {
             "hammer": 2
@@ -12,7 +12,7 @@
     {
         "key": "shatter_diamond_action",
         "requirement": {
-            "items": "tetra:pristine_diamond"
+            "items": [ "tetra:pristine_diamond" ]
         },
         "requiredTools": {
             "hammer": 2
@@ -22,7 +22,7 @@
     {
         "key": "shatter_emerald_action",
         "requirement": {
-            "items": "tetra:pristine_emerald"
+            "items": [ "tetra:pristine_emerald" ]
         },
         "requiredTools": {
             "hammer": 2
@@ -32,7 +32,7 @@
     {
         "key": "shatter_lapis_action",
         "requirement": {
-            "items": "tetra:pristine_lapis"
+            "items": [ "tetra:pristine_lapis" ]
         },
         "requiredTools": {
             "hammer": 2

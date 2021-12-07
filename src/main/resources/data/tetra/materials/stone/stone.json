@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:cobblestone"
+        "items": [ "minecraft:cobblestone" ]
     },
     "requiredTools": {
         "hammer": 1

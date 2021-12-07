@@ -76,7 +76,10 @@
                     "generic.attack_damage": 0.25
                 },
                 "tools": {
-                    "axe": [1, 1]
+                    "axe_dig": [1, 1],
+                    "axe_strip": [1, 1],
+                    "axe_scrape": [1, 1],
+                    "axe_wax_off": [1, 1]
                 },
                 "durability": 0.5,
                 "integrity": -1,

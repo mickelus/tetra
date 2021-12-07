@@ -36,7 +36,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "tetra:quick_latch"
+                "items": [ "tetra:quick_latch" ]
             },
             "improvements": {
                 "quiver/quick_latch": 0

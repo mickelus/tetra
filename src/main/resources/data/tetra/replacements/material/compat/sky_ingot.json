@@ -5,7 +5,7 @@
             "modid": "naturesaura"
         }],
                 "predicate": {
-            "items": "naturesaura:sky_pickaxe"
+            "items": [ "naturesaura:sky_pickaxe" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -21,7 +21,7 @@
     },
     {
                 "predicate": {
-            "items": "naturesaura:sky_axe"
+            "items": [ "naturesaura:sky_axe" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -37,7 +37,7 @@
     },
     {
                 "predicate": {
-            "items": "naturesaura:sky_hoe"
+            "items": [ "naturesaura:sky_hoe" ]
         },
         "item": "tetra:modular_double",
         "modules": {
@@ -53,7 +53,7 @@
     },
     {
                 "predicate": {
-            "items": "naturesaura:sky_shovel"
+            "items": [ "naturesaura:sky_shovel" ]
         },
         "item": "tetra:modular_single",
         "modules": {
@@ -67,7 +67,7 @@
     },
     {
                 "predicate": {
-            "items": "naturesaura:sky_sword"
+            "items": [ "naturesaura:sky_sword" ]
         },
         "item": "tetra:modular_sword",
         "modules": {

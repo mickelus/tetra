@@ -21,7 +21,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:pink_wool"
+        "items": [ "minecraft:pink_wool" ]
     },
     "requiredTools": {
         "cut": 1

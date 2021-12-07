@@ -19,9 +19,9 @@
         "wooden"
     ],
     "material": {
-        "item": "minecraft:jungle_planks"
+        "items": [ "minecraft:jungle_planks" ]
     },
     "requiredTools": {
-        "axe": 1
+        "axe_dig": 1
     }
 }

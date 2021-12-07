@@ -17,7 +17,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "minecraft:shulker_shell",
+                "items": [ "minecraft:shulker_shell" ],
                 "count": 3
             },
             "moduleKey": "toolbelt/belt",

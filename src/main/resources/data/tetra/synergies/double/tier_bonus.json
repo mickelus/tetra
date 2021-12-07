@@ -3,7 +3,7 @@
         "modules": ["double/basic_pickaxe", "double/basic_pickaxe"],
         "sameVariant": true,
         "tools": {
-            "pickaxe": 1
+            "pickaxe_dig": 1
         }
     },
     {

@@ -18,7 +18,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "minecraft:leather",
+                "items": [ "minecraft:leather" ],
                 "count": 3
             },
             "requiredTools": {
@@ -29,7 +29,7 @@
         },
         {
             "material": {
-                "item": "minecraft:iron_ingot",
+                "items": [ "minecraft:iron_ingot" ],
                 "count": 3
             },
             "requiredTools": {

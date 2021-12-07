@@ -19,9 +19,9 @@
         "wooden"
     ],
     "material": {
-        "item": "minecraft:acacia_planks"
+        "items": [ "minecraft:acacia_planks" ]
     },
     "requiredTools": {
-        "axe": 1
+        "axe_dig": 1
     }
 }

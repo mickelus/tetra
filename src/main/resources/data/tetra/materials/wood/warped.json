@@ -19,12 +19,12 @@
         "wooden"
     ],
     "material": {
-        "item": "minecraft:warped_planks"
+        "items": [ "minecraft:warped_planks" ]
     },
     "effects": {
         "unstable": 30
     },
     "requiredTools": {
-        "axe": 3
+        "axe_dig": 3
     }
 }

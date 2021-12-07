@@ -21,7 +21,7 @@
         "default"
     ],
     "material": {
-        "item": "minecraft:cyan_wool"
+        "items": [ "minecraft:cyan_wool" ]
     },
     "requiredTools": {
         "cut": 1

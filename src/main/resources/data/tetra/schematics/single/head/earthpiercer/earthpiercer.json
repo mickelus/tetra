@@ -14,7 +14,7 @@
     "outcomes": [
         {
             "material": {
-                "item": "tetra:earthpiercer"
+                "items": [ "tetra:earthpiercer" ]
             },
             "requiredTools": {
                 "hammer": 1

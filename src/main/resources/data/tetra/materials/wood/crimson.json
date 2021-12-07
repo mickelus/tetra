@@ -19,9 +19,9 @@
         "wooden"
     ],
     "material": {
-        "item": "minecraft:crimson_planks"
+        "items": [ "minecraft:crimson_planks" ]
     },
     "requiredTools": {
-        "axe": 3
+        "axe_dig": 3
     }
 }
