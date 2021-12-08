@@ -5,6 +5,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Multimap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -208,6 +209,18 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
         return Math.min(stack.getMaxDamage() - stack.getDamageValue() - 1, amount);
+    }
+
+    @Override
+    public int getBarWidth(ItemStack itemStack) {
+        return Math.round(13.0F - (float)itemStack.getDamageValue() * 13.0F / (float) getMaxDamage(itemStack));
+    }
+
+    @Override
+    public int getBarColor(ItemStack itemStack) {
+        float maxDamage = getMaxDamage(itemStack);
+        float f = Math.max(0.0F, (maxDamage - itemStack.getDamageValue()) / maxDamage);
+        return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
     }
 
     @Override
