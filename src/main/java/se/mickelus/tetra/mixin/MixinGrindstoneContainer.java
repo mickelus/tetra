@@ -11,7 +11,7 @@ import se.mickelus.tetra.items.modular.IModularItem;
 @Mixin(GrindstoneMenu.class)
 public class MixinGrindstoneContainer {
 
-    @Inject(at = @At("HEAD"), method = "removeEnchantments", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "removeNonCurses", cancellable = true)
     private void removeEnchantments(ItemStack itemStack, int damage, int count, CallbackInfoReturnable<ItemStack> callback) {
         if (itemStack.getItem() instanceof IModularItem) {
             ItemStack result = IModularItem.removeAllEnchantments(itemStack.copy());
