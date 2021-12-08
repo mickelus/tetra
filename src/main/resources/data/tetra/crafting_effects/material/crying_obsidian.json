@@ -8,7 +8,7 @@
         {
             "type": "tetra:material",
             "material": {
-                "item": "minecraft:crying_obsidian"
+                "items": ["minecraft:crying_obsidian"]
             }
         }
     ],
