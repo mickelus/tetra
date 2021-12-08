@@ -8,7 +8,7 @@
     "integrityCost": "1",
     "integrityGain": "4",
     "magicCapacity": "80",
-    "toolLevel": "2",
+    "toolLevel": "3",
     "toolEfficiency": "5",
     "tints": {
         "glyph": "flint_glyph",

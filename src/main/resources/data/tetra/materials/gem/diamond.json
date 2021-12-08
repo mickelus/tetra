@@ -8,7 +8,7 @@
     "integrityCost": "2",
     "integrityGain": "2",
     "magicCapacity": "60",
-    "toolLevel": "4",
+    "toolLevel": "5",
     "toolEfficiency": "8",
     "tints": {
         "glyph": "diamond_glyph",

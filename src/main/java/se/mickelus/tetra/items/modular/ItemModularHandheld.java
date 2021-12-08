@@ -31,6 +31,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -47,6 +48,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
@@ -816,7 +818,6 @@ public class ItemModularHandheld extends ModularItem {
         return super.canPerformAction(stack, toolAction);
     }
 
-    // todo 1.18: replace harvest checks
     public int getHarvestLevel(ItemStack stack, ToolAction tool, @Nullable Player player, @Nullable BlockState blockState) {
         if (!isBroken(stack)) {
             int toolTier = getToolLevel(stack, tool);
@@ -827,7 +828,6 @@ public class ItemModularHandheld extends ModularItem {
         return -1;
     }
 
-    // todo 1.18: replace harvest checks
     @Override
     public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
         if (!state.requiresCorrectToolForDrops()) {
@@ -835,9 +835,15 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         ToolAction requiredTool = getEffectiveTool(state);
+        if (requiredTool != null) {
+            List<Tier> tiers = TierSortingRegistry.getSortedTiers();
+            int tier = getHarvestLevel(stack, requiredTool, null, state);
 
-        // todo 1.18: need taglevel map here
-        return requiredTool != null && getHarvestLevel(stack, requiredTool, null, state) >= Math.max(/* here */ 0, 0);
+            return tier > -1
+                    && tiers.size() > tier
+                    && TierSortingRegistry.isCorrectTierForDrops(tiers.get(tier), state);
+        }
+        return false;
     }
 
     @Override

@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -90,6 +91,11 @@ public class StrikingEffect {
     public static boolean causeEffect(Player breakingPlayer, ItemStack itemStack, ItemModularHandheld item, Level world, BlockPos pos, BlockState blockState) {
         int strikingLevel = 0;
         ToolAction tool = null;
+
+
+        if (breakingPlayer.hasEffect(MobEffects.DIG_SLOWDOWN)) {
+            return false;
+        }
 
         // essentially checks if the item is effective in for each tool type, and checks if it can strike for that type
         if (ItemModularHandheld.isToolEffective(ToolActions.AXE_DIG, blockState)) {

@@ -8,7 +8,7 @@
     "integrityCost": "2",
     "integrityGain": "6",
     "magicCapacity": "90",
-    "toolLevel": "2",
+    "toolLevel": "3",
     "toolEfficiency": "4",
     "tints": {
         "glyph": "warped_glyph",

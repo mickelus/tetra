@@ -8,7 +8,7 @@
     "integrityCost": "2",
     "integrityGain": "1",
     "magicCapacity": "144",
-    "toolLevel": "2",
+    "toolLevel": "3",
     "toolEfficiency": "13",
     "tints": {
         "glyph": "electrum_glyph",

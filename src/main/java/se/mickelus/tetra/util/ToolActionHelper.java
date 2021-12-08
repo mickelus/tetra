@@ -4,7 +4,6 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.Tag;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -31,12 +30,6 @@ public class ToolActionHelper {
         appropriateTools.put(ToolActions.SHOVEL_DIG, MINEABLE_WITH_SHOVEL);
         appropriateTools.put(ToolActions.HOE_DIG, MINEABLE_WITH_HOE);
     }
-
-	/*
-   public static final Tag.Named<Block> NEEDS_DIAMOND_TOOL = bind("needs_diamond_tool");
-   public static final Tag.Named<Block> NEEDS_IRON_TOOL = bind("needs_iron_tool");
-   public static final Tag.Named<Block> NEEDS_STONE_TOOL = bind("needs_stone_tool");
-	 */
 
     private static Stream<ToolAction> getActionsFor(BlockState state) {
         return ToolAction.getActions()
@@ -87,14 +80,19 @@ public class ToolActionHelper {
     }
 
     public static boolean playerCanDestroyBlock(Player player, BlockState state, BlockPos pos, ItemStack toolStack, @Nullable ToolAction useAction) {
-        if (state.getDestroySpeed(player.level, pos) < 0)
+        if (state.getDestroySpeed(player.level, pos) < 0) {
             return false;
-        if (player.hasEffect(MobEffects.DIG_SLOWDOWN))
+        }
+        if (useAction == null ? !isEffectiveOn(toolStack, state) : !isEffectiveOn(useAction, state)) {
             return false;
-        if (useAction == null ? !isEffectiveOn(toolStack, state) : !isEffectiveOn(useAction, state))
+        }
+        if (!toolStack.isCorrectToolForDrops(state)) {
             return false;
-        if (!toolStack.isCorrectToolForDrops(state))
+        }
+        if (!ForgeEventFactory.doPlayerHarvestCheck(player, state, true)) {
             return false;
-        return ForgeEventFactory.doPlayerHarvestCheck(player, state, !state.requiresCorrectToolForDrops() || toolStack.isCorrectToolForDrops(state));
+        }
+
+        return true;
     }
 }
