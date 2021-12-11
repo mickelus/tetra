@@ -2132,6 +2132,8 @@
   "tetra.improvement.enchantment/apotheosis_magic_protection.description":"Magic damage dealt by and to the user is reduced.",
   "tetra.improvement.destabilized/apotheosis_magic_protection.name":"\u00a75不穩定: Occult Aversion",
   "tetra.improvement.destabilized/apotheosis_magic_protection.description":"Reduces the effect of the Occult Aversion enchantment",
+  "tetra.improvement.enchantment/apotheosis_true_infinity.name": "Endless Quiver",
+  "tetra.improvement.enchantment/apotheosis_true_infinity.description": "Makes all arrows infinite",
   "tetra.improvement.enchantment/cyclic_excavate.name":"Excavate",
   "tetra.improvement.enchantment/cyclic_excavate.description":"Harvests the whole vein of connected matching blocks, not including diagonals",
   "tetra.improvement.destabilized/cyclic_excavate.name":"\u00a75不穩定: Excavate",
