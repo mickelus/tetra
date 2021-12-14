@@ -3,6 +3,7 @@ package se.mickelus.tetra;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -57,6 +58,7 @@ import se.mickelus.tetra.blocks.rack.RackTile;
 import se.mickelus.tetra.blocks.scroll.*;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTESR;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
@@ -79,6 +81,7 @@ import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.effect.revenge.AddRevengePacket;
 import se.mickelus.tetra.effect.revenge.RemoveRevengePacket;
+import se.mickelus.tetra.generation.ExtendedStructureRenderer;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
@@ -198,20 +201,20 @@ public class TetraMod {
         blocks = new Block[] {
                 new BasicWorkbenchBlock(),
                 new GeodeBlock(),
-                new HammerHeadBlock(),
-                new HammerBaseBlock(),
-                new BlockForgedWall(),
-                new BlockForgedPillar(),
-                new BlockForgedPlatform(),
-                new BlockForgedPlatformSlab(),
-                new ForgedVentBlock(),
-                new ForgedWorkbenchBlock(),
-                new ForgedContainerBlock(),
-                new ForgedCrateBlock(),
-                new TransferUnitBlock(),
-                new CoreExtractorBaseBlock(),
-                new CoreExtractorPistonBlock(),
-                new CoreExtractorPipeBlock(),
+//                new HammerHeadBlock(),
+//                new HammerBaseBlock(),
+//                new BlockForgedWall(),
+//                new BlockForgedPillar(),
+//                new BlockForgedPlatform(),
+//                new BlockForgedPlatformSlab(),
+//                new ForgedVentBlock(),
+//                new ForgedWorkbenchBlock(),
+//                new ForgedContainerBlock(),
+//                new ForgedCrateBlock(),
+//                new TransferUnitBlock(),
+//                new CoreExtractorBaseBlock(),
+//                new CoreExtractorPistonBlock(),
+//                new CoreExtractorPipeBlock(),
                 new SeepingBedrockBlock(),
                 new RackBlock(),
                 new ChthonicExtractorBlock(),
@@ -230,16 +233,16 @@ public class TetraMod {
                 new PristineEmeraldItem(),
                 new PristineDiamondItem(),
                 new ModularToolbeltItem(),
-                new ItemCellMagmatic(),
+//                new ItemCellMagmatic(),
                 new ItemBolt(),
                 new ItemBeam(),
                 new ItemMesh(),
                 new ItemQuickLatch(),
                 new ItemMetalScrap(),
                 new InsulatedPlateItem(),
-                new CombustionChamberItem(),
+//                new CombustionChamberItem(),
                 new PlanarStabilizerItem(),
-                new LubricantDispenser(),
+//                new LubricantDispenser(),
                 new ModularHolosphereItem(),
                 new EarthpiercerItem(),
                 new DragonSinewItem(),
@@ -333,8 +336,8 @@ public class TetraMod {
                     .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
                     .forEach(event::addSprite);
 
-            event.addSprite(ForgedContainerRenderer.material.texture());
-            event.addSprite(HammerBaseRenderer.material.texture());
+//            event.addSprite(ForgedContainerRenderer.material.texture());
+//            event.addSprite(HammerBaseRenderer.material.texture());
             event.addSprite(ScrollRenderer.material.texture());
         }
     }
@@ -348,8 +351,8 @@ public class TetraMod {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ForgedContainerRenderer.layer, ForgedContainerRenderer::createLayer);
-        event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
+//        event.registerLayerDefinition(ForgedContainerRenderer.layer, ForgedContainerRenderer::createLayer);
+//        event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
         event.registerLayerDefinition(ScrollRenderer.layer, ScrollRenderer::createLayer);
     }
 
@@ -359,10 +362,11 @@ public class TetraMod {
         event.registerEntityRenderer(ExtractorProjectileEntity.type, ExtractorProjectileRenderer::new);
         event.registerEntityRenderer(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
 
-        event.registerBlockEntityRenderer(ForgedContainerTile.type, ForgedContainerRenderer::new);
-        event.registerBlockEntityRenderer(CoreExtractorPistonTile.type, CoreExtractorPistonRenderer::new);
-        event.registerBlockEntityRenderer(HammerBaseTile.type, HammerBaseRenderer::new);
-        event.registerBlockEntityRenderer(HammerHeadTile.type, HammerHeadTESR::new);
+//        event.registerBlockEntityRenderer(ForgedContainerTile.type, ForgedContainerRenderer::new);
+//        event.registerBlockEntityRenderer(CoreExtractorPistonTile.type, CoreExtractorPistonRenderer::new);
+//        event.registerBlockEntityRenderer(HammerBaseTile.type, HammerBaseRenderer::new);
+//        event.registerBlockEntityRenderer(HammerHeadTile.type, HammerHeadTESR::new);
+
     }
 
     @SubscribeEvent
@@ -425,11 +429,11 @@ public class TetraMod {
             event.getRegistry().register(workbenchContainerType);
 
             // forged container
-            MenuType<?> forgedContainerContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
-                BlockPos pos = data.readBlockPos();
-                return ForgedContainerContainer.create(windowId, pos, inv);
-            })).setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName);
-            event.getRegistry().register(forgedContainerContainerType);
+//            MenuType<?> forgedContainerContainerType = IForgeMenuType.create(((windowId, inv, data) -> {
+//                BlockPos pos = data.readBlockPos();
+//                return ForgedContainerContainer.create(windowId, pos, inv);
+//            })).setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName);
+//            event.getRegistry().register(forgedContainerContainerType);
         }
 
         @SubscribeEvent
@@ -451,33 +455,33 @@ public class TetraMod {
         @SubscribeEvent
         public static void registerTileEntities(final RegistryEvent.Register<BlockEntityType<?>> event) {
             event.getRegistry().register(BlockEntityType.Builder.of(WorkbenchTile::new,
-                    BasicWorkbenchBlock.instance, ForgedWorkbenchBlock.instance)
+                    BasicWorkbenchBlock.instance) //, ForgedWorkbenchBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, WorkbenchTile.unlocalizedName));
-
-            event.getRegistry().register(BlockEntityType.Builder.of(HammerBaseTile::new, HammerBaseBlock.instance)
-                    .build(null)
-                    .setRegistryName(MOD_ID, HammerBaseBlock.unlocalizedName));
-
-            event.getRegistry().register(BlockEntityType.Builder.of(HammerHeadTile::new, HammerHeadBlock.instance)
-                    .build(null)
-                    .setRegistryName(MOD_ID, HammerHeadBlock.unlocalizedName));
-
-            event.getRegistry().register(BlockEntityType.Builder.of(TransferUnitTile::new, TransferUnitBlock.instance)
-                    .build(null)
-                    .setRegistryName(MOD_ID, TransferUnitBlock.unlocalizedName));
-
-            event.getRegistry().register(BlockEntityType.Builder.of(CoreExtractorBaseTile::new, CoreExtractorBaseBlock.instance)
-                    .build(null)
-                    .setRegistryName(MOD_ID, CoreExtractorBaseBlock.unlocalizedName));
-
-            event.getRegistry().register(BlockEntityType.Builder.of(CoreExtractorPistonTile::new, CoreExtractorPistonBlock.instance)
-                    .build(null)
-                    .setRegistryName(MOD_ID, CoreExtractorPistonBlock.unlocalizedName));
-
-            event.getRegistry().register(BlockEntityType.Builder.of(ForgedContainerTile::new, ForgedContainerBlock.instance)
-                    .build(null)
-                    .setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName));
+//
+//            event.getRegistry().register(BlockEntityType.Builder.of(HammerBaseTile::new, HammerBaseBlock.instance)
+//                    .build(null)
+//                    .setRegistryName(MOD_ID, HammerBaseBlock.unlocalizedName));
+//
+//            event.getRegistry().register(BlockEntityType.Builder.of(HammerHeadTile::new, HammerHeadBlock.instance)
+//                    .build(null)
+//                    .setRegistryName(MOD_ID, HammerHeadBlock.unlocalizedName));
+//
+//            event.getRegistry().register(BlockEntityType.Builder.of(TransferUnitTile::new, TransferUnitBlock.instance)
+//                    .build(null)
+//                    .setRegistryName(MOD_ID, TransferUnitBlock.unlocalizedName));
+//
+//            event.getRegistry().register(BlockEntityType.Builder.of(CoreExtractorBaseTile::new, CoreExtractorBaseBlock.instance)
+//                    .build(null)
+//                    .setRegistryName(MOD_ID, CoreExtractorBaseBlock.unlocalizedName));
+//
+//            event.getRegistry().register(BlockEntityType.Builder.of(CoreExtractorPistonTile::new, CoreExtractorPistonBlock.instance)
+//                    .build(null)
+//                    .setRegistryName(MOD_ID, CoreExtractorPistonBlock.unlocalizedName));
+//
+//            event.getRegistry().register(BlockEntityType.Builder.of(ForgedContainerTile::new, ForgedContainerBlock.instance)
+//                    .build(null)
+//                    .setRegistryName(MOD_ID, ForgedContainerBlock.unlocalizedName));
 
             event.getRegistry().register(BlockEntityType.Builder.of(ChthonicExtractorTile::new, ChthonicExtractorBlock.instance)
                     .build(null)

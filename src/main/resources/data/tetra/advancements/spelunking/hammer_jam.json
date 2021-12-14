@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:hammer_base"
+            "item": "minecraft:barrier"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.hammer_jam.title"
@@ -12,11 +12,8 @@
     },
     "parent": "tetra:spelunking/hammer_craft",
     "criteria": {
-        "fuel": {
-            "trigger": "tetra:block_use",
-            "conditions": {
-                "after": "tetra:hammer_head"
-            }
+        "impossible": {
+            "trigger": "minecraft:impossible"
         }
     }
 }

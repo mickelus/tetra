@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:forged_pillar"
+            "item": "minecraft:barrier"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.ancient_ruins.title"
@@ -12,44 +12,8 @@
     },
     "parent": "tetra:spelunking/root",
     "criteria": {
-        "wall": {
-            "trigger": "tetra:block_look",
-            "conditions": {
-                "block": "tetra:forged_wall"
-            }
-        },
-        "pillar": {
-            "trigger": "tetra:block_look",
-            "conditions": {
-                "block": "tetra:forged_pillar"
-            }
-        },
-        "platform": {
-            "trigger": "tetra:block_look",
-            "conditions": {
-                "block": "tetra:forged_platform"
-            }
-        },
-        "platform_slab": {
-            "trigger": "tetra:block_look",
-            "conditions": {
-                "block": "tetra:forged_platform_slab"
-            }
-        },
-        "vent": {
-            "trigger": "tetra:block_look",
-            "conditions": {
-                "block": "tetra:forged_vent"
-            }
+        "impossible": {
+            "trigger": "minecraft:impossible"
         }
-    },
-    "requirements": [
-        [
-            "wall",
-            "pillar",
-            "platform",
-            "platform_slab",
-            "vent"
-        ]
-    ]
+    }
 }
