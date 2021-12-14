@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
 import com.google.common.collect.Sets;
+import com.mojang.math.Vector3d;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -19,7 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.ClipBlockStateContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -198,9 +198,8 @@ public class FracturedBedrockTile extends BlockEntity {
         });
     }
 
-    private BlockPos traceDown(BlockPos blockPos, Level level) {
+    private BlockPos traceDown(BlockPos blockPos, int minY, Level level) {
         BlockPos.MutableBlockPos movePos = blockPos.mutable();
-        int minY = level.getMinBuildHeight();
 
         while (movePos.getY() > minY) {
             movePos.move(Direction.DOWN);
@@ -270,7 +269,7 @@ public class FracturedBedrockTile extends BlockEntity {
             spawnInfo = level.getBiome(pos).getMobSettings();
         }
 
-        if (getBlockPos().distSqr(pos) < 42 && level.getRandom().nextFloat() >= spawnInfo.getCreatureProbability() / 5) {
+        if (getBlockPos().distSqr(pos) < 42 || level.getRandom().nextFloat() >= spawnInfo.getCreatureProbability() / 4) {
             return;
         }
 
@@ -279,11 +278,12 @@ public class FracturedBedrockTile extends BlockEntity {
         if (!optionalSpawnerData.isPresent())
             return;
         MobSpawnSettings.SpawnerData mob = optionalSpawnerData.get();
+        Vec3 spawnPos = Vec3.atBottomCenterOf(pos);
 
         ServerLevel serverWorld = (ServerLevel) level;
         if (mob.type.canSummon()
 //                && WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementType(mob.type), world, pos, mob.type)
-                && serverWorld.noCollision(mob.type.getAABB(pos.getX(), pos.getY(), pos.getZ()))
+                && serverWorld.noCollision(mob.type.getAABB(spawnPos.x, spawnPos.y, spawnPos.z))
                 && SpawnPlacements.checkSpawnRules(mob.type, serverWorld, MobSpawnType.SPAWNER, pos, serverWorld.getRandom())) {
 
             Entity entity;
@@ -294,13 +294,13 @@ public class FracturedBedrockTile extends BlockEntity {
                 return;
             }
 
-            entity.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
+            entity.moveTo(spawnPos);
             CastOptional.cast(entity, Mob.class)
-                    .filter(e -> ForgeHooks.canEntitySpawn(e, serverWorld, pos.getX(), pos.getY(), pos.getZ(), null, MobSpawnType.SPAWNER) != -1)
-                    .filter(e -> e.checkSpawnRules(serverWorld, MobSpawnType.CHUNK_GENERATION))
+                    .filter(e -> ForgeHooks.canEntitySpawn(e, serverWorld, spawnPos.x, spawnPos.y, spawnPos.z, null, MobSpawnType.SPAWNER) != -1)
+                    .filter(e -> e.checkSpawnRules(serverWorld, MobSpawnType.SPAWNER))
                     .filter(e -> e.checkSpawnObstruction(serverWorld))
                     .ifPresent(e -> {
-                        e.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(e.blockPosition()), MobSpawnType.CHUNK_GENERATION, null, null);
+                        e.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(e.blockPosition()), MobSpawnType.SPAWNER, null, null);
                         serverWorld.addFreshEntityWithPassengers(e);
 
                         // makes the mob angry at a nearby player
@@ -377,12 +377,13 @@ public class FracturedBedrockTile extends BlockEntity {
 
                     breakBlock(level, hitPos, hitState);
 
-                    BlockPos spawnPos = traceDown(hitPos, level);
+                    int minY = level.getMinBuildHeight();
+                    BlockPos spawnPos = traceDown(hitPos, minY, level);
                     BlockState spawnState = level.getBlockState(spawnPos);
 
                     if (canReplace(spawnState)) {
                         if (level.getRandom().nextFloat() < spawnRatio) {
-                            if (spawnPos.getY() < spawnYLimit) {
+                            if (spawnPos.getY() < minY + spawnYLimit) {
                                 spawnOre(spawnPos);
                             }
                         } else {
