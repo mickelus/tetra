@@ -26,6 +26,6 @@
         "stabilizing": 15
     },
     "requiredTools": {
-        "hammer": 1
+        "hammer_dig": 1
     }
 }

@@ -10,7 +10,7 @@
         "modules": ["double/basic_hammer", "double/basic_hammer"],
         "sameVariant": true,
         "tools": {
-            "hammer": 1
+            "hammer_dig": 1
         }
     }
 ]

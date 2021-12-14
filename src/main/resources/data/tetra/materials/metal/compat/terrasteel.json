@@ -29,6 +29,6 @@
         "mana_repair": 1
     },
     "requiredTools": {
-        "hammer": 4
+        "hammer_dig": 4
     }
 }

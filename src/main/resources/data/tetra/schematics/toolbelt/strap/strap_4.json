@@ -33,7 +33,7 @@
                 "count": 4
             },
             "requiredTools": {
-                "hammer": 6
+                "hammer_dig": 6
             },
             "moduleKey": "toolbelt/strap",
             "moduleVariant": "strap4/iron"

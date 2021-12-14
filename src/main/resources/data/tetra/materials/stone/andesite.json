@@ -23,6 +23,6 @@
         "items": [ "minecraft:andesite" ]
     },
     "requiredTools": {
-        "hammer": 1
+        "hammer_dig": 1
     }
 }

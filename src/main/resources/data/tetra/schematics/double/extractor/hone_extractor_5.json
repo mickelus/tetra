@@ -19,7 +19,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer": 7
+                "hammer_dig": 7
             },
             "improvements": {
                 "extractor_hone/potency": 5

@@ -16,7 +16,7 @@
                 "items": [ "tetra:chthonic_extractor" ]
             },
             "requiredTools": {
-                "hammer": 4
+                "hammer_dig": 4
             },
             "moduleKey": "double/extractor",
             "moduleVariant": "extractor/extractor"

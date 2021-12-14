@@ -22,6 +22,6 @@
         "items": [ "tetra:vent_plate" ]
     },
     "requiredTools": {
-        "hammer": 5
+        "hammer_dig": 5
     }
 }

@@ -24,7 +24,7 @@
                 "items": [ "tetra:planar_stabilizer" ]
             },
             "requiredTools": {
-                "hammer": 3
+                "hammer_dig": 3
             },
             "moduleKey": "toolbelt/suspender",
             "moduleVariant": "suspender/suspender"

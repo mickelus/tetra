@@ -53,7 +53,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer": [0, 0.8333]
+                    "hammer_dig": [0, 0.8333]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -74,7 +74,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer": 1
+                "hammer_dig": 1
             },
             "models": [{
                 "location": "tetra:items/module/double/head/basic_hammer/stone",
@@ -89,7 +89,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer": [0, 0.8333]
+                    "hammer_dig": [0, 0.8333]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -106,7 +106,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer": 1
+                "hammer_dig": 1
             },
             "extract": {
                 "primaryAttributes": {
@@ -117,7 +117,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer": [0, 0.8333]
+                    "hammer_dig": [0, 0.8333]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -138,7 +138,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer": 2
+                "hammer_dig": 2
             },
             "extract": {
                 "primaryAttributes": {
@@ -149,7 +149,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer": [0, 0.8333]
+                    "hammer_dig": [0, 0.8333]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -170,7 +170,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer": 3
+                "hammer_dig": 3
             },
             "integrity": -1,
             "extract": {
@@ -182,7 +182,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer": [0, 0.8333]
+                    "hammer_dig": [0, 0.8333]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -203,7 +203,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer": 4
+                "hammer_dig": 4
             },
             "models": [{
                 "location": "tetra:items/module/double/head/basic_hammer/obsidian"
@@ -217,7 +217,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer": [0, 0.8333]
+                    "hammer_dig": [0, 0.8333]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -234,7 +234,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer": 5
+                "hammer_dig": 5
             },
             "integrity": -1,
             "extract": {
@@ -246,7 +246,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer": [0, 0.8333]
+                    "hammer_dig": [0, 0.8333]
                 },
                 "durability": 0.55,
                 "integrity": -1,

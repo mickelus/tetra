@@ -15,7 +15,7 @@
         "module": {
             "trigger": "tetra:block_interaction",
             "conditions": {
-                "tool": "hammer",
+                "tool": "hammer_dig",
                 "after": {
                     "block": "tetra:chthonic_extractor"
                 }

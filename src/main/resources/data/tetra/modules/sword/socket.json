@@ -15,7 +15,7 @@
             },
             "tools": {
                 "axe_dig": [0, 1],
-                "shovel": [0, 1],
+                "shovel_dig": [0, 1],
                 "pickaxe_dig": [0, 1],
                 "cut": [0, 1]
             },
@@ -94,7 +94,7 @@
             },
             "tools": {
                 "axe_dig": [0, 4],
-                "shovel": [0, 4],
+                "shovel_dig": [0, 4],
                 "pickaxe_dig": [0, 4],
                 "cut": [0, 4]
             },

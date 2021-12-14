@@ -17,7 +17,7 @@
                 "items": [ "tetra:earthpiercer" ]
             },
             "requiredTools": {
-                "hammer": 1
+                "hammer_dig": 1
             },
             "moduleKey": "single/earthpiercer",
             "moduleVariant": "earthpiercer/earthpiercer"

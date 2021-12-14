@@ -4,7 +4,7 @@
         "count": 1
     },
     "requiredTools": {
-        "hammer": 4
+        "hammer_dig": 4
     },
     "moduleKey": "single/binding",
     "moduleVariant": "single_binding/prismarine"

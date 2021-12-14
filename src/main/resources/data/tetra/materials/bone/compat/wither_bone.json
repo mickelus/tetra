@@ -25,6 +25,6 @@
         "unstable": 10
     },
     "requiredTools": {
-        "hammer": 4
+        "hammer_dig": 4
     }
 }

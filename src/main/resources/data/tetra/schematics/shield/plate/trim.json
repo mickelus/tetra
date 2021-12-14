@@ -31,7 +31,7 @@
                 "count": 8
             },
             "requiredTools": {
-                "hammer": 4
+                "hammer_dig": 4
             },
             "improvements": {
                 "shield/trim/scrap": 0

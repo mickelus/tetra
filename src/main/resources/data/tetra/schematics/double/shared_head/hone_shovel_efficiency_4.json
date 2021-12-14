@@ -29,7 +29,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer": 3
+                "hammer_dig": 3
             },
             "improvements": {
                 "head_hone/shovel_efficiency": 4

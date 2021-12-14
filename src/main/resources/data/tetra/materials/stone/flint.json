@@ -26,6 +26,6 @@
         "workable": 1
     },
     "requiredTools": {
-        "hammer": 2
+        "hammer_dig": 2
     }
 }

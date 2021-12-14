@@ -23,6 +23,6 @@
         "tag": "forge:blackstone"
     },
     "requiredTools": {
-        "hammer": 3
+        "hammer_dig": 3
     }
 }

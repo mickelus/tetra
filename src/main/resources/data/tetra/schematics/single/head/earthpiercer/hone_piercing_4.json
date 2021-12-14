@@ -19,7 +19,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer": 7
+                "hammer_dig": 7
             },
             "improvements": {
                 "head_hone/piercing": 4

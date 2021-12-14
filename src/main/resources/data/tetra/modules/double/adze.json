@@ -54,7 +54,7 @@
                 },
                 "tools": {
                     "axe_dig": [0.6, 0.6],
-                    "shovel": [0.6, 0.6]
+                    "shovel_dig": [0.6, 0.6]
                 },
                 "durability": 0.5,
                 "integrity": -1,

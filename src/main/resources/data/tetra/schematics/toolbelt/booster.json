@@ -22,7 +22,7 @@
                 "count": 8
             },
             "requiredTools": {
-                "hammer": 3
+                "hammer_dig": 3
             },
             "moduleKey": "toolbelt/booster",
             "moduleVariant": "booster/iron"

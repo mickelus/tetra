@@ -21,7 +21,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer": 2
+                "hammer_dig": 2
             },
             "improvements": {
                 "grip_hone/speed_flat": 1

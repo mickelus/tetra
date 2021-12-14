@@ -23,7 +23,7 @@
             "generic.attack_speed": -1
         },
         "tools": {
-            "hammer": [0, 2]
+            "hammer_dig": [0, 2]
         },
         "durability": 2,
         "integrity": -3,
@@ -62,7 +62,7 @@
                 "tag": "forge:obsidian"
             },
             "requiredTools": {
-                "hammer": 6
+                "hammer_dig": 6
             },
             "moduleKey": "double/basic_hammer",
             "moduleVariant": "basic_hammer/obsidian",
@@ -76,7 +76,7 @@
                 "count": 2
             },
             "requiredTools": {
-                "hammer": 7
+                "hammer_dig": 7
             },
             "moduleKey": "double/basic_hammer",
             "moduleVariant": "basic_hammer/netherite"

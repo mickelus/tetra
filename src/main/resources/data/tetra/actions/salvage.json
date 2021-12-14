@@ -5,7 +5,7 @@
             "items": [ "tetra:forged_bolt" ]
         },
         "requiredTools": {
-            "hammer": 3
+            "hammer_dig": 3
         },
         "lootTable": "tetra:actions/bolt_salvage"
     },
@@ -15,7 +15,7 @@
             "items": [ "tetra:forged_beam" ]
         },
         "requiredTools": {
-            "hammer": 4
+            "hammer_dig": 4
         },
         "lootTable": "tetra:actions/beam_salvage"
     },
@@ -25,7 +25,7 @@
             "items": [ "tetra:forged_mesh" ]
         },
         "requiredTools": {
-            "hammer": 3
+            "hammer_dig": 3
         },
         "lootTable": "tetra:actions/mesh_salvage"
     },
@@ -35,7 +35,7 @@
             "items": [ "tetra:vent_plate" ]
         },
         "requiredTools": {
-            "hammer": 3
+            "hammer_dig": 3
         },
         "lootTable": "tetra:actions/vent_plate_salvage"
     },
@@ -45,7 +45,7 @@
             "items": [ "tetra:metal_scrap" ]
         },
         "requiredTools": {
-            "hammer": 3
+            "hammer_dig": 3
         },
         "lootTable": "tetra:actions/metal_scrap_salvage"
     },
@@ -55,7 +55,7 @@
             "items": [ "tetra:quick_latch" ]
         },
         "requiredTools": {
-            "hammer": 3
+            "hammer_dig": 3
         },
         "lootTable": "tetra:actions/quick_latch_salvage_hammer"
     },
@@ -75,7 +75,7 @@
             "items": [ "tetra:stonecutter" ]
         },
         "requiredTools": {
-            "hammer": 5
+            "hammer_dig": 5
         },
         "lootTable": "tetra:actions/stonecutter_salvage"
     },
@@ -85,7 +85,7 @@
             "items": [ "tetra:earthpiercer" ]
         },
         "requiredTools": {
-            "hammer": 5
+            "hammer_dig": 5
         },
         "lootTable": "tetra:actions/earthpiercer_salvage"
     }

@@ -11,7 +11,7 @@
             "tools": {
                 "axe_dig": [0, 0.93],
                 "pickaxe_dig": [0, 0.93],
-                "shovel": [0, 0.93],
+                "shovel_dig": [0, 0.93],
                 "cut": [0, 0.93],
                 "pry": [0, 0.93]
             }

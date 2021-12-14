@@ -22,7 +22,7 @@
                 "count": 1
             },
             "requiredTools": {
-                "hammer": 4
+                "hammer_dig": 4
             },
             "moduleKey": "toolbelt/potion_storage",
             "moduleVariant": "potion_storage/forged_mesh"

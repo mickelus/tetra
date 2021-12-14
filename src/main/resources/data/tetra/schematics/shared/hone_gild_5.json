@@ -53,7 +53,7 @@
                 "count": 7
             },
             "requiredTools": {
-                "hammer": 3
+                "hammer_dig": 3
             },
             "experienceCost": 7,
             "improvements": {

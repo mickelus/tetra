@@ -5,11 +5,11 @@
         "improvements": ["double/warforged"],
         "tools": {
             "axe_dig": -1,
-            "shovel": -1,
+            "shovel_dig": -1,
             "pickaxe_dig": -1,
-            "hoe": -1,
+            "hoe_dig": -1,
             "cut": -1,
-            "hammer": -1
+            "hammer_dig": -1
         },
         "effects": {
             "abilitySpeed": 20

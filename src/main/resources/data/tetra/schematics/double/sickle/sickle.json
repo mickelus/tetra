@@ -19,7 +19,7 @@
             "generic.attack_damage": 3
         },
         "tools": {
-            "hoe": [2, 2]
+            "hoe_dig": [2, 2]
         },
         "durability": 2,
         "integrity": -3,

@@ -15,9 +15,9 @@
             },
             "tools": {
                 "axe_dig": [0, 2],
-                "shovel": [0, 2],
+                "shovel_dig": [0, 2],
                 "pickaxe_dig": [0, 2],
-                "hoe": [0, 2],
+                "hoe_dig": [0, 2],
                 "cut": [0, 2]
             },
             "glyph": {
@@ -95,9 +95,9 @@
             },
             "tools": {
                 "axe_dig": [0, 4],
-                "shovel": [0, 4],
+                "shovel_dig": [0, 4],
                 "pickaxe_dig": [0, 4],
-                "hoe": [0, 4],
+                "hoe_dig": [0, 4],
                 "cut": [0, 4]
             },
             "glyph": {

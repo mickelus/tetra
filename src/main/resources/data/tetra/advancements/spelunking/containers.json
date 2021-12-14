@@ -24,7 +24,7 @@
         "crate2": {
             "trigger": "tetra:block_interaction",
             "conditions": {
-                "tool": "hammer",
+                "tool": "hammer_dig",
                 "after": {
                     "block": "minecraft:air"
                 }

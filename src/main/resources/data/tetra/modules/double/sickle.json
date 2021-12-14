@@ -53,7 +53,7 @@
                     "generic.attack_damage": 1
                 },
                 "tools": {
-                    "hoe": [0.74, 0.8333]
+                    "hoe_dig": [0.74, 0.8333]
                 },
                 "durability": 0.5,
                 "integrity": -1,

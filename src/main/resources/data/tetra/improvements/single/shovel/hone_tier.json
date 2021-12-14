@@ -3,7 +3,7 @@
         "key": "head_hone/shovel_tier",
         "integrity": -1,
         "tools": {
-            "shovel": 1
+            "shovel_dig": 1
         }
     }
 ]

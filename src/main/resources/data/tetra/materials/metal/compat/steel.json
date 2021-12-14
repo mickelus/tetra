@@ -22,6 +22,6 @@
         "tag": "forge:ingots/steel"
     },
     "requiredTools": {
-        "hammer": 3
+        "hammer_dig": 3
     }
 }

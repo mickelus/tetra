@@ -5,7 +5,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 1.5],
-            "shovel": [0, 1.5]
+            "shovel_dig": [0, 1.5]
         },
         "magicCapacity": -31
     },
@@ -15,7 +15,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 3.75],
-            "shovel": [0, 3.75]
+            "shovel_dig": [0, 3.75]
         },
         "magicCapacity": -41
     },
@@ -25,7 +25,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 7.5],
-            "shovel": [0, 7.5]
+            "shovel_dig": [0, 7.5]
         },
         "magicCapacity": -51
     },
@@ -35,7 +35,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 12.75],
-            "shovel": [0, 12.75]
+            "shovel_dig": [0, 12.75]
         },
         "magicCapacity": -61
     },
@@ -45,7 +45,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 19.5],
-            "shovel": [0, 19.5]
+            "shovel_dig": [0, 19.5]
         },
         "magicCapacity": -71
     },
@@ -55,7 +55,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 27.75],
-            "shovel": [0, 27.75]
+            "shovel_dig": [0, 27.75]
         },
         "magicCapacity": -81
     },
@@ -65,7 +65,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 37.5],
-            "shovel": [0, 37.5]
+            "shovel_dig": [0, 37.5]
         },
         "magicCapacity": -91
     },
@@ -75,7 +75,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 48.75],
-            "shovel": [0, 48.75]
+            "shovel_dig": [0, 48.75]
         },
         "magicCapacity": -101
     },
@@ -85,7 +85,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 61.5],
-            "shovel": [0, 61.5]
+            "shovel_dig": [0, 61.5]
         },
         "magicCapacity": -111
     },
@@ -95,7 +95,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 75.75],
-            "shovel": [0, 75.75]
+            "shovel_dig": [0, 75.75]
         },
         "magicCapacity": -121
     },
@@ -105,7 +105,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 91.5],
-            "shovel": [0, 91.5]
+            "shovel_dig": [0, 91.5]
         },
         "magicCapacity": -131
     },
@@ -115,7 +115,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 108.75],
-            "shovel": [0, 108.75]
+            "shovel_dig": [0, 108.75]
         },
         "magicCapacity": -141
     },
@@ -125,7 +125,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 127.5],
-            "shovel": [0, 127.5]
+            "shovel_dig": [0, 127.5]
         },
         "magicCapacity": -151
     },
@@ -135,7 +135,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 147.75],
-            "shovel": [0, 147.75]
+            "shovel_dig": [0, 147.75]
         },
         "magicCapacity": -161
     },
@@ -145,7 +145,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, 169.5],
-            "shovel": [0, 169.5]
+            "shovel_dig": [0, 169.5]
         },
         "magicCapacity": -171
     },
@@ -155,7 +155,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, -1.5],
-            "shovel": [0, -1.5]
+            "shovel_dig": [0, -1.5]
         },
         "glyph": {
             "tint": "ee5599"
@@ -167,7 +167,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, -3.75],
-            "shovel": [0, -3.75]
+            "shovel_dig": [0, -3.75]
         },
         "glyph": {
             "tint": "ee5599"
@@ -179,7 +179,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, -7.5],
-            "shovel": [0, -7.5]
+            "shovel_dig": [0, -7.5]
         },
         "glyph": {
             "tint": "ee5599"
@@ -191,7 +191,7 @@
         "enchantment": true,
         "tools": {
             "axe_dig": [0, -12.75],
-            "shovel": [0, -12.75]
+            "shovel_dig": [0, -12.75]
         },
         "glyph": {
             "tint": "ee5599"

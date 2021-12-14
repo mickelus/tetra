@@ -3,7 +3,7 @@
         "key": "head_hone/hammer_tier",
         "integrity": -1,
         "tools": {
-            "hammer": 1
+            "hammer_dig": 1
         }
     }
 ]

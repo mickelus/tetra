@@ -4,7 +4,7 @@
         "count": 3
     },
     "requiredTools": {
-        "hammer": 5
+        "hammer_dig": 5
     },
     "moduleKey": "single/binding",
     "moduleVariant": "single_binding/bolt"

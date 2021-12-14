@@ -42,7 +42,7 @@
                     "generic.attack_damage": 1
                 },
                 "tools": {
-                    "shovel": [1, 1]
+                    "shovel_dig": [1, 1]
                 },
                 "durability": 1,
                 "integrity": -1,

@@ -21,7 +21,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer": 3
+                "hammer_dig": 3
             },
             "improvements": {
                 "head_hone/pickaxe_efficiency": 1

@@ -20,7 +20,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer": 2
+                "hammer_dig": 2
             },
             "improvements": {
                 "handle_hone/speed": 2

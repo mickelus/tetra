@@ -22,6 +22,6 @@
         "items": [ "minecraft:netherite_ingot" ]
     },
     "requiredTools": {
-        "hammer": 4
+        "hammer_dig": 4
     }
 }
