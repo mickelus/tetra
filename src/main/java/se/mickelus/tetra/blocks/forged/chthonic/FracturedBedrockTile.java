@@ -18,13 +18,16 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ClipBlockStateContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -36,6 +39,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.logging.log4j.LogManager;
@@ -79,11 +83,11 @@ public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
 
     private MobSpawnSettings spawnInfo;
 
-    public FracturedBedrockTile(BlockPos p_155268_, BlockState p_155269_) {
-        super(type, p_155268_, p_155269_);
+    public FracturedBedrockTile(BlockPos pos, BlockState blockState) {
+        super(type, pos, blockState);
     }
 
-    public void updateLuck(boolean wasSeeping) {
+    public void updateLuck() {
         if (spawnInfo == null) {
             spawnInfo = level.getBiome(worldPosition).getMobSettings();
         }
@@ -93,10 +97,6 @@ public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
                 .anyMatch(type -> EntityType.HUSK.equals(type) || EntityType.STRAY.equals(type) || EntityType.WITCH.equals(type));
         if (spawnBonus) {
             luck += 1;
-        }
-
-        if (wasSeeping) {
-            luck += 2;
         }
     }
 
@@ -184,14 +184,27 @@ public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
 
     // todo 1.18: changed significantly, verify functionality
     private BlockHitResult raytrace(Level level, Vec3 origin, Vec3 target) {
-        return level.isBlockInLine(new ClipBlockStateContext(origin, target,
-                blockState -> !isBedrock(blockState.getBlock()) && !canReplace(blockState)));
+        return BlockGetter.traverseBlocks(origin, target, new ClipContext(origin, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null), (ctx, blockPos) -> {
+            BlockState blockState = level.getBlockState(blockPos);
+            Block block = blockState.getBlock();
+
+            if (isBedrock(block) || canReplace(blockState)) {
+                return null;
+            }
+
+            VoxelShape voxelshape = ctx.getBlockShape(blockState, level, blockPos);
+            return level.clipWithInteractionOverride(origin, target, blockPos, voxelshape, blockState);
+        }, ctx -> {
+            Vec3 vec3 = ctx.getFrom().subtract(ctx.getTo());
+            return BlockHitResult.miss(ctx.getTo(), Direction.getNearest(vec3.x, vec3.y, vec3.z), new BlockPos(ctx.getTo()));
+        });
     }
 
-    private BlockPos traceDown(BlockPos blockPos) {
+    private BlockPos traceDown(BlockPos blockPos, Level level) {
         BlockPos.MutableBlockPos movePos = blockPos.mutable();
+        int minY = level.getMinBuildHeight();
 
-        while (movePos.getY() >= 0) {
+        while (movePos.getY() > minY) {
             movePos.move(Direction.DOWN);
             BlockState blockState = level.getBlockState(movePos);
 
@@ -251,7 +264,7 @@ public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
     }
 
     /**
-     * Spawns one of the biomes "monster type" mobs at the given location, based on {@link WorldEntitySpawner#performWorldGenSpawning}
+     * Spawns one of the biomes "monster type" mobs at the given location, based on {@link net.minecraft.world.level.NaturalSpawner}
      * @param pos
      */
     private void spawnMob(BlockPos pos) {
@@ -351,53 +364,52 @@ public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
         this.load(packet.getTag());
     }
 
-	@Override
-	public void tick(Level level, BlockPos pos, BlockState state) {
-		if (!level.isClientSide && activity > 0 && level.getGameTime() % getRate() == 0) {
-			int intensity = getIntensity();
-			Vec3 origin = Vec3.atCenterOf(pos);
+    public void tick(Level level, BlockPos pos, BlockState state) {
+        if (!level.isClientSide && activity > 0 && level.getGameTime() % getRate() == 0) {
+            int intensity = getIntensity();
+            Vec3 origin = Vec3.atCenterOf(pos);
 
-			for (int i = 0; i < intensity; i++) {
-				Vec3 target = getTarget(step + i);
-				BlockHitResult result = raytrace(level, origin, origin.add(target));
+            for (int i = 0; i < intensity; i++) {
+                Vec3 target = getTarget(step + i);
+                BlockHitResult result = raytrace(level, origin, origin.add(target));
 
-				if (result.getType() != HitResult.Type.MISS) {
-					BlockPos hitPos = result.getBlockPos();
-					BlockState hitState = level.getBlockState(hitPos);
+                if (result.getType() != HitResult.Type.MISS) {
+                    BlockPos hitPos = result.getBlockPos();
+                    BlockState hitState = level.getBlockState(hitPos);
 
-					breakBlock(level, hitPos, hitState);
+                    breakBlock(level, hitPos, hitState);
 
-					BlockPos spawnPos = traceDown(hitPos);
-					BlockState spawnState = level.getBlockState(spawnPos);
+                    BlockPos spawnPos = traceDown(hitPos, level);
+                    BlockState spawnState = level.getBlockState(spawnPos);
 
-					if (canReplace(spawnState)) {
-						if (level.getRandom().nextFloat() < spawnRatio) {
-							if (spawnPos.getY() < spawnYLimit) {
-								spawnOre(spawnPos);
-							}
-						} else {
-							spawnMob(spawnPos);
-						}
-					} else {
-						breakBlock(level, spawnPos, spawnState);
-					}
-				}
-			}
+                    if (canReplace(spawnState)) {
+                        if (level.getRandom().nextFloat() < spawnRatio) {
+                            if (spawnPos.getY() < spawnYLimit) {
+                                spawnOre(spawnPos);
+                            }
+                        } else {
+                            spawnMob(spawnPos);
+                        }
+                    } else {
+                        breakBlock(level, spawnPos, spawnState);
+                    }
+                }
+            }
 
-			((ServerLevel) level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.defaultBlockState()),
-				worldPosition.getX() + 0.5, worldPosition.getY() + 1.1, worldPosition.getZ() + 0.5,
-				8, 0, level.random.nextGaussian() * 0.1, 0, 0.1);
+            ((ServerLevel) level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.defaultBlockState()),
+                worldPosition.getX() + 0.5, worldPosition.getY() + 1.1, worldPosition.getZ() + 0.5,
+                8, 0, level.random.nextGaussian() * 0.1, 0, 0.1);
 
-			step += intensity;
-			activity -= intensity;
+            step += intensity;
+            activity -= intensity;
 
-			if (shouldDeplete()) {
-				level.setBlock(getBlockPos(), DepletedBedrockBlock.instance.defaultBlockState(), 2);
-			}
-		}
+            if (shouldDeplete()) {
+                level.setBlock(getBlockPos(), DepletedBedrockBlock.instance.defaultBlockState(), 2);
+            }
+        }
 
-		if (!level.isClientSide  && activity > 0 && this.level.getGameTime() % 80 == 0) {
-			playSound();
-		}
-	}
+        if (!level.isClientSide  && activity > 0 && this.level.getGameTime() % 80 == 0) {
+            playSound();
+        }
+    }
 }

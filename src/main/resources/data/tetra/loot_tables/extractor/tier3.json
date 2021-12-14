@@ -17,12 +17,12 @@
                     "children": [
                         {
                             "type": "item",
-                            "name": "minecraft:diamond_ore",
+                            "name": "minecraft:deepslate_diamond_ore",
                             "weight": 1
                         },
                         {
                             "type": "item",
-                            "name": "minecraft:emerald_ore",
+                            "name": "minecraft:deepslate_emerald_ore",
                             "weight": 1
                         }
                     ]
@@ -35,17 +35,17 @@
                     "children": [
                         {
                             "type": "item",
-                            "name": "minecraft:redstone_ore",
+                            "name": "minecraft:deepslate_redstone_ore",
                             "weight": 1
                         },
                         {
                             "type": "item",
-                            "name": "minecraft:gold_ore",
+                            "name": "minecraft:deepslate_gold_ore",
                             "weight": 1
                         },
                         {
                             "type": "item",
-                            "name": "minecraft:lapis_ore",
+                            "name": "minecraft:deepslate_lapis_ore",
                             "weight": 1
                         },
                         {
@@ -72,13 +72,13 @@
                     "children": [
                         {
                             "type": "item",
-                            "name": "minecraft:iron_ore",
+                            "name": "minecraft:deepslate_iron_ore",
                             "weight": 1
                         },
                         {
-                            "type": "minecraft:tag",
-                            "name": "forge:ores/copper",
-                            "expand": true
+                            "type": "minecraft:item",
+                            "name": "minecraft:deepslate_copper_ore",
+                            "weight": 1
                         },
                         {
                             "type": "minecraft:tag",
@@ -102,7 +102,7 @@
                         },
                         {
                             "type": "item",
-                            "name": "minecraft:coal_ore",
+                            "name": "minecraft:deepslate_coal_ore",
                             "weight": 1
                         }
                     ]

@@ -1,51 +1,52 @@
 {
+    "_comment": "TODO 1.18: use ores_in_ground/deepslate with custom entry to ensure the deepslate ore variant gets used",
     "pools": [
         {
             "name": "forged/bolt",
             "rolls": 1,
             "entries": [
                 {
-                    "type": "item",
+                    "type": "minecraft:item",
                     "name": "minecraft:air",
                     "weight": 3
                 },
                 {
-                    "type": "group",
+                    "type": "minecraft:group",
                     "weight": 1,
                     "quality": 2,
                     "name": "rarest",
                     "children": [
                         {
-                            "type": "item",
-                            "name": "minecraft:diamond_ore",
+                            "type": "minecraft:item",
+                            "name": "minecraft:deepslate_diamond_ore",
                             "weight": 1
                         },
                         {
-                            "type": "item",
-                            "name": "minecraft:emerald_ore",
+                            "type": "minecraft:item",
+                            "name": "minecraft:deepslate_emerald_ore",
                             "weight": 1
                         }
                     ]
                 },
                 {
-                    "type": "group",
+                    "type": "minecraft:group",
                     "weight": 5,
                     "quality": 0.5,
                     "name": "rare",
                     "children": [
                         {
-                            "type": "item",
-                            "name": "minecraft:redstone_ore",
+                            "type": "minecraft:item",
+                            "name": "minecraft:deepslate_redstone_ore",
                             "weight": 1
                         },
                         {
-                            "type": "item",
-                            "name": "minecraft:gold_ore",
+                            "type": "minecraft:item",
+                            "name": "minecraft:deepslate_gold_ore",
                             "weight": 1
                         },
                         {
-                            "type": "item",
-                            "name": "minecraft:lapis_ore",
+                            "type": "minecraft:item",
+                            "name": "minecraft:deepslate_lapis_ore",
                             "weight": 1
                         },
                         {
@@ -66,19 +67,19 @@
                     ]
                 },
                 {
-                    "type": "group",
+                    "type": "minecraft:group",
                     "weight": 8,
                     "name": "common",
                     "children": [
                         {
-                            "type": "item",
-                            "name": "minecraft:iron_ore",
+                            "type": "minecraft:item",
+                            "name": "minecraft:deepslate_iron_ore",
                             "weight": 1
                         },
                         {
-                            "type": "minecraft:tag",
-                            "name": "forge:ores/copper",
-                            "expand": true
+                            "type": "minecraft:item",
+                            "name": "minecraft:deepslate_copper_ore",
+                            "weight": 1
                         },
                         {
                             "type": "minecraft:tag",
@@ -96,30 +97,30 @@
                             "expand": true
                         },
                         {
-                            "type": "item",
+                            "type": "minecraft:item",
                             "name": "minecraft:clay",
                             "weight": 1
                         },
                         {
-                            "type": "item",
-                            "name": "minecraft:coal_ore",
+                            "type": "minecraft:item",
+                            "name": "minecraft:deepslate_coal_ore",
                             "weight": 1
                         }
                     ]
                 },
                 {
-                    "type": "group",
+                    "type": "minecraft:group",
                     "weight": 8,
                     "quality": -0.5,
                     "name": "filler",
                     "children": [
                         {
-                            "type": "item",
+                            "type": "minecraft:item",
                             "name": "minecraft:gravel",
                             "weight": 1
                         },
                         {
-                            "type": "item",
+                            "type": "minecraft:item",
                             "name": "minecraft:sand",
                             "weight": 1
                         }
