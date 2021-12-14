@@ -362,11 +362,16 @@ public class TetraMod {
         event.registerEntityRenderer(ExtractorProjectileEntity.type, ExtractorProjectileRenderer::new);
         event.registerEntityRenderer(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
 
+        BlockEntityRenderers.register(WorkbenchTile.type, WorkbenchTESR::new);
+        BlockEntityRenderers.register(ScrollTile.type, ScrollRenderer::new);
 //        event.registerBlockEntityRenderer(ForgedContainerTile.type, ForgedContainerRenderer::new);
 //        event.registerBlockEntityRenderer(CoreExtractorPistonTile.type, CoreExtractorPistonRenderer::new);
 //        event.registerBlockEntityRenderer(HammerBaseTile.type, HammerBaseRenderer::new);
 //        event.registerBlockEntityRenderer(HammerHeadTile.type, HammerHeadTESR::new);
 
+        if (ConfigHandler.development.get()) {
+            BlockEntityRenderers.register(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureRenderer::new);
+        }
     }
 
     @SubscribeEvent

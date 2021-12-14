@@ -39,16 +39,10 @@ public class ClientProxy implements IProxy {
 		Arrays.stream(blocks).forEach(ITetraBlock::clientInit);
 
 		// these are registered here as there are multiple instances of workbench blocks
-		BlockEntityRenderers.register(WorkbenchTile.type, WorkbenchTESR::new);
 		MenuScreens.register(WorkbenchTile.containerType, WorkbenchScreen::new);
-		BlockEntityRenderers.register(ScrollTile.type, ScrollRenderer::new);
 
 		MinecraftForge.EVENT_BUS.register(new HowlingOverlay(Minecraft.getInstance()));
 		MinecraftForge.EVENT_BUS.register(new AbilityOverlays(Minecraft.getInstance()));
-
-		if (ConfigHandler.development.get()) {
-			BlockEntityRenderers.register(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureRenderer::new);
-		}
 
 		BotaniaCompat.clientInit();
 
