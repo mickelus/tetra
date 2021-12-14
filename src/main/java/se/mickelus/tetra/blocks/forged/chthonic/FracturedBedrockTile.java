@@ -27,7 +27,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -47,14 +46,13 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
 import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.tetra.util.ITetraTicker;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Set;
 @ParametersAreNonnullByDefault
-public class FracturedBedrockTile extends BlockEntity implements ITetraTicker {
+public class FracturedBedrockTile extends BlockEntity {
     @ObjectHolder(TetraMod.MOD_ID + ":" + FracturedBedrockBlock.unlocalizedName)
     public static BlockEntityType<FracturedBedrockTile> type;
 

@@ -29,7 +29,6 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.util.TickProvider;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -40,7 +39,6 @@ import static net.minecraft.world.level.material.Fluids.WATER;
 @ParametersAreNonnullByDefault
 public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements EntityBlock {
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
-    public static final TickProvider<CoreExtractorBaseTile> TILE_TICK_PROVIDER = new TickProvider<>(CoreExtractorBaseTile.type, CoreExtractorBaseTile::new);
     private static final VoxelShape capShape = box(3, 14, 3, 13, 16, 13);
     private static final VoxelShape shaftShape = box(4, 13, 4, 12, 14, 12);
     private static final VoxelShape smallCoverShapeZ = box(1, 0, 0, 15, 12, 16);
@@ -133,15 +131,15 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
         return state.rotate(mirror.getRotation(state.getValue(facingProp)));
     }
 
-	@Nullable
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return TILE_TICK_PROVIDER.create(pos, state);
-	}
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new CoreExtractorBaseTile(pos, state);
+    }
 
-	@Nullable
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> entityType) {
-		return TILE_TICK_PROVIDER.forTileType(entityType).orElseGet(() -> EntityBlock.super.getTicker(level, state, entityType));
-	}
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> entityType) {
+        return getTicker(entityType, CoreExtractorBaseTile.type, (lvl, pos, blockState, tile) -> tile.tick(lvl, pos, blockState));
+    }
 }

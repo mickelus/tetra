@@ -15,14 +15,12 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.util.TickProvider;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class FracturedBedrockBlock extends TetraBlock implements EntityBlock {
     public static final String unlocalizedName = "fractured_bedrock";
-    public static final TickProvider<FracturedBedrockTile> TILE_TICK_PROVIDER = new TickProvider<>(FracturedBedrockTile.type, FracturedBedrockTile::new);
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static FracturedBedrockBlock instance;
@@ -59,12 +57,12 @@ public class FracturedBedrockBlock extends TetraBlock implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TILE_TICK_PROVIDER.create(pos, state);
+        return new FracturedBedrockTile(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> entityType) {
-        return TILE_TICK_PROVIDER.forTileType(entityType).orElseGet(() -> EntityBlock.super.getTicker(level, state, entityType));
+        return getTicker(entityType, FracturedBedrockTile.type, (lvl, pos, blockState, tile) -> tile.tick(lvl, pos, blockState));
     }
 }

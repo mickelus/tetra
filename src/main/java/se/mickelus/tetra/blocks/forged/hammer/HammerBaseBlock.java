@@ -45,7 +45,6 @@ import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.salvage.TileBlockInteraction;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.util.TickProvider;
 import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
@@ -58,7 +57,6 @@ import static net.minecraft.world.level.material.Fluids.WATER;
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 @ParametersAreNonnullByDefault
 public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, EntityBlock {
-	public static final TickProvider<HammerBaseTile> TILE_TICK_PROVIDER = new TickProvider<>(HammerBaseTile.type, HammerBaseTile::new);
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
 
     public static final String qualityImprovementKey = "quality";
@@ -327,15 +325,15 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
         return state.rotate(mirror.getRotation(state.getValue(facingProp)));
     }
 
-	@Nullable
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return TILE_TICK_PROVIDER.create(pos, state);
-	}
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new HammerBaseTile(pos, state);
+    }
 
-	@Nullable
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> entityType) {
-		return TILE_TICK_PROVIDER.forTileType(entityType).orElseGet(() -> EntityBlock.super.getTicker(level, state, entityType));
-	}
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> entityType) {
+        return getTicker(entityType, HammerBaseTile.type, (lvl, pos, blockState, tile) -> tile.tick(lvl, pos, blockState));
+    }
 }

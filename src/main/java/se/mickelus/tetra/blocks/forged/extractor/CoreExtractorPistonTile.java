@@ -12,12 +12,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.util.ITetraTicker;
 import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
-public class CoreExtractorPistonTile extends BlockEntity implements ITetraTicker {
+public class CoreExtractorPistonTile extends BlockEntity {
     @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorPistonBlock.unlocalizedName)
     public static BlockEntityType<CoreExtractorPistonTile> type;
 
@@ -26,8 +25,8 @@ public class CoreExtractorPistonTile extends BlockEntity implements ITetraTicker
 
     private long endTime = Long.MAX_VALUE;
 
-    public CoreExtractorPistonTile(BlockPos p_155268_, BlockState p_155269_) {
-        super(type, p_155268_, p_155269_);
+    public CoreExtractorPistonTile(BlockPos blockPos, BlockState blockState) {
+        super(type, blockPos, blockState);
     }
 
 
@@ -70,17 +69,16 @@ public class CoreExtractorPistonTile extends BlockEntity implements ITetraTicker
                 0.2f, 0.5f);
     }
 
-	@Override
-	public void tick(Level level, BlockPos pos, BlockState state) {
-		if (endTime < level.getGameTime()) {
-			endTime = Long.MAX_VALUE;
-			if (!level.isClientSide) {
-				TileEntityOptional.from(level, pos.relative(Direction.DOWN), CoreExtractorBaseTile.class)
-					.ifPresent(base -> base.fill(fillAmount));
+    public void tick(Level level, BlockPos pos, BlockState state) {
+        if (endTime < level.getGameTime()) {
+            endTime = Long.MAX_VALUE;
+            if (!level.isClientSide) {
+                TileEntityOptional.from(level, pos.relative(Direction.DOWN), CoreExtractorBaseTile.class)
+                    .ifPresent(base -> base.fill(fillAmount));
 
-				runEndEffects();
-				setChanged();
-			}
-		}
-	}
+                runEndEffects();
+                setChanged();
+            }
+        }
+    }
 }

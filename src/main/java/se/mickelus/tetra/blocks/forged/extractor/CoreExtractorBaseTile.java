@@ -12,14 +12,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
-import se.mickelus.tetra.util.ITetraTicker;
 import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 @ParametersAreNonnullByDefault
-public class CoreExtractorBaseTile extends BlockEntity implements ITetraTicker, IHeatTransfer {
+public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer {
     @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.unlocalizedName)
     public static BlockEntityType<CoreExtractorBaseTile> type;
 
@@ -230,16 +229,15 @@ public class CoreExtractorBaseTile extends BlockEntity implements ITetraTicker, 
 //        world.notifyBlockUpdate(pos, state, state,3);
     }
 
-	@Override
-	public void tick(Level level, BlockPos pos, BlockState state) {
-		if (!level.isClientSide) {
-			if (isSending) {
-				if (level.getGameTime() % 5 == 0) {
-					transfer();
-				}
-			} else if (currentCharge > 0 && level.getGameTime() % 20 == 0) {
-					currentCharge = Math.max(0, currentCharge - drainAmount);
-			}
-		}
-	}
+    public void tick(Level level, BlockPos pos, BlockState state) {
+        if (!level.isClientSide) {
+            if (isSending) {
+                if (level.getGameTime() % 5 == 0) {
+                    transfer();
+                }
+            } else if (currentCharge > 0 && level.getGameTime() % 20 == 0) {
+                    currentCharge = Math.max(0, currentCharge - drainAmount);
+            }
+        }
+    }
 }

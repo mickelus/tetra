@@ -31,7 +31,6 @@ import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.util.ITetraTicker;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -40,7 +39,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 @ParametersAreNonnullByDefault
-public class HammerBaseTile extends BlockEntity implements ITetraTicker {
+public class HammerBaseTile extends BlockEntity {
     @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.unlocalizedName)
     public static BlockEntityType<HammerBaseTile> type;
 
@@ -413,40 +412,39 @@ public class HammerBaseTile extends BlockEntity implements ITetraTicker {
         compound.put(slotsKey, nbttaglist);
     }
 
-	@Override
-	public void tick(Level level, BlockPos pos, BlockState state) {
-		if (redstonePower > 0 && level.getGameTime() % tickrate() == 0 && level.hasNeighborSignal(pos) && isFunctional()) {
-			BlockPos targetPos = pos.below(2);
-			BlockState targetState = level.getBlockState(targetPos);
+    public void tick(Level level, BlockPos pos, BlockState state) {
+        if (redstonePower > 0 && level.getGameTime() % tickrate() == 0 && level.hasNeighborSignal(pos) && isFunctional()) {
+            BlockPos targetPos = pos.below(2);
+            BlockState targetState = level.getBlockState(targetPos);
 
-			HammerHeadTile head = TileEntityOptional.from(level, pos.below(), HammerHeadTile.class).orElse(null);
+            HammerHeadTile head = TileEntityOptional.from(level, pos.below(), HammerHeadTile.class).orElse(null);
 
-			if (head == null || head.isJammed()) {
-				return;
-			}
+            if (head == null || head.isJammed()) {
+                return;
+            }
 
-			CastOptional.cast(targetState.getBlock(), IInteractiveBlock.class)
-				.map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(TetraToolActions.hammer)))
-				.stream()
-				.flatMap(Arrays::stream)
-				.filter(interaction -> TetraToolActions.hammer.equals(interaction.requiredTool))
-				.filter(interaction -> getHammerLevel() >= interaction.requiredLevel)
-				.findFirst()
-				.ifPresent(interaction -> {
-					interaction.applyOutcome(level, targetPos, targetState, null, null, Direction.UP);
+            CastOptional.cast(targetState.getBlock(), IInteractiveBlock.class)
+                .map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(TetraToolActions.hammer)))
+                .stream()
+                .flatMap(Arrays::stream)
+                .filter(interaction -> TetraToolActions.hammer.equals(interaction.requiredTool))
+                .filter(interaction -> getHammerLevel() >= interaction.requiredLevel)
+                .findFirst()
+                .ifPresent(interaction -> {
+                    interaction.applyOutcome(level, targetPos, targetState, null, null, Direction.UP);
 
-					// the workbench triggers the hammer on the server side, so no need to consume fuel and play sounds
-					if (!(targetState.getBlock() instanceof AbstractWorkbenchBlock)) {
-						if (!level.isClientSide) {
-							consumeFuel();
-						} else {
-							head.activate();
-							level.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
-						}
-					} else {
-						head.activate();
-					}
-				});
-		}
-	}
+                    // the workbench triggers the hammer on the server side, so no need to consume fuel and play sounds
+                    if (!(targetState.getBlock() instanceof AbstractWorkbenchBlock)) {
+                        if (!level.isClientSide) {
+                            consumeFuel();
+                        } else {
+                            head.activate();
+                            level.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
+                        }
+                    } else {
+                        head.activate();
+                    }
+                });
+        }
+    }
 }

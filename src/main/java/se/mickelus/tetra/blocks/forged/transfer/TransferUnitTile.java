@@ -18,14 +18,13 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.tetra.util.ITetraTicker;
 import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 @ParametersAreNonnullByDefault
-public class TransferUnitTile extends BlockEntity implements ITetraTicker, IHeatTransfer {
+public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
     @ObjectHolder(TetraMod.MOD_ID + ":" + TransferUnitBlock.unlocalizedName)
     public static BlockEntityType<TransferUnitTile> type;
 
@@ -163,7 +162,6 @@ public class TransferUnitTile extends BlockEntity implements ITetraTicker, IHeat
                 .orElse(0);
     }
 
-    @Override
     public void tick(Level level, BlockPos pos, BlockState blockState) {
         if (!level.isClientSide
                 && level.getGameTime() % 5 == 0
