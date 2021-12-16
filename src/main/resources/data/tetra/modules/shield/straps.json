@@ -41,7 +41,7 @@
                 },
                 "availableTextures": ["default"],
                 "models": [{
-                    "type": "shield_straps",
+                    "type": "tetra:grip/straps",
                     "location": "tetra:items/module/shield/grip/straps/"
                 }]
             }

@@ -62,7 +62,7 @@
                 },
                 "availableTextures": ["wooden", "metal", "bone", "vent"],
                 "models": [{
-                    "type": "shield_buckler",
+                    "type": "tetra:plate/buckler",
                     "location": "tetra:items/module/shield/plate/buckler/"
                 }]
             }

@@ -62,7 +62,7 @@
                 },
                 "availableTextures": ["wooden", "metal", "bone", "vent"],
                 "models": [{
-                    "type": "shield_tower",
+                    "type": "tetra:plate/tower",
                     "location": "tetra:items/module/shield/plate/tower/"
                 }]
             }

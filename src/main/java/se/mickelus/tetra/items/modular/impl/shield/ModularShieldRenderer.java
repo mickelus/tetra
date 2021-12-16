@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,6 +17,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ReloadableResourceManager;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
@@ -22,6 +27,7 @@ import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.mutil.util.CastOptional;
 
@@ -30,12 +36,30 @@ import java.util.Collection;
 import java.util.List;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class ModularShieldISTER extends BlockEntityWithoutLevelRenderer {
+public class ModularShieldRenderer extends BlockEntityWithoutLevelRenderer {
+    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, "items/shield"), "main");
+    public static ModelLayerLocation bannerLayer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, "items/shield_banner"), "main");
 
-    private final ModularShieldModel model = new ModularShieldModel();
+    private ModularShieldModel model;
+    public ModularShieldBannerModel bannerModel;
 
-    public ModularShieldISTER(BlockEntityRenderDispatcher p_172550_, EntityModelSet p_172551_) {
-        super(p_172550_, p_172551_);
+    private final EntityModelSet modelSet;
+
+    public ModularShieldRenderer(Minecraft minecraft) {
+        super(minecraft.getBlockEntityRenderDispatcher(), minecraft.getEntityModels());
+
+        this.modelSet = minecraft.getEntityModels();
+
+        this.model = new ModularShieldModel(modelSet.bakeLayer(layer));
+        this.bannerModel = new ModularShieldBannerModel(modelSet.bakeLayer(bannerLayer));
+
+        ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(this);
+    }
+
+    @Override
+    public void onResourceManagerReload(ResourceManager p_172555_) {
+        this.model = new ModularShieldModel(modelSet.bakeLayer(layer));
+        this.bannerModel = new ModularShieldBannerModel(modelSet.bakeLayer(bannerLayer));
     }
 
     @Override
@@ -49,29 +73,32 @@ public class ModularShieldISTER extends BlockEntityWithoutLevelRenderer {
                 .orElse(ImmutableList.of());
 
         // handle
-        models.stream()
-                .forEach(modelData -> {
-                    ModelPart modelRenderer = model.getModel(modelData.type);
-                    if (model.bannerModel.isBannerModel(modelRenderer)) {
-                        if (itemStack.getTagElement("BlockEntityTag") != null) { // banner data is stored in a compound keyed with "BlockEntityTag"
-                            renderBanner(itemStack, modelRenderer, matrixStack, buffer, combinedLight, combinedOverlay);
-                        }
-                    } else if (modelRenderer != null) {
-                        Material material = new Material(TextureAtlas.LOCATION_BLOCKS, modelData.location);
-                        VertexConsumer vertexBuilder = material.sprite().wrap(
-                                ItemRenderer.getFoilBuffer(buffer, model.renderType(material.atlasLocation()), false, itemStack.hasFoil()));
+        models.forEach(modelData -> {
+            ModelPart bannerPart = bannerModel.getModel(modelData.type);
+            if (bannerPart != null) {
+                if (itemStack.getTagElement("BlockEntityTag") != null) { // banner data is stored in a compound keyed with "BlockEntityTag"
+                    renderBanner(itemStack, bannerPart, matrixStack, buffer, combinedLight, combinedOverlay);
+                }
+                return;
+            }
 
-                        float r = ((modelData.tint >> 16) & 0xFF) / 255f; // red
-                        float g = ((modelData.tint >>  8) & 0xFF) / 255f; // green
-                        float b = ((modelData.tint >>  0) & 0xFF) / 255f; // blue
-                        float a = ((modelData.tint >> 24) & 0xFF) / 255f; // alpha
+            ModelPart modelPart = model.getModel(modelData.type);
+            if (modelPart != null) {
+                Material material = new Material(TextureAtlas.LOCATION_BLOCKS, modelData.location);
+                VertexConsumer vertexBuilder = material.sprite().wrap(
+                        ItemRenderer.getFoilBuffer(buffer, model.renderType(material.atlasLocation()), false, itemStack.hasFoil()));
 
-                        // reset alpha to 1 if it's 0 to avoid mistakes & make things cleaner
-                        a = a == 0 ? 1 : a;
+                float r = ((modelData.tint >> 16) & 0xFF) / 255f; // red
+                float g = ((modelData.tint >>  8) & 0xFF) / 255f; // green
+                float b = ((modelData.tint >>  0) & 0xFF) / 255f; // blue
+                float a = ((modelData.tint >> 24) & 0xFF) / 255f; // alpha
 
-                        modelRenderer.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, r, g, b, a);
-                    }
-                });
+                // reset alpha to 1 if it's 0 to avoid mistakes & make things cleaner
+                a = a == 0 ? 1 : a;
+
+                modelPart.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, r, g, b, a);
+            }
+        });
 
 
 

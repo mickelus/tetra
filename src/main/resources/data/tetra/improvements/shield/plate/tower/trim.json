@@ -6,7 +6,7 @@
         "integrity": -1,
         "durability": 5,
         "models": [{
-            "type": "shield_tower",
+            "type": "tetra:plate/tower",
             "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
             "tint": "inherit"
         }],
@@ -14,7 +14,7 @@
             "durability": 0.15,
             "availableTextures": ["trim"],
             "models": [{
-                "type": "shield_tower",
+                "type": "tetra:plate/tower",
                 "location": "tetra:items/module/shield/plate/tower/improvements/"
             }]
         }
@@ -26,7 +26,7 @@
         "integrity": -1,
         "durability": 10,
         "models": [{
-            "type": "shield_tower",
+            "type": "tetra:plate/tower",
             "location": "tetra:items/module/shield/plate/tower/improvements/trim_shadow",
             "tint": "inherit"
         }],
@@ -34,7 +34,7 @@
             "durability": 0.17,
             "availableTextures": ["trim"],
             "models": [{
-                "type": "shield_tower",
+                "type": "tetra:plate/tower",
                 "location": "tetra:items/module/shield/plate/tower/improvements/"
             }]
         }
@@ -46,11 +46,11 @@
         "durability": 120,
         "models": [
             {
-                "type": "shield_tower",
+                "type": "tetra:plate/tower",
                 "location": "tetra:items/module/shield/plate/tower/improvements/trim_scrap"
             },
             {
-                "type": "shield_tower",
+                "type": "tetra:plate/tower",
                 "location": "tetra:items/module/shield/plate/tower/improvements/trim_scrap_bevel",
                 "tint": "inherit"
             }

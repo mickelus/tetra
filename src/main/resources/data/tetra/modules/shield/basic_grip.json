@@ -52,7 +52,7 @@
                 },
                 "availableTextures": ["default"],
                 "models": [{
-                    "type": "shield_grip",
+                    "type": "tetra:grip/grip",
                     "location": "tetra:items/module/shield/grip/basic_grip/"
                 }]
             }

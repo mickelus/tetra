@@ -95,7 +95,10 @@ import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.bow.ProjectileMotionPacket;
 import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
+import se.mickelus.tetra.items.modular.impl.shield.ModularShieldBannerModel;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
+import se.mickelus.tetra.items.modular.impl.shield.ModularShieldModel;
+import se.mickelus.tetra.items.modular.impl.shield.ModularShieldRenderer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
@@ -354,6 +357,8 @@ public class TetraMod {
 //        event.registerLayerDefinition(ForgedContainerRenderer.layer, ForgedContainerRenderer::createLayer);
 //        event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
         event.registerLayerDefinition(ScrollRenderer.layer, ScrollRenderer::createLayer);
+        event.registerLayerDefinition(ModularShieldRenderer.layer, ModularShieldModel::createLayer);
+        event.registerLayerDefinition(ModularShieldRenderer.bannerLayer, ModularShieldBannerModel::createLayer);
     }
 
     @SubscribeEvent

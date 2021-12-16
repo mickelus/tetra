@@ -33,7 +33,7 @@
                 },
                 "availableTextures": ["sturdy_boss"],
                 "models": [{
-                    "type": "shield_boss",
+                    "type": "tetra:boss/flat",
                     "location": "tetra:items/module/shield/boss/"
                 }]
             }

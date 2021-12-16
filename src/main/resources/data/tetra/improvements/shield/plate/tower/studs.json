@@ -6,7 +6,7 @@
         "integrity": -1,
         "durability": 20,
         "models": [{
-            "type": "shield_tower",
+            "type": "tetra:plate/tower",
             "location": "tetra:items/module/shield/plate/tower/improvements/studs_shadow",
             "tint": "inherit"
         }],
@@ -14,7 +14,7 @@
             "durability": 0.2,
             "availableTextures": ["studs"],
             "models": [{
-                "type": "shield_tower",
+                "type": "tetra:plate/tower",
                 "location": "tetra:items/module/shield/plate/tower/improvements/"
             }]
         }

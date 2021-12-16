@@ -69,7 +69,7 @@
                 },
                 "availableTextures": ["wooden", "metal", "bone", "vent"],
                 "models": [{
-                    "type": "shield_heater",
+                    "type": "tetra:plate/heater",
                     "location": "tetra:items/module/shield/plate/heater/"
                 }]
             }

@@ -8,7 +8,7 @@
             "throwable": [1, 0.8]
         },
         "models": [{
-            "type": "shield_heater",
+            "type": "tetra:plate/heater",
             "location": "tetra:items/module/shield/plate/heater/improvements/aerodynamic_trim_bevel",
             "tint": "inherit"
         }],
@@ -19,7 +19,7 @@
             "durability": 0.1,
             "availableTextures": ["aerodynamic_trim"],
             "models": [{
-                "type": "shield_heater",
+                "type": "tetra:plate/heater",
                 "location": "tetra:items/module/shield/plate/heater/improvements/"
             }]
         }

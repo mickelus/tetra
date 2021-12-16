@@ -6,7 +6,7 @@
         "integrity": -1,
         "durability": 10,
         "models": [{
-            "type": "shield_buckler",
+            "type": "tetra:plate/buckler",
             "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
             "tint": "inherit"
         }],
@@ -14,7 +14,7 @@
             "durability": 0.15,
             "availableTextures": ["studs"],
             "models": [{
-                "type": "shield_buckler",
+                "type": "tetra:plate/buckler",
                 "location": "tetra:items/module/shield/plate/buckler/improvements/"
             }]
         }

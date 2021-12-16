@@ -1,97 +1,93 @@
 package se.mickelus.tetra.items.modular.impl.shield;
 
 
+import com.google.gson.JsonElement;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.GsonHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import se.mickelus.tetra.data.DataManager;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ModularShieldModel extends Model {
-//    private final ModelPart towerPlate;
-//
-//    private final ModelPart heaterPlate;
-//
-//    private final ModelPart bucklerPlate;
-//
-//    private final ModelPart grip;
-    private ModelPart straps;
+    private final ModelPart root;
 
-    private ModelPart boss;
-
-    public static final String towerModelType = "shield_tower";
-    public static final String heaterModelType = "shield_heater";
-    public static final String bucklerModelType = "shield_buckler";
-    public static final String gripModelType = "shield_grip";
-    public static final String strapsModelType = "shield_straps";
-    public static final String bossModelType = "shield_boss";
-
-    public ModularShieldBannerModel bannerModel;
-
-    public static final String towerBannerModelType = "banner_tower";
-    public static final String heaterBannerModelType = "banner_heater";
-    public static final String bucklerBannerModelType = "banner_buckler";
-
-    public ModularShieldModel() {
+    public ModularShieldModel(ModelPart modelPart) {
         super(RenderType::entityTranslucent);
-//        texWidth = 32;
-//        texHeight = 32;
-//
-//        towerPlate = new ModelPart(this, 0, 0);
-//        towerPlate.addBox(-6.0F, -11.0F, -2.0F, 12.0F, 22.0F, 1.0F, 0.0F);
-//
-//        heaterPlate = new ModelPart(this, 0, 0);
-//        heaterPlate.addBox(-7.0F, -8.0F, -2.0F, 14.0F, 16.0F, 1.0F, 0.0F);
-//
-//        bucklerPlate = new ModelPart(this, 0, 0);
-//        bucklerPlate.addBox(-5.0F, -5.0F, -2.0F, 10.0F, 10.0F, 1.0F, 0.0F);
-//        bucklerPlate.zRot = (float) (- Math.PI / 4);
-//
-//        grip = new ModelPart(this, 0, 0);
-//        grip.addBox(-1.0F, -3.0F, -1.0F, 2.0F, 6.0F, 6.0F, 0.0F);
-//
-//        straps = new ModelPart(this, 0, 0);
-//        straps.addBox(2, -3, -1, 1, 6, 1, 0);
-//        straps.addBox(-3, -3, -1, 1, 6, 1, 0);
-//
-//        boss = new ModelPart(this, 0, 0);
-//        boss.addBox(-5.0F, -5.0F, -2.01F, 10.0F, 10.0F, 1.0F, 0.0F);
 
-        bannerModel = new ModularShieldBannerModel();
+        this.root = modelPart;
+    }
+
+    private static Optional<Pair<ResourceLocation, ShieldModelData>> getModel(ResourceManager resourceManager, ResourceLocation resourceLocation) {
+        try {
+            return Optional.of(resourceManager.getResource(resourceLocation))
+                    .map(Resource::getInputStream)
+                    .map(inputStream -> new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)))
+                    .map(reader -> GsonHelper.fromJson(DataManager.gson, reader, JsonElement.class))
+                    .map(json -> ShieldModelData.codec.decode(JsonOps.INSTANCE, json))
+                    .map(DataResult::result)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .map(Pair::getFirst)
+                    .map(model -> new Pair<>(resourceLocation, model));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+
+    private static String trimResourceLocation(ResourceLocation rl) {
+        return rl.getNamespace() + ":" + rl.getPath().substring(22, rl.getPath().length() - 5);
+    }
+
+    public static LayerDefinition createLayer() {
+        MeshDefinition mesh = new MeshDefinition();
+        PartDefinition parts = mesh.getRoot();
+
+        ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
+        resourceManager.listResources("models/modular/shield/", path -> path.endsWith(".json")).stream()
+                .map(rl -> getModel(resourceManager, rl))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .forEach(pair -> pair.getSecond().populatePartDefinition(parts.addOrReplaceChild(trimResourceLocation(pair.getFirst()),
+                        CubeListBuilder.create(), PartPose.ZERO)));
+
+        return LayerDefinition.create(mesh, 32, 32);
     }
 
     public ModelPart getModel(String modelType) {
-//        switch (modelType) {
-//            case towerModelType:
-//                return towerPlate;
-//            case heaterModelType:
-//                return heaterPlate;
-//            case bucklerModelType:
-//                return bucklerPlate;
-//            case gripModelType:
-//                return grip;
-//            case strapsModelType:
-//                return straps;
-//            case bossModelType:
-//                return boss;
-//            case towerBannerModelType:
-//                return bannerModel.towerBanner;
-//            case heaterBannerModelType:
-//                return bannerModel.heaterBanner;
-//            case bucklerBannerModelType:
-//                return bannerModel.bucklerBanner;
-//        }
-
+        try {
+            return root.getChild(modelType);
+        } catch (NoSuchElementException e) {}
         return null;
     }
 
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {
-//        this.towerPlate.render(matrixStack, vertexBuilder, light, overlay, red, green, blue, alpha);
-//        this.grip.render(matrixStack, vertexBuilder, light, overlay, red, green, blue, alpha);
-    }
+    @Override
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {}
 }
