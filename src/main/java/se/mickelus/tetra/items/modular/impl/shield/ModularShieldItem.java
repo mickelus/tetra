@@ -76,10 +76,12 @@ public class ModularShieldItem extends ItemModularHandheld {
     @OnlyIn(Dist.CLIENT)
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         super.initializeClient(consumer);
+
+        NonNullLazy<BlockEntityWithoutLevelRenderer> renderer = NonNullLazy.of(() -> new ModularShieldRenderer(Minecraft.getInstance()));
         consumer.accept(new IItemRenderProperties() {
             @Override
             public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-                return new ModularShieldRenderer(Minecraft.getInstance());
+                return renderer.get();
             }
         });
     }

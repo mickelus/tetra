@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.modular.impl.shield;
 
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Pair;
@@ -22,6 +23,8 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.DataManager;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -35,6 +38,7 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ModularShieldModel extends Model {
+    private static final Logger logger = LogManager.getLogger();
     private final ModelPart root;
 
     public ModularShieldModel(ModelPart modelPart) {
@@ -55,8 +59,8 @@ public class ModularShieldModel extends Model {
                     .map(Optional::get)
                     .map(Pair::getFirst)
                     .map(model -> new Pair<>(resourceLocation, model));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | JsonParseException e) {
+            logger.warn("Failed to parse model data from '{}': {}", resourceLocation, e);
         }
 
         return Optional.empty();
