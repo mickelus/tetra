@@ -8,11 +8,9 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -28,16 +26,16 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.rack.RackBlock;
-import se.mickelus.mutil.util.RotationHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
     public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/scroll"));
     public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, "blocks/scroll"), "main");
-    private final ModelPart model;
 
     private ModelPart[] rolledModel;
     private ModelPart ribbonModel;
@@ -50,62 +48,72 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
     private static final int availableGlyphs = 16;
     private static final int availableMaterials = 3;
 
-    ModelPart transparent;
     private BlockEntityRendererProvider.Context context;
 
     public ScrollRenderer(BlockEntityRendererProvider.Context context) {
         this.context = context;
 
-        model = context.bakeLayer(layer);
+        ModelPart model = context.bakeLayer(layer);
+
+        rolledModel = new ModelPart[availableMaterials];
+        wallModel = new ModelPart[availableMaterials];
+        openModel = new ModelPart[availableMaterials];
+        for (int i = 0; i < availableMaterials; i++) {
+            rolledModel[i] = model.getChild("rolled" + i);
+            wallModel[i] = model.getChild("wall" + i);
+            openModel[i] = model.getChild("open" + i);
+        }
+
+        ribbonModel = model.getChild("ribbon");
+
+        wallGlyphs = new QuadRenderer[2][];
+        for (int i = 0; i < wallGlyphs.length; i++) {
+            wallGlyphs[i] = new QuadRenderer[availableGlyphs];
+        }
+        for (int i = 0; i < availableGlyphs; i++) {
+            wallGlyphs[0][i] = new QuadRenderer(8, 1, 0.075f, 7, 13, i * 7, 51, 128, 64, true, Direction.SOUTH);
+            wallGlyphs[1][i] = new QuadRenderer(1, 1, 0.075f, 7, 13, i * 7, 51, 128, 64, false, Direction.SOUTH);
+        }
+
+        openGlyphs = new QuadRenderer[4][];
+        for (int i = 0; i < openGlyphs.length; i++) {
+            openGlyphs[i] = new QuadRenderer[availableGlyphs];
+        }
+        for (int i = 0; i < availableGlyphs; i++) {
+            openGlyphs[0][i] = new QuadRenderer(1, 0.075f, 2, 7, 6, i * 7, 58, 128, 64, true, Direction.UP);
+            openGlyphs[1][i] = new QuadRenderer(8, 0.075f, 2, 7, 6, i * 7, 58, 128, 64, false, Direction.UP);
+            openGlyphs[2][i] = new QuadRenderer(1, 0.075f, 2, 7, 6, i * 7, 58, 128, 64, true, Direction.UP);
+            openGlyphs[3][i] = new QuadRenderer(8, 0.075f, 2, 7, 6, i * 7, 58, 128, 64, false, Direction.UP);
+        }
     }
 
     public static LayerDefinition createLayer() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition parts = mesh.getRoot();
 
-//        rolledModel = new ModelPart[availableMaterials];
-//        wallModel = new ModelPart[availableMaterials];
-//        openModel = new ModelPart[availableMaterials];
-//        for (int i = 0; i < availableMaterials; i++) {
-//            rolledModel[i] = new ModelPart(128, 64, 34 * i, 4);
-//            rolledModel[i].addBox(1, 0, 7, 14, 3, 3, 0);
-//
-//            wallModel[i] = new ModelPart(128, 64, 34 * i, 0);
-//            wallModel[i].addBox(1, 14, 0, 14, 2, 2, 0);
-//            wallModel[i].addBox("face", 1, 1, 0.05f, 14, 13, 0, 0, 34 * i, 10);
-//
-//            openModel[i] = new ModelPart(128, 64, 34 * i, 0);
-//            openModel[i].addBox(1, 0, 0, 14, 2, 2, 0);
-//            openModel[i].addBox(1, 0, 14, 14, 2, 2, 0);
-//            openModel[i].addBox("face", 1, 0.05f, 2, 14, 0, 12, 0, 34 * i -12, 10);
-//
-//        }
-//
-//        ribbonModel = new ModelPart(128, 64, 0, 23);
-//        ribbonModel.addBox(7, 0, 7, 2, 3, 3, 0.001f);
-//
-//        transparent = new ModelPart(128, 64, 0, 0);
-//        transparent.addBox("face", 2, 1, 0.075f, 6, 13, 0, 0, -6, 51);
-//
-//        wallGlyphs = new QuadRenderer[2][];
-//        for (int i = 0; i < wallGlyphs.length; i++) {
-//            wallGlyphs[i] = new QuadRenderer[availableGlyphs];
-//        }
-//        for (int i = 0; i < availableGlyphs; i++) {
-//            wallGlyphs[0][i] = new QuadRenderer(8, 1, 0.075f, 7, 13, i * 7, 51, 128, 64, true, Direction.SOUTH);
-//            wallGlyphs[1][i] = new QuadRenderer(1, 1, 0.075f, 7, 13, i * 7, 51, 128, 64, false, Direction.SOUTH);
-//        }
-//
-//        openGlyphs = new QuadRenderer[4][];
-//        for (int i = 0; i < openGlyphs.length; i++) {
-//            openGlyphs[i] = new QuadRenderer[availableGlyphs];
-//        }
-//        for (int i = 0; i < availableGlyphs; i++) {
-//            openGlyphs[0][i] = new QuadRenderer(1, 0.075f, 2, 7, 6, i * 7, 58, 128, 64, true, Direction.UP);
-//            openGlyphs[1][i] = new QuadRenderer(8, 0.075f, 2, 7, 6, i * 7, 58, 128, 64, false, Direction.UP);
-//            openGlyphs[2][i] = new QuadRenderer(1, 0.075f, 2, 7, 6, i * 7, 58, 128, 64, true, Direction.UP);
-//            openGlyphs[3][i] = new QuadRenderer(8, 0.075f, 2, 7, 6, i * 7, 58, 128, 64, false, Direction.UP);
-//        }
+        for (int i = 0; i < availableMaterials; i++) {
+            parts.addOrReplaceChild("rolled" + i, CubeListBuilder.create()
+                    .texOffs(34 * i, 4)
+                    .addBox(1, 0, 7, 14, 3, 3), PartPose.ZERO);
+
+            parts.addOrReplaceChild("wall" + i, CubeListBuilder.create()
+                    .texOffs(34 * i, 0)
+                    .addBox(1, 14, 0, 14, 2, 2)
+                    .texOffs(34 * i, 10)
+                    .addBox(1, 1, 0.05f, 14, 13, 0), PartPose.ZERO);
+
+            parts.addOrReplaceChild("open" + i, CubeListBuilder.create()
+                    .texOffs(34 * i, 0)
+                    .addBox(1, 0, 0, 14, 2, 2)
+                    .addBox(1, 0, 14, 14, 2, 2)
+                    .texOffs(34 * i -12, 10)
+                    .addBox(1, 0.05f, 2, 14, 0, 12), PartPose.ZERO);
+
+        }
+
+        parts.addOrReplaceChild("ribbon", CubeListBuilder.create()
+                .texOffs(0, 23)
+                .addBox(7, 0, 7, 2, 3, 3, new CubeDeformation(0.001f)), PartPose.ZERO);
 
         return LayerDefinition.create(mesh, 128, 64);
     }
@@ -114,52 +122,52 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
     public void render(ScrollTile tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         VertexConsumer vertexBuilder = material.buffer(buffer, rl -> RenderType.entityCutout(rl));
 
-        model.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
+//        model.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
 
-//        ScrollData[] scrolls = tile.getScrolls();
-//        ScrollBlock.Arrangement arrangement = ((ScrollBlock) tile.getBlockState().getBlock()).getArrangement();
-//        Direction direction = tile.getBlockState().getValue(RackBlock.facingProp);
-//
-//        matrixStack.pushPose();
-//        matrixStack.translate(0.5, 0, 0.5);
-//        matrixStack.mulPose(direction.getRotation());
-//        matrixStack.mulPose(Vector3f.XN.rotationDegrees(90));
-//        matrixStack.translate(-0.5, 0, -0.5);
-//
-//
-//        switch (arrangement) {
-//            case rolled:
-//                renderRolled(scrolls, matrixStack, combinedLight, combinedOverlay, vertexBuilder);
-//                break;
-//            case wall:
-//                renderWall(scrolls, matrixStack, combinedLight, combinedOverlay, vertexBuilder);
-//                break;
-//            case open:
-//                renderOpen(scrolls, matrixStack, combinedLight, combinedOverlay, vertexBuilder);
-//                break;
-//        }
-//
-//        matrixStack.popPose();
-//
-//        if (shouldDrawLabel(scrolls, tile.getBlockPos())) {
-//            matrixStack.pushPose();
-//            matrixStack.translate(0.5, 0, 0.5);
-//            if (arrangement == ScrollBlock.Arrangement.wall) {
-//                matrixStack.mulPose(direction.getOpposite().getRotation());
-//                matrixStack.mulPose(Vector3f.XN.rotationDegrees(90));
-//                matrixStack.translate(0, 0.55, 0.4);
-//                drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
-//            } else if (arrangement == ScrollBlock.Arrangement.open) {
-//                double angle = RotationHelper.getHorizontalAngle(Minecraft.getInstance().getCameraEntity().getEyePosition(partialTicks),
-//                        Vec3.atCenterOf(tile.getBlockPos()));
-//                Quaternion rotation = new Quaternion(0.0F, 0.0F, 0.0F, 1.0F);
-//                rotation.mul(Vector3f.YP.rotationDegrees((float) (angle / Math.PI * 180 + 180)));
-//                matrixStack.mulPose(rotation);
-//                matrixStack.translate(0, 0.4f, 0.4);
-//                drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
-//            }
-//            matrixStack.popPose();
-//        }
+        ScrollData[] scrolls = tile.getScrolls();
+        ScrollBlock.Arrangement arrangement = ((ScrollBlock) tile.getBlockState().getBlock()).getArrangement();
+        Direction direction = tile.getBlockState().getValue(RackBlock.facingProp);
+
+        matrixStack.pushPose();
+        matrixStack.translate(0.5, 0, 0.5);
+        matrixStack.mulPose(direction.getRotation());
+        matrixStack.mulPose(Vector3f.XN.rotationDegrees(90));
+        matrixStack.translate(-0.5, 0, -0.5);
+
+
+        switch (arrangement) {
+            case rolled:
+                renderRolled(scrolls, matrixStack, combinedLight, combinedOverlay, vertexBuilder);
+                break;
+            case wall:
+                renderWall(scrolls, matrixStack, combinedLight, combinedOverlay, vertexBuilder);
+                break;
+            case open:
+                renderOpen(scrolls, matrixStack, combinedLight, combinedOverlay, vertexBuilder);
+                break;
+        }
+
+        matrixStack.popPose();
+
+        if (shouldDrawLabel(scrolls, tile.getBlockPos())) {
+            matrixStack.pushPose();
+            matrixStack.translate(0.5, 0, 0.5);
+            if (arrangement == ScrollBlock.Arrangement.wall) {
+                matrixStack.mulPose(direction.getOpposite().getRotation());
+                matrixStack.mulPose(Vector3f.XN.rotationDegrees(90));
+                matrixStack.translate(0, 0.55, 0.4);
+                drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
+            } else if (arrangement == ScrollBlock.Arrangement.open) {
+                double angle = RotationHelper.getHorizontalAngle(Minecraft.getInstance().getCameraEntity().getEyePosition(partialTicks),
+                        Vec3.atCenterOf(tile.getBlockPos()));
+                Quaternion rotation = new Quaternion(0.0F, 0.0F, 0.0F, 1.0F);
+                rotation.mul(Vector3f.YP.rotationDegrees((float) (angle / Math.PI * 180 + 180)));
+                matrixStack.mulPose(rotation);
+                matrixStack.translate(0, 0.4f, 0.4);
+                drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
+            }
+            matrixStack.popPose();
+        }
     }
 
     private void renderRolled(ScrollData[] scrolls, PoseStack matrixStack, int combinedLight, int combinedOverlay, VertexConsumer vertexBuilder) {
