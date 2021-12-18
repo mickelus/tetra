@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "   ",
+        " # ",
+        " x "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:netherite_scrap"
+        },
+        "x": {
+            "item": "tetra:metal_scrap"
+        }
+    },
+    "result": {
+        "item": "tetra:forged_bolt",
+        "count": 2
+    }
+}

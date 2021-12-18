@@ -203,7 +203,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer_dig": 4
+                "hammer_dig": 5
             },
             "models": [{
                 "location": "tetra:items/module/double/head/basic_hammer/obsidian"
@@ -234,7 +234,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer_dig": 5
+                "hammer_dig": 6
             },
             "integrity": -1,
             "extract": {

@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " c ",
+        " p ",
+        " s "
+    ],
+    "key": {
+        "c": { "item": "minecraft:copper_ingot" },
+        "p": { "item": "minecraft:ender_pearl" },
+        "s": { "item": "minecraft:netherite_scrap" }
+    },
+    "result": {
+        "item": "tetra:chthonic_extractor"
+    }
+}

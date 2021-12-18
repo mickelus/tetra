@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "  #",
+        " # ",
+        "#  "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:netherite_scrap"
+        }
+    },
+    "result": {
+        "item": "tetra:forged_beam"
+    }
+}

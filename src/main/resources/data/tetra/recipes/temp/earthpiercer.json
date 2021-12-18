@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " ##",
+        " x#",
+        "   "
+    ],
+    "key": {
+        "x": {
+            "item": "minecraft:nether_star"
+        },
+        "#": {
+            "item": "minecraft:netherite_scrap"
+        }
+    },
+    "result": {
+        "item": "tetra:earthpiercer"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:netherite_scrap"
+        }
+    ],
+    "result": {
+        "item": "tetra:metal_scrap",
+        "count": 8
+    }
+}

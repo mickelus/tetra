@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " tn",
+        " # ",
+        "nt "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:netherite_scrap"
+        },
+        "n": {
+            "item": "minecraft:iron_nugget"
+        },
+        "t": {
+            "item": "minecraft:tripwire_hook"
+        }
+    },
+    "result": {
+        "item": "tetra:quick_latch"
+    }
+}
