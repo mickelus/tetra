@@ -262,10 +262,23 @@ public class ItemModularHandheld extends ModularItem {
             for (ToolAction tool: tools) {
                 BlockState block = blockState.getToolModifiedState(world, pos, context.getPlayer(), context.getItemInHand(), tool);
                 if (block != null) {
-                    SoundEvent sound = Optional.ofNullable(getUseSound(tool))
-                            .orElseGet(() -> blockState.getSoundType(world, pos, player).getHitSound());
+                    if (ToolActions.AXE_STRIP.equals(tool)) {
+                        world.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    } else if (ToolActions.AXE_SCRAPE.equals(tool)) {
+                        world.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        world.levelEvent(player, 3005, pos, 0);
+                    } else if (ToolActions.AXE_WAX_OFF.equals(tool)) {
+                        world.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        world.levelEvent(player, 3005, pos, 0);
+                    } else if (ToolActions.HOE_DIG.equals(tool)) {
+                        world.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    } else if (ToolActions.SHOVEL_DIG.equals(tool)) {
+                        world.playSound(player, pos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    } else {
+                        SoundEvent sound = blockState.getSoundType(world, pos, player).getHitSound();
+                        world.playSound(player, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    }
 
-                    world.playSound(player, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
                     if (!world.isClientSide) {
                         world.setBlock(pos, block, 11);
                         applyDamage(blockDestroyDamage, context.getItemInHand(), player);
@@ -288,13 +301,6 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         return super.useOn(context);
-    }
-
-    private SoundEvent getUseSound(ToolAction tool) {
-        if      (tool == ToolActions.AXE_DIG)    return SoundEvents.AXE_STRIP;
-        else if (tool == ToolActions.HOE_DIG)    return SoundEvents.HOE_TILL;
-        else if (tool == ToolActions.SHOVEL_DIG) return SoundEvents.SHOVEL_FLATTEN;
-        return null;
     }
 
     @Override
