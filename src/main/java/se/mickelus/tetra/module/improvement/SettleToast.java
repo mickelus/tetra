@@ -1,22 +1,22 @@
 package se.mickelus.tetra.module.improvement;
 
-import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
@@ -52,8 +52,10 @@ public class SettleToast implements Toast {
 
 
         if (itemStack != null) {
-            toastGui.getMinecraft().getTextureManager().bindForSetup(texture);
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.setShaderTexture(0, texture);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+
             toastGui.blit(matrixStack, 0, 0, 0, 0, 160, 32);
 
             if (!this.hasPlayedSound && delta > 0L) {

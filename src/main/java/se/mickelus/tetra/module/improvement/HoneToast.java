@@ -1,8 +1,10 @@
 package se.mickelus.tetra.module.improvement;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.resources.ResourceLocation;
@@ -27,8 +29,10 @@ public class HoneToast implements Toast {
     @Override
     public Visibility render(PoseStack matrixStack, ToastComponent toastGui, long delta) {
         if (itemStack != null) {
-            toastGui.getMinecraft().getTextureManager().bindForSetup(texture);
-            // RenderSystem.color3f(1.0F, 1.0F, 1.0F);
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.setShaderTexture(0, texture);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+
             toastGui.blit(matrixStack, 0, 0, 0, 0, 160, 32);
 
             String itemName = toastGui.getMinecraft().font.plainSubstrByWidth(itemStack.getHoverName().getString(), 125);
