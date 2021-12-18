@@ -32,7 +32,9 @@ public class WorkbenchTESR implements BlockEntityRenderer<WorkbenchTile> {
         if (itemStack != null && !itemStack.isEmpty()) {
             matrixStack.pushPose();
 
-            BakedModel model = itemRenderer.getModel(itemStack, workbenchTile.getLevel(), null, combinedLight); // fixme: figure out the last int
+            int renderId = (int) workbenchTile.getBlockPos().asLong();
+
+            BakedModel model = itemRenderer.getModel(itemStack, workbenchTile.getLevel(), null, renderId);
             if (itemStack.getItem() instanceof ModularShieldItem) {
                 matrixStack.translate(0.375, 0.9125, 0.5);
                 matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
@@ -48,7 +50,7 @@ public class WorkbenchTESR implements BlockEntityRenderer<WorkbenchTile> {
 
             Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemTransforms.TransformType.FIXED,
                     LevelRenderer.getLightColor(workbenchTile.getLevel(), workbenchTile.getBlockPos().above()),
-                    combinedOverlay, matrixStack, buffer, 0); // FIXME: figure out the last int
+                    combinedOverlay, matrixStack, buffer, renderId);
 
             matrixStack.popPose();
         }

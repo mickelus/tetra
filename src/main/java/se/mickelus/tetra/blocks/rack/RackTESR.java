@@ -47,7 +47,7 @@ public class RackTESR implements BlockEntityRenderer<RackTile> {
                     matrixStack.pushPose();
                     matrixStack.translate(itemDirection.getStepX() * (i - 0.5), 0, itemDirection.getStepZ() * (i - 0.5));
                     matrixStack.mulPose(direction.getRotation());
-                    renderItemStack(tile.getLevel(), itemStack, matrixStack, buffer, combinedLight, combinedOverlay);
+                    renderItemStack(tile, itemStack, matrixStack, buffer, combinedLight, combinedOverlay);
                     matrixStack.popPose();
                 }
             }
@@ -55,11 +55,12 @@ public class RackTESR implements BlockEntityRenderer<RackTile> {
         });
     }
 
-    private void renderItemStack(Level world, ItemStack itemStack, PoseStack matrixStack, MultiBufferSource buffer,
+    private void renderItemStack(RackTile tile, ItemStack itemStack, PoseStack matrixStack, MultiBufferSource buffer,
             int combinedLight, int combinedOverlay) {
         if (itemStack != null && !itemStack.isEmpty()) {
+            int renderId = (int) tile.getBlockPos().asLong();
 
-            BakedModel model = itemRenderer.getModel(itemStack, world, null, combinedLight);
+            BakedModel model = itemRenderer.getModel(itemStack, tile.getLevel(), null, combinedLight);
 
             matrixStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
@@ -80,7 +81,7 @@ public class RackTESR implements BlockEntityRenderer<RackTile> {
             }
 
             Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemTransforms.TransformType.FIXED, combinedLight, combinedOverlay,
-                    matrixStack, buffer, 0); // FIXME: what does last int do? wasnt there on 1.16
+                    matrixStack, buffer, renderId);
 
         }
     }

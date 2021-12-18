@@ -61,7 +61,7 @@ public class ModularOverrideList extends ItemOverrides {
 
     @Nullable
     @Override
-    public BakedModel resolve(BakedModel originalModel, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int i) { // fixme: figure out las int
+    public BakedModel resolve(BakedModel originalModel, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int renderId) {
         CompoundTag baseTag = stack.getTag();
         BakedModel result = originalModel;
 

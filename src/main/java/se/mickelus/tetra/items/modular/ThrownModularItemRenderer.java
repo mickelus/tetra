@@ -42,7 +42,8 @@ public class ThrownModularItemRenderer extends EntityRenderer<ThrownModularItemE
             transformShield(entity, partialTicks, matrixStack);
         }
 
-        Minecraft.getInstance().getItemRenderer().renderStatic(entity.getPickupItem(), ItemTransforms.TransformType.FIXED, packedLightIn, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer, 1); // FIXME: figure out last int
+        Minecraft.getInstance().getItemRenderer().renderStatic(entity.getPickupItem(), ItemTransforms.TransformType.FIXED, packedLightIn,
+                OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer, entity.getId());
 
         matrixStack.popPose();
         super.render(entity, entityYaw, partialTicks, matrixStack, renderTypeBuffer, packedLightIn);
