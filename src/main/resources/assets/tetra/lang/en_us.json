@@ -282,7 +282,7 @@
   "tetra.stats.slam_defensive.tooltip": "Reduces damage dealt by §e30%% (%s)§r but stun direct targets for §e%s§r seconds and slow AOE targets by §e30%%§r for §e%s§r seconds when used in the offhand",
   "tetra.stats.puncture_defensive.tooltip": "Shove the target away when used in the offhand. Deals §e30%% (%s)§r attack damage and slows the target's movement speed by §e%s%%§r for §e%s§r seconds, punctured targets or targets with less than §e6§7 armor are shoved further",
   "tetra.stats.pry_defensive.tooltip": "Reduce the target's attack damage by §e%s§r for §e%s§r seconds when used in the offhand, but inflict no armor reduction",
-  "tetra.stats.overpower_defensive.tooltip": "Only applies §eExhausted§7 (§e1§r stack) on the target when used in the offhand, but damage dealt is reduced to §e%s%% (%s)§r and the cooldown is increased by §e%s%%",
+  "tetra.stats.overpower_defensive.tooltip": "Only applies §eExhausted§7 (§e1§r stack) on the wielder when used in the offhand, but damage dealt is reduced to §e%s%% (%s)§r and the cooldown is increased by §e%s%%",
   "tetra.stats.reap_defensive.tooltip": "Gain §e1§r armor for each enemy hit when used in the offhand, lasts for §e%s§r seconds plus §e%s§r seconds for each enemy killed\n \n§rMainhand use grants §e+20%%§r movement speed per kill for §e%s§r seconds",
 
   "tetra.stats.ability_overcharge": "Overcharge",
