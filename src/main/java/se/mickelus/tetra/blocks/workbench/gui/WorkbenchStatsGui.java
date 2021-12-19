@@ -93,6 +93,7 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.workable,
             GuiStats.stability,
             new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.hammer),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.cut),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.AXE_DIG),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.PICKAXE_DIG),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.SHOVEL_DIG),

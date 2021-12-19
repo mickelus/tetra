@@ -92,6 +92,7 @@ public class HoloStatsGui extends GuiElement {
             GuiStats.stability,
             GuiStats.workable,
             new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.hammer, true),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.cut, true),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.AXE_DIG, true),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.PICKAXE_DIG, true),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.SHOVEL_DIG, true),
