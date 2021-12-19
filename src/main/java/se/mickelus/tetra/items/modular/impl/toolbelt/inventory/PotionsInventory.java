@@ -6,6 +6,8 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Predicate;
+
 @ParametersAreNonnullByDefault
 public class PotionsInventory extends ToolbeltInventory {
 
@@ -17,7 +19,7 @@ public class PotionsInventory extends ToolbeltInventory {
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.potion);
 
-        predicate = ToolbeltInventory.potionPredicate;
+        predicate = getPredicate("potion");
 
         readFromNBT(stack.getOrCreateTag());
     }

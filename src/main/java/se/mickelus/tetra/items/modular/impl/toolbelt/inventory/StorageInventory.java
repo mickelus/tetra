@@ -8,6 +8,8 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
+
 @ParametersAreNonnullByDefault
 public class StorageInventory extends ToolbeltInventory {
 
@@ -18,6 +20,8 @@ public class StorageInventory extends ToolbeltInventory {
         super(inventoryKey, stack, maxSize, SlotType.storage);
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.storage);
+
+        predicate = getPredicate("storage");
 
         readFromNBT(stack.getOrCreateTag());
     }

@@ -1,6 +1,10 @@
 package se.mickelus.tetra.proxy;
 
+import net.minecraft.core.Registry;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.tags.TagCollection;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.items.ITetraItem;
@@ -28,4 +32,8 @@ public class ServerProxy implements IProxy {
         return null;
     }
 
+    @Override
+    public TagCollection<Item> getItemTags() {
+        return SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY);
+    }
 }

@@ -77,7 +77,6 @@ public class DataManager implements DataDistributor {
     public final DataStore<ReplacementDefinition[]> replacementData;
     public final SchematicStore schematicData;
     public final DataStore<CraftingEffect> craftingEffectData;
-    public final DataStore<ItemPredicate[]> predicateData;
     public final DataStore<ConfigActionImpl[]> actionData;
     public final DataStore<DestabilizationEffect[]> destabilizationData;
     public final DataStore<FeatureParameters> featureData;
@@ -99,13 +98,12 @@ public class DataManager implements DataDistributor {
         this.replacementData = new DataStore<>(gson, TetraMod.MOD_ID, "replacements", ReplacementDefinition[].class, this);
         this.schematicData = new SchematicStore(gson, TetraMod.MOD_ID, "schematics", this);
         this.craftingEffectData = new CraftingEffectStore(gson, TetraMod.MOD_ID, "crafting_effects", this);
-        this.predicateData = new DataStore<>(gson, TetraMod.MOD_ID, "predicatus", ItemPredicate[].class, this);
         this.actionData = new DataStore<>(gson, TetraMod.MOD_ID, "actions", ConfigActionImpl[].class, this);
         this.destabilizationData = new DataStore<>(gson, TetraMod.MOD_ID, "destabilization", DestabilizationEffect[].class, this);
         this.featureData = new FeatureStore(gson, TetraMod.MOD_ID, "structures", this);
 
         dataStores = new DataStore[] { tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
-                replacementData, schematicData, craftingEffectData, repairData, predicateData, actionData, destabilizationData, featureData };
+                replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData, featureData };
     }
 
     @SubscribeEvent

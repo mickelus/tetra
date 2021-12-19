@@ -3,7 +3,11 @@ package se.mickelus.tetra.proxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.core.Registry;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.tags.TagCollection;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -58,5 +62,14 @@ public class ClientProxy implements IProxy {
 	@Override
 	public Player getClientPlayer() {
 		return Minecraft.getInstance().player;
+	}
+
+	@Override
+	public TagCollection<Item> getItemTags() {
+		if (Minecraft.getInstance().level != null) {
+			return Minecraft.getInstance().level.getTagManager().getOrEmpty(Registry.ITEM_REGISTRY);
+		}
+
+		return SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY);
 	}
 }

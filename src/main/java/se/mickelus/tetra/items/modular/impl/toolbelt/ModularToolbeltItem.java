@@ -20,6 +20,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TagsUpdatedEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
@@ -34,7 +36,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltGui;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.JumpHandlerSuspend;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.ToggleSuspendPacket;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
@@ -89,9 +91,6 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
         packetHandler.registerPacket(UpdateBoosterPacket.class, UpdateBoosterPacket::new);
         packetHandler.registerPacket(ToggleSuspendPacket.class, ToggleSuspendPacket::new);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
-
-
-        ToolbeltInventory.initializePredicates();
 
         RemoveSchematic.registerRemoveSchematics(this);
 

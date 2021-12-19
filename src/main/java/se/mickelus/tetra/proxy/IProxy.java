@@ -1,6 +1,8 @@
 package se.mickelus.tetra.proxy;
 
+import net.minecraft.tags.TagCollection;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.items.ITetraItem;
@@ -12,4 +14,5 @@ public interface IProxy {
     public void postInit();
 
     public Player getClientPlayer();
+    public TagCollection<Item> getItemTags();
 }

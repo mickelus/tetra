@@ -30,8 +30,6 @@ public class ToolbeltContainer extends AbstractContainerMenu {
 
         this.itemStackToolbelt = itemStackToolbelt;
 
-//        quickslotInventory.openInventory(player);
-
         int numPotionSlots = potionsInventory.getContainerSize();
         int numQuickslots = quickslotInventory.getContainerSize();
         int numStorageSlots = storageInventory.getContainerSize();
@@ -115,7 +113,6 @@ public class ToolbeltContainer extends AbstractContainerMenu {
      * @return true if the given itemstack has been emptied, otherwise false
      */
     private boolean mergeItemStackExtended(ItemStack incomingStack, int startIndex, int endIndex) {
-
         for (int i = startIndex; i < endIndex; i++) {
             Slot slot = this.slots.get(i);
             if (slot.mayPlace(incomingStack)) {
@@ -153,38 +150,9 @@ public class ToolbeltContainer extends AbstractContainerMenu {
         return false;
     }
 
-    // todo 1.18: changed significantly, needs verification
-    @Override
-    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
-        if (clickTypeIn == ClickType.PICKUP && 0 <= slotId && slotId < potionsInventory.getContainerSize()) {
-            Slot slot = getSlot(slotId);
-            if (player.getInventory().getSelected().isEmpty()) {
-                setCarried(slot.remove(64));
-            } else {
-                if (slot.mayPlace(player.getInventory().getSelected())) {
-                    if (slot.getItem().isEmpty()) {
-                        slot.set(player.getInventory().getSelected());
-                        setCarried(ItemStack.EMPTY);
-                    } else if (ItemStack.isSame(slot.getItem(), player.getInventory().getSelected())
-                            && ItemStack.tagMatches(slot.getItem(), player.getInventory().getSelected())) {
-                        int moveAmount = Math.min(player.getInventory().getSelected().getCount(), slot.getMaxStackSize() - slot.getItem().getCount());
-                        slot.getItem().grow(moveAmount);
-                        player.getInventory().getSelected().shrink(moveAmount);
-                    } else if (slot.getItem().getCount() <= slot.getItem().getMaxStackSize()) {
-                        ItemStack tempStack = slot.getItem();
-                        slot.set(player.getInventory().getSelected());
-                        setCarried(tempStack);
-                    }
-                }
-            }
-        } else {
-            super.clicked(slotId, dragType, clickTypeIn, player);
-        }
-    }
-
     @Override
     public boolean stillValid(Player playerIn) {
-        return this.quickslotInventory.stillValid(playerIn);
+        return true;
     }
 
     /**
@@ -216,27 +184,37 @@ public class ToolbeltContainer extends AbstractContainerMenu {
                         // reset count if it was not possible to move the itemstack
                         itemStack.setCount(count);
                         slot.set(itemStack);
+                        slot.setChanged();
                         return ItemStack.EMPTY;
                     }
                 } else {
+                    ItemStack breakoff = itemStack.split(itemStack.getMaxStackSize());
                     // move item from slot into player inventory
-                    if (!this.moveItemStackTo(itemStack, playerInventoryStart,  slots.size(), true)) {
+                    if (!this.moveItemStackTo(breakoff, playerInventoryStart,  slots.size(), true)) {
+                        slot.setChanged();
+                        return itemStack;
+                    } else {
+                        itemStack.grow(breakoff.getCount());
+                        slot.setChanged();
                         return ItemStack.EMPTY;
                     }
                 }
 
                 slot.setChanged();
             } else {
-                if (numPotionSlots > 0 && mergeItemStackExtended(itemStack, 0,  numPotionSlots)) {
+                // plop item into first available slot, in priority: quiver > potion > quickslot > storage
+                // todo: cleanup, this is really confusing
+
+                if (numQuiverSlots > 0 && moveItemStackTo(itemStack, numStorageSlots,  numStorageSlots + numQuiverSlots, false)) {
                     return itemStack;
                 }
-                if (numQuiverSlots > 0 && moveItemStackTo(itemStack, numPotionSlots,  numPotionSlots + numQuiverSlots, false)) {
+                if (numPotionSlots > 0 && mergeItemStackExtended(itemStack, numStorageSlots + numQuiverSlots, numStorageSlots + numQuiverSlots+ numPotionSlots)) {
                     return itemStack;
                 }
-                if (numQuickslots > 0 && moveItemStackTo(itemStack, numPotionSlots + numQuiverSlots,  numPotionSlots + numQuiverSlots + numQuickslots, false)) {
+                if (numQuickslots > 0 && moveItemStackTo(itemStack, numStorageSlots + numQuiverSlots+ numPotionSlots,  playerInventoryStart, false)) {
                     return itemStack;
                 }
-                if (numStorageSlots > 0 && moveItemStackTo(itemStack, numPotionSlots + numQuiverSlots + numQuickslots,  playerInventoryStart, false)) {
+                if (numStorageSlots > 0 && moveItemStackTo(itemStack, 0,  numStorageSlots, false)) {
                     return itemStack;
                 }
                 return ItemStack.EMPTY;

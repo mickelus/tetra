@@ -6,6 +6,8 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
+import java.util.function.Predicate;
+
 @ParametersAreNonnullByDefault
 public class QuiverInventory extends ToolbeltInventory {
 
@@ -17,7 +19,7 @@ public class QuiverInventory extends ToolbeltInventory {
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.quiver);
 
-        predicate = ToolbeltInventory.quiverPredicate;
+        predicate = getPredicate("quiver");
 
         readFromNBT(stack.getOrCreateTag());
     }

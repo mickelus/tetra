@@ -1,10 +1,9 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.tags.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
@@ -12,17 +11,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ItemEffect;
-import se.mickelus.tetra.items.ItemPredicateComposite;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Predicate;
+
 @ParametersAreNonnullByDefault
 public class ToolbeltInventory implements Container {
     protected static final String slotKey = "slot";
@@ -36,11 +32,7 @@ public class ToolbeltInventory implements Container {
     protected int numSlots = 0;
     protected int maxSize = 0;
 
-    ItemPredicate predicate = ItemPredicate.ANY;
-    public static ItemPredicate potionPredicate = ItemPredicate.ANY;
-    public static ItemPredicate quickPredicate = ItemPredicate.ANY;
-    public static ItemPredicate quiverPredicate = ItemPredicate.ANY;
-    public static ItemPredicate storagePredicate = ItemPredicate.ANY;
+    protected Predicate<ItemStack> predicate = (itemStack -> true);
 
     public ToolbeltInventory(String inventoryKey, ItemStack stack, int maxSize, SlotType inventoryType) {
         this.inventoryKey = inventoryKey;
@@ -52,32 +44,16 @@ public class ToolbeltInventory implements Container {
         inventoryContents = NonNullList.withSize(maxSize, ItemStack.EMPTY);
     }
 
-    public static void initializePredicates() {
-        DataManager.instance.predicateData.onReload(() -> {
-            potionPredicate = getPredicate("potion");
-            quickPredicate = getPredicate("quick");
-            quiverPredicate = getPredicate("quiver");
-            storagePredicate = getPredicate("storage");
-        });
-    }
+    protected static Predicate<ItemStack> getPredicate(String inventory) {
+        Tag<Item> acceptTag = TetraMod.proxy.getItemTags().getTagOrEmpty(new ResourceLocation(TetraMod.MOD_ID, "toolbelt/" + inventory + "_accept"));
+        Tag<Item> rejectTag = TetraMod.proxy.getItemTags().getTagOrEmpty(new ResourceLocation(TetraMod.MOD_ID, "toolbelt/" + inventory + "_reject"));
 
-    private static ItemPredicate getPredicate(String inventory) {
-        ItemPredicate[] predicates = Arrays.stream(DataManager.instance.predicateData.getData(
-                new ResourceLocation(TetraMod.MOD_ID, String.format("toolbelt/%s", inventory))))
-                .filter(Objects::nonNull)
-                .toArray(ItemPredicate[]::new);
-
-        // todo: add debug log
-        if (predicates.length > 0) {
-            return new ItemPredicateComposite(predicates);
-        }
-
-        return ItemPredicate.ANY;
+        return (itemStack -> (acceptTag.getValues().isEmpty() || itemStack.is(acceptTag)) && !itemStack.is(rejectTag));
     }
 
 
     public void readFromNBT(CompoundTag compound) {
-        ListTag items = compound.getList(inventoryKey, Tag.TAG_COMPOUND);
+        ListTag items = compound.getList(inventoryKey, net.minecraft.nbt.Tag.TAG_COMPOUND);
 
         for (int i = 0; i < items.size(); i++) {
             CompoundTag itemTag = items.getCompound(i);
@@ -217,7 +193,7 @@ public class ToolbeltInventory implements Container {
     }
 
     public boolean isItemValid(ItemStack itemStack) {
-        return !ModularToolbeltItem.instance.equals(itemStack.getItem()) && predicate.matches(itemStack);
+        return !ModularToolbeltItem.instance.equals(itemStack.getItem()) && predicate.test(itemStack);
     }
 
     public boolean storeItemInInventory(ItemStack itemStack) {
