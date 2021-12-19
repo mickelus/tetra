@@ -19,11 +19,12 @@ public class InvertColorGui extends GuiElement {
 
     @Override
     protected void drawChildren(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        RenderSystem.enableBlend();
 
-        // todo 1.18: check that rendering is not opaque
-        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        // todo 1.18: alphaTest is baked into shaders now, need to find a shader that works for this
+//        RenderSystem.enableBlend();
+//        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR,
+//                GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         super.drawChildren(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
-        RenderSystem.defaultBlendFunc();
+//        RenderSystem.defaultBlendFunc();
     }
 }

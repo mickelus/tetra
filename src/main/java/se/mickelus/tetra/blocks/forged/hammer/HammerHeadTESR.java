@@ -25,7 +25,6 @@ public class HammerHeadTESR implements BlockEntityRenderer<HammerHeadTile> {
         blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }
 
-    // todo 1.15: ripped out
     @Override
     public void render(HammerHeadTile tile, float v, PoseStack matrixStack, MultiBufferSource buffer,
             int combinedLight, int combinedOverlay) {
