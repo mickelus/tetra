@@ -32,7 +32,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate" ],
             "moduleKey": "shield/heater",
             "moduleVariant": "heater/"
         }

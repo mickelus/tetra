@@ -29,7 +29,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:misc/stick", "tetra:metal/"],
+            "materials": [ "tetra:wood/", "tetra:misc/stick", "tetra:metal/" ],
             "key": "long_stave/",
             "attributes": {
                 "tetra:draw_speed": 1.6,
@@ -58,7 +58,7 @@
                     "textureX": 144,
                     "textureY": 32
                 },
-                "availableTextures": ["crude"],
+                "availableTextures": [ "crude" ],
                 "models": [
                     {
                         "location": "tetra:items/module/bow/stave/long/"

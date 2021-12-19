@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Function;
+
 @ParametersAreNonnullByDefault
 public class TileEntityOutcome<T extends BlockEntity> implements InteractionOutcome {
 

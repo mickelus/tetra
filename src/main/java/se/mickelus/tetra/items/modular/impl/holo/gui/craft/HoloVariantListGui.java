@@ -17,14 +17,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class HoloVariantListGui extends GuiElement {
-    private GuiHorizontalScrollable groupsScroll;
-    private GuiHorizontalLayoutGroup groups;
+    private final GuiHorizontalScrollable groupsScroll;
+    private final GuiHorizontalLayoutGroup groups;
 
-    private Consumer<OutcomePreview> onVariantHover;
-    private Consumer<OutcomePreview> onVariantBlur;
-    private Consumer<OutcomePreview> onVariantSelect;
+    private final Consumer<OutcomePreview> onVariantHover;
+    private final Consumer<OutcomePreview> onVariantBlur;
+    private final Consumer<OutcomePreview> onVariantSelect;
 
     private boolean filterCategory = false;
     private String filter = "";
@@ -101,11 +102,7 @@ public class HoloVariantListGui extends GuiElement {
 
     @Override
     public boolean onCharType(char character, int modifiers) {
-        if (character == 'f') {
-            return true;
-        }
-
-        return false;
+        return character == 'f';
     }
 
     private boolean filter(OutcomePreview preview) {

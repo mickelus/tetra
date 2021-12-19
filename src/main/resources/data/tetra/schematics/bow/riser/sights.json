@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["bow/riser"],
+    "slots": [ "bow/riser" ],
     "materialSlotCount": 1,
     "displayType": "minor",
     "glyph": {
@@ -13,9 +13,11 @@
         },
         "durability": 1
     },
-    "outcomes": [{
-        "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/stick"],
-        "moduleKey": "bow/sights",
-        "moduleVariant": "sights/"
-    }]
+    "outcomes": [
+        {
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/stick" ],
+            "moduleKey": "bow/sights",
+            "moduleVariant": "sights/"
+        }
+    ]
 }

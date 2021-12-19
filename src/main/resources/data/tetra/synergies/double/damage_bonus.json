@@ -1,6 +1,6 @@
 [
     {
-        "modules": ["double/basic_axe", "double/basic_axe"],
+        "modules": [ "double/basic_axe", "double/basic_axe" ],
         "name": "double/axe_axe",
         "attributes": {
             "**generic.attack_damage": 0.2

@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class StunEffect {
     public static void perform(ItemStack itemStack, int effectLevel, LivingEntity attacker, LivingEntity target) {

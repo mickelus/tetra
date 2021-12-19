@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.Tooltips;
 
 public interface ITooltipGetter {
-    public default String getTooltip(Player player, ItemStack itemStack) {
+    default String getTooltip(Player player, ItemStack itemStack) {
         if (hasExtendedTooltip(player, itemStack)) {
             return getTooltipBase(player, itemStack) + "\n \n" + Tooltips.expand.getString();
         }
@@ -16,11 +16,12 @@ public interface ITooltipGetter {
 
     /**
      * Used for showing extended tooltips when shift is held down
+     *
      * @param player
      * @param itemStack
      * @return
      */
-    public default String getTooltipExtended(Player player, ItemStack itemStack) {
+    default String getTooltipExtended(Player player, ItemStack itemStack) {
         if (hasExtendedTooltip(player, itemStack)) {
             return getTooltipBase(player, itemStack) + "\n \n" + Tooltips.expanded.getString() + "\n"
                     + ChatFormatting.GRAY + getTooltipExtension(player, itemStack);
@@ -29,13 +30,13 @@ public interface ITooltipGetter {
         return getTooltip(player, itemStack);
     }
 
-    public String getTooltipBase(Player player, ItemStack itemStack);
+    String getTooltipBase(Player player, ItemStack itemStack);
 
-    public default boolean hasExtendedTooltip(Player player, ItemStack itemStack) {
+    default boolean hasExtendedTooltip(Player player, ItemStack itemStack) {
         return false;
     }
 
-    public default String getTooltipExtension(Player player, ItemStack itemStack) {
+    default String getTooltipExtension(Player player, ItemStack itemStack) {
         return null;
     }
 }

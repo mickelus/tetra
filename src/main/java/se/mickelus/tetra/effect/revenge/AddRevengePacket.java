@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class AddRevengePacket extends AbstractPacket {
     private int entityId = -1;
@@ -14,7 +15,8 @@ public class AddRevengePacket extends AbstractPacket {
         this.entityId = attacker.getId();
     }
 
-    public AddRevengePacket() {}
+    public AddRevengePacket() {
+    }
 
     @Override
     public void toBytes(FriendlyByteBuf buffer) {

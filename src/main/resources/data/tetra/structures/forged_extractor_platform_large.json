@@ -1,8 +1,8 @@
 {
-    "origin": [10, 12, 5],
+    "origin": [ 10, 12, 5 ],
     "children": [
         {
-            "offset": [4, 5, 4],
+            "offset": [ 4, 5, 4 ],
             "facing": "EAST",
             "chance": 0.8,
             "features": [
@@ -12,7 +12,7 @@
             ]
         },
         {
-            "offset": [4, 5, 6],
+            "offset": [ 4, 5, 6 ],
             "facing": "EAST",
             "chance": 0.8,
             "features": [
@@ -22,7 +22,7 @@
             ]
         },
         {
-            "offset": [16, 5, 4],
+            "offset": [ 16, 5, 4 ],
             "facing": "WEST",
             "chance": 0.8,
             "features": [
@@ -32,7 +32,7 @@
             ]
         },
         {
-            "offset": [16, 5, 6],
+            "offset": [ 16, 5, 6 ],
             "facing": "WEST",
             "chance": 0.8,
             "features": [
@@ -42,7 +42,7 @@
             ]
         },
         {
-            "offset": [10, 6, 8],
+            "offset": [ 10, 6, 8 ],
             "facing": "NORTH",
             "chance": 0.3,
             "features": [
@@ -50,14 +50,12 @@
             ]
         },
         {
-            "offset": [10, 6, 2],
+            "offset": [ 10, 6, 2 ],
             "facing": "SOUTH",
             "chance": 0.3,
             "features": [
-
                 "tetra:forged_crate_3x2x2"
             ]
         }
     ]
-
 }

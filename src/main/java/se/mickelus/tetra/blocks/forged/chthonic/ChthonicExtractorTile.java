@@ -11,12 +11,12 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ChthonicExtractorTile extends BlockEntity {
+    private static final String damageKey = "dmg";
     @ObjectHolder(TetraMod.MOD_ID + ":" + ChthonicExtractorBlock.unlocalizedName)
     public static BlockEntityType<ChthonicExtractorTile> type;
-
-    private static final String damageKey = "dmg";
     private int damage = 0;
 
     public ChthonicExtractorTile(BlockPos p_155268_, BlockState p_155269_) {

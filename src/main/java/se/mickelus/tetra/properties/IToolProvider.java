@@ -14,9 +14,9 @@ import java.util.Set;
 public interface IToolProvider {
     Logger logger = LogManager.getLogger();
 
-    public boolean canProvideTools(ItemStack itemStack);
+    boolean canProvideTools(ItemStack itemStack);
 
-    public ToolData getToolData(ItemStack itemStack);
+    ToolData getToolData(ItemStack itemStack);
 
 
     default int getToolLevel(ItemStack itemStack, ToolAction tool) {
@@ -54,14 +54,15 @@ public interface IToolProvider {
     /**
      * Apply special effects and possibly consume required resources after this item has been used to craft or upgrade
      * another item. This is called once for each tool used by the craft, which this item provide.
-     * @param providerStack The providing stack, the itemstack for this item
-     * @param targetStack The itemstack which is being upgraded/crafted/altered in some way
-     * @param player The player performing the actions
-     * @param tool The tool used
-     * @param toolLevel The level of the used tool
+     *
+     * @param providerStack    The providing stack, the itemstack for this item
+     * @param targetStack      The itemstack which is being upgraded/crafted/altered in some way
+     * @param player           The player performing the actions
+     * @param tool             The tool used
+     * @param toolLevel        The level of the used tool
      * @param consumeResources
      */
-    public default ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, Player player, ToolAction tool, int toolLevel,
+    default ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, Player player, ToolAction tool, int toolLevel,
             boolean consumeResources) {
         ItemStack result = targetStack.copy();
 
@@ -71,14 +72,15 @@ public interface IToolProvider {
     /**
      * Apply special effects and possibly consume required resources after this item has been used to perform a
      * workbench action.
-     * @param providerStack The providing stack, the itemstack for this item
-     * @param targetStack The itemstack which the action is performed upon
-     * @param player The player performing the action
-     * @param tool The tool used
-     * @param toolLevel The level of the used tool
+     *
+     * @param providerStack    The providing stack, the itemstack for this item
+     * @param targetStack      The itemstack which the action is performed upon
+     * @param player           The player performing the action
+     * @param tool             The tool used
+     * @param toolLevel        The level of the used tool
      * @param consumeResources
      */
-    public default ItemStack onActionConsume(ItemStack providerStack, ItemStack targetStack, Player player, ToolAction tool, int toolLevel,
+    default ItemStack onActionConsume(ItemStack providerStack, ItemStack targetStack, Player player, ToolAction tool, int toolLevel,
             boolean consumeResources) {
         ItemStack result = targetStack.copy();
 

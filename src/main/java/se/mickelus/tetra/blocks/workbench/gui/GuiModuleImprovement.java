@@ -9,13 +9,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class GuiModuleImprovement extends GuiElement {
 
     private final List<String> tooltipLines;
 
-    private Runnable hoverHandler;
-    private Runnable blurHandler;
+    private final Runnable hoverHandler;
+    private final Runnable blurHandler;
 
     public GuiModuleImprovement(int x, int y, String improvement, int level, int color, Runnable hoverHandler, Runnable blurHandler) {
         super(x, y, 4, 4);

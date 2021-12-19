@@ -10,7 +10,7 @@
     "toolLevel": "0",
     "toolEfficiency": "0",
     "effects": {
-        "enderReverb": [4, 0.3]
+        "enderReverb": [ 4, 0.3 ]
     },
     "tints": {
         "glyph": "end_rod_glyph",

@@ -1,12 +1,12 @@
 {
     "replace": true,
-    "slots": ["sword/guard"],
+    "slots": [ "sword/guard" ],
     "type": "tetra:basic_module",
     "renderLayer": "higher",
     "tweakKey": "tetra:sword/binding",
     "variants": [
         {
-            "materials": ["tetra:fibre/", "tetra:skin/"],
+            "materials": [ "tetra:fibre/", "tetra:skin/" ],
             "key": "sword_binding/",
             "extract": {
                 "secondaryAttributes": {
@@ -18,8 +18,8 @@
                     "textureX": 88,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
-                "models": [{ "location": "tetra:items/module/sword/guard/binding/" }]
+                "availableTextures": [ "default" ],
+                "models": [ { "location": "tetra:items/module/sword/guard/binding/" } ]
             }
         },
         {
@@ -33,10 +33,12 @@
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/sword/guard/binding/bolt",
-                "tint": "bolt"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/guard/binding/bolt",
+                    "tint": "bolt"
+                }
+            ]
         }
     ]
 }

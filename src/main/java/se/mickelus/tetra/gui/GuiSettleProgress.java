@@ -14,6 +14,7 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class GuiSettleProgress extends GuiElement {
     protected GuiString labelString;

@@ -11,6 +11,7 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class BlockForgedPlatform extends TetraBlock {
     static final String unlocalizedName = "forged_platform";
@@ -23,8 +24,8 @@ public class BlockForgedPlatform extends TetraBlock {
 
         hasItem = true;
 
-    setRegistryName(unlocalizedName);
-}
+        setRegistryName(unlocalizedName);
+    }
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag advanced) {

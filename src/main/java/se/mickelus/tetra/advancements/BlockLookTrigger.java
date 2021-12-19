@@ -21,11 +21,11 @@ import se.mickelus.tetra.blocks.PropertyMatcher;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
 @ParametersAreNonnullByDefault
 public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> {
-    private Cache<UUID, BlockState> stateCache;
-
     public static final BlockLookTrigger instance = new BlockLookTrigger();
+    private final Cache<UUID, BlockState> stateCache;
 
     public BlockLookTrigger() {
         super("tetra:block_look", BlockLookTrigger::deserialize);
@@ -33,6 +33,15 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
                 .maximumSize(100)
                 .expireAfterWrite(1, TimeUnit.MINUTES)
                 .build();
+    }
+
+    public static Instance deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
+        PropertyMatcher propertyMatcher = null;
+        if (json.has("block")) {
+            propertyMatcher = PropertyMatcher.deserialize(json.get("block"));
+        }
+
+        return new Instance(entityPredicate, propertyMatcher);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -60,15 +69,6 @@ public class BlockLookTrigger extends GenericTrigger<BlockLookTrigger.Instance> 
             }
             event.player.level.getProfiler().pop();
         }
-    }
-
-    public static Instance deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
-        PropertyMatcher propertyMatcher = null;
-        if (json.has("block")) {
-            propertyMatcher = PropertyMatcher.deserialize(json.get("block"));
-        }
-
-        return new Instance(entityPredicate, propertyMatcher);
     }
 
     public void trigger(ServerPlayer player, BlockState state) {

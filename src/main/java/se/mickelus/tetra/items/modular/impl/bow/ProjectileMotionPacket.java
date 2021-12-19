@@ -8,6 +8,7 @@ import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class ProjectileMotionPacket extends AbstractPacket {
     private int entityId = -1;
@@ -15,7 +16,8 @@ public class ProjectileMotionPacket extends AbstractPacket {
     private float motionY;
     private float motionZ;
 
-    public ProjectileMotionPacket() {}
+    public ProjectileMotionPacket() {
+    }
 
     public ProjectileMotionPacket(Projectile target) {
         entityId = target.getId();

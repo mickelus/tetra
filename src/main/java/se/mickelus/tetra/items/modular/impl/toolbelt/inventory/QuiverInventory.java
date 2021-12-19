@@ -6,7 +6,6 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 @ParametersAreNonnullByDefault
 public class QuiverInventory extends ToolbeltInventory {
@@ -26,6 +25,7 @@ public class QuiverInventory extends ToolbeltInventory {
 
     /**
      * Returns the number of unique items in this inventory.
+     *
      * @return
      */
     public ItemStack[] getAggregatedStacks() {

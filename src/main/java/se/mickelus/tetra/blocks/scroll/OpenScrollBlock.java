@@ -10,10 +10,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.mutil.util.RotationHelper;
+import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class OpenScrollBlock extends ScrollBlock {
 

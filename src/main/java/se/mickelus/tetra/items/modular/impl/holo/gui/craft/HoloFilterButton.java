@@ -15,15 +15,15 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloFilterButton extends GuiElement {
     private final List<String> tooltip = Collections.singletonList(I18n.get("tetra.holo.craft.variants_filter"));
+    private final GuiString label;
+    private final Consumer<String> onChange;
+    private final GuiTexture icon;
     private boolean inputFocused = false;
     private String filter = "";
-    private Consumer<String> onChange;
-
-    private GuiTexture icon;
-    private final GuiString label;
 
     public HoloFilterButton(int x, int y, Consumer<String> onChange) {
         super(x, y, 11, 9);

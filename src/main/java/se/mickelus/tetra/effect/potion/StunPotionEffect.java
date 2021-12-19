@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 @ParametersAreNonnullByDefault
 public class StunPotionEffect extends MobEffect {
     public static StunPotionEffect instance;
+
     public StunPotionEffect() {
         super(MobEffectCategory.HARMFUL, 0xeeeeee);
 

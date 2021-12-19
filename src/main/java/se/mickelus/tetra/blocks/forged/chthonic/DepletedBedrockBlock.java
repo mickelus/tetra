@@ -6,6 +6,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class DepletedBedrockBlock extends TetraBlock {
     public static final String unlocalizedName = "depleted_bedrock";

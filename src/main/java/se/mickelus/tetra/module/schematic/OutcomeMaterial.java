@@ -47,6 +47,17 @@ public class OutcomeMaterial {
 
     private ItemPredicate predicate;
 
+    // todo: this is rather hacky, networked tags are required on clients in multiplayer, but that's not always available
+    protected static TagCollection<Item> getTagCollection() {
+        if (FMLEnvironment.dist.isClient()) {
+            if (Minecraft.getInstance().level != null) {
+                return Minecraft.getInstance().level.getTagManager().getOrEmpty(Registry.ITEM_REGISTRY);
+            }
+        }
+
+        return SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY);
+    }
+
     public OutcomeMaterial offsetCount(float multiplier, int offset) {
         OutcomeMaterial result = new OutcomeMaterial();
         result.count = Math.round(count * multiplier) + offset;
@@ -62,21 +73,10 @@ public class OutcomeMaterial {
         return result;
     }
 
-    // todo: this is rather hacky, networked tags are required on clients in multiplayer, but that's not always available
-    protected static TagCollection<Item> getTagCollection() {
-        if (FMLEnvironment.dist.isClient()) {
-            if (Minecraft.getInstance().level != null) {
-                return Minecraft.getInstance().level.getTagManager().getOrEmpty(Registry.ITEM_REGISTRY);
-            }
-        }
-
-        return SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY);
-    }
-
     @OnlyIn(Dist.CLIENT)
     public Component[] getDisplayNames() {
         if (getPredicate() == null) {
-            return new Component[] {new TextComponent("Unknown material")};
+            return new Component[]{new TextComponent("Unknown material")};
         } else if (itemStacks != null) {
             return itemStacks.stream().map(ItemStack::getHoverName).toArray(Component[]::new);
         } else if (tagLocation != null) {
@@ -88,7 +88,7 @@ public class OutcomeMaterial {
                     .toArray(Component[]::new);
         }
 
-        return new Component[] {new TextComponent("Unknown material")};
+        return new Component[]{new TextComponent("Unknown material")};
     }
 
     public ItemStack[] getApplicableItemStacks() {

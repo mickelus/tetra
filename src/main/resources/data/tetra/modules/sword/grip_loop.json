@@ -1,10 +1,10 @@
 {
     "replace": true,
-    "slots": ["sword/pommel"],
+    "slots": [ "sword/pommel" ],
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:fibre/", "tetra:skin/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:fibre/", "tetra:skin/", "tetra:bone/" ],
             "key": "grip_loop/",
             "durability": 10,
             "integrity": -1,
@@ -12,7 +12,7 @@
                 "forge:reach_distance": 1.5
             },
             "effects": {
-                "sweeping": [0, 1]
+                "sweeping": [ 0, 1 ]
             },
             "extract": {
                 "durability": 0.08,
@@ -20,8 +20,8 @@
                     "textureX": 56,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
-                "models": [{ "location": "tetra:items/module/sword/pommel/grip_loop/" }]
+                "availableTextures": [ "default" ],
+                "models": [ { "location": "tetra:items/module/sword/pommel/grip_loop/" } ]
             }
         }
     ]

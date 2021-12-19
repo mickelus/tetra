@@ -4,7 +4,7 @@
         "level": 1,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 1.82]
+            "pickaxe_dig": [ 0, 1.82 ]
         },
         "magicCapacity": -31
     },
@@ -13,7 +13,7 @@
         "level": 2,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 4.55]
+            "pickaxe_dig": [ 0, 4.55 ]
         },
         "magicCapacity": -41
     },
@@ -22,7 +22,7 @@
         "level": 3,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 9.1]
+            "pickaxe_dig": [ 0, 9.1 ]
         },
         "magicCapacity": -51
     },
@@ -31,7 +31,7 @@
         "level": 4,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 15.5]
+            "pickaxe_dig": [ 0, 15.5 ]
         },
         "magicCapacity": -61
     },
@@ -40,7 +40,7 @@
         "level": 5,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 23.64]
+            "pickaxe_dig": [ 0, 23.64 ]
         },
         "magicCapacity": -71
     },
@@ -49,7 +49,7 @@
         "level": 6,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 33.64]
+            "pickaxe_dig": [ 0, 33.64 ]
         },
         "magicCapacity": -81
     },
@@ -58,7 +58,7 @@
         "level": 7,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 45.5]
+            "pickaxe_dig": [ 0, 45.5 ]
         },
         "magicCapacity": -91
     },
@@ -67,7 +67,7 @@
         "level": 8,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 59.1]
+            "pickaxe_dig": [ 0, 59.1 ]
         },
         "magicCapacity": -101
     },
@@ -76,7 +76,7 @@
         "level": 9,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 74.55]
+            "pickaxe_dig": [ 0, 74.55 ]
         },
         "magicCapacity": -111
     },
@@ -85,7 +85,7 @@
         "level": 10,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 91.82]
+            "pickaxe_dig": [ 0, 91.82 ]
         },
         "magicCapacity": -121
     },
@@ -94,7 +94,7 @@
         "level": 11,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 110.91]
+            "pickaxe_dig": [ 0, 110.91 ]
         },
         "magicCapacity": -131
     },
@@ -103,7 +103,7 @@
         "level": 12,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 131.82]
+            "pickaxe_dig": [ 0, 131.82 ]
         },
         "magicCapacity": -141
     },
@@ -112,7 +112,7 @@
         "level": 13,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 154.55]
+            "pickaxe_dig": [ 0, 154.55 ]
         },
         "magicCapacity": -151
     },
@@ -121,7 +121,7 @@
         "level": 14,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 179.1]
+            "pickaxe_dig": [ 0, 179.1 ]
         },
         "magicCapacity": -161
     },
@@ -130,7 +130,7 @@
         "level": 15,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, 205.5]
+            "pickaxe_dig": [ 0, 205.5 ]
         },
         "magicCapacity": -171
     },
@@ -139,7 +139,7 @@
         "level": 1,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, -1.82]
+            "pickaxe_dig": [ 0, -1.82 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -150,7 +150,7 @@
         "level": 2,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, -4.55]
+            "pickaxe_dig": [ 0, -4.55 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -161,7 +161,7 @@
         "level": 3,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, -9.1]
+            "pickaxe_dig": [ 0, -9.1 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -172,7 +172,7 @@
         "level": 4,
         "enchantment": true,
         "tools": {
-            "pickaxe_dig": [0, -15.5]
+            "pickaxe_dig": [ 0, -15.5 ]
         },
         "glyph": {
             "tint": "ee5599"

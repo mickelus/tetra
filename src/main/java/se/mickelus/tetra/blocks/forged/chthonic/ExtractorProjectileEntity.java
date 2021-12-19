@@ -36,23 +36,21 @@ import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.tetra.ServerScheduler;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.RotationHelper;
+import se.mickelus.tetra.ServerScheduler;
+import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ExtractorProjectileEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
     public static final String unlocalizedName = "extractor_projectile";
-
+    public static final String damageKey = "dmg";
+    public static final String heatKey = "heat";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static EntityType<ExtractorProjectileEntity> type;
-
-    public static final String damageKey = "dmg";
     private int damage;
-
-    public static final String heatKey = "heat";
     private int heat;
 
     private boolean extinguishing = false;
@@ -135,20 +133,20 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
         Vec3i axis1 = RotationHelper.shiftAxis(face.getNormal());
         Vec3i axis2 = RotationHelper.shiftAxis(axis1);
         ServerScheduler.schedule(2, () -> {
-                breakBlock(world, pos.offset(axis1), shooter);
-                breakBlock(world, pos.subtract(axis1), shooter);
+            breakBlock(world, pos.offset(axis1), shooter);
+            breakBlock(world, pos.subtract(axis1), shooter);
         });
         ServerScheduler.schedule(4, () -> {
-                breakBlock(world, pos.offset(axis2), shooter);
-                breakBlock(world, pos.subtract(axis2), shooter);
+            breakBlock(world, pos.offset(axis2), shooter);
+            breakBlock(world, pos.subtract(axis2), shooter);
         });
         ServerScheduler.schedule(6, () -> {
-                breakBlock(world, pos.offset(axis1).offset(axis2), shooter);
-                breakBlock(world, pos.subtract(axis1).subtract(axis2), shooter);
+            breakBlock(world, pos.offset(axis1).offset(axis2), shooter);
+            breakBlock(world, pos.subtract(axis1).subtract(axis2), shooter);
         });
         ServerScheduler.schedule(8, () -> {
-                breakBlock(world, pos.offset(axis1).subtract(axis2), shooter);
-                breakBlock(world, pos.subtract(axis1).offset(axis2), shooter);
+            breakBlock(world, pos.offset(axis1).subtract(axis2), shooter);
+            breakBlock(world, pos.subtract(axis1).offset(axis2), shooter);
         });
     }
 
@@ -317,7 +315,8 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
 
     // possibly stops this from being removed after sitting around for too long
     @Override
-    public void tickDespawn() { }
+    public void tickDespawn() {
+    }
 
     @Override
     public Packet<?> getAddEntityPacket() {

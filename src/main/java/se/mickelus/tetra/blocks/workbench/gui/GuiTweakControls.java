@@ -14,15 +14,16 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class GuiTweakControls extends GuiElement {
 
-    private GuiString untweakableLabel;
+    private final GuiString untweakableLabel;
 
-    private GuiElement tweakControls;
-    private GuiButton applyButton;
+    private final GuiElement tweakControls;
+    private final GuiButton applyButton;
 
-    private Consumer<Map<String, Integer>> previewTweak;
+    private final Consumer<Map<String, Integer>> previewTweak;
 
     private Map<String, Integer> tweaks;
 

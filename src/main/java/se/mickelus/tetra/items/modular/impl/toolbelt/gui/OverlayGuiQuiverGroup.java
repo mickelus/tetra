@@ -9,10 +9,11 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Objects;
+
 @ParametersAreNonnullByDefault
 public class OverlayGuiQuiverGroup extends GuiElement {
-    private OverlayGuiQuiverSlot[] slots = new OverlayGuiQuiverSlot[0];
     QuiverInventory inventory;
+    private OverlayGuiQuiverSlot[] slots = new OverlayGuiQuiverSlot[0];
 
     public OverlayGuiQuiverGroup(int x, int y) {
         super(x, y, 0, 0);

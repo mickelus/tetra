@@ -16,7 +16,7 @@ public enum HammerEffect implements StringRepresentable {
     precise(PlanarStabilizerItem.instance),
     reliable(LubricantDispenser.instance);
 
-    private Item item;
+    private final Item item;
 
     HammerEffect(Item item) {
         this.item = item;

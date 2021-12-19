@@ -11,6 +11,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
@@ -20,7 +21,6 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.properties.IToolProvider;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -111,11 +111,7 @@ public class ToolbeltHelper {
             return true;
         }
 
-        if (new StorageInventory(toolbeltStack).storeItemInInventory(itemStack)) {
-            return true;
-        }
-
-        return false;
+        return new StorageInventory(toolbeltStack).storeItemInInventory(itemStack);
     }
 
     /**

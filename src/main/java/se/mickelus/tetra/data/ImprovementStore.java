@@ -10,10 +10,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ImprovementStore extends DataStore<ImprovementData[]> {
 
-    private MaterialStore materialStore;
+    private final MaterialStore materialStore;
 
     public ImprovementStore(Gson gson, String namespace, String directory, MaterialStore materialStore, DataDistributor distributor) {
         super(gson, namespace, directory, ImprovementData[].class, distributor);

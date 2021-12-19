@@ -10,32 +10,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ToolData extends TierData<ToolAction> {
-    public static class Deserializer implements JsonDeserializer<ToolData> {
-        @Override
-        public ToolData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            JsonObject jsonObject = json.getAsJsonObject();
-            ToolData data = new ToolData();
-
-            jsonObject.entrySet().forEach(entry -> {
-                JsonElement entryValue = entry.getValue();
-                ToolAction toolAction = ToolAction.get(entry.getKey());
-                if (entryValue.isJsonArray()) {
-                    JsonArray entryArray = entryValue.getAsJsonArray();
-                    if (entryArray.size() == 2) {
-                        data.levelMap.put(toolAction, entryArray.get(0).getAsFloat());
-                        data.efficiencyMap.put(toolAction, entryArray.get(1).getAsFloat());
-                    }
-                } else {
-                    data.levelMap.put(toolAction, entryValue.getAsFloat());
-                }
-            });
-
-            return data;
-        }
-    }
-
     public static ToolData overwrite(ToolData a, ToolData b) {
         if (a == null) {
             return b;
@@ -125,5 +102,29 @@ public class ToolData extends TierData<ToolAction> {
 //        }));
 
         return result;
+    }
+
+    public static class Deserializer implements JsonDeserializer<ToolData> {
+        @Override
+        public ToolData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+            ToolData data = new ToolData();
+
+            jsonObject.entrySet().forEach(entry -> {
+                JsonElement entryValue = entry.getValue();
+                ToolAction toolAction = ToolAction.get(entry.getKey());
+                if (entryValue.isJsonArray()) {
+                    JsonArray entryArray = entryValue.getAsJsonArray();
+                    if (entryArray.size() == 2) {
+                        data.levelMap.put(toolAction, entryArray.get(0).getAsFloat());
+                        data.efficiencyMap.put(toolAction, entryArray.get(1).getAsFloat());
+                    }
+                } else {
+                    data.levelMap.put(toolAction, entryValue.getAsFloat());
+                }
+            });
+
+            return data;
+        }
     }
 }

@@ -1,10 +1,10 @@
 {
     "replace": true,
-    "slots": ["sword/pommel"],
+    "slots": [ "sword/pommel" ],
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:bone/", "tetra:stone/", "tetra:metal/"],
+            "materials": [ "tetra:wood/", "tetra:bone/", "tetra:stone/", "tetra:metal/" ],
             "key": "counterweight/",
             "durability": 15,
             "integrity": -1,
@@ -17,8 +17,8 @@
                     "textureX": 32,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
-                "models": [{ "location": "tetra:items/module/sword/pommel/counterweight/" }]
+                "availableTextures": [ "default" ],
+                "models": [ { "location": "tetra:items/module/sword/pommel/counterweight/" } ]
             }
         }
     ]

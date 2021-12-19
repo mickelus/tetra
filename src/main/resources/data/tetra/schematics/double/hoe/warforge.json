@@ -2,8 +2,8 @@
     "replace": true,
     "localizationKey": "double/warforge",
     "locked": true,
-    "slots": ["double/head_left", "double/head_right"],
-    "keySuffixes": ["_left", "_right"],
+    "slots": [ "double/head_left", "double/head_right" ],
+    "keySuffixes": [ "_left", "_right" ],
     "materialSlotCount": 0,
     "rarity": "temporary",
     "displayType": "improvement",
@@ -13,7 +13,7 @@
     },
     "requirement": {
         "type": "tetra:modular_item",
-        "modules": [["double/hoe_right"], ["double/hoe_left"]]
+        "modules": [ [ "double/hoe_right" ], [ "double/hoe_left" ] ]
     },
     "outcomes": [
         {

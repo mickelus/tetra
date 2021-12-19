@@ -28,9 +28,9 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
-import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -38,33 +38,53 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
+
 @ParametersAreNonnullByDefault
 public class ForgedContainerTile extends BlockEntity implements MenuProvider {
+    private static final String inventoryKey = "inv";
+    private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
     @ObjectHolder(TetraMod.MOD_ID + ":" + ForgedContainerBlock.unlocalizedName)
     public static BlockEntityType<ForgedContainerTile> type;
-
-    private static final String inventoryKey = "inv";
-
     public static int lockIntegrityMax = 4;
     public static int lockCount = 4;
-    private int[] lockIntegrity;
-
     public static int lidIntegrityMax = 5;
-    private int lidIntegrity = 0;
-
-    private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
-
     public static int compartmentCount = 3;
     public static int compartmentSize = 54;
-
+    private final int[] lockIntegrity;
+    private final LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(compartmentSize * compartmentCount));
     public long openTime = -1;
-
-    private LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(compartmentSize * compartmentCount));
+    private int lidIntegrity = 0;
 
     public ForgedContainerTile(BlockPos p_155268_, BlockState p_155269_) {
         super(type, p_155268_, p_155269_);
 
         lockIntegrity = new int[lockCount];
+    }
+
+    public static BlockState getUpdatedBlockState(BlockState blockState, int[] lockIntegrity, int lidIntegrity) {
+        if (blockState.getValue(ForgedContainerBlock.flippedProp)) {
+            return blockState
+                    .setValue(ForgedContainerBlock.locked1Prop, lockIntegrity[2] > 0)
+                    .setValue(ForgedContainerBlock.locked2Prop, lockIntegrity[3] > 0)
+                    .setValue(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
+                    .setValue(ForgedContainerBlock.openProp, lidIntegrity <= 0);
+        }
+
+        return blockState
+                .setValue(ForgedContainerBlock.locked1Prop, lockIntegrity[0] > 0)
+                .setValue(ForgedContainerBlock.locked2Prop, lockIntegrity[1] > 0)
+                .setValue(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
+                .setValue(ForgedContainerBlock.openProp, lidIntegrity <= 0);
+    }
+
+    public static void writeLockData(CompoundTag compound, int[] lockIntegrity) {
+        for (int i = 0; i < lockIntegrity.length; i++) {
+            compound.putInt("lock_integrity" + i, lockIntegrity[i]);
+        }
+    }
+
+    public static void writeLidData(CompoundTag compound, int lidIntegrity) {
+        compound.putInt("lid_integrity", lidIntegrity);
     }
 
     public ForgedContainerTile getOrDelegate() {
@@ -125,9 +145,9 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
 
         for (int i = 0; i < smokeCount; i++) {
             worldServer.sendParticles(ParticleTypes.SMOKE,
-                    smokeOrigin.getX() + smokeDirection.x * i * 2 / ( smokeCount - 1),
+                    smokeOrigin.getX() + smokeDirection.x * i * 2 / (smokeCount - 1),
                     smokeOrigin.getY() + 0.8,
-                    smokeOrigin.getZ() + smokeDirection.z * i * 2 / ( smokeCount - 1),
+                    smokeOrigin.getZ() + smokeDirection.z * i * 2 / (smokeCount - 1),
                     1, 0, 0, 0, 0d);
         }
 
@@ -140,22 +160,6 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
 
         BlockPos offsetPos = worldPosition.relative(getFacing().getClockWise());
         level.setBlock(offsetPos, getUpdatedBlockState(level.getBlockState(offsetPos), lockIntegrity, lidIntegrity), 3);
-    }
-
-    public static BlockState getUpdatedBlockState(BlockState blockState, int[] lockIntegrity, int lidIntegrity) {
-        if (blockState.getValue(ForgedContainerBlock.flippedProp)) {
-            return blockState
-                    .setValue(ForgedContainerBlock.locked1Prop, lockIntegrity[2] > 0)
-                    .setValue(ForgedContainerBlock.locked2Prop, lockIntegrity[3] > 0)
-                    .setValue(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
-                    .setValue(ForgedContainerBlock.openProp, lidIntegrity <= 0);
-        }
-
-        return blockState
-                .setValue(ForgedContainerBlock.locked1Prop, lockIntegrity[0] > 0)
-                .setValue(ForgedContainerBlock.locked2Prop, lockIntegrity[1] > 0)
-                .setValue(ForgedContainerBlock.anyLockedProp, Arrays.stream(lockIntegrity).anyMatch(integrity -> integrity > 0))
-                .setValue(ForgedContainerBlock.openProp, lidIntegrity <= 0);
     }
 
     public Direction getFacing() {
@@ -185,9 +189,9 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
             lockIntegrity[index]--;
 
             if (lockIntegrity[index] == 0) {
-                level.playSound(player, worldPosition, SoundEvents.SHIELD_BREAK, SoundSource.PLAYERS, 1,0.5f);
+                level.playSound(player, worldPosition, SoundEvents.SHIELD_BREAK, SoundSource.PLAYERS, 1, 0.5f);
             } else {
-                level.playSound(player, worldPosition, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundSource.PLAYERS, 1,0.5f);
+                level.playSound(player, worldPosition, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundSource.PLAYERS, 1, 0.5f);
             }
 
             if (!level.isClientSide && lockIntegrity[index] == 0) {
@@ -251,15 +255,5 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
 
         writeLockData(compound, lockIntegrity);
         writeLidData(compound, lidIntegrity);
-    }
-
-    public static void writeLockData(CompoundTag compound, int[] lockIntegrity) {
-        for (int i = 0; i < lockIntegrity.length; i++) {
-            compound.putInt("lock_integrity" + i, lockIntegrity[i]);
-        }
-    }
-
-    public static void writeLidData(CompoundTag compound, int lidIntegrity) {
-        compound.putInt("lid_integrity", lidIntegrity);
     }
 }

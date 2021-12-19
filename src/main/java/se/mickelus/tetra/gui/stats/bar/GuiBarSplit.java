@@ -8,11 +8,12 @@ import se.mickelus.mutil.gui.GuiRect;
 import se.mickelus.tetra.gui.GuiColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiBarSplit extends GuiBar {
 
-    private GuiBar negativeBar;
-    private GuiBar positiveBar;
+    private final GuiBar negativeBar;
+    private final GuiBar positiveBar;
 
     public GuiBarSplit(int x, int y, int barLength, double range, boolean inverted) {
         super(x, y, barLength, -range, range, inverted);

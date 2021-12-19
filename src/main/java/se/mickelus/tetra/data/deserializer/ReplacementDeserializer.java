@@ -16,6 +16,7 @@ import se.mickelus.tetra.module.ReplacementDefinition;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefinition> {
 
@@ -41,7 +42,7 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
         replacement.itemStack = new ItemStack(item);
 
         if (item instanceof IModularItem) {
-            for (Map.Entry<String, JsonElement> moduleDefinition: GsonHelper.getAsJsonObject(jsonObject, "modules").entrySet()) {
+            for (Map.Entry<String, JsonElement> moduleDefinition : GsonHelper.getAsJsonObject(jsonObject, "modules").entrySet()) {
                 String moduleKey = moduleDefinition.getValue().getAsJsonArray().get(0).getAsString();
                 String moduleVariant = moduleDefinition.getValue().getAsJsonArray().get(1).getAsString();
                 ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleKey);
@@ -52,8 +53,8 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
             }
 
             if (jsonObject.has("improvements")) {
-                for (Map.Entry<String, JsonElement> improvement: GsonHelper.getAsJsonObject(jsonObject, "improvements").entrySet()) {
-                    String temp[] = improvement.getKey().split(":");
+                for (Map.Entry<String, JsonElement> improvement : GsonHelper.getAsJsonObject(jsonObject, "improvements").entrySet()) {
+                    String[] temp = improvement.getKey().split(":");
                     ItemModuleMajor.addImprovement(replacement.itemStack, temp[0], temp[1], improvement.getValue().getAsInt());
                 }
             }

@@ -13,17 +13,16 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class OverlayGuiQuiverSlot extends GuiElement {
-    private ItemStack itemStack;
+    private final ItemStack itemStack;
 
-    private Minecraft mc;
+    private final Minecraft mc;
 
-    private KeyframeAnimation showAnimation;
-
+    private final KeyframeAnimation showAnimation;
+    private final GuiTexture backdrop;
     private Font fontRenderer;
-
-    private GuiTexture backdrop;
     private GuiString count;
     private GuiString hoverLabel;
 
@@ -45,7 +44,7 @@ public class OverlayGuiQuiverSlot extends GuiElement {
             fontRenderer = mc.font;
         }
 
-        backdrop  = new GuiTexture(0, 0, 23, 23, 32, 28, GuiTextures.toolbelt);
+        backdrop = new GuiTexture(0, 0, 23, 23, 32, 28, GuiTextures.toolbelt);
         addChild(backdrop);
 
         if (itemStack != null) {
@@ -65,12 +64,12 @@ public class OverlayGuiQuiverSlot extends GuiElement {
 
         isVisible = false;
         showAnimation = new KeyframeAnimation(80, this)
-            .applyTo(
-                    new Applier.TranslateX(x - 2, x),
-                    new Applier.TranslateY(y + 2, y),
-                    new Applier.Opacity(0, 1))
-            .withDelay(slot * 80)
-        .onStop((finished) -> count.setVisible(true));
+                .applyTo(
+                        new Applier.TranslateX(x - 2, x),
+                        new Applier.TranslateY(y + 2, y),
+                        new Applier.Opacity(0, 1))
+                .withDelay(slot * 80)
+                .onStop((finished) -> count.setVisible(true));
     }
 
     @Override
@@ -106,7 +105,7 @@ public class OverlayGuiQuiverSlot extends GuiElement {
 
         mc.getItemRenderer().renderAndDecorateItem(itemStack, x, y);
         mc.getItemRenderer().renderGuiItemDecorations(fontRenderer, itemStack, x, y, "");
-      //  Lighting.turnOff();
+        //  Lighting.turnOff();
         RenderSystem.disableDepthTest();
         renderSystemStack.popPose();
     }

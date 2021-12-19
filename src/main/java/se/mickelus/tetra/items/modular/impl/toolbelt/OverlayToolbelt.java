@@ -22,25 +22,20 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.gui.OverlayGuiToolbelt;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class OverlayToolbelt {
 
-    public static OverlayToolbelt instance;
-
-    private final Minecraft mc;
-
     public static final String bindingGroup = "tetra.toolbelt.binding.group";
-
+    public static OverlayToolbelt instance;
+    private final Minecraft mc;
+    private final OverlayGuiToolbelt gui;
     public KeyMapping accessBinding;
     public KeyMapping restockBinding;
     public KeyMapping openBinding;
-
     private long openTime = -1;
-
     // due to gui visibility tricks, let's use this to keep track of when we should show or hide the gui
     private boolean isActive = false;
-
-    private OverlayGuiToolbelt gui;
 
     public OverlayToolbelt(Minecraft mc) {
         this.mc = mc;
@@ -134,6 +129,7 @@ public class OverlayToolbelt {
 
     /**
      * Requests the server to open the toolbelt container UI
+     *
      * @return true if the player has a toolbelt
      */
     private boolean openToolbelt() {

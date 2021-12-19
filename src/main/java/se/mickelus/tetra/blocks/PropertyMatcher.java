@@ -17,36 +17,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
+
 @ParametersAreNonnullByDefault
 public class PropertyMatcher implements Predicate<BlockState> {
     public static final PropertyMatcher any = new PropertyMatcher();
-
+    private final Map<Property<?>, Predicate<?>> propertyPredicates = Maps.newHashMap();
     private Block block = null;
-    private final Map< Property<?>, Predicate<?>> propertyPredicates = Maps.newHashMap();
-
-    @Override
-    public boolean test(BlockState blockState) {
-        if (block != null && block != blockState.getBlock()) {
-            return false;
-        }
-
-        for (Map.Entry<Property<?>, Predicate<?>> entry : this.propertyPredicates.entrySet()) {
-            if (!matches(blockState, (Property) entry.getKey(), (Predicate) entry.getValue())) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    protected <T extends Comparable<T>> boolean matches(BlockState blockState, Property<T> property, Predicate<T> predicate) {
-        return predicate.test(blockState.getValue(property));
-    }
-
-    public <V extends Comparable<V>> PropertyMatcher where(Property<V> property, Predicate<? extends V> is) {
-         this.propertyPredicates.put(property, is);
-         return this;
-    }
 
     public static PropertyMatcher deserialize(JsonElement json) {
         PropertyMatcher result = new PropertyMatcher();
@@ -97,5 +73,29 @@ public class PropertyMatcher implements Predicate<BlockState> {
 
 
         return result;
+    }
+
+    @Override
+    public boolean test(BlockState blockState) {
+        if (block != null && block != blockState.getBlock()) {
+            return false;
+        }
+
+        for (Map.Entry<Property<?>, Predicate<?>> entry : this.propertyPredicates.entrySet()) {
+            if (!matches(blockState, (Property) entry.getKey(), (Predicate) entry.getValue())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected <T extends Comparable<T>> boolean matches(BlockState blockState, Property<T> property, Predicate<T> predicate) {
+        return predicate.test(blockState.getValue(property));
+    }
+
+    public <V extends Comparable<V>> PropertyMatcher where(Property<V> property, Predicate<? extends V> is) {
+        this.propertyPredicates.put(property, is);
+        return this;
     }
 }

@@ -1,12 +1,12 @@
 {
     "replace": true,
     "type": "tetra:basic_module",
-    "slots": ["double/binding"],
+    "slots": [ "double/binding" ],
     "renderLayer": "higher",
     "tweakKey": "tetra:double/binding",
     "variants": [
         {
-            "materials": ["tetra:fibre/", "tetra:skin/"],
+            "materials": [ "tetra:fibre/", "tetra:skin/" ],
             "key": "double_binding/",
             "extract": {
                 "secondaryAttributes": {
@@ -18,8 +18,8 @@
                     "textureX": 88,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
-                "models": [{ "location": "tetra:items/module/double/binding/binding/" }]
+                "availableTextures": [ "default" ],
+                "models": [ { "location": "tetra:items/module/double/binding/binding/" } ]
             }
         },
         {
@@ -33,10 +33,12 @@
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/double/binding/binding/bolt",
-                "tint": "bolt"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/double/binding/binding/bolt",
+                    "tint": "bolt"
+                }
+            ]
         }
     ]
 }

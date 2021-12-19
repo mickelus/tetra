@@ -8,11 +8,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraSounds;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ScannerSound extends AbstractTickableSoundInstance {
+    private final Minecraft mc;
     private int activeCounter;
-    private Minecraft mc;
     private boolean hasStarted;
 
     public ScannerSound(Minecraft mc) {

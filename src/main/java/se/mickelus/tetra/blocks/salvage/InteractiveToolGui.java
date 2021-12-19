@@ -11,17 +11,15 @@ import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
 import se.mickelus.tetra.properties.PropertyHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class InteractiveToolGui extends GuiElement {
-    private GuiTool toolIcon;
-
+    private final GuiTool toolIcon;
+    private final KeyframeAnimation hide;
+    private final ToolAction toolAction;
+    private final int toolLevel;
+    private final Player player;
     private KeyframeAnimation show;
-    private KeyframeAnimation hide;
-
-    private ToolAction toolAction;
-    private int toolLevel;
-
-    private Player player;
     private int currentSlot;
 
     public InteractiveToolGui(int x, int y, ToolAction toolAction, int toolLevel, Player player) {

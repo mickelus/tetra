@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class GuiSlotEffect extends GuiElement {
     String tooltip;
@@ -22,7 +23,7 @@ public class GuiSlotEffect extends GuiElement {
     public GuiSlotEffect(int x, int y, SlotType slotType, ItemEffect effect) {
         super(x, y, 8, 8);
 
-        tooltip = I18n.get(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType.toString(), effect.getKey()));
+        tooltip = I18n.get(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType, effect.getKey()));
 
         if (ItemEffect.quickAccess.equals(effect)) {
             addChild(new GuiTexture(0, 0, 8, 8, 0, 64, GuiTextures.toolbelt).setColor(0xbbbbbb));
@@ -31,19 +32,6 @@ public class GuiSlotEffect extends GuiElement {
         } else {
             addChild(new GuiString(0, 0, "?"));
         }
-    }
-
-    @Override
-    protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
-        super.calculateFocusState(refX, refY, mouseX, mouseY);
-    }
-
-    @Override
-    public List<String> getTooltipLines() {
-        if (hasFocus()) {
-            return Collections.singletonList(tooltip);
-        }
-        return super.getTooltipLines();
     }
 
     public static Collection<GuiSlotEffect> getEffectsForSlot(SlotType slotType, Collection<ItemEffect> slotEffects) {
@@ -72,5 +60,18 @@ public class GuiSlotEffect extends GuiElement {
                     return group;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
+        super.calculateFocusState(refX, refY, mouseX, mouseY);
+    }
+
+    @Override
+    public List<String> getTooltipLines() {
+        if (hasFocus()) {
+            return Collections.singletonList(tooltip);
+        }
+        return super.getTooltipLines();
     }
 }

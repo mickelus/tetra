@@ -57,7 +57,6 @@ public class PuncturedPotionEffect extends MobEffect {
     }
 
 
-
     @Override
     @OnlyIn(Dist.CLIENT)
     public void initializeClient(Consumer<EffectRenderer> consumer) {
@@ -65,7 +64,7 @@ public class PuncturedPotionEffect extends MobEffect {
         consumer.accept(new EffectTooltipRenderer(effect -> {
             int amp = effect.getAmplifier() + 1;
             double armor = Minecraft.getInstance().player.getArmorValue();
-            double armorReduction =  armor / (1 - amp * 0.1) - armor;
+            double armorReduction = armor / (1 - amp * 0.1) - armor;
             return I18n.get("effect.tetra.punctured.tooltip", String.format("%d", amp * 10), String.format("%.1f", armorReduction));
         }));
     }

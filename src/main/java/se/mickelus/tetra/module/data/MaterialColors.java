@@ -5,6 +5,7 @@ import se.mickelus.tetra.items.modular.ItemColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class MaterialColors {
     public int texture = 0xffffffff;

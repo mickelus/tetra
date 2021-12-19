@@ -6,12 +6,14 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.effect.ItemEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TooltipGetterCriticalStrike implements ITooltipGetter {
     private static final IStatGetter efficiencyGetter = new StatGetterEffectEfficiency(ItemEffect.criticalStrike, 100);
     private static final IStatGetter levelGetter = new StatGetterEffectLevel(ItemEffect.criticalStrike, 1);
 
-    public TooltipGetterCriticalStrike() { }
+    public TooltipGetterCriticalStrike() {
+    }
 
     @Override
     public String getTooltipBase(Player player, ItemStack itemStack) {

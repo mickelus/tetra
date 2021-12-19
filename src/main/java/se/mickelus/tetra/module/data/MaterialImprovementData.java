@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class MaterialImprovementData extends ImprovementData {
 
@@ -69,8 +70,8 @@ public class MaterialImprovementData extends ImprovementData {
                 .orElse(glyph);
 
         result.models = Stream.concat(
-                Arrays.stream(models),
-                Arrays.stream(extract.models).map(model -> new ModuleModel(model.type, combineModelLocation(model.location, material), material.tints.texture)))
+                        Arrays.stream(models),
+                        Arrays.stream(extract.models).map(model -> new ModuleModel(model.type, combineModelLocation(model.location, material), material.tints.texture)))
                 .toArray(ModuleModel[]::new);
 
         return result;

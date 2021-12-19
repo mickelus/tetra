@@ -1,9 +1,9 @@
 {
     "parts": [
         {
-            "origin": [-5, -5, -2],
-            "dimensions": [10, 10, 1],
-            "rotation": [0, 0, -45]
+            "origin": [ -5, -5, -2 ],
+            "dimensions": [ 10, 10, 1 ],
+            "rotation": [ 0, 0, -45 ]
         }
     ]
 }

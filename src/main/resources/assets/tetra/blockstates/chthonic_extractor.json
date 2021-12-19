@@ -1,5 +1,5 @@
 {
-  "variants": {
-    "": { "model": "tetra:block/chthonic_extractor" }
-  }
+    "variants": {
+        "": { "model": "tetra:block/chthonic_extractor" }
+    }
 }

@@ -14,6 +14,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class GuiActionList extends GuiElement {
 

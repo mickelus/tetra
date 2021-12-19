@@ -23,14 +23,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
-import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -40,24 +40,46 @@ import java.util.LinkedList;
 
 @ParametersAreNonnullByDefault
 public class HammerBaseTile extends BlockEntity {
-    @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.unlocalizedName)
-    public static BlockEntityType<HammerBaseTile> type;
-
     private static final String moduleAKey = "modA";
     private static final String moduleBKey = "modB";
-    private HammerEffect moduleA;
-    private HammerEffect moduleB;
-
     private static final String slotsKey = "slots";
     private static final String indexKey = "slot";
-    private ItemStack[] slots;
-
     private static final String redstoneKey = "rs";
+    @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.unlocalizedName)
+    public static BlockEntityType<HammerBaseTile> type;
+    private HammerEffect moduleA;
+    private HammerEffect moduleB;
+    private ItemStack[] slots;
     private int redstonePower = 0;
 
     public HammerBaseTile(BlockPos p_155268_, BlockState p_155269_) {
         super(type, p_155268_, p_155269_);
         slots = new ItemStack[2];
+    }
+
+    public static void writeModules(CompoundTag compound, HammerEffect moduleA, HammerEffect moduleB) {
+        if (moduleA != null) {
+            compound.put(moduleAKey, ByteTag.valueOf((byte) moduleA.ordinal()));
+        }
+
+        if (moduleB != null) {
+            compound.put(moduleBKey, ByteTag.valueOf((byte) moduleB.ordinal()));
+        }
+    }
+
+    public static void writeCells(CompoundTag compound, ItemStack... cells) {
+        ListTag nbttaglist = new ListTag();
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i] != null) {
+                CompoundTag nbttagcompound = new CompoundTag();
+
+                nbttagcompound.putByte(indexKey, (byte) i);
+                cells[i].save(nbttagcompound);
+
+                nbttaglist.add(nbttagcompound);
+            }
+        }
+        compound.put(slotsKey, nbttaglist);
     }
 
     public boolean setModule(boolean isA, Item item) {
@@ -176,11 +198,11 @@ public class HammerBaseTile extends BlockEntity {
     public void updateRedstonePower() {
         if (level != null) {
             int updatedPower = 0;
-            for(Direction direction : Direction.values()) {
+            for (Direction direction : Direction.values()) {
                 updatedPower += level.getSignal(worldPosition.relative(direction), direction);
             }
 
-            if (updatedPower != redstonePower){
+            if (updatedPower != redstonePower) {
                 redstonePower = updatedPower;
                 sync();
             }
@@ -387,31 +409,6 @@ public class HammerBaseTile extends BlockEntity {
         compound.putInt(redstoneKey, redstonePower);
     }
 
-    public static void writeModules(CompoundTag compound, HammerEffect moduleA, HammerEffect moduleB) {
-        if (moduleA != null) {
-            compound.put(moduleAKey, ByteTag.valueOf((byte) moduleA.ordinal()));
-        }
-
-        if (moduleB != null) {
-            compound.put(moduleBKey, ByteTag.valueOf((byte) moduleB.ordinal()));
-        }
-    }
-
-    public static void writeCells(CompoundTag compound, ItemStack... cells) {
-        ListTag nbttaglist = new ListTag();
-        for (int i = 0; i < cells.length; i++) {
-            if (cells[i] != null) {
-                CompoundTag nbttagcompound = new CompoundTag();
-
-                nbttagcompound.putByte(indexKey, (byte) i);
-                cells[i].save(nbttagcompound);
-
-                nbttaglist.add(nbttagcompound);
-            }
-        }
-        compound.put(slotsKey, nbttaglist);
-    }
-
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (redstonePower > 0 && level.getGameTime() % tickrate() == 0 && level.hasNeighborSignal(pos) && isFunctional()) {
             BlockPos targetPos = pos.below(2);
@@ -424,27 +421,27 @@ public class HammerBaseTile extends BlockEntity {
             }
 
             CastOptional.cast(targetState.getBlock(), IInteractiveBlock.class)
-                .map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(TetraToolActions.hammer)))
-                .stream()
-                .flatMap(Arrays::stream)
-                .filter(interaction -> TetraToolActions.hammer.equals(interaction.requiredTool))
-                .filter(interaction -> getHammerLevel() >= interaction.requiredLevel)
-                .findFirst()
-                .ifPresent(interaction -> {
-                    interaction.applyOutcome(level, targetPos, targetState, null, null, Direction.UP);
+                    .map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(TetraToolActions.hammer)))
+                    .stream()
+                    .flatMap(Arrays::stream)
+                    .filter(interaction -> TetraToolActions.hammer.equals(interaction.requiredTool))
+                    .filter(interaction -> getHammerLevel() >= interaction.requiredLevel)
+                    .findFirst()
+                    .ifPresent(interaction -> {
+                        interaction.applyOutcome(level, targetPos, targetState, null, null, Direction.UP);
 
-                    // the workbench triggers the hammer on the server side, so no need to consume fuel and play sounds
-                    if (!(targetState.getBlock() instanceof AbstractWorkbenchBlock)) {
-                        if (!level.isClientSide) {
-                            consumeFuel();
+                        // the workbench triggers the hammer on the server side, so no need to consume fuel and play sounds
+                        if (!(targetState.getBlock() instanceof AbstractWorkbenchBlock)) {
+                            if (!level.isClientSide) {
+                                consumeFuel();
+                            } else {
+                                head.activate();
+                                level.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
+                            }
                         } else {
                             head.activate();
-                            level.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
                         }
-                    } else {
-                        head.activate();
-                    }
-                });
+                    });
         }
     }
 }

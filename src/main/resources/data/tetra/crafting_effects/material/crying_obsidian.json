@@ -8,14 +8,14 @@
         {
             "type": "tetra:material",
             "material": {
-                "items": ["minecraft:crying_obsidian"]
+                "items": [ "minecraft:crying_obsidian" ]
             }
         }
     ],
     "outcomes": [
         {
             "type": "tetra:remove_improvements",
-            "improvements": ["arrested"]
+            "improvements": [ "arrested" ]
         },
         {
             "type": "tetra:apply_improvements",

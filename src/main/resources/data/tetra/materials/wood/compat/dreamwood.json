@@ -1,8 +1,10 @@
 {
-    "conditions": [{
-        "type": "forge:mod_loaded",
-        "modid": "botania"
-    }],
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "botania"
+        }
+    ],
     "key": "dreamwood",
     "category": "wood",
     "primary": "4",
@@ -18,7 +20,7 @@
         "glyph": "adbbbf",
         "texture": "808a8c"
     },
-    "textures": ["crude"],
+    "textures": [ "crude" ],
     "material": {
         "items": [ "botania:dreamwood_planks" ]
     },

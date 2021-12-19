@@ -20,14 +20,14 @@ import se.mickelus.tetra.module.schematic.SchematicRarity;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class SettleToast implements Toast {
-    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/toasts.png");
-
+    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toasts.png");
+    private final ItemStack itemStack;
+    private final String moduleName;
+    private final GuiModuleGlyph glyph;
     private boolean hasPlayedSound = false;
-    private ItemStack itemStack;
-    private String moduleName;
-    private GuiModuleGlyph glyph;
 
     public SettleToast(ItemStack itemStack, String slot) {
         this.itemStack = itemStack;

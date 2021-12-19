@@ -5,17 +5,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class BlockProgressOverlay {
     public static BlockProgressOverlay instance;
 
     private final Minecraft mc;
 
-    private GuiBlockProgress gui;
+    private final GuiBlockProgress gui;
 
     public BlockProgressOverlay(Minecraft mc) {
         this.mc = mc;

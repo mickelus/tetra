@@ -24,6 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
@@ -38,7 +39,6 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
-import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import javax.annotation.Nullable;
@@ -46,20 +46,17 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ModularDoubleHeadedItem extends ItemModularHandheld {
-    private static final Logger logger = LogManager.getLogger();
-
     public final static String headLeftKey = "double/head_left";
     public final static String headRightKey = "double/head_right";
-
     public final static String handleKey = "double/handle";
     public final static String bindingKey = "double/binding";
     public final static String accessoryKey = "double/accessory";
-
     public final static String leftSuffix = "_left";
     public final static String rightSuffix = "_right";
-
+    private static final Logger logger = LogManager.getLogger();
     private static final String unlocalizedName = "modular_double";
 
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
@@ -74,10 +71,10 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
         entityHitDamage = 2;
 
-        majorModuleKeys = new String[] { headLeftKey, headRightKey, handleKey };
-        minorModuleKeys = new String[] { bindingKey };
+        majorModuleKeys = new String[]{headLeftKey, headRightKey, handleKey};
+        minorModuleKeys = new String[]{bindingKey};
 
-        requiredModules = new String[] { handleKey, headLeftKey, headRightKey };
+        requiredModules = new String[]{handleKey, headLeftKey, headRightKey};
 
         updateConfig(ConfigHandler.honedoubleBase.get(), ConfigHandler.honedoubleIntegrityMultiplier.get());
 
@@ -188,11 +185,11 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
                 .collect(Collectors.toList()));
 
         return Stream.concat(
-                getAllModules(itemStack).stream()
-                        .filter(itemModule -> !(headLeftKey.equals(itemModule.getSlot()) || headRightKey.equals(itemModule.getSlot())))
-                        .map(module -> module.getToolData(itemStack)),
-                Arrays.stream(getSynergyData(itemStack))
-                        .map(synergy -> synergy.tools))
+                        getAllModules(itemStack).stream()
+                                .filter(itemModule -> !(headLeftKey.equals(itemModule.getSlot()) || headRightKey.equals(itemModule.getSlot())))
+                                .map(module -> module.getToolData(itemStack)),
+                        Arrays.stream(getSynergyData(itemStack))
+                                .map(synergy -> synergy.tools))
                 .filter(Objects::nonNull)
                 .reduce(result, ToolData::merge);
     }

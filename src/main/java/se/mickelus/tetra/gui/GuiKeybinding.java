@@ -11,6 +11,7 @@ import se.mickelus.mutil.gui.GuiStringOutline;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiKeybinding extends GuiElement {
 

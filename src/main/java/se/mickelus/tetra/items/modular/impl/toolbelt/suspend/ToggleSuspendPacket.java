@@ -5,12 +5,14 @@ import net.minecraft.world.entity.player.Player;
 import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ToggleSuspendPacket extends AbstractPacket {
 
     boolean toggleOn;
 
-    public ToggleSuspendPacket() { }
+    public ToggleSuspendPacket() {
+    }
 
     public ToggleSuspendPacket(boolean toggleOn) {
         this.toggleOn = toggleOn;

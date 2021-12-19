@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["shield/plate"],
+    "slots": [ "shield/plate" ],
     "materialSlotCount": 1,
     "displayType": "improvement",
     "glyph": {
@@ -12,14 +12,14 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:metal/"],
+            "materials": [ "tetra:metal/" ],
             "countFactor": 2,
             "improvements": {
                 "shield/trim/": 0
             }
         },
         {
-            "materials": ["tetra:skin/"],
+            "materials": [ "tetra:skin/" ],
             "countFactor": 4,
             "improvements": {
                 "shield/trim/": 0

@@ -34,6 +34,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
@@ -45,7 +46,6 @@ import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.salvage.TileBlockInteraction;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -55,6 +55,7 @@ import java.util.stream.Stream;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 import static net.minecraft.world.level.material.Fluids.WATER;
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
+
 @ParametersAreNonnullByDefault
 public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, EntityBlock {
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
@@ -62,10 +63,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     public static final String qualityImprovementKey = "quality";
 
     public static final String unlocalizedName = "hammer_base";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static HammerBaseBlock instance;
-
-    public static final BlockInteraction[] interactions = new BlockInteraction[] {
+    public static final BlockInteraction[] interactions = new BlockInteraction[]{
             new TileBlockInteraction<>(TetraToolActions.pry, 1, Direction.EAST, 5, 11, 10, 12,
                     HammerBaseTile.class, tile -> tile.getEffect(true) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, true)),
@@ -73,6 +71,8 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
                     HammerBaseTile.class, tile -> tile.getEffect(false) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, false))
     };
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static HammerBaseBlock instance;
 
     public HammerBaseBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
@@ -80,6 +80,25 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
         setRegistryName(unlocalizedName);
 
         hasItem = true;
+    }
+
+    public static boolean removeModule(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace, boolean isA) {
+        ItemStack moduleStack = TileEntityOptional.from(world, pos, HammerBaseTile.class)
+                .map(te -> te.removeModule(isA))
+                .map(ItemStack::new)
+                .orElse(null);
+
+        if (moduleStack != null && !world.isClientSide) {
+            if (player != null && player.getInventory().add(moduleStack)) {
+                player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
+            } else {
+                popResource(world, pos.relative(hitFace), moduleStack);
+            }
+        }
+
+        world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.6f);
+
+        return true;
     }
 
     @Override
@@ -121,25 +140,6 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
         return TileEntityOptional.from(world, pos, HammerBaseTile.class)
                 .map(HammerBaseTile::getHammerLevel)
                 .orElse(0);
-    }
-
-    public static boolean removeModule(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace, boolean isA) {
-        ItemStack moduleStack = TileEntityOptional.from(world, pos, HammerBaseTile.class)
-                .map(te -> te.removeModule(isA))
-                .map(ItemStack::new)
-                .orElse(null);
-
-        if (moduleStack != null && !world.isClientSide) {
-            if (player != null && player.getInventory().add(moduleStack)) {
-                player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
-            } else {
-                popResource(world, pos.relative(hitFace), moduleStack);
-            }
-        }
-
-        world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.6f);
-
-        return true;
     }
 
     public ItemStack applyCraftEffects(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
@@ -201,7 +201,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
         }
 
         if (blockFacing.getAxis().equals(facing.getAxis())) {
-            int slotIndex = blockFacing.equals(facing)? 0 : 1;
+            int slotIndex = blockFacing.equals(facing) ? 0 : 1;
             if (te.hasCellInSlot(slotIndex)) {
                 ItemStack cell = te.removeCellFromSlot(slotIndex);
                 if (player.getInventory().add(cell)) {

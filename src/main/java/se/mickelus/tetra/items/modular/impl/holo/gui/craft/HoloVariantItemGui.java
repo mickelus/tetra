@@ -12,6 +12,7 @@ import se.mickelus.tetra.module.schematic.OutcomePreview;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloVariantItemGui extends GuiClickable {
     protected GuiItemRolling material;
@@ -82,7 +83,7 @@ public class HoloVariantItemGui extends GuiClickable {
         super.drawChildren(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (Screen.hasShiftDown()) {
-            material.draw(matrixStack, refX+ material.getX(), refY + material.getY(), screenWidth, screenHeight, mouseX, mouseY, opacity);
+            material.draw(matrixStack, refX + material.getX(), refY + material.getY(), screenWidth, screenHeight, mouseX, mouseY, opacity);
         }
     }
 }

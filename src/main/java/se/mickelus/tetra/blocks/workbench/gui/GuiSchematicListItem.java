@@ -14,14 +14,14 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class GuiSchematicListItem extends GuiClickable {
 
+    private final GuiString label;
+    private final SchematicRarity rarity;
     private GuiTexture border;
     private GuiTexture glyph;
-    private GuiString label;
-
-    private SchematicRarity rarity;
 
     public GuiSchematicListItem(int x, int y, UpgradeSchematic schematic, Runnable onClickHandler) {
         this(x, y, 109, schematic, onClickHandler);

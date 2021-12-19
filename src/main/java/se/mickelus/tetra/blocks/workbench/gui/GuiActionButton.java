@@ -14,21 +14,22 @@ import se.mickelus.tetra.gui.GuiTextures;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class GuiActionButton extends GuiElement {
 
-    private WorkbenchAction action;
-    private ItemStack targetStack;
+    private final WorkbenchAction action;
+    private final ItemStack targetStack;
 
-    private ToolRequirementGui toolIndicator;
+    private final ToolRequirementGui toolIndicator;
 
-    private GuiClickable iconClickable;
-    private GuiClickable labelClickable;
+    private final GuiClickable iconClickable;
+    private final GuiClickable labelClickable;
 
-    private GuiTexture borderLeft;
-    private GuiTexture borderRight;
-    private GuiRect borderTop;
-    private GuiRect borderBottom;
+    private final GuiTexture borderLeft;
+    private final GuiTexture borderRight;
+    private final GuiRect borderTop;
+    private final GuiRect borderBottom;
 
     public GuiActionButton(int x, int y, WorkbenchAction action, ItemStack targetStack, Consumer<WorkbenchAction> clickHandler) {
         this(x, y, action, targetStack, GuiAlignment.left, clickHandler);

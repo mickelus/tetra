@@ -16,16 +16,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloSortButton extends GuiElement {
     private final List<String> tooltip = Collections.singletonList(I18n.get("tetra.holo.craft.variants_sort"));
-
-    Consumer<IStatSorter> onSelect;
-
-    private GuiTexture icon;
     private final GuiString label;
-
-    private HoloSortPopover popover;
+    private final GuiTexture icon;
+    private final HoloSortPopover popover;
+    Consumer<IStatSorter> onSelect;
 
     public HoloSortButton(int x, int y, Consumer<IStatSorter> onSelect) {
         super(x, y, 36, 9);

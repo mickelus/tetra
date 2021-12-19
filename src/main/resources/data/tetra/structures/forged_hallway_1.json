@@ -1,9 +1,9 @@
 {
-    "origin": [3, 2, 7],
+    "origin": [ 3, 2, 7 ],
     "integrityMin": 0.85,
     "children": [
         {
-            "offset": [1, 1, 7],
+            "offset": [ 1, 1, 7 ],
             "facing": "EAST",
             "chance": 0.4,
             "features": [
@@ -14,7 +14,7 @@
             ]
         },
         {
-            "offset": [5, 1, 6],
+            "offset": [ 5, 1, 6 ],
             "facing": "WEST",
             "chance": 0.4,
             "features": [

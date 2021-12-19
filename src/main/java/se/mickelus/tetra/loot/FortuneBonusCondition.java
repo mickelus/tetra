@@ -18,17 +18,16 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.properties.IToolProvider;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class FortuneBonusCondition implements LootItemCondition {
 
     public static final ResourceLocation identifier = new ResourceLocation(TetraMod.MOD_ID, "random_chance_with_fortune");
     public static final LootItemConditionType type = new LootItemConditionType(new ConditionSerializer());
-
+    private final int requiredToolLevel = -1;
     private float chance;
     private float fortuneMultiplier;
-
     private ToolAction requiredTool;
-    private int requiredToolLevel = -1;
 
     @Override
     public boolean test(LootContext context) {

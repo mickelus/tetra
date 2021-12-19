@@ -20,22 +20,23 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class HoloMaterialDetailGui extends GuiElement {
 
-    private GuiElement content;
+    private final GuiElement content;
 
-    private GuiString label;
-    private GuiTexture labelHighlight;
-    private GuiItemRolling icon;
+    private final GuiString label;
+    private final GuiTexture labelHighlight;
+    private final GuiItemRolling icon;
 
-    private GuiElement modifiers;
+    private final GuiElement modifiers;
 
-    private GuiElement requiredTools;
+    private final GuiElement requiredTools;
 
-    private KeyframeAnimation openAnimation;
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
+    private final KeyframeAnimation openAnimation;
+    private final KeyframeAnimation showAnimation;
+    private final KeyframeAnimation hideAnimation;
 
     private boolean hasSelected = false;
 
@@ -77,7 +78,7 @@ public class HoloMaterialDetailGui extends GuiElement {
         icon.setAttachment(GuiAttachment.topCenter);
         content.addChild(icon);
 
-        label = new GuiStringOutline(0, 50,"");
+        label = new GuiStringOutline(0, 50, "");
         label.setAttachment(GuiAttachment.topCenter);
         content.addChild(label);
 

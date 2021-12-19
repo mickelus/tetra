@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Iterator;
 import java.util.Queue;
+
 @ParametersAreNonnullByDefault
 public class ServerScheduler {
     private static final Queue<Task> queue = Queues.newConcurrentLinkedQueue();
@@ -28,7 +29,7 @@ public class ServerScheduler {
             return;
         }
 
-        for (Iterator<Task> it = queue.iterator(); it.hasNext();) {
+        for (Iterator<Task> it = queue.iterator(); it.hasNext(); ) {
             Task task = it.next();
             if (task.getTick() < counter) {
                 task.run();

@@ -33,14 +33,14 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate" ],
             "key": "heater/",
             "attributes": {
                 "tetra:ability_damage": 1,
                 "tetra:ability_cooldown": 2
             },
             "effects": {
-                "blocking": [2.5, 1]
+                "blocking": [ 2.5, 1 ]
             },
             "durability": 150,
             "extract": {
@@ -67,11 +67,13 @@
                     "textureX": 32,
                     "textureY": 48
                 },
-                "availableTextures": ["wooden", "metal", "bone", "vent"],
-                "models": [{
-                    "type": "tetra:plate/heater",
-                    "location": "tetra:items/module/shield/plate/heater/"
-                }]
+                "availableTextures": [ "wooden", "metal", "bone", "vent" ],
+                "models": [
+                    {
+                        "type": "tetra:plate/heater",
+                        "location": "tetra:items/module/shield/plate/heater/"
+                    }
+                ]
             }
         }
     ]

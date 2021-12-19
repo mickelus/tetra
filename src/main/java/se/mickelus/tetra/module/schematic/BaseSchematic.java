@@ -3,8 +3,8 @@ package se.mickelus.tetra.module.schematic;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
-import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.tetra.items.modular.IModularItem;
 
 import java.util.Map;
 

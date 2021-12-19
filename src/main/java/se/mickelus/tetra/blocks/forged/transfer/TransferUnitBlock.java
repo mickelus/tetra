@@ -34,6 +34,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
@@ -44,7 +45,6 @@ import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.InsulatedPlateItem;
-import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -53,6 +53,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
+
 @ParametersAreNonnullByDefault
 public class TransferUnitBlock extends TetraWaterloggedBlock implements IInteractiveBlock, EntityBlock {
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
@@ -60,10 +61,9 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     public static final IntegerProperty cellProp = IntegerProperty.create("cell", 0, 2);
     public static final EnumProperty<EnumTransferConfig> configProp = EnumProperty.create("config", EnumTransferConfig.class);
     public static final EnumProperty<EnumTransferState> transferProp = EnumProperty.create("transfer", EnumTransferState.class);
-
+    public static final String unlocalizedName = "transfer_unit";
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
-
-    public static final BlockInteraction[] interactions = new BlockInteraction[] {
+    public static final BlockInteraction[] interactions = new BlockInteraction[]{
             new BlockInteraction(TetraToolActions.pry, 1, Direction.SOUTH, 3, 11, 4, 6,
                     new PropertyMatcher().where(plateProp, equalTo(true)),
                     TransferUnitBlock::removePlate),
@@ -71,14 +71,10 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
                     new PropertyMatcher().where(plateProp, equalTo(false)),
                     TransferUnitBlock::reconfigure),
     };
-
-    private static final VoxelShape eastShape =  box(3, 0, 1,  16, 12, 15);
-    private static final VoxelShape northShape = box(1, 0, 0,  15, 12, 13);
-    private static final VoxelShape westShape =  box(0, 0, 1,  13, 12, 15);
+    private static final VoxelShape eastShape = box(3, 0, 1, 16, 12, 15);
+    private static final VoxelShape northShape = box(1, 0, 0, 15, 12, 13);
+    private static final VoxelShape westShape = box(0, 0, 1, 13, 12, 15);
     private static final VoxelShape southShape = box(1, 0, 3, 15, 12, 16);
-
-    public static final String unlocalizedName = "transfer_unit";
-
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static TransferUnitBlock instance;
 
@@ -94,11 +90,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
                 .setValue(cellProp, 0)
                 .setValue(configProp, EnumTransferConfig.a)
                 .setValue(transferProp, EnumTransferState.none));
-    }
-
-    @Override
-    public void clientInit() {
-        ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutout());
     }
 
     public static boolean removePlate(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction hitFace) {
@@ -137,6 +128,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     /**
      * Returns the effect with redstone power taken into consideration, if the block is powered with redstone the REDSTONE effect will be
      * translated into SEND/RECEIVE depending on the powered side.
+     *
      * @return the effect with redstone power taken into consideration
      */
     public static EnumTransferEffect getEffectPowered(Level world, BlockPos pos, BlockState blockState) {
@@ -182,6 +174,11 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
 
     public static Direction getFacing(BlockState blockState) {
         return blockState.getValue(facingProp);
+    }
+
+    @Override
+    public void clientInit() {
+        ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutout());
     }
 
     @Override

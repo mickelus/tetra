@@ -20,6 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class WorkbenchStatsGui extends GuiElement {
 
@@ -101,7 +102,7 @@ public class WorkbenchStatsGui extends GuiElement {
             new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.pry),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.HOE_DIG)
     ));
-    private GuiElement barGroup;
+    private final GuiElement barGroup;
 
     public WorkbenchStatsGui(int x, int y) {
         super(x, y, 200, 52);

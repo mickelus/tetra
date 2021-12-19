@@ -8,15 +8,14 @@ import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TweakData {
+    private final VariantData properties = new VariantData();
     public String variant;
     public String improvement;
-
     public String key;
     public int steps;
-
-    private VariantData properties = new VariantData();
 
     public ItemProperties getProperties(int step) {
         return properties.multiply(step);

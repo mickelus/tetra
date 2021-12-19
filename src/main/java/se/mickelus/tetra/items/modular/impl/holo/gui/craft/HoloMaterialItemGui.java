@@ -10,6 +10,7 @@ import se.mickelus.tetra.module.data.MaterialData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloMaterialItemGui extends GuiClickable {
     protected GuiTexture backdrop;
@@ -17,10 +18,8 @@ public class HoloMaterialItemGui extends GuiClickable {
     protected MaterialData material;
     protected Consumer<MaterialData> onHover;
     protected Consumer<MaterialData> onBlur;
-
-    GuiItemRolling icon;
-
     protected boolean isMuted = false;
+    GuiItemRolling icon;
 
     public HoloMaterialItemGui(int x, int y, MaterialData material,
             Consumer<MaterialData> onHover, Consumer<MaterialData> onBlur, Consumer<MaterialData> onSelect) {

@@ -23,21 +23,21 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
-import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ScrollBlock extends TetraBlock implements EntityBlock {
-
-    private Arrangement arrangement;
 
     public static final Material material = new Material.Builder(MaterialColor.WOOL).nonSolid().build();
     public static final SoundType sound = new SoundType(0.8F, 1.3F, SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN,
             SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN);
+    private final Arrangement arrangement;
 
     public ScrollBlock(String registryName, Arrangement arrangement) {
         super(Properties.of(material).sound(sound));
@@ -79,7 +79,7 @@ public class ScrollBlock extends TetraBlock implements EntityBlock {
         if (arrangement == Arrangement.open) {
             BlockState offsetState = world.getBlockState(pos.below());
 
-            if (offsetState.getBlock()  instanceof AbstractWorkbenchBlock) {
+            if (offsetState.getBlock() instanceof AbstractWorkbenchBlock) {
                 return offsetState.use(world, player, hand, new BlockHitResult(Vec3.ZERO, Direction.UP, pos.below(), true));
             }
         }
@@ -139,7 +139,7 @@ public class ScrollBlock extends TetraBlock implements EntityBlock {
     public void dropScrolls(Level world, BlockPos pos) {
         TileEntityOptional.from(world, pos, ScrollTile.class)
                 .ifPresent(tile -> {
-                    for (CompoundTag nbt: tile.getItemTags()) {
+                    for (CompoundTag nbt : tile.getItemTags()) {
                         ItemStack itemStack = new ItemStack(ScrollItem.instance);
                         itemStack.addTagElement("BlockEntityTag", nbt);
 

@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
-import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -84,7 +84,8 @@ public class CritEffect {
 
     /**
      * Attempts to roll for a crit multiplier with the given item & entity
-     * @param random a random instance, preferably taken from the causing entity
+     *
+     * @param random    a random instance, preferably taken from the causing entity
      * @param item
      * @param itemStack
      * @return returns 1 if the item cannot crit or if the didn't result in a crit, otherwise the crit multiplier (efficiency) for the item

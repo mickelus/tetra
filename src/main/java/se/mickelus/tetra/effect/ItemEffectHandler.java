@@ -37,6 +37,7 @@ import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
@@ -48,13 +49,13 @@ import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ItemEffectHandler {
 
@@ -80,12 +81,12 @@ public class ItemEffectHandler {
 
         // todo: only trigger if target is standing on stone/earth/sand/gravel
         int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
-        if (earthbindLevel > 0 && attacker.getRandom().nextFloat() < Math.max(0.1, 0.5 * ( 1 - target.getY()  / 128 ))) {
+        if (earthbindLevel > 0 && attacker.getRandom().nextFloat() < Math.max(0.1, 0.5 * (1 - target.getY() / 128))) {
             target.addEffect(new MobEffectInstance(EarthboundPotionEffect.instance, earthbindLevel * 20, 0, false, true));
 
             if (target.level instanceof ServerLevel) {
                 BlockState blockState = target.level.getBlockState(new BlockPos(target.getX(), target.getY() - 1, target.getZ()));
-                ((ServerLevel)target.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState),
+                ((ServerLevel) target.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState),
                         target.getX(), target.getY() + 0.1, target.getZ(),
                         16, 0, target.level.random.nextGaussian() * 0.2, 0, 0.1);
             }
@@ -105,7 +106,7 @@ public class ItemEffectHandler {
         return EffectHelper.getEffectEfficiency(itemStack, effect);
     }
 
-    @SubscribeEvent(priority=EventPriority.LOW)
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void onExperienceDrop(LivingExperienceDropEvent event) {
         Optional.ofNullable(event.getAttackingPlayer())
                 .map(LivingEntity::getMainHandItem)
@@ -199,7 +200,7 @@ public class ItemEffectHandler {
                                 .getAttribute(Attributes.ATTACK_DAMAGE).getValue();
                         float multiplier = quickStrikeLevel * 0.05f + 0.2f;
 
-                        if (event.getAmount() <  multiplier * maxDamage) {
+                        if (event.getAmount() < multiplier * maxDamage) {
                             event.setAmount(multiplier * maxDamage);
                         }
                     }

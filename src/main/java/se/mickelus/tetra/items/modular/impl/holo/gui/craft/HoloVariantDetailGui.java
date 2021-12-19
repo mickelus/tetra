@@ -28,39 +28,31 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class HoloVariantDetailGui extends GuiElement {
 
     private final GuiHorizontalLayoutGroup header;
-    private GuiString variantLabel;
-
-    private GuiSynergyIndicator synergyIndicator;
-
-    private GuiElement requiredTools;
-    private GuiItemRolling material;
-
-    private HoloStatsGui stats;
-
-    private Map<ToolAction, Integer> availableToolLevels;
-
-    private Runnable populateImprovements;
-    private HoloImprovementButton improvementButton;
-    private HoloImprovementListGui improvements;
-
-    private KeyframeAnimation openAnimation;
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
-
     private final KeyframeAnimation foldAnimation;
     private final KeyframeAnimation unfoldAnimation;
-
+    private final GuiString variantLabel;
+    private final GuiSynergyIndicator synergyIndicator;
+    private final GuiElement requiredTools;
+    private final GuiItemRolling material;
+    private final HoloStatsGui stats;
+    private final Map<ToolAction, Integer> availableToolLevels;
+    private final HoloImprovementButton improvementButton;
+    private final HoloImprovementListGui improvements;
+    private final KeyframeAnimation openAnimation;
+    private final KeyframeAnimation showAnimation;
+    private final KeyframeAnimation hideAnimation;
+    private final List<OutcomeStack> selectedOutcomes;
+    private final int originalY;
+    private Runnable populateImprovements;
     private OutcomePreview variantOutcome;
     private OutcomePreview currentOutcome;
     private String slot;
-    private List<OutcomeStack> selectedOutcomes;
     private OutcomePreview hoveredImprovement;
-
-    private int originalY;
 
     public HoloVariantDetailGui(int x, int y, int width, Consumer<OutcomePreview> onVariantOpen) {
         super(x, y, width, 100);
@@ -155,7 +147,7 @@ public class HoloVariantDetailGui extends GuiElement {
 
             requiredTools.clearChildren();
             baseOutcome.tools.getLevelMap().forEach((tool, level) -> {
-                ToolRequirementGui requirement = new ToolRequirementGui( requiredTools.getNumChildren() * 20, 0, tool,
+                ToolRequirementGui requirement = new ToolRequirementGui(requiredTools.getNumChildren() * 20, 0, tool,
                         "tetra.tool." + tool.name() + ".craft_requirement");
                 requirement.updateRequirement(level, availableToolLevels.getOrDefault(tool, 0));
                 requiredTools.addChild(requirement);
@@ -213,7 +205,7 @@ public class HoloVariantDetailGui extends GuiElement {
 
     public void updateStats(OutcomePreview selectedOutcome, OutcomePreview hoveredOutcome) {
         ItemStack baseStack = hoveredOutcome != null ? hoveredOutcome.itemStack : selectedOutcome != null ? selectedOutcome.itemStack : ItemStack.EMPTY;
-        stats.update(selectedOutcome != null ? selectedOutcome.itemStack : baseStack, baseStack,null, null,
+        stats.update(selectedOutcome != null ? selectedOutcome.itemStack : baseStack, baseStack, null, null,
                 Minecraft.getInstance().player);
     }
 

@@ -4,7 +4,7 @@
     "slots": [
         "holo/frame"
     ],
-    "improvements": [],
+    "improvements": [ ],
     "variants": [
         {
             "key": "frame/ancient",

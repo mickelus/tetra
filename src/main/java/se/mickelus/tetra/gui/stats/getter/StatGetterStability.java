@@ -5,6 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.effect.ItemEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class StatGetterStability implements IStatGetter {
 
@@ -12,7 +13,8 @@ public class StatGetterStability implements IStatGetter {
     private final StatGetterEffectLevel unstableGetter = new StatGetterEffectLevel(ItemEffect.unstable, 1);
 
 
-    public StatGetterStability() { }
+    public StatGetterStability() {
+    }
 
     @Override
     public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {

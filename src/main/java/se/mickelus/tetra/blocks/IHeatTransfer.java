@@ -1,20 +1,29 @@
 package se.mickelus.tetra.blocks;
 
 public interface IHeatTransfer {
-    public boolean canRecieve();
-    public boolean canSend();
-    public void setReceiving(boolean receiving);
-    public boolean isReceiving();
-    public void setSending(boolean sending);
-    public boolean isSending();
-    public int getReceiveLimit();
-    public int getSendLimit();
-    public int drain(int amount);
-    public int fill(int amount);
+    boolean canRecieve();
 
-    public int getCharge();
+    boolean canSend();
 
-    public float getEfficiency();
+    boolean isReceiving();
 
-    public void updateTransferState();
+    void setReceiving(boolean receiving);
+
+    boolean isSending();
+
+    void setSending(boolean sending);
+
+    int getReceiveLimit();
+
+    int getSendLimit();
+
+    int drain(int amount);
+
+    int fill(int amount);
+
+    int getCharge();
+
+    float getEfficiency();
+
+    void updateTransferState();
 }

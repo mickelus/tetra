@@ -28,14 +28,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class HoloMaterialApplicable extends GuiElement {
     private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_applicable_materials"));
+    private final GuiTexture icon;
     private List<String> tooltip;
-
-    private GuiTexture icon;
-
-
     private IModularItem item;
     private String slot;
     private UpgradeSchematic schematic;

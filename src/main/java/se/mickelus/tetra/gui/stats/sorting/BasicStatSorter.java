@@ -10,12 +10,13 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Comparator;
 import java.util.function.Function;
+
 @ParametersAreNonnullByDefault
 public class BasicStatSorter implements IStatSorter {
-    private IStatGetter getter;
-    private String name;
+    private final IStatGetter getter;
+    private final String name;
+    private final StatFormat statFormat;
     private String suffix;
-    private StatFormat statFormat;
     private boolean inverted;
 
     public BasicStatSorter(IStatGetter getter, String name, StatFormat statFormat) {

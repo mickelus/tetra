@@ -19,18 +19,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class RemoveSchematic extends BaseSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
 
-    private String key = "remove";
+    private final String key = "remove";
 
-    private IModularItem item;
-    private String slot;
+    private final IModularItem item;
+    private final String slot;
 
-    private GlyphData glyph = new GlyphData(GuiTextures.workbench, 52, 32);
+    private final GlyphData glyph = new GlyphData(GuiTextures.workbench, 52, 32);
 
     public RemoveSchematic(IModularItem item, String slot) {
         this.item = item;

@@ -10,7 +10,6 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -42,9 +41,9 @@ public class ModularShieldBannerModel extends Model {
         }
 
         parts.addOrReplaceChild("tetra:banner/buckler", CubeListBuilder.create()
-                .texOffs(2, 7)
-                .addBox(-4.0F, -4.0F, -2.005F, 8.0F, 8.0F, 1.0F),
-                PartPose.rotation(0, 0, (float) (- Math.PI / 4)));
+                        .texOffs(2, 7)
+                        .addBox(-4.0F, -4.0F, -2.005F, 8.0F, 8.0F, 1.0F),
+                PartPose.rotation(0, 0, (float) (-Math.PI / 4)));
 
         return LayerDefinition.create(mesh, 64, 64);
     }
@@ -56,7 +55,8 @@ public class ModularShieldBannerModel extends Model {
     public ModelPart getModel(String modelType) {
         try {
             return root.getChild(modelType);
-        } catch (NoSuchElementException e) {}
+        } catch (NoSuchElementException e) {
+        }
         return null;
     }
 }

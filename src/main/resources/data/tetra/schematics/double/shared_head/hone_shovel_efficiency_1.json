@@ -19,8 +19,8 @@
     "requirement": {
         "type": "tetra:modular_item",
         "modules": [
-            ["double/adze_right"],
-            ["double/adze_left"]
+            [ "double/adze_right" ],
+            [ "double/adze_left" ]
         ],
         "improvements": {
             "!head_hone/shovel_efficiency": -1

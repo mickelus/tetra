@@ -5,11 +5,12 @@ import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+
 @ParametersAreNonnullByDefault
 public class StatGetterMultiply implements IStatGetter {
-    private IStatGetter[] statGetters;
+    private final IStatGetter[] statGetters;
 
-    public StatGetterMultiply(IStatGetter ... statGetters) {
+    public StatGetterMultiply(IStatGetter... statGetters) {
         this.statGetters = statGetters;
     }
 

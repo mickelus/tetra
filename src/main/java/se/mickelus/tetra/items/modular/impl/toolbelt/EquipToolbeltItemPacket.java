@@ -3,10 +3,11 @@ package se.mickelus.tetra.items.modular.impl.toolbelt;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
 import se.mickelus.mutil.network.AbstractPacket;
+import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class EquipToolbeltItemPacket extends AbstractPacket {
 
@@ -15,7 +16,8 @@ public class EquipToolbeltItemPacket extends AbstractPacket {
 
     private InteractionHand hand;
 
-    public EquipToolbeltItemPacket() { }
+    public EquipToolbeltItemPacket() {
+    }
 
     public EquipToolbeltItemPacket(ToolbeltSlotType inventoryType, int toolbeltSlot, InteractionHand hand) {
         this.slotType = inventoryType;

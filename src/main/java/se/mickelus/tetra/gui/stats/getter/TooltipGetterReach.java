@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.ConfigHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TooltipGetterReach implements ITooltipGetter {
     private final IStatGetter getter;

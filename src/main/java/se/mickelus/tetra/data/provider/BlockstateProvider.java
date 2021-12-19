@@ -15,6 +15,7 @@ import se.mickelus.tetra.blocks.forged.ForgedVentBlock;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import static se.mickelus.tetra.TetraMod.MOD_ID;
+
 @ParametersAreNonnullByDefault
 public class BlockstateProvider extends BlockStateProvider {
     public BlockstateProvider(DataGenerator gen, String modid, ExistingFileHelper exFileHelper) {

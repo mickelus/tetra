@@ -37,46 +37,35 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public abstract class ModularItem extends TetraItem implements IModularItem, IToolProvider {
-    private static final Logger logger = LogManager.getLogger();
-
-    protected int honeBase = 450;
-    protected int honeIntegrityMultiplier = 200;
-
-    // static marker for item, denoting if it can progress towards being honed
-    protected boolean canHone = true;
-
-    protected String[] majorModuleKeys;
-    protected String[] minorModuleKeys;
-
-    protected String[] requiredModules = new String[0];
-
-    protected int baseDurability = 0;
-    protected int baseIntegrity = 0;
-
-    protected SynergyData[] synergies = new SynergyData[0];
-
     public static final UUID attackDamageModifier = Item.BASE_ATTACK_DAMAGE_UUID;
     public static final UUID attackSpeedModifier = Item.BASE_ATTACK_SPEED_UUID;
-
-    private Cache<String, Multimap<Attribute, AttributeModifier>> attributeCache = CacheBuilder.newBuilder()
+    private static final Logger logger = LogManager.getLogger();
+    private final Cache<String, Multimap<Attribute, AttributeModifier>> attributeCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
             .expireAfterWrite(5, TimeUnit.MINUTES)
             .build();
-
-    private Cache<String, ToolData> toolCache = CacheBuilder.newBuilder()
+    private final Cache<String, ToolData> toolCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
             .expireAfterWrite(5, TimeUnit.MINUTES)
             .build();
-
-    private Cache<String, EffectData> effectCache = CacheBuilder.newBuilder()
+    private final Cache<String, EffectData> effectCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
             .expireAfterWrite(5, TimeUnit.MINUTES)
             .build();
-
-    private Cache<String, ItemProperties> propertyCache = CacheBuilder.newBuilder()
+    private final Cache<String, ItemProperties> propertyCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
             .expireAfterWrite(5, TimeUnit.MINUTES)
             .build();
+    protected int honeBase = 450;
+    protected int honeIntegrityMultiplier = 200;
+    // static marker for item, denoting if it can progress towards being honed
+    protected boolean canHone = true;
+    protected String[] majorModuleKeys;
+    protected String[] minorModuleKeys;
+    protected String[] requiredModules = new String[0];
+    protected int baseDurability = 0;
+    protected int baseIntegrity = 0;
+    protected SynergyData[] synergies = new SynergyData[0];
 
     public ModularItem(Properties properties) {
         super(properties);
@@ -164,16 +153,17 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     /**
      * Get uncached tool data, this is not needed in most cases.
+     *
      * @param itemStack
      * @return
      */
     protected ToolData getToolDataRaw(ItemStack itemStack) {
         logger.debug("Gathering tool data for {} ({})", getName(itemStack).getString(), getDataCacheKey(itemStack));
         return Stream.concat(
-                getAllModules(itemStack).stream()
-                        .map(module -> module.getToolData(itemStack)),
-                Arrays.stream(getSynergyData(itemStack))
-                        .map(synergy -> synergy.tools))
+                        getAllModules(itemStack).stream()
+                                .map(module -> module.getToolData(itemStack)),
+                        Arrays.stream(getSynergyData(itemStack))
+                                .map(synergy -> synergy.tools))
                 .filter(Objects::nonNull)
                 .reduce(null, ToolData::merge);
     }
@@ -213,7 +203,7 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     @Override
     public int getBarWidth(ItemStack itemStack) {
-        return Math.round(13.0F - (float)itemStack.getDamageValue() * 13.0F / (float) getMaxDamage(itemStack));
+        return Math.round(13.0F - (float) itemStack.getDamageValue() * 13.0F / (float) getMaxDamage(itemStack));
     }
 
     @Override
@@ -230,6 +220,7 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     /**
      * Vanilla method for determining if the item should display the enchantment glint
+     *
      * @param itemStack The itemstack for the item
      * @return true if should display glint
      */

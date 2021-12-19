@@ -21,11 +21,12 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class RevengeTracker {
     private static final Logger logger = LogManager.getLogger();
 
-    private static Cache<Integer, Collection<Integer>> cache = CacheBuilder.newBuilder()
+    private static final Cache<Integer, Collection<Integer>> cache = CacheBuilder.newBuilder()
             .maximumSize(100)
             .expireAfterWrite(30, TimeUnit.SECONDS)
             .build();
@@ -69,6 +70,7 @@ public class RevengeTracker {
 
     /**
      * Removes the enemy as a revenge target for the given player, sync to the client of the player
+     *
      * @param entity
      * @param enemy
      */

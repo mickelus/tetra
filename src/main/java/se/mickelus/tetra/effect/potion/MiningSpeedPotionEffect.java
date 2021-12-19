@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 @ParametersAreNonnullByDefault
 public class MiningSpeedPotionEffect extends MobEffect {
     public static MiningSpeedPotionEffect instance;
+
     public MiningSpeedPotionEffect() {
         super(MobEffectCategory.BENEFICIAL, 0xeeeeee);
 
@@ -22,7 +23,6 @@ public class MiningSpeedPotionEffect extends MobEffect {
 
         instance = this;
     }
-
 
 
     @SubscribeEvent

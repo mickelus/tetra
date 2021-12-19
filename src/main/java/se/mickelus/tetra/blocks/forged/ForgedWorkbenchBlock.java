@@ -30,13 +30,12 @@ import static net.minecraft.world.level.material.Fluids.WATER;
 @ParametersAreNonnullByDefault
 public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements SimpleWaterloggedBlock {
     public static final String unlocalizedName = "forged_workbench";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static AbstractWorkbenchBlock instance;
-
     private static final VoxelShape shape = Shapes.or(
             box(3, 0, 1, 13, 2, 15),
             box(4, 2, 2, 12, 9, 14),
             box(2, 9, 0, 14, 16, 16));
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static AbstractWorkbenchBlock instance;
 
     public ForgedWorkbenchBlock() {
         super(ForgedBlockCommon.propertiesSolid);

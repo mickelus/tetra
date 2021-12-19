@@ -10,13 +10,10 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class ItemPredicateDeserializer implements JsonDeserializer<ItemPredicate> {
     private static final Logger logger = LogManager.getLogger();
-    @Override
-    public ItemPredicate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return deserialize(json);
-    }
 
     public static ItemPredicate deserialize(JsonElement json) {
         try {
@@ -26,5 +23,10 @@ public class ItemPredicateDeserializer implements JsonDeserializer<ItemPredicate
             // todo: debug level log
             return null;
         }
+    }
+
+    @Override
+    public ItemPredicate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        return deserialize(json);
     }
 }

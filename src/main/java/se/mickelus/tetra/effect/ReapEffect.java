@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+
 @ParametersAreNonnullByDefault
 public class ReapEffect extends ChargedAbilityEffect {
 

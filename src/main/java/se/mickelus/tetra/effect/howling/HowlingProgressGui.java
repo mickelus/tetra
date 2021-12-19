@@ -4,7 +4,6 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiRoot;
@@ -13,18 +12,16 @@ import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.InvertColorGui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class HowlingProgressGui extends GuiRoot {
 
     private static final int width = 16;
-
-    private GuiElement backdrop;
-    private GuiElement container;
-
-    private HowlingIndicatorGui[] indicators;
-
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
+    private final GuiElement container;
+    private final HowlingIndicatorGui[] indicators;
+    private GuiElement backdrop;
 
     public HowlingProgressGui(Minecraft mc) {
         super(mc);

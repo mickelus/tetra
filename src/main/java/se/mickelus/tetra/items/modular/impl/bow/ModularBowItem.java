@@ -33,6 +33,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.network.PacketHandler;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
@@ -44,15 +46,14 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
-import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class ModularBowItem extends ModularItem {
     public final static String staveKey = "bow/stave";
@@ -60,29 +61,24 @@ public class ModularBowItem extends ModularItem {
     public final static String riserKey = "bow/riser";
 
     public static final String unlocalizedName = "modular_bow";
-
+    public static final double velocityFactor = 1 / 8d;
+    private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, 21, -11, -3);
+    private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static ModularBowItem instance;
     protected ModuleModel arrowModel0 = new ModuleModel("draw_0", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_0"));
     protected ModuleModel arrowModel1 = new ModuleModel("draw_1", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_1"));
     protected ModuleModel arrowModel2 = new ModuleModel("draw_2", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_2"));
-
-    private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, 21, -11, -3);
-    private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
-
-    public static final double velocityFactor = 1 / 8d;
-
     protected ItemStack vanillaBow;
-
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ModularBowItem instance;
 
     public ModularBowItem() {
         super(new Properties().stacksTo(1).fireResistant());
         setRegistryName(unlocalizedName);
 
-        majorModuleKeys = new String[] { stringKey, staveKey };
-        minorModuleKeys = new String[] { riserKey };
+        majorModuleKeys = new String[]{stringKey, staveKey};
+        minorModuleKeys = new String[]{riserKey};
 
-        requiredModules = new String[] { stringKey, staveKey };
+        requiredModules = new String[]{stringKey, staveKey};
 
         vanillaBow = new ItemStack(Items.BOW);
 
@@ -90,6 +86,30 @@ public class ModularBowItem extends ModularItem {
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
         RemoveSchematic.registerRemoveSchematics(this);
+    }
+
+    /**
+     * Gets the velocity of the arrow entity from the bow's charge
+     */
+    public static float getArrowVelocity(int charge, double strength, float velocityBonus, boolean suspend) {
+        float velocity = (float) charge / 20.0F;
+
+        velocity = (velocity * velocity + velocity * 2.0F) / 3.0F;
+
+
+        if (velocity > 1.0F) {
+            velocity = 1.0F;
+        }
+        // increase velocity for bows that have a higher draw strength than vanilla bows (6 strength)
+        velocity = velocity * (float) Math.max(1, 1 + (strength - 6) * velocityFactor);
+
+        if (suspend && charge >= 20) {
+            velocity *= 2;
+        } else {
+            velocity += velocity * velocityBonus;
+        }
+
+        return velocity;
     }
 
     @Override
@@ -160,7 +180,7 @@ public class ModularBowItem extends ModularItem {
 
     protected void fireArrow(ItemStack itemStack, Level world, LivingEntity entity, int timeLeft) {
         if (entity instanceof Player) {
-            Player player = (Player)entity;
+            Player player = (Player) entity;
             ItemStack ammoStack = player.getProjectile(vanillaBow);
 
             boolean playerInfinite = isInfinite(player, itemStack, ammoStack);
@@ -209,7 +229,7 @@ public class ModularBowItem extends ModularItem {
                             }
 
                             // the damage modifier is based on fully drawn damage, vanilla bows deal 3 times base damage + 0-4 crit damage
-                            projectile.setBaseDamage(projectile.getBaseDamage() -2 + strength / 3);
+                            projectile.setBaseDamage(projectile.getBaseDamage() - 2 + strength / 3);
 
                             if (powerLevel > 0) {
                                 projectile.setBaseDamage(projectile.getBaseDamage() + powerLevel * 0.5D + 0.5D);
@@ -246,7 +266,7 @@ public class ModularBowItem extends ModularItem {
                                 Vec3 projPos = projectile.position();
                                 for (int j = 0; j < 4; j++) {
                                     Vec3 pos = projPos.add(projDir.scale(2 + j * 2));
-                                    ((ServerLevel)entity.level).sendParticles(ParticleTypes.END_ROD,
+                                    ((ServerLevel) entity.level).sendParticles(ParticleTypes.END_ROD,
                                             pos.x(), pos.y(), pos.z(), 1,
                                             0, 0, 0, 0.01);
                                 }
@@ -302,36 +322,13 @@ public class ModularBowItem extends ModularItem {
                 .orElse(false);
     }
 
-    /**
-     * Gets the velocity of the arrow entity from the bow's charge
-     */
-    public static float getArrowVelocity(int charge, double strength, float velocityBonus, boolean suspend) {
-        float velocity = (float)charge / 20.0F;
-
-        velocity = (velocity * velocity + velocity * 2.0F) / 3.0F;
-
-
-        if (velocity > 1.0F) {
-            velocity = 1.0F;
-        }
-        // increase velocity for bows that have a higher draw strength than vanilla bows (6 strength)
-        velocity = velocity * (float) Math.max(1, 1 + (strength - 6) * velocityFactor);
-
-        if (suspend && charge >= 20) {
-            velocity *= 2;
-        } else {
-            velocity += velocity * velocityBonus;
-        }
-
-        return velocity;
-    }
-
     public int getDrawDuration(ItemStack itemStack) {
         return Math.max((int) (20 * getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())), 1);
     }
 
     /**
      * Returns a value between 0 - 1 representing how far the bow has been drawn, a value of 1 means that the bow is fully drawn
+     *
      * @param itemStack
      * @param entity
      * @return
@@ -340,7 +337,7 @@ public class ModularBowItem extends ModularItem {
         return Optional.ofNullable(entity)
                 .filter(e -> e.getUseItemRemainingTicks() > 0)
                 .filter(e -> itemStack.equals(e.getUseItem()))
-                .map( e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getDrawDuration(itemStack))
+                .map(e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getDrawDuration(itemStack))
                 .orElse(0f);
     }
 
@@ -431,7 +428,7 @@ public class ModularBowItem extends ModularItem {
 
     @Override
     public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
-        return super.getModelCacheKey(itemStack, entity) + ":" +  getDrawVariant(itemStack, entity);
+        return super.getModelCacheKey(itemStack, entity) + ":" + getDrawVariant(itemStack, entity);
     }
 
     @Override

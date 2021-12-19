@@ -23,13 +23,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.advancements.BlockInteractionCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.mutil.util.RotationHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class BlockInteraction {
     public ToolAction requiredTool;
@@ -85,29 +86,6 @@ public class BlockInteraction {
             float minX, float maxX, float minY, float maxY, Property<V> property, V propertyValue, InteractionOutcome outcome) {
         this(requiredTool, requiredLevel, face, minX, maxX, minY, maxY, new PropertyMatcher().where(property, Predicates.equalTo(propertyValue)),
                 outcome);
-    }
-
-    public boolean applicableForBlock(Level world, BlockPos pos, BlockState blockState) {
-        return predicate.test(blockState);
-    }
-
-    public boolean isWithinBounds(double x, double y) {
-        return minX <= x && x <= maxX && minY <= y && y <= maxY;
-    }
-
-    public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction hitFace, Collection<ToolAction> availableTools) {
-        return isPotentialInteraction(world, pos, blockState, Direction.NORTH, hitFace, availableTools);
-    }
-
-    public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction blockFacing, Direction hitFace,
-            Collection<ToolAction> availableTools) {
-        return applicableForBlock(world, pos, blockState)
-                && RotationHelper.rotationFromFacing(blockFacing).rotate(face).equals(hitFace)
-                && (alwaysReveal || availableTools.contains(requiredTool));
-    }
-
-    public void applyOutcome(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace) {
-        outcome.apply(world, pos, blockState, player, hand, hitFace);
     }
 
     public static InteractionResult attemptInteraction(Level world, BlockState blockState, BlockPos pos, Player player, InteractionHand hand,
@@ -204,6 +182,7 @@ public class BlockInteraction {
 
     /**
      * Returns the horizontal coordinate for where the face was clicked, between 0-1.
+     *
      * @param facing
      * @param boundingBox
      * @param hitX
@@ -231,6 +210,7 @@ public class BlockInteraction {
 
     /**
      * Returns the vertical coordinate for where the face was clicked, between 0-1.
+     *
      * @param facing
      * @param boundingBox
      * @param hitX
@@ -254,25 +234,6 @@ public class BlockInteraction {
                 return boundingBox.maxY - hitY;
         }
         return 0;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BlockInteraction that = (BlockInteraction) o;
-        return requiredLevel == that.requiredLevel &&
-                Float.compare(that.minX, minX) == 0 &&
-                Float.compare(that.minY, minY) == 0 &&
-                Float.compare(that.maxX, maxX) == 0 &&
-                Float.compare(that.maxY, maxY) == 0 &&
-                Objects.equals(requiredTool, that.requiredTool) &&
-                face == that.face;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(requiredTool, requiredLevel, face, minX, minY, maxX, maxY);
     }
 
     public static List<ItemStack> getLoot(ResourceLocation lootTable, Player player, InteractionHand hand, ServerLevel world,
@@ -309,9 +270,52 @@ public class BlockInteraction {
             }
         });
     }
+
     public static void dropLoot(ResourceLocation lootTable, ServerLevel world, BlockPos pos, BlockState blockState) {
         getLoot(lootTable, world, pos, blockState).forEach(itemStack -> {
             Block.popResource(world, pos, itemStack);
         });
+    }
+
+    public boolean applicableForBlock(Level world, BlockPos pos, BlockState blockState) {
+        return predicate.test(blockState);
+    }
+
+    public boolean isWithinBounds(double x, double y) {
+        return minX <= x && x <= maxX && minY <= y && y <= maxY;
+    }
+
+    public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction hitFace, Collection<ToolAction> availableTools) {
+        return isPotentialInteraction(world, pos, blockState, Direction.NORTH, hitFace, availableTools);
+    }
+
+    public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction blockFacing, Direction hitFace,
+            Collection<ToolAction> availableTools) {
+        return applicableForBlock(world, pos, blockState)
+                && RotationHelper.rotationFromFacing(blockFacing).rotate(face).equals(hitFace)
+                && (alwaysReveal || availableTools.contains(requiredTool));
+    }
+
+    public void applyOutcome(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace) {
+        outcome.apply(world, pos, blockState, player, hand, hitFace);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BlockInteraction that = (BlockInteraction) o;
+        return requiredLevel == that.requiredLevel &&
+                Float.compare(that.minX, minX) == 0 &&
+                Float.compare(that.minY, minY) == 0 &&
+                Float.compare(that.maxX, maxX) == 0 &&
+                Float.compare(that.maxY, maxY) == 0 &&
+                Objects.equals(requiredTool, that.requiredTool) &&
+                face == that.face;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(requiredTool, requiredLevel, face, minX, minY, maxX, maxY);
     }
 }

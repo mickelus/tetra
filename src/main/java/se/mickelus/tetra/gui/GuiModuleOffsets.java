@@ -1,13 +1,14 @@
 package se.mickelus.tetra.gui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiModuleOffsets {
-    private int[] offsetX;
-    private int[] offsetY;
-    private boolean[] alignment;
+    private final int[] offsetX;
+    private final int[] offsetY;
+    private final boolean[] alignment;
 
-    public GuiModuleOffsets(int ... offsets) {
+    public GuiModuleOffsets(int... offsets) {
         offsetX = new int[offsets.length / 2];
         offsetY = new int[offsets.length / 2];
         alignment = new boolean[offsets.length / 2];

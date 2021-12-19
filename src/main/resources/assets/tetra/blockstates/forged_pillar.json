@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "axis=y": { "model": "tetra:block/forged_pillar" },
-    "axis=z": { "model": "tetra:block/forged_pillar", "x": 90 },
-    "axis=x": { "model": "tetra:block/forged_pillar", "x": 90, "y": 90 }
-  }
+    "variants": {
+        "axis=y": { "model": "tetra:block/forged_pillar" },
+        "axis=z": { "model": "tetra:block/forged_pillar", "x": 90 },
+        "axis=x": { "model": "tetra:block/forged_pillar", "x": 90, "y": 90 }
+    }
 }

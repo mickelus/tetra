@@ -19,12 +19,12 @@
             "from": [ 0, 0, 1 ],
             "to": [ 15, 9, 15 ],
             "faces": {
-                "north": { "texture": "#front",  "uv": [ 0, 0, 15, 9 ] },
-                "east":  { "texture": "#side",   "uv": [ 14, 0, 0, 9 ] },
-                "south": { "texture": "#back",   "uv": [ 15, 0, 0, 9 ] },
-                "west":  { "texture": "#side",   "uv": [ 14, 0, 0, 9 ] },
-                "up":    { "texture": "#top",    "uv": [ 15, 0, 0, 14 ] },
-                "down":  { "texture": "#bottom", "uv": [ 15, 0, 0, 14 ] }
+                "north": { "texture": "#front", "uv": [ 0, 0, 15, 9 ] },
+                "east": { "texture": "#side", "uv": [ 14, 0, 0, 9 ] },
+                "south": { "texture": "#back", "uv": [ 15, 0, 0, 9 ] },
+                "west": { "texture": "#side", "uv": [ 14, 0, 0, 9 ] },
+                "up": { "texture": "#top", "uv": [ 15, 0, 0, 14 ] },
+                "down": { "texture": "#bottom", "uv": [ 15, 0, 0, 14 ] }
             }
         },
         {
@@ -32,12 +32,12 @@
             "from": [ 0, 9, 1 ],
             "to": [ 15, 12, 15 ],
             "faces": {
-                "north": { "texture": "#lid_front",  "uv": [ 0, 0, 15, 3 ] },
-                "east":  { "texture": "#lid_side",   "uv": [ 14, 0, 0, 3 ] },
-                "south": { "texture": "#lid_back",   "uv": [ 15, 0, 0, 3 ] },
-                "west":  { "texture": "#lid_side",   "uv": [ 14, 0, 0, 3 ] },
-                "up":    { "texture": "#lid_top",    "uv": [ 15, 0, 0, 14 ] },
-                "down":  { "texture": "#lid_bottom", "uv": [ 15, 0, 0, 14 ] }
+                "north": { "texture": "#lid_front", "uv": [ 0, 0, 15, 3 ] },
+                "east": { "texture": "#lid_side", "uv": [ 14, 0, 0, 3 ] },
+                "south": { "texture": "#lid_back", "uv": [ 15, 0, 0, 3 ] },
+                "west": { "texture": "#lid_side", "uv": [ 14, 0, 0, 3 ] },
+                "up": { "texture": "#lid_top", "uv": [ 15, 0, 0, 14 ] },
+                "down": { "texture": "#lid_bottom", "uv": [ 15, 0, 0, 14 ] }
             }
         }
     ]

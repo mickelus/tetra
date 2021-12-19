@@ -8,6 +8,7 @@ import se.mickelus.tetra.module.Priority;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class VariantData extends ItemProperties {
     /**
@@ -25,11 +26,11 @@ public class VariantData extends ItemProperties {
      * use. The keys in the object should be names of provided tools and the value is an array containing the level and efficiency. The level is an
      * integer and the efficiency is a decimal number. The efficiency is optional and when not provided the level should not be placed within an array.
      * Optional, can be omitted if the module variant provides no tool usages.
-     *
+     * <p>
      * Json format:
      * {
-     *     "toolA": [level, efficiency],
-     *     "toolB": level
+     * "toolA": [level, efficiency],
+     * "toolB": level
      * }
      */
     public ToolData tools;
@@ -40,14 +41,14 @@ public class VariantData extends ItemProperties {
      * level and efficiency. The level is an integer and the efficiency is a decimal number. The efficiency is optional
      * and when not provided the level should not be placed within an array.
      * Optional, can be omitted if the module variant provides no effects.
-     *
+     * <p>
      * Json format:
      * {
-     *     "effectA": [level, efficiency],
-     *     "effectB": level
+     * "effectA": [level, efficiency],
+     * "effectB": level
      * }
      */
-     public EffectData effects;
+    public EffectData effects;
 
     /**
      * The priority for setting the name of the item. Multiple modules may want to provide an item name e.g. hammer,

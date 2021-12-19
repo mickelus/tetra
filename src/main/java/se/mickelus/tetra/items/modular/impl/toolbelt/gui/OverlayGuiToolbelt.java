@@ -12,12 +12,13 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class OverlayGuiToolbelt extends GuiRoot {
 
-    private OverlayGuiQuickslotGroup quickslotGroup;
-    private OverlayGuiPotionGroup potionGroup;
-    private OverlayGuiQuiverGroup quiverGroup;
+    private final OverlayGuiQuickslotGroup quickslotGroup;
+    private final OverlayGuiPotionGroup potionGroup;
+    private final OverlayGuiQuiverGroup quiverGroup;
 
     public OverlayGuiToolbelt(Minecraft mc) {
         super(mc);
@@ -93,11 +94,7 @@ public class OverlayGuiToolbelt extends GuiRoot {
         }
 
         int quiverFocus = quiverGroup.getFocus();
-        if (quiverFocus != -1) {
-            return quiverFocus;
-        }
-
-        return -1;
+        return quiverFocus;
     }
 
     public InteractionHand getFocusHand() {

@@ -11,15 +11,16 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import se.mickelus.mutil.util.ParticleHelper;
 import se.mickelus.tetra.effect.potion.PriedPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.mutil.util.ParticleHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Random;
+
 @ParametersAreNonnullByDefault
 public class PryEffect {
     public static final double flatCooldown = 2;

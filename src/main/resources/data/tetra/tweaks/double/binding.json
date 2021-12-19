@@ -6,12 +6,12 @@
         "properties": {
             "durabilityMultiplier": 0.952,
             "tools": {
-                "hammer_dig": [0, 0.93],
-                "axe_dig": [0, 0.93],
-                "pickaxe_dig": [0, 0.93],
-                "shovel_dig": [0, 0.93],
-                "cut": [0, 0.93],
-                "pry": [0, 0.93]
+                "hammer_dig": [ 0, 0.93 ],
+                "axe_dig": [ 0, 0.93 ],
+                "pickaxe_dig": [ 0, 0.93 ],
+                "shovel_dig": [ 0, 0.93 ],
+                "cut": [ 0, 0.93 ],
+                "pry": [ 0, 0.93 ]
             }
         }
     }

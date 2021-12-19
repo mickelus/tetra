@@ -20,6 +20,7 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class HoneProgressGui extends GuiElement {
     protected GuiString labelString;
@@ -69,7 +70,7 @@ public class HoneProgressGui extends GuiElement {
 
             tooltip = Collections.singletonList(tooltipBase + "\n \n" + Tooltips.expand.getString());
             extendedTooltip = Collections.singletonList(tooltipBase + "\n \n" + Tooltips.expanded.getString()
-                    + "\n" + ChatFormatting.GRAY.toString() + I18n.get("item.tetra.modular.hone_progress.description_extended"));
+                    + "\n" + ChatFormatting.GRAY + I18n.get("item.tetra.modular.hone_progress.description_extended"));
 
             valueString.setString(factorString);
 

@@ -6,13 +6,15 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.effect.ItemEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TooltipGetterBashing implements ITooltipGetter {
 
     private static final IStatGetter levelGetter = new StatGetterEffectLevel(ItemEffect.bashing, 1);
     private static final IStatGetter efficiencyGetter = new StatGetterEffectEfficiency(ItemEffect.bashing, 1);
 
-    public TooltipGetterBashing() { }
+    public TooltipGetterBashing() {
+    }
 
 
     @Override

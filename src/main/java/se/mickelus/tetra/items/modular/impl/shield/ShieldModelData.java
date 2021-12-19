@@ -24,7 +24,7 @@ public class ShieldModelData {
     ).apply(instance, Part::new));
 
     public static final Codec<ShieldModelData> codec = RecordCodecBuilder.create(instance -> instance.group(
-            partCodec.listOf().fieldOf("parts").forGetter(i -> i.parts))
+                    partCodec.listOf().fieldOf("parts").forGetter(i -> i.parts))
             .apply(instance, ShieldModelData::new));
 
     List<Part> parts;
@@ -37,24 +37,24 @@ public class ShieldModelData {
         for (int i = 0; i < parts.size(); i++) {
             Part part = parts.get(i);
             partDefinition.addOrReplaceChild(i + "", CubeListBuilder.create()
-                    .texOffs((int) part.uv.u(), (int) part.uv.v())
-                    .addBox(part.origin.x(), part.origin.y(), part.origin.z(), part.dimensions.x(), part.dimensions.y(), part.dimensions.z()),
+                            .texOffs((int) part.uv.u(), (int) part.uv.v())
+                            .addBox(part.origin.x(), part.origin.y(), part.origin.z(), part.dimensions.x(), part.dimensions.y(), part.dimensions.z()),
                     PartPose.rotation((float) Math.toRadians(part.rotation.x()), (float) Math.toRadians(part.rotation.y()), (float) Math.toRadians(part.rotation.z())));
         }
 
     }
 
     static class Part {
+        Vector3f origin;
+        Vector3f dimensions;
+        Vector3f rotation;
+        UVPair uv;
+
         public Part(Vector3f origin, Vector3f dimensions, Vector3f rotation, UVPair uv) {
             this.origin = origin;
             this.dimensions = dimensions;
             this.rotation = rotation;
             this.uv = uv;
         }
-
-        Vector3f origin;
-        Vector3f dimensions;
-        Vector3f rotation;
-        UVPair uv;
     }
 }

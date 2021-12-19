@@ -11,6 +11,7 @@ import se.mickelus.tetra.module.schematic.OutcomePreview;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloVariantMajorItemGui extends HoloVariantItemGui {
 
@@ -18,7 +19,7 @@ public class HoloVariantMajorItemGui extends HoloVariantItemGui {
             Consumer<OutcomePreview> onHover, Consumer<OutcomePreview> onBlur, Consumer<OutcomePreview> onSelect) {
         super(x, y, 16, 16, outcome, onHover, onBlur, onSelect);
 
-        backdrop = new GuiTexture(1, 0, 15, 15, 52,0, GuiTextures.workbench);
+        backdrop = new GuiTexture(1, 0, 15, 15, 52, 0, GuiTextures.workbench);
         addChild(backdrop);
 
         if (label != null) {
@@ -38,11 +39,7 @@ public class HoloVariantMajorItemGui extends HoloVariantItemGui {
     protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
         mouseX -= refX + x;
         mouseY -= refY + y;
-        boolean gainFocus = true;
-
-        if (mouseX + mouseY < 8) {
-            gainFocus = false;
-        }
+        boolean gainFocus = mouseX + mouseY >= 8;
 
         if (mouseX + mouseY > 24) {
             gainFocus = false;

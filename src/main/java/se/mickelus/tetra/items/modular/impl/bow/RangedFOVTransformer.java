@@ -5,11 +5,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.FOVModifierEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class RangedFOVTransformer {
 

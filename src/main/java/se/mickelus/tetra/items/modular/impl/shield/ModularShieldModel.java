@@ -88,10 +88,12 @@ public class ModularShieldModel extends Model {
     public ModelPart getModel(String modelType) {
         try {
             return root.getChild(modelType);
-        } catch (NoSuchElementException e) {}
+        } catch (NoSuchElementException e) {
+        }
         return null;
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {}
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {
+    }
 }

@@ -12,23 +12,24 @@ import se.mickelus.tetra.module.data.GlyphData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+
 @ParametersAreNonnullByDefault
 public class GuiModuleDetails extends GuiElement {
 
-    private GuiElement glyph;
-    private GuiString title;
-    private GuiTextSmall description;
-    private GuiString emptyLabel;
+    private final GuiElement glyph;
+    private final GuiString title;
+    private final GuiTextSmall description;
+    private final GuiString emptyLabel;
 
-    private GuiMagicUsage magicBar;
-    private GuiSettleProgress settleBar;
+    private final GuiMagicUsage magicBar;
+    private final GuiSettleProgress settleBar;
 
-    private GuiSynergyIndicator synergyIndicator;
+    private final GuiSynergyIndicator synergyIndicator;
 
-    private GuiElement repairGroup;
-    private GuiStringSmall repairTitle;
-    private GuiItemRolling repairMaterial;
-    private GuiStringSmall noRepairLabel;
+    private final GuiElement repairGroup;
+    private final GuiStringSmall repairTitle;
+    private final GuiItemRolling repairMaterial;
+    private final GuiStringSmall noRepairLabel;
 
     public GuiModuleDetails(int x, int y) {
         super(x, y, 224, 67);

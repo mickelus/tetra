@@ -1,10 +1,10 @@
 {
     "replace": true,
-    "slots": ["crossbow/string"],
+    "slots": [ "crossbow/string" ],
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:fibre/", "tetra:skin/"],
+            "materials": [ "tetra:fibre/", "tetra:skin/" ],
             "key": "basic_string/",
             "attributes": {
                 "tetra:draw_speed": -0.05
@@ -21,7 +21,7 @@
                     "textureX": 24,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
                         "location": "tetra:items/module/crossbow/string/basic/"

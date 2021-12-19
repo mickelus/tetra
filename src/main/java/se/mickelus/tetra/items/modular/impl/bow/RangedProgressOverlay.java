@@ -7,13 +7,14 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class RangedProgressOverlay {
     public static RangedProgressOverlay instance;
 
     private final Minecraft mc;
 
-    private GuiRangedProgress gui;
+    private final GuiRangedProgress gui;
 
     public RangedProgressOverlay(Minecraft mc) {
         this.mc = mc;

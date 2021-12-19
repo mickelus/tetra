@@ -19,6 +19,7 @@ import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ThrownModularItemRenderer extends EntityRenderer<ThrownModularItemEntity> {

@@ -16,6 +16,7 @@ import se.mickelus.tetra.module.data.VariantData;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class GuiModule extends GuiClickable {
 
@@ -36,9 +37,9 @@ public class GuiModule extends GuiClickable {
     protected BiConsumer<String, String> hoverHandler;
 
     public GuiModule(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack,
-                     String slotKey, String slotName,
-                     ItemModule module, ItemModule previewModule,
-                     Consumer<String> slotClickHandler, BiConsumer<String, String> hoverHandler) {
+            String slotKey, String slotName,
+            ItemModule module, ItemModule previewModule,
+            Consumer<String> slotClickHandler, BiConsumer<String, String> hoverHandler) {
         super(x, y, 0, 11, () -> slotClickHandler.accept(slotKey));
         this.slotKey = slotKey;
         setAttachmentPoint(attachmentPoint);

@@ -13,6 +13,7 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloSchematicGui extends GuiElement {
     private final GuiElement listGroup;
@@ -22,17 +23,13 @@ public class HoloSchematicGui extends GuiElement {
     private final HoloSortButton sortbutton;
     private final HoloFilterButton filterButton;
     private final HoloVariantListGui list;
-
-    private HoloVariantDetailGui detail;
-
+    private final HoloVariantDetailGui detail;
+    private final KeyframeAnimation showListAnimation;
+    private final KeyframeAnimation hideListAnimation;
+    String slot;
     private OutcomePreview openVariant;
     private OutcomePreview selectedVariant;
     private OutcomePreview hoveredVariant;
-
-    String slot;
-
-    private KeyframeAnimation showListAnimation;
-    private KeyframeAnimation hideListAnimation;
 
     public HoloSchematicGui(int x, int y, int width, int height, Consumer<OutcomePreview> onVariantOpen) {
         super(x, y, width, height);
@@ -65,7 +62,7 @@ public class HoloSchematicGui extends GuiElement {
 
         showListAnimation = new KeyframeAnimation(60, listGroup)
                 .applyTo(new Applier.Opacity(1), new Applier.TranslateY(0))
-        .withDelay(100);
+                .withDelay(100);
 
         hideListAnimation = new KeyframeAnimation(100, listGroup)
                 .applyTo(new Applier.Opacity(0), new Applier.TranslateY(-50))
@@ -73,7 +70,7 @@ public class HoloSchematicGui extends GuiElement {
                     if (complete) {
                         list.setVisible(false);
                     }
-                });;
+                });
     }
 
     public void update(IModularItem item, String slot, UpgradeSchematic schematic) {

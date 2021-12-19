@@ -17,7 +17,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:bone/" ],
             "moduleKey": "sword/counterweight",
             "moduleVariant": "counterweight/"
         }

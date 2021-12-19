@@ -4,6 +4,7 @@ import com.google.gson.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class ImprovementData extends VariantData {
 

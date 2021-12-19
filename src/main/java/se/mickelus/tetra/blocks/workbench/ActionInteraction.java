@@ -8,19 +8,20 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.InteractionOutcome;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class ActionInteraction extends BlockInteraction {
 
-    private String actionKey;
+    private final String actionKey;
 
     public ActionInteraction(ToolAction requiredType, int requiredLevel, String actionKey) {
         super(requiredType, requiredLevel, Direction.UP, 5, 11, 5, 11, InteractionOutcome.EMPTY);

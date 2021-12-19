@@ -1,14 +1,15 @@
 package se.mickelus.tetra.module;
 
 import net.minecraft.resources.ResourceLocation;
+import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.TweakData;
-import se.mickelus.mutil.util.Filter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
+
 @ParametersAreNonnullByDefault
 public class BasicMajorModule extends ItemModuleMajor {
 

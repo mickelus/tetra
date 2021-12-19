@@ -12,6 +12,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class StatSorters {
 

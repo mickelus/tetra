@@ -3,6 +3,7 @@ package se.mickelus.tetra;
 import net.minecraftforge.common.ToolAction;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TetraToolActions {
     // todo 1.18: add dig, craft, salvage variants here

@@ -12,15 +12,16 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class GuiTweakSlider extends GuiElement {
 
-    private GuiString labelString;
-    private GuiSliderSegmented slider;
+    private final GuiString labelString;
+    private final GuiSliderSegmented slider;
 
-    private List<String> tooltip;
+    private final List<String> tooltip;
 
-    private int steps;
+    private final int steps;
 
     public GuiTweakSlider(int x, int y, int width, TweakData tweak, Consumer<Integer> onChange) {
         super(x, y, width, 16);

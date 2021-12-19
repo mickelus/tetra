@@ -18,14 +18,13 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
+
 @ParametersAreNonnullByDefault
 public class ScrollTile extends BlockEntity {
     public static final String unlocalizedName = "scroll";
-
+    private static final String scrollsKey = "scrolls";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockEntityType<ScrollTile> type;
-
-    private static final String scrollsKey = "scrolls";
     private ScrollData[] scrolls = new ScrollData[0];
 
     public ScrollTile(BlockPos p_155268_, BlockState p_155269_) {
@@ -71,7 +70,7 @@ public class ScrollTile extends BlockEntity {
 
     public CompoundTag[] getItemTags() {
         return Arrays.stream(scrolls)
-                .map(data -> new ScrollData[] { data })
+                .map(data -> new ScrollData[]{data})
                 .map(data -> ScrollData.write(data, new CompoundTag()))
                 .toArray(CompoundTag[]::new);
     }

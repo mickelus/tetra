@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -23,19 +22,16 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContainerTile> {
-    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/forged_container/forged_container"));
+    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "blocks/forged_container/forged_container"));
+    private static final float openDuration = 300;
     public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, ForgedContainerBlock.unlocalizedName), "main");
-
-
     public ModelPart lid;
     public ModelPart base;
-
-    public ModelPart locks[];
-
-    private static final float openDuration = 300;
+    public ModelPart[] locks;
 
     public ForgedContainerRenderer(BlockEntityRendererProvider.Context context) {
         ModelPart modelpart = context.bakeLayer(layer);
@@ -108,9 +104,9 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
             float progress = Math.min(1, (System.currentTimeMillis() - tile.openTime) / openDuration);
             lid.yRot = (progress * 0.1f * ((float) Math.PI / 2F));
 
-            matrixStack.translate(0,0, 0.3f * progress);
+            matrixStack.translate(0, 0, 0.3f * progress);
             lid.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
-            matrixStack.translate(0,0, -0.3f * progress);
+            matrixStack.translate(0, 0, -0.3f * progress);
 
         } else {
             lid.yRot = 0;

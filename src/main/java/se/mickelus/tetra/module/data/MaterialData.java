@@ -11,90 +11,72 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class MaterialData {
+    private static final MaterialData defaultValues = new MaterialData();
     public boolean replace = false;
-
     public String key;
-
     public String category = "misc";
-
     /**
      * If set to true, material will not show up in the holosphere.
      */
     public boolean hidden = false;
-
     /**
      * If set to true, module and improvement variants derived from this material will not show up in the holosphere.
      */
     public boolean hiddenOutcomes = false;
-
     /**
      * Innate attributes gained from the material
      */
     public Multimap<Attribute, AttributeModifier> attributes;
-
     /**
      * Multiplier for primary attributes, e.g. damage or similar
      */
     public Float primary;
-
     /**
      * Multiplier for secondary attributes, e.g. speed or similar
      */
     public Float secondary;
-
     /**
      * Multiplier for tertiary attributes, not sure which attributes this should map to but I want something more for modpacks/datapacks/compat. Try
      * to keep this balanced so that it can actually be used by modules
      */
     public Float tertiary;
-
     public float durability = 0;
-
     public float integrityGain = 0;
     public float integrityCost = 0;
-
     public int magicCapacity = 0;
-
     /**
      * Innate effects gained from the material
      */
     public EffectData effects = new EffectData();
-
     /**
      * Multipliers for tool levels and efficiency added by modules
      */
     public int toolLevel = 0;
     public float toolEfficiency = 0;
-
     public MaterialColors tints;
-
     /**
      * An array of textures that this material would prefer to use, the first one that matches those available for the module will be used. If none
      * of the textures provided here matches one of the available textures for the module then the first available texture for the module will be used.
      */
     public String[] textures = {};
-
     /**
      * If true all variants of this material will use the first of it's provided textures rather than one from the textures available from the module.
      * Useful where a modded material should use it's own texture rather than one of the defaults, e.g. metals from twilight forest
      */
     public boolean textureOverride = false;
-
     public OutcomeMaterial material;
     public ToolData requiredTools;
-
-    /**
-     * Innate improvements for the material that should be applied if available, e.g. arrested for diamond
-     */
-    public Map<String, Integer> improvements = new HashMap<>();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Non-configurable stuff below
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static final MaterialData defaultValues = new MaterialData();
+    /**
+     * Innate improvements for the material that should be applied if available, e.g. arrested for diamond
+     */
+    public Map<String, Integer> improvements = new HashMap<>();
 
     public static void copyFields(MaterialData from, MaterialData to) {
         if (from.key != null) {

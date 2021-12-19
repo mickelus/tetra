@@ -23,6 +23,7 @@ import se.mickelus.tetra.properties.PropertyHelper;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class ConfigActionImpl extends ConfigAction {
 

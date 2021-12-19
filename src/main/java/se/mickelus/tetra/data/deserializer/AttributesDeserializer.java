@@ -11,24 +11,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class AttributesDeserializer implements JsonDeserializer<Multimap<Attribute, AttributeModifier>> {
-    public static final TypeToken<Multimap<Attribute, AttributeModifier>> typeToken = new TypeToken<Multimap<Attribute, AttributeModifier>>() {};
-
-    @Override
-    public Multimap<Attribute, AttributeModifier> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        JsonObject jsonObject = json.getAsJsonObject();
-        ArrayListMultimap<Attribute, AttributeModifier> result = ArrayListMultimap.create();
-
-        jsonObject.entrySet().forEach(entry -> {
-            Attribute attribute = getAttribute(entry.getKey());
-            if (attribute != null) {
-                result.put(attribute, new AttributeModifier("module_data", entry.getValue().getAsDouble(), getOperation(entry.getKey())));
-            }
-        });
-
-        return result;
-    }
+    public static final TypeToken<Multimap<Attribute, AttributeModifier>> typeToken = new TypeToken<Multimap<Attribute, AttributeModifier>>() {
+    };
 
     private static AttributeModifier.Operation getOperation(String key) {
         if (key.startsWith("**")) {
@@ -44,5 +31,20 @@ public class AttributesDeserializer implements JsonDeserializer<Multimap<Attribu
         ResourceLocation rl = new ResourceLocation(key.replace("*", ""));
 
         return ForgeRegistries.ATTRIBUTES.getValue(rl);
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        JsonObject jsonObject = json.getAsJsonObject();
+        ArrayListMultimap<Attribute, AttributeModifier> result = ArrayListMultimap.create();
+
+        jsonObject.entrySet().forEach(entry -> {
+            Attribute attribute = getAttribute(entry.getKey());
+            if (attribute != null) {
+                result.put(attribute, new AttributeModifier("module_data", entry.getValue().getAsDouble(), getOperation(entry.getKey())));
+            }
+        });
+
+        return result;
     }
 }

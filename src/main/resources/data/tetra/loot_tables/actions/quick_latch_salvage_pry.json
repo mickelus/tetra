@@ -4,7 +4,6 @@
             "name": "forged/quick_latch_salvage_pry",
             "rolls": 1,
             "entries": [
-
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:iron_nugget",
@@ -108,5 +107,4 @@
             ]
         }
     ]
-
 }

@@ -11,6 +11,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
+
 @ParametersAreNonnullByDefault
 public class GuiQuickSlotBackdrop extends GuiElement {
     public GuiQuickSlotBackdrop(int x, int y, int numSlots, Collection<Collection<ItemEffect>> inventoryEffects) {

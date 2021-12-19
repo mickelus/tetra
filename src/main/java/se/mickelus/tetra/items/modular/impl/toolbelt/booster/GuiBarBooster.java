@@ -5,6 +5,7 @@ import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.animation.VisibilityFilter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiBarBooster extends GuiElement {
 

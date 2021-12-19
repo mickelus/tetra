@@ -8,12 +8,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class JumpHandlerBooster {
 
     private final Minecraft mc;
 
-    private KeyMapping jumpKey;
+    private final KeyMapping jumpKey;
 
     private boolean wasJumpKeyDown = false;
 

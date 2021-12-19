@@ -1,7 +1,7 @@
 {
     "replace": true,
     "type": "tetra:basic_module",
-    "slots": ["single/binding"],
+    "slots": [ "single/binding" ],
     "renderLayer": "higher",
     "variants": [
         {
@@ -14,21 +14,23 @@
                 "**generic.attack_damage": 0.1
             },
             "tools": {
-                "axe_dig": [0, 2],
-                "shovel_dig": [0, 2],
-                "pickaxe_dig": [0, 2],
-                "hoe_dig": [0, 2],
-                "cut": [0, 2]
+                "axe_dig": [ 0, 2 ],
+                "shovel_dig": [ 0, 2 ],
+                "pickaxe_dig": [ 0, 2 ],
+                "hoe_dig": [ 0, 2 ],
+                "cut": [ 0, 2 ]
             },
             "glyph": {
                 "tint": "diamond",
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/single/binding/socket/default",
-                "tint": "diamond"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/binding/socket/default",
+                    "tint": "diamond"
+                }
+            ]
         },
         {
             "key": "single_socket/emerald",
@@ -40,12 +42,14 @@
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/single/binding/socket/default",
-                "tint": "emerald"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/binding/socket/default",
+                    "tint": "emerald"
+                }
+            ],
             "effects": {
-                "criticalStrike": [15, 2]
+                "criticalStrike": [ 15, 2 ]
             }
         },
         {
@@ -58,10 +62,12 @@
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/single/binding/socket/default",
-                "tint": "lapis"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/binding/socket/default",
+                    "tint": "lapis"
+                }
+            ],
             "effects": {
                 "intuit": 1
             }
@@ -76,10 +82,12 @@
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/single/binding/socket/default",
-                "tint": "f29000"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/binding/socket/default",
+                    "tint": "f29000"
+                }
+            ],
             "effects": {
                 "earthbind": 4
             }
@@ -94,21 +102,23 @@
                 "**generic.attack_damage": 0.2
             },
             "tools": {
-                "axe_dig": [0, 4],
-                "shovel_dig": [0, 4],
-                "pickaxe_dig": [0, 4],
-                "hoe_dig": [0, 4],
-                "cut": [0, 4]
+                "axe_dig": [ 0, 4 ],
+                "shovel_dig": [ 0, 4 ],
+                "pickaxe_dig": [ 0, 4 ],
+                "hoe_dig": [ 0, 4 ],
+                "cut": [ 0, 4 ]
             },
             "glyph": {
                 "tint": "diamond",
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/single/binding/socket/pristine",
-                "tint": "diamond"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/binding/socket/pristine",
+                    "tint": "diamond"
+                }
+            ]
         },
         {
             "key": "single_socket/pristine_emerald",
@@ -120,12 +130,14 @@
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/single/binding/socket/pristine",
-                "tint": "emerald"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/binding/socket/pristine",
+                    "tint": "emerald"
+                }
+            ],
             "effects": {
-                "criticalStrike": [30, 2]
+                "criticalStrike": [ 30, 2 ]
             }
         },
         {
@@ -138,10 +150,12 @@
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/single/binding/socket/pristine",
-                "tint": "lapis"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/binding/socket/pristine",
+                    "tint": "lapis"
+                }
+            ],
             "effects": {
                 "intuit": 2
             }
@@ -154,12 +168,14 @@
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/single/binding/socket/pristine",
-                "tint": "9a3aa8"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/single/binding/socket/pristine",
+                    "tint": "9a3aa8"
+                }
+            ],
             "effects": {
-                "manaRepair": [1, 0.0025]
+                "manaRepair": [ 1, 0.0025 ]
             }
         }
     ]

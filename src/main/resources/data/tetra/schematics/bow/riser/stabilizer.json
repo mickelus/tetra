@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["bow/riser"],
+    "slots": [ "bow/riser" ],
     "materialSlotCount": 1,
     "displayType": "minor",
     "glyph": {
@@ -15,7 +15,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/" ],
             "moduleKey": "bow/stabilizer",
             "moduleVariant": "stabilizer/"
         },

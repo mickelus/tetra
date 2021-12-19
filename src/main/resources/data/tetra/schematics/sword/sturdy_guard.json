@@ -1,7 +1,7 @@
 {
     "replace": true,
     "locked": true,
-    "slots": ["sword/guard"],
+    "slots": [ "sword/guard" ],
     "materialSlotCount": 1,
     "rarity": "temporary",
     "displayType": "minor",
@@ -14,14 +14,14 @@
             "blocking": 1
         },
         "secondaryEffects": {
-            "blocking": [0, 1]
+            "blocking": [ 0, 1 ]
         },
         "durability": 2,
         "integrity": -1
     },
     "outcomes": [
         {
-            "materials": ["tetra:metal/", "tetra:scale/", "tetra:bone/"],
+            "materials": [ "tetra:metal/", "tetra:scale/", "tetra:bone/" ],
             "moduleKey": "sword/sturdy_guard",
             "moduleVariant": "sturdy_guard/"
         }

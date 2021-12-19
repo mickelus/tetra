@@ -6,11 +6,13 @@ import se.mickelus.tetra.gui.stats.getter.StatGetterEffectEfficiency;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class ManaRepairStatGetter extends StatGetterEffectEfficiency {
     public ManaRepairStatGetter() {
         super(ManaRepair.effect, 1);
     }
+
     @Override
     public double getValue(Player player, ItemStack itemStack) {
         return Optional.of(super.getValue(player, itemStack))

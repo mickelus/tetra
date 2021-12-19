@@ -6,10 +6,12 @@
         "effects": {
             "backstab": 1
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/improvements/hooked",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/improvements/hooked",
+                "tint": "inherit"
+            }
+        ]
     },
     {
         "key": "blade/hooked",
@@ -18,10 +20,12 @@
         "effects": {
             "backstab": 2
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/improvements/hooked",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/improvements/hooked",
+                "tint": "inherit"
+            }
+        ]
     },
     {
         "key": "blade/hooked",
@@ -30,9 +34,11 @@
         "effects": {
             "backstab": 4
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/improvements/hooked",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/improvements/hooked",
+                "tint": "inherit"
+            }
+        ]
     }
 ]

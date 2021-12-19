@@ -9,10 +9,12 @@ import net.minecraftforge.network.NetworkHooks;
 import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class OpenToolbeltItemPacket extends AbstractPacket {
 
-    public OpenToolbeltItemPacket() { }
+    public OpenToolbeltItemPacket() {
+    }
 
     @Override
     public void toBytes(FriendlyByteBuf buffer) {

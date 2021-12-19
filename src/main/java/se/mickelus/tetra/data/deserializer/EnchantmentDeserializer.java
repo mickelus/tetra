@@ -10,6 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class EnchantmentDeserializer implements JsonDeserializer<Enchantment> {
     @Override

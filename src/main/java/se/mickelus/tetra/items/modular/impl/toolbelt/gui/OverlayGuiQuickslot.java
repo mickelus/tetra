@@ -14,23 +14,24 @@ import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class OverlayGuiQuickslot extends GuiElement {
     public static final int height = 20;
 
-    private ItemStack itemStack;
+    private final ItemStack itemStack;
 
-    private int slot;
+    private final int slot;
 
-    private KeyframeAnimation showAnimation;
+    private final KeyframeAnimation showAnimation;
 
-    private KeyframeAnimation showLabel;
-    private KeyframeAnimation hideLabel;
+    private final KeyframeAnimation showLabel;
+    private final KeyframeAnimation hideLabel;
 
-    private GuiItem guiItem;
-    private GuiString label;
-    private OverlayGuiQuickslotSide hitLeft;
-    private OverlayGuiQuickslotSide hitRight;
+    private final GuiItem guiItem;
+    private final GuiString label;
+    private final OverlayGuiQuickslotSide hitLeft;
+    private final OverlayGuiQuickslotSide hitRight;
 
     public OverlayGuiQuickslot(int x, int y, ItemStack itemStack, int slot) {
         super(x, y, 200, height);
@@ -56,8 +57,8 @@ public class OverlayGuiQuickslot extends GuiElement {
 
         isVisible = false;
         showAnimation = new KeyframeAnimation(80, guiItem)
-            .applyTo(new Applier.Opacity(1), new Applier.TranslateY(0, 1))
-            .withDelay(slot * 80);
+                .applyTo(new Applier.Opacity(1), new Applier.TranslateY(0, 1))
+                .withDelay(slot * 80);
 
 
         showLabel = new KeyframeAnimation(100, label)

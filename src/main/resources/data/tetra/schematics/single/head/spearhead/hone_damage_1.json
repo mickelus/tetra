@@ -18,8 +18,8 @@
             "!spearhead_hone/damage": -1
         },
         "modules": [
-            ["single/spearhead"],
-            ["single/trident"]
+            [ "single/spearhead" ],
+            [ "single/trident" ]
         ]
     },
     "outcomes": [

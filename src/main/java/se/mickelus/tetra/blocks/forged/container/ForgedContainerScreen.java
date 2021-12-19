@@ -21,6 +21,7 @@ import se.mickelus.tetra.gui.VerticalTabGroupGui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.stream.IntStream;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContainerContainer> {
@@ -129,5 +130,6 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
     }
 
     @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) { }
+    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+    }
 }

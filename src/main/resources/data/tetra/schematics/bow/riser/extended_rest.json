@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["bow/riser"],
+    "slots": [ "bow/riser" ],
     "materialSlotCount": 1,
     "displayType": "minor",
     "glyph": {
@@ -12,13 +12,13 @@
             "multishot": 3
         },
         "tertiaryEffects": {
-            "multishot": [0, -3]
+            "multishot": [ 0, -3 ]
         },
         "durability": 1
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/stick"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/stick" ],
             "moduleKey": "bow/extended_rest",
             "moduleVariant": "extended_rest/"
         },

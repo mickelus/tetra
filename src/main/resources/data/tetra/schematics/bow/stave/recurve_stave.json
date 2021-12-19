@@ -35,14 +35,14 @@
             "moduleVariant": "recurve_stave/stick"
         },
         {
-            "materials": ["tetra:wood/"],
+            "materials": [ "tetra:wood/" ],
             "toolOffset": 1,
             "toolFactor": 1.1,
             "moduleKey": "bow/recurve_stave",
             "moduleVariant": "recurve_stave/"
         },
         {
-            "materials": ["tetra:metal/"],
+            "materials": [ "tetra:metal/" ],
             "toolOffset": 3,
             "moduleKey": "bow/recurve_stave",
             "moduleVariant": "recurve_stave/"

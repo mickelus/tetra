@@ -18,10 +18,10 @@
     "requirement": {
         "type": "tetra:modular_item",
         "modules": [
-            ["double/adze_right"],
-            ["double/adze_left"],
-            ["double/basic_axe_right"],
-            ["double/basic_axe_left"]
+            [ "double/adze_right" ],
+            [ "double/adze_left" ],
+            [ "double/basic_axe_right" ],
+            [ "double/basic_axe_left" ]
         ],
         "improvements": {
             "head_hone/axe_efficiency": 4

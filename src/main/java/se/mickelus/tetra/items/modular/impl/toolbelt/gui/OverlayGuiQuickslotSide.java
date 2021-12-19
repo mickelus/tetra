@@ -9,13 +9,14 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class OverlayGuiQuickslotSide extends GuiElement {
 
-    private GuiTexture arrow;
+    private final GuiTexture arrow;
 
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
+    private final KeyframeAnimation showAnimation;
+    private final KeyframeAnimation hideAnimation;
 
     public OverlayGuiQuickslotSide(int x, int y, int width, int height, boolean right) {
         super(x, y, width, height);

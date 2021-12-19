@@ -22,12 +22,13 @@ import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+
 @ParametersAreNonnullByDefault
 public class ForgedContainerContainer extends AbstractContainerMenu {
     @ObjectHolder(TetraMod.MOD_ID + ":" + ForgedContainerBlock.unlocalizedName)
     public static MenuType<ForgedContainerContainer> type;
 
-    private ForgedContainerTile tile;
+    private final ForgedContainerTile tile;
 
     private ToggleableSlot[][] compartmentSlots;
     private int currentCompartment = 0;
@@ -110,7 +111,7 @@ public class ForgedContainerContainer extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else if (!moveItemStackTo(slotStack, currentCompartment * ForgedContainerTile.compartmentSize,
-                    ( currentCompartment + 1) * ForgedContainerTile.compartmentSize, false)) {
+                    (currentCompartment + 1) * ForgedContainerTile.compartmentSize, false)) {
                 return ItemStack.EMPTY;
             }
 

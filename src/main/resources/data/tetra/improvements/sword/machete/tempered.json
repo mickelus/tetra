@@ -6,9 +6,11 @@
         "effects": {
             "armorPenetration": 20
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/improvements/tempered"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/improvements/tempered"
+            }
+        ]
     },
     {
         "key": "blade/tempered",
@@ -17,9 +19,11 @@
         "effects": {
             "armorPenetration": 30
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/improvements/tempered"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/improvements/tempered"
+            }
+        ]
     },
     {
         "key": "blade/tempered",
@@ -28,8 +32,10 @@
         "effects": {
             "armorPenetration": 45
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/improvements/tempered"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/improvements/tempered"
+            }
+        ]
     }
 ]

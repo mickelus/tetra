@@ -5,24 +5,25 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.MaterialVariantData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.VariantData;
-import se.mickelus.mutil.util.Filter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ModuleRegistry {
     private static final Logger logger = LogManager.getLogger();
 
     public static ModuleRegistry instance;
 
-    private Map<ResourceLocation, BiFunction<ResourceLocation, ModuleData, ItemModule>> moduleConstructors;
+    private final Map<ResourceLocation, BiFunction<ResourceLocation, ModuleData, ItemModule>> moduleConstructors;
     private Map<ResourceLocation, ItemModule> moduleMap;
 
     public ModuleRegistry() {
@@ -72,8 +73,8 @@ public class ModuleRegistry {
             ArrayList<Pair<ResourceLocation, ModuleData>> result = new ArrayList<>(moduleData.slots.length);
             for (int i = 0; i < moduleData.slots.length; i++) {
                 ModuleData dataCopy = moduleData.shallowCopy();
-                dataCopy.slots = new String[] { moduleData.slots[i] };
-                dataCopy.slotSuffixes = new String[] { moduleData.slotSuffixes[i] };
+                dataCopy.slots = new String[]{moduleData.slots[i]};
+                dataCopy.slotSuffixes = new String[]{moduleData.slotSuffixes[i]};
 
                 ResourceLocation suffixedIdentifier = new ResourceLocation(
                         entry.getKey().getNamespace(),
@@ -89,6 +90,7 @@ public class ModuleRegistry {
 
     /**
      * Expands all material based variants for this module data.
+     *
      * @param moduleData
      */
     private void expandMaterialVariants(ModuleData moduleData) {

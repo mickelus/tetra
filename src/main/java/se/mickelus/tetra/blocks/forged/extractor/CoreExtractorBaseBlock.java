@@ -25,10 +25,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
-import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -36,22 +36,21 @@ import java.util.List;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 import static net.minecraft.world.level.material.Fluids.WATER;
+
 @ParametersAreNonnullByDefault
 public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements EntityBlock {
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
+    public static final String unlocalizedName = "core_extractor";
     private static final VoxelShape capShape = box(3, 14, 3, 13, 16, 13);
     private static final VoxelShape shaftShape = box(4, 13, 4, 12, 14, 12);
     private static final VoxelShape smallCoverShapeZ = box(1, 0, 0, 15, 12, 16);
     private static final VoxelShape largeCoverShapeZ = box(0, 0, 1, 16, 13, 15);
     private static final VoxelShape smallCoverShapeX = box(0, 0, 1, 16, 12, 15);
     private static final VoxelShape largeCoverShapeX = box(1, 0, 0, 15, 13, 16);
-
     private static final VoxelShape combinedShapeZ
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeZ, largeCoverShapeZ, BooleanOp.OR), capShape, shaftShape);
     private static final VoxelShape combinedShapeX
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeX, largeCoverShapeX, BooleanOp.OR), capShape, shaftShape);
-
-    public static final String unlocalizedName = "core_extractor";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static CoreExtractorBaseBlock instance;
 

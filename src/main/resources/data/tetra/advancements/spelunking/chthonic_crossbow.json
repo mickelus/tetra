@@ -32,5 +32,5 @@
             }
         }
     },
-    "requirements": [["unused", "used"]]
+    "requirements": [ [ "unused", "used" ] ]
 }

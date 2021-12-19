@@ -10,6 +10,7 @@ import se.mickelus.tetra.module.data.TweakData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+
 @ParametersAreNonnullByDefault
 public class MultiSlotModule extends ItemModule {
 

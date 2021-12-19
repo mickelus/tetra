@@ -33,7 +33,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate" ],
             "key": "buckler/",
             "attributes": {
                 "tetra:ability_damage": 1,
@@ -60,11 +60,13 @@
                     "textureX": 48,
                     "textureY": 48
                 },
-                "availableTextures": ["wooden", "metal", "bone", "vent"],
-                "models": [{
-                    "type": "tetra:plate/buckler",
-                    "location": "tetra:items/module/shield/plate/buckler/"
-                }]
+                "availableTextures": [ "wooden", "metal", "bone", "vent" ],
+                "models": [
+                    {
+                        "type": "tetra:plate/buckler",
+                        "location": "tetra:items/module/shield/plate/buckler/"
+                    }
+                ]
             }
         }
     ]

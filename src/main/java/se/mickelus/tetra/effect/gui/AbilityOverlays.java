@@ -9,13 +9,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiRoot;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class AbilityOverlays extends GuiRoot {
     public static AbilityOverlays instance;
 
-    private ChargeBarGui chargeBar;
-    private ComboPointGui comboPoints;
-    private RevengeGui revengeIndicator;
+    private final ChargeBarGui chargeBar;
+    private final ComboPointGui comboPoints;
+    private final RevengeGui revengeIndicator;
 
     public AbilityOverlays(Minecraft mc) {
         super(mc);

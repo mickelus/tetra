@@ -89,10 +89,6 @@ public class ToolActionHelper {
         if (!toolStack.isCorrectToolForDrops(state)) {
             return false;
         }
-        if (!ForgeEventFactory.doPlayerHarvestCheck(player, state, true)) {
-            return false;
-        }
-
-        return true;
+        return ForgeEventFactory.doPlayerHarvestCheck(player, state, true);
     }
 }

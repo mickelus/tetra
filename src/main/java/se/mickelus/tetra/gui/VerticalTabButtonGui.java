@@ -10,6 +10,7 @@ import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.mutil.gui.impl.GuiColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class VerticalTabButtonGui extends GuiClickable {
 

@@ -11,20 +11,20 @@ import se.mickelus.tetra.effect.EffectHelper;
 import java.util.function.Function;
 
 public class EffectTooltipRenderer extends EffectRenderer {
-	private final Function<MobEffectInstance, String> constructEffectTooltip;
+    private final Function<MobEffectInstance, String> constructEffectTooltip;
 
-	public EffectTooltipRenderer(Function<MobEffectInstance, String> constructEffectTooltip) {
-		this.constructEffectTooltip = constructEffectTooltip;
-	}
+    public EffectTooltipRenderer(Function<MobEffectInstance, String> constructEffectTooltip) {
+        this.constructEffectTooltip = constructEffectTooltip;
+    }
 
-	@Override
-	public void renderInventoryEffect(MobEffectInstance effect, EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, float z) {
-		EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-			new TextComponent(constructEffectTooltip.apply(effect)));
-	}
+    @Override
+    public void renderInventoryEffect(MobEffectInstance effect, EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, float z) {
+        EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
+                new TextComponent(constructEffectTooltip.apply(effect)));
+    }
 
-	@Override
-	public void renderHUDEffect(MobEffectInstance effect, GuiComponent gui, PoseStack mStack, int x, int y, float z, float alpha) {
+    @Override
+    public void renderHUDEffect(MobEffectInstance effect, GuiComponent gui, PoseStack mStack, int x, int y, float z, float alpha) {
 
-	}
+    }
 }

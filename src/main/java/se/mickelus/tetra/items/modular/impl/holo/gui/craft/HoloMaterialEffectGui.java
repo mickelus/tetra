@@ -9,6 +9,7 @@ import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class HoloMaterialEffectGui extends GuiElement {
     protected GuiTexture backdrop;

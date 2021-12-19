@@ -7,24 +7,24 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.schematic.*;
-import se.mickelus.mutil.util.Filter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class SchematicRegistry {
     private static final Logger logger = LogManager.getLogger();
 
     public static SchematicRegistry instance;
-
+    private final Map<ResourceLocation, UpgradeSchematic> dynamicSchematics;
     private Map<ResourceLocation, UpgradeSchematic> schematicMap;
-    private Map<ResourceLocation, UpgradeSchematic> dynamicSchematics;
 
     public SchematicRegistry() {
         instance = this;
@@ -35,8 +35,38 @@ public class SchematicRegistry {
         DataManager.instance.schematicData.onReload(() -> setupSchematics(DataManager.instance.schematicData.getData()));
     }
 
+    public static UpgradeSchematic getSchematic(ResourceLocation identifier) {
+        return instance.schematicMap.get(identifier);
+    }
+
+    public static UpgradeSchematic getSchematic(String key) {
+        return getSchematic(new ResourceLocation(TetraMod.MOD_ID, key));
+    }
+
+    public static Collection<UpgradeSchematic> getAllSchematics() {
+        return instance.schematicMap.values();
+    }
+
+    public static UpgradeSchematic[] getAvailableSchematics(Player player, WorkbenchTile tile, ItemStack itemStack) {
+        return getAllSchematics().stream()
+                .filter(upgradeSchematic -> playerHasSchematic(player, tile, itemStack, upgradeSchematic))
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForItem(itemStack))
+                .toArray(UpgradeSchematic[]::new);
+    }
+
+    public static UpgradeSchematic[] getSchematics(String slot, ItemStack itemStack) {
+        return getAllSchematics().stream()
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(slot, itemStack))
+                .toArray(UpgradeSchematic[]::new);
+    }
+
+    public static boolean playerHasSchematic(Player player, WorkbenchTile tile, ItemStack targetStack, UpgradeSchematic schematic) {
+        return schematic.isVisibleForPlayer(player, tile, targetStack);
+    }
+
     /**
      * Register a schematic that's not config driven
+     *
      * @param schematic
      */
     public void registerSchematic(UpgradeSchematic schematic) {
@@ -148,34 +178,5 @@ public class SchematicRegistry {
                         : Optional.ofNullable(DataManager.instance.materialData.getData(rl)).map(Collections::singletonList).orElseGet(Collections::emptyList))
                 .flatMap(Collection::stream)
                 .map(source::combine);
-    }
-
-    public static UpgradeSchematic getSchematic(ResourceLocation identifier) {
-        return instance.schematicMap.get(identifier);
-    }
-
-    public static UpgradeSchematic getSchematic(String key) {
-        return getSchematic(new ResourceLocation(TetraMod.MOD_ID, key));
-    }
-
-    public static Collection<UpgradeSchematic> getAllSchematics() {
-        return instance.schematicMap.values();
-    }
-
-    public static UpgradeSchematic[] getAvailableSchematics(Player player, WorkbenchTile tile, ItemStack itemStack) {
-        return getAllSchematics().stream()
-                .filter(upgradeSchematic -> playerHasSchematic(player, tile, itemStack, upgradeSchematic))
-                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForItem(itemStack))
-                .toArray(UpgradeSchematic[]::new);
-    }
-
-    public static UpgradeSchematic[] getSchematics(String slot, ItemStack itemStack) {
-        return getAllSchematics().stream()
-                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(slot, itemStack))
-                .toArray(UpgradeSchematic[]::new);
-    }
-
-    public static boolean playerHasSchematic(Player player, WorkbenchTile tile, ItemStack targetStack, UpgradeSchematic schematic) {
-        return schematic.isVisibleForPlayer(player, tile, targetStack);
     }
 }

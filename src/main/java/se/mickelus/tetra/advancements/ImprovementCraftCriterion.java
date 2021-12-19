@@ -9,21 +9,18 @@ import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.util.JsonOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ImprovementCraftCriterion extends AbstractCriterionTriggerInstance {
+    public static final GenericTrigger<ImprovementCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_improvement", ImprovementCraftCriterion::deserialize);
     private final ItemPredicate before;
     private final ItemPredicate after;
-
     private final String schematic;
-
     private final String slot;
     private final String improvement;
     private final int improvementLevel;
-
     private final ToolAction toolAction;
     private final MinMaxBounds.Ints toolLevel;
-
-    public static final GenericTrigger<ImprovementCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_improvement", ImprovementCraftCriterion::deserialize);
 
     public ImprovementCraftCriterion(EntityPredicate.Composite playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolAction toolAction, MinMaxBounds.Ints toolLevel) {
         super(trigger.getId(), playerCondition);
@@ -41,6 +38,35 @@ public class ImprovementCraftCriterion extends AbstractCriterionTriggerInstance 
             int improvementLevel, ToolAction toolAction, int toolLevel) {
         trigger.fulfillCriterion(player,
                 criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, toolAction, toolLevel));
+    }
+
+    private static ImprovementCraftCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
+        return new ImprovementCraftCriterion(entityPredicate,
+                JsonOptional.field(json, "before")
+                        .map(ItemPredicate::fromJson)
+                        .orElse(null),
+                JsonOptional.field(json, "after")
+                        .map(ItemPredicate::fromJson)
+                        .orElse(null),
+                JsonOptional.field(json, "schematic")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "slot")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "improvement")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "improvementLevel")
+                        .map(JsonElement::getAsInt)
+                        .orElse(-1),
+                JsonOptional.field(json, "tool")
+                        .map(JsonElement::getAsString)
+                        .map(ToolAction::get)
+                        .orElse(null),
+                JsonOptional.field(json, "toolLevel")
+                        .map(MinMaxBounds.Ints::fromJson)
+                        .orElse(MinMaxBounds.Ints.ANY));
     }
 
     public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String improvement, int improvementLevel,
@@ -74,39 +100,6 @@ public class ImprovementCraftCriterion extends AbstractCriterionTriggerInstance 
             return false;
         }
 
-        if (!this.toolLevel.matches(toolLevel)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private static ImprovementCraftCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
-        return new ImprovementCraftCriterion(entityPredicate,
-                JsonOptional.field(json, "before")
-                        .map(ItemPredicate::fromJson)
-                        .orElse(null),
-                JsonOptional.field(json, "after")
-                        .map(ItemPredicate::fromJson)
-                        .orElse(null),
-                JsonOptional.field(json, "schematic")
-                        .map(JsonElement::getAsString)
-                        .orElse(null),
-                JsonOptional.field(json, "slot")
-                        .map(JsonElement::getAsString)
-                        .orElse(null),
-                JsonOptional.field(json, "improvement")
-                        .map(JsonElement::getAsString)
-                        .orElse(null),
-                JsonOptional.field(json, "improvementLevel")
-                        .map(JsonElement::getAsInt)
-                        .orElse(-1),
-                JsonOptional.field(json, "tool")
-                        .map(JsonElement::getAsString)
-                        .map(ToolAction::get)
-                        .orElse(null),
-                JsonOptional.field(json, "toolLevel")
-                        .map(MinMaxBounds.Ints::fromJson)
-                        .orElse(MinMaxBounds.Ints.ANY));
+        return this.toolLevel.matches(toolLevel);
     }
 }

@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["crossbow/string"],
+    "slots": [ "crossbow/string" ],
     "materialSlotCount": 1,
     "displayType": "minor",
     "glyph": {
@@ -17,13 +17,13 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:fibre/"],
+            "materials": [ "tetra:fibre/" ],
             "countFactor": 1.5,
             "moduleKey": "crossbow/basic_string",
             "moduleVariant": "basic_string/"
         },
         {
-            "materials": ["tetra:skin/"],
+            "materials": [ "tetra:skin/" ],
             "toolOffset": 1,
             "moduleKey": "crossbow/basic_string",
             "moduleVariant": "basic_string/"

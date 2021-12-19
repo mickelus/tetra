@@ -13,18 +13,16 @@ import net.minecraftforge.client.event.DrawSelectionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class InteractiveBlockOverlay {
 
-    private Minecraft mc;
-
-    private InteractiveBlockOverlayGui gui;
-
+    private static boolean isDirty = false;
+    private final Minecraft mc;
+    private final InteractiveBlockOverlayGui gui;
     private BlockPos previousPos;
     private Direction previousFace;
     private BlockState previousState;
-
-    private static boolean isDirty = false;
 
     public InteractiveBlockOverlay() {
         gui = new InteractiveBlockOverlayGui();

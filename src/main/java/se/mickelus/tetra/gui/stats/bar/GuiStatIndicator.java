@@ -10,6 +10,7 @@ import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiStatIndicator extends GuiTexture {
     protected String label;
@@ -26,6 +27,7 @@ public class GuiStatIndicator extends GuiTexture {
 
     /**
      * Updates the indicator
+     *
      * @param player
      * @param currentStack
      * @param previewStack

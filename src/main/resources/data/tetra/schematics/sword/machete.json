@@ -17,15 +17,16 @@
             "generic.attack_speed": -1
         },
         "tools": {
-            "cut": [0, 4]
+            "cut": [ 0, 4 ]
         },
         "durability": 3,
         "integrity": -3
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/" ],
             "moduleKey": "sword/machete",
             "moduleVariant": "machete/"
         }
-    ]}
+    ]
+}

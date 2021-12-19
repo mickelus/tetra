@@ -4,10 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import se.mickelus.mutil.gui.GuiAlignment;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiBarSegmented extends GuiBar {
 
-    private int maxSegments;
+    private final int maxSegments;
     private int segmentCount;
     private int diffCount;
     private int segmentLength;
@@ -62,14 +63,14 @@ public class GuiBarSegmented extends GuiBar {
 
     private void drawSegment(PoseStack matrixStack, int refX, int refY, int index, int color, float opacity) {
         drawRect(matrixStack,
-            refX + x + (index * (segmentLength)),
-            refY + y + 6,
-            refX + x + ((index + 1) * segmentLength) - 1,
-            refY + y + 6 + height,
-            color, opacity);
+                refX + x + (index * (segmentLength)),
+                refY + y + 6,
+                refX + x + ((index + 1) * segmentLength) - 1,
+                refY + y + 6 + height,
+                color, opacity);
     }
 
     private void drawSegmentReverse(PoseStack matrixStack, int refX, int refY, int index, int color, float opacity) {
-        drawSegment(matrixStack,refX + width, refY, -index - 1, color, opacity);
+        drawSegment(matrixStack, refX + width, refY, -index - 1, color, opacity);
     }
 }

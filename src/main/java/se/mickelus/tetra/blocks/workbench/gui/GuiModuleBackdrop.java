@@ -4,6 +4,7 @@ import se.mickelus.mutil.gui.GuiTextureOffset;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiModuleBackdrop extends GuiTextureOffset {
 

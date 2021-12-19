@@ -21,7 +21,7 @@
                     "improvements": {
                         "enchantment/efficiency": 1
                     },
-                    "modules": [["sword/stonecutter"]]
+                    "modules": [ [ "sword/stonecutter" ] ]
                 }
             }
         }

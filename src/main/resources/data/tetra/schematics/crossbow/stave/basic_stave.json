@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["crossbow/stave"],
+    "slots": [ "crossbow/stave" ],
     "materialSlotCount": 1,
     "displayType": "major",
     "glyph": {
@@ -30,12 +30,12 @@
             "moduleVariant": "basic_stave/stick"
         },
         {
-            "materials": ["tetra:wood/"],
+            "materials": [ "tetra:wood/" ],
             "moduleKey": "crossbow/basic_stave",
             "moduleVariant": "basic_stave/"
         },
         {
-            "materials": ["tetra:metal/"],
+            "materials": [ "tetra:metal/" ],
             "toolOffset": 2,
             "moduleKey": "crossbow/basic_stave",
             "moduleVariant": "basic_stave/"

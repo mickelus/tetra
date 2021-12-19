@@ -14,7 +14,7 @@
     },
     "requirement": {
         "type": "tetra:modular_item",
-        "modules": [["single/basic_shovel"]],
+        "modules": [ [ "single/basic_shovel" ] ],
         "improvements": {
             "head_hone/shovel_efficiency": 2
         }

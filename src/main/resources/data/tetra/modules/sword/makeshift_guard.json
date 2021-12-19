@@ -1,11 +1,11 @@
 {
     "replace": true,
-    "slots": ["sword/guard"],
+    "slots": [ "sword/guard" ],
     "type": "tetra:basic_module",
     "renderLayer": "higher",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:bone/", "tetra:gem/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:bone/", "tetra:gem/" ],
             "key": "makeshift_guard/",
             "attributes": {
                 "generic.attack_speed": -0.05
@@ -16,8 +16,8 @@
                     "textureX": 7,
                     "textureY": 16
                 },
-                "availableTextures": ["shiny", "default"],
-                "models": [{ "location": "tetra:items/module/sword/guard/makeshift_guard/" }]
+                "availableTextures": [ "shiny", "default" ],
+                "models": [ { "location": "tetra:items/module/sword/guard/makeshift_guard/" } ]
             }
         }
     ]

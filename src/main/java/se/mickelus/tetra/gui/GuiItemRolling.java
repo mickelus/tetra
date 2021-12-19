@@ -8,6 +8,7 @@ import se.mickelus.mutil.gui.GuiItem;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class GuiItemRolling extends GuiElement {
     private boolean showTooltip = true;

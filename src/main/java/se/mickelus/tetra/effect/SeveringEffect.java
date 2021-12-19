@@ -13,6 +13,7 @@ import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Random;
+
 @ParametersAreNonnullByDefault
 public class SeveringEffect {
     public static void perform(ItemStack itemStack, int effectLevel, LivingEntity attacker, LivingEntity target) {

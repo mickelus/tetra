@@ -6,10 +6,12 @@
         "effects": {
             "bleeding": 1
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/heavy/improvements/serrated",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/heavy/improvements/serrated",
+                "tint": "inherit"
+            }
+        ]
     },
     {
         "key": "blade/serrated",
@@ -18,10 +20,12 @@
         "effects": {
             "bleeding": 2
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/heavy/improvements/serrated",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/heavy/improvements/serrated",
+                "tint": "inherit"
+            }
+        ]
     },
     {
         "key": "blade/serrated",
@@ -30,9 +34,11 @@
         "effects": {
             "bleeding": 4
         },
-        "models": [{
-            "location": "tetra:items/module/sword/blade/heavy/improvements/serrated",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/heavy/improvements/serrated",
+                "tint": "inherit"
+            }
+        ]
     }
 ]

@@ -34,21 +34,17 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
-    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID,"blocks/scroll"));
-    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, "blocks/scroll"), "main");
-
-    private ModelPart[] rolledModel;
-    private ModelPart ribbonModel;
-    private ModelPart[] wallModel;
-    private QuadRenderer[][] wallGlyphs;
-
-    private ModelPart[] openModel;
-    private QuadRenderer[][] openGlyphs;
-
+    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "blocks/scroll"));
     private static final int availableGlyphs = 16;
     private static final int availableMaterials = 3;
-
-    private BlockEntityRendererProvider.Context context;
+    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, "blocks/scroll"), "main");
+    private final ModelPart[] rolledModel;
+    private final ModelPart ribbonModel;
+    private final ModelPart[] wallModel;
+    private final QuadRenderer[][] wallGlyphs;
+    private final ModelPart[] openModel;
+    private final QuadRenderer[][] openGlyphs;
+    private final BlockEntityRendererProvider.Context context;
 
     public ScrollRenderer(BlockEntityRendererProvider.Context context) {
         this.context = context;
@@ -106,7 +102,7 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
                     .texOffs(34 * i, 0)
                     .addBox(1, 0, 0, 14, 2, 2)
                     .addBox(1, 0, 14, 14, 2, 2)
-                    .texOffs(34 * i -12, 10)
+                    .texOffs(34 * i - 12, 10)
                     .addBox(1, 0.05f, 2, 14, 0, 12), PartPose.ZERO);
 
         }

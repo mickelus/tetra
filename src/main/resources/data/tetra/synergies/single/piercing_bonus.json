@@ -1,12 +1,12 @@
 [
     {
-        "modules": ["single/earthpiercer", "single/basic_handle"],
+        "modules": [ "single/earthpiercer", "single/basic_handle" ],
         "effects": {
             "piercing": 1
         }
     },
     {
-        "modules": ["single/earthpiercer", "single/long_handle"],
+        "modules": [ "single/earthpiercer", "single/long_handle" ],
         "effects": {
             "piercing": 1
         }

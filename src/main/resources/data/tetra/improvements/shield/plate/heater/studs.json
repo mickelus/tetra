@@ -1,22 +1,26 @@
 [
     {
-        "materials": ["tetra:metal/"],
+        "materials": [ "tetra:metal/" ],
         "key": "shield/studs/",
         "group": "face",
         "integrity": -1,
         "durability": 15,
-        "models": [{
-            "type": "tetra:plate/heater",
-            "location": "tetra:items/module/shield/plate/heater/improvements/studs_shadow",
-            "tint": "inherit"
-        }],
+        "models": [
+            {
+                "type": "tetra:plate/heater",
+                "location": "tetra:items/module/shield/plate/heater/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ],
         "extract": {
             "durability": 0.175,
-            "availableTextures": ["studs"],
-            "models": [{
-                "type": "tetra:plate/heater",
-                "location": "tetra:items/module/shield/plate/heater/improvements/"
-            }]
+            "availableTextures": [ "studs" ],
+            "models": [
+                {
+                    "type": "tetra:plate/heater",
+                    "location": "tetra:items/module/shield/plate/heater/improvements/"
+                }
+            ]
         }
     }
 ]

@@ -25,6 +25,7 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class ItemQuickLatch extends TetraItem {
     private static final String unlocalizedName = "quick_latch";
@@ -61,6 +62,6 @@ public class ItemQuickLatch extends TetraItem {
         if (Math.random() > 0.5f) {
             event = SoundEvents.TRIPWIRE_CLICK_ON;
         }
-        world.playSound(player, player.blockPosition(), event, SoundSource.PLAYERS, 0.3f,  1f + 0.5f * (float) Math.random());
+        world.playSound(player, player.blockPosition(), event, SoundSource.PLAYERS, 0.3f, 1f + 0.5f * (float) Math.random());
     }
 }

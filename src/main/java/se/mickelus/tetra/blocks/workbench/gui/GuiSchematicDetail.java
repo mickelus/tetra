@@ -20,37 +20,30 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class GuiSchematicDetail extends GuiElement {
 
     private static final int MAX_NUM_SLOTS = 2;
-
+    private final GuiElement glyph;
+    private final GuiString title;
+    private final GuiTextSmall description;
+    private final CraftButtonGui craftButton;
+    private final GuiString[] slotNames;
+    private final GuiString[] slotQuantities;
+    private final GuiItemRolling[] slotPlaceholders;
+    private final GuiTexture[] slotBorders;
+    private final GuiMagicUsage magicCapacity;
+    private final ToolRequirementListGui toolRequirementList;
+    private final GuiExperience experienceIndicator;
+    private final HoloMaterialTranslation materialTranslation;
+    private final HoloMaterialApplicable applicableMaterials;
     private UpgradeSchematic schematic;
-
-    private GuiElement glyph;
-    private GuiString title;
-    private GuiTextSmall description;
     private List<String> descriptionTooltip;
-
-    private CraftButtonGui craftButton;
-
-    private GuiString[] slotNames;
-    private GuiString[] slotQuantities;
-    private GuiItemRolling[] slotPlaceholders;
-    private GuiTexture[] slotBorders;
-
-    private GuiMagicUsage magicCapacity;
-
-    private ToolRequirementListGui toolRequirementList;
-
-    private GuiExperience experienceIndicator;
-
-    private HoloMaterialTranslation materialTranslation;
-    private HoloMaterialApplicable applicableMaterials;
 
     public GuiSchematicDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 67);
-        addChild(new GuiButton(-4 , height - 2, 40, 8, "< " + I18n.get("tetra.workbench.schematic_detail.back"), backListener));
+        addChild(new GuiButton(-4, height - 2, 40, 8, "< " + I18n.get("tetra.workbench.schematic_detail.back"), backListener));
 
         glyph = new GuiElement(3, 3, 16, 16);
         addChild(glyph);
@@ -90,7 +83,7 @@ public class GuiSchematicDetail extends GuiElement {
             addChild(slotBorders[i]);
         }
 
-        magicCapacity = new GuiMagicUsage(121, 28,80);
+        magicCapacity = new GuiMagicUsage(121, 28, 80);
         addChild(magicCapacity);
 
         toolRequirementList = new ToolRequirementListGui(80, 39);
@@ -112,7 +105,7 @@ public class GuiSchematicDetail extends GuiElement {
 
         String descriptionString = schematic.getDescription(itemStack);
         description.setString(ChatFormatting.GRAY + descriptionString
-                .replace(ChatFormatting.RESET.toString(), ChatFormatting.RESET.toString() + ChatFormatting.GRAY.toString()));
+                .replace(ChatFormatting.RESET.toString(), ChatFormatting.RESET.toString() + ChatFormatting.GRAY));
         descriptionTooltip = ImmutableList.of(descriptionString);
 
         materialTranslation.setVisible(schematic.getNumMaterialSlots() > 0);

@@ -1,7 +1,7 @@
 {
     "replace": true,
     "locked": true,
-    "slots": ["sword/fuller"],
+    "slots": [ "sword/fuller" ],
     "materialSlotCount": 1,
     "rarity": "temporary",
     "displayType": "minor",
@@ -17,14 +17,15 @@
             "howling": 2
         },
         "tertiaryEffects": {
-            "howling": [0, 1]
+            "howling": [ 0, 1 ]
         },
         "durability": 1
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:scale/", "tetra:misc/vent_plate"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:scale/", "tetra:misc/vent_plate" ],
             "moduleKey": "sword/howling",
             "moduleVariant": "howling/"
         }
-    ]}
+    ]
+}

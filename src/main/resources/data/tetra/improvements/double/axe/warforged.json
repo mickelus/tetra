@@ -3,11 +3,13 @@
         "key": "double/warforged",
         "integrity": -2,
         "effects": {
-            "severing": [15, 5]
+            "severing": [ 15, 5 ]
         },
-        "models": [{
-            "location": "tetra:items/module/double/head/basic_axe/warforged",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/double/head/basic_axe/warforged",
+                "tint": "inherit"
+            }
+        ]
     }
 ]

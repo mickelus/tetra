@@ -5,13 +5,14 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GlyphData {
 
     /**
      * Color tint for the glyph, used to color glyphs based on materials or perhaps some other attribute. Expressed
      * as a hexadecimal string.
-     *
+     * <p>
      * Json format: "rrggbb"
      */
     public int tint = 0xffffffff;
@@ -26,12 +27,13 @@ public class GlyphData {
     /**
      * The resourcelocation for the glyph texture. This is optional and most glyphs are available in the defailt
      * texture.
-     *
+     * <p>
      * Json format: "domain:path"
      */
     public ResourceLocation textureLocation = GuiTextures.glyphs;
 
-    public GlyphData() {}
+    public GlyphData() {
+    }
 
     public GlyphData(int textureX, int textureY) {
         this.textureX = textureX;

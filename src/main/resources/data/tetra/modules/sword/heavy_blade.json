@@ -47,17 +47,17 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:metal/", "tetra:stone/", "tetra:wood/"],
+            "materials": [ "tetra:metal/", "tetra:stone/", "tetra:wood/" ],
             "key": "heavy_blade/",
             "attributes": {
                 "generic.attack_speed": -1.7
             },
             "effects": {
-                "sweeping": [2, 0.5],
+                "sweeping": [ 2, 0.5 ],
                 "truesweep": 1
             },
             "tools": {
-                "cut": [1, 3]
+                "cut": [ 1, 3 ]
             },
             "integrity": -1,
             "extract": {
@@ -77,8 +77,8 @@
                 "glyph": {
                     "textureX": 48
                 },
-                "availableTextures": ["metal", "shiny", "grainy", "crude"],
-                "models": [{ "location": "tetra:items/module/sword/blade/heavy/" }]
+                "availableTextures": [ "metal", "shiny", "grainy", "crude" ],
+                "models": [ { "location": "tetra:items/module/sword/blade/heavy/" } ]
             }
         }
     ]

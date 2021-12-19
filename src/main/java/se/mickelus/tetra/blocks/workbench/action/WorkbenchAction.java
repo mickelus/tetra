@@ -11,14 +11,19 @@ import java.util.Map;
 
 public interface WorkbenchAction {
 
-    public String getKey();
-    public boolean canPerformOn(@Nullable Player player, WorkbenchTile tile, ItemStack itemStack);
-    public Collection<ToolAction> getRequiredToolActions(ItemStack itemStack);
-    public int getRequiredToolLevel(ItemStack itemStack, ToolAction toolAction);
-    public Map<ToolAction, Integer> getRequiredTools(ItemStack itemStack);
-    public void perform(Player player, ItemStack itemStack, WorkbenchTile workbench);
+    String getKey();
 
-    public default boolean allowInWorldInteraction() {
+    boolean canPerformOn(@Nullable Player player, WorkbenchTile tile, ItemStack itemStack);
+
+    Collection<ToolAction> getRequiredToolActions(ItemStack itemStack);
+
+    int getRequiredToolLevel(ItemStack itemStack, ToolAction toolAction);
+
+    Map<ToolAction, Integer> getRequiredTools(ItemStack itemStack);
+
+    void perform(Player player, ItemStack itemStack, WorkbenchTile workbench);
+
+    default boolean allowInWorldInteraction() {
         return false;
     }
 }

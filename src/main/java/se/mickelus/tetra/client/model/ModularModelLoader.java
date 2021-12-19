@@ -14,6 +14,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class ModularModelLoader implements IModelLoader<ModularItemModel> {
 
@@ -56,7 +57,8 @@ public class ModularModelLoader implements IModelLoader<ModularItemModel> {
 
         if (modelContents.has("variants")) {
             Map<String, ItemTransforms> transformVariants = deserializationContext.deserialize(modelContents.get("variants"),
-                    new TypeToken<Map<String, ItemTransforms>>(){}.getType());
+                    new TypeToken<Map<String, ItemTransforms>>() {
+                    }.getType());
 
             ModularItemModel model = new ModularItemModel(cameraTransforms, transformVariants);
             newModels.add(model);

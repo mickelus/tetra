@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Predicate;
+
 @ParametersAreNonnullByDefault
 public class PredicateSlot extends Slot {
 

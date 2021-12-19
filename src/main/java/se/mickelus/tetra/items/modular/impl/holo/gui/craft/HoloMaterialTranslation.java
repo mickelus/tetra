@@ -22,13 +22,13 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+
 @ParametersAreNonnullByDefault
 public class HoloMaterialTranslation extends GuiElement {
     private final List<String> emptyTooltipImprovement = Collections.singletonList(I18n.get("tetra.holo.craft.empty_translation_improvement"));
     private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_translation_module"));
+    private final GuiTexture icon;
     private List<String> tooltip;
-
-    private GuiTexture icon;
 
     public HoloMaterialTranslation(int x, int y) {
         super(x, y, 9, 9);
@@ -153,16 +153,16 @@ public class HoloMaterialTranslation extends GuiElement {
     private void extractEffects(EffectData effects, List<String> result) {
         if (effects != null) {
             effects.getValues().stream()
-                .map(effect -> extractEffectLevel(effect, effects))
-                .filter(Objects::nonNull)
-                .map(line -> "  " + line)
-                .forEach(result::add);
+                    .map(effect -> extractEffectLevel(effect, effects))
+                    .filter(Objects::nonNull)
+                    .map(line -> "  " + line)
+                    .forEach(result::add);
 
             effects.getValues().stream()
-                .map(effect -> extractEffectEfficiency(effect, effects))
-                .filter(Objects::nonNull)
-                .map(line -> "  " + line)
-                .forEach(result::add);
+                    .map(effect -> extractEffectEfficiency(effect, effects))
+                    .filter(Objects::nonNull)
+                    .map(line -> "  " + line)
+                    .forEach(result::add);
         }
     }
 

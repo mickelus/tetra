@@ -9,6 +9,7 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class ToolRequirementListGui extends GuiElement {
 

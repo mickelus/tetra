@@ -4,15 +4,16 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.*;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.stats.StatsHelper;
 import se.mickelus.tetra.gui.stats.getter.*;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class GuiStatBarIntegrity extends GuiStatBase {
     protected double max = 9;
@@ -59,7 +60,8 @@ public class GuiStatBarIntegrity extends GuiStatBase {
     }
 
     @Override
-    public void setAlignment(GuiAlignment alignment) {}
+    public void setAlignment(GuiAlignment alignment) {
+    }
 
     @Override
     public void update(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {

@@ -23,14 +23,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ToolbeltGui extends AbstractContainerScreen<ToolbeltContainer> {
 
     private static ToolbeltGui instance;
 
-    private GuiElement defaultGui;
-    private GuiElement keybindGui;
+    private final GuiElement defaultGui;
+    private final GuiElement keybindGui;
 
     public ToolbeltGui(ToolbeltContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
@@ -67,7 +68,7 @@ public class ToolbeltGui extends AbstractContainerScreen<ToolbeltContainer> {
             offset += potionsBackdrop.getHeight() + 2;
         }
 
-        if (numQuickslots > 0 ) {
+        if (numQuickslots > 0) {
             GuiQuickSlotBackdrop quickSlotBackdrop = new GuiQuickSlotBackdrop(0, 130 - offset, numQuickslots, container.getQuickslotInventory().getSlotEffects());
             defaultGui.addChild(quickSlotBackdrop);
             offset += quickSlotBackdrop.getHeight() + 2;
@@ -125,7 +126,8 @@ public class ToolbeltGui extends AbstractContainerScreen<ToolbeltContainer> {
     }
 
     @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) { }
+    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+    }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {

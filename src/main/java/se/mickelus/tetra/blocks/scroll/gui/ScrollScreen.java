@@ -21,14 +21,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ScrollScreen extends Screen {
     private static int currentPage;
-    private String[] pages;
+    private final String[] pages;
 
-    private GuiElement gui;
-    private GuiText text;
+    private final GuiElement gui;
+    private final GuiText text;
 
     public ScrollScreen(String key) {
         super(new TextComponent("tetra:scroll"));

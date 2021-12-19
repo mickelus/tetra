@@ -1,11 +1,10 @@
 {
-    "origin": [4, 12, 2],
+    "origin": [ 4, 12, 2 ],
     "children": [
         {
-            "offset": [4, 12, 2],
+            "offset": [ 4, 12, 2 ],
             "chance": 0.8,
-            "features": ["tetra:forged_extractor_large_powered"]
+            "features": [ "tetra:forged_extractor_large_powered" ]
         }
     ]
-
 }

@@ -16,10 +16,10 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
-import se.mickelus.mutil.network.PacketHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -38,10 +38,10 @@ public class GeodeBlock extends TetraBlock {
     // todo 1.18: tag with pickaxe break tag
     public GeodeBlock() {
         super(Properties.of(Material.STONE)
-        .sound(SoundType.STONE)
+                .sound(SoundType.STONE)
 //        .harvestTool(ToolActions.PICKAXE_DIG)
 //        .harvestLevel(0)
-        .strength(1.5F, 6.0F));
+                .strength(1.5F, 6.0F));
 
         setRegistryName(unlocalizedName);
 
@@ -59,6 +59,12 @@ public class GeodeBlock extends TetraBlock {
         }
     }
 
+    public static void registerFeature(BiomeGenerationSettingsBuilder builder) {
+        if (instance.configuredFeature != null) {
+//            builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, instance.configuredFeature);
+        }
+    }
+
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
         return Blocks.STONE.getCloneItemStack(state, target, world, pos, player);
@@ -68,12 +74,6 @@ public class GeodeBlock extends TetraBlock {
     public void init(PacketHandler packetHandler) {
         if (configuredFeature != null) {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(TetraMod.MOD_ID, unlocalizedName), configuredFeature);
-        }
-    }
-
-    public static void registerFeature(BiomeGenerationSettingsBuilder builder) {
-        if (instance.configuredFeature != null) {
-//            builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, instance.configuredFeature);
         }
     }
 }

@@ -15,13 +15,13 @@
         "find_latch": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-              "items": [
-                {
-                  "items": [
-                    "tetra:quick_latch"
-                  ]
-                }
-              ]
+                "items": [
+                    {
+                        "items": [
+                            "tetra:quick_latch"
+                        ]
+                    }
+                ]
             }
         },
         "quiver": {

@@ -46,7 +46,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/" ],
             "key": "short_blade/",
             "attributes": {
                 "generic.attack_speed": -1,
@@ -67,7 +67,7 @@
                     "jab": -8
                 },
                 "tools": {
-                    "cut": [0.7, 1]
+                    "cut": [ 0.7, 1 ]
                 },
                 "durability": 0.8,
                 "integrity": -1,
@@ -75,8 +75,8 @@
                 "glyph": {
                     "textureX": 32
                 },
-                "availableTextures": ["metal", "shiny", "grainy", "crude"],
-                "models": [{ "location": "tetra:items/module/sword/blade/short/" }]
+                "availableTextures": [ "metal", "shiny", "grainy", "crude" ],
+                "models": [ { "location": "tetra:items/module/sword/blade/short/" } ]
             }
         },
         {
@@ -93,12 +93,14 @@
                 "textureX": 32
             },
             "tools": {
-                "cut": [2, 0.7]
+                "cut": [ 2, 0.7 ]
             },
-            "models": [{
-                "location": "tetra:items/module/sword/blade/short/grainy",
-                "tint": "prismarine"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/sword/blade/short/grainy",
+                    "tint": "prismarine"
+                }
+            ]
         }
     ]
 }

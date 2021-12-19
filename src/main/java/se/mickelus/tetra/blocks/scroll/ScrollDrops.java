@@ -11,6 +11,7 @@ import se.mickelus.tetra.TetraMod;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class ScrollDrops {
     Map<ResourceLocation, ResourceLocation> basicExtensions;

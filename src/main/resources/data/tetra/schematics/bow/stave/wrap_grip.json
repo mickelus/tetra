@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["bow/stave"],
+    "slots": [ "bow/stave" ],
     "materialSlotCount": 1,
     "glyph": {
         "textureX": 16
@@ -20,7 +20,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:fibre/", "tetra:skin/", "tetra:fabric/"],
+            "materials": [ "tetra:fibre/", "tetra:skin/", "tetra:fabric/" ],
             "countFactor": 1.5,
             "improvements": {
                 "stave/wrap/": 0

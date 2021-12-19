@@ -7,34 +7,30 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ModuleData {
+    private static final ModuleData defaultValues = new ModuleData();
     /**
      * The slots that this module can go into. Has to contain at least one value.
      */
     public String[] slots = new String[0];
-
     /**
      * Suffixes, used when modules should have different keys depending on slot (e.g. pickaxe head keys end with
      * "_left" or "_right" so that different textures can be used depending on the slot. If there's more than one slot then this has to have
      * the same length as the slots field.
      */
     public String[] slotSuffixes = new String[0];
-
     public ResourceLocation type;
     public boolean replace = false;
-
     public Priority renderLayer = Priority.BASE;
-
     public ResourceLocation tweakKey;
     public ResourceLocation[] improvements = new ResourceLocation[0];
-    public VariantData[] variants = new VariantData[0];
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Non-configurable stuff below
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static final ModuleData defaultValues = new ModuleData();
+    public VariantData[] variants = new VariantData[0];
 
     public static void copyFields(ModuleData from, ModuleData to) {
         to.slots = Stream.concat(Arrays.stream(to.slots), Arrays.stream(from.slots))

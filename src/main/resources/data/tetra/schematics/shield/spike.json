@@ -14,7 +14,7 @@
             "tetra:ability_cooldown": -1
         },
         "primaryEffects": {
-            "blockingReflect": [0, 1]
+            "blockingReflect": [ 0, 1 ]
         },
         "secondaryEffects": {
             "blockingReflect": -3
@@ -24,7 +24,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:metal/", "tetra:bone/"],
+            "materials": [ "tetra:metal/", "tetra:bone/" ],
             "moduleKey": "shield/spike",
             "toolOffset": 1,
             "moduleVariant": "spike/"

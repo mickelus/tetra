@@ -11,6 +11,7 @@ import net.minecraftforge.common.ToolAction;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class LockedCondition implements CraftingEffectCondition {
     ResourceLocation key;

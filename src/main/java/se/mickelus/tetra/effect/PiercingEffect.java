@@ -18,13 +18,14 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class PiercingEffect {
     public static void pierceBlocks(ItemModularHandheld item, ItemStack itemStack, int pierceAmount, ServerLevel world, BlockState state, BlockPos pos, LivingEntity entity) {

@@ -4,7 +4,7 @@
         "level": 1,
         "textured": false,
         "effects": {
-            "manaRepair": [1, 0.0025]
+            "manaRepair": [ 1, 0.0025 ]
         }
     },
     {
@@ -12,7 +12,7 @@
         "level": 2,
         "textured": false,
         "effects": {
-            "manaRepair": [1, 0.005]
+            "manaRepair": [ 1, 0.005 ]
         }
     },
     {
@@ -20,7 +20,7 @@
         "level": 3,
         "textured": false,
         "effects": {
-            "manaRepair": [1, 0.0075]
+            "manaRepair": [ 1, 0.0075 ]
         }
     },
     {
@@ -28,7 +28,7 @@
         "level": 4,
         "textured": false,
         "effects": {
-            "manaRepair": [1, 0.01]
+            "manaRepair": [ 1, 0.01 ]
         }
     },
     {
@@ -36,7 +36,7 @@
         "level": 5,
         "textured": false,
         "effects": {
-            "manaRepair": [1, 0.0125]
+            "manaRepair": [ 1, 0.0125 ]
         }
     }
 ]

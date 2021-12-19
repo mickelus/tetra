@@ -1,7 +1,7 @@
 {
     "replace": true,
     "localizationKey": "double/shared_head/hone_speed_3",
-    "slots": ["single/head"],
+    "slots": [ "single/head" ],
     "materialSlotCount": 0,
     "hone": true,
     "rarity": "hone",

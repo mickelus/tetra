@@ -7,6 +7,7 @@ import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TetraAttributes {
     public static final DeferredRegister<Attribute> registry = DeferredRegister.create(Attribute.class, TetraMod.MOD_ID);

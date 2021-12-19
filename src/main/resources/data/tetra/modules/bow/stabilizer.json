@@ -1,10 +1,10 @@
 {
     "replace": true,
-    "slots": ["bow/riser"],
+    "slots": [ "bow/riser" ],
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/" ],
             "key": "stabilizer/",
             "effects": {
                 "velocity": 15
@@ -20,7 +20,7 @@
                     "textureX": 112,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
                         "location": "tetra:items/module/bow/riser/stabilizer/",
@@ -39,8 +39,8 @@
             },
             "glyph": {
                 "tint": "bolt_glyph",
-                    "textureX": 112,
-                    "textureY": 16
+                "textureX": 112,
+                "textureY": 16
             },
             "models": [
                 {

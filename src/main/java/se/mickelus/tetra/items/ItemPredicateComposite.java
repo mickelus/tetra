@@ -5,6 +5,7 @@ import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+
 @ParametersAreNonnullByDefault
 public class ItemPredicateComposite extends ItemPredicate {
     ItemPredicate[] predicates;

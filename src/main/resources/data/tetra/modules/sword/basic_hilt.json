@@ -51,8 +51,8 @@
                 "glyph": {
                     "textureX": 16
                 },
-                "availableTextures": ["bright", "default"],
-                "models": [{ "location": "tetra:items/module/sword/hilt/basic/" }]
+                "availableTextures": [ "bright", "default" ],
+                "models": [ { "location": "tetra:items/module/sword/hilt/basic/" } ]
             }
         }
     ]

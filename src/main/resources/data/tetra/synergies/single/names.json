@@ -1,6 +1,6 @@
 [
     {
-        "modules": ["single/spearhead", "single/light_handle"],
+        "modules": [ "single/spearhead", "single/light_handle" ],
         "name": "single/javelin"
     }
 ]

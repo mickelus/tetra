@@ -1,16 +1,16 @@
 {
-    "origin": [1, 2, 3],
+    "origin": [ 1, 2, 3 ],
     "children": [
         {
-            "offset": [5, 4, 1],
+            "offset": [ 5, 4, 1 ],
             "facing": "EAST",
-            "features": ["tetra:forged_intersection_wall_chest", "tetra:forged_intersection_wall", "tetra:forged_intersection_hallway"]
+            "features": [ "tetra:forged_intersection_wall_chest", "tetra:forged_intersection_wall", "tetra:forged_intersection_hallway" ]
         },
         {
-            "features": ["tetra:forged_vent"],
+            "features": [ "tetra:forged_vent" ],
             "facing": "EAST",
             "chance": 0.2,
-            "offset": [4, 3, 1]
+            "offset": [ 4, 3, 1 ]
         }
     ]
 }

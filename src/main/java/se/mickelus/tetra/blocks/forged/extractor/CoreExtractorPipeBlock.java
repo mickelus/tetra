@@ -24,6 +24,7 @@ import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class CoreExtractorPipeBlock extends TetraBlock {
     public static final DirectionProperty facingProp = BlockStateProperties.FACING;
@@ -41,14 +42,14 @@ public class CoreExtractorPipeBlock extends TetraBlock {
         hasItem = true;
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(ForgedBlockCommon.locationTooltip);
-    }
-
     public static boolean isPowered(Level world, BlockPos pos) {
         BlockState pipeState = world.getBlockState(pos);
         return instance.equals(pipeState.getBlock()) && pipeState.getValue(poweredProp);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     private boolean shouldGetPower(Level world, BlockPos pos, Direction blockFacing) {

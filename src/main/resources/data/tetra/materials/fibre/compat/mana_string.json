@@ -1,8 +1,10 @@
 {
-    "conditions": [{
-        "type": "forge:mod_loaded",
-        "modid": "botania"
-    }],
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "botania"
+        }
+    ],
     "key": "mana_string",
     "category": "fibre",
     "primary": "5",
@@ -18,7 +20,7 @@
         "glyph": "bdfced",
         "texture": "b2ffec"
     },
-    "textures": ["crude", "default"],
+    "textures": [ "crude", "default" ],
     "material": {
         "items": [ "botania:mana_string" ]
     },

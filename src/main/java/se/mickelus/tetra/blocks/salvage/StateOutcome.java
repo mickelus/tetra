@@ -9,11 +9,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class StateOutcome<T extends Comparable<T>, V extends T> implements InteractionOutcome {
 
-    private Property<T> property;
-    private V value;
+    private final Property<T> property;
+    private final V value;
 
     public StateOutcome(Property<T> property, V value) {
         this.property = property;

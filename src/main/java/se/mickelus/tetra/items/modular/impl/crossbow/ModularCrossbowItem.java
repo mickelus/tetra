@@ -32,6 +32,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.network.PacketHandler;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
@@ -45,15 +47,14 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
-import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class ModularCrossbowItem extends ModularItem {
     public final static String staveKey = "crossbow/stave";
@@ -64,34 +65,28 @@ public class ModularCrossbowItem extends ModularItem {
     public final static String attachmentBKey = "crossbow/attachment_1";
 
     public static final String unlocalizedName = "modular_crossbow";
-
+    public static final double velocityFactor = 1 / 8d;
+    private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, 0, -13, 18);
+    private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(4, -1, 13, 12, 4, 25);
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static ModularCrossbowItem instance;
     protected ModuleModel arrowModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "items/module/crossbow/arrow"));
     protected ModuleModel extractorModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "items/module/crossbow/extractor"));
     protected ModuleModel fireworkModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "items/module/crossbow/firework"));
-
-    private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, 0, -13, 18);
-    private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(4, -1, 13, 12, 4, 25);
-
-    public static final double velocityFactor = 1 / 8d;
-
     // used to pick projectiles from the player inventory
     protected ItemStack shootableDummy;
-
     // todo: based on vanilla, uses bool in singleton to keep track of which sound to play. Would break if multiple entities use this simultaneously
     private boolean isLoadingStart = false;
     private boolean isLoadingMiddle = false;
-
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ModularCrossbowItem instance;
 
     public ModularCrossbowItem() {
         super(new Properties().stacksTo(1).fireResistant());
         setRegistryName(unlocalizedName);
 
-        majorModuleKeys = new String[] { staveKey, stockKey };
-        minorModuleKeys = new String[] { attachmentAKey, stringKey, attachmentBKey };
+        majorModuleKeys = new String[]{staveKey, stockKey};
+        minorModuleKeys = new String[]{attachmentAKey, stringKey, attachmentBKey};
 
-        requiredModules = new String[] { stringKey, stockKey, staveKey };
+        requiredModules = new String[]{stringKey, stockKey, staveKey};
 
         shootableDummy = new ItemStack(new ShootableDummyItem());
 
@@ -99,6 +94,17 @@ public class ModularCrossbowItem extends ModularItem {
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
         RemoveSchematic.registerRemoveSchematics(this);
+    }
+
+    /**
+     * Gets the velocity for the projectile entity
+     */
+    public static float getProjectileVelocity(double strength, float velocityBonus) {
+        float velocity = (float) Math.max(1, 1 + (strength - 6) * velocityFactor);
+
+        velocity += velocity * velocityBonus;
+
+        return velocity;
     }
 
     @Override
@@ -130,7 +136,7 @@ public class ModularCrossbowItem extends ModularItem {
                 List<Component> list1 = Lists.newArrayList();
                 Items.FIREWORK_ROCKET.appendHoverText(itemstack, worldIn, list1, flagIn);
                 if (!list1.isEmpty()) {
-                    for(int i = 0; i < list1.size(); ++i) {
+                    for (int i = 0; i < list1.size(); ++i) {
                         list1.set(i, (new TextComponent("  ")).append(list1.get(i)).withStyle(ChatFormatting.GRAY));
                     }
 
@@ -296,7 +302,7 @@ public class ModularCrossbowItem extends ModularItem {
             projectile.setCritArrow(true);
 
             // the damage modifier is based on fully drawn damage, vanilla bows deal 3 times base damage + 0-4 crit damage
-            projectile.setBaseDamage(projectile.getBaseDamage() -2 + strength / 3);
+            projectile.setBaseDamage(projectile.getBaseDamage() - 2 + strength / 3);
 
             // velocity multiplies arrow damage for vanilla projectiles, need to reduce damage if velocity > 1
             if (projectileVelocity > 1) {
@@ -318,23 +324,13 @@ public class ModularCrossbowItem extends ModularItem {
         }
     }
 
-    /**
-     * Gets the velocity for the projectile entity
-     */
-    public static float getProjectileVelocity(double strength, float velocityBonus) {
-        float velocity = (float) Math.max(1, 1 + (strength - 6) * velocityFactor);
-
-        velocity += velocity * velocityBonus;
-
-        return velocity;
-    }
-
     public int getReloadDuration(ItemStack itemStack) {
         return Math.max((int) (20 * getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())), 1);
     }
 
     /**
      * Returns a value between 0 - 1 representing how far the crossbow has been drawn, a value of 1 means that the crossbow is fully drawn
+     *
      * @param itemStack
      * @param entity
      * @return
@@ -343,7 +339,7 @@ public class ModularCrossbowItem extends ModularItem {
         return Optional.ofNullable(entity)
                 .filter(e -> e.getUseItemRemainingTicks() > 0)
                 .filter(e -> itemStack.equals(e.getUseItem()))
-                .map( e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getReloadDuration(itemStack))
+                .map(e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getReloadDuration(itemStack))
                 .orElse(0f);
     }
 
@@ -361,7 +357,7 @@ public class ModularCrossbowItem extends ModularItem {
         ItemStack ammoStack = findAmmo(entity);
         ItemStack itemstack1 = ammoStack.copy();
 
-        for(int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             if (i > 0) {
                 ammoStack = itemstack1.copy();
             }
@@ -447,7 +443,7 @@ public class ModularCrossbowItem extends ModularItem {
         List<ItemStack> result = Lists.newArrayList();
         ListTag projectileTags = getProjectilesNBT(itemStack);
 
-        for(int i = 0; i < projectileTags.size(); ++i) {
+        for (int i = 0; i < projectileTags.size(); ++i) {
             CompoundTag stackNbt = projectileTags.getCompound(i);
             result.add(ItemStack.of(stackNbt));
         }
@@ -460,7 +456,7 @@ public class ModularCrossbowItem extends ModularItem {
         int size = Math.min(nbtList.size(), count);
         List<ItemStack> result = new ArrayList<>(size);
 
-        for(int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) {
             CompoundTag stackNbt = nbtList.getCompound(0);
             nbtList.remove(0);
             result.add(ItemStack.of(stackNbt));
@@ -555,7 +551,7 @@ public class ModularCrossbowItem extends ModularItem {
 
     @Override
     public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
-        return super.getModelCacheKey(itemStack, entity) + ":" +  getDrawVariant(itemStack, entity) + getProjectileVariant(itemStack);
+        return super.getModelCacheKey(itemStack, entity) + ":" + getDrawVariant(itemStack, entity) + getProjectileVariant(itemStack);
     }
 
     @Override

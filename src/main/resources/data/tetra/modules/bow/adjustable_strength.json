@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["bow/riser"],
+    "slots": [ "bow/riser" ],
     "type": "tetra:basic_module",
     "tweakKey": "tetra:bow/adjustable_strength",
     "variants": [

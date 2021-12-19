@@ -8,20 +8,20 @@ import se.mickelus.tetra.gui.GuiColors;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class ToolRequirementGui extends GuiTool {
 
+    String requirementTooltip;
     private int requiredLevel;
     private int availableLevel;
-
     private boolean showTooltip = true;
     private boolean showTooltipRequirement = true;
-
-    String requirementTooltip;
 
     public ToolRequirementGui(int x, int y, ToolAction toolAction) {
         this(x, y, toolAction, "tetra.tool." + toolAction.name() + ".requirement");
     }
+
     public ToolRequirementGui(int x, int y, ToolAction toolAction, String requirementTooltip) {
         super(x, y, toolAction);
 
@@ -60,7 +60,7 @@ public class ToolRequirementGui extends GuiTool {
             if (showTooltipRequirement) {
                 return Collections.singletonList(I18n.get(requirementTooltip, requiredLevel) + "\n \n"
                         + (requiredLevel > availableLevel ? ChatFormatting.RED : ChatFormatting.GREEN)
-                        + I18n.get( "tetra.tool.available", availableLevel));
+                        + I18n.get("tetra.tool.available", availableLevel));
 
             }
 

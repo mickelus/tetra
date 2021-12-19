@@ -1,14 +1,14 @@
 {
     "replace": true,
-    "slots": ["bow/riser"],
+    "slots": [ "bow/riser" ],
     "type": "tetra:basic_module",
     "tweakKey": "tetra:bow/extended_rest",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/" ],
             "key": "extended_rest/",
             "effects": {
-                "multishot": [0, 10]
+                "multishot": [ 0, 10 ]
             },
             "integrity": -1,
             "durability": 10,
@@ -17,14 +17,14 @@
                     "multishot": 0.9
                 },
                 "tertiaryEffects": {
-                    "multishot": [0, -1]
+                    "multishot": [ 0, -1 ]
                 },
                 "durability": 0.2,
                 "glyph": {
                     "textureX": 128,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
                         "location": "tetra:items/module/bow/riser/extended_rest/",
@@ -34,10 +34,10 @@
             }
         },
         {
-            "materials": ["tetra:misc/stick"],
+            "materials": [ "tetra:misc/stick" ],
             "key": "extended_rest/",
             "effects": {
-                "multishot": [2, 5]
+                "multishot": [ 2, 5 ]
             },
             "integrity": -1,
             "durability": 10,
@@ -47,7 +47,7 @@
                     "textureX": 128,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
                         "location": "tetra:items/module/bow/riser/extended_rest/",
@@ -59,7 +59,7 @@
         {
             "key": "extended_rest/bolt",
             "effects": {
-                "multishot": [4, 10]
+                "multishot": [ 4, 10 ]
             },
             "durability": 10,
             "integrity": -1,

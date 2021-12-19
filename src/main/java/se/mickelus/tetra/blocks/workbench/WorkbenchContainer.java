@@ -18,9 +18,10 @@ import se.mickelus.mutil.gui.ToggleableSlot;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class WorkbenchContainer extends AbstractContainerMenu {
-    private WorkbenchTile workbench;
+    private final WorkbenchTile workbench;
 
     private ToggleableSlot[] materialSlots = new ToggleableSlot[0];
 
@@ -72,7 +73,7 @@ public class WorkbenchContainer extends AbstractContainerMenu {
 
         // based on Container.isWithinUsableDistance but with more generic blockcheck
         if (workbench.getLevel().getBlockState(workbench.getBlockPos()).getBlock() instanceof AbstractWorkbenchBlock) {
-            return player.distanceToSqr((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
+            return player.distanceToSqr((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D) <= 64.0D;
         }
 
         return false;

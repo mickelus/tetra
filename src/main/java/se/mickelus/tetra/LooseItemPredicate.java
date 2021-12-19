@@ -7,10 +7,11 @@ import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.stream.StreamSupport;
+
 @ParametersAreNonnullByDefault
 public class LooseItemPredicate extends ItemPredicate {
 
-    private String[] keys;
+    private final String[] keys;
 
     public LooseItemPredicate(JsonObject jsonObject) {
         keys = StreamSupport.stream(jsonObject.get("keys").getAsJsonArray().spliterator(), false)
@@ -22,7 +23,7 @@ public class LooseItemPredicate extends ItemPredicate {
     @Override
     public boolean matches(ItemStack itemStack) {
         String target = itemStack.getItem().getRegistryName().getPath();
-        for (String key: keys) {
+        for (String key : keys) {
             if (key.equals(target)) {
                 return true;
             }

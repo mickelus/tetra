@@ -6,6 +6,7 @@ import se.mickelus.mutil.data.MergingDataStore;
 import se.mickelus.tetra.module.schematic.SchematicDefinition;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class SchematicStore extends MergingDataStore<SchematicDefinition, SchematicDefinition[]> {
 

@@ -15,7 +15,7 @@
     "displayType": "major",
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/" ],
             "moduleKey": "double/adze",
             "moduleVariant": "adze/"
         }

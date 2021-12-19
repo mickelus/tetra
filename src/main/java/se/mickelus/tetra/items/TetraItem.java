@@ -4,6 +4,7 @@ import net.minecraft.world.item.Item;
 import se.mickelus.mutil.network.PacketHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TetraItem extends Item implements ITetraItem {
 

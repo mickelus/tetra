@@ -10,25 +10,23 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
-import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer {
-    @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.unlocalizedName)
-    public static BlockEntityType<CoreExtractorBaseTile> type;
-
-    private boolean isSending = false;
-
     private static final int sendLimit = 4;
-
     private static final String chargeKey = "charge";
     private static final int maxCharge = 128;
     private static final int drainAmount = 4;
+    @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.unlocalizedName)
+    public static BlockEntityType<CoreExtractorBaseTile> type;
+    private boolean isSending = false;
     private int currentCharge = 0;
     private float efficiency;
 
@@ -41,6 +39,11 @@ public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer 
     }
 
     @Override
+    public boolean isReceiving() {
+        return false;
+    }
+
+    @Override
     public void setReceiving(boolean receiving) {
         if (receiving) {
             isSending = false;
@@ -50,13 +53,13 @@ public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer 
     }
 
     @Override
-    public boolean isReceiving() {
+    public boolean canRecieve() {
         return false;
     }
 
     @Override
-    public boolean canRecieve() {
-        return false;
+    public boolean isSending() {
+        return isSending;
     }
 
     @Override
@@ -64,11 +67,6 @@ public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer 
         isSending = sending;
 
         notifyBlockUpdate();
-    }
-
-    @Override
-    public boolean isSending() {
-        return isSending;
     }
 
     @Override
@@ -178,7 +176,7 @@ public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer 
     private void notifyBlockUpdate() {
         setChanged();
         BlockState state = level.getBlockState(worldPosition);
-        level.sendBlockUpdated(worldPosition, state, state,3);
+        level.sendBlockUpdated(worldPosition, state, state, 3);
     }
 
     public Direction getFacing() {
@@ -195,7 +193,7 @@ public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer 
 
     @Override
     public void load(CompoundTag compound) {
-        super.load( compound);
+        super.load(compound);
 
         if (compound.contains(chargeKey)) {
             currentCharge = compound.getInt(chargeKey);
@@ -236,7 +234,7 @@ public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer 
                     transfer();
                 }
             } else if (currentCharge > 0 && level.getGameTime() % 20 == 0) {
-                    currentCharge = Math.max(0, currentCharge - drainAmount);
+                currentCharge = Math.max(0, currentCharge - drainAmount);
             }
         }
     }

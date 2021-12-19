@@ -12,6 +12,7 @@ import se.mickelus.tetra.blocks.scroll.ScrollItem;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ScrollIngredient extends Ingredient {
     private final ItemStack itemStack;
@@ -27,7 +28,7 @@ public class ScrollIngredient extends Ingredient {
 
     @Override
     public boolean test(@Nullable ItemStack input) {
-        if (input == null  || input.getItem() != ScrollItem.instance) {
+        if (input == null || input.getItem() != ScrollItem.instance) {
             return false;
         }
 

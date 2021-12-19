@@ -13,20 +13,18 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloImprovementListGui extends GuiElement {
     private final List<HoloImprovementGui> improvements;
     private final GuiHorizontalScrollable container;
     private final GuiHorizontalLayoutGroup[] groups;
-
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
-
     private final Consumer<OutcomePreview> onVariantHover;
     private final Consumer<OutcomePreview> onVariantBlur;
     private final Consumer<OutcomeStack> onVariantSelect;
-
-    private int originalY;
+    private final KeyframeAnimation showAnimation;
+    private final KeyframeAnimation hideAnimation;
+    private final int originalY;
 
     public HoloImprovementListGui(int x, int y, int width, int height, Consumer<OutcomePreview> onVariantHover,
             Consumer<OutcomePreview> onVariantBlur, Consumer<OutcomeStack> onVariantSelect) {

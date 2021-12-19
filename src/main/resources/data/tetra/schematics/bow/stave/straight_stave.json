@@ -25,19 +25,19 @@
     "outcomes": [
         {
             "material": {
-                "items": ["minecraft:stick"],
+                "items": [ "minecraft:stick" ],
                 "count": 3
             },
             "moduleKey": "bow/straight_stave",
             "moduleVariant": "straight_stave/stick"
         },
         {
-            "materials": ["tetra:wood/"],
+            "materials": [ "tetra:wood/" ],
             "moduleKey": "bow/straight_stave",
             "moduleVariant": "straight_stave/"
         },
         {
-            "materials": ["tetra:metal/"],
+            "materials": [ "tetra:metal/" ],
             "toolOffset": 2,
             "moduleKey": "bow/straight_stave",
             "moduleVariant": "straight_stave/"

@@ -17,7 +17,8 @@ public class UpdateDataPacket extends AbstractPacket {
     private String directory;
     private Map<ResourceLocation, String> data;
 
-    public UpdateDataPacket() {}
+    public UpdateDataPacket() {
+    }
 
     public UpdateDataPacket(String directory, Map<ResourceLocation, JsonElement> data) {
         this.directory = directory;

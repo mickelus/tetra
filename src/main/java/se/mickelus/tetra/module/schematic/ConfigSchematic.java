@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -18,7 +19,6 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.MaterialMultiplier;
 import se.mickelus.tetra.module.data.VariantData;
-import se.mickelus.mutil.util.Filter;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -26,6 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ConfigSchematic extends BaseSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
@@ -33,10 +34,10 @@ public class ConfigSchematic extends BaseSchematic {
     private static final String descriptionSuffix = ".description";
     private static final String slotSuffix = ".slot";
 
-    private SchematicDefinition definition;
+    private final SchematicDefinition definition;
 
-    private String keySuffix;
-    private String moduleSlot;
+    private final String keySuffix;
+    private final String moduleSlot;
 
     public ConfigSchematic(SchematicDefinition definition) throws InvalidSchematicException {
         this(definition, "", null);
@@ -294,7 +295,7 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     private void triggerAdvancement(OutcomeDefinition outcome, Player player, ItemStack itemStack, ItemStack upgradedStack, String slot) {
-        if(player instanceof ServerPlayer) {
+        if (player instanceof ServerPlayer) {
 
             if (outcome.moduleKey != null) {
                 if (outcome.requiredTools.getValues().isEmpty()) {
@@ -313,7 +314,7 @@ public class ConfigSchematic extends BaseSchematic {
                 } else {
                     outcome.requiredTools.getLevelMap().forEach((tool, toolLevel) ->
                             ImprovementCraftCriterion.trigger((ServerPlayer) player, itemStack, upgradedStack, getKey(), slot, improvement, level,
-                            tool, toolLevel));
+                                    tool, toolLevel));
                 }
             });
         }
@@ -405,7 +406,7 @@ public class ConfigSchematic extends BaseSchematic {
                         category = variant.category;
                     } else {
                         if (outcome.improvements.size() == 1) {
-                            for (Map.Entry<String, Integer> entry: outcome.improvements.entrySet()) {
+                            for (Map.Entry<String, Integer> entry : outcome.improvements.entrySet()) {
                                 key = entry.getKey();
                                 name = IModularItem.getImprovementName(key, entry.getValue());
                                 level = entry.getValue();

@@ -12,6 +12,7 @@ import net.minecraftforge.common.loot.LootModifier;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class ReplaceTableModifier extends LootModifier {
     ResourceLocation table;

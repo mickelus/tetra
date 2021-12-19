@@ -20,6 +20,7 @@ import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.mutil.gui.GuiTextureOffset;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
@@ -28,7 +29,6 @@ import se.mickelus.tetra.gui.HoneProgressGui;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -37,31 +37,23 @@ import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer> {
-    private Player viewingPlayer;
-
     private final WorkbenchTile tileEntity;
     private final WorkbenchContainer container;
-
-    private GuiElement defaultGui;
-
-    private GuiModuleList moduleList;
-    private WorkbenchStatsGui statGroup;
-    private GuiIntegrityBar integrityBar;
-    private HoneProgressGui honeBar;
-    private GuiActionList actionList;
-
     private final GuiInventoryInfo inventoryInfo;
+    private final GuiElement defaultGui;
+    private final GuiModuleList moduleList;
+    private final WorkbenchStatsGui statGroup;
+    private final GuiIntegrityBar integrityBar;
+    private final HoneProgressGui honeBar;
+    private final GuiActionList actionList;
+    private final GuiSlotDetail slotDetail;
+    private final ItemStack[] currentMaterials;
+    private Player viewingPlayer;
     private String selectedSlot;
     private int previewMaterialSlot = -1;
-
-    private GuiSlotDetail slotDetail;
-
     private ItemStack currentTarget = ItemStack.EMPTY;
     private ItemStack currentPreview = ItemStack.EMPTY;
     private UpgradeSchematic currentSchematic = null;
-
-    private ItemStack[] currentMaterials;
-
     private boolean hadItem = false;
 
     private boolean isDirty = false;
@@ -143,7 +135,8 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
 
     // override this to stop titles from rendering
     @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) { }
+    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+    }
 
     @Override
     protected void renderTooltip(PoseStack matrixStack, int mouseX, int mouseY) {
@@ -393,7 +386,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
 
             Map<ToolAction, Integer> tools = schematic.getRequiredToolLevels(targetStack, materials);
 
-            for (Map.Entry<ToolAction, Integer> entry: tools.entrySet()) {
+            for (Map.Entry<ToolAction, Integer> entry : tools.entrySet()) {
                 result = WorkbenchTile.consumeCraftingToolEffects(result, slot, willReplace, entry.getKey(), entry.getValue(), viewingPlayer,
                         tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), false);
             }

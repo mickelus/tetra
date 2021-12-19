@@ -1,13 +1,13 @@
 [
     {
-                "predicate": {
+        "predicate": {
             "items": [ "minecraft:trident" ]
         },
         "item": "tetra:modular_single",
         "modules": {
-            "single/head": ["single/trident", "trident/trident"],
-            "single/handle": ["single/light_handle", "light_handle/prismarine"],
-            "single/binding": ["single/binding", "single_binding/prismarine"]
+            "single/head": [ "single/trident", "trident/trident" ],
+            "single/handle": [ "single/light_handle", "light_handle/prismarine" ],
+            "single/binding": [ "single/binding", "single_binding/prismarine" ]
         }
     }
 ]

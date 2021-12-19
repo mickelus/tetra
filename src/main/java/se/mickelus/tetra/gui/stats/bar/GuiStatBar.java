@@ -11,18 +11,19 @@ import se.mickelus.mutil.gui.GuiAlignment;
 import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiStringSmall;
 import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.gui.stats.getter.ILabelGetter;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class GuiStatBar extends GuiStatBase {
@@ -89,7 +90,7 @@ public class GuiStatBar extends GuiStatBase {
         this.inverted = inverted;
     }
 
-    public GuiStatBar setIndicators(GuiStatIndicator ... indicators) {
+    public GuiStatBar setIndicators(GuiStatIndicator... indicators) {
         this.indicators = indicators;
         return this;
     }

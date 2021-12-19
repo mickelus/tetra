@@ -10,22 +10,22 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.mutil.util.RotationHelper;
+import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumMap;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class WallScrollBlock extends ScrollBlock {
     public static final String identifier = "scroll_wall";
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ScrollBlock instance;
-
-    private VoxelShape baseShape = Shapes.or(
+    private final Map<Direction, VoxelShape> shapes;
+    private final VoxelShape baseShape = Shapes.or(
             Block.box(1.0, 14.0, 0.0, 15.0, 16.0, 2.0),
             Block.box(1.0, 1.0, 0.0, 15.0, 14.0, 0.1));
-    private final Map<Direction, VoxelShape> shapes;
 
     public WallScrollBlock() {
         super(identifier, Arrangement.wall);

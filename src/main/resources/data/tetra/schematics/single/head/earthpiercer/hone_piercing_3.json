@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["single/head"],
+    "slots": [ "single/head" ],
     "materialSlotCount": 0,
     "hone": true,
     "rarity": "hone",
@@ -11,7 +11,7 @@
     },
     "requirement": {
         "type": "tetra:modular_item",
-        "modules": [["single/earthpiercer"]],
+        "modules": [ [ "single/earthpiercer" ] ],
         "improvements": {
             "head_hone/piercing": 2
         }

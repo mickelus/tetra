@@ -7,12 +7,12 @@ import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ScrollPageButtonGui extends GuiClickable {
+    static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/pamphlet.png");
     GuiTexture regularTexture;
     GuiTexture hoverTexture;
-
-    static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/pamphlet.png");
 
     public ScrollPageButtonGui(int x, int y, boolean back, Runnable onClick) {
         super(x, y, 25, 14, onClick);

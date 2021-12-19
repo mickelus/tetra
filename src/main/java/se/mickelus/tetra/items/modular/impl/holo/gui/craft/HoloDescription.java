@@ -13,12 +13,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class HoloDescription extends GuiElement {
     private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_description"));
+    private final GuiTexture icon;
     private List<String> tooltip;
-
-    private GuiTexture icon;
 
     public HoloDescription(int x, int y) {
         super(x, y, 9, 9);

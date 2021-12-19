@@ -1,8 +1,10 @@
 {
-    "conditions": [{
-        "type": "forge:mod_loaded",
-        "modid": "botania"
-    }],
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "botania"
+        }
+    ],
     "key": "manasteel",
     "category": "metal",
     "primary": "6",

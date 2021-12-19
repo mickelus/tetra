@@ -26,7 +26,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/" ],
             "key": "spearhead/",
             "attributes": {
                 "generic.attack_speed": -0.9
@@ -47,8 +47,8 @@
                     "textureX": 208,
                     "textureY": 32
                 },
-                "availableTextures": ["metal", "shiny", "crude"],
-                "models": [{ "location": "tetra:items/module/single/head/spearhead/" }]
+                "availableTextures": [ "metal", "shiny", "crude" ],
+                "models": [ { "location": "tetra:items/module/single/head/spearhead/" } ]
             }
         }
     ]

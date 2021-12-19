@@ -11,8 +11,8 @@
             "!blade/hooked": -1
         },
         "modules": [
-            ["sword/short_blade"],
-            ["sword/basic_blade"]
+            [ "sword/short_blade" ],
+            [ "sword/basic_blade" ]
         ]
     },
     "outcomes": [

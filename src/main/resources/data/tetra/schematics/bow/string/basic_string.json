@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["bow/string"],
+    "slots": [ "bow/string" ],
     "materialSlotCount": 1,
     "displayType": "major",
     "glyph": {
@@ -17,13 +17,13 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:fibre/"],
+            "materials": [ "tetra:fibre/" ],
             "countFactor": 1.5,
             "moduleKey": "bow/basic_string",
             "moduleVariant": "basic_string/"
         },
         {
-            "materials": ["tetra:skin/"],
+            "materials": [ "tetra:skin/" ],
             "toolOffset": 1,
             "moduleKey": "bow/basic_string",
             "moduleVariant": "basic_string/"

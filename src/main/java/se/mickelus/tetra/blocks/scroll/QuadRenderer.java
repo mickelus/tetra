@@ -9,6 +9,7 @@ import com.mojang.math.Vector4f;
 import net.minecraft.core.Direction;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class QuadRenderer {
     public final Vertex[] vertexPositions;
@@ -30,7 +31,7 @@ public class QuadRenderer {
         switch (direction) {
             default:
             case DOWN:
-                vertexPositions = new Vertex[] {
+                vertexPositions = new Vertex[]{
                         new Vertex(x + 0, y + 0, z + 0, u1, v1),
                         new Vertex(x + w, y + 0, z + 0, u2, v1),
                         new Vertex(x + w, y + 0, z + h, u2, v2),
@@ -38,7 +39,7 @@ public class QuadRenderer {
                 };
                 break;
             case UP:
-                vertexPositions = new Vertex[] {
+                vertexPositions = new Vertex[]{
                         new Vertex(x + w, y + 0, z + 0, u1, v1),
                         new Vertex(x + 0, y + 0, z + 0, u2, v1),
                         new Vertex(x + 0, y + 0, z + h, u2, v2),
@@ -46,7 +47,7 @@ public class QuadRenderer {
                 };
                 break;
             case WEST:
-                vertexPositions = new Vertex[] {
+                vertexPositions = new Vertex[]{
                         new Vertex(x + 0, y + 0, z + 0, u1, v1),
                         new Vertex(x + 0, y + 0, z + w, u2, v1),
                         new Vertex(x + 0, y + h, z + w, u2, v2),
@@ -54,7 +55,7 @@ public class QuadRenderer {
                 };
                 break;
             case NORTH:
-                vertexPositions = new Vertex[] {
+                vertexPositions = new Vertex[]{
                         new Vertex(x + w, y + 0, z + 0, u1, v1),
                         new Vertex(x + 0, y + 0, z + 0, u2, v1),
                         new Vertex(x + 0, y + h, z + 0, u2, v2),
@@ -62,7 +63,7 @@ public class QuadRenderer {
                 };
                 break;
             case EAST:
-                vertexPositions = new Vertex[] {
+                vertexPositions = new Vertex[]{
                         new Vertex(x + 0, y + 0, z + w, u1, v1),
                         new Vertex(x + 0, y + 0, z + 0, u2, v1),
                         new Vertex(x + 0, y + h, z + 0, u2, v2),
@@ -70,7 +71,7 @@ public class QuadRenderer {
                 };
                 break;
             case SOUTH:
-                vertexPositions = new Vertex[] {
+                vertexPositions = new Vertex[]{
                         new Vertex(x + 0, y + 0, z + 0, u1, v1),
                         new Vertex(x + w, y + 0, z + 0, u2, v1),
                         new Vertex(x + w, y + h, z + 0, u2, v2),

@@ -1,8 +1,10 @@
 {
-    "conditions": [{
-        "type": "forge:mod_loaded",
-        "modid": "botania"
-    }],
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "botania"
+        }
+    ],
     "key": "livingwood",
     "category": "wood",
     "primary": "3",
@@ -18,7 +20,7 @@
         "glyph": "803413",
         "texture": "2b1207"
     },
-    "textures": ["crude"],
+    "textures": [ "crude" ],
     "material": {
         "items": [ "botania:livingwood_planks" ]
     },

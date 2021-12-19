@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class GuiModuleMajor extends GuiModule {
 
@@ -27,9 +28,9 @@ public class GuiModuleMajor extends GuiModule {
     private GuiModuleImprovement[] improvementElements;
 
     public GuiModuleMajor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack,
-                          String slotKey, String slotName,
-                          ItemModuleMajor module, ItemModuleMajor previewModule,
-                          Consumer<String> slotClickHandler, BiConsumer<String, String> hoverHandler) {
+            String slotKey, String slotName,
+            ItemModuleMajor module, ItemModuleMajor previewModule,
+            Consumer<String> slotClickHandler, BiConsumer<String, String> hoverHandler) {
         super(x, y, attachmentPoint, itemStack, previewStack, slotKey, slotName, module, previewModule,
                 slotClickHandler, hoverHandler);
 
@@ -39,6 +40,13 @@ public class GuiModuleMajor extends GuiModule {
         if (module != null && previewModule != null) {
             setupImprovements(previewModule, previewStack, module, itemStack);
         }
+    }
+
+    public static String[] getImprovementUnion(ImprovementData[] improvements, ImprovementData[] previewImprovements) {
+        return Stream.concat(Arrays.stream(improvements), Arrays.stream(previewImprovements))
+                .map(improvement -> improvement.key)
+                .distinct()
+                .toArray(String[]::new);
     }
 
     public void showAnimation(int offset) {
@@ -169,19 +177,12 @@ public class GuiModuleMajor extends GuiModule {
         }
     }
 
-    public static String[] getImprovementUnion(ImprovementData[] improvements, ImprovementData[] previewImprovements) {
-        return Stream.concat(Arrays.stream(improvements), Arrays.stream(previewImprovements))
-                .map(improvement -> improvement.key)
-                .distinct()
-                .toArray(String[]::new);
-    }
-
     protected void setColor(int color) {
         super.setColor(color);
 
         slotString.setColor(color);
 
-        if(GuiColors.muted == color) {
+        if (GuiColors.muted == color) {
             Arrays.stream(improvementElements).forEach(element -> element.setOpacity(0.5f));
         } else {
             Arrays.stream(improvementElements).forEach(element -> element.setOpacity(1));

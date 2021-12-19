@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["crossbow/stock"],
+    "slots": [ "crossbow/stock" ],
     "materialSlotCount": 1,
     "displayType": "major",
     "glyph": {
@@ -25,12 +25,12 @@
             "moduleVariant": "basic_stock/stick"
         },
         {
-            "materials": ["tetra:wood/"],
+            "materials": [ "tetra:wood/" ],
             "moduleKey": "crossbow/basic_stock",
             "moduleVariant": "basic_stock/"
         },
         {
-            "materials": ["tetra:metal/"],
+            "materials": [ "tetra:metal/" ],
             "toolOffset": 2,
             "moduleKey": "crossbow/basic_stock",
             "moduleVariant": "basic_stock/"

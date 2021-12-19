@@ -2,7 +2,7 @@
     "replace": true,
     "localizationKey": "double/warforge",
     "locked": true,
-    "slots": ["double/head_right"],
+    "slots": [ "double/head_right" ],
     "materialSlotCount": 0,
     "rarity": "temporary",
     "displayType": "improvement",
@@ -12,7 +12,7 @@
     },
     "requirement": {
         "type": "tetra:modular_item",
-        "modules": [["double/extractor_right"]]
+        "modules": [ [ "double/extractor_right" ] ]
     },
     "outcomes": [
         {

@@ -13,8 +13,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.IForgeRegistry;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.mutil.network.PacketHandler;
+import se.mickelus.tetra.items.TetraItemGroup;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,9 +25,11 @@ import java.util.stream.Collectors;
 public interface ITetraBlock {
 
     @OnlyIn(Dist.CLIENT)
-    default void clientInit() { }
+    default void clientInit() {
+    }
 
-    default void init(PacketHandler packetHandler) {}
+    default void init(PacketHandler packetHandler) {
+    }
 
     boolean hasItem();
 

@@ -13,9 +13,11 @@ import se.mickelus.tetra.blocks.forged.ForgedCrateBlock;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
+
 @ParametersAreNonnullByDefault
 public class ForgedCrateProcessor extends StructureProcessor {
-    public ForgedCrateProcessor() {}
+    public ForgedCrateProcessor() {
+    }
 
     @Nullable
     @Override

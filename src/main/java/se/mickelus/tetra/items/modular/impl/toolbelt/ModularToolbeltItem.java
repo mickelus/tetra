@@ -20,10 +20,9 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TagsUpdatedEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -36,16 +35,15 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltGui;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.JumpHandlerSuspend;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.ToggleSuspendPacket;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
-import se.mickelus.mutil.network.PacketHandler;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     public final static String unlocalizedName = "modular_toolbelt";
@@ -78,10 +76,10 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
 
         setRegistryName(unlocalizedName);
 
-        majorModuleKeys = new String[] { slot1Key, slot2Key, slot3Key };
-        minorModuleKeys = new String[] { beltKey };
+        majorModuleKeys = new String[]{slot1Key, slot2Key, slot3Key};
+        minorModuleKeys = new String[]{beltKey};
 
-        requiredModules = new String[] { beltKey };
+        requiredModules = new String[]{beltKey};
     }
 
     @Override

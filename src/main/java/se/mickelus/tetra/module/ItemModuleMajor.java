@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.ArrayUtils;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -16,7 +17,6 @@ import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.mutil.util.CastOptional;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -24,11 +24,9 @@ import java.util.Optional;
 
 public abstract class ItemModuleMajor extends ItemModule {
 
-    protected ImprovementData[] improvements = new ImprovementData[0];
-
     public static final String settleImprovement = "settled";
     public static final String arrestedImprovement = "arrested";
-
+    protected ImprovementData[] improvements = new ImprovementData[0];
     protected int settleMax = 0;
     private String settleProgressKey = "/settle_progress";
 
@@ -36,6 +34,19 @@ public abstract class ItemModuleMajor extends ItemModule {
         super(slotKey, moduleKey);
 
         settleProgressKey = getSlot() + settleProgressKey;
+    }
+
+    public static void addImprovement(ItemStack itemStack, String slot, String improvement, int level) {
+        IModularItem item = (IModularItem) itemStack.getItem();
+        CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
+                .filter(module -> module.acceptsImprovementLevel(improvement, level))
+                .ifPresent(module -> module.addImprovement(itemStack, improvement, level));
+    }
+
+    public static void removeImprovement(ItemStack itemStack, String slot, String improvement) {
+        if (itemStack.hasTag()) {
+            itemStack.getTag().remove(slot + ":" + improvement);
+        }
     }
 
     public void tickProgression(LivingEntity entity, ItemStack itemStack, int multiplier) {
@@ -65,6 +76,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     /**
      * Returns the remaining number of times the item has to be used before this module will settle.
+     *
      * @param itemStack The itemstack which the module is present on
      * @return
      */
@@ -77,16 +89,18 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     /**
      * Returns the total number of times the item has to be used before this module will settle.
+     *
      * @param itemStack The itemstack which the module is present on
      * @return
      */
     public int getSettleLimit(ItemStack itemStack) {
-        return (int) (( ConfigHandler.settleLimitBase.get() + getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier.get())
+        return (int) ((ConfigHandler.settleLimitBase.get() + getDurability(itemStack) * ConfigHandler.settleLimitDurabilityMultiplier.get())
                 * Math.max(getImprovementLevel(itemStack, settleImprovement) * ConfigHandler.settleLimitLevelMultiplier.get(), 1f));
     }
 
     /**
      * Returns the total number of times the item has to be used before this module will settle.
+     *
      * @param itemStack The itemstack which the module is present on
      * @return
      */
@@ -161,13 +175,6 @@ public abstract class ItemModuleMajor extends ItemModule {
         itemStack.getOrCreateTag().putInt(slotTagKey + ":" + improvementKey, level);
     }
 
-    public static void addImprovement(ItemStack itemStack, String slot, String improvement, int level) {
-        IModularItem item = (IModularItem) itemStack.getItem();
-        CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
-                .filter(module -> module.acceptsImprovementLevel(improvement, level))
-                .ifPresent(module -> module.addImprovement(itemStack, improvement, level));
-    }
-
     public void removeCollidingImprovements(ItemStack itemStack, String improvementKey, int level) {
         Arrays.stream(improvements)
                 .filter(improvement -> improvementKey.equals(improvement.key))
@@ -182,12 +189,6 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     public void removeImprovement(ItemStack itemStack, String improvement) {
         removeImprovement(itemStack, slotTagKey, improvement);
-    }
-
-    public static void removeImprovement(ItemStack itemStack, String slot, String improvement) {
-        if (itemStack.hasTag()) {
-            itemStack.getTag().remove(slot + ":" + improvement);
-        }
     }
 
     public void removeEnchantments(ItemStack itemStack) {
@@ -285,9 +286,9 @@ public abstract class ItemModuleMajor extends ItemModule {
                 .map(item -> item.getStabilityModifier(itemStack))
                 .orElse(1f)
                 * Arrays.stream(getImprovements(itemStack))
-                        .mapToInt(improvement -> improvement.magicCapacity)
-                        .filter(magicCapacity -> magicCapacity > 0)
-                        .sum());
+                .mapToInt(improvement -> improvement.magicCapacity)
+                .filter(magicCapacity -> magicCapacity > 0)
+                .sum());
     }
 
     public int getImprovementMagicCapacityCost(ItemStack itemStack) {

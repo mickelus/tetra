@@ -30,6 +30,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
@@ -46,7 +47,6 @@ import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -82,18 +82,132 @@ public interface IModularItem {
     String honeAvailableKey = "honing_available";
     String honeCountKey = "honing_count";
 
-    public Item getItem();
-
-    default ItemStack getDefaultStack() {
-        return new ItemStack(getItem());
-    }
-
-    public static void updateIdentifier(ItemStack itemStack) {
+    static void updateIdentifier(ItemStack itemStack) {
         updateIdentifier(itemStack.getOrCreateTag());
     }
 
-    public static void updateIdentifier(CompoundTag nbt) {
+    static void updateIdentifier(CompoundTag nbt) {
         nbt.putString(identifierKey, UUID.randomUUID().toString());
+    }
+
+    /**
+     * Helper for manually adding modules, to be used in cases like creative tab items which are populated before modules exists. Use
+     * with caution as this may break things if the module/variant doesn't actually end up existing.
+     *
+     * @param itemStack
+     * @param slot
+     * @param module
+     * @param moduleVariantKey
+     * @param moduleVariant
+     */
+    static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariantKey, String moduleVariant) {
+        CompoundTag tag = itemStack.getOrCreateTag();
+        tag.putString(slot, module);
+        tag.putString(moduleVariantKey, moduleVariant);
+    }
+
+    static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariant) {
+        CompoundTag tag = itemStack.getOrCreateTag();
+        tag.putString(slot, module);
+        tag.putString(module + "_material", moduleVariant);
+    }
+
+    static int getIntegrityGain(ItemStack itemStack) {
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                .map(item -> item.getPropertiesCached(itemStack))
+                .map(properties -> properties.integrity)
+                .orElse(0);
+    }
+
+    static int getIntegrityCost(ItemStack itemStack) {
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                .map(item -> item.getPropertiesCached(itemStack))
+                .map(properties -> properties.integrityUsage)
+                .orElse(0);
+    }
+
+    static boolean isHoneable(ItemStack itemStack) {
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.contains(honeAvailableKey))
+                .orElse(false);
+    }
+
+    static int getHoningSeed(ItemStack itemStack) {
+        return Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.getInt(honeCountKey))
+                .orElse(0);
+    }
+
+    static void removeHoneable(ItemStack itemStack) {
+        CompoundTag tag = itemStack.getTag();
+
+        if (tag != null) {
+            tag.remove(honeAvailableKey);
+            tag.remove(honeProgressKey);
+            tag.putInt(honeCountKey, tag.getInt(honeCountKey) + 1);
+        }
+    }
+
+    static String getImprovementName(String key, int level) {
+        String name = null;
+        if (I18n.exists("tetra.improvement." + key + ".name")) {
+            name = I18n.get("tetra.improvement." + key + ".name");
+        } else {
+            int lastSlash = key.lastIndexOf("/");
+            if (lastSlash != -1) {
+                String templateKey = "tetra.improvement." + key.substring(0, lastSlash) + ".name";
+                if (I18n.exists(templateKey)) {
+                    String materialKey = "tetra.material." + key.substring(lastSlash + 1) + ".prefix";
+                    if (I18n.exists(materialKey)) {
+                        name = StringUtils.capitalize(I18n.get(templateKey, I18n.get(materialKey).toLowerCase()));
+                    }
+                }
+            }
+
+            if (name == null) {
+                name = "tetra.improvement." + key + ".name";
+            }
+        }
+
+        if (level > 0) {
+            name += " " + I18n.get("enchantment.level." + level);
+        }
+
+        return name;
+    }
+
+    static String getImprovementDescription(String key) {
+        if (I18n.exists("tetra.improvement." + key + ".description")) {
+            return I18n.get("tetra.improvement." + key + ".description");
+        }
+
+        int lastSlash = key.lastIndexOf("/");
+        if (lastSlash != -1) {
+            String splitKey = "tetra.improvement." + key.substring(0, lastSlash) + ".description";
+            if (I18n.exists(splitKey)) {
+                return I18n.get(splitKey);
+            }
+        }
+
+        return "tetra.improvement." + key + ".description";
+    }
+
+    static ItemStack removeAllEnchantments(ItemStack itemStack) {
+        itemStack.removeTagKey("Enchantments");
+        itemStack.removeTagKey("StoredEnchantments");
+        Arrays.stream(((IModularItem) itemStack.getItem()).getMajorModules(itemStack))
+                .filter(Objects::nonNull)
+                .forEach(module -> module.removeEnchantments(itemStack));
+
+        IModularItem.updateIdentifier(itemStack);
+
+        return itemStack;
+    }
+
+    Item getItem();
+
+    default ItemStack getDefaultStack() {
+        return new ItemStack(getItem());
     }
 
     @Nullable
@@ -117,11 +231,13 @@ public interface IModularItem {
                 .orElseGet(() -> itemStack.hasTag() ? itemStack.getTag().toString() : "INVALID-" + getItem().getRegistryName());
     }
 
-    public void clearCaches();
+    void clearCaches();
 
-    public String[] getMajorModuleKeys();
-    public String[] getMinorModuleKeys();
-    public String[] getRequiredModules();
+    String[] getMajorModuleKeys();
+
+    String[] getMinorModuleKeys();
+
+    String[] getRequiredModules();
 
     default boolean isModuleRequired(String moduleSlot) {
         return ArrayUtils.contains(getRequiredModules(), moduleSlot);
@@ -131,7 +247,7 @@ public interface IModularItem {
         CompoundTag stackTag = stack.getTag();
 
         if (stackTag != null) {
-            return Stream.concat(Arrays.stream(getMajorModuleKeys()),Arrays.stream(getMinorModuleKeys()))
+            return Stream.concat(Arrays.stream(getMajorModuleKeys()), Arrays.stream(getMinorModuleKeys()))
                     .map(stackTag::getString)
                     .map(ItemUpgradeRegistry.instance::getModule)
                     .filter(Objects::nonNull)
@@ -193,27 +309,6 @@ public interface IModularItem {
                 .toArray(String[]::new);
     }
 
-    /**
-     * Helper for manually adding modules, to be used in cases like creative tab items which are populated before modules exists. Use
-     * with caution as this may break things if the module/variant doesn't actually end up existing.
-     * @param itemStack
-     * @param slot
-     * @param module
-     * @param moduleVariantKey
-     * @param moduleVariant
-     */
-    public static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariantKey, String moduleVariant) {
-        CompoundTag tag = itemStack.getOrCreateTag();
-        tag.putString(slot, module);
-        tag.putString(moduleVariantKey, moduleVariant);
-    }
-
-    public static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariant) {
-        CompoundTag tag = itemStack.getOrCreateTag();
-        tag.putString(slot, module);
-        tag.putString(module + "_material", moduleVariant);
-    }
-
     default boolean hasModule(ItemStack itemStack, ItemModule module) {
         return getAllModules(itemStack).stream()
                 .anyMatch(module::equals);
@@ -226,20 +321,6 @@ public interface IModularItem {
                 .orElse(null);
     }
 
-    static int getIntegrityGain(ItemStack itemStack) {
-        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> item.getPropertiesCached(itemStack))
-                .map(properties -> properties.integrity)
-                .orElse(0);
-    }
-
-    static int getIntegrityCost(ItemStack itemStack) {
-        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> item.getPropertiesCached(itemStack))
-                .map(properties -> properties.integrityUsage)
-                .orElse(0);
-    }
-
     default void tickProgression(LivingEntity entity, ItemStack itemStack, int multiplier) {
         if (!ConfigHandler.moduleProgression.get()) {
             return;
@@ -247,7 +328,7 @@ public interface IModularItem {
 
         tickHoningProgression(entity, itemStack, multiplier);
 
-        for (ItemModuleMajor module: getMajorModules(itemStack)) {
+        for (ItemModuleMajor module : getMajorModules(itemStack)) {
             module.tickProgression(entity, itemStack, multiplier);
         }
     }
@@ -297,9 +378,9 @@ public interface IModularItem {
         return (int) Math.max((getHoneBase() + getHoneIntegrityMultiplier() * getIntegrityCost(itemStack)) * workableFactor, 1);
     }
 
-    public int getHoneBase();
+    int getHoneBase();
 
-    public int getHoneIntegrityMultiplier();
+    int getHoneIntegrityMultiplier();
 
     default int getHoningIntegrityPenalty(ItemStack itemStack) {
         return getHoneIntegrityMultiplier() * getIntegrityCost(itemStack);
@@ -311,36 +392,14 @@ public interface IModularItem {
                 .orElse(0);
     }
 
-    public boolean canGainHoneProgress();
-
-    public static boolean isHoneable(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTag())
-                .map(tag -> tag.contains(honeAvailableKey))
-                .orElse(false);
-    }
-
-    public static int getHoningSeed(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTag())
-                .map(tag -> tag.getInt(honeCountKey))
-                .orElse(0);
-    }
-
-    public static void removeHoneable(ItemStack itemStack) {
-        CompoundTag tag = itemStack.getTag();
-
-        if (tag != null) {
-            tag.remove(honeAvailableKey);
-            tag.remove(honeProgressKey);
-            tag.putInt(honeCountKey, tag.getInt(honeCountKey) + 1);
-        }
-    }
+    boolean canGainHoneProgress();
 
     /**
      * Applies usage effects and ticks progression based on the given multiplier, should typically be called when the item is used
      * for something.
      *
-     * @param entity The using entity
-     * @param itemStack The used itemstack
+     * @param entity     The using entity
+     * @param itemStack  The used itemstack
      * @param multiplier A multiplier representing the effort and effect yielded from the use
      */
     default void applyUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {
@@ -466,53 +525,10 @@ public interface IModularItem {
         return getImprovementName(key, level);
     }
 
-    public static String getImprovementName(String key, int level) {
-        String name = null;
-        if (I18n.exists("tetra.improvement." + key + ".name")) {
-            name = I18n.get("tetra.improvement." + key + ".name");
-        } else {
-            int lastSlash = key.lastIndexOf("/");
-            if (lastSlash != -1) {
-                String templateKey = "tetra.improvement." + key.substring(0, lastSlash) + ".name";
-                if (I18n.exists(templateKey)) {
-                    String materialKey = "tetra.material." + key.substring(lastSlash + 1) + ".prefix";
-                    if (I18n.exists(materialKey)) {
-                        name = StringUtils.capitalize(I18n.get(templateKey, I18n.get(materialKey).toLowerCase()));
-                    }
-                }
-            }
-
-            if (name == null) {
-                name = "tetra.improvement." + key + ".name";
-            }
-        }
-
-        if (level > 0) {
-            name += " " + I18n.get("enchantment.level." + level);
-        }
-
-        return name;
-    }
-
-    public static String getImprovementDescription(String key) {
-        if (I18n.exists("tetra.improvement." + key + ".description")) {
-            return I18n.get("tetra.improvement." + key + ".description");
-        }
-
-        int lastSlash = key.lastIndexOf("/");
-        if (lastSlash != -1) {
-            String splitKey = "tetra.improvement." + key.substring(0, lastSlash) + ".description";
-            if (I18n.exists(splitKey)) {
-                return I18n.get(splitKey);
-            }
-        }
-
-        return "tetra.improvement." + key + ".description";
-    }
-
     /**
      * Returns an optional with the module that will be repaired in next repair attempt, the optional is empty if
      * there are no repairable modules in this item.
+     *
      * @param itemStack The itemstack for the modular item
      * @return An optional with the module that will be repaired in next repair attempt
      */
@@ -549,6 +565,7 @@ public interface IModularItem {
     /**
      * Returns a collection of definitions for all possible ways to perform the next repair attempt. Rotates between materials required
      * for different modules
+     *
      * @param itemStack The itemstack for the modular item
      * @return a collection of definitions, empty if none are available
      */
@@ -560,7 +577,8 @@ public interface IModularItem {
 
     /**
      * Returns the required size of the repair material itemstack for the next repair attempt.
-     * @param itemStack The itemstack for the modular item
+     *
+     * @param itemStack     The itemstack for the modular item
      * @param materialStack The material stack that is to be used to repair the item
      * @return
      */
@@ -573,6 +591,7 @@ public interface IModularItem {
 
     /**
      * Returns the amount of durability restored by the next repair attempt.
+     *
      * @param itemStack The itemstack for the modular item
      * @return
      */
@@ -608,6 +627,7 @@ public interface IModularItem {
 
     /**
      * Returns the number of times this item has been repaired.
+     *
      * @param itemStack The itemstack for the modular item
      * @return
      */
@@ -687,6 +707,7 @@ public interface IModularItem {
     /**
      * Stability modifier for magic capacity, the stabilizing and unstable effects should increase/decrease the magic capacity of all modules by a
      * percentage equal to the effect levels
+     *
      * @param itemStack
      * @return
      */
@@ -761,13 +782,13 @@ public interface IModularItem {
 
     /**
      * Returns attribute modifiers gained from item effects, e.g. attack speed from the counterweight
+     *
      * @param itemStack
      * @return
      */
     default Multimap<Attribute, AttributeModifier> getEffectAttributes(ItemStack itemStack) {
         return AttributeHelper.emptyMap;
     }
-
 
     default Multimap<Attribute, AttributeModifier> getModuleAttributes(ItemStack itemStack) {
         return getAllModules(itemStack).stream()
@@ -841,10 +862,10 @@ public interface IModularItem {
             logger.debug("Gathering effect data for {} ({})", getItemName(itemStack), getDataCacheKey(itemStack));
         }
         return Stream.concat(
-                getAllModules(itemStack).stream()
-                        .map(module -> module.getEffectData(itemStack)),
-                Arrays.stream(getSynergyData(itemStack))
-                        .map(synergy -> synergy.effects))
+                        getAllModules(itemStack).stream()
+                                .map(module -> module.getEffectData(itemStack)),
+                        Arrays.stream(getSynergyData(itemStack))
+                                .map(synergy -> synergy.effects))
                 .filter(Objects::nonNull)
                 .reduce(null, EffectData::merge);
     }
@@ -867,8 +888,8 @@ public interface IModularItem {
         }
 
         return Stream.concat(
-                getAllModules(itemStack).stream().map(module -> module.getProperties(itemStack)),
-                Arrays.stream(getSynergyData(itemStack)))
+                        getAllModules(itemStack).stream().map(module -> module.getProperties(itemStack)),
+                        Arrays.stream(getSynergyData(itemStack)))
                 .reduce(new ItemProperties(), ItemProperties::merge);
     }
 
@@ -916,15 +937,15 @@ public interface IModularItem {
 
     default String getDisplayNamePrefixes(ItemStack itemStack) {
         return Stream.concat(
-                Arrays.stream(getImprovements(itemStack))
-                        .map(improvement -> improvement.key + ".prefix")
-                        .filter(I18n::exists)
-                        .map(I18n::get),
-                getAllModules(itemStack).stream()
-                        .sorted(Comparator.comparing(module -> module.getItemPrefixPriority(itemStack)))
-                        .map(module -> module.getItemPrefix(itemStack))
-                        .filter(Objects::nonNull)
-        )
+                        Arrays.stream(getImprovements(itemStack))
+                                .map(improvement -> improvement.key + ".prefix")
+                                .filter(I18n::exists)
+                                .map(I18n::get),
+                        getAllModules(itemStack).stream()
+                                .sorted(Comparator.comparing(module -> module.getItemPrefixPriority(itemStack)))
+                                .map(module -> module.getItemPrefix(itemStack))
+                                .filter(Objects::nonNull)
+                )
                 .limit(2)
                 .reduce("", (result, prefix) -> result + prefix + " ");
     }
@@ -956,7 +977,7 @@ public interface IModularItem {
         return StringUtils.capitalize(prefixes + name);
     }
 
-    public SynergyData[] getAllSynergyData(ItemStack itemStack);
+    SynergyData[] getAllSynergyData(ItemStack itemStack);
 
     default SynergyData[] getSynergyData(ItemStack itemStack) {
         SynergyData[] synergies = getAllSynergyData(itemStack);
@@ -1057,6 +1078,7 @@ public interface IModularItem {
     /**
      * Resets and applies effects for the current setup of modules & improvements. Applies enchantments and other things which cannot be emulated
      * through other means. Call this after each time the module setup changes.
+     *
      * @param itemStack The modular item itemstack
      * @param severity
      */
@@ -1081,18 +1103,6 @@ public interface IModularItem {
 
     default boolean hasEnchantments(ItemStack itemStack) {
         return Arrays.stream(getImprovements(itemStack)).anyMatch(improvement -> improvement.enchantment);
-    }
-
-    public static ItemStack removeAllEnchantments(ItemStack itemStack) {
-        itemStack.removeTagKey("Enchantments");
-        itemStack.removeTagKey("StoredEnchantments");
-        Arrays.stream(((IModularItem) itemStack.getItem()).getMajorModules(itemStack))
-                .filter(Objects::nonNull)
-                .forEach(module -> module.removeEnchantments(itemStack));
-
-        IModularItem.updateIdentifier(itemStack);
-
-        return itemStack;
     }
 
     default boolean canEnchantInEnchantingTable(ItemStack itemStack) {

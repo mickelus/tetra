@@ -28,17 +28,15 @@ import java.util.function.Function;
  * Forge reimplementation of vanilla {@link ItemModelGenerator}, i.e. builtin/generated models,
  * with the following changes:
  * - Represented as a true {@link IUnbakedModel} so it can be baked as usual instead of using
- *   special-case logic like vanilla does.
+ * special-case logic like vanilla does.
  * - Various fixes in the baking logic.
  * - Not limited to 4 layers maximum.
  */
 public final class ModularItemModel implements IModelGeometry<ModularItemModel> {
 
-    private ItemTransforms cameraTransforms;
-
-    private Map<String, ItemTransforms> transformVariants = Collections.emptyMap();
-
+    private final ItemTransforms cameraTransforms;
     ModularOverrideList overrideList;
+    private Map<String, ItemTransforms> transformVariants = Collections.emptyMap();
 
     public ModularItemModel(ItemTransforms cameraTransforms, Map<String, ItemTransforms> transformVariants) {
         this(cameraTransforms);
@@ -47,82 +45,6 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
 
     public ModularItemModel(ItemTransforms cameraTransforms) {
         this.cameraTransforms = cameraTransforms;
-    }
-
-    public void clearCache() {
-        Optional.ofNullable(overrideList).ifPresent(ModularOverrideList::clearCache);
-    }
-
-    @Override
-    public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter,
-            Set<Pair<String, String>> missingTextureErrors) {
-        return Collections.emptyList();
-    }
-
-    /**
-     * Fakebake, real bake is done in override
-     * @param owner
-     * @param bakery
-     * @param spriteGetter
-     * @param modelTransform
-     * @param overrides
-     * @param modelLocation
-     * @return
-     */
-    @Override
-    public BakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter,
-            ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
-
-        overrideList = new ModularOverrideList(this, owner, bakery, spriteGetter, modelTransform, modelLocation);
-        return new BakedWrapper(this, owner, bakery, spriteGetter, modelTransform, modelLocation, overrideList);
-    }
-
-    public BakedModel realBake(List<ModuleModel> moduleModels, String transformVariant, IModelConfiguration owner, ModelBakery bakery,
-            Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides,
-            ResourceLocation modelLocation) {
-        ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
-
-        TextureAtlasSprite particle = null;
-
-        Transformation rotationTransform = modelTransform.getRotation();
-        ImmutableMap<ItemTransforms.TransformType, Transformation> transforms = PerspectiveMapWrapper.getTransforms(modelTransform);
-        for(int i = 0; i < moduleModels.size(); i++) {
-            ModuleModel model = moduleModels.get(i);
-            TextureAtlasSprite sprite = spriteGetter.apply(new Material(TextureAtlas.LOCATION_BLOCKS, model.location));
-            builder.addAll(getQuadsForSprite(i, sprite, rotationTransform, model.tint));
-
-            particle = sprite;
-        }
-
-        return new BakedPerspectiveModel(builder.build(), particle, transforms, overrides, rotationTransform.isIdentity(), owner.isSideLit(),
-                getCameraTransforms(transformVariant));
-    }
-
-    protected ItemTransforms getCameraTransforms(String transformVariant) {
-        if (transformVariant != null && transformVariants.containsKey(transformVariant)) {
-            ItemTransforms variant = transformVariants.get(transformVariant);
-
-            return new ItemTransforms(
-            variant.hasTransform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND) ?
-                variant.thirdPersonLeftHand : cameraTransforms.thirdPersonLeftHand,
-            variant.hasTransform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND) ?
-                variant.thirdPersonRightHand : cameraTransforms.thirdPersonRightHand,
-            variant.hasTransform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND) ?
-                variant.firstPersonLeftHand : cameraTransforms.firstPersonLeftHand,
-            variant.hasTransform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) ?
-                variant.firstPersonRightHand : cameraTransforms.firstPersonRightHand,
-            variant.hasTransform(ItemTransforms.TransformType.HEAD) ?
-                variant.head : cameraTransforms.head,
-            variant.hasTransform(ItemTransforms.TransformType.GUI) ?
-                variant.gui : cameraTransforms.gui,
-            variant.hasTransform(ItemTransforms.TransformType.GROUND) ?
-                variant.ground : cameraTransforms.ground,
-            variant.hasTransform(ItemTransforms.TransformType.FIXED) ?
-                variant.fixed : cameraTransforms.fixed
-            );
-        }
-
-        return cameraTransforms;
     }
 
     public static List<BakedQuad> getQuadsForSprite(int tintIndex, TextureAtlasSprite sprite, Transformation transform, int color) {
@@ -160,7 +82,6 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
         return builder.build();
     }
 
-
     private static BakedQuad buildSideQuad(Transformation transform, Direction side, int tintIndex,
             int color, TextureAtlasSprite sprite, int u, int v, int size) {
 
@@ -178,7 +99,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
         float z0 = 7.5f / 16f;
         float z1 = 8.5f / 16f;
 
-        switch(side) {
+        switch (side) {
             case WEST:
                 z0 = 8.5f / 16f;
                 z1 = 7.5f / 16f;
@@ -246,15 +167,15 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
 
     private static void putVertex(IVertexConsumer consumer, Direction side, float x, float y, float z, float u, float v, int color) {
         VertexFormat format = consumer.getVertexFormat();
-        for(int e = 0; e < format.getElements().size(); e++) {
-            switch(format.getElements().get(e).getUsage()) {
+        for (int e = 0; e < format.getElements().size(); e++) {
+            switch (format.getElements().get(e).getUsage()) {
                 case POSITION:
                     consumer.put(e, x, y, z, 1f);
                     break;
                 case COLOR:
                     float r = ((color >> 16) & 0xFF) / 255f; // red
-                    float g = ((color >>  8) & 0xFF) / 255f; // green
-                    float b = ((color >>  0) & 0xFF) / 255f; // blue
+                    float g = ((color >> 8) & 0xFF) / 255f; // green
+                    float b = ((color >> 0) & 0xFF) / 255f; // blue
                     float a = ((color >> 24) & 0xFF) / 255f; // alpha
 
                     // reset alpha to 1 if it's 0 to avoid mistakes & make things cleaner
@@ -269,7 +190,7 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
                     consumer.put(e, offX, offY, offZ, 0f);
                     break;
                 case UV:
-                    if(format.getElements().get(e).getIndex() == 0) {
+                    if (format.getElements().get(e).getIndex() == 0) {
                         consumer.put(e, u, v, 0f, 1f);
                         break;
                     }
@@ -279,5 +200,82 @@ public final class ModularItemModel implements IModelGeometry<ModularItemModel> 
                     break;
             }
         }
+    }
+
+    public void clearCache() {
+        Optional.ofNullable(overrideList).ifPresent(ModularOverrideList::clearCache);
+    }
+
+    @Override
+    public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter,
+            Set<Pair<String, String>> missingTextureErrors) {
+        return Collections.emptyList();
+    }
+
+    /**
+     * Fakebake, real bake is done in override
+     *
+     * @param owner
+     * @param bakery
+     * @param spriteGetter
+     * @param modelTransform
+     * @param overrides
+     * @param modelLocation
+     * @return
+     */
+    @Override
+    public BakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter,
+            ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
+
+        overrideList = new ModularOverrideList(this, owner, bakery, spriteGetter, modelTransform, modelLocation);
+        return new BakedWrapper(this, owner, bakery, spriteGetter, modelTransform, modelLocation, overrideList);
+    }
+
+    public BakedModel realBake(List<ModuleModel> moduleModels, String transformVariant, IModelConfiguration owner, ModelBakery bakery,
+            Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides,
+            ResourceLocation modelLocation) {
+        ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
+
+        TextureAtlasSprite particle = null;
+
+        Transformation rotationTransform = modelTransform.getRotation();
+        ImmutableMap<ItemTransforms.TransformType, Transformation> transforms = PerspectiveMapWrapper.getTransforms(modelTransform);
+        for (int i = 0; i < moduleModels.size(); i++) {
+            ModuleModel model = moduleModels.get(i);
+            TextureAtlasSprite sprite = spriteGetter.apply(new Material(TextureAtlas.LOCATION_BLOCKS, model.location));
+            builder.addAll(getQuadsForSprite(i, sprite, rotationTransform, model.tint));
+
+            particle = sprite;
+        }
+
+        return new BakedPerspectiveModel(builder.build(), particle, transforms, overrides, rotationTransform.isIdentity(), owner.isSideLit(),
+                getCameraTransforms(transformVariant));
+    }
+
+    protected ItemTransforms getCameraTransforms(String transformVariant) {
+        if (transformVariant != null && transformVariants.containsKey(transformVariant)) {
+            ItemTransforms variant = transformVariants.get(transformVariant);
+
+            return new ItemTransforms(
+                    variant.hasTransform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND) ?
+                            variant.thirdPersonLeftHand : cameraTransforms.thirdPersonLeftHand,
+                    variant.hasTransform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND) ?
+                            variant.thirdPersonRightHand : cameraTransforms.thirdPersonRightHand,
+                    variant.hasTransform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND) ?
+                            variant.firstPersonLeftHand : cameraTransforms.firstPersonLeftHand,
+                    variant.hasTransform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) ?
+                            variant.firstPersonRightHand : cameraTransforms.firstPersonRightHand,
+                    variant.hasTransform(ItemTransforms.TransformType.HEAD) ?
+                            variant.head : cameraTransforms.head,
+                    variant.hasTransform(ItemTransforms.TransformType.GUI) ?
+                            variant.gui : cameraTransforms.gui,
+                    variant.hasTransform(ItemTransforms.TransformType.GROUND) ?
+                            variant.ground : cameraTransforms.ground,
+                    variant.hasTransform(ItemTransforms.TransformType.FIXED) ?
+                            variant.fixed : cameraTransforms.fixed
+            );
+        }
+
+        return cameraTransforms;
     }
 }

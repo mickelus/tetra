@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["crossbow/stock"],
+    "slots": [ "crossbow/stock" ],
     "type": "tetra:basic_major_module",
     "improvements": [
         "tetra:crossbow/stock/",
@@ -9,7 +9,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:misc/stick", "tetra:metal/"],
+            "materials": [ "tetra:wood/", "tetra:misc/stick", "tetra:metal/" ],
             "key": "basic_stock/",
             "attributes": {
                 "tetra:draw_speed": 0.5
@@ -26,7 +26,7 @@
                     "textureX": 128,
                     "textureY": 48
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
                         "location": "tetra:items/module/crossbow/stock/basic/",

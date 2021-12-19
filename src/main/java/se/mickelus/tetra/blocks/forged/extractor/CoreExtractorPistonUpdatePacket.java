@@ -7,11 +7,13 @@ import se.mickelus.mutil.network.BlockPosPacket;
 import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class CoreExtractorPistonUpdatePacket extends BlockPosPacket {
     private long timestamp;
 
-    public CoreExtractorPistonUpdatePacket() {}
+    public CoreExtractorPistonUpdatePacket() {
+    }
 
     public CoreExtractorPistonUpdatePacket(BlockPos pos, long timestamp) {
         super(pos);

@@ -19,7 +19,7 @@
             "jab": -1
         },
         "tools": {
-            "cut": [2, 3]
+            "cut": [ 2, 3 ]
         },
         "durability": 4,
         "integrity": -3,
@@ -27,7 +27,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/" ],
             "moduleKey": "sword/short_blade",
             "moduleVariant": "short_blade/"
         }

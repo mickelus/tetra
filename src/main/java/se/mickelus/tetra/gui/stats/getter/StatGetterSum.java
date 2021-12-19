@@ -5,16 +5,17 @@ import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+
 @ParametersAreNonnullByDefault
 public class StatGetterSum implements IStatGetter {
-    private IStatGetter[] statGetters;
+    private final IStatGetter[] statGetters;
     private double offset = 0;
 
-    public StatGetterSum(IStatGetter ... statGetters) {
+    public StatGetterSum(IStatGetter... statGetters) {
         this.statGetters = statGetters;
     }
 
-    public StatGetterSum(double offset, IStatGetter ... statGetters) {
+    public StatGetterSum(double offset, IStatGetter... statGetters) {
         this(statGetters);
         this.offset = offset;
     }

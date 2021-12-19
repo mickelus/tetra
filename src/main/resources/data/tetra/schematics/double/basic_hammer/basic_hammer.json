@@ -13,7 +13,7 @@
         "textureX": 64
     },
     "displayType": "major",
-    "applicableMaterials": ["#wood", "#stone", "!iron", "!blackstone", "!obsidian", "!netherite"],
+    "applicableMaterials": [ "#wood", "#stone", "!iron", "!blackstone", "!obsidian", "!netherite" ],
     "translation": {
         "primaryAttributes": {
             "generic.attack_damage": 2
@@ -23,7 +23,7 @@
             "generic.attack_speed": -1
         },
         "tools": {
-            "hammer_dig": [0, 2]
+            "hammer_dig": [ 0, 2 ]
         },
         "durability": 2,
         "integrity": -3,

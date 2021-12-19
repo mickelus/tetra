@@ -6,11 +6,13 @@
             "generic.attack_damage": 3
         },
         "effects": {
-            "sweeping": [3, 2]
+            "sweeping": [ 3, 2 ]
         },
-        "models": [{
-            "location": "tetra:items/module/double/head/sickle/warforged",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/double/head/sickle/warforged",
+                "tint": "inherit"
+            }
+        ]
     }
 ]

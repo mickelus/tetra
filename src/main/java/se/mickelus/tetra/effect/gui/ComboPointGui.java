@@ -11,10 +11,11 @@ import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.InvertColorGui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ComboPointGui extends GuiElement {
-    private GuiElement container;
-    private Point[] points;
+    private final GuiElement container;
+    private final Point[] points;
 
     public ComboPointGui() {
         super(-1, 18, 15, 3);
@@ -53,11 +54,10 @@ public class ComboPointGui extends GuiElement {
     }
 
     static class Point extends GuiElement {
-        private GuiTexture active;
-        private GuiTexture inactive;
-
         private final KeyframeAnimation showAnimation;
         private final KeyframeAnimation hideAnimation;
+        private final GuiTexture active;
+        private final GuiTexture inactive;
 
         public Point(int x, int y, int offset) {
             super(x, y - 3, 3, 3);
@@ -76,7 +76,9 @@ public class ComboPointGui extends GuiElement {
             hideAnimation = new KeyframeAnimation(100, this)
                     .applyTo(new Applier.Opacity(0), new Applier.TranslateY(y - 3))
                     .withDelay(50 * offset)
-                    .onStop(complete -> { if (complete) isVisible = false; });
+                    .onStop(complete -> {
+                        if (complete) isVisible = false;
+                    });
         }
 
         public void toggle(boolean on) {

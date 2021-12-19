@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloHeaderGui extends GuiElement {
 
@@ -98,7 +99,7 @@ public class HoloHeaderGui extends GuiElement {
     }
 
     public void changePage(HoloPage page) {
-        for (GuiButton button: buttons) {
+        for (GuiButton button : buttons) {
             button.setOpacity(0.5f);
         }
 

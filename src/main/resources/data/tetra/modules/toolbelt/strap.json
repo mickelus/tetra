@@ -1,9 +1,9 @@
 {
     "replace": true,
     "type": "tetra:toolbelt_module",
-    "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
-    "slotSuffixes": ["_slot1", "_slot2", "_slot3"],
-    "improvements": ["tetra:toolbelt/strap"],
+    "slots": [ "toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3" ],
+    "slotSuffixes": [ "_slot1", "_slot2", "_slot3" ],
+    "improvements": [ "tetra:toolbelt/strap" ],
     "variants": [
         {
             "key": "strap1/leather",

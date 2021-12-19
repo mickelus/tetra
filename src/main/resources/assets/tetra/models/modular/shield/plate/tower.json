@@ -1,8 +1,8 @@
 {
     "parts": [
         {
-            "origin": [-6, -11, -2],
-            "dimensions": [12, 22, 1]
+            "origin": [ -6, -11, -2 ],
+            "dimensions": [ 12, 22, 1 ]
         }
     ]
 }

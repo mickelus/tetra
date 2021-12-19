@@ -3,16 +3,17 @@ package se.mickelus.tetra.gui.stats.getter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.properties.IToolProvider;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class StatGetterToolEfficiency implements IStatGetter {
 
-    private ToolAction tool;
+    private final ToolAction tool;
 
     public StatGetterToolEfficiency(ToolAction tool) {
         this.tool = tool;

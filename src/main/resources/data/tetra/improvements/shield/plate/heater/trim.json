@@ -1,42 +1,50 @@
 [
     {
-        "materials": ["tetra:metal/"],
+        "materials": [ "tetra:metal/" ],
         "key": "shield/trim/",
         "group": "trim",
         "integrity": -1,
         "durability": 15,
-        "models": [{
-            "type": "tetra:plate/heater",
-            "location": "tetra:items/module/shield/plate/heater/improvements/trim_bevel",
-            "tint": "inherit"
-        }],
+        "models": [
+            {
+                "type": "tetra:plate/heater",
+                "location": "tetra:items/module/shield/plate/heater/improvements/trim_bevel",
+                "tint": "inherit"
+            }
+        ],
         "extract": {
             "durability": 0.17,
-            "availableTextures": ["trim"],
-            "models": [{
-                "type": "tetra:plate/heater",
-                "location": "tetra:items/module/shield/plate/heater/improvements/"
-            }]
+            "availableTextures": [ "trim" ],
+            "models": [
+                {
+                    "type": "tetra:plate/heater",
+                    "location": "tetra:items/module/shield/plate/heater/improvements/"
+                }
+            ]
         }
     },
     {
-        "materials": ["tetra:skin/"],
+        "materials": [ "tetra:skin/" ],
         "key": "shield/trim/",
         "group": "trim",
         "integrity": -1,
         "durability": 15,
-        "models": [{
-            "type": "tetra:plate/heater",
-            "location": "tetra:items/module/shield/plate/heater/improvements/trim_shadow",
-            "tint": "inherit"
-        }],
+        "models": [
+            {
+                "type": "tetra:plate/heater",
+                "location": "tetra:items/module/shield/plate/heater/improvements/trim_shadow",
+                "tint": "inherit"
+            }
+        ],
         "extract": {
             "durability": 0.2,
-            "availableTextures": ["trim"],
-            "models": [{
-                "type": "tetra:plate/heater",
-                "location": "tetra:items/module/shield/plate/heater/improvements/"
-            }]
+            "availableTextures": [ "trim" ],
+            "models": [
+                {
+                    "type": "tetra:plate/heater",
+                    "location": "tetra:items/module/shield/plate/heater/improvements/"
+                }
+            ]
         }
     },
     {

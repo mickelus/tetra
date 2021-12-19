@@ -9,10 +9,13 @@ import se.mickelus.tetra.items.ITetraItem;
 
 public interface IProxy {
 
-    public void preInit(ITetraItem[] items, ITetraBlock[] blocks);
-    public void init(FMLCommonSetupEvent event, ITetraItem[] items, ITetraBlock[] blocks);
-    public void postInit();
+    void preInit(ITetraItem[] items, ITetraBlock[] blocks);
 
-    public Player getClientPlayer();
-    public TagCollection<Item> getItemTags();
+    void init(FMLCommonSetupEvent event, ITetraItem[] items, ITetraBlock[] blocks);
+
+    void postInit();
+
+    Player getClientPlayer();
+
+    TagCollection<Item> getItemTags();
 }

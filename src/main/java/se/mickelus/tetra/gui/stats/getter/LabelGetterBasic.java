@@ -3,18 +3,9 @@ package se.mickelus.tetra.gui.stats.getter;
 import net.minecraft.ChatFormatting;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class LabelGetterBasic implements ILabelGetter {
-    protected static final String increaseColorFont = ChatFormatting.GREEN.toString();
-    protected static final String decreaseColorFont = ChatFormatting.RED.toString();
-
-    protected String formatDiff;
-    protected String formatDiffFlipped;
-    protected String format;
-
-    // denotes if a decrease in value should be considered positive
-    protected boolean inverted;
-
     public static final ILabelGetter integerLabel = new LabelGetterBasic("%.0f", "%+.0f");
     public static final ILabelGetter integerLabelInverted = new LabelGetterBasic("%.0f", "%+.0f", true);
     public static final ILabelGetter decimalLabel = new LabelGetterBasic("%.02f", "%+.02f");
@@ -24,11 +15,22 @@ public class LabelGetterBasic implements ILabelGetter {
     public static final ILabelGetter percentageLabelInverted = new LabelGetterBasic("%.0f%%", "%+.0f%%", true);
     public static final ILabelGetter percentageLabelDecimal = new LabelGetterBasic("%.01f%%", "%+.01f%%");
     public static final ILabelGetter percentageLabelDecimalInverted = new LabelGetterBasic("%.01f%%", "%+.01f%%", true);
-
     public static final ILabelGetter noLabel = new ILabelGetter() {
-        public String getLabel(double value, double diffValue, boolean flipped) { return ""; }
-        public String getLabelMerged(double value, double diffValue) { return ""; }
+        public String getLabel(double value, double diffValue, boolean flipped) {
+            return "";
+        }
+
+        public String getLabelMerged(double value, double diffValue) {
+            return "";
+        }
     };
+    protected static final String increaseColorFont = ChatFormatting.GREEN.toString();
+    protected static final String decreaseColorFont = ChatFormatting.RED.toString();
+    protected String formatDiff;
+    protected String formatDiffFlipped;
+    protected String format;
+    // denotes if a decrease in value should be considered positive
+    protected boolean inverted;
 
     public LabelGetterBasic(String format) {
         this(format, format);

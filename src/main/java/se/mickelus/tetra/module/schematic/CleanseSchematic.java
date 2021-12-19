@@ -7,18 +7,19 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolAction;
 import org.apache.commons.lang3.ArrayUtils;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class CleanseSchematic implements UpgradeSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
@@ -28,9 +29,10 @@ public class CleanseSchematic implements UpgradeSchematic {
     private static final String descriptionSuffix = ".description";
     private static final String slotLabel = "item.minecraft.lapis_lazuli";
 
-    private GlyphData glyph = new GlyphData("textures/gui/workbench.png", 80, 32);
+    private final GlyphData glyph = new GlyphData("textures/gui/workbench.png", 80, 32);
 
-    public CleanseSchematic() { }
+    public CleanseSchematic() {
+    }
 
     @Override
     public String getKey() {
@@ -59,7 +61,7 @@ public class CleanseSchematic implements UpgradeSchematic {
 
     @Override
     public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
-        return new ItemStack[] {Items.LAPIS_LAZULI.getDefaultInstance()};
+        return new ItemStack[]{Items.LAPIS_LAZULI.getDefaultInstance()};
     }
 
     @Override

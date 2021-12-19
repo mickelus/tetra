@@ -3,6 +3,7 @@ package se.mickelus.tetra.module.schematic;
 import se.mickelus.tetra.module.data.ToolData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class RepairDefinition {
     public OutcomeMaterial material;

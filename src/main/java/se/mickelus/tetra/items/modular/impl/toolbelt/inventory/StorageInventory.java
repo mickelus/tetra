@@ -8,7 +8,6 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Predicate;
 
 @ParametersAreNonnullByDefault
 public class StorageInventory extends ToolbeltInventory {
@@ -24,6 +23,16 @@ public class StorageInventory extends ToolbeltInventory {
         predicate = getPredicate("storage");
 
         readFromNBT(stack.getOrCreateTag());
+    }
+
+    public static int getColumns(int slotCount) {
+        for (int i = 12; i >= 5; i--) {
+            if (slotCount % i == 0) {
+                return i;
+            }
+
+        }
+        return 9;
     }
 
     @Override
@@ -59,15 +68,5 @@ public class StorageInventory extends ToolbeltInventory {
             }
         }
         return false;
-    }
-
-    public static int getColumns(int slotCount) {
-        for (int i = 12; i >= 5; i--) {
-            if (slotCount % i == 0) {
-                return i;
-            }
-
-        }
-        return 9;
     }
 }

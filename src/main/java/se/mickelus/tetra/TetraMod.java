@@ -40,18 +40,11 @@ import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ITetraBlock;
-import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.chthonic.*;
-import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
-import se.mickelus.tetra.blocks.forged.container.ForgedContainerContainer;
-import se.mickelus.tetra.blocks.forged.container.ForgedContainerRenderer;
-import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
-import se.mickelus.tetra.blocks.forged.extractor.*;
-import se.mickelus.tetra.blocks.forged.hammer.*;
-import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
-import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
+import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
 import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.rack.RackBlock;
 import se.mickelus.tetra.blocks.rack.RackTile;
@@ -84,7 +77,6 @@ import se.mickelus.tetra.effect.revenge.RemoveRevengePacket;
 import se.mickelus.tetra.generation.ExtendedStructureRenderer;
 import se.mickelus.tetra.items.ITetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
-import se.mickelus.tetra.items.cell.ItemCellMagmatic;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.loot.DragonSinewItem;
 import se.mickelus.tetra.items.modular.*;
@@ -112,7 +104,6 @@ import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.module.schematic.BookEnchantSchematic;
 import se.mickelus.tetra.module.schematic.CleanseSchematic;
-import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
@@ -122,23 +113,19 @@ import se.mickelus.tetra.trades.TradeHandler;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 
-@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)
 
 @ParametersAreNonnullByDefault
 public class TetraMod {
-    private static final Logger logger = LogManager.getLogger();
-
     public static final String MOD_ID = "tetra";
-
+    private static final Logger logger = LogManager.getLogger();
     public static IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
     public static TetraMod instance;
-
+    public static PacketHandler packetHandler;
     private static Item[] items;
     private static Block[] blocks;
-
-    public static PacketHandler packetHandler;
 
     public TetraMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -201,7 +188,7 @@ public class TetraMod {
 
         ScrollBlock scrollRolled = new RolledScrollBlock();
 
-        blocks = new Block[] {
+        blocks = new Block[]{
                 new BasicWorkbenchBlock(),
                 new GeodeBlock(),
 //                new HammerHeadBlock(),
@@ -228,7 +215,7 @@ public class TetraMod {
                 new OpenScrollBlock()
         };
 
-        items = new Item[] {
+        items = new Item[]{
                 new ModularBladedItem(),
                 new ModularDoubleHeadedItem(),
                 new GeodeItem(),
@@ -280,52 +267,6 @@ public class TetraMod {
                 Arrays.stream(blocks)
                         .filter(block -> block instanceof ITetraBlock)
                         .map(block -> (ITetraBlock) block).toArray(ITetraBlock[]::new));
-    }
-
-    public void setup(FMLCommonSetupEvent event) {
-        proxy.init(event,
-                Arrays.stream(items)
-                        .filter(item -> item instanceof ITetraItem)
-                        .map(item -> (ITetraItem) item).toArray(ITetraItem[]::new),
-                Arrays.stream(blocks)
-                        .filter(block -> block instanceof ITetraBlock)
-                        .map(block -> (ITetraBlock) block).toArray(ITetraBlock[]::new));
-
-
-        packetHandler = new PacketHandler(MOD_ID, "main", "1");
-
-        Arrays.stream(items)
-                .filter(item -> item instanceof ITetraItem)
-                .map(item -> (ITetraItem) item)
-                .forEach(item -> item.init(packetHandler));
-        Arrays.stream(blocks)
-                .filter(block -> block instanceof ITetraBlock)
-                .map(block -> (ITetraBlock) block)
-                .forEach(block -> block.init(packetHandler));
-
-        packetHandler.registerPacket(HonePacket.class, HonePacket::new);
-        packetHandler.registerPacket(SettlePacket.class, SettlePacket::new);
-        packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
-        packetHandler.registerPacket(SecondaryAbilityPacket.class, SecondaryAbilityPacket::new);
-        packetHandler.registerPacket(ChargedAbilityPacket.class, ChargedAbilityPacket::new);
-        packetHandler.registerPacket(TruesweepPacket.class, TruesweepPacket::new);
-        packetHandler.registerPacket(HowlingPacket.class, HowlingPacket::new);
-        packetHandler.registerPacket(ProjectileMotionPacket.class, ProjectileMotionPacket::new);
-        packetHandler.registerPacket(AddRevengePacket.class, AddRevengePacket::new);
-        packetHandler.registerPacket(RemoveRevengePacket.class, RemoveRevengePacket::new);
-        packetHandler.registerPacket(LungeEchoPacket.class, LungeEchoPacket::new);
-
-        WorkbenchTile.init(packetHandler);
-
-        proxy.postInit();
-
-        DestabilizationEffect.init();
-        SchematicRegistry.instance.registerSchematic(new CleanseSchematic());
-    }
-
-    @SubscribeEvent
-    public void serverStarting(ServerStartingEvent event) {
-        ModuleDevCommand.register(event.getServer().getCommands().getDispatcher());
     }
 
     @SubscribeEvent
@@ -382,9 +323,55 @@ public class TetraMod {
     @SubscribeEvent
     public static void onGatherData(final GatherDataEvent event) {
         DataGenerator dataGenerator = event.getGenerator();
-        if(event.includeServer()) {
+        if (event.includeServer()) {
 //            dataGenerator.addProvider(new BlockstateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
         }
+    }
+
+    public void setup(FMLCommonSetupEvent event) {
+        proxy.init(event,
+                Arrays.stream(items)
+                        .filter(item -> item instanceof ITetraItem)
+                        .map(item -> (ITetraItem) item).toArray(ITetraItem[]::new),
+                Arrays.stream(blocks)
+                        .filter(block -> block instanceof ITetraBlock)
+                        .map(block -> (ITetraBlock) block).toArray(ITetraBlock[]::new));
+
+
+        packetHandler = new PacketHandler(MOD_ID, "main", "1");
+
+        Arrays.stream(items)
+                .filter(item -> item instanceof ITetraItem)
+                .map(item -> (ITetraItem) item)
+                .forEach(item -> item.init(packetHandler));
+        Arrays.stream(blocks)
+                .filter(block -> block instanceof ITetraBlock)
+                .map(block -> (ITetraBlock) block)
+                .forEach(block -> block.init(packetHandler));
+
+        packetHandler.registerPacket(HonePacket.class, HonePacket::new);
+        packetHandler.registerPacket(SettlePacket.class, SettlePacket::new);
+        packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
+        packetHandler.registerPacket(SecondaryAbilityPacket.class, SecondaryAbilityPacket::new);
+        packetHandler.registerPacket(ChargedAbilityPacket.class, ChargedAbilityPacket::new);
+        packetHandler.registerPacket(TruesweepPacket.class, TruesweepPacket::new);
+        packetHandler.registerPacket(HowlingPacket.class, HowlingPacket::new);
+        packetHandler.registerPacket(ProjectileMotionPacket.class, ProjectileMotionPacket::new);
+        packetHandler.registerPacket(AddRevengePacket.class, AddRevengePacket::new);
+        packetHandler.registerPacket(RemoveRevengePacket.class, RemoveRevengePacket::new);
+        packetHandler.registerPacket(LungeEchoPacket.class, LungeEchoPacket::new);
+
+        WorkbenchTile.init(packetHandler);
+
+        proxy.postInit();
+
+        DestabilizationEffect.init();
+        SchematicRegistry.instance.registerSchematic(new CleanseSchematic());
+    }
+
+    @SubscribeEvent
+    public void serverStarting(ServerStartingEvent event) {
+        ModuleDevCommand.register(event.getServer().getCommands().getDispatcher());
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
@@ -392,11 +379,11 @@ public class TetraMod {
         GeodeBlock.registerFeature(event.getGeneration());
     }
 
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
         public static void registerModifierSerializers(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-            event.getRegistry().register(new ReplaceTableModifier.Serializer().setRegistryName(new ResourceLocation(MOD_ID,"replace_table")));
+            event.getRegistry().register(new ReplaceTableModifier.Serializer().setRegistryName(new ResourceLocation(MOD_ID, "replace_table")));
         }
 
         @SubscribeEvent
@@ -465,7 +452,7 @@ public class TetraMod {
         @SubscribeEvent
         public static void registerTileEntities(final RegistryEvent.Register<BlockEntityType<?>> event) {
             event.getRegistry().register(BlockEntityType.Builder.of(WorkbenchTile::new,
-                    BasicWorkbenchBlock.instance) //, ForgedWorkbenchBlock.instance)
+                            BasicWorkbenchBlock.instance) //, ForgedWorkbenchBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, WorkbenchTile.unlocalizedName));
 //
@@ -506,7 +493,7 @@ public class TetraMod {
                     .setRegistryName(MOD_ID, RackBlock.unlocalizedName));
 
             event.getRegistry().register(BlockEntityType.Builder.of(ScrollTile::new,
-                    OpenScrollBlock.instance, WallScrollBlock.instance, RolledScrollBlock.instance)
+                            OpenScrollBlock.instance, WallScrollBlock.instance, RolledScrollBlock.instance)
                     .build(null)
                     .setRegistryName(MOD_ID, ScrollTile.unlocalizedName));
         }

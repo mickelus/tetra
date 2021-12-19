@@ -9,6 +9,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -18,13 +19,13 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.EnchantmentMapping;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ToolData;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.IntStream;
+
 @ParametersAreNonnullByDefault
 public class BookEnchantSchematic implements UpgradeSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
@@ -34,9 +35,10 @@ public class BookEnchantSchematic implements UpgradeSchematic {
     private static final String descriptionSuffix = ".description";
     private static final String slotSuffix = ".slot1";
 
-    private GlyphData glyph = new GlyphData(GuiTextures.workbench, 80, 32);
+    private final GlyphData glyph = new GlyphData(GuiTextures.workbench, 80, 32);
 
-    public BookEnchantSchematic() {}
+    public BookEnchantSchematic() {
+    }
 
     @Override
     public String getKey() {
@@ -65,7 +67,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     @Override
     public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
-        return new ItemStack[] {Items.ENCHANTED_BOOK.getDefaultInstance()};
+        return new ItemStack[]{Items.ENCHANTED_BOOK.getDefaultInstance()};
     }
 
     @Override
@@ -77,7 +79,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
     public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack) {
         ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, itemSlot))
-                .flatMap (mod -> CastOptional.cast(mod, ItemModuleMajor.class))
+                .flatMap(mod -> CastOptional.cast(mod, ItemModuleMajor.class))
                 .orElse(null);
 
         return module != null && !materialStack.isEmpty() && materialStack.getItem() instanceof EnchantedBookItem

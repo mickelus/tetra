@@ -1,22 +1,26 @@
 [
     {
-        "materials": ["tetra:metal/"],
+        "materials": [ "tetra:metal/" ],
         "key": "shield/studs/",
         "group": "face",
         "integrity": -1,
         "durability": 10,
-        "models": [{
-            "type": "tetra:plate/buckler",
-            "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
-            "tint": "inherit"
-        }],
+        "models": [
+            {
+                "type": "tetra:plate/buckler",
+                "location": "tetra:items/module/shield/plate/buckler/improvements/studs_shadow",
+                "tint": "inherit"
+            }
+        ],
         "extract": {
             "durability": 0.15,
-            "availableTextures": ["studs"],
-            "models": [{
-                "type": "tetra:plate/buckler",
-                "location": "tetra:items/module/shield/plate/buckler/improvements/"
-            }]
+            "availableTextures": [ "studs" ],
+            "models": [
+                {
+                    "type": "tetra:plate/buckler",
+                    "location": "tetra:items/module/shield/plate/buckler/improvements/"
+                }
+            ]
         }
     }
 ]

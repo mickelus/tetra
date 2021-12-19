@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["bow/string"],
+    "slots": [ "bow/string" ],
     "type": "tetra:basic_major_module",
     "improvements": [
         "tetra:enchantment/infinity",
@@ -27,7 +27,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:fibre/", "tetra:skin/"],
+            "materials": [ "tetra:fibre/", "tetra:skin/" ],
             "key": "basic_string/",
             "integrity": 1,
             "durability": 70,
@@ -45,7 +45,7 @@
                     "textureX": 112,
                     "textureY": 32
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
                         "location": "tetra:items/module/bow/string/basic/"

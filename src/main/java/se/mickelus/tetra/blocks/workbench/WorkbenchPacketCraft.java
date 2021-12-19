@@ -5,10 +5,12 @@ import net.minecraft.world.entity.player.Player;
 import se.mickelus.mutil.network.BlockPosPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class WorkbenchPacketCraft extends BlockPosPacket {
 
-    public WorkbenchPacketCraft() {}
+    public WorkbenchPacketCraft() {
+    }
 
     public WorkbenchPacketCraft(BlockPos pos) {
         super(pos);

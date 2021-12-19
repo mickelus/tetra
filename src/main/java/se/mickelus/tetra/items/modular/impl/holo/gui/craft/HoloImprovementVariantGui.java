@@ -9,18 +9,17 @@ import se.mickelus.tetra.module.schematic.OutcomePreview;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloImprovementVariantGui extends GuiClickable {
 
     private final GuiTexture backdrop;
     private final GuiString label;
-
-    private List<String> tooltip;
-    private boolean isMuted;
-
     private final OutcomePreview preview;
     private final Consumer<OutcomePreview> onVariantHover;
     private final Consumer<OutcomePreview> onVariantBlur;
+    private final List<String> tooltip;
+    private boolean isMuted;
 
     public HoloImprovementVariantGui(int x, int y, String name, int labelStart, OutcomePreview preview, boolean isConnected,
             Consumer<OutcomePreview> onVariantHover, Consumer<OutcomePreview> onVariantBlur, Consumer<OutcomePreview> onVariantSelect) {

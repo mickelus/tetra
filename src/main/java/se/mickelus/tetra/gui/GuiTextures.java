@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiTextures {
     public static final ResourceLocation workbench = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/workbench.png");

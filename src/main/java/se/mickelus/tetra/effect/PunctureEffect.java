@@ -16,6 +16,7 @@ import se.mickelus.tetra.effect.potion.PuncturedPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class PunctureEffect extends ChargedAbilityEffect {
 

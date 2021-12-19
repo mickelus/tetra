@@ -9,7 +9,6 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.function.Predicate;
 
 @ParametersAreNonnullByDefault
 public class QuickslotInventory extends ToolbeltInventory {
@@ -18,7 +17,7 @@ public class QuickslotInventory extends ToolbeltInventory {
     private static final String inventoryKey = "quickInventory";
     private static final String shadowsKey = "quickShadows";
 
-    private NonNullList<ItemStack> inventoryShadows;
+    private final NonNullList<ItemStack> inventoryShadows;
 
     public QuickslotInventory(ItemStack stack) {
         super(inventoryKey, stack, maxSize, SlotType.quick);
@@ -52,10 +51,10 @@ public class QuickslotInventory extends ToolbeltInventory {
         ListTag shadows = new ListTag();
 
         for (int i = 0; i < maxSize; i++) {
-                CompoundTag item = new CompoundTag();
-                item.putInt(slotKey, i);
-                getShadowOfSlot(i).save(item);
-                shadows.add(item);
+            CompoundTag item = new CompoundTag();
+            item.putInt(slotKey, i);
+            getShadowOfSlot(i).save(item);
+            shadows.add(item);
         }
         tagcompound.put(shadowsKey, shadows);
     }

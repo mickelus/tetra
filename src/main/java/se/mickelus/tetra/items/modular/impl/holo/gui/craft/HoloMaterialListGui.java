@@ -14,17 +14,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class HoloMaterialListGui extends GuiElement {
-    private GuiHorizontalScrollable groupsScroll;
-    private GuiHorizontalLayoutGroup groups;
+    private final GuiHorizontalScrollable groupsScroll;
+    private final GuiHorizontalLayoutGroup groups;
 
-    private HoloMaterialDetailGui detail;
-
+    private final HoloMaterialDetailGui detail;
+    private final KeyframeAnimation openAnimation;
     private MaterialData selectedItem;
     private MaterialData hoveredItem;
-
-    private KeyframeAnimation openAnimation;
 
     public HoloMaterialListGui(int x, int y, int width, int height) {
         super(x, y, width, height);

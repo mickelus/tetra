@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class PotionSlot extends PredicateSlot {
     public PotionSlot(PotionsInventory inventory, int index, int x, int y) {

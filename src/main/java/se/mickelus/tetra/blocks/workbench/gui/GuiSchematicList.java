@@ -9,22 +9,17 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class GuiSchematicList extends GuiElement {
-    private static int pageLength = 8;
-
+    private static final int pageLength = 8;
+    private final Consumer<UpgradeSchematic> schematicSelectionConsumer;
+    private final GuiElement listGroup;
+    private final GuiButton buttonBack;
+    private final GuiButton buttonForward;
+    private final GuiText emptyStateText;
     private int page = 0;
-
     private UpgradeSchematic[] schematics;
-
-    private Consumer<UpgradeSchematic> schematicSelectionConsumer;
-
-    private GuiElement listGroup;
-
-    private GuiButton buttonBack;
-    private GuiButton buttonForward;
-
-    private GuiText emptyStateText;
 
     public GuiSchematicList(int x, int y, Consumer<UpgradeSchematic> schematicSelectionConsumer) {
         super(x, y, 224, 67);
@@ -81,6 +76,6 @@ public class GuiSchematicList extends GuiElement {
     }
 
     private int getNumPages() {
-        return (int) Math.ceil(1f * schematics.length / pageLength );
+        return (int) Math.ceil(1f * schematics.length / pageLength);
     }
 }

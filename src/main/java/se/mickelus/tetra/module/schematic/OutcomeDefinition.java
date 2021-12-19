@@ -7,6 +7,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class OutcomeDefinition {
 
@@ -35,11 +36,11 @@ public class OutcomeDefinition {
     /**
      * Defines which tools (and which level of each tool) are required for this outcome.
      * Optional, if no tools are required this field can be omitted.
-     *
+     * <p>
      * Json format:
      * {
-     *     "toolA": level,
-     *     "toolB": level
+     * "toolA": level,
+     * "toolB": level
      * }
      */
     public ToolData requiredTools = new ToolData();
@@ -60,11 +61,11 @@ public class OutcomeDefinition {
      * An object describing which improvements to apply to which slot, where the key is the improvement and the value
      * is the improvement level.
      * Optional, this can be used both with and without the moduleKey being set.
-     *
+     * <p>
      * Json format:
      * {
-     *     "improvementA": level,
-     *     "improvementB": level
+     * "improvementA": level,
+     * "improvementB": level
      * }
      */
     public Map<String, Integer> improvements = new HashMap<>();

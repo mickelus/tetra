@@ -8,9 +8,11 @@
         "effects": {
             "armorPenetration": 35
         },
-        "models": [{
-            "location": "tetra:items/module/double/head/claw/warforged",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/double/head/claw/warforged",
+                "tint": "inherit"
+            }
+        ]
     }
 ]

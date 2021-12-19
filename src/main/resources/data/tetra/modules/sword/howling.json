@@ -1,16 +1,16 @@
 {
     "replace": true,
-    "slots": ["sword/fuller"],
+    "slots": [ "sword/fuller" ],
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:metal/", "tetra:wood/", "tetra:scale/", "tetra:misc/vent_plate"],
+            "materials": [ "tetra:metal/", "tetra:wood/", "tetra:scale/", "tetra:misc/vent_plate" ],
             "key": "howling/",
             "attributes": {
                 "generic.attack_speed": -0.1
             },
             "effects": {
-                "howling": [-1, 1]
+                "howling": [ -1, 1 ]
             },
             "durability": 10,
             "integrity": -1,
@@ -22,15 +22,15 @@
                     "howling": 0.5
                 },
                 "tertiaryEffects": {
-                    "howling": [0, 0.2]
+                    "howling": [ 0, 0.2 ]
                 },
                 "durability": 0.25,
                 "glyph": {
                     "textureX": 72,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
-                "models": [{ "location": "tetra:items/module/sword/fuller/howling/" }]
+                "availableTextures": [ "default" ],
+                "models": [ { "location": "tetra:items/module/sword/fuller/howling/" } ]
             }
         }
     ]

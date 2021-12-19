@@ -9,6 +9,7 @@ import net.minecraftforge.common.ToolAction;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class MaterialReductionOutcome implements CraftingEffectOutcome {
     float probability;

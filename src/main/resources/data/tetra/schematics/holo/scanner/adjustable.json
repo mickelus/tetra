@@ -17,8 +17,8 @@
     "requirement": {
         "type": "tetra:modular_item",
         "modules": [
-            ["holo/scanner_0"],
-            ["holo/scanner_1"]
+            [ "holo/scanner_0" ],
+            [ "holo/scanner_1" ]
         ]
     },
     "outcomes": [

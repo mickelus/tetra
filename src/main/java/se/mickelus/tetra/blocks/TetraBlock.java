@@ -16,6 +16,7 @@ import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TetraBlock extends Block implements ITetraBlock {
 
@@ -25,12 +26,7 @@ public class TetraBlock extends Block implements ITetraBlock {
         super(properties);
     }
 
-    @Override
-    public boolean hasItem() {
-        return hasItem;
-    }
-
-    public static void  dropBlockInventory(Block thisBlock, Level world, BlockPos pos, BlockState newState) {
+    public static void dropBlockInventory(Block thisBlock, Level world, BlockPos pos, BlockState newState) {
         if (!thisBlock.equals(newState.getBlock())) {
             TileEntityOptional.from(world, pos, BlockEntity.class)
                     .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
@@ -53,5 +49,10 @@ public class TetraBlock extends Block implements ITetraBlock {
     protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> getTicker(BlockEntityType<A> givenType,
             BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
         return expectedType == givenType ? (BlockEntityTicker<A>) ticker : null;
+    }
+
+    @Override
+    public boolean hasItem() {
+        return hasItem;
     }
 }

@@ -15,19 +15,15 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class OverlayGuiPotionSlot extends GuiElement {
-    private ItemStack itemStack;
-
-    private int slot;
-
-    private Minecraft mc;
-
-    private KeyframeAnimation showAnimation;
-
-    private Font fontRenderer;
-
+    private final ItemStack itemStack;
+    private final int slot;
+    private final Minecraft mc;
+    private final KeyframeAnimation showAnimation;
     GuiTexture backdrop;
+    private Font fontRenderer;
 
     public OverlayGuiPotionSlot(int x, int y, ItemStack itemStack, int slot, boolean animateUp) {
         super(x, y, 23, 23);
@@ -48,13 +44,13 @@ public class OverlayGuiPotionSlot extends GuiElement {
             fontRenderer = mc.font;
         }
 
-        backdrop  = new GuiTexture(0, 0, 23, 23, 32, 28, GuiTextures.toolbelt);
+        backdrop = new GuiTexture(0, 0, 23, 23, 32, 28, GuiTextures.toolbelt);
         addChild(backdrop);
 
         isVisible = false;
         showAnimation = new KeyframeAnimation(80, this)
-            .applyTo(new Applier.TranslateY(animateUp ? y + 2 : y - 2, y), new Applier.Opacity(0, 1))
-            .withDelay((int) (Math.random() * 300));
+                .applyTo(new Applier.TranslateY(animateUp ? y + 2 : y - 2, y), new Applier.Opacity(0, 1))
+                .withDelay((int) (Math.random() * 300));
     }
 
     @Override
@@ -113,11 +109,7 @@ public class OverlayGuiPotionSlot extends GuiElement {
     protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
         mouseX -= refX + x;
         mouseY -= refY + y;
-        boolean gainFocus = true;
-
-        if (mouseX + mouseY < 12) {
-            gainFocus = false;
-        }
+        boolean gainFocus = mouseX + mouseY >= 12;
 
         if (mouseX + mouseY > 34) {
             gainFocus = false;

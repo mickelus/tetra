@@ -21,16 +21,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
+
 @ParametersAreNonnullByDefault
 public class ItemCellMagmatic extends TetraItem {
+    public static final int maxCharge = 128;
     private static final String unlocalizedName = "magmatic_cell";
-
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemCellMagmatic instance;
-
     private final String chargedPropKey = "tetra:charged";
-
-    public static final int maxCharge = 128;
 
     public ItemCellMagmatic() {
         super(new Properties()

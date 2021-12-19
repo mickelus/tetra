@@ -3,7 +3,7 @@
         "key": "destabilized/haunted",
         "level": 1,
         "effects": {
-            "haunted": [10, 0.1]
+            "haunted": [ 10, 0.1 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -13,7 +13,7 @@
         "key": "destabilized/haunted",
         "level": 2,
         "effects": {
-            "haunted": [10, 0.2]
+            "haunted": [ 10, 0.2 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -23,7 +23,7 @@
         "key": "destabilized/haunted",
         "level": 3,
         "effects": {
-            "haunted": [10, 0.3]
+            "haunted": [ 10, 0.3 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -33,7 +33,7 @@
         "key": "destabilized/haunted",
         "level": 4,
         "effects": {
-            "haunted": [10, 0.4]
+            "haunted": [ 10, 0.4 ]
         },
         "glyph": {
             "tint": "ee5599"

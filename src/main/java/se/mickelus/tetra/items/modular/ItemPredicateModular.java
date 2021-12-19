@@ -4,19 +4,20 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.world.item.ItemStack;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
+
 @ParametersAreNonnullByDefault
 public class ItemPredicateModular extends ItemPredicate {
 
+    private final Map<String, String> variants = new HashMap<>();
+    private final Map<String, Integer> improvements = new HashMap<>();
     private String[][] modules = new String[0][0];
-    private Map<String, String> variants = new HashMap<>();
-    private Map<String, Integer> improvements = new HashMap<>();
 
     public ItemPredicateModular(String[][] modules) {
         this.modules = modules;
@@ -54,9 +55,7 @@ public class ItemPredicateModular extends ItemPredicate {
                 return false;
             }
 
-            if (!improvements.isEmpty() && !checkImprovements(itemStack, slot)) {
-                return false;
-            }
+            return improvements.isEmpty() || checkImprovements(itemStack, slot);
         }
 
         return true;
@@ -160,7 +159,7 @@ public class ItemPredicateModular extends ItemPredicate {
         return improvements.entrySet().stream()
                 .filter(entry -> entry.getKey().startsWith("!"))
                 .anyMatch(entry -> {
-                    for (ImprovementData data: improvementData) {
+                    for (ImprovementData data : improvementData) {
                         if (entry.getKey().substring(1).equals(data.key) && (entry.getValue() == -1 || entry.getValue() == data.level)) {
                             return true;
                         }
@@ -176,7 +175,7 @@ public class ItemPredicateModular extends ItemPredicate {
         return improvements.entrySet().stream()
                 .filter(entry -> !entry.getKey().startsWith("!"))
                 .anyMatch(entry -> {
-                    for (ImprovementData data: improvementData) {
+                    for (ImprovementData data : improvementData) {
                         if (entry.getKey().equals(data.key) && (entry.getValue() == -1 || entry.getValue() == data.level)) {
                             return true;
                         }
@@ -188,6 +187,6 @@ public class ItemPredicateModular extends ItemPredicate {
 
     @Override
     public boolean matches(ItemStack itemStack) {
-       return test(itemStack, null);
+        return test(itemStack, null);
     }
 }

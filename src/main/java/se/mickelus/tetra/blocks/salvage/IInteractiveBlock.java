@@ -9,5 +9,5 @@ import net.minecraftforge.common.ToolAction;
 import java.util.Collection;
 
 public interface IInteractiveBlock {
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolAction> tools);
+    BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolAction> tools);
 }

@@ -15,20 +15,21 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloBreadcrumbsGui extends GuiElement {
 
-    private Consumer<Integer> onClick;
+    private final Consumer<Integer> onClick;
 
-    private KeyframeAnimation openAnimation;
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
+    private final KeyframeAnimation openAnimation;
+    private final KeyframeAnimation showAnimation;
+    private final KeyframeAnimation hideAnimation;
 
-    private KeyframeAnimation focusAnimation;
-    private KeyframeAnimation blurAnimation;
+    private final KeyframeAnimation focusAnimation;
+    private final KeyframeAnimation blurAnimation;
 
-    private List<GuiElement> separators;
-    private List<GuiButton> buttons;
+    private final List<GuiElement> separators;
+    private final List<GuiButton> buttons;
 
     public HoloBreadcrumbsGui(int x, int y, int width, Consumer<Integer> onClick) {
         super(x, y, width, 16);

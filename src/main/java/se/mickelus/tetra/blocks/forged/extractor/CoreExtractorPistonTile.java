@@ -11,18 +11,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.mutil.util.TileEntityOptional;
+import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class CoreExtractorPistonTile extends BlockEntity {
-    @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorPistonBlock.unlocalizedName)
-    public static BlockEntityType<CoreExtractorPistonTile> type;
-
     static final long activationDuration = 105;
     private static final int fillAmount = 40;
-
+    @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorPistonBlock.unlocalizedName)
+    public static BlockEntityType<CoreExtractorPistonTile> type;
     private long endTime = Long.MAX_VALUE;
 
     public CoreExtractorPistonTile(BlockPos blockPos, BlockState blockState) {
@@ -59,7 +58,7 @@ public class CoreExtractorPistonTile extends BlockEntity {
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE,
                     worldPosition.getX() + 0.5, worldPosition.getY() + 0.1, worldPosition.getZ() + 0.5,
-                    5,  0, 0, 0, 0.02f);
+                    5, 0, 0, 0, 0.02f);
         }
 
         level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
@@ -74,7 +73,7 @@ public class CoreExtractorPistonTile extends BlockEntity {
             endTime = Long.MAX_VALUE;
             if (!level.isClientSide) {
                 TileEntityOptional.from(level, pos.relative(Direction.DOWN), CoreExtractorBaseTile.class)
-                    .ifPresent(base -> base.fill(fillAmount));
+                        .ifPresent(base -> base.fill(fillAmount));
 
                 runEndEffects();
                 setChanged();

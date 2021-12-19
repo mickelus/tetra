@@ -8,10 +8,11 @@ import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.properties.TetraAttributes;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TooltipGetterVelocity implements ITooltipGetter {
-    private static final IStatGetter velocityGetter = new StatGetterEffectLevel(ItemEffect.velocity, 1);
     public static final IStatGetter drawStrengthGetter = new StatGetterAttribute(TetraAttributes.drawStrength.get());
+    private static final IStatGetter velocityGetter = new StatGetterEffectLevel(ItemEffect.velocity, 1);
 
     @Override
     public String getTooltipBase(Player player, ItemStack itemStack) {

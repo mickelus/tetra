@@ -19,11 +19,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
+
 @ParametersAreNonnullByDefault
 public class BakedWrapper implements BakedModel {
 
-    private TextureAtlasSprite particleAtlas;
-    private ItemOverrides itemOverrideList;
+    private final TextureAtlasSprite particleAtlas;
+    private final ItemOverrides itemOverrideList;
 
     public BakedWrapper(ModularItemModel model, IModelConfiguration owner, ModelBakery bakery,
             Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ResourceLocation modelLocation,

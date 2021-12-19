@@ -11,15 +11,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class UtilBooster {
 
@@ -103,7 +104,7 @@ public class UtilBooster {
                     8, 0, -0.3, 0, 0.1D);
 
             if (Math.random() > 0.3) {
-                ((ServerLevel)player.level).sendParticles(ParticleTypes.FLAME,
+                ((ServerLevel) player.level).sendParticles(ParticleTypes.FLAME,
                         player.getX() - 0.2 + Math.random() * 0.4,
                         player.getY() + Math.random() * 0.2,
                         player.getZ() - 0.2 + Math.random() * 0.4,
@@ -135,17 +136,17 @@ public class UtilBooster {
                         for (int i = 0; i < 8; i++) {
                             player.getCommandSenderWorld().addParticle(ParticleTypes.SMOKE,
                                     player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
-                                    Math.random() * (0.2 * direction.x + 0.07) -0.05,
+                                    Math.random() * (0.2 * direction.x + 0.07) - 0.05,
                                     Math.random() * 0.1 - 0.05,
-                                    Math.random() * (0.2 * direction.z + 0.07) -0.05);
+                                    Math.random() * (0.2 * direction.z + 0.07) - 0.05);
                         }
 
                         if (Math.random() > 0.3) {
                             player.getCommandSenderWorld().addParticle(ParticleTypes.FLAME,
                                     player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
-                                    Math.random() * (0.2 * direction.x + 0.07) -0.05,
+                                    Math.random() * (0.2 * direction.x + 0.07) - 0.05,
                                     Math.random() * 0.1 - 0.05,
-                                    Math.random() * (0.2 * direction.z + 0.07) -0.05);
+                                    Math.random() * (0.2 * direction.z + 0.07) - 0.05);
                         }
                     }
 
@@ -176,10 +177,10 @@ public class UtilBooster {
         player.move(MoverType.SELF, new Vec3(0, 0.4, 0));
 
         if (player.level instanceof ServerLevel) {
-            ((ServerLevel)player.level).sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(),
+            ((ServerLevel) player.level).sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(),
                     player.getY() + player.getBbHeight() * 0.4, player.getZ(), 10, 0,
                     -0.1, 0, 0.1D);
-            ((ServerLevel)player.level).sendParticles(ParticleTypes.FLAME, player.getX(),
+            ((ServerLevel) player.level).sendParticles(ParticleTypes.FLAME, player.getX(),
                     player.getY() + player.getBbHeight() * 0.4, player.getZ(), 3, 0,
                     -0.1, 0, 0.1D);
         }

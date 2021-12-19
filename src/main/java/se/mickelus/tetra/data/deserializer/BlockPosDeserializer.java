@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class BlockPosDeserializer implements JsonDeserializer<BlockPos> {
     @Override

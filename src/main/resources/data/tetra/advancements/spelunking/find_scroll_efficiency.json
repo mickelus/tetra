@@ -16,28 +16,34 @@
         "hammer_efficiency": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [{
-                    "item": "tetra:scroll_rolled",
-                    "nbt": "{BlockEntityTag:{data:[{key:\"hammer_efficiency\"}]}}"
-                }]
+                "items": [
+                    {
+                        "item": "tetra:scroll_rolled",
+                        "nbt": "{BlockEntityTag:{data:[{key:\"hammer_efficiency\"}]}}"
+                    }
+                ]
             }
         },
         "axe_efficiency": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [{
-                    "item": "tetra:scroll_rolled",
-                    "nbt": "{BlockEntityTag:{data:[{key:\"axe_efficiency\"}]}}"
-                }]
+                "items": [
+                    {
+                        "item": "tetra:scroll_rolled",
+                        "nbt": "{BlockEntityTag:{data:[{key:\"axe_efficiency\"}]}}"
+                    }
+                ]
             }
         },
         "cut_efficiency": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [{
-                    "item": "tetra:scroll_rolled",
-                    "nbt": "{BlockEntityTag:{data:[{key:\"cut_efficiency\"}]}}"
-                }]
+                "items": [
+                    {
+                        "item": "tetra:scroll_rolled",
+                        "nbt": "{BlockEntityTag:{data:[{key:\"cut_efficiency\"}]}}"
+                    }
+                ]
             }
         }
     }

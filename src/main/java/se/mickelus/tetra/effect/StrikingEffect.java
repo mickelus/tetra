@@ -15,11 +15,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -38,7 +38,7 @@ public class StrikingEffect {
             .build();
 
 
-    private static final BlockPos[] sweep1 = new BlockPos[] {
+    private static final BlockPos[] sweep1 = new BlockPos[]{
             new BlockPos(-2, 0, 0),
             new BlockPos(-1, 0, 0),
             new BlockPos(0, 0, 0),
@@ -65,7 +65,7 @@ public class StrikingEffect {
             new BlockPos(-1, -1, -1),
     };
 
-    private static final BlockPos[] sweep2 = new BlockPos[] {
+    private static final BlockPos[] sweep2 = new BlockPos[]{
             new BlockPos(-2, 0, 0),
             new BlockPos(-1, 0, 0),
             new BlockPos(0, 0, 0),

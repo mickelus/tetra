@@ -1,5 +1,5 @@
 {
-  "variants": {
-    "": { "model": "tetra:block/basic_workbench" }
-  }
+    "variants": {
+        "": { "model": "tetra:block/basic_workbench" }
+    }
 }

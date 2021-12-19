@@ -14,12 +14,12 @@ import se.mickelus.tetra.data.DataManager;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class CraftingEffectRegistry {
+    public static CraftingEffectRegistry instance;
     protected Map<String, Class<? extends CraftingEffectCondition>> conditionTypes = new HashMap<>();
     Map<String, Class<? extends CraftingEffectOutcome>> effectTypes = new HashMap<>();
-
-    public static CraftingEffectRegistry instance;
 
     public CraftingEffectRegistry() {
         instance = this;

@@ -1,12 +1,12 @@
 {
     "replace": true,
     "type": "tetra:basic_module",
-    "slots": ["single/binding"],
+    "slots": [ "single/binding" ],
     "renderLayer": "higher",
     "tweakKey": "tetra:single/binding",
     "variants": [
         {
-            "materials": ["tetra:fibre/", "tetra:skin/"],
+            "materials": [ "tetra:fibre/", "tetra:skin/" ],
             "key": "single_binding/",
             "extract": {
                 "secondaryAttributes": {
@@ -18,8 +18,8 @@
                     "textureX": 88,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
-                "models": [{ "location": "tetra:items/module/single/binding/binding/" }]
+                "availableTextures": [ "default" ],
+                "models": [ { "location": "tetra:items/module/single/binding/binding/" } ]
             }
         },
         {
@@ -33,10 +33,12 @@
                 "textureX": 80,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/single/binding/binding/bolt",
-                "tint": "bolt"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/single/binding/binding/bolt",
+                    "tint": "bolt"
+                }
+            ]
         },
         {
             "key": "single_binding/prismarine",

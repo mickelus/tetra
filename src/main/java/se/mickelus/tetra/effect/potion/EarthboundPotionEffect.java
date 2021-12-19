@@ -1,7 +1,6 @@
 package se.mickelus.tetra.effect.potion;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -22,9 +21,8 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class EarthboundPotionEffect extends MobEffect {
+    public static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/potions.png");
     public static EarthboundPotionEffect instance;
-
-    public static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/potions.png");
 
     public EarthboundPotionEffect() {
         super(MobEffectCategory.HARMFUL, 0x006600);

@@ -18,6 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class HoloStatsGui extends GuiElement {
 
@@ -101,7 +102,7 @@ public class HoloStatsGui extends GuiElement {
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.HOE_DIG, true)
     ));
 
-    private GuiElement barGroup;
+    private final GuiElement barGroup;
 
     public HoloStatsGui(int x, int y) {
         super(x, y, 320, 52);

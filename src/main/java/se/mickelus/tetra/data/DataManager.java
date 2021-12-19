@@ -37,10 +37,9 @@ import se.mickelus.tetra.module.schematic.RepairDefinition;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class DataManager implements DataDistributor {
-
-    private final Logger logger = LogManager.getLogger();
 
     // todo: use the same naming for all deserializers?
     public static final Gson gson = new GsonBuilder()
@@ -66,7 +65,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
             .create();
-
+    public static DataManager instance;
     public final DataStore<TweakData[]> tweakData;
     public final MaterialStore materialData;
     public final DataStore<ImprovementData[]> improvementData;
@@ -80,17 +79,15 @@ public class DataManager implements DataDistributor {
     public final DataStore<ConfigActionImpl[]> actionData;
     public final DataStore<DestabilizationEffect[]> destabilizationData;
     public final DataStore<FeatureParameters> featureData;
-
+    private final Logger logger = LogManager.getLogger();
     private final DataStore[] dataStores;
-
-    public static DataManager instance;
 
     public DataManager() {
         instance = this;
 
         this.tweakData = new DataStore<>(gson, TetraMod.MOD_ID, "tweaks", TweakData[].class, this);
         this.materialData = new MaterialStore(gson, TetraMod.MOD_ID, "materials", this);
-        this.improvementData = new ImprovementStore(gson, TetraMod.MOD_ID, "improvements", materialData,this);
+        this.improvementData = new ImprovementStore(gson, TetraMod.MOD_ID, "improvements", materialData, this);
         this.moduleData = new ModuleStore(gson, TetraMod.MOD_ID, "modules", this);
         this.repairData = new DataStore<>(gson, TetraMod.MOD_ID, "repairs", RepairDefinition.class, this);
         this.enchantmentData = new DataStore<>(gson, TetraMod.MOD_ID, "enchantments", EnchantmentMapping[].class, this);
@@ -102,8 +99,8 @@ public class DataManager implements DataDistributor {
         this.destabilizationData = new DataStore<>(gson, TetraMod.MOD_ID, "destabilization", DestabilizationEffect[].class, this);
         this.featureData = new FeatureStore(gson, TetraMod.MOD_ID, "structures", this);
 
-        dataStores = new DataStore[] { tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
-                replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData, featureData };
+        dataStores = new DataStore[]{tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
+                replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData, featureData};
     }
 
     @SubscribeEvent
@@ -135,6 +132,7 @@ public class DataManager implements DataDistributor {
     /**
      * Wrapped data getter for synergy data so that data may be ordered in such a way that it's efficiently compared. Skipping this step
      * would cause items to incorrectly gain synergies.
+     *
      * @param path The path to the synergy data
      * @return An array of synergy data
      */

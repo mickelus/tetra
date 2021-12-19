@@ -6,12 +6,14 @@ import se.mickelus.mutil.network.AbstractPacket;
 import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ChangeCompartmentPacket extends AbstractPacket {
 
     private int compartmentIndex;
 
-    public ChangeCompartmentPacket() {}
+    public ChangeCompartmentPacket() {
+    }
 
     public ChangeCompartmentPacket(int compartmentIndex) {
         this.compartmentIndex = compartmentIndex;

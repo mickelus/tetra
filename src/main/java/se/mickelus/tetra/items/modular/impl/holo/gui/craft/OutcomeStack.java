@@ -5,6 +5,7 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
+
 @ParametersAreNonnullByDefault
 public class OutcomeStack {
     UpgradeSchematic schematic;

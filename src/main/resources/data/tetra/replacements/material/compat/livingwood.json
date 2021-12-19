@@ -1,16 +1,18 @@
 [
     {
-        "conditions": [{
-            "type": "forge:mod_loaded",
-            "modid": "botania"
-        }],
-                "predicate": {
+        "conditions": [
+            {
+                "type": "forge:mod_loaded",
+                "modid": "botania"
+            }
+        ],
+        "predicate": {
             "items": [ "botania:livingwood_bow" ]
         },
         "item": "tetra:modular_bow",
         "modules": {
-            "bow/stave": ["bow/straight_stave", "straight_stave/livingwood"],
-            "bow/string": ["bow/basic_string", "basic_string/mana_string"]
+            "bow/stave": [ "bow/straight_stave", "straight_stave/livingwood" ],
+            "bow/string": [ "bow/basic_string", "basic_string/mana_string" ]
         },
         "improvements": {
             "bow/stave:mana_repair": 3,

@@ -9,21 +9,18 @@ import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.util.JsonOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ModuleCraftCriterion extends AbstractCriterionTriggerInstance {
+    public static final GenericTrigger<ModuleCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_module", ModuleCraftCriterion::deserialize);
     private final ItemPredicate before;
     private final ItemPredicate after;
-
     private final String schematic;
-
     private final String slot;
     private final String module;
     private final String variant;
-
     private final ToolAction toolAction;
     private final MinMaxBounds.Ints toolLevel;
-
-    public static final GenericTrigger<ModuleCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_module", ModuleCraftCriterion::deserialize);
 
     public ModuleCraftCriterion(EntityPredicate.Composite playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String module, String variant, ToolAction toolAction, MinMaxBounds.Ints toolLevel) {
         super(trigger.getId(), playerCondition);
@@ -41,6 +38,35 @@ public class ModuleCraftCriterion extends AbstractCriterionTriggerInstance {
             String variant, ToolAction toolAction, int toolLevel) {
         trigger.fulfillCriterion(player, criterion -> criterion.test(before, after, schematic, slot, module, variant, toolAction,
                 toolLevel));
+    }
+
+    private static ModuleCraftCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
+        return new ModuleCraftCriterion(entityPredicate,
+                JsonOptional.field(json, "before")
+                        .map(ItemPredicate::fromJson)
+                        .orElse(null),
+                JsonOptional.field(json, "after")
+                        .map(ItemPredicate::fromJson)
+                        .orElse(null),
+                JsonOptional.field(json, "schematic")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "slot")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "module")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "variant")
+                        .map(JsonElement::getAsString)
+                        .orElse(null),
+                JsonOptional.field(json, "tool")
+                        .map(JsonElement::getAsString)
+                        .map(ToolAction::get)
+                        .orElse(null),
+                JsonOptional.field(json, "toolLevel")
+                        .map(MinMaxBounds.Ints::fromJson)
+                        .orElse(MinMaxBounds.Ints.ANY));
     }
 
     public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String module, String variant,
@@ -73,39 +99,6 @@ public class ModuleCraftCriterion extends AbstractCriterionTriggerInstance {
             return false;
         }
 
-        if (!this.toolLevel.matches(toolLevel)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private static ModuleCraftCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
-        return new ModuleCraftCriterion(entityPredicate,
-                JsonOptional.field(json, "before")
-                        .map(ItemPredicate::fromJson)
-                        .orElse(null),
-                JsonOptional.field(json, "after")
-                        .map(ItemPredicate::fromJson)
-                        .orElse(null),
-                JsonOptional.field(json, "schematic")
-                        .map(JsonElement::getAsString)
-                        .orElse(null),
-                JsonOptional.field(json, "slot")
-                        .map(JsonElement::getAsString)
-                        .orElse(null),
-                JsonOptional.field(json, "module")
-                        .map(JsonElement::getAsString)
-                        .orElse(null),
-                JsonOptional.field(json, "variant")
-                        .map(JsonElement::getAsString)
-                        .orElse(null),
-                JsonOptional.field(json, "tool")
-                        .map(JsonElement::getAsString)
-                        .map(ToolAction::get)
-                        .orElse(null),
-                JsonOptional.field(json, "toolLevel")
-                        .map(MinMaxBounds.Ints::fromJson)
-                        .orElse(MinMaxBounds.Ints.ANY));
+        return this.toolLevel.matches(toolLevel);
     }
 }

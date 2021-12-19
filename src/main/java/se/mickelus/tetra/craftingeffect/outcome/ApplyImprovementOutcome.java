@@ -6,12 +6,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class ApplyImprovementOutcome implements CraftingEffectOutcome {
     Map<String, Integer> improvements;
@@ -24,7 +25,7 @@ public class ApplyImprovementOutcome implements CraftingEffectOutcome {
                 .flatMap(module -> CastOptional.cast(module, ItemModuleMajor.class))
                 .map(module -> {
                     boolean result = false;
-                    for (Map.Entry<String, Integer> improvement: improvements.entrySet()){
+                    for (Map.Entry<String, Integer> improvement : improvements.entrySet()) {
                         if (module.acceptsImprovementLevel(improvement.getKey(), improvement.getValue())) {
                             module.addImprovement(upgradedStack, improvement.getKey(), improvement.getValue());
                             result = true;

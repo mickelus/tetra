@@ -35,6 +35,7 @@ import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.CritEffect;
 import se.mickelus.tetra.effect.EffectHelper;
@@ -42,7 +43,6 @@ import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
-import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.Nullable;
@@ -193,7 +193,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
             BlockState blockState = level.getBlockState(pos);
 
             ItemModularHandheld item = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class).orElse(null);
-            if (ToolActionHelper.isEffectiveOn(thrownStack, blockState)	&& shooter instanceof Player player && item != null) {
+            if (ToolActionHelper.isEffectiveOn(thrownStack, blockState) && shooter instanceof Player player && item != null) {
                 double destroySpeed = item.getDestroySpeed(thrownStack, blockState) * item.getEffectEfficiency(thrownStack, ItemEffect.throwable);
 
                 if (destroySpeed > blockState.getDestroySpeed(level, pos)) {

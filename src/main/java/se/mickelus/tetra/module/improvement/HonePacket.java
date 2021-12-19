@@ -6,12 +6,14 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class HonePacket extends AbstractPacket {
 
     ItemStack itemStack;
 
-    public HonePacket() {}
+    public HonePacket() {
+    }
 
     public HonePacket(ItemStack itemStack) {
         this.itemStack = itemStack;

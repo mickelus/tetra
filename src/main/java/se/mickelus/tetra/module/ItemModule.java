@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
 import org.apache.commons.lang3.StringUtils;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -19,28 +20,39 @@ import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.IToolProvider;
-import se.mickelus.mutil.util.CastOptional;
 
 import java.util.*;
 
 public abstract class ItemModule implements IToolProvider {
 
-    protected VariantData[] variantData = new VariantData[0];
-
-    protected TweakData[] tweaks = new TweakData[0];
-
+    public static final float repairLevelFactor = 10;
     protected final String slotTagKey;
     protected final String moduleKey;
     protected final String variantTagKey;
-
+    protected VariantData[] variantData = new VariantData[0];
+    protected TweakData[] tweaks = new TweakData[0];
     protected Priority renderLayer = Priority.BASE;
-
-    public static final float repairLevelFactor = 10;
 
     public ItemModule(String slotKey, String moduleKey) {
         this.slotTagKey = slotKey;
         this.moduleKey = moduleKey;
         this.variantTagKey = moduleKey + "_material";
+    }
+
+    public static String getName(String moduleKey, String variantKey) {
+        if (I18n.exists("tetra.variant." + variantKey)) {
+            return I18n.get("tetra.variant." + variantKey);
+        }
+
+        if (I18n.exists("tetra.module." + moduleKey + ".material_name")) {
+            String variant = variantKey.substring(variantKey.indexOf('/') + 1);
+            if (I18n.exists("tetra.material." + variant + ".prefix")) {
+                return StringUtils.capitalize(I18n.get("tetra.module." + moduleKey + ".material_name",
+                        I18n.get("tetra.material." + variant + ".prefix")).toLowerCase());
+            }
+        }
+
+        return I18n.get("tetra.variant." + variantKey);
     }
 
     public String getKey() {
@@ -71,7 +83,8 @@ public abstract class ItemModule implements IToolProvider {
         return new ItemStack[0];
     }
 
-    public void postRemove(ItemStack targetStack, Player player) { }
+    public void postRemove(ItemStack targetStack, Player player) {
+    }
 
     public VariantData[] getVariantData() {
         return variantData;
@@ -100,22 +113,6 @@ public abstract class ItemModule implements IToolProvider {
 
     public VariantData getDefaultData() {
         return variantData.length > 0 ? variantData[0] : new VariantData();
-    }
-
-    public static String getName(String moduleKey, String variantKey) {
-        if (I18n.exists("tetra.variant." + variantKey)) {
-            return I18n.get("tetra.variant." + variantKey);
-        }
-
-        if (I18n.exists("tetra.module." + moduleKey + ".material_name")) {
-            String variant = variantKey.substring(variantKey.indexOf('/') + 1);
-            if (I18n.exists("tetra.material." + variant + ".prefix")) {
-                return StringUtils.capitalize(I18n.get("tetra.module." + moduleKey + ".material_name",
-                        I18n.get("tetra.material." + variant + ".prefix")).toLowerCase());
-            }
-        }
-
-        return I18n.get("tetra.variant." + variantKey);
     }
 
     public String getName(ItemStack itemStack) {
@@ -205,7 +202,7 @@ public abstract class ItemModule implements IToolProvider {
 
     public int getMagicCapacityGain(ItemStack itemStack) {
         int magicCapacity = getVariantData(itemStack).magicCapacity;
-        if (magicCapacity > 0 ) {
+        if (magicCapacity > 0) {
             float stabilityMultiplier = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                     .map(item -> item.getStabilityModifier(itemStack))
                     .orElse(1f);
@@ -217,7 +214,7 @@ public abstract class ItemModule implements IToolProvider {
 
     public int getMagicCapacityCost(ItemStack itemStack) {
         int magicCapacity = getVariantData(itemStack).magicCapacity;
-        if (magicCapacity < 0 ) {
+        if (magicCapacity < 0) {
             return -magicCapacity;
         }
         return 0;
@@ -228,7 +225,7 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public float getDestabilizationChance(int instability, int capacity, float probabilityMultiplier) {
-        return Math.max(probabilityMultiplier *  instability / capacity, 0);
+        return Math.max(probabilityMultiplier * instability / capacity, 0);
     }
 
     public int getDurability(ItemStack itemStack) {
@@ -306,7 +303,7 @@ public abstract class ItemModule implements IToolProvider {
     public int getTweakStep(ItemStack itemStack, TweakData tweak) {
         return Optional.ofNullable(itemStack.getTag())
                 .map(tag -> tag.getInt(slotTagKey + ":" + tweak.key))
-                .map(step -> Mth.clamp(step, -tweak.steps,  tweak.steps))
+                .map(step -> Mth.clamp(step, -tweak.steps, tweak.steps))
                 .orElse(0);
     }
 

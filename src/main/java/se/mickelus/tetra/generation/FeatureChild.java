@@ -12,7 +12,7 @@ public class FeatureChild {
      * The position offset relative to the parent at which this child feature should be generated.
      * Json format: [x, y, z]
      */
-    public BlockPos offset = new BlockPos(0, 0 ,0);
+    public BlockPos offset = new BlockPos(0, 0, 0);
 
     /**
      * The direction in which the child feature should be facing.

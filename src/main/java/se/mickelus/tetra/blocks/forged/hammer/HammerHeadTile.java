@@ -12,16 +12,15 @@ import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class HammerHeadTile extends BlockEntity {
+    private static final String jamKey = "jam";
     @ObjectHolder(TetraMod.MOD_ID + ":" + HammerHeadBlock.unlocalizedName)
     public static BlockEntityType<HammerHeadTile> type;
-
     private long activationTime = -1;
     private long unjamTime = -1;
-
     private boolean jammed;
-    private static final String jamKey = "jam";
 
     public HammerHeadTile(BlockPos p_155268_, BlockState p_155269_) {
         super(type, p_155268_, p_155269_);

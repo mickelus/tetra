@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["sword/blade"],
+    "slots": [ "sword/blade" ],
     "materialSlotCount": 1,
     "displayType": "major",
     "translation": {
@@ -13,7 +13,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/" ],
             "countFactor": 2,
             "moduleKey": "sword/basic_blade",
             "moduleVariant": "basic_blade/"

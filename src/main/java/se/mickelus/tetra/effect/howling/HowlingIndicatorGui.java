@@ -6,12 +6,13 @@ import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class HowlingIndicatorGui extends GuiTexture {
     private final KeyframeAnimation animation;
 
-    private int originX;
-    private int originY;
+    private final int originX;
+    private final int originY;
 
     public HowlingIndicatorGui(int x, int y, int width, int height, int textureX, int textureY, int transitionOffset, boolean horizontalTransition) {
         super(x, y, width, height, textureX, textureY, GuiTextures.hud);

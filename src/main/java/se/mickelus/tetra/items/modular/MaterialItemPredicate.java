@@ -8,10 +8,11 @@ import se.mickelus.tetra.module.data.MaterialData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Comparator;
+
 @ParametersAreNonnullByDefault
 public class MaterialItemPredicate extends ItemPredicate {
 
-    private String category;
+    private final String category;
 
     public MaterialItemPredicate(JsonObject jsonObject) {
         category = jsonObject.get("category").getAsString();
@@ -26,11 +27,7 @@ public class MaterialItemPredicate extends ItemPredicate {
                 .findFirst()
                 .orElse(null);
         if (materialData != null) {
-            if (category != null && !category.equals(materialData.category)) {
-                return false;
-            }
-
-            return true;
+            return category == null || category.equals(materialData.category);
         }
 
         return false;

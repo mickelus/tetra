@@ -23,17 +23,15 @@ import se.mickelus.tetra.TetraMod;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class RackTile extends BlockEntity {
     public static final String unlocalizedName = "rack";
-
+    public static final int inventorySize = 2;
+    private static final String inventoryKey = "inv";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockEntityType<RackTile> type;
-
-    private static final String inventoryKey = "inv";
-
-    public static final int inventorySize = 2;
-    private LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(inventorySize) {
+    private final LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(inventorySize) {
         protected void onContentsChanged(int slot) {
             setChanged();
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);

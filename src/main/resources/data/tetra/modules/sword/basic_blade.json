@@ -47,7 +47,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/", "tetra:bone/" ],
             "key": "basic_blade/",
             "attributes": {
                 "generic.attack_speed": -1.9
@@ -56,7 +56,7 @@
                 "sweeping": 1
             },
             "tools": {
-                "cut": [1, 2]
+                "cut": [ 1, 2 ]
             },
             "durability": -20,
             "extract": {
@@ -69,8 +69,8 @@
                 "glyph": {
                     "textureX": 0
                 },
-                "availableTextures": ["metal", "shiny", "grainy", "crude"],
-                "models": [{ "location": "tetra:items/module/sword/blade/basic/" }]
+                "availableTextures": [ "metal", "shiny", "grainy", "crude" ],
+                "models": [ { "location": "tetra:items/module/sword/blade/basic/" } ]
             }
         }
     ]

@@ -27,11 +27,11 @@ public abstract class ConfigAction implements WorkbenchAction {
 
     /**
      * Defines which tools are required for this action, a map where the tool is the key and the value is the required level.
-     *
+     * <p>
      * Json format:
      * {
-     *     "toolA": level,
-     *     "toolB": level
+     * "toolA": level,
+     * "toolB": level
      * }
      */
     public ToolData requiredTools = new ToolData();

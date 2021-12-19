@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class HoloImprovementGui extends GuiElement {
     private final GuiHorizontalLayoutGroup header;
@@ -29,17 +30,13 @@ public class HoloImprovementGui extends GuiElement {
     private final HoloMaterialTranslation translation;
 
     private final GuiElement variants;
-
-    private UpgradeSchematic schematic;
-    private String slot;
-
-    private boolean isActive;
-
-    private OutcomePreview preview;
-    private Consumer<OutcomePreview> onVariantHover;
-    private Consumer<OutcomePreview> onVariantBlur;
-
     private final Consumer<OutcomeStack> onVariantSelect;
+    private final UpgradeSchematic schematic;
+    private final String slot;
+    private final Consumer<OutcomePreview> onVariantHover;
+    private final Consumer<OutcomePreview> onVariantBlur;
+    private boolean isActive;
+    private OutcomePreview preview;
 
     public HoloImprovementGui(int x, int y, UpgradeSchematic schematic, ItemStack baseStack, String slot, Consumer<OutcomePreview> onVariantHover,
             Consumer<OutcomePreview> onVariantBlur, Consumer<OutcomeStack> onVariantSelect) {

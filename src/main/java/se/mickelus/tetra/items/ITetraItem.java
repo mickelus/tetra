@@ -6,6 +6,8 @@ import se.mickelus.mutil.network.PacketHandler;
 
 public interface ITetraItem {
     @OnlyIn(Dist.CLIENT)
-    public default void clientInit() {}
-    public void init(PacketHandler packetHandler);
+    default void clientInit() {
+    }
+
+    void init(PacketHandler packetHandler);
 }

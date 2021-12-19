@@ -14,17 +14,15 @@ import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiBlockProgress extends GuiRoot {
 
     private static final int width = 16;
-
-    private GuiElement container;
-
-    private GuiRect bar;
-
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
+    private final GuiElement container;
+    private final GuiRect bar;
 
     public GuiBlockProgress(Minecraft mc) {
         super(mc);
@@ -72,8 +70,8 @@ public class GuiBlockProgress extends GuiRoot {
             int width = window.getGuiScaledWidth();
             int height = window.getGuiScaledHeight();
 
-            int mouseX = (int)(mc.mouseHandler.xpos() * window.getGuiScaledWidth() / window.getScreenWidth());
-            int mouseY = (int)(mc.mouseHandler.ypos() * window.getGuiScaledHeight() / window.getScreenHeight());
+            int mouseX = (int) (mc.mouseHandler.xpos() * window.getGuiScaledWidth() / window.getScreenWidth());
+            int mouseY = (int) (mc.mouseHandler.ypos() * window.getGuiScaledHeight() / window.getScreenHeight());
 
             this.drawChildren(matrixStack, width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
             RenderSystem.setShaderColor(1, 1, 1, 1);

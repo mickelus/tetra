@@ -15,12 +15,12 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class HoneToast implements Toast {
-    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID,"textures/gui/toasts.png");
-
+    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toasts.png");
+    private final ItemStack itemStack;
     private boolean hasPlayedSound = false;
-    private ItemStack itemStack;
 
     public HoneToast(ItemStack itemStack) {
         this.itemStack = itemStack;

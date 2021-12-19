@@ -5,9 +5,11 @@
         "attributes": {
             "generic.attack_damage": 4
         },
-        "models": [{
-            "location": "tetra:items/module/double/head/adze/warforged",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/double/head/adze/warforged",
+                "tint": "inherit"
+            }
+        ]
     }
 ]

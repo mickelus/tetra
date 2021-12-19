@@ -6,6 +6,7 @@ import se.mickelus.tetra.module.data.ModuleModel;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class ModuleModelDeserializer implements JsonDeserializer<ModuleModel> {
 

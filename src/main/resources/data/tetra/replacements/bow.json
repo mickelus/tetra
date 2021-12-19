@@ -1,12 +1,12 @@
 [
     {
-                "predicate": {
+        "predicate": {
             "items": [ "minecraft:bow" ]
         },
         "item": "tetra:modular_bow",
         "modules": {
-            "bow/stave": ["bow/straight_stave", "straight_stave/stick"],
-            "bow/string": ["bow/basic_string", "basic_string/string"]
+            "bow/stave": [ "bow/straight_stave", "straight_stave/stick" ],
+            "bow/string": [ "bow/basic_string", "basic_string/string" ]
         },
         "improvements": {
             "bow/stave:stave/wrap/string": 0

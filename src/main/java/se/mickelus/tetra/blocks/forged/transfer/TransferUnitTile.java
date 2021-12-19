@@ -14,28 +14,35 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
 import se.mickelus.tetra.items.cell.ItemCellMagmatic;
-import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
+    private static final int baseAmount = 8;
     @ObjectHolder(TetraMod.MOD_ID + ":" + TransferUnitBlock.unlocalizedName)
     public static BlockEntityType<TransferUnitTile> type;
-
     private ItemStack cell;
-
-    private static final int baseAmount = 8;
     private float efficiency = 1;
 
     public TransferUnitTile(BlockPos p_155268_, BlockState p_155269_) {
         super(type, p_155268_, p_155269_);
         cell = ItemStack.EMPTY;
+    }
+
+    public static void writeCell(CompoundTag compound, ItemStack cell) {
+        if (!cell.isEmpty()) {
+            CompoundTag cellNBT = new CompoundTag();
+            cell.save(cellNBT);
+            compound.put("cell", cellNBT);
+        }
     }
 
     public boolean canRecieve() {
@@ -51,23 +58,23 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
     }
 
     @Override
-    public void setReceiving(boolean receiving) {
-        TransferUnitBlock.setReceiving(level, worldPosition, getBlockState(), receiving);
-    }
-
-    @Override
     public boolean isReceiving() {
         return TransferUnitBlock.isReceiving(getBlockState());
     }
 
     @Override
-    public void setSending(boolean sending) {
-        TransferUnitBlock.setSending(level, worldPosition, getBlockState(), sending);
+    public void setReceiving(boolean receiving) {
+        TransferUnitBlock.setReceiving(level, worldPosition, getBlockState(), receiving);
     }
 
     @Override
     public boolean isSending() {
         return TransferUnitBlock.isSending(getBlockState());
+    }
+
+    @Override
+    public void setSending(boolean sending) {
+        TransferUnitBlock.setSending(level, worldPosition, getBlockState(), sending);
     }
 
     public boolean hasCell() {
@@ -198,7 +205,7 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
         if (level instanceof ServerLevel) {
             ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE,
                     worldPosition.getX() + 0.5, worldPosition.getY() + 0.7, worldPosition.getZ() + 0.5,
-                    10,  0, 0, 0, 0.02f);
+                    10, 0, 0, 0, 0.02f);
             level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
                     0.2f, 1);
         }
@@ -208,7 +215,7 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
         if (level instanceof ServerLevel) {
             ((ServerLevel) level).sendParticles(ParticleTypes.FLAME,
                     worldPosition.getX() + 0.5, worldPosition.getY() + 0.7, worldPosition.getZ() + 0.5,
-                    5,  0, 0, 0, 0.02f);
+                    5, 0, 0, 0, 0.02f);
             level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
                     0.2f, 1);
         }
@@ -258,14 +265,6 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
             cell = ItemStack.of(compound.getCompound("cell"));
         } else {
             cell = ItemStack.EMPTY;
-        }
-    }
-
-    public static void writeCell(CompoundTag compound, ItemStack cell) {
-        if (!cell.isEmpty()) {
-            CompoundTag cellNBT = new CompoundTag();
-            cell.save(cellNBT);
-            compound.put("cell", cellNBT);
         }
     }
 

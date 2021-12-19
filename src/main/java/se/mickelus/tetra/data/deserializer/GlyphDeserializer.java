@@ -6,6 +6,7 @@ import se.mickelus.tetra.module.data.GlyphData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class GlyphDeserializer implements JsonDeserializer<GlyphData> {
 

@@ -15,6 +15,7 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class ItemMesh extends TetraItem {
     private static final String unlocalizedName = "forged_mesh";

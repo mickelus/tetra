@@ -1,8 +1,8 @@
 {
-    "origin": [3, 2, 2],
+    "origin": [ 3, 2, 2 ],
     "children": [
         {
-            "offset": [1, 1, 2],
+            "offset": [ 1, 1, 2 ],
             "facing": "EAST",
             "chance": 0.2,
             "features": [
@@ -13,7 +13,7 @@
             ]
         },
         {
-            "offset": [5, 1, 1],
+            "offset": [ 5, 1, 1 ],
             "facing": "WEST",
             "chance": 0.2,
             "features": [

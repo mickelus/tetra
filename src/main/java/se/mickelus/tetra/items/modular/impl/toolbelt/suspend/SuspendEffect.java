@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class SuspendEffect {
     private static final Set<MobEffect> enablingEffects = Stream.concat(

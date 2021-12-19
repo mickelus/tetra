@@ -15,15 +15,16 @@ import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.phys.Vec3;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
 import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Random;
+
 @ParametersAreNonnullByDefault
 public class ExecuteEffect extends ChargedAbilityEffect {
 

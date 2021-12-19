@@ -5,9 +5,11 @@
         "effects": {
             "crushing": 4
         },
-        "models": [{
-            "location": "tetra:items/module/double/head/basic_hammer/warforged",
-            "tint": "inherit"
-        }]
+        "models": [
+            {
+                "location": "tetra:items/module/double/head/basic_hammer/warforged",
+                "tint": "inherit"
+            }
+        ]
     }
 ]

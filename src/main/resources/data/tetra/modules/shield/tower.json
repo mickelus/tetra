@@ -33,7 +33,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:misc/vent_plate" ],
             "key": "tower/",
             "attributes": {
                 "tetra:ability_damage": 5,
@@ -60,11 +60,13 @@
                 "glyph": {
                     "textureY": 48
                 },
-                "availableTextures": ["wooden", "metal", "bone", "vent"],
-                "models": [{
-                    "type": "tetra:plate/tower",
-                    "location": "tetra:items/module/shield/plate/tower/"
-                }]
+                "availableTextures": [ "wooden", "metal", "bone", "vent" ],
+                "models": [
+                    {
+                        "type": "tetra:plate/tower",
+                        "location": "tetra:items/module/shield/plate/tower/"
+                    }
+                ]
             }
         }
     ]

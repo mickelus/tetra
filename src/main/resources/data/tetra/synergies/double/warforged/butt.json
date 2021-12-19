@@ -1,8 +1,8 @@
 [
     {
-        "modules": ["double/butt_right"],
+        "modules": [ "double/butt_right" ],
         "matchSuffixed": true,
-        "improvements": ["double/warforged"],
+        "improvements": [ "double/warforged" ],
         "tools": {
             "axe_dig": -1,
             "shovel_dig": -1,

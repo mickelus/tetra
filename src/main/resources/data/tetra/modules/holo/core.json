@@ -4,7 +4,7 @@
     "slots": [
         "holo/core"
     ],
-    "improvements": [],
+    "improvements": [ ],
     "variants": [
         {
             "key": "core/dim",

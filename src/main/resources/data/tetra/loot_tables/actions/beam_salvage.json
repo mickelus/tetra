@@ -18,7 +18,7 @@
                         },
                         {
                             "function": "minecraft:apply_bonus",
-                            "enchantment":"minecraft:fortune",
+                            "enchantment": "minecraft:fortune",
                             "formula": "uniform_bonus_count",
                             "parameters": {
                                 "bonusMultiplier": 2
@@ -37,7 +37,7 @@
                         },
                         {
                             "function": "minecraft:apply_bonus",
-                            "enchantment":"minecraft:fortune",
+                            "enchantment": "minecraft:fortune",
                             "formula": "uniform_bonus_count",
                             "parameters": {
                                 "bonusMultiplier": 1
@@ -60,7 +60,7 @@
                         },
                         {
                             "function": "minecraft:apply_bonus",
-                            "enchantment":"minecraft:fortune",
+                            "enchantment": "minecraft:fortune",
                             "formula": "uniform_bonus_count",
                             "parameters": {
                                 "bonusMultiplier": 1
@@ -83,7 +83,7 @@
                         },
                         {
                             "function": "minecraft:apply_bonus",
-                            "enchantment":"minecraft:fortune",
+                            "enchantment": "minecraft:fortune",
                             "formula": "uniform_bonus_count",
                             "parameters": {
                                 "bonusMultiplier": 2

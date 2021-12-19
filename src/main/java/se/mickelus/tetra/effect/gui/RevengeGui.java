@@ -12,14 +12,14 @@ import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class RevengeGui extends GuiElement {
-    private GuiTexture indicatorLeft;
-
     private final KeyframeAnimation showAnimationLeft;
     private final KeyframeAnimation hideAnimationLeft;
     private final KeyframeAnimation showAnimationRight;
     private final KeyframeAnimation hideAnimationRight;
+    private final GuiTexture indicatorLeft;
 
     public RevengeGui() {
         super(0, 14, 13, 3);

@@ -8,6 +8,7 @@ import se.mickelus.tetra.ServerScheduler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
+
 @ParametersAreNonnullByDefault
 public class EchoHelper {
     public static void echo(Player attacker, int delay, Runnable callback) {
@@ -24,10 +25,10 @@ public class EchoHelper {
         }
 
         ServerScheduler.schedule(delay, () -> {
-                Vec3 currentPos = attacker.position();
-                attacker.setPos(origin.x, origin.y, origin.z);
-                callback.run();
-                attacker.setPos(currentPos.x, currentPos.y, currentPos.z);
+            Vec3 currentPos = attacker.position();
+            attacker.setPos(origin.x, origin.y, origin.z);
+            callback.run();
+            attacker.setPos(currentPos.x, currentPos.y, currentPos.z);
         });
     }
 }

@@ -10,13 +10,14 @@ import se.mickelus.tetra.module.schematic.SchematicDefinition;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class RepairRegistry {
     private static final Logger logger = LogManager.getLogger();
 
     public static RepairRegistry instance;
 
-    private Map<String, List<RepairDefinition>> repairMap;
+    private final Map<String, List<RepairDefinition>> repairMap;
     private List<RepairDefinition> injectedRepairs;
 
     public RepairRegistry() {

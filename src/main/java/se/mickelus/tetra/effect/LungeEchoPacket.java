@@ -5,11 +5,13 @@ import net.minecraft.world.entity.player.Player;
 import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class LungeEchoPacket extends AbstractPacket {
     boolean isVertical;
 
-    public LungeEchoPacket() { }
+    public LungeEchoPacket() {
+    }
 
     public LungeEchoPacket(boolean isVertical) {
         this.isVertical = isVertical;

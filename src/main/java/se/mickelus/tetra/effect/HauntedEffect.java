@@ -10,13 +10,14 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.tetra.items.modular.IModularItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class HauntedEffect {
     public static void perform(LivingEntity entity, ItemStack itemStack, double multiplier) {

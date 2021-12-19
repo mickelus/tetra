@@ -7,14 +7,14 @@ import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiInventoryInfo extends GuiElement {
-    private Inventory inventory;
+    private final Inventory inventory;
+    private final GuiInventoryHighlight[] highlights;
     private ItemStack targetStack;
     private String slot;
     private UpgradeSchematic schematic;
-
-    private GuiInventoryHighlight[] highlights;
 
     public GuiInventoryInfo(int x, int y, Player player) {
         super(x, y, 224, 72);

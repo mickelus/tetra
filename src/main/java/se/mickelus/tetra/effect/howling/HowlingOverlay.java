@@ -8,13 +8,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class HowlingOverlay {
     public static HowlingOverlay instance;
 
     private final Minecraft mc;
 
-    private HowlingProgressGui gui;
+    private final HowlingProgressGui gui;
 
     public HowlingOverlay(Minecraft mc) {
         this.mc = mc;

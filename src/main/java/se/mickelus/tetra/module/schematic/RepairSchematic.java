@@ -5,18 +5,19 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.data.GlyphData;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class RepairSchematic extends BaseSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
@@ -25,11 +26,11 @@ public class RepairSchematic extends BaseSchematic {
     private static final String descriptionSuffix = ".description";
     private static final String extendedDescriptionSuffix = ".description_details";
 
-    private String key = "repair";
+    private final String key = "repair";
 
-    private IModularItem item;
+    private final IModularItem item;
 
-    private GlyphData glyph = new GlyphData(GuiTextures.workbench, 0, 52);
+    private final GlyphData glyph = new GlyphData(GuiTextures.workbench, 0, 52);
 
     public RepairSchematic(IModularItem item) {
         this.item = item;
@@ -169,7 +170,7 @@ public class RepairSchematic extends BaseSchematic {
     @Override
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
         return CastOptional.cast(targetStack.getItem(), IModularItem.class)
-        .map(item -> item.getRepairRequiredExperience(targetStack))
+                .map(item -> item.getRepairRequiredExperience(targetStack))
                 .orElse(0);
     }
 

@@ -3,12 +3,13 @@ package se.mickelus.tetra.blocks.workbench;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
+import se.mickelus.mutil.network.AbstractPacket;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
-import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
+
 @ParametersAreNonnullByDefault
 public class WorkbenchPacketUpdate extends AbstractPacket {
 
@@ -16,7 +17,8 @@ public class WorkbenchPacketUpdate extends AbstractPacket {
     private UpgradeSchematic schematic;
     private String selectedSlot;
 
-    public WorkbenchPacketUpdate() {}
+    public WorkbenchPacketUpdate() {
+    }
 
     public WorkbenchPacketUpdate(BlockPos pos, UpgradeSchematic schematic, String selectedSlot) {
         this.pos = pos;

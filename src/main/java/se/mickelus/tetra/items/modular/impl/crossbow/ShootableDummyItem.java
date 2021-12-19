@@ -6,6 +6,7 @@ import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Predicate;
+
 @ParametersAreNonnullByDefault
 public class ShootableDummyItem extends ProjectileWeaponItem {
 

@@ -55,8 +55,8 @@
                 "glyph": {
                     "textureX": 16
                 },
-                "availableTextures": ["default", "metal", "bone", "bright"],
-                "models": [{ "location": "tetra:items/module/single/handle/basic/" }]
+                "availableTextures": [ "default", "metal", "bone", "bright" ],
+                "models": [ { "location": "tetra:items/module/single/handle/basic/" } ]
             }
         }
     ]

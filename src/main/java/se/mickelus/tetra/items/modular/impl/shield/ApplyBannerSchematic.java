@@ -8,6 +8,7 @@ import net.minecraft.world.item.BannerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -17,12 +18,12 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class ApplyBannerSchematic implements UpgradeSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
@@ -32,9 +33,10 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
     private static final String descriptionSuffix = ".description";
     private static final String slotSuffix = ".slot1";
 
-    private GlyphData glyph = new GlyphData(GuiTextures.glyphs, 96, 240);
+    private final GlyphData glyph = new GlyphData(GuiTextures.glyphs, 96, 240);
 
-    public ApplyBannerSchematic() {}
+    public ApplyBannerSchematic() {
+    }
 
     @Override
     public String getKey() {
@@ -63,7 +65,7 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
 
     @Override
     public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
-        return new ItemStack[] { Items.WHITE_BANNER.getDefaultInstance() };
+        return new ItemStack[]{Items.WHITE_BANNER.getDefaultInstance()};
     }
 
     @Override

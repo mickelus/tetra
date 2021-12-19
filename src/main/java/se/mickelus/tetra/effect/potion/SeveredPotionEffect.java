@@ -21,6 +21,7 @@ import java.util.function.Consumer;
 @ParametersAreNonnullByDefault
 public class SeveredPotionEffect extends MobEffect {
     public static SeveredPotionEffect instance;
+
     public SeveredPotionEffect() {
         super(MobEffectCategory.HARMFUL, 0x880000);
 

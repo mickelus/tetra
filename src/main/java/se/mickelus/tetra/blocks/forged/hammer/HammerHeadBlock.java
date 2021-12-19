@@ -26,6 +26,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
@@ -33,8 +35,6 @@ import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.salvage.TileBlockInteraction;
-import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -44,19 +44,17 @@ import java.util.List;
 import java.util.Random;
 
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
+
 @ParametersAreNonnullByDefault
 public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteractiveBlock, EntityBlock {
-    static final BlockInteraction[] interactions = new BlockInteraction[] {
+    public static final String unlocalizedName = "hammer_head";
+    public static final VoxelShape shape = box(2, 14, 2, 14, 16, 14);
+    public static final VoxelShape jamShape = box(2, 4, 2, 14, 16, 14);
+    static final BlockInteraction[] interactions = new BlockInteraction[]{
             new TileBlockInteraction<>(TetraToolActions.hammer, 4, Direction.EAST, 1, 11, 7, 11,
                     HammerHeadTile.class, HammerHeadTile::isJammed,
                     (world, pos, blockState, player, hand, hitFace) -> unjam(world, pos, player))
     };
-
-    public static final String unlocalizedName = "hammer_head";
-
-    public static final VoxelShape shape = box(2, 14, 2, 14, 16, 14);
-    public static final VoxelShape jamShape = box(2, 4, 2, 14, 16, 14);
-
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static HammerHeadBlock instance;
 
@@ -68,6 +66,12 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
         hasItem = false;
     }
 
+    private static boolean unjam(Level world, BlockPos pos, Player playerEntity) {
+        TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(tile -> tile.setJammed(false));
+        world.playSound(playerEntity, pos, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundSource.PLAYERS, 1, 0.5f);
+        return true;
+    }
+
     @Override
     public void appendHoverText(final ItemStack stack, @Nullable final BlockGetter world, final List<Component> tooltip,
             final TooltipFlag advanced) {
@@ -76,12 +80,6 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
 
     private boolean isJammed(BlockGetter world, BlockPos pos) {
         return TileEntityOptional.from(world, pos, HammerHeadTile.class).map(HammerHeadTile::isJammed).orElse(false);
-    }
-
-    private static boolean unjam(Level world, BlockPos pos, Player playerEntity) {
-        TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(tile -> tile.setJammed(false));
-        world.playSound(playerEntity, pos, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundSource.PLAYERS, 1, 0.5f);
-        return true;
     }
 
     @Override

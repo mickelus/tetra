@@ -1,6 +1,6 @@
 [
     {
         "key": "shield/banner",
-        "models": [{ "type": "tetra:banner/buckler" }]
+        "models": [ { "type": "tetra:banner/buckler" } ]
     }
 ]

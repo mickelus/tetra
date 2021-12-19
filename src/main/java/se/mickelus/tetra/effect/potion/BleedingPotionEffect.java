@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 @ParametersAreNonnullByDefault
 public class BleedingPotionEffect extends MobEffect {
     public static BleedingPotionEffect instance;
+
     public BleedingPotionEffect() {
         super(MobEffectCategory.HARMFUL, 0x880000);
 

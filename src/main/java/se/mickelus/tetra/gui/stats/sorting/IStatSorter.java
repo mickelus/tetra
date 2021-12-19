@@ -8,12 +8,12 @@ import java.util.Comparator;
 import java.util.function.Function;
 
 public interface IStatSorter {
-    public String getName();
+    String getName();
 
-    public <T> Comparator<T> compare(Player player, Function<? super T, ItemStack> keyExtractor);
+    <T> Comparator<T> compare(Player player, Function<? super T, ItemStack> keyExtractor);
 
     @Nullable
-    public String getValue(Player player, ItemStack itemStack);
+    String getValue(Player player, ItemStack itemStack);
 
-    public int getWeight(Player player, ItemStack itemStack);
+    int getWeight(Player player, ItemStack itemStack);
 }

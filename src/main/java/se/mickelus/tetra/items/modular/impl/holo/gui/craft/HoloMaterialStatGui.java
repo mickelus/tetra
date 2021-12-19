@@ -11,6 +11,7 @@ import se.mickelus.tetra.module.data.MaterialData;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Function;
+
 @ParametersAreNonnullByDefault
 public class HoloMaterialStatGui extends GuiElement {
     protected GuiTexture backdrop;

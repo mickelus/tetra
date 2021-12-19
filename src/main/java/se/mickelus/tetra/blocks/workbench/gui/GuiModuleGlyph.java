@@ -6,6 +6,7 @@ import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.module.data.GlyphData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiModuleGlyph extends GuiTexture {
 

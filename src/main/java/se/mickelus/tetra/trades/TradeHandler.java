@@ -12,6 +12,7 @@ import se.mickelus.tetra.items.forged.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class TradeHandler {
     @SubscribeEvent

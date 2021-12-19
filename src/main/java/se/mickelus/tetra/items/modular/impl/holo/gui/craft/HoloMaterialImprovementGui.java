@@ -10,6 +10,7 @@ import se.mickelus.tetra.items.modular.IModularItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class HoloMaterialImprovementGui extends GuiElement {
     protected GuiTexture backdrop;
@@ -34,7 +35,7 @@ public class HoloMaterialImprovementGui extends GuiElement {
         value = new GuiStringOutline(0, 8, improvementName);
         value.setAttachment(GuiAttachment.topCenter);
         addChild(value);
-        
+
         if (current != preview) {
             value.setColor(preview ? GuiColors.add : GuiColors.remove);
         }

@@ -1,10 +1,10 @@
 {
     "replace": true,
-    "slots": ["sword/pommel"],
+    "slots": [ "sword/pommel" ],
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:bone/", "tetra:gem/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:bone/", "tetra:gem/" ],
             "key": "decorative_pommel/",
             "attributes": {
                 "generic.attack_speed": -0.05
@@ -15,8 +15,8 @@
                     "textureX": 14,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
-                "models": [{ "location": "tetra:items/module/sword/pommel/decorative_pommel/" }]
+                "availableTextures": [ "default" ],
+                "models": [ { "location": "tetra:items/module/sword/pommel/decorative_pommel/" } ]
             }
         }
     ]

@@ -10,12 +10,12 @@ import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiTool extends GuiElement {
     public static final int width = 16;
+    private final GuiString levelIndicator;
     protected ToolAction toolAction;
-
-    private GuiString levelIndicator;
 
     public GuiTool(int x, int y, ToolAction toolAction) {
         super(x, y, width, 16);

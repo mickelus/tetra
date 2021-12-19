@@ -29,11 +29,16 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+
 @ParametersAreNonnullByDefault
 public class EffectHelper {
     private static final Cache<UUID, Float> cooledAttackStrengthCache = CacheBuilder.newBuilder()
             .maximumSize(50)
             .expireAfterWrite(10, TimeUnit.SECONDS)
+            .build();
+    private static final Cache<UUID, Boolean> sprintingCache = CacheBuilder.newBuilder()
+            .maximumSize(50)
+            .expireAfterWrite(1, TimeUnit.SECONDS)
             .build();
 
     public static void setCooledAttackStrength(Player player, float strength) {
@@ -47,11 +52,6 @@ public class EffectHelper {
             return 0;
         }
     }
-
-    private static final Cache<UUID, Boolean> sprintingCache = CacheBuilder.newBuilder()
-            .maximumSize(50)
-            .expireAfterWrite(1, TimeUnit.SECONDS)
-            .build();
 
     public static void setSprinting(LivingEntity player, boolean isSprinting) {
         sprintingCache.put(player.getUUID(), isSprinting);
@@ -81,12 +81,12 @@ public class EffectHelper {
      * Based on how players break blocks in vanilla {@link net.minecraft.server.management.PlayerInteractionManager#tryHarvestBlock}, but allows
      * control over the used itemstack and without causing damage and honing progression for the used itemstack
      *
-     * @param world the world in which to break blocks
+     * @param world          the world in which to break blocks
      * @param breakingPlayer the player which is breaking the blocks
-     * @param toolStack the itemstack used to break the blocks
-     * @param pos the position which to break blocks around
-     * @param blockState the state of the block that is to broken
-     * @param harvest true if the player is ment to harvest the block, false if it should just magically disappear
+     * @param toolStack      the itemstack used to break the blocks
+     * @param pos            the position which to break blocks around
+     * @param blockState     the state of the block that is to broken
+     * @param harvest        true if the player is ment to harvest the block, false if it should just magically disappear
      * @return True if the player was allowed to break the block, otherwise false
      */
     public static boolean breakBlock(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState,
@@ -129,10 +129,11 @@ public class EffectHelper {
 
     /**
      * Sends an event to a specific player.
+     *
      * @param player the player the event will be sent to
-     * @param type an integer representation of the event
-     * @param pos the position in which the event takes place
-     * @param data an integer representation of event data (e.g. Block.getStateId)
+     * @param type   an integer representation of the event
+     * @param pos    the position in which the event takes place
+     * @param data   an integer representation of event data (e.g. Block.getStateId)
      */
     public static void sendEventToPlayer(ServerPlayer player, int type, BlockPos pos, int data) {
         player.connection.send(new ClientboundLevelEventPacket(type, pos, data, false));
@@ -140,6 +141,7 @@ public class EffectHelper {
 
     /**
      * Variant on {@link EnchantmentHelper#applyArthropodEnchantments} that allows control over the held itemstack
+     *
      * @param itemStack
      * @param target
      * @param attacker
@@ -150,7 +152,7 @@ public class EffectHelper {
         });
 
         if (attacker != null) {
-            for (ItemStack equipment: attacker.getAllSlots()) {
+            for (ItemStack equipment : attacker.getAllSlots()) {
                 EnchantmentHelper.getEnchantments(equipment).forEach((enchantment, level) -> {
                     enchantment.doPostAttack(attacker, target, level);
                 });

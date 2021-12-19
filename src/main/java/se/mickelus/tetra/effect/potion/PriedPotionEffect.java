@@ -1,7 +1,6 @@
 package se.mickelus.tetra.effect.potion;
 
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,8 +9,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.EffectRenderer;
-import se.mickelus.tetra.effect.gui.EffectTooltipRenderer;
 import se.mickelus.mutil.util.ParticleHelper;
+import se.mickelus.tetra.effect.gui.EffectTooltipRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
@@ -40,7 +39,6 @@ public class PriedPotionEffect extends MobEffect {
     public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration % 10 == 0;
     }
-
 
 
     @Override

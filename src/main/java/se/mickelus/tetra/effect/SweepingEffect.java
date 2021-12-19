@@ -15,18 +15,20 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class SweepingEffect {
 
     /**
      * Perfoms a sweeping attack, dealing damage and playing effects similar to vanilla swords.
-     * @param itemStack the itemstack used for the attack
-     * @param target the attacking entity
-     * @param attacker the attacked entity
+     *
+     * @param itemStack     the itemstack used for the attack
+     * @param target        the attacking entity
+     * @param attacker      the attacked entity
      * @param sweepingLevel the level of the sweeping effect of the itemstack
      */
     public static void sweepAttack(ItemStack itemStack, LivingEntity target, LivingEntity attacker, int sweepingLevel) {
@@ -73,8 +75,9 @@ public class SweepingEffect {
 
     /**
      * Perfoms a sweeping attack in front of the attacker without requiring a target, dealing damage to nearby entities and playing effects similar to vanilla swords.
+     *
      * @param itemStack the itemstack used for the attack
-     * @param attacker the attacked entity
+     * @param attacker  the attacked entity
      */
     public static void truesweep(ItemStack itemStack, LivingEntity attacker) {
         int sweepingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.sweeping);

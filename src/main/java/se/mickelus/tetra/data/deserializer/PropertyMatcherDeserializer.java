@@ -8,6 +8,7 @@ import se.mickelus.tetra.blocks.PropertyMatcher;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class PropertyMatcherDeserializer implements JsonDeserializer<PropertyMatcher> {
     @Override

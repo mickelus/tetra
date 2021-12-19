@@ -11,6 +11,7 @@ import se.mickelus.mutil.network.BlockPosPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class ChargedAbilityPacket extends BlockPosPacket {
 
@@ -20,7 +21,8 @@ public class ChargedAbilityPacket extends BlockPosPacket {
 
     private Vec3 hitVec;
 
-    public ChargedAbilityPacket() {}
+    public ChargedAbilityPacket() {
+    }
 
     public ChargedAbilityPacket(LivingEntity target, BlockPos pos, Vec3 hitVec, InteractionHand hand, int ticksUsed) {
         super(pos == null ? BlockPos.ZERO : pos);

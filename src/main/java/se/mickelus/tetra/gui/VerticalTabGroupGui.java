@@ -5,16 +5,17 @@ import se.mickelus.mutil.gui.GuiElement;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class VerticalTabGroupGui extends GuiElement {
 
-    private static final char[] keybindings = new char[] {'a', 's', 'd', 'f', 'g'};
+    private static final char[] keybindings = new char[]{'a', 's', 'd', 'f', 'g'};
 
-    private VerticalTabButtonGui[] buttons;
+    private final VerticalTabButtonGui[] buttons;
 
-    private Consumer<Integer> clickHandler;
+    private final Consumer<Integer> clickHandler;
 
-    public VerticalTabGroupGui(int x, int y, Consumer<Integer> clickHandler, String ... labels) {
+    public VerticalTabGroupGui(int x, int y, Consumer<Integer> clickHandler, String... labels) {
         super(x, y, 3, labels.length * 16 + 1);
 
         buttons = new VerticalTabButtonGui[labels.length];
@@ -34,7 +35,7 @@ public class VerticalTabGroupGui extends GuiElement {
         this.clickHandler = clickHandler;
     }
 
-    public VerticalTabGroupGui(int x, int y, Consumer<Integer> clickHandler, ResourceLocation texture, int textureX, int textureY, String ... labels) {
+    public VerticalTabGroupGui(int x, int y, Consumer<Integer> clickHandler, ResourceLocation texture, int textureX, int textureY, String... labels) {
         super(x, y, 3, labels.length * 16 + 1);
 
         buttons = new VerticalTabButtonGui[labels.length];

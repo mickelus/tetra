@@ -25,24 +25,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class HoloGui extends Screen {
     private static final Logger logger = LogManager.getLogger();
-
-    private final HoloHeaderGui header;
-
-    private final HoloRootBaseGui[] pages;
-    private HoloRootBaseGui currentPage;
-
-    private GuiElement defaultGui;
-
-    private GuiElement spinner;
-
     private static HoloGui instance = null;
-
     private static boolean hasListener = false;
-
+    private final HoloHeaderGui header;
+    private final HoloRootBaseGui[] pages;
+    private final GuiElement defaultGui;
+    private final GuiElement spinner;
+    private HoloRootBaseGui currentPage;
     private Runnable closeCallback;
 
     public HoloGui() {
@@ -81,6 +75,24 @@ public class HoloGui extends Screen {
         }
     }
 
+    public static HoloGui getInstance() {
+        if (instance == null) {
+            instance = new HoloGui();
+        }
+
+        return instance;
+    }
+
+    private static void onReload() {
+        if (instance != null && instance.getMinecraft().screen == instance) {
+            logger.info("Refreshing holosphere gui data");
+            instance.spinner.setVisible(false);
+            if (instance.currentPage != null) {
+                instance.currentPage.onReload();
+            }
+        }
+    }
+
     public void openSchematic(IModularItem item, String slot, UpgradeSchematic schematic, Runnable closeCallback) {
         changePage(HoloPage.craft);
 
@@ -97,14 +109,6 @@ public class HoloGui extends Screen {
             this.closeCallback = null;
             callback.run();
         }
-    }
-
-    public static HoloGui getInstance() {
-        if (instance == null) {
-            instance = new HoloGui();
-        }
-
-        return instance;
     }
 
     public void onShow() {
@@ -206,15 +210,5 @@ public class HoloGui extends Screen {
         }
 
         return false;
-    }
-
-    private static void onReload() {
-        if (instance != null && instance.getMinecraft().screen == instance) {
-            logger.info("Refreshing holosphere gui data");
-            instance.spinner.setVisible(false);
-            if (instance.currentPage != null) {
-                instance.currentPage.onReload();
-            }
-        }
     }
 }

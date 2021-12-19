@@ -15,7 +15,7 @@
         "steps": 9,
         "properties": {
             "effects": {
-                "multishot": [0, 1]
+                "multishot": [ 0, 1 ]
             }
         }
     }

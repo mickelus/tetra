@@ -40,7 +40,7 @@
                 "generic.attack_speed": -1.95
             },
             "tools": {
-                "pickaxe_dig": [3, 5]
+                "pickaxe_dig": [ 3, 5 ]
             },
             "effects": {
                 "piercing": 2,
@@ -50,7 +50,7 @@
                 "textureX": 224,
                 "textureY": 32
             },
-            "models": [{ "location": "tetra:items/module/single/head/earthpiercer/default" }]
+            "models": [ { "location": "tetra:items/module/single/head/earthpiercer/default" } ]
         }
     ]
 }

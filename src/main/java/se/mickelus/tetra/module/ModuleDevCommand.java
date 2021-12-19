@@ -23,6 +23,7 @@ import se.mickelus.tetra.module.data.VariantData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.CompletableFuture;
+
 @ParametersAreNonnullByDefault
 public class ModuleDevCommand {
     private static final Logger logger = LogManager.getLogger();

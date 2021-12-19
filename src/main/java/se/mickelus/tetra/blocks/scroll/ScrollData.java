@@ -21,17 +21,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 @ParametersAreNonnullByDefault
 public class ScrollData {
-    public String key;
-    public String details;
-    public boolean isIntricate;
-    public int material = 0;
-    public int ribbon = 0xffffff;
-    public List<Integer> glyphs = Collections.emptyList();
-    public List<ResourceLocation> schematics = Collections.emptyList();
-    public List<ResourceLocation> craftingEffects = Collections.emptyList();
-
     private static final Codec<ScrollData> codec = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("key").forGetter(i -> i.key),
             Codec.STRING.optionalFieldOf("details").forGetter(i -> Optional.ofNullable(i.details)),
@@ -42,6 +34,14 @@ public class ScrollData {
             ResourceLocation.CODEC.listOf().optionalFieldOf("schematics", Collections.emptyList()).forGetter(i -> i.schematics),
             ResourceLocation.CODEC.listOf().optionalFieldOf("effects", Collections.emptyList()).forGetter(i -> i.craftingEffects)
     ).apply(instance, ScrollData::new));
+    public String key;
+    public String details;
+    public boolean isIntricate;
+    public int material = 0;
+    public int ribbon = 0xffffff;
+    public List<Integer> glyphs = Collections.emptyList();
+    public List<ResourceLocation> schematics = Collections.emptyList();
+    public List<ResourceLocation> craftingEffects = Collections.emptyList();
 
     public ScrollData() {
         key = "unknown";
@@ -92,10 +92,6 @@ public class ScrollData {
                 .orElseGet(ScrollData::new);
     }
 
-    public void write(ItemStack itemStack) {
-        itemStack.addTagElement("BlockEntityTag", ScrollData.write(new ScrollData[] { this }, new CompoundTag()));
-    }
-
     public static ScrollData[] read(CompoundTag tag) {
         return tag.getList("data", Tag.TAG_COMPOUND).stream()
                 .map(nbt -> ScrollData.codec.decode(NbtOps.INSTANCE, nbt))
@@ -122,6 +118,10 @@ public class ScrollData {
                 .flatMap(DataResult::result)
                 .map(Pair::getFirst)
                 .orElse(null);
+    }
+
+    public void write(ItemStack itemStack) {
+        itemStack.addTagElement("BlockEntityTag", ScrollData.write(new ScrollData[]{this}, new CompoundTag()));
     }
 
     public JsonElement write(JsonObject json) {

@@ -4,13 +4,14 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class StatGetterAttribute implements IStatGetter {
     private final Attribute attribute;
@@ -30,16 +31,16 @@ public class StatGetterAttribute implements IStatGetter {
         this.ignoreBase = ignoreBase;
     }
 
-    public StatGetterAttribute withOffset(double offset) {
-        this.offset = offset;
-        return this;
-    }
-
     public StatGetterAttribute(Attribute attribute, boolean ignoreBase, boolean ignoreBonuses) {
         this(attribute);
 
         this.ignoreBase = ignoreBase;
         this.ignoreBonuses = ignoreBonuses;
+    }
+
+    public StatGetterAttribute withOffset(double offset) {
+        this.offset = offset;
+        return this;
     }
 
     @Override

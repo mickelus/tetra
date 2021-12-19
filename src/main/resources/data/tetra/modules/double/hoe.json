@@ -42,7 +42,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:metal/", "tetra:stone/", "tetra:wood/", "tetra:gem/"],
+            "materials": [ "tetra:metal/", "tetra:stone/", "tetra:wood/", "tetra:gem/" ],
             "key": "hoe/",
             "attributes": {
                 "generic.attack_damage": -3,
@@ -54,7 +54,7 @@
                     "generic.attack_damage": 1
                 },
                 "tools": {
-                    "hoe_dig": [1, 1]
+                    "hoe_dig": [ 1, 1 ]
                 },
                 "durability": 0.5,
                 "integrity": -1,
@@ -63,8 +63,8 @@
                     "textureX": 16,
                     "textureY": 32
                 },
-                "availableTextures": ["crude", "metal", "shiny"],
-                "models": [{ "location": "tetra:items/module/double/head/hoe/" }]
+                "availableTextures": [ "crude", "metal", "shiny" ],
+                "models": [ { "location": "tetra:items/module/double/head/hoe/" } ]
             }
         }
     ]

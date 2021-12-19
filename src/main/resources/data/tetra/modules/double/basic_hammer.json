@@ -39,7 +39,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/"],
+            "materials": [ "tetra:wood/" ],
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
@@ -53,7 +53,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer_dig": [0, 0.8333]
+                    "hammer_dig": [ 0, 0.8333 ]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -61,14 +61,16 @@
                 "glyph": {
                     "textureX": 64
                 },
-                "availableTextures": ["log"],
-                "models": [{
-                    "location": "tetra:items/module/double/head/basic_hammer/"
-                }]
+                "availableTextures": [ "log" ],
+                "models": [
+                    {
+                        "location": "tetra:items/module/double/head/basic_hammer/"
+                    }
+                ]
             }
         },
         {
-            "materials": ["tetra:stone/stone"],
+            "materials": [ "tetra:stone/stone" ],
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
@@ -76,10 +78,12 @@
             "tools": {
                 "hammer_dig": 1
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_hammer/stone",
-                "tint": "aaaaaa"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_hammer/stone",
+                    "tint": "aaaaaa"
+                }
+            ],
             "extract": {
                 "primaryAttributes": {
                     "generic.attack_damage": 0.5
@@ -89,7 +93,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer_dig": [0, 0.8333]
+                    "hammer_dig": [ 0, 0.8333 ]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -100,7 +104,7 @@
             }
         },
         {
-            "materials": ["tetra:stone/diorite", "tetra:stone/andesite", "tetra:stone/granite"],
+            "materials": [ "tetra:stone/diorite", "tetra:stone/andesite", "tetra:stone/granite" ],
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
@@ -117,7 +121,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer_dig": [0, 0.8333]
+                    "hammer_dig": [ 0, 0.8333 ]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -125,14 +129,16 @@
                 "glyph": {
                     "textureX": 64
                 },
-                "availableTextures": ["stone"],
-                "models": [{
-                    "location": "tetra:items/module/double/head/basic_hammer/"
-                }]
+                "availableTextures": [ "stone" ],
+                "models": [
+                    {
+                        "location": "tetra:items/module/double/head/basic_hammer/"
+                    }
+                ]
             }
         },
         {
-            "materials": ["tetra:metal/iron"],
+            "materials": [ "tetra:metal/iron" ],
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
@@ -149,7 +155,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer_dig": [0, 0.8333]
+                    "hammer_dig": [ 0, 0.8333 ]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -157,14 +163,16 @@
                 "glyph": {
                     "textureX": 64
                 },
-                "availableTextures": ["metal"],
-                "models": [{
-                    "location": "tetra:items/module/double/head/basic_hammer/"
-                }]
+                "availableTextures": [ "metal" ],
+                "models": [
+                    {
+                        "location": "tetra:items/module/double/head/basic_hammer/"
+                    }
+                ]
             }
         },
         {
-            "materials": ["tetra:stone/blackstone"],
+            "materials": [ "tetra:stone/blackstone" ],
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
@@ -182,7 +190,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer_dig": [0, 0.8333]
+                    "hammer_dig": [ 0, 0.8333 ]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -190,14 +198,16 @@
                 "glyph": {
                     "textureX": 64
                 },
-                "availableTextures": ["stone"],
-                "models": [{
-                    "location": "tetra:items/module/double/head/basic_hammer/"
-                }]
+                "availableTextures": [ "stone" ],
+                "models": [
+                    {
+                        "location": "tetra:items/module/double/head/basic_hammer/"
+                    }
+                ]
             }
         },
         {
-            "materials": ["tetra:stone/obsidian"],
+            "materials": [ "tetra:stone/obsidian" ],
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
@@ -205,9 +215,11 @@
             "tools": {
                 "hammer_dig": 5
             },
-            "models": [{
-                "location": "tetra:items/module/double/head/basic_hammer/obsidian"
-            }],
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/basic_hammer/obsidian"
+                }
+            ],
             "extract": {
                 "primaryAttributes": {
                     "generic.attack_damage": 0.5
@@ -217,7 +229,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer_dig": [0, 0.8333]
+                    "hammer_dig": [ 0, 0.8333 ]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -228,7 +240,7 @@
             }
         },
         {
-            "materials": ["tetra:metal/netherite"],
+            "materials": [ "tetra:metal/netherite" ],
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
@@ -246,7 +258,7 @@
                     "generic.attack_speed": -0.08
                 },
                 "tools": {
-                    "hammer_dig": [0, 0.8333]
+                    "hammer_dig": [ 0, 0.8333 ]
                 },
                 "durability": 0.55,
                 "integrity": -1,
@@ -254,10 +266,12 @@
                 "glyph": {
                     "textureX": 64
                 },
-                "availableTextures": ["metal"],
-                "models": [{
-                    "location": "tetra:items/module/double/head/basic_hammer/"
-                }]
+                "availableTextures": [ "metal" ],
+                "models": [
+                    {
+                        "location": "tetra:items/module/double/head/basic_hammer/"
+                    }
+                ]
             }
         }
     ]

@@ -1,8 +1,8 @@
 {
     "replace": true,
     "type": "tetra:toolbelt_module",
-    "slots": ["toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3"],
-    "slotSuffixes": ["_slot1", "_slot2", "_slot3"],
+    "slots": [ "toolbelt/slot1", "toolbelt/slot2", "toolbelt/slot3" ],
+    "slotSuffixes": [ "_slot1", "_slot2", "_slot3" ],
     "variants": [
         {
             "key": "suspender/suspender",

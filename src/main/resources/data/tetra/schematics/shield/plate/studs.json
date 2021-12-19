@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["shield/plate"],
+    "slots": [ "shield/plate" ],
     "materialSlotCount": 1,
     "displayType": "improvement",
     "glyph": {
@@ -12,7 +12,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:metal/"],
+            "materials": [ "tetra:metal/" ],
             "improvements": {
                 "shield/studs/": 0
             }

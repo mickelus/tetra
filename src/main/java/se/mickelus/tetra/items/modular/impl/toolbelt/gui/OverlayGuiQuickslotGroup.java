@@ -13,11 +13,12 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventor
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Objects;
+
 @ParametersAreNonnullByDefault
 public class OverlayGuiQuickslotGroup extends GuiElement {
 
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
+    private final KeyframeAnimation showAnimation;
+    private final KeyframeAnimation hideAnimation;
 
     private OverlayGuiQuickslot[] slots = new OverlayGuiQuickslot[0];
 

@@ -7,13 +7,13 @@ public enum EnumTransferConfig implements StringRepresentable {
     b,
     c;
 
+    public static EnumTransferConfig getNextConfiguration(EnumTransferConfig config) {
+        int index = (config.ordinal() + 1) % values().length;
+        return values()[index];
+    }
+
     @Override
     public String getSerializedName() {
         return toString().toLowerCase();
-    }
-
-    public static EnumTransferConfig getNextConfiguration(EnumTransferConfig config) {
-        int index = ( config.ordinal() + 1 ) % values().length;
-        return values()[index];
     }
 }

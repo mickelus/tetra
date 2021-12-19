@@ -12,6 +12,7 @@ import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class EnderReverbEffect {
     public static void perform(LivingEntity entity, ItemStack itemStack, double multiplier) {

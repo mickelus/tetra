@@ -3,17 +3,19 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.mutil.network.AbstractPacket;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class UpdateBoosterPacket extends AbstractPacket {
 
     private boolean active;
     private boolean charged;
 
-    public UpdateBoosterPacket() { }
+    public UpdateBoosterPacket() {
+    }
 
     public UpdateBoosterPacket(boolean active) {
         this(active, false);

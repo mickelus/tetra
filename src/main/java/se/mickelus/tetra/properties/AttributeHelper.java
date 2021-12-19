@@ -15,12 +15,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class AttributeHelper {
 
     public static final Multimap<Attribute, AttributeModifier> emptyMap = ImmutableMultimap.of();
 
     private static final Map<String, UUID> attributeIdMap = new HashMap<>();
+
     static {
         attributeIdMap.put(getAttributeKey(Attributes.ATTACK_DAMAGE, AttributeModifier.Operation.ADDITION), ModularItem.attackDamageModifier);
         attributeIdMap.put(getAttributeKey(Attributes.ATTACK_SPEED, AttributeModifier.Operation.ADDITION), ModularItem.attackSpeedModifier);
@@ -28,6 +30,7 @@ public class AttributeHelper {
 
     /**
      * Merge two multimaps, values from b will be used when both map contain values for the same key
+     *
      * @param a
      * @param b
      * @return
@@ -105,18 +108,19 @@ public class AttributeHelper {
     /**
      * Collapse the modifiers collection into two entries per attribute: ADDITION & MULTIPLY_TOTAL. ADDITION is aggregated from ADDITION and
      * MULTIPLY_BASE so that MULTIPLY_BASE can be used by improvements to increase attributes based on the module value.
+     *
      * @param modifiers
      * @return
      */
     public static Collection<AttributeModifier> collapse(Collection<AttributeModifier> modifiers) {
         return Stream.of(
-                Optional.of(getAdditionAmount(modifiers))
-                        .filter(amount -> amount != 0)
-                        .map(amount -> new AttributeModifier("tetra.stats.addition", amount, AttributeModifier.Operation.ADDITION)),
-                Optional.of(getMultiplyAmount(modifiers))
-                        .map(amount -> amount - 1) // vanilla expects the multiplier to be 0 based
-                        .filter(amount -> amount != 0)
-                        .map(amount -> new AttributeModifier("tetra.stats.multiply", amount, AttributeModifier.Operation.MULTIPLY_TOTAL)))
+                        Optional.of(getAdditionAmount(modifiers))
+                                .filter(amount -> amount != 0)
+                                .map(amount -> new AttributeModifier("tetra.stats.addition", amount, AttributeModifier.Operation.ADDITION)),
+                        Optional.of(getMultiplyAmount(modifiers))
+                                .map(amount -> amount - 1) // vanilla expects the multiplier to be 0 based
+                                .filter(amount -> amount != 0)
+                                .map(amount -> new AttributeModifier("tetra.stats.multiply", amount, AttributeModifier.Operation.MULTIPLY_TOTAL)))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
@@ -125,6 +129,7 @@ public class AttributeHelper {
     /**
      * Computes an aggregated value from all modifiers
      * Based on {@link net.minecraft.entity.ai.attributes.ModifiableAttributeInstance#ModifiableAttributeInstance}
+     *
      * @param modifiers
      * @return
      */

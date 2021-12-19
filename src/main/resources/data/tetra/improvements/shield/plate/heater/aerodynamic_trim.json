@@ -1,27 +1,31 @@
 [
     {
-        "materials": ["tetra:metal/"],
+        "materials": [ "tetra:metal/" ],
         "key": "shield/aerodynamic_trim/",
         "group": "trim",
         "integrity": -1,
         "effects": {
-            "throwable": [1, 0.8]
+            "throwable": [ 1, 0.8 ]
         },
-        "models": [{
-            "type": "tetra:plate/heater",
-            "location": "tetra:items/module/shield/plate/heater/improvements/aerodynamic_trim_bevel",
-            "tint": "inherit"
-        }],
+        "models": [
+            {
+                "type": "tetra:plate/heater",
+                "location": "tetra:items/module/shield/plate/heater/improvements/aerodynamic_trim_bevel",
+                "tint": "inherit"
+            }
+        ],
         "extract": {
             "primaryEffects": {
-                "throwable": [0, 0.015]
+                "throwable": [ 0, 0.015 ]
             },
             "durability": 0.1,
-            "availableTextures": ["aerodynamic_trim"],
-            "models": [{
-                "type": "tetra:plate/heater",
-                "location": "tetra:items/module/shield/plate/heater/improvements/"
-            }]
+            "availableTextures": [ "aerodynamic_trim" ],
+            "models": [
+                {
+                    "type": "tetra:plate/heater",
+                    "location": "tetra:items/module/shield/plate/heater/improvements/"
+                }
+            ]
         }
     }
 ]

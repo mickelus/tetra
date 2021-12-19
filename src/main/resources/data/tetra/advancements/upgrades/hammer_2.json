@@ -72,7 +72,7 @@
         }
     },
     "requirements": [
-        ["diorite_left", "andesite_left", "granite_left", "stone_left"],
-        ["diorite_right", "andesite_right", "granite_right", "stone_right"]
+        [ "diorite_left", "andesite_left", "granite_left", "stone_left" ],
+        [ "diorite_right", "andesite_right", "granite_right", "stone_right" ]
     ]
 }

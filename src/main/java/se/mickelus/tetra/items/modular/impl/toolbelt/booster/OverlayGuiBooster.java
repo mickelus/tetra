@@ -4,10 +4,11 @@ import net.minecraft.client.Minecraft;
 import se.mickelus.mutil.gui.GuiRoot;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class OverlayGuiBooster extends GuiRoot {
 
-    private GuiBarBooster barElement;
+    private final GuiBarBooster barElement;
 
     public OverlayGuiBooster(Minecraft mc) {
         super(mc);

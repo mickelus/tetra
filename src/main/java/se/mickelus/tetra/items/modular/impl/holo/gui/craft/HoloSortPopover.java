@@ -11,15 +11,14 @@ import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloSortPopover extends GuiElement {
-    private Consumer<IStatSorter> onSelect;
-
-    private GuiVerticalLayoutGroup items;
-    private GuiElement backdrop;
-
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
+    private final Consumer<IStatSorter> onSelect;
+    private final GuiVerticalLayoutGroup items;
+    private final GuiElement backdrop;
 
     public HoloSortPopover(int x, int y, Consumer<IStatSorter> onSelect) {
         super(x, y - 3, 40, 9);
@@ -42,7 +41,9 @@ public class HoloSortPopover extends GuiElement {
                 .applyTo(new Applier.TranslateY(y), new Applier.Opacity(1));
         hideAnimation = new KeyframeAnimation(100, this)
                 .applyTo(new Applier.TranslateY(y - 3), new Applier.Opacity(0))
-                .onStop(complete -> { if (complete) isVisible = false; });
+                .onStop(complete -> {
+                    if (complete) isVisible = false;
+                });
     }
 
     public void update(IStatSorter[] sorters) {

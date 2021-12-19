@@ -27,22 +27,23 @@ import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+
 @ParametersAreNonnullByDefault
 public class ModularOverrideList extends ItemOverrides {
     private static final Logger logger = LogManager.getLogger();
 
-    private Cache<CacheKey, BakedModel> bakedModelCache = CacheBuilder.newBuilder()
+    private final Cache<CacheKey, BakedModel> bakedModelCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
             .expireAfterWrite(5, TimeUnit.MINUTES)
             .build();
 
 
-    private ModularItemModel model;
-    private IModelConfiguration owner;
-    private ModelBakery bakery;
-    private Function<Material, TextureAtlasSprite> spriteGetter;
-    private ModelState modelTransform;
-    private ResourceLocation modelLocation;
+    private final ModularItemModel model;
+    private final IModelConfiguration owner;
+    private final ModelBakery bakery;
+    private final Function<Material, TextureAtlasSprite> spriteGetter;
+    private final ModelState modelTransform;
+    private final ResourceLocation modelLocation;
 
     public ModularOverrideList(ModularItemModel model, IModelConfiguration owner, ModelBakery bakery,
             Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ResourceLocation modelLocation) {
@@ -65,12 +66,12 @@ public class ModularOverrideList extends ItemOverrides {
         CompoundTag baseTag = stack.getTag();
         BakedModel result = originalModel;
 
-        if(baseTag != null && !baseTag.isEmpty()) {
+        if (baseTag != null && !baseTag.isEmpty()) {
             CacheKey key = getCacheKey(stack, entity, originalModel);
 
             try {
                 result = bakedModelCache.get(key, () -> getOverrideModel(stack, world, entity));
-            } catch(ExecutionException e) {
+            } catch (ExecutionException e) {
                 // do nothing, return original model
                 e.printStackTrace();
             }
@@ -79,7 +80,7 @@ public class ModularOverrideList extends ItemOverrides {
     }
 
     protected BakedModel getOverrideModel(ItemStack itemStack, @Nullable Level world, @Nullable LivingEntity entity) {
-        IModularItem item  = (IModularItem) itemStack.getItem();
+        IModularItem item = (IModularItem) itemStack.getItem();
 
         List<ModuleModel> models = item.getModels(itemStack, entity);
         String transformVariant = item.getTransformVariant(itemStack, entity);
@@ -103,16 +104,16 @@ public class ModularOverrideList extends ItemOverrides {
 
         @Override
         public boolean equals(Object o) {
-            if(this == o) {
+            if (this == o) {
                 return true;
             }
-            if(o == null || getClass() != o.getClass()) {
+            if (o == null || getClass() != o.getClass()) {
                 return false;
             }
 
             CacheKey cacheKey = (CacheKey) o;
 
-            if(parent != null ? parent != cacheKey.parent : cacheKey.parent != null) {
+            if (parent != null ? parent != cacheKey.parent : cacheKey.parent != null) {
                 return false;
             }
             return Objects.equals(data, cacheKey.data);

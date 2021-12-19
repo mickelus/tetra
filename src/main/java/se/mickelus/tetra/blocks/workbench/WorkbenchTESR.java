@@ -16,11 +16,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class WorkbenchTESR implements BlockEntityRenderer<WorkbenchTile> {
 
-    private ItemRenderer itemRenderer;
+    private final ItemRenderer itemRenderer;
 
     public WorkbenchTESR(BlockEntityRendererProvider.Context context) {
         itemRenderer = Minecraft.getInstance().getItemRenderer();

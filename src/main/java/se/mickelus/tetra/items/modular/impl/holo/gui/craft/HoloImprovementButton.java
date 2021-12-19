@@ -10,19 +10,18 @@ import se.mickelus.tetra.gui.GuiTextures;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class HoloImprovementButton extends GuiClickable {
+    private final KeyframeAnimation showAnimation;
+    private final KeyframeAnimation hideAnimation;
     GuiString label;
     List<KeyframeAnimation> hoverAnimations;
     List<KeyframeAnimation> blurAnimations;
-
     boolean hasImprovements = false;
 
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
-
     public HoloImprovementButton(int x, int y, Runnable onClick) {
-        super(x, y, 0,  19, onClick);
+        super(x, y, 0, 19, onClick);
 
         label = new GuiStringOutline(0, 0, I18n.get("tetra.holo.craft.improvement_button", "00"));
         label.setAttachment(GuiAttachment.middleCenter);

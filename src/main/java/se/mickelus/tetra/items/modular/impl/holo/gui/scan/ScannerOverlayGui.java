@@ -11,11 +11,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ClipBlockStateContext;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -32,38 +29,29 @@ import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Objects;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ScannerOverlayGui extends GuiRoot {
     private static final ResourceLocation tag = new ResourceLocation("tetra:scannable");
-
+    private static final int snoozeLength = 6000; // 5 min
     public static ScannerOverlayGui instance;
-
-    private ScannerBarGui scanner;
-
+    private final ScannerBarGui scanner;
     BlockPos upHighlight;
     BlockPos midHighlight;
     BlockPos downHighlight;
-
     float widthRatio = 1;
-
     ScannerSound sound;
-
-    private int ticks;
-
-    private int snooze = -1;
-    private static final int snoozeLength = 6000; // 5 min
-
     // stats
     boolean available;
     int horizontalSpread = 44;
     int verticalSpread = 3;
     float cooldown = 1.2f;
     int range = 32;
+    private int ticks;
+    private int snooze = -1;
 
     public ScannerOverlayGui() {
         super(Minecraft.getInstance());
@@ -190,7 +178,7 @@ public class ScannerOverlayGui extends GuiRoot {
         }
 
         if (available && ticks % 2 == 0 && !isSnoozed()) {
-            int offset = (int) (ticks / 2) % (int) (horizontalSpread * 2 * cooldown);
+            int offset = (ticks / 2) % (int) (horizontalSpread * 2 * cooldown);
             if (offset < horizontalSpread * 2) {
                 int yawOffset = (int) ((-horizontalSpread + offset) * ScannerBarGui.getDegreesPerUnit());
                 if (offset % 2 == 0) {
@@ -248,8 +236,8 @@ public class ScannerOverlayGui extends GuiRoot {
     }
 
     private Vec3 getVectorForRotation(float pitch, float yaw) {
-        float f = pitch * ((float)Math.PI / 180F);
-        float f1 = -yaw * ((float)Math.PI / 180F);
+        float f = pitch * ((float) Math.PI / 180F);
+        float f1 = -yaw * ((float) Math.PI / 180F);
         float f2 = Mth.cos(f1);
         float f3 = Mth.sin(f1);
         float f4 = Mth.cos(f);

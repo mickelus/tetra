@@ -16,10 +16,12 @@
         "find": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [{
-                    "item": "tetra:scroll_rolled",
-                    "nbt": "{BlockEntityTag:{data:[{key:\"sword/throwing_knife\"}]}}"
-                }]
+                "items": [
+                    {
+                        "item": "tetra:scroll_rolled",
+                        "nbt": "{BlockEntityTag:{data:[{key:\"sword/throwing_knife\"}]}}"
+                    }
+                ]
             }
         }
     }

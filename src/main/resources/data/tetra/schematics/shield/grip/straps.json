@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["shield/grip"],
+    "slots": [ "shield/grip" ],
     "materialSlotCount": 1,
     "displayType": "major",
     "glyph": {
@@ -9,16 +9,17 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:fibre/"],
+            "materials": [ "tetra:fibre/" ],
             "countFactor": 2.5,
             "moduleKey": "shield/straps",
             "moduleVariant": "straps/"
         },
         {
-            "materials": ["tetra:skin/"],
+            "materials": [ "tetra:skin/" ],
             "countFactor": 1.5,
             "toolOffset": 1,
             "moduleKey": "shield/straps",
             "moduleVariant": "straps/"
         }
-    ]}
+    ]
+}

@@ -4,22 +4,23 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.gui.GuiAlignment;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.stats.getter.*;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiStatBarTool extends GuiStatBar {
     private static final int efficiencyMax = 50;
 
-    private GuiTool icon;
-    private IStatGetter levelGetter;
+    private final GuiTool icon;
+    private final IStatGetter levelGetter;
 
-    private boolean efficiencyVisibility;
+    private final boolean efficiencyVisibility;
 
     public GuiStatBarTool(int x, int y, int width, ToolAction toolAction) {
         this(x, y, width, toolAction, false);

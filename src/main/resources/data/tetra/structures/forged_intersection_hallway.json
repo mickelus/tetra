@@ -1,9 +1,11 @@
 {
-    "origin": [1, 2, 9],
+    "origin": [ 1, 2, 9 ],
     "integrityMin": 0.7,
-    "children": [{
-        "features": ["tetra:forged_vent"],
-        "chance": 0.3,
-        "offset": [1, 1, 9]
-    }]
+    "children": [
+        {
+            "features": [ "tetra:forged_vent" ],
+            "chance": 0.3,
+            "offset": [ 1, 1, 9 ]
+        }
+    ]
 }

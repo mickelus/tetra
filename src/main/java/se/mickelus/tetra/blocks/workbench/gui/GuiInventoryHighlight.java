@@ -11,10 +11,11 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class GuiInventoryHighlight extends GuiElement {
 
-    private AnimationChain animation;
+    private final AnimationChain animation;
     GuiElement dots;
 
     public GuiInventoryHighlight(int x, int y, int offset) {

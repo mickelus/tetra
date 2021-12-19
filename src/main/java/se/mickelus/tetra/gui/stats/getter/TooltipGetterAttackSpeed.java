@@ -5,11 +5,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TooltipGetterAttackSpeed implements ITooltipGetter {
 
-    private final IStatGetter statGetter;
     private static final String localizationKey = "tetra.stats.speed.tooltip";
+    private final IStatGetter statGetter;
 
     public TooltipGetterAttackSpeed(IStatGetter statGetter) {
         this.statGetter = statGetter;

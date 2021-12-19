@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
 import com.google.common.collect.Sets;
-import com.mojang.math.Vector3d;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -43,46 +42,64 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.Set;
+
 @ParametersAreNonnullByDefault
 public class FracturedBedrockTile extends BlockEntity {
-    @ObjectHolder(TetraMod.MOD_ID + ":" + FracturedBedrockBlock.unlocalizedName)
-    public static BlockEntityType<FracturedBedrockTile> type;
-
+    public static final Set<Material> breakMaterials = Sets.newHashSet(Material.STONE, Material.CLAY, Material.DIRT);
     private static final Logger logger = LogManager.getLogger();
 
     private static final String activityKey = "actv";
-    private int activity = 0;
-
     private static final String stepKey = "step";
-    private int step = 0;
-
-    private float spawnRatio = 0.5f;
-    private int spawnYLimit = 4;
-
-    public static final Set<Material> breakMaterials = Sets.newHashSet(Material.STONE, Material.CLAY, Material.DIRT);
-
     private static final String luckKey = "luck";
-    private int luck = 0;
-
-    private static final ResourceLocation[] lootTables = new ResourceLocation[] {
+    private static final ResourceLocation[] lootTables = new ResourceLocation[]{
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier1"),
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier2"),
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier3"),
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier4")
     };
-
+    @ObjectHolder(TetraMod.MOD_ID + ":" + FracturedBedrockBlock.unlocalizedName)
+    public static BlockEntityType<FracturedBedrockTile> type;
+    private final float spawnRatio = 0.5f;
+    private final int spawnYLimit = 4;
+    private int activity = 0;
+    private int step = 0;
+    private int luck = 0;
     private MobSpawnSettings spawnInfo;
 
     public FracturedBedrockTile(BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
+    }
+
+    public static boolean breakBlock(Level world, BlockPos pos, BlockState blockState) {
+        if (world instanceof ServerLevel serverLevel
+                && !blockState.isAir()
+                && breakMaterials.contains(blockState.getMaterial())
+                && blockState.getDestroySpeed(world, pos) > -1) {
+            BlockEntity tile = blockState.getBlock() instanceof EntityBlock ? world.getBlockEntity(pos) : null;
+            LootContext.Builder lootBuilder = new LootContext.Builder(serverLevel)
+                    .withRandom(world.random)
+                    .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
+                    .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
+                    .withOptionalParameter(LootContextParams.BLOCK_ENTITY, tile)
+                    .withOptionalParameter(LootContextParams.THIS_ENTITY, null);
+
+            blockState.getDrops(lootBuilder).forEach(itemStack -> Block.popResource(world, pos, itemStack));
+
+            world.levelEvent(null, 2001, pos, Block.getId(world.getBlockState(pos)));
+            world.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+
+            return true;
+        }
+
+        return false;
     }
 
     public void updateLuck() {
@@ -217,30 +234,6 @@ public class FracturedBedrockTile extends BlockEntity {
         return movePos.immutable();
     }
 
-    public static boolean breakBlock(Level world, BlockPos pos, BlockState blockState) {
-        if (world instanceof ServerLevel serverLevel
-                && !blockState.isAir()
-                && breakMaterials.contains(blockState.getMaterial())
-                && blockState.getDestroySpeed(world, pos) > -1) {
-            BlockEntity tile = blockState.getBlock() instanceof EntityBlock ? world.getBlockEntity(pos) : null;
-            LootContext.Builder lootBuilder = new LootContext.Builder(serverLevel)
-                    .withRandom(world.random)
-                    .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
-                    .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
-                    .withOptionalParameter(LootContextParams.BLOCK_ENTITY, tile)
-                    .withOptionalParameter(LootContextParams.THIS_ENTITY, null);
-
-            blockState.getDrops(lootBuilder).forEach(itemStack -> Block.popResource(world, pos, itemStack));
-
-            world.levelEvent(null, 2001, pos, Block.getId(world.getBlockState(pos)));
-            world.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
-
-            return true;
-        }
-
-        return false;
-    }
-
     private void spawnOre(BlockPos pos) {
         ServerLevel serverWorld = (ServerLevel) level;
         LootTable table = serverWorld.getServer().getLootTables().get(lootTables[getTier()]);
@@ -262,6 +255,7 @@ public class FracturedBedrockTile extends BlockEntity {
 
     /**
      * Spawns one of the biomes "monster type" mobs at the given location, based on {@link net.minecraft.world.level.NaturalSpawner}
+     *
      * @param pos
      */
     private void spawnMob(BlockPos pos) {
@@ -396,8 +390,8 @@ public class FracturedBedrockTile extends BlockEntity {
             }
 
             ((ServerLevel) level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, FracturedBedrockBlock.instance.defaultBlockState()),
-                worldPosition.getX() + 0.5, worldPosition.getY() + 1.1, worldPosition.getZ() + 0.5,
-                8, 0, level.random.nextGaussian() * 0.1, 0, 0.1);
+                    worldPosition.getX() + 0.5, worldPosition.getY() + 1.1, worldPosition.getZ() + 0.5,
+                    8, 0, level.random.nextGaussian() * 0.1, 0, 0.1);
 
             step += intensity;
             activity -= intensity;
@@ -407,7 +401,7 @@ public class FracturedBedrockTile extends BlockEntity {
             }
         }
 
-        if (!level.isClientSide  && activity > 0 && this.level.getGameTime() % 80 == 0) {
+        if (!level.isClientSide && activity > 0 && this.level.getGameTime() % 80 == 0) {
             playSound();
         }
     }

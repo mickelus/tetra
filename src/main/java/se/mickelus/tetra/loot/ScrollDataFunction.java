@@ -13,12 +13,13 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.scroll.ScrollData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ScrollDataFunction extends LootItemConditionalFunction {
     public static final ResourceLocation identifier = new ResourceLocation(TetraMod.MOD_ID, "scroll");
     public static final LootItemFunctionType type = new LootItemFunctionType(new Serializer());
 
-    private ScrollData data;
+    private final ScrollData data;
 
     protected ScrollDataFunction(LootItemCondition[] conditions, ScrollData data) {
         super(conditions);

@@ -6,12 +6,14 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.effect.ItemEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TooltipGetterMultishot implements ITooltipGetter {
     private static final IStatGetter efficiencyGetter = new StatGetterEffectEfficiency(ItemEffect.multishot, 1);
     private static final IStatGetter levelGetter = new StatGetterEffectLevel(ItemEffect.multishot, 1);
 
-    public TooltipGetterMultishot() { }
+    public TooltipGetterMultishot() {
+    }
 
     @Override
     public String getTooltipBase(Player player, ItemStack itemStack) {

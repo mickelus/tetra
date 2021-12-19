@@ -11,20 +11,21 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.mutil.util.TileEntityOptional;
+import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumMap;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class RolledScrollBlock extends ScrollBlock {
     public static final String identifier = "scroll_rolled";
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ScrollBlock instance;
 
-    private final VoxelShape[] baseShapes = new VoxelShape[] {
+    private final VoxelShape[] baseShapes = new VoxelShape[]{
             Block.box(6.0, 0.0, 1.0, 9.0, 3.0, 15.0),
             Block.box(4.0, 0.0, 1.0, 11.0, 3.0, 15.0),
             Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),

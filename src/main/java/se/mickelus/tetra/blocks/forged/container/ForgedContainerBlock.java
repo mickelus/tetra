@@ -31,6 +31,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.network.PacketHandler;
+import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.PropertyMatcher;
@@ -38,8 +40,6 @@ import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
-import se.mickelus.mutil.network.PacketHandler;
-import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -48,19 +48,16 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.google.common.base.Predicates.equalTo;
+
 @ParametersAreNonnullByDefault
 public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInteractiveBlock, EntityBlock {
     public static final String unlocalizedName = "forged_container";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ForgedContainerBlock instance;
-
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty flippedProp = BooleanProperty.create("flipped");
     public static final BooleanProperty locked1Prop = BooleanProperty.create("locked1");
     public static final BooleanProperty locked2Prop = BooleanProperty.create("locked2");
     public static final BooleanProperty anyLockedProp = BooleanProperty.create("locked_any");
     public static final BooleanProperty openProp = BooleanProperty.create("open");
-
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
             new BlockInteraction(TetraToolActions.hammer, 3, Direction.SOUTH, 5, 7, 2, 5,
                     new PropertyMatcher().where(locked1Prop, equalTo(true)).where(flippedProp, equalTo(false)),
@@ -87,15 +84,16 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
                             .where(flippedProp, equalTo(true)),
                     ForgedContainerBlock::open)
     };
-
-    private static final VoxelShape shapeZ1 =     box(1,   0, -15, 15, 12, 15);
-    private static final VoxelShape shapeZ2 =     box(1,   0, 1,   15, 12, 31);
-    private static final VoxelShape shapeX1 =     box(-15, 0, 1,   15, 12, 15);
-    private static final VoxelShape shapeX2 =     box(1,   0, 1,   31, 12, 15);
-    private static final VoxelShape shapeZ1Open = box(1,   0, -15, 15,  9, 15);
-    private static final VoxelShape shapeZ2Open = box(1,   0, 1,   15,  9, 31);
-    private static final VoxelShape shapeX1Open = box(-15, 0, 1,   15,  9, 15);
-    private static final VoxelShape shapeX2Open = box(1,   0, 1,   31,  9, 15);
+    private static final VoxelShape shapeZ1 = box(1, 0, -15, 15, 12, 15);
+    private static final VoxelShape shapeZ2 = box(1, 0, 1, 15, 12, 31);
+    private static final VoxelShape shapeX1 = box(-15, 0, 1, 15, 12, 15);
+    private static final VoxelShape shapeX2 = box(1, 0, 1, 31, 12, 15);
+    private static final VoxelShape shapeZ1Open = box(1, 0, -15, 15, 9, 15);
+    private static final VoxelShape shapeZ2Open = box(1, 0, 1, 15, 9, 31);
+    private static final VoxelShape shapeX1Open = box(-15, 0, 1, 15, 9, 15);
+    private static final VoxelShape shapeX2Open = box(1, 0, 1, 31, 9, 15);
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static ForgedContainerBlock instance;
 
     public ForgedContainerBlock() {
         super(ForgedBlockCommon.propertiesSolid);
@@ -111,22 +109,6 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
                 .setValue(locked1Prop, false)
                 .setValue(locked2Prop, false)
                 .setValue(anyLockedProp, false));
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void clientInit() {
-        MenuScreens.register(ForgedContainerContainer.type, ForgedContainerScreen::new);
-    }
-
-    @Override
-    public void init(PacketHandler packetHandler) {
-        packetHandler.registerPacket(ChangeCompartmentPacket.class, ChangeCompartmentPacket::new);
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     private static boolean breakLock(Level world, BlockPos pos, @Nullable Player player, int index, @Nullable InteractionHand hand) {
@@ -145,6 +127,22 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
         }
 
         return true;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void clientInit() {
+        MenuScreens.register(ForgedContainerContainer.type, ForgedContainerScreen::new);
+    }
+
+    @Override
+    public void init(PacketHandler packetHandler) {
+        packetHandler.registerPacket(ChangeCompartmentPacket.class, ChangeCompartmentPacket::new);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     @Override
@@ -295,8 +293,8 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
         Direction facing = state.getValue(facingProp);
 
         if (Rotation.CLOCKWISE_180.equals(rot)
-                || Rotation.CLOCKWISE_90.equals(rot) && ( Direction.NORTH.equals(facing) || Direction.SOUTH.equals(facing))
-                || Rotation.COUNTERCLOCKWISE_90.equals(rot) && ( Direction.EAST.equals(facing) || Direction.WEST.equals(facing))) {
+                || Rotation.CLOCKWISE_90.equals(rot) && (Direction.NORTH.equals(facing) || Direction.SOUTH.equals(facing))
+                || Rotation.COUNTERCLOCKWISE_90.equals(rot) && (Direction.EAST.equals(facing) || Direction.WEST.equals(facing))) {
             state = state.setValue(flippedProp, state.getValue(flippedProp));
         }
 

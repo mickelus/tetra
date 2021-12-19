@@ -10,15 +10,16 @@ import se.mickelus.tetra.gui.GuiTextures;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class GuiExperience extends GuiElement {
     private static final int positiveColor = 0xc8ff8f;
     private static final int negativeColor = 0x8c605d;
 
-    private GuiTexture indicator;
-    private GuiString levelString;
+    private final GuiTexture indicator;
+    private final GuiString levelString;
 
-    private String unlocalizedTooltip;
+    private final String unlocalizedTooltip;
     private List<String> formattedTooltip;
 
     public GuiExperience(int x, int y) {

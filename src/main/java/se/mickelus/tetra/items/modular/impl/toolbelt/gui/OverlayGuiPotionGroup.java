@@ -11,12 +11,12 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.PotionsInventory;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Objects;
+
 @ParametersAreNonnullByDefault
 public class OverlayGuiPotionGroup extends GuiElement {
     GuiString focusSlot;
-
-    private OverlayGuiPotionSlot[] slots = new OverlayGuiPotionSlot[0];
     PotionsInventory inventory;
+    private OverlayGuiPotionSlot[] slots = new OverlayGuiPotionSlot[0];
 
     public OverlayGuiPotionGroup(int x, int y) {
         super(x, y, 0, 0);
@@ -53,9 +53,9 @@ public class OverlayGuiPotionGroup extends GuiElement {
                 if (i > 6) {
                     slots[i] = new OverlayGuiPotionSlot(22, 22, itemStack, i, true);
                 } else if (i > 4) {
-                    slots[i] = new OverlayGuiPotionSlot((i-5) * 22 +11, -11, itemStack, i, true);
+                    slots[i] = new OverlayGuiPotionSlot((i - 5) * 22 + 11, -11, itemStack, i, true);
                 } else if (i > 2) {
-                    slots[i] = new OverlayGuiPotionSlot((i-3) * 22 + 11, 11, itemStack, i, true);
+                    slots[i] = new OverlayGuiPotionSlot((i - 3) * 22 + 11, 11, itemStack, i, true);
                 } else {
                     slots[i] = new OverlayGuiPotionSlot(i * 22, 0, itemStack, i, true);
                 }

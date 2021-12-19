@@ -58,7 +58,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/" ],
             "key": "basic_axe/",
             "attributes": {
                 "generic.attack_speed": -1.6,
@@ -76,10 +76,10 @@
                     "generic.attack_damage": 0.25
                 },
                 "tools": {
-                    "axe_dig": [1, 1],
-                    "axe_strip": [1, 1],
-                    "axe_scrape": [1, 1],
-                    "axe_wax_off": [1, 1]
+                    "axe_dig": [ 1, 1 ],
+                    "axe_strip": [ 1, 1 ],
+                    "axe_scrape": [ 1, 1 ],
+                    "axe_wax_off": [ 1, 1 ]
                 },
                 "durability": 0.5,
                 "integrity": -1,
@@ -87,8 +87,8 @@
                 "glyph": {
                     "textureX": 144
                 },
-                "availableTextures": ["crude", "metal", "shiny"],
-                "models": [{ "location": "tetra:items/module/double/head/basic_axe/" }]
+                "availableTextures": [ "crude", "metal", "shiny" ],
+                "models": [ { "location": "tetra:items/module/double/head/basic_axe/" } ]
             }
         }
     ]

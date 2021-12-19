@@ -2,14 +2,15 @@ package se.mickelus.tetra.gui.stats.getter;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class StatGetterAbilityChargeTime implements IStatGetter {
-    private ChargedAbilityEffect ability;
+    private final ChargedAbilityEffect ability;
 
     public StatGetterAbilityChargeTime(ChargedAbilityEffect ability) {
         this.ability = ability;

@@ -9,6 +9,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.UUID;
+
 @ParametersAreNonnullByDefault
 public class ArmorPenetrationEffect {
 
@@ -17,6 +18,7 @@ public class ArmorPenetrationEffect {
     /**
      * Applies the armor reduction effect before the damage value is calculated.
      * Note that some mods cause this to be called twice before onLivingDamage.
+     *
      * @param event
      * @param effectLevel
      */

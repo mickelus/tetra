@@ -1,5 +1,5 @@
 {
-  "variants": {
-    "": { "model": "tetra:block/fractured_bedrock" }
-  }
+    "variants": {
+        "": { "model": "tetra:block/fractured_bedrock" }
+    }
 }

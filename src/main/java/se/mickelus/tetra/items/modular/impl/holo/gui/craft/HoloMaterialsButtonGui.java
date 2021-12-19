@@ -11,20 +11,17 @@ import se.mickelus.tetra.gui.GuiTextures;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class HoloMaterialsButtonGui extends GuiClickable {
 
-    private List<GuiAnimation> hoverAnimations;
-    private List<GuiAnimation> blurAnimations;
-
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
-
-
     private final GuiTexture backdrop;
     private final GuiTexture icon;
-
     private final GuiString label;
+    private final List<GuiAnimation> hoverAnimations;
+    private final List<GuiAnimation> blurAnimations;
+    private final KeyframeAnimation showAnimation;
+    private final KeyframeAnimation hideAnimation;
 
     public HoloMaterialsButtonGui(int x, int y, Runnable onClickHandler) {
         super(x, y, 64, 64, onClickHandler);
@@ -100,11 +97,7 @@ public class HoloMaterialsButtonGui extends GuiClickable {
     protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
         mouseX -= refX + x;
         mouseY -= refY + y;
-        boolean gainFocus = true;
-
-        if (mouseX + mouseY < 44) {
-            gainFocus = false;
-        }
+        boolean gainFocus = mouseX + mouseY >= 44;
 
         if (mouseX + mouseY > 84) {
             gainFocus = false;

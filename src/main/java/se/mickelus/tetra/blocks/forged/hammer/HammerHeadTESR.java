@@ -14,12 +14,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.EmptyModelData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class HammerHeadTESR implements BlockEntityRenderer<HammerHeadTile> {
-    private static BlockRenderDispatcher blockRenderer;
     private static final float animationDuration = 400;
     private static final float unjamDuration = 800;
+    private static BlockRenderDispatcher blockRenderer;
 
     public HammerHeadTESR(BlockEntityRendererProvider.Context context) {
         blockRenderer = Minecraft.getInstance().getBlockRenderer();

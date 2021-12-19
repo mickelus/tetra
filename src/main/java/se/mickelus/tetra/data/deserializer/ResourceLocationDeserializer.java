@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+
 @ParametersAreNonnullByDefault
 public class ResourceLocationDeserializer implements JsonDeserializer<ResourceLocation> {
 

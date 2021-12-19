@@ -9,6 +9,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.mutil.util.InventoryStream;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -16,8 +18,6 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
-import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.mutil.util.InventoryStream;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -25,6 +25,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class PropertyHelper {
 
@@ -168,7 +169,7 @@ public class PropertyHelper {
     }
 
     public static ItemStack consumeCraftToolInventory(Container inventory, Player player, ItemStack targetStack,
-            ToolAction tool, int level,  boolean consumeResources) {
+            ToolAction tool, int level, boolean consumeResources) {
         ItemStack itemStack = getInventoryProvidingItemStack(inventory, tool, level);
         if (itemStack.getItem() instanceof IToolProvider) {
             return ((IToolProvider) itemStack.getItem())
@@ -179,7 +180,7 @@ public class PropertyHelper {
     }
 
     public static ItemStack consumeActionToolInventory(Container inventory, Player player, ItemStack targetStack,
-            ToolAction tool, int level,  boolean consumeResources) {
+            ToolAction tool, int level, boolean consumeResources) {
         ItemStack itemStack = getInventoryProvidingItemStack(inventory, tool, level);
         if (itemStack.getItem() instanceof IToolProvider) {
             return ((IToolProvider) itemStack.getItem())
@@ -254,7 +255,7 @@ public class PropertyHelper {
     }
 
     @Nullable
-    public static ItemStack consumeCraftToolToolbelt(Player player, ItemStack targetStack, ToolAction tool, int level,  boolean consumeResources) {
+    public static ItemStack consumeCraftToolToolbelt(Player player, ItemStack targetStack, ToolAction tool, int level, boolean consumeResources) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> {
@@ -278,7 +279,7 @@ public class PropertyHelper {
 
     }
 
-    public static ItemStack consumeActionToolToolbelt(Player player, ItemStack targetStack, ToolAction tool, int level,  boolean consumeResources) {
+    public static ItemStack consumeActionToolToolbelt(Player player, ItemStack targetStack, ToolAction tool, int level, boolean consumeResources) {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> {
@@ -319,18 +320,18 @@ public class PropertyHelper {
 
     public static int getCombinedToolLevel(Player player, Level world, BlockPos pos, BlockState blockStateIn, ToolAction tool) {
         return IntStream.of(
-                getPlayerToolLevel(player, tool),
-                getToolbeltToolLevel(player, tool),
-                getBlockToolLevel(world, pos, blockStateIn, tool))
+                        getPlayerToolLevel(player, tool),
+                        getToolbeltToolLevel(player, tool),
+                        getBlockToolLevel(world, pos, blockStateIn, tool))
                 .max()
                 .orElse(0);
     }
 
     public static Map<ToolAction, Integer> getCombinedToolLevels(Player player, Level world, BlockPos pos, BlockState blockStateIn) {
         return Stream.of(
-                getInventoryToolLevels(player.getInventory()),
-                getToolbeltToolLevels(player),
-                getBlockToolLevels(world, pos, blockStateIn))
+                        getInventoryToolLevels(player.getInventory()),
+                        getToolbeltToolLevels(player),
+                        getBlockToolLevels(world, pos, blockStateIn))
                 .map(Map::entrySet)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Math::max));

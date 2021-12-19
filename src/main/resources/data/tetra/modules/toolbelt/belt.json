@@ -1,7 +1,7 @@
 {
     "replace": true,
     "type": "tetra:basic_module",
-    "slots": ["toolbelt/belt"],
+    "slots": [ "toolbelt/belt" ],
     "variants": [
         {
             "key": "belt/rope",
@@ -11,9 +11,11 @@
                 "textureX": 0,
                 "textureY": 16
             },
-            "models": [{
-                "location":"tetra:items/module/toolbelt/belt/rope"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/toolbelt/belt/rope"
+                }
+            ]
         },
         {
             "key": "belt/sash",
@@ -23,9 +25,11 @@
                 "textureX": 0,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/toolbelt/belt/sash"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/toolbelt/belt/sash"
+                }
+            ]
         },
         {
             "key": "belt/leather",
@@ -35,9 +39,11 @@
                 "textureX": 0,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/toolbelt/belt/leather"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/toolbelt/belt/leather"
+                }
+            ]
         },
         {
             "key": "belt/buckled",
@@ -47,9 +53,11 @@
                 "textureX": 0,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/toolbelt/belt/buckled"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/toolbelt/belt/buckled"
+                }
+            ]
         },
         {
             "key": "belt/inlaid",
@@ -59,9 +67,11 @@
                 "textureX": 0,
                 "textureY": 16
             },
-            "models": [{
-                "location": "tetra:items/module/toolbelt/belt/inlaid"
-            }]
+            "models": [
+                {
+                    "location": "tetra:items/module/toolbelt/belt/inlaid"
+                }
+            ]
         }
     ]
 }

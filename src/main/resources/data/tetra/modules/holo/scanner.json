@@ -22,7 +22,7 @@
             },
             "effects": {
                 "scannerRange": 24,
-                "scannerHorizontalSpread":  20,
+                "scannerHorizontalSpread": 20,
                 "scannerVerticalSpread": 3
             },
             "glyph": {

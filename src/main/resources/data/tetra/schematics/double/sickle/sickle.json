@@ -19,7 +19,7 @@
             "generic.attack_damage": 3
         },
         "tools": {
-            "hoe_dig": [2, 2]
+            "hoe_dig": [ 2, 2 ]
         },
         "durability": 2,
         "integrity": -3,
@@ -27,7 +27,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
+            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/" ],
             "moduleKey": "double/sickle",
             "moduleVariant": "sickle/"
         }

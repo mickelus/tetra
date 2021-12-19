@@ -6,6 +6,7 @@ import se.mickelus.mutil.data.MergingDataStore;
 import se.mickelus.tetra.module.data.ModuleData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ModuleStore extends MergingDataStore<ModuleData, ModuleData[]> {
 

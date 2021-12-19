@@ -1,7 +1,7 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["shield/grip"],
+    "slots": [ "shield/grip" ],
     "improvements": [
         "tetra:shield/grip/hone_damage_mult",
         "tetra:shield/grip/hone_speed_flat",
@@ -28,7 +28,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:fibre/", "tetra:skin/"],
+            "materials": [ "tetra:fibre/", "tetra:skin/" ],
             "key": "straps/",
             "integrity": -1,
             "extract": {
@@ -39,11 +39,13 @@
                     "textureX": 64,
                     "textureY": 48
                 },
-                "availableTextures": ["default"],
-                "models": [{
-                    "type": "tetra:grip/straps",
-                    "location": "tetra:items/module/shield/grip/straps/"
-                }]
+                "availableTextures": [ "default" ],
+                "models": [
+                    {
+                        "type": "tetra:grip/straps",
+                        "location": "tetra:items/module/shield/grip/straps/"
+                    }
+                ]
             }
         }
     ]

@@ -35,14 +35,14 @@
             "moduleVariant": "long_stave/stick"
         },
         {
-            "materials": ["tetra:wood/"],
+            "materials": [ "tetra:wood/" ],
             "countFactor": 2,
             "toolOffset": 1,
             "moduleKey": "bow/long_stave",
             "moduleVariant": "long_stave/"
         },
         {
-            "materials": ["tetra:metal/"],
+            "materials": [ "tetra:metal/" ],
             "countFactor": 3,
             "toolOffset": 3,
             "moduleKey": "bow/long_stave",

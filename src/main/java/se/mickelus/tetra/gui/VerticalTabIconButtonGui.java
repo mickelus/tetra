@@ -9,10 +9,11 @@ import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.mutil.gui.impl.GuiColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class VerticalTabIconButtonGui extends VerticalTabButtonGui {
-    private GuiTexture icon;
-    private AnimationChain iconFlash;
+    private final GuiTexture icon;
+    private final AnimationChain iconFlash;
 
     public VerticalTabIconButtonGui(int x, int y, ResourceLocation texture, int textureX, int textureY, String label, String keybinding,
             Runnable onClickHandler, boolean initiallyActive) {
@@ -39,7 +40,7 @@ public class VerticalTabIconButtonGui extends VerticalTabButtonGui {
         super.updateStyling();
 
         // todo: nullcheck required as this is called in super constructor, can fix?
-        if (icon !=  null) {
+        if (icon != null) {
             if (isActive) {
                 icon.setColor(hasFocus() ? GuiColors.hover : GuiColors.normal);
             } else if (hasContent) {

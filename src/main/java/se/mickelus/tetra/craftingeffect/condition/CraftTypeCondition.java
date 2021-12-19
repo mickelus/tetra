@@ -11,6 +11,7 @@ import net.minecraftforge.common.ToolAction;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class CraftTypeCondition implements CraftingEffectCondition {
     CraftType craft;
@@ -34,10 +35,10 @@ public class CraftTypeCondition implements CraftingEffectCondition {
         return materials.length == 1 && !materials[0].isEmpty() && Items.ENCHANTED_BOOK.equals(materials[0].getItem());
     }
 
-    static enum CraftType {
+    enum CraftType {
         module,
         improvement,
         enchantment,
-        repair;
+        repair
     }
 }

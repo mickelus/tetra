@@ -10,16 +10,17 @@ import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class InteractiveOutlineGui extends GuiElement {
     private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/block-interaction.png");
 
-    private BlockInteraction blockInteraction;
+    private final BlockInteraction blockInteraction;
 
-    private GuiTexture topLeft;
-    private GuiTexture topRight;
-    private GuiTexture bottomLeft;
-    private GuiTexture bottomRight;
+    private final GuiTexture topLeft;
+    private final GuiTexture topRight;
+    private final GuiTexture bottomLeft;
+    private final GuiTexture bottomRight;
 
     private InteractiveToolGui tool;
 
@@ -78,8 +79,8 @@ public class InteractiveOutlineGui extends GuiElement {
             tool = new InteractiveToolGui(0, 0, blockInteraction.requiredTool, blockInteraction.requiredLevel, player);
             addChild(tool);
 
-             float centerY = y + height / 2f;
-             float centerX = x + width / 2f;
+            float centerY = y + height / 2f;
+            float centerX = x + width / 2f;
 
             if (Math.abs(centerX - 16) > Math.abs(centerY - 16)) {
                 if (centerX < 16) {

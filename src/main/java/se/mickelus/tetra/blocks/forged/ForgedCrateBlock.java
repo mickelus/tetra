@@ -31,6 +31,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.ITetraBlock;
@@ -38,7 +39,6 @@ import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.properties.IToolProvider;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -50,15 +50,12 @@ import static net.minecraft.world.level.material.Fluids.WATER;
 
 @ParametersAreNonnullByDefault
 public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInteractiveBlock, SimpleWaterloggedBlock {
-    static final String unlocalizedName = "forged_crate";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ForgedCrateBlock instance;
-
     public static final DirectionProperty propFacing = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty propStacked = BooleanProperty.create("stacked");
     public static final IntegerProperty propIntegrity = IntegerProperty.create("integrity", 0, 3);
-
-    static final BlockInteraction[] interactions = new BlockInteraction[] {
+    public static final ResourceLocation interactionLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/crate_content");
+    static final String unlocalizedName = "forged_crate";
+    static final BlockInteraction[] interactions = new BlockInteraction[]{
             new BlockInteraction(TetraToolActions.pry, 1, Direction.EAST, 6, 8, 6, 8,
                     BlockStatePredicate.ANY,
                     ForgedCrateBlock::attemptBreakPry),
@@ -69,12 +66,12 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
                     BlockStatePredicate.ANY,
                     ForgedCrateBlock::attemptBreakHammer),
     };
-
-    public static final ResourceLocation interactionLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/crate_content");
-
     private static final VoxelShape shape = box(1, 0, 1, 15, 14, 15);
     private static final VoxelShape[] shapesNormal = new VoxelShape[4];
     private static final VoxelShape[] shapesOffset = new VoxelShape[4];
+    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static ForgedCrateBlock instance;
+
     static {
         for (Direction dir : Direction.Plane.HORIZONTAL) {
             shapesNormal[dir.get2DDataValue()] = shape.move(dir.getStepX() / 16f, dir.getStepY() / 16f, dir.getStepZ() / 16f);
@@ -96,11 +93,6 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
                 .setValue(WATERLOGGED, false));
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(ForgedBlockCommon.locationTooltip);
-    }
-
     private static boolean attemptBreakHammer(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction facing) {
         return attemptBreak(world, pos, blockState, player, hand, player.getItemInHand(hand), TetraToolActions.hammer, 2, 1);
     }
@@ -120,7 +112,7 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
 
         int progress = CastOptional.cast(itemStack.getItem(), IToolProvider.class)
                 .map(item -> item.getToolLevel(itemStack, toolAction))
-                .map(level -> ( level - min ) * multiplier)
+                .map(level -> (level - min) * multiplier)
                 .orElse(1);
 
         if (integrity - progress >= 0) {
@@ -143,8 +135,13 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     }
 
     @Override
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(ForgedBlockCommon.locationTooltip);
+    }
+
+    @Override
     public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ToolAction> tools) {
-            return interactions;
+        return interactions;
     }
 
     @Override

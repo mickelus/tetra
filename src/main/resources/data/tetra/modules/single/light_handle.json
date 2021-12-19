@@ -46,14 +46,14 @@
                 "generic.attack_speed": -1.1
             },
             "effects": {
-                "throwable": [1, 0.8]
+                "throwable": [ 1, 0.8 ]
             },
             "extract": {
                 "secondaryAttributes": {
                     "generic.attack_speed": -0.1
                 },
                 "secondaryEffects": {
-                    "throwable": [0, 0.1]
+                    "throwable": [ 0, 0.1 ]
                 },
                 "durability": 0.1,
                 "integrity": 1,
@@ -61,8 +61,8 @@
                 "glyph": {
                     "textureX": 16
                 },
-                "availableTextures": ["default", "metal", "bone", "bright"],
-                "models": [{ "location": "tetra:items/module/single/handle/light/" }]
+                "availableTextures": [ "default", "metal", "bone", "bright" ],
+                "models": [ { "location": "tetra:items/module/single/handle/light/" } ]
             }
         },
         {
@@ -71,7 +71,7 @@
                 "generic.attack_speed": -1.55
             },
             "effects": {
-                "throwable": [1, 0.9]
+                "throwable": [ 1, 0.9 ]
             },
             "durability": 261,
             "integrity": 4,
@@ -80,10 +80,12 @@
                 "tint": "prismarine_glyph",
                 "textureX": 16
             },
-            "models": [{
-                "tint": "prismarine_dark",
-                "location": "tetra:items/module/single/handle/light/default"
-            }]
+            "models": [
+                {
+                    "tint": "prismarine_dark",
+                    "location": "tetra:items/module/single/handle/light/default"
+                }
+            ]
         }
     ]
 }

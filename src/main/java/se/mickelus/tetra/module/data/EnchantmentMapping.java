@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class EnchantmentMapping {
     /**

@@ -16,7 +16,7 @@
     "displayType": "minor",
     "outcomes": [
         {
-            "materials": ["tetra:fabric/wool/"],
+            "materials": [ "tetra:fabric/wool/" ],
             "moduleKey": "toolbelt/belt_wool",
             "moduleVariant": "belt_wool/"
         }

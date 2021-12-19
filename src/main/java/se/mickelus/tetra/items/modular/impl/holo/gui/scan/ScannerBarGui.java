@@ -9,26 +9,23 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ScannerBarGui extends GuiElement {
+    private static final int unitWidth = 6;
+    private final KeyframeAnimation showAnimation;
+    private final KeyframeAnimation hideAnimation;
+    private final GuiString statusLabel;
+    private final KeyframeAnimation statusInAnimation;
+    private final KeyframeAnimation statusOutAnimation;
+    int horizontalSpread;
     private AnimationChain[] upAnimations;
     private AnimationChain[] upHighlightAnimations;
     private AnimationChain[] midAnimations;
     private AnimationChain[] midHighlightAnimations;
     private AnimationChain[] downAnimations;
     private AnimationChain[] downHighlightAnimations;
-
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
-
-    int horizontalSpread;
-
-    private static final int unitWidth = 6;
-
     private boolean hasStatus;
-    private GuiString statusLabel;
-    private KeyframeAnimation statusInAnimation;
-    private KeyframeAnimation statusOutAnimation;
 
     public ScannerBarGui(int x, int y, int horizontalSpread) {
         super(x, y, horizontalSpread * unitWidth, 9);
@@ -53,6 +50,10 @@ public class ScannerBarGui extends GuiElement {
                 .onStop(complete -> this.isVisible = false);
 
         setup();
+    }
+
+    public static double getDegreesPerUnit() {
+        return Minecraft.getInstance().options.fov * unitWidth / Minecraft.getInstance().getWindow().getGuiScaledWidth();
     }
 
     private void setup() {
@@ -129,10 +130,6 @@ public class ScannerBarGui extends GuiElement {
         }
 
         addChild(statusLabel);
-    }
-
-    public static double getDegreesPerUnit() {
-        return Minecraft.getInstance().options.fov * unitWidth / Minecraft.getInstance().getWindow().getGuiScaledWidth();
     }
 
     public void setHorizontalSpread(int horizontalSpread) {

@@ -25,6 +25,7 @@ import se.mickelus.tetra.advancements.BlockUseCriterion;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
     public static final String unlocalizedName = "basic_workbench";
@@ -39,11 +40,6 @@ public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
         setRegistryName(unlocalizedName);
 
         hasItem = true;
-    }
-
-    @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag advanced) {
-        tooltip.add(new TranslatableComponent("block.tetra.basic_workbench.description").withStyle(ChatFormatting.GRAY));
     }
 
     public static InteractionResult upgradeWorkbench(Player player, Level world, BlockPos pos, InteractionHand hand, Direction facing) {
@@ -65,5 +61,10 @@ public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
         }
 
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag advanced) {
+        tooltip.add(new TranslatableComponent("block.tetra.basic_workbench.description").withStyle(ChatFormatting.GRAY));
     }
 }

@@ -8,14 +8,15 @@ import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiStringSmall;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.gui.stats.bar.GuiBar;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class GuiMagicUsage extends GuiElement {
     protected GuiString valueString;
@@ -36,6 +37,34 @@ public class GuiMagicUsage extends GuiElement {
         bar = new GuiBar(0, 0, barLength, 0, 0);
         addChild(bar);
 
+    }
+
+    private static int getGain(ItemStack itemStack, String slot) {
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                .map(item -> item.getModuleFromSlot(itemStack, slot))
+                .map(module -> module.getMagicCapacityGain(itemStack))
+                .orElse(0);
+    }
+
+    private static int getCost(ItemStack itemStack, String slot) {
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                .map(item -> item.getModuleFromSlot(itemStack, slot))
+                .map(module -> module.getMagicCapacityCost(itemStack))
+                .orElse(0);
+    }
+
+    private static float getDestabilizeChance(ItemStack itemStack, String slot) {
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                .map(item -> item.getModuleFromSlot(itemStack, slot))
+                .map(module -> module.getDestabilizationChance(itemStack, 1))
+                .orElse(0f);
+    }
+
+    private static int getExperienceCost(ItemStack itemStack, String slot) {
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                .map(item -> item.getModuleFromSlot(itemStack, slot))
+                .map(module -> module.getRepairExperienceCost(itemStack))
+                .orElse(0);
     }
 
     public void update(ItemStack itemStack, ItemStack previewStack, String slot) {
@@ -96,34 +125,6 @@ public class GuiMagicUsage extends GuiElement {
             bar.setMax(max);
             bar.setValue(max - value, max - value);
         }
-    }
-
-    private static int getGain(ItemStack itemStack, String slot) {
-        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> item.getModuleFromSlot(itemStack, slot))
-                .map(module -> module.getMagicCapacityGain(itemStack))
-                .orElse(0);
-    }
-
-    private static int getCost(ItemStack itemStack, String slot) {
-        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> item.getModuleFromSlot(itemStack, slot))
-                .map(module -> module.getMagicCapacityCost(itemStack))
-                .orElse(0);
-    }
-
-    private static float getDestabilizeChance(ItemStack itemStack, String slot) {
-        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> item.getModuleFromSlot(itemStack, slot))
-                .map(module -> module.getDestabilizationChance(itemStack, 1))
-                .orElse(0f);
-    }
-
-    private static int getExperienceCost(ItemStack itemStack, String slot) {
-        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> item.getModuleFromSlot(itemStack, slot))
-                .map(module -> module.getRepairExperienceCost(itemStack))
-                .orElse(0);
     }
 
     public boolean hasChanged(ItemStack itemStack, ItemStack previewStack, String slot) {

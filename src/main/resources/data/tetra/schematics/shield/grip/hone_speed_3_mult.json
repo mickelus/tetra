@@ -13,7 +13,7 @@
     },
     "requirement": {
         "type": "tetra:modular_item",
-        "modules": [["shield/basic_grip"]],
+        "modules": [ [ "shield/basic_grip" ] ],
         "improvements": {
             "grip_hone/speed_mult": 2
         }

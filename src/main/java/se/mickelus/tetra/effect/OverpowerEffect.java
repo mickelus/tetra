@@ -26,14 +26,14 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+
 @ParametersAreNonnullByDefault
 public class OverpowerEffect extends ChargedAbilityEffect {
-    private static Cache<Integer, DelayData> delayCache = CacheBuilder.newBuilder()
+    public static final OverpowerEffect instance = new OverpowerEffect();
+    private static final Cache<Integer, DelayData> delayCache = CacheBuilder.newBuilder()
             .maximumSize(20)
             .expireAfterWrite(1, TimeUnit.MINUTES)
             .build();
-
-    public static final OverpowerEffect instance = new OverpowerEffect();
 
     OverpowerEffect() {
         super(10, 1f, 10, 1, ItemEffect.overpower, TargetRequirement.none, UseAnim.SPEAR, "raised");

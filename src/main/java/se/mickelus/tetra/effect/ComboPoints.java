@@ -12,9 +12,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ComboPoints {
-    private static Cache<Integer, Integer> cache = CacheBuilder.newBuilder()
+    private static final Cache<Integer, Integer> cache = CacheBuilder.newBuilder()
             .maximumSize(100)
             .expireAfterWrite(30, TimeUnit.SECONDS)
             .build();
@@ -28,7 +29,7 @@ public class ComboPoints {
             int identifier = getIdentifier(entity);
             int points = Math.min(5, cache.get(identifier, () -> 0) + 1);
             cache.put(identifier, points);
-        } catch(ExecutionException e) {
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
     }
@@ -36,7 +37,7 @@ public class ComboPoints {
     public static int get(Entity entity) {
         try {
             return cache.get(getIdentifier(entity), () -> 0);
-        } catch(ExecutionException e) {
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -48,7 +49,7 @@ public class ComboPoints {
             int points = cache.get(getIdentifier(entity), () -> 0);
             reset(entity);
             return points;
-        } catch(ExecutionException e) {
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
 

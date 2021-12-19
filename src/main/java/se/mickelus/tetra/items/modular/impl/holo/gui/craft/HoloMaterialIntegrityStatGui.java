@@ -5,6 +5,7 @@ import se.mickelus.tetra.module.data.MaterialData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
 @ParametersAreNonnullByDefault
 public class HoloMaterialIntegrityStatGui extends HoloMaterialStatGui {
 

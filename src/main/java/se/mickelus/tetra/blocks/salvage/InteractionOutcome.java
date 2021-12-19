@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public interface InteractionOutcome {
 
-    public static final InteractionOutcome EMPTY = (world, pos, blockState, player, hand, hitFace) -> false;
+    InteractionOutcome EMPTY = (world, pos, blockState, player, hand, hitFace) -> false;
 
-    public boolean apply(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction hitFace);
+    boolean apply(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction hitFace);
 }

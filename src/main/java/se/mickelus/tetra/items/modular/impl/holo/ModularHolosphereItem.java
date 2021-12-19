@@ -18,6 +18,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
@@ -28,7 +29,6 @@ import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
-import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.properties.TetraAttributes;
 
 import javax.annotation.Nullable;
@@ -36,15 +36,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
+
 @ParametersAreNonnullByDefault
 public class ModularHolosphereItem extends ModularItem {
-    private static final String unlocalizedName = "holo";
-
     public final static String coreKey = "holo/core";
     public final static String frameKey = "holo/frame";
     public final static String attachmentAKey = "holo/attachment_0";
     public final static String attachmentBKey = "holo/attachment_1";
-
+    private static final String unlocalizedName = "holo";
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 0, -14, 18, 4, 0, 4, 18);
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -60,10 +59,21 @@ public class ModularHolosphereItem extends ModularItem {
 
         setRegistryName(unlocalizedName);
 
-        majorModuleKeys = new String[] { coreKey, frameKey, attachmentAKey, attachmentBKey };
+        majorModuleKeys = new String[]{coreKey, frameKey, attachmentAKey, attachmentBKey};
         minorModuleKeys = new String[0];
 
-        requiredModules = new String[] { coreKey, frameKey };
+        requiredModules = new String[]{coreKey, frameKey};
+    }
+
+    public static ItemStack findHolosphere(Player player) {
+        return Stream.of(
+                        player.getInventory().offhand.stream(),
+                        player.getInventory().items.stream(),
+                        ToolbeltHelper.getToolbeltItems(player).stream())
+                .flatMap(Function.identity())
+                .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)
+                .findFirst()
+                .orElse(ItemStack.EMPTY);
     }
 
     @Override
@@ -139,16 +149,5 @@ public class ModularHolosphereItem extends ModularItem {
 
     public double getCooldownBase(ItemStack itemStack) {
         return Math.max(0, getAttributeValue(itemStack, TetraAttributes.abilityCooldown.get()));
-    }
-
-    public static ItemStack findHolosphere(Player player) {
-        return Stream.of(
-                player.getInventory().offhand.stream(),
-                player.getInventory().items.stream(),
-                ToolbeltHelper.getToolbeltItems(player).stream())
-                .flatMap(Function.identity())
-                .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)
-                .findFirst()
-                .orElse(ItemStack.EMPTY);
     }
 }

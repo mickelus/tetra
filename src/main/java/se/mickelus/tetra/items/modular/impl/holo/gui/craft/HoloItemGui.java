@@ -14,26 +14,21 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloItemGui extends GuiClickable {
 
-    GuiElement slotGroup;
-
-    private List<GuiAnimation> selectAnimations;
-    private List<GuiAnimation> deselectAnimations;
-
-    private List<GuiAnimation> hoverAnimations;
-    private List<GuiAnimation> blurAnimations;
-
-    private KeyframeAnimation itemShow;
-    private KeyframeAnimation itemHide;
-
-    private boolean isSelected = false;
     private final GuiTexture backdrop;
-
     private final GuiTexture icon;
-
-    private IModularItem item;
+    private final List<GuiAnimation> selectAnimations;
+    private final List<GuiAnimation> deselectAnimations;
+    private final List<GuiAnimation> hoverAnimations;
+    private final List<GuiAnimation> blurAnimations;
+    private final KeyframeAnimation itemShow;
+    private final KeyframeAnimation itemHide;
+    private final IModularItem item;
+    GuiElement slotGroup;
+    private boolean isSelected = false;
 
     public HoloItemGui(int x, int y, IModularItem item, int textureIndex, Runnable onSelect, Consumer<String> onSlotSelect) {
         super(x, y, 64, 64, onSelect);
@@ -170,11 +165,7 @@ public class HoloItemGui extends GuiClickable {
     protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
         mouseX -= refX + x;
         mouseY -= refY + y;
-        boolean gainFocus = true;
-
-        if (mouseX + mouseY < 44) {
-            gainFocus = false;
-        }
+        boolean gainFocus = mouseX + mouseY >= 44;
 
         if (mouseX + mouseY > 84) {
             gainFocus = false;

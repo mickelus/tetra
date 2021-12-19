@@ -36,7 +36,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:metal/", "tetra:stone/", "tetra:wood/", "tetra:gem/"],
+            "materials": [ "tetra:metal/", "tetra:stone/", "tetra:wood/", "tetra:gem/" ],
             "key": "sickle/",
             "attributes": {
                 "generic.attack_damage": -2,
@@ -53,7 +53,7 @@
                     "generic.attack_damage": 1
                 },
                 "tools": {
-                    "hoe_dig": [0.74, 0.8333]
+                    "hoe_dig": [ 0.74, 0.8333 ]
                 },
                 "durability": 0.5,
                 "integrity": -1,
@@ -62,8 +62,8 @@
                     "textureX": 32,
                     "textureY": 32
                 },
-                "availableTextures": ["crude", "metal", "shiny"],
-                "models": [{ "location": "tetra:items/module/double/head/sickle/" }]
+                "availableTextures": [ "crude", "metal", "shiny" ],
+                "models": [ { "location": "tetra:items/module/double/head/sickle/" } ]
             }
         }
     ]

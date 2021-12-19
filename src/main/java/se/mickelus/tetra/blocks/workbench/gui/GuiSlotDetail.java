@@ -13,6 +13,7 @@ import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.mutil.gui.animation.AnimationChain;
 import se.mickelus.mutil.gui.animation.Applier;
 import se.mickelus.mutil.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.VerticalTabGroupGui;
@@ -21,7 +22,6 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.properties.PropertyHelper;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
@@ -29,30 +29,24 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
+
 @ParametersAreNonnullByDefault
 public class GuiSlotDetail extends GuiElement {
-    private static final char[] keybindings = new char[] { 'a', 's', 'd'};
-    private static final String[] labels = new String[] {
+    private static final char[] keybindings = new char[]{'a', 's', 'd'};
+    private static final String[] labels = new String[]{
             "tetra.workbench.slot_detail.details_tab",
             "tetra.workbench.slot_detail.craft_tab",
             "tetra.workbench.slot_detail.tweak_tab"
     };
-
-    private int tab = 1;
-
-    private VerticalTabGroupGui tabGroup;
-
-    private GuiModuleDetails moduleDetails;
-
-    private GuiElement schematicGroup;
-    private GuiSchematicList schematicList;
-    private GuiSchematicDetail schematicDetail;
-
-    private GuiTweakControls tweakControls;
-
-    private Consumer<UpgradeSchematic> selectSchematicHandler;
-
     private final AnimationChain slotTransition;
+    private final VerticalTabGroupGui tabGroup;
+    private final GuiModuleDetails moduleDetails;
+    private final GuiElement schematicGroup;
+    private final GuiSchematicList schematicList;
+    private final GuiSchematicDetail schematicDetail;
+    private final GuiTweakControls tweakControls;
+    private final Consumer<UpgradeSchematic> selectSchematicHandler;
+    private int tab = 1;
 
     public GuiSlotDetail(int x, int y, Consumer<UpgradeSchematic> selectSchematicHandler, Runnable closeHandler,
             Runnable craftHandler, Consumer<Map<String, Integer>> previewTweak, Consumer<Map<String, Integer>> applyTweak) {

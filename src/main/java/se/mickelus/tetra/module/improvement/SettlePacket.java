@@ -6,12 +6,14 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class SettlePacket extends AbstractPacket {
     ItemStack itemStack;
     String slot;
 
-    public SettlePacket() {}
+    public SettlePacket() {
+    }
 
     public SettlePacket(ItemStack itemStack, String slot) {
         this.itemStack = itemStack;

@@ -50,11 +50,13 @@
                     "textureX": 16,
                     "textureY": 48
                 },
-                "availableTextures": ["default"],
-                "models": [{
-                    "type": "tetra:grip/grip",
-                    "location": "tetra:items/module/shield/grip/basic_grip/"
-                }]
+                "availableTextures": [ "default" ],
+                "models": [
+                    {
+                        "type": "tetra:grip/grip",
+                        "location": "tetra:items/module/shield/grip/basic_grip/"
+                    }
+                ]
             }
         }
     ]

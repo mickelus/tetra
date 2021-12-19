@@ -52,6 +52,7 @@ import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.effect.*;
@@ -61,7 +62,6 @@ import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.properties.AttributeHelper;
-import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.Nullable;
@@ -89,7 +89,7 @@ public class ItemModularHandheld extends ModularItem {
     public static final Set<Tag.Named<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
     // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
     public static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
-    static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[] {
+    static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[]{
             ExecuteEffect.instance,
             LungeEffect.instance,
             SlamEffect.instance,
@@ -112,16 +112,16 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public static void handleChargedAbility(Player player, InteractionHand hand, @Nullable LivingEntity target, @Nullable BlockPos targetPos,
-                                            @Nullable Vec3 hitVec, int ticksUsed) {
+            @Nullable Vec3 hitVec, int ticksUsed) {
         ItemStack activeStack = player.getItemInHand(hand);
 
         if (!activeStack.isEmpty() && activeStack.getItem() instanceof ItemModularHandheld) {
             ItemModularHandheld item = (ItemModularHandheld) activeStack.getItem();
 
             Arrays.stream(abilities)
-                .filter(ability -> ability.canPerform(player, item, activeStack, target, targetPos, ticksUsed))
-                .findFirst()
-                .ifPresent(ability -> ability.perform(player, hand, item, activeStack, target, targetPos, hitVec, ticksUsed));
+                    .filter(ability -> ability.canPerform(player, item, activeStack, target, targetPos, ticksUsed))
+                    .findFirst()
+                    .ifPresent(ability -> ability.perform(player, hand, item, activeStack, target, targetPos, hitVec, ticksUsed));
 
             player.stopUsingItem();
         }
@@ -259,7 +259,7 @@ public class ItemModularHandheld extends ModularItem {
                     .sorted(player.isCrouching() ? Comparator.comparing(ToolAction::name).reversed() : Comparator.comparing(ToolAction::name))
                     .collect(Collectors.toList());
 
-            for (ToolAction tool: tools) {
+            for (ToolAction tool : tools) {
                 BlockState block = blockState.getToolModifiedState(world, pos, context.getPlayer(), context.getItemInHand(), tool);
                 if (block != null) {
                     if (ToolActions.AXE_STRIP.equals(tool)) {
@@ -368,7 +368,7 @@ public class ItemModularHandheld extends ModularItem {
      * Helper for hitting entities with abilities
      */
     public AbilityUseResult hitEntity(ItemStack itemStack, Player player, LivingEntity target, double damageMultiplier,
-                                      float knockbackBase, float knockbackMultiplier) {
+            float knockbackBase, float knockbackMultiplier) {
         return hitEntity(itemStack, player, target, damageMultiplier, 0, knockbackBase, knockbackMultiplier);
     }
 
@@ -376,11 +376,11 @@ public class ItemModularHandheld extends ModularItem {
      * Helper for hitting entities with abilities
      */
     public AbilityUseResult hitEntity(ItemStack itemStack, Player player, LivingEntity target, double damageMultiplier, double damageBonus,
-                                      float knockbackBase, float knockbackMultiplier) {
+            float knockbackBase, float knockbackMultiplier) {
         float targetModifier = EnchantmentHelper.getDamageBonus(itemStack, target.getMobType());
         float critMultiplier = Optional.ofNullable(ForgeHooks.getCriticalHit(player, target, false, 1.5f))
-            .map(CriticalHitEvent::getDamageModifier)
-            .orElse(1f);
+                .map(CriticalHitEvent::getDamageModifier)
+                .orElse(1f);
 
         double damage = (1 + getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier * damageMultiplier + damageBonus;
 
@@ -396,7 +396,7 @@ public class ItemModularHandheld extends ModularItem {
             // knocks back the target based on effect level + knockback enchantment level
             float knockbackFactor = knockbackBase + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
             target.knockback(knockbackFactor * knockbackMultiplier,
-                player.getX() - target.getX(), player.getZ() - target.getZ());
+                    player.getX() - target.getX(), player.getZ() - target.getZ());
 
             if (targetModifier > 1) {
                 player.magicCrit(target);
@@ -545,7 +545,7 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         if (getEffectLevel(stack, ItemEffect.throwable) > 0
-            || EnchantmentHelper.getRiptide(stack) > 0) {
+                || EnchantmentHelper.getRiptide(stack) > 0) {
             return UseAnim.SPEAR;
         }
 
@@ -732,7 +732,7 @@ public class ItemModularHandheld extends ModularItem {
         if (entity instanceof Player player) {
             LivingEntity target = Optional.ofNullable(Minecraft.getInstance().hitResult)
                     .filter(rayTraceResult -> rayTraceResult.getType() == HitResult.Type.ENTITY)
-                    .map(rayTraceResult -> ((EntityHitResult)rayTraceResult).getEntity())
+                    .map(rayTraceResult -> ((EntityHitResult) rayTraceResult).getEntity())
                     .flatMap(hitEntity -> CastOptional.cast(hitEntity, LivingEntity.class))
                     .orElse(null);
 

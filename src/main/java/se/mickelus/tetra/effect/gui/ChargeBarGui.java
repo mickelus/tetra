@@ -8,23 +8,23 @@ import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.mutil.gui.animation.Applier;
 import se.mickelus.mutil.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.InvertColorGui;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class ChargeBarGui extends GuiElement {
-    private GuiElement container;
-    private GuiElement overchargeContainer;
-    private Bar bar;
-    private Bar[] overchargeBars;
-
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
+    private final GuiElement container;
+    private final GuiElement overchargeContainer;
+    private final Bar bar;
+    private final Bar[] overchargeBars;
 
     public ChargeBarGui() {
         super(-1, 22, 17, 2);
@@ -97,8 +97,8 @@ public class ChargeBarGui extends GuiElement {
     }
 
     static class Bar extends GuiElement {
-        private GuiTexture bar;
-        private GuiTexture background;
+        private final GuiTexture bar;
+        private final GuiTexture background;
 
         public Bar(int x, int y, int width, int height) {
             super(x, y, width, height);

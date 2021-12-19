@@ -12,6 +12,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
+
 @ParametersAreNonnullByDefault
 public class GuiStorageBackdrop extends GuiElement {
     public GuiStorageBackdrop(int x, int y, int numSlots, Collection<Collection<ItemEffect>> inventoryEffects) {

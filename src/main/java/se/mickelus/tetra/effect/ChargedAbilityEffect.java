@@ -46,6 +46,17 @@ public abstract class ChargedAbilityEffect {
         this.modelTransform = modelTransform;
     }
 
+    public static double getOverchargeProgress(float progress) {
+        if (progress > 1.5) {
+            return 0.75 * progress + 0.875;
+        }
+        if (progress > 0.5) {
+            return progress + 0.5;
+        }
+
+        return 2 * progress;
+    }
+
     public boolean isAvailable(ItemModularHandheld item, ItemStack itemStack) {
         return item.getEffectLevel(itemStack, effect) > 0;
     }
@@ -56,17 +67,6 @@ public abstract class ChargedAbilityEffect {
 
     public boolean canOvercharge(ItemModularHandheld item, ItemStack itemStack) {
         return isAvailable(item, itemStack) && item.getEffectLevel(itemStack, ItemEffect.abilityOvercharge) > 0;
-    }
-
-    public static double getOverchargeProgress(float progress) {
-        if (progress > 1.5) {
-            return 0.75 * progress + 0.875;
-        }
-        if (progress > 0.5) {
-            return progress + 0.5;
-        }
-
-        return 2 * progress;
     }
 
     public double getOverchargeProgress(ItemModularHandheld item, ItemStack itemStack, int chargedTicks) {

@@ -4,7 +4,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -13,13 +12,14 @@ import se.mickelus.mutil.gui.DisabledSlot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class ToolbeltContainer extends AbstractContainerMenu {
-    private ItemStack itemStackToolbelt;
-    private QuickslotInventory quickslotInventory;
-    private StorageInventory storageInventory;
-    private PotionsInventory potionsInventory;
-    private QuiverInventory quiverInventory;
+    private final ItemStack itemStackToolbelt;
+    private final QuickslotInventory quickslotInventory;
+    private final StorageInventory storageInventory;
+    private final PotionsInventory potionsInventory;
+    private final QuiverInventory quiverInventory;
 
     public ToolbeltContainer(int windowId, Container playerInventory, ItemStack itemStackToolbelt, Player player) {
         super(ModularToolbeltItem.containerType, windowId);
@@ -41,27 +41,27 @@ public class ToolbeltContainer extends AbstractContainerMenu {
             int rows = 1 + (numStorageSlots - 1) / cols;
 
             for (int i = 0; i < numStorageSlots; i++) {
-                addSlot(new PredicateSlot(storageInventory, i, (int)(-8.5 * cols + 17 * (i % cols) + 90), 108 - offset - (i / cols) * 17, storageInventory::isItemValid));
+                addSlot(new PredicateSlot(storageInventory, i, (int) (-8.5 * cols + 17 * (i % cols) + 90), 108 - offset - (i / cols) * 17, storageInventory::isItemValid));
             }
             offset += rows * 17 + 13;
         }
 
         for (int i = 0; i < numQuiverSlots; i++) {
-            addSlot(new PredicateSlot(quiverInventory, i, (int)(-8.5 * numQuiverSlots + 17 * i + 90), 108 - offset, quiverInventory::isItemValid));
+            addSlot(new PredicateSlot(quiverInventory, i, (int) (-8.5 * numQuiverSlots + 17 * i + 90), 108 - offset, quiverInventory::isItemValid));
         }
         if (numQuiverSlots > 0) {
             offset += 30;
         }
 
         for (int i = 0; i < numPotionSlots; i++) {
-            addSlot(new PotionSlot(potionsInventory, i, (int)(-8.5 * numPotionSlots + 17 * i + 90), 108 - offset));
+            addSlot(new PotionSlot(potionsInventory, i, (int) (-8.5 * numPotionSlots + 17 * i + 90), 108 - offset));
         }
         if (numPotionSlots > 0) {
             offset += 30;
         }
 
         for (int i = 0; i < numQuickslots; i++) {
-            addSlot(new PredicateSlot(quickslotInventory, i, (int)(-8.5 * numQuickslots + 17 * i + 90), 108 - offset, quickslotInventory::isItemValid));
+            addSlot(new PredicateSlot(quickslotInventory, i, (int) (-8.5 * numQuickslots + 17 * i + 90), 108 - offset, quickslotInventory::isItemValid));
         }
         if (numQuickslots > 0) {
             offset += 30;
@@ -107,9 +107,10 @@ public class ToolbeltContainer extends AbstractContainerMenu {
     /**
      * Attempts to merge the given stack into the slots between the given indexes, prioritizing slot stack limits
      * over item stack limits.
+     *
      * @param incomingStack an item stack
-     * @param startIndex an integer
-     * @param endIndex an integer, preferrably larger than startIndex
+     * @param startIndex    an integer
+     * @param endIndex      an integer, preferrably larger than startIndex
      * @return true if the given itemstack has been emptied, otherwise false
      */
     private boolean mergeItemStackExtended(ItemStack incomingStack, int startIndex, int endIndex) {
@@ -180,7 +181,7 @@ public class ToolbeltContainer extends AbstractContainerMenu {
                 if (slot.container == potionsInventory && slot.getSlotIndex() == index) {
                     int count = slot.getItem().getCount();
                     itemStack = slot.remove(64);
-                    if (!this.moveItemStackTo(itemStack, playerInventoryStart,  slots.size(), true)) {
+                    if (!this.moveItemStackTo(itemStack, playerInventoryStart, slots.size(), true)) {
                         // reset count if it was not possible to move the itemstack
                         itemStack.setCount(count);
                         slot.set(itemStack);
@@ -190,7 +191,7 @@ public class ToolbeltContainer extends AbstractContainerMenu {
                 } else {
                     ItemStack breakoff = itemStack.split(itemStack.getMaxStackSize());
                     // move item from slot into player inventory
-                    if (!this.moveItemStackTo(breakoff, playerInventoryStart,  slots.size(), true)) {
+                    if (!this.moveItemStackTo(breakoff, playerInventoryStart, slots.size(), true)) {
                         slot.setChanged();
                         return itemStack;
                     } else {
@@ -205,16 +206,16 @@ public class ToolbeltContainer extends AbstractContainerMenu {
                 // plop item into first available slot, in priority: quiver > potion > quickslot > storage
                 // todo: cleanup, this is really confusing
 
-                if (numQuiverSlots > 0 && moveItemStackTo(itemStack, numStorageSlots,  numStorageSlots + numQuiverSlots, false)) {
+                if (numQuiverSlots > 0 && moveItemStackTo(itemStack, numStorageSlots, numStorageSlots + numQuiverSlots, false)) {
                     return itemStack;
                 }
-                if (numPotionSlots > 0 && mergeItemStackExtended(itemStack, numStorageSlots + numQuiverSlots, numStorageSlots + numQuiverSlots+ numPotionSlots)) {
+                if (numPotionSlots > 0 && mergeItemStackExtended(itemStack, numStorageSlots + numQuiverSlots, numStorageSlots + numQuiverSlots + numPotionSlots)) {
                     return itemStack;
                 }
-                if (numQuickslots > 0 && moveItemStackTo(itemStack, numStorageSlots + numQuiverSlots+ numPotionSlots,  playerInventoryStart, false)) {
+                if (numQuickslots > 0 && moveItemStackTo(itemStack, numStorageSlots + numQuiverSlots + numPotionSlots, playerInventoryStart, false)) {
                     return itemStack;
                 }
-                if (numStorageSlots > 0 && moveItemStackTo(itemStack, 0,  numStorageSlots, false)) {
+                if (numStorageSlots > 0 && moveItemStackTo(itemStack, 0, numStorageSlots, false)) {
                     return itemStack;
                 }
                 return ItemStack.EMPTY;

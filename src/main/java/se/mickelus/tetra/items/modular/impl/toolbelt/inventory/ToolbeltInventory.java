@@ -3,8 +3,8 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.tags.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
@@ -16,18 +16,16 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 import java.util.function.Predicate;
 
 @ParametersAreNonnullByDefault
 public class ToolbeltInventory implements Container {
     protected static final String slotKey = "slot";
-
-    protected ItemStack toolbeltItemStack;
-
-    protected SlotType inventoryType;
-
     protected final String inventoryKey;
+    protected ItemStack toolbeltItemStack;
+    protected SlotType inventoryType;
     protected NonNullList<ItemStack> inventoryContents;
     protected int numSlots = 0;
     protected int maxSize = 0;
@@ -72,7 +70,7 @@ public class ToolbeltInventory implements Container {
             if (getItem(i) != null) {
                 CompoundTag compound = new CompoundTag();
                 getItem(i).save(compound);
-                compound.putByte(slotKey, (byte)i);
+                compound.putByte(slotKey, (byte) i);
                 items.add(compound);
             }
         }
@@ -156,10 +154,12 @@ public class ToolbeltInventory implements Container {
     }
 
     @Override
-    public void startOpen(Player player) {}
+    public void startOpen(Player player) {
+    }
 
     @Override
-    public void stopOpen(Player player) {}
+    public void stopOpen(Player player) {
+    }
 
     @Override
     public boolean canPlaceItem(int index, ItemStack stack) {

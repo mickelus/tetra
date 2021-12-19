@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerBarGui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class TooltipGetterScannerHorizontalRange implements ITooltipGetter {
 

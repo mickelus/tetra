@@ -13,7 +13,7 @@
     },
     "requirement": {
         "type": "tetra:modular_item",
-        "modules": [["shield/straps"]],
+        "modules": [ [ "shield/straps" ] ],
         "improvements": {
             "grip_hone/damage_mult": 4
         }

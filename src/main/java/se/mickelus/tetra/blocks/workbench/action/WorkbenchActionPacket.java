@@ -3,17 +3,19 @@ package se.mickelus.tetra.blocks.workbench.action;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.mutil.network.BlockPosPacket;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
+
 @ParametersAreNonnullByDefault
 public class WorkbenchActionPacket extends BlockPosPacket {
 
     private String actionKey;
 
-    public WorkbenchActionPacket() {}
+    public WorkbenchActionPacket() {
+    }
 
     public WorkbenchActionPacket(BlockPos pos, String actionKey) {
         super(pos);

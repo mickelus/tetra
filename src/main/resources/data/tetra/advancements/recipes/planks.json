@@ -15,7 +15,7 @@
         "got_wood": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [{ "tag": "minecraft:planks" }]
+                "items": [ { "tag": "minecraft:planks" } ]
             }
         }
     }

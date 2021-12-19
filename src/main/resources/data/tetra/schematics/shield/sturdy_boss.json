@@ -14,17 +14,17 @@
             "tetra:ability_cooldown": -3
         },
         "primaryEffects": {
-            "bashing": [1, 2]
+            "bashing": [ 1, 2 ]
         },
         "secondaryEffects": {
-            "bashing": [2, 1]
+            "bashing": [ 2, 1 ]
         },
         "durability": 1,
         "integrity": -2
     },
     "outcomes": [
         {
-            "materials": ["tetra:metal/"],
+            "materials": [ "tetra:metal/" ],
             "moduleKey": "shield/sturdy_boss",
             "toolOffset": 1,
             "moduleVariant": "sturdy_boss/"

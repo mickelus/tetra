@@ -4,26 +4,27 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.animation.Applier;
 import se.mickelus.mutil.gui.animation.KeyframeAnimation;
+import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.blocks.workbench.gui.GuiSchematicListItem;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
-import se.mickelus.mutil.util.Filter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloSchematicListGui extends GuiElement {
 
-    private Consumer<UpgradeSchematic> onSchematicSelect;
+    private final Consumer<UpgradeSchematic> onSchematicSelect;
 
-    private KeyframeAnimation openAnimation;
+    private final KeyframeAnimation openAnimation;
 
-    private KeyframeAnimation showAnimation;
-    private KeyframeAnimation hideAnimation;
+    private final KeyframeAnimation showAnimation;
+    private final KeyframeAnimation hideAnimation;
 
     public HoloSchematicListGui(int x, int y, int width, int height, Consumer<UpgradeSchematic> onSchematicSelect) {
         super(x, y, width, height);

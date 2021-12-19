@@ -1,16 +1,16 @@
 {
     "replace": true,
     "type": "tetra:basic_module",
-    "slots": ["shield/boss"],
+    "slots": [ "shield/boss" ],
     "variants": [
         {
-            "materials": ["tetra:metal/", "tetra:bone/"],
+            "materials": [ "tetra:metal/", "tetra:bone/" ],
             "key": "spike/",
             "attributes": {
                 "tetra:ability_cooldown": 0.3
             },
             "effects": {
-                "blockingReflect": [38, 0.9]
+                "blockingReflect": [ 38, 0.9 ]
             },
             "durability": 20,
             "extract": {
@@ -18,7 +18,7 @@
                     "tetra:ability_cooldown": 0.1
                 },
                 "primaryEffects": {
-                    "blockingReflect": [0, 0.05]
+                    "blockingReflect": [ 0, 0.05 ]
                 },
                 "secondaryEffects": {
                     "blockingReflect": -2
@@ -29,11 +29,13 @@
                     "textureX": 104,
                     "textureY": 16
                 },
-                "availableTextures": ["spike"],
-                "models": [{
-                    "type": "tetra:boss/flat",
-                    "location": "tetra:items/module/shield/boss/"
-                }]
+                "availableTextures": [ "spike" ],
+                "models": [
+                    {
+                        "type": "tetra:boss/flat",
+                        "location": "tetra:items/module/shield/boss/"
+                    }
+                ]
             }
         }
     ]

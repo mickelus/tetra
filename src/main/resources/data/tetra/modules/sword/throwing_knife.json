@@ -47,17 +47,17 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:metal/", "tetra:gem/", "tetra:bone/"],
+            "materials": [ "tetra:metal/", "tetra:gem/", "tetra:bone/" ],
             "key": "throwing_knife/",
             "attributes": {
                 "generic.attack_speed": -1.3,
                 "generic.attack_damage": -1
             },
             "tools": {
-                "cut": [1, 1]
+                "cut": [ 1, 1 ]
             },
             "effects": {
-                "throwable": [1, 0.7]
+                "throwable": [ 1, 0.7 ]
             },
             "durability": -20,
             "integrity": -1,
@@ -66,10 +66,10 @@
                     "generic.attack_damage": 1
                 },
                 "secondaryEffects": {
-                    "throwable": [0, 0.15]
+                    "throwable": [ 0, 0.15 ]
                 },
                 "tools": {
-                    "cut": [0.3, 1]
+                    "cut": [ 0.3, 1 ]
                 },
                 "durability": 0.6,
                 "integrity": -1,
@@ -78,8 +78,8 @@
                     "textureX": 160,
                     "textureY": 48
                 },
-                "availableTextures": ["metal", "shiny", "grainy", "crude"],
-                "models": [{ "location": "tetra:items/module/sword/blade/throwing_knife/" }]
+                "availableTextures": [ "metal", "shiny", "grainy", "crude" ],
+                "models": [ { "location": "tetra:items/module/sword/blade/throwing_knife/" } ]
             }
         }
     ]

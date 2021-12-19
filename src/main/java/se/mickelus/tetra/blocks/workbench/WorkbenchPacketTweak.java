@@ -10,6 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 @ParametersAreNonnullByDefault
 public class WorkbenchPacketTweak extends BlockPosPacket {
 
@@ -55,7 +56,7 @@ public class WorkbenchPacketTweak extends BlockPosPacket {
             slot = readString(buffer);
             int size = buffer.readInt();
             for (int i = 0; i < size; i++) {
-                    tweaks.put(readString(buffer), buffer.readInt());
+                tweaks.put(readString(buffer), buffer.readInt());
             }
         } catch (IOException e) {
             System.err.println("An error occurred when reading tweak packet from buffer");

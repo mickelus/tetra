@@ -12,11 +12,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class GuiModuleList extends GuiElement {
     private final Consumer<String> slotClickHandler;
     private final BiConsumer<String, String> hoverHandler;
-    
+
     private GuiModuleMajor[] majorModuleElements;
     private GuiModule[] minorModuleElements;
 
@@ -52,7 +53,7 @@ public class GuiModuleList extends GuiElement {
             minorModuleElements[i].showAnimation(rand.nextInt(minorModuleElements.length + majorModuleElements.length));
         }
     }
-    
+
     public void setFocus(String slotKey) {
         for (GuiModuleMajor element :
                 majorModuleElements) {
@@ -70,7 +71,7 @@ public class GuiModuleList extends GuiElement {
         String[] majorModuleKeys = item.getMajorModuleKeys();
         ItemModuleMajor[] majorModules = item.getMajorModules(itemStack);
         GuiModuleOffsets offsets = item.getMajorGuiOffsets();
-        
+
         majorModuleElements = new GuiModuleMajor[majorModules.length];
 
         if (!previewStack.isEmpty()) {
@@ -112,16 +113,16 @@ public class GuiModuleList extends GuiElement {
         } else {
             for (int i = 0; i < minorModuleNames.length; i++) {
                 minorModuleElements[i] = getMinorModule(i, offsets,
-                    itemStack, itemStack, minorModuleKeys[i], minorModuleNames[i],
-                    minorModules[i], minorModules[i]);
+                        itemStack, itemStack, minorModuleKeys[i], minorModuleNames[i],
+                        minorModules[i], minorModules[i]);
                 addChild(minorModuleElements[i]);
             }
         }
     }
 
     private GuiModule getMinorModule(int index, GuiModuleOffsets offsets, ItemStack itemStack, ItemStack previewStack,
-                                     String slotKey, String slotName,
-                                     ItemModule module, ItemModule previewModule) {
+            String slotKey, String slotName,
+            ItemModule module, ItemModule previewModule) {
         final int x = offsets.getX(index);
         return new GuiModule(x, offsets.getY(index), x > 0 ? GuiAttachment.topLeft : GuiAttachment.topRight,
                 itemStack, previewStack, slotKey, slotName, module, previewModule, slotClickHandler, hoverHandler);

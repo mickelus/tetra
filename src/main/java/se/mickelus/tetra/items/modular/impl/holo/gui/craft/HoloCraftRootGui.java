@@ -9,26 +9,23 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.LinkedList;
+
 @ParametersAreNonnullByDefault
 public class HoloCraftRootGui extends HoloRootBaseGui {
 
     public static final char backBinding = 'q';
 
-    private HoloBreadcrumbsGui breadcrumbs;
+    private final HoloBreadcrumbsGui breadcrumbs;
+    private final HoloItemsGui itemsView;
+    private final HoloSchematicListGui schematicsView;
+    private final HoloSchematicGui schematicView;
+    private final HoloMaterialListGui materialsView;
     private int depth = 0;
-
-    private HoloItemsGui itemsView;
     private IModularItem item;
-
-    private HoloSchematicListGui schematicsView;
     private String slot;
-
-    private HoloSchematicGui schematicView;
     private UpgradeSchematic schematic;
     private OutcomePreview openVariant;
-
     private boolean showingMaterials = false;
-    private HoloMaterialListGui materialsView;
 
     public HoloCraftRootGui(int x, int y) {
         super(x, y);

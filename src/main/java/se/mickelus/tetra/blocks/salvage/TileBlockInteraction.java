@@ -10,6 +10,7 @@ import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Function;
+
 @ParametersAreNonnullByDefault
 public class TileBlockInteraction<T extends BlockEntity> extends BlockInteraction {
 

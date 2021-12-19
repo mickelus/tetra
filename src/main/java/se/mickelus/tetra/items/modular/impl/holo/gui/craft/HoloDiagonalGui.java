@@ -9,13 +9,13 @@ import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.GuiColors;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 public class HoloDiagonalGui extends GuiElement {
 
+    private static final float targetOpacity = 0.2f;
     protected AnimationChain openAnimation;
     protected AnimationChain reopenAnimation;
-    private static final float targetOpacity = 0.2f;
-
     protected boolean upRight = false;
 
     public HoloDiagonalGui(int x, int y, int size, GuiAttachment attachment, int delay) {

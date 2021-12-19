@@ -16,6 +16,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
+
 @ParametersAreNonnullByDefault
 public class HoloItemsGui extends GuiElement {
 
@@ -23,8 +24,8 @@ public class HoloItemsGui extends GuiElement {
 
     private final HoloMaterialsButtonGui materialsButton;
 
-    private KeyframeAnimation openAnimation;
-    private KeyframeAnimation backAnimation;
+    private final KeyframeAnimation openAnimation;
+    private final KeyframeAnimation backAnimation;
 
     public HoloItemsGui(int x, int y, int width, int height, Consumer<IModularItem> onItemSelect, Consumer<String> onSlotSelect, Runnable onMaterialsClick) {
         super(x, y, width, height);
@@ -35,15 +36,15 @@ public class HoloItemsGui extends GuiElement {
 
         addChild(new HoloItemGui(-39, 0, ModularBladedItem.instance, 0,
                 () -> onItemSelect.accept(ModularBladedItem.instance), onSlotSelect)
-            .setAttachment(GuiAttachment.topCenter));
+                .setAttachment(GuiAttachment.topCenter));
 
         addChild(new HoloItemGui(1, -40, ModularToolbeltItem.instance, 4,
                 () -> onItemSelect.accept(ModularToolbeltItem.instance), onSlotSelect)
-            .setAttachment(GuiAttachment.topCenter));
+                .setAttachment(GuiAttachment.topCenter));
 
         addChild(new HoloItemGui(41, 0, ModularDoubleHeadedItem.instance, 1,
                 () -> onItemSelect.accept(ModularDoubleHeadedItem.instance), onSlotSelect)
-            .setAttachment(GuiAttachment.topCenter));
+                .setAttachment(GuiAttachment.topCenter));
 
         if (ConfigHandler.enableSingle.get()) {
             addChild(new HoloItemGui(81, -40, ModularSingleHeadedItem.instance, 2,

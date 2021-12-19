@@ -1,6 +1,5 @@
 package se.mickelus.tetra.generation;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
@@ -14,7 +13,6 @@ import net.minecraft.client.renderer.blockentity.StructureBlockRenderer;
 import net.minecraft.client.renderer.debug.DebugRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.StructureBlockEntity;
 import net.minecraft.world.phys.AABB;
@@ -25,11 +23,12 @@ import se.mickelus.tetra.data.DataManager;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ExtendedStructureRenderer extends StructureBlockRenderer {
 
-    private BlockEntityRendererProvider.Context dispatcher;
+    private final BlockEntityRendererProvider.Context dispatcher;
 
     public ExtendedStructureRenderer(BlockEntityRendererProvider.Context dispatcher) {
         super(dispatcher);
@@ -91,9 +90,9 @@ public class ExtendedStructureRenderer extends StructureBlockRenderer {
                 .endVertex();
 
         vertexBuilder.vertex(matrix4f,
-                x + offset.getX() + 0.5f + 0.3f * facing.getX(),
-                y + offset.getY() + 0.5f + 0.3f * facing.getY(),
-                z + offset.getZ() + 0.5f + 0.3f * facing.getZ())
+                        x + offset.getX() + 0.5f + 0.3f * facing.getX(),
+                        y + offset.getY() + 0.5f + 0.3f * facing.getY(),
+                        z + offset.getZ() + 0.5f + 0.3f * facing.getZ())
                 .color(1, 1, 1, 1.0F)
                 .endVertex();
 

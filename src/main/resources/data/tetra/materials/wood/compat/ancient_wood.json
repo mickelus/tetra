@@ -1,8 +1,10 @@
 {
-    "conditions": [{
-        "type": "forge:mod_loaded",
-        "modid": "naturesaura"
-    }],
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "naturesaura"
+        }
+    ],
     "key": "ancient_wood",
     "category": "wood",
     "primary": "3",

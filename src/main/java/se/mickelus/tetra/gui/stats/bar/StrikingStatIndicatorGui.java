@@ -13,6 +13,7 @@ import se.mickelus.tetra.gui.stats.getter.TooltipGetterNone;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class StrikingStatIndicatorGui extends GuiStatIndicator {
     GuiStatIndicator striking;
