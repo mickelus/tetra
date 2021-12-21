@@ -12,13 +12,7 @@
         "got_mesh": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [
-                    {
-                        "items": [
-                            "tetra:forged_mesh"
-                        ]
-                    }
-                ]
+                "items": [ { "item": "tetra:forged_mesh" } ]
             }
         }
     }

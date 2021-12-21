@@ -13,7 +13,7 @@
     "parent": "tetra:spelunking/hammer_fix",
     "criteria": {
         "craft": {
-            "trigger": "tetra:craft_module",
+            "trigger": "impossible",
             "conditions": {
                 "tool": "hammer_dig",
                 "toolLevel": {
@@ -22,7 +22,7 @@
             }
         },
         "improvement": {
-            "trigger": "tetra:craft_improvement",
+            "trigger": "impossible",
             "conditions": {
                 "tool": "hammer_dig",
                 "toolLevel": {

@@ -13,7 +13,7 @@
     "parent": "tetra:spelunking/find_cell",
     "criteria": {
         "fuel": {
-            "trigger": "tetra:block_use",
+            "trigger": "impossible",
             "conditions": {
                 "data": {
                     "functional": "true"

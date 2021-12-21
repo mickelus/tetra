@@ -15,9 +15,7 @@
         "module": {
             "trigger": "minecraft:impossible",
             "conditions": {
-                "item": {
-                    "item": "tetra:combustion_chamber"
-                }
+                "items": [ { "item": "tetra:combustion_chamber" } ]
             }
         }
     }

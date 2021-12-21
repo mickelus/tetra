@@ -13,7 +13,7 @@
     "parent": "tetra:spelunking/find_cell",
     "criteria": {
         "get_geode": {
-            "trigger": "minecraft:inventory_changed",
+            "trigger": "impossible",
             "conditions": {
                 "items": [
                     {
