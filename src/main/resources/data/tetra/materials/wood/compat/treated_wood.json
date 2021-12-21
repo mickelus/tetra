@@ -1,15 +1,15 @@
 {
     "key": "treated_wood",
     "category": "wood",
-    "primary": "4",
-    "secondary": "2",
-    "tertiary": "6.5",
-    "durability": "70",
-    "integrityCost": "2",
-    "integrityGain": "5",
-    "magicCapacity": "82",
-    "toolLevel": "3",
-    "toolEfficiency": "3",
+    "primary": 4,
+    "secondary": 2,
+    "tertiary": 6.5,
+    "durability": 70,
+    "integrityCost": 2,
+    "integrityGain": 5,
+    "magicCapacity": 82,
+    "toolLevel": "minecraft:gold",
+    "toolEfficiency": 3,
     "tints": {
         "glyph": "643927",
         "texture": "643927"
@@ -25,6 +25,6 @@
         "workable": 1
     },
     "requiredTools": {
-        "axe_dig": 3
+        "axe_dig": "minecraft:stone"
     }
 }

@@ -1,15 +1,15 @@
 {
     "key": "sapphire",
     "category": "gem",
-    "primary": "6",
-    "secondary": "2.9",
-    "tertiary": "0",
-    "durability": "1561",
-    "integrityCost": "2",
-    "integrityGain": "2",
+    "primary": 6,
+    "secondary": 2.9,
+    "tertiary": 0,
+    "durability": 1561,
+    "integrityCost": 2,
+    "integrityGain": 2,
     "magicCapacity": 60,
-    "toolLevel": "4",
-    "toolEfficiency": "9",
+    "toolLevel": "minecraft:iron",
+    "toolEfficiency": 9,
     "tints": {
         "glyph": "3939f5",
         "texture": "3939f5"
@@ -22,6 +22,6 @@
         "tag": "forge:gems/sapphire"
     },
     "requiredTools": {
-        "hammer_dig": 3
+        "hammer_dig": "minecraft:stone"
     }
 }

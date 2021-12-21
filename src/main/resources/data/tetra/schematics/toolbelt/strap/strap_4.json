@@ -22,7 +22,7 @@
                 "count": 4
             },
             "requiredTools": {
-                "cut": 4
+                "cut": "minecraft:iron"
             },
             "moduleKey": "toolbelt/strap",
             "moduleVariant": "strap4/leather"
@@ -33,7 +33,7 @@
                 "count": 4
             },
             "requiredTools": {
-                "hammer_dig": 6
+                "hammer_dig": "minecraft:netherite"
             },
             "moduleKey": "toolbelt/strap",
             "moduleVariant": "strap4/iron"

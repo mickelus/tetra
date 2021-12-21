@@ -21,7 +21,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer_dig": 3
+                "hammer_dig": "minecraft:stone"
             },
             "improvements": {
                 "head_hone/pickaxe_efficiency": 1

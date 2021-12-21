@@ -19,7 +19,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer_dig": 6
+                "hammer_dig": "minecraft:netherite"
             },
             "improvements": {
                 "head_hone/piercing": 3

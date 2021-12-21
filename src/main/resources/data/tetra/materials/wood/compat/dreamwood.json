@@ -7,15 +7,15 @@
     ],
     "key": "dreamwood",
     "category": "wood",
-    "primary": "4",
-    "secondary": "2.5",
-    "tertiary": "7.5",
-    "durability": "150",
-    "integrityCost": "2",
-    "integrityGain": "5",
-    "magicCapacity": "120",
-    "toolLevel": "3",
-    "toolEfficiency": "4",
+    "primary": 4,
+    "secondary": 2.5,
+    "tertiary": 7.5,
+    "durability": 150,
+    "integrityCost": 2,
+    "integrityGain": 5,
+    "magicCapacity": 120,
+    "toolLevel": "minecraft:gold",
+    "toolEfficiency": 4,
     "tints": {
         "glyph": "adbbbf",
         "texture": "808a8c"
@@ -28,6 +28,6 @@
         "mana_repair": 3
     },
     "requiredTools": {
-        "axe_dig": 2
+        "axe_dig": "minecraft:gold"
     }
 }

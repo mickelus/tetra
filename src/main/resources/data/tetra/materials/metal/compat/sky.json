@@ -7,15 +7,15 @@
     ],
     "key": "sky",
     "category": "metal",
-    "primary": "6",
-    "secondary": "3",
-    "tertiary": "3.5",
-    "durability": "1500",
-    "integrityCost": "2",
-    "integrityGain": "6",
-    "magicCapacity": "72",
-    "toolLevel": "5",
-    "toolEfficiency": "8",
+    "primary": 6,
+    "secondary": 3,
+    "tertiary": 3.5,
+    "durability": 1500,
+    "integrityCost": 2,
+    "integrityGain": 6,
+    "magicCapacity": 72,
+    "toolLevel": "minecraft:diamond",
+    "toolEfficiency": 8,
     "tints": {
         "glyph": "00d5c2",
         "texture": "00b59f"
@@ -31,6 +31,6 @@
         "naturesaura_aura_mending_innate": 1
     },
     "requiredTools": {
-        "hammer_dig": 3
+        "hammer_dig": "minecraft:stone"
     }
 }

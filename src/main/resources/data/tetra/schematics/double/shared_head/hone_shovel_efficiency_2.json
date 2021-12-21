@@ -29,7 +29,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer_dig": 2
+                "hammer_dig": "minecraft:gold"
             },
             "improvements": {
                 "head_hone/shovel_efficiency": 2

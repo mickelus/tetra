@@ -1,15 +1,15 @@
 {
     "key": "crimson",
     "category": "wood",
-    "primary": "4",
-    "secondary": "2.5",
-    "tertiary": "7.5",
-    "durability": "150",
-    "integrityCost": "2",
-    "integrityGain": "5",
-    "magicCapacity": "90",
-    "toolLevel": "3",
-    "toolEfficiency": "4",
+    "primary": 4,
+    "secondary": 2.5,
+    "tertiary": 7.5,
+    "durability": 150,
+    "integrityCost": 2,
+    "integrityGain": 5,
+    "magicCapacity": 90,
+    "toolLevel": "minecraft:gold",
+    "toolEfficiency": 4,
     "tints": {
         "glyph": "crimson_glyph",
         "texture": "crimson"
@@ -22,6 +22,6 @@
         "items": [ "minecraft:crimson_planks" ]
     },
     "requiredTools": {
-        "axe_dig": 3
+        "axe_dig": "minecraft:stone"
     }
 }

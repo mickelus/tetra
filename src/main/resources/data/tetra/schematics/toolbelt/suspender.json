@@ -24,7 +24,7 @@
                 "items": [ "tetra:planar_stabilizer" ]
             },
             "requiredTools": {
-                "hammer_dig": 3
+                "hammer_dig": "minecraft:stone"
             },
             "moduleKey": "toolbelt/suspender",
             "moduleVariant": "suspender/suspender"

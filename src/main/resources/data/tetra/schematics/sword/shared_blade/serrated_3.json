@@ -16,7 +16,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer_dig": 4
+                "hammer_dig": "minecraft:iron"
             },
             "improvements": {
                 "blade/serrated": 3

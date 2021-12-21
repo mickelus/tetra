@@ -7,15 +7,15 @@
     ],
     "key": "manasteel",
     "category": "metal",
-    "primary": "6",
-    "secondary": "4",
-    "tertiary": "2",
-    "durability": "300",
-    "integrityCost": "2",
-    "integrityGain": "5",
-    "magicCapacity": "120",
-    "toolLevel": "5",
-    "toolEfficiency": "6.2",
+    "primary": 6,
+    "secondary": 4,
+    "tertiary": 2,
+    "durability": 300,
+    "integrityCost": 2,
+    "integrityGain": 5,
+    "magicCapacity": 120,
+    "toolLevel": "minecraft:diamond",
+    "toolEfficiency": 6.2,
     "tints": {
         "glyph": "6ea8f1",
         "texture": "0e60e5"
@@ -31,6 +31,6 @@
         "mana_repair": 3
     },
     "requiredTools": {
-        "hammer_dig": 2
+        "hammer_dig": "minecraft:gold"
     }
 }

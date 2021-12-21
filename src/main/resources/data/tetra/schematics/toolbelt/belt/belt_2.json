@@ -20,7 +20,7 @@
                 "items": [ "minecraft:iron_ingot" ]
             },
             "requiredTools": {
-                "hammer_dig": 4
+                "hammer_dig": "minecraft:iron"
             },
             "moduleKey": "toolbelt/belt",
             "moduleVariant": "belt/buckled"

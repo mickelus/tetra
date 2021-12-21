@@ -16,7 +16,7 @@
                 "items": [ "tetra:chthonic_extractor" ]
             },
             "requiredTools": {
-                "hammer_dig": 4
+                "hammer_dig": "minecraft:iron"
             },
             "moduleKey": "double/extractor",
             "moduleVariant": "extractor/extractor"

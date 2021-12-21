@@ -1,15 +1,15 @@
 {
     "key": "tin",
     "category": "metal",
-    "primary": "4",
-    "secondary": "3.2",
-    "tertiary": "3",
-    "durability": "126",
-    "integrityCost": "1",
-    "integrityGain": "5",
-    "magicCapacity": "72",
-    "toolLevel": "4",
-    "toolEfficiency": "6",
+    "primary": 4,
+    "secondary": 3.2,
+    "tertiary": 3,
+    "durability": 126,
+    "integrityCost": 1,
+    "integrityGain": 5,
+    "magicCapacity": 72,
+    "toolLevel": "minecraft:iron",
+    "toolEfficiency": 6,
     "tints": {
         "glyph": "tin_glyph",
         "texture": "tin"
@@ -24,6 +24,6 @@
         "workable": 1
     },
     "requiredTools": {
-        "hammer_dig": 1
+        "hammer_dig": "minecraft:wood"
     }
 }

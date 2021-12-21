@@ -22,7 +22,7 @@
                 "count": 8
             },
             "requiredTools": {
-                "hammer_dig": 3
+                "hammer_dig": "minecraft:stone"
             },
             "moduleKey": "toolbelt/booster",
             "moduleVariant": "booster/iron"

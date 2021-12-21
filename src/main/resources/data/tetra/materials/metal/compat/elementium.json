@@ -7,15 +7,15 @@
     ],
     "key": "elementium",
     "category": "metal",
-    "primary": "5",
-    "secondary": "4",
-    "tertiary": "2",
-    "durability": "720",
-    "integrityCost": "2",
-    "integrityGain": "5",
-    "magicCapacity": "120",
-    "toolLevel": "5",
-    "toolEfficiency": "6.2",
+    "primary": 5,
+    "secondary": 4,
+    "tertiary": 2,
+    "durability": 720,
+    "integrityCost": 2,
+    "integrityGain": 5,
+    "magicCapacity": 120,
+    "toolLevel": "minecraft:diamond",
+    "toolEfficiency": 6.2,
     "tints": {
         "glyph": "f279bc",
         "texture": "f2357e"
@@ -31,6 +31,6 @@
         "mana_repair": 3
     },
     "requiredTools": {
-        "hammer_dig": 3
+        "hammer_dig": "minecraft:stone"
     }
 }

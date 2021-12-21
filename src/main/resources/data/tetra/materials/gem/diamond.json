@@ -1,15 +1,15 @@
 {
     "key": "diamond",
     "category": "gem",
-    "primary": "6",
-    "secondary": "2.9",
-    "tertiary": "0",
-    "durability": "1561",
-    "integrityCost": "2",
-    "integrityGain": "2",
-    "magicCapacity": "60",
-    "toolLevel": "5",
-    "toolEfficiency": "8",
+    "primary": 6,
+    "secondary": 2.9,
+    "tertiary": 0,
+    "durability": 1561,
+    "integrityCost": 2,
+    "integrityGain": 2,
+    "magicCapacity": 60,
+    "toolLevel": "minecraft:diamond",
+    "toolEfficiency": 8,
     "tints": {
         "glyph": "diamond_glyph",
         "texture": "diamond"
@@ -25,6 +25,6 @@
         "arrested": 0
     },
     "requiredTools": {
-        "hammer_dig": 3
+        "hammer_dig": "minecraft:stone"
     }
 }

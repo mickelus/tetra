@@ -5,7 +5,7 @@
             "items": [ "tetra:forged_bolt" ]
         },
         "requiredTools": {
-            "hammer_dig": 3
+            "hammer_dig": "minecraft:stone"
         },
         "lootTable": "tetra:actions/bolt_salvage"
     },
@@ -15,7 +15,7 @@
             "items": [ "tetra:forged_beam" ]
         },
         "requiredTools": {
-            "hammer_dig": 4
+            "hammer_dig": "minecraft:iron"
         },
         "lootTable": "tetra:actions/beam_salvage"
     },
@@ -25,7 +25,7 @@
             "items": [ "tetra:forged_mesh" ]
         },
         "requiredTools": {
-            "hammer_dig": 3
+            "hammer_dig": "minecraft:stone"
         },
         "lootTable": "tetra:actions/mesh_salvage"
     },
@@ -35,7 +35,7 @@
             "items": [ "tetra:vent_plate" ]
         },
         "requiredTools": {
-            "hammer_dig": 3
+            "hammer_dig": "minecraft:stone"
         },
         "lootTable": "tetra:actions/vent_plate_salvage"
     },
@@ -45,7 +45,7 @@
             "items": [ "tetra:metal_scrap" ]
         },
         "requiredTools": {
-            "hammer_dig": 3
+            "hammer_dig": "minecraft:stone"
         },
         "lootTable": "tetra:actions/metal_scrap_salvage"
     },
@@ -55,7 +55,7 @@
             "items": [ "tetra:quick_latch" ]
         },
         "requiredTools": {
-            "hammer_dig": 3
+            "hammer_dig": "minecraft:stone"
         },
         "lootTable": "tetra:actions/quick_latch_salvage_hammer"
     },
@@ -65,7 +65,7 @@
             "items": [ "tetra:quick_latch" ]
         },
         "requiredTools": {
-            "pry": 1
+            "pry": "minecraft:wood"
         },
         "lootTable": "tetra:actions/quick_latch_salvage_pry"
     },
@@ -75,7 +75,7 @@
             "items": [ "tetra:stonecutter" ]
         },
         "requiredTools": {
-            "hammer_dig": 5
+            "hammer_dig": "minecraft:diamond"
         },
         "lootTable": "tetra:actions/stonecutter_salvage"
     },
@@ -85,7 +85,7 @@
             "items": [ "tetra:earthpiercer" ]
         },
         "requiredTools": {
-            "hammer_dig": 5
+            "hammer_dig": "minecraft:diamond"
         },
         "lootTable": "tetra:actions/earthpiercer_salvage"
     }

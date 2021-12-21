@@ -7,15 +7,15 @@
     ],
     "key": "terrasteel",
     "category": "metal",
-    "primary": "7",
-    "secondary": "5",
-    "tertiary": "1",
-    "durability": "2300",
-    "integrityCost": "2",
-    "integrityGain": "5",
-    "magicCapacity": "144",
-    "toolLevel": "6",
-    "toolEfficiency": "9",
+    "primary": 7,
+    "secondary": 5,
+    "tertiary": 1,
+    "durability": 2300,
+    "integrityCost": 2,
+    "integrityGain": 5,
+    "magicCapacity": 144,
+    "toolLevel": "minecraft:netherite",
+    "toolEfficiency": 9,
     "tints": {
         "glyph": "9be545",
         "texture": "85e517"
@@ -31,6 +31,6 @@
         "mana_repair": 1
     },
     "requiredTools": {
-        "hammer_dig": 4
+        "hammer_dig": "minecraft:iron"
     }
 }

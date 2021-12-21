@@ -62,7 +62,7 @@
                 "tag": "forge:obsidian"
             },
             "requiredTools": {
-                "hammer_dig": 3
+                "hammer_dig": "minecraft:stone"
             },
             "moduleKey": "double/basic_hammer",
             "moduleVariant": "basic_hammer/obsidian",
@@ -76,7 +76,7 @@
                 "count": 2
             },
             "requiredTools": {
-                "hammer_dig": 5
+                "hammer_dig": "minecraft:diamond"
             },
             "moduleKey": "double/basic_hammer",
             "moduleVariant": "basic_hammer/netherite"

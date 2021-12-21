@@ -1,15 +1,15 @@
 {
     "key": "obsidian",
     "category": "stone",
-    "primary": "6",
-    "secondary": "5.5",
-    "tertiary": "0",
-    "durability": "580",
-    "integrityCost": "3",
-    "integrityGain": "1",
-    "magicCapacity": "90",
-    "toolLevel": "5",
-    "toolEfficiency": "9",
+    "primary": 6,
+    "secondary": 5.5,
+    "tertiary": 0,
+    "durability": 580,
+    "integrityCost": 3,
+    "integrityGain": 1,
+    "magicCapacity": 90,
+    "toolLevel": "minecraft:diamond",
+    "toolEfficiency": 9,
     "tints": {
         "glyph": "obsidian_glyph",
         "texture": "obsidian"
@@ -26,6 +26,6 @@
         "arrested": 0
     },
     "requiredTools": {
-        "hammer_dig": 5
+        "hammer_dig": "minecraft:diamond"
     }
 }

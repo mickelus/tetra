@@ -1,15 +1,15 @@
 {
     "key": "wither_bone",
     "category": "bone",
-    "primary": "6.5",
-    "secondary": "4",
-    "tertiary": "6",
-    "durability": "958",
-    "integrityCost": "2",
-    "integrityGain": "5",
-    "magicCapacity": "182",
-    "toolLevel": "4",
-    "toolEfficiency": "8",
+    "primary": 6.5,
+    "secondary": 4,
+    "tertiary": 6,
+    "durability": 958,
+    "integrityCost": 2,
+    "integrityGain": 5,
+    "magicCapacity": 182,
+    "toolLevel": "minecraft:iron",
+    "toolEfficiency": 8,
     "tints": {
         "glyph": "4c4854",
         "texture": "27252b"
@@ -25,6 +25,6 @@
         "unstable": 10
     },
     "requiredTools": {
-        "hammer_dig": 4
+        "hammer_dig": "minecraft:iron"
     }
 }

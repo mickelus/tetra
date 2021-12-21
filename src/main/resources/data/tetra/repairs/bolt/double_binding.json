@@ -4,7 +4,7 @@
         "count": 3
     },
     "requiredTools": {
-        "hammer_dig": 5
+        "hammer_dig": "minecraft:diamond"
     },
     "moduleKey": "double/binding",
     "moduleVariant": "double_binding/bolt"

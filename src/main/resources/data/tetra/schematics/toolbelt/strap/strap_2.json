@@ -22,7 +22,7 @@
                 "count": 2
             },
             "requiredTools": {
-                "cut": 2
+                "cut": "minecraft:gold"
             },
             "moduleKey": "toolbelt/strap",
             "moduleVariant": "strap2/leather"
@@ -33,7 +33,7 @@
                 "count": 2
             },
             "requiredTools": {
-                "hammer_dig": 4
+                "hammer_dig": "minecraft:iron"
             },
             "moduleKey": "toolbelt/strap",
             "moduleVariant": "strap2/iron"

@@ -4,7 +4,7 @@
         "count": 3
     },
     "requiredTools": {
-        "hammer_dig": 4
+        "hammer_dig": "minecraft:iron"
     },
     "moduleKey": "single/light_handle",
     "moduleVariant": "light_handle/prismarine"

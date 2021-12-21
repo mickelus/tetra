@@ -1,15 +1,15 @@
 {
     "key": "dragon_bone",
     "category": "bone",
-    "primary": "7",
-    "secondary": "3",
-    "tertiary": "3.5",
-    "durability": "1660",
-    "integrityCost": "2",
-    "integrityGain": "8",
-    "magicCapacity": "108",
-    "toolLevel": "6",
-    "toolEfficiency": "10",
+    "primary": 7,
+    "secondary": 3,
+    "tertiary": 3.5,
+    "durability": 1660,
+    "integrityCost": 2,
+    "integrityGain": 8,
+    "magicCapacity": 108,
+    "toolLevel": "minecraft:netherite",
+    "toolEfficiency": 10,
     "tints": {
         "glyph": "9a9581",
         "texture": "9a9581"
@@ -25,6 +25,6 @@
         "arrested": 0
     },
     "requiredTools": {
-        "hammer_dig": 5
+        "hammer_dig": "minecraft:diamond"
     }
 }

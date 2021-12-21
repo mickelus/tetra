@@ -1,14 +1,14 @@
 {
     "key": "blaze_rod",
-    "primary": "5",
-    "secondary": "0.4",
-    "tertiary": "1",
-    "durability": "111",
-    "integrityCost": "2",
-    "integrityGain": "7",
-    "magicCapacity": "108",
-    "toolLevel": "0",
-    "toolEfficiency": "0",
+    "primary": 5,
+    "secondary": 0.4,
+    "tertiary": 1,
+    "durability": 111,
+    "integrityCost": 2,
+    "integrityGain": 7,
+    "magicCapacity": 108,
+    "toolLevel": 0,
+    "toolEfficiency": 0,
     "effects": {
         "fierySelf": [ 3, 0.1 ]
     },
@@ -24,6 +24,6 @@
         "items": [ "minecraft:blaze_rod" ]
     },
     "requiredTools": {
-        "hammer_dig": 1
+        "hammer_dig": "minecraft:wood"
     }
 }

@@ -1,15 +1,15 @@
 {
     "key": "silver",
     "category": "metal",
-    "primary": "4",
-    "secondary": "4.2",
-    "tertiary": "1",
-    "durability": "50",
-    "integrityCost": "2",
-    "integrityGain": "1",
-    "magicCapacity": "126",
-    "toolLevel": "2",
-    "toolEfficiency": "11",
+    "primary": 4,
+    "secondary": 4.2,
+    "tertiary": 1,
+    "durability": 50,
+    "integrityCost": 2,
+    "integrityGain": 1,
+    "magicCapacity": 126,
+    "toolLevel": "minecraft:gold",
+    "toolEfficiency": 11,
     "tints": {
         "glyph": "silver_glyph",
         "texture": "silver"
@@ -25,6 +25,6 @@
         "stabilizing": 10
     },
     "requiredTools": {
-        "hammer_dig": 1
+        "hammer_dig": "minecraft:wood"
     }
 }

@@ -50,6 +50,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(Priority.class, new Priority.Deserializer())
             .registerTypeAdapter(ItemPredicate.class, new ItemPredicateDeserializer())
             .registerTypeAdapter(PropertyMatcher.class, new PropertyMatcherDeserializer())
+            .registerTypeAdapter(MaterialData.class, new MaterialData.Deserializer())
             .registerTypeAdapter(OutcomeMaterial.class, new OutcomeMaterial.Deserializer())
             .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
             .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())

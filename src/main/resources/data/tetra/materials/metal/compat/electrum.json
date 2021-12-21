@@ -1,15 +1,15 @@
 {
     "key": "electrum",
     "category": "metal",
-    "primary": "5",
-    "secondary": "4.6",
-    "tertiary": "1",
-    "durability": "58",
-    "integrityCost": "2",
-    "integrityGain": "1",
-    "magicCapacity": "144",
-    "toolLevel": "3",
-    "toolEfficiency": "13",
+    "primary": 5,
+    "secondary": 4.6,
+    "tertiary": 1,
+    "durability": 58,
+    "integrityCost": 2,
+    "integrityGain": 1,
+    "magicCapacity": 144,
+    "toolLevel": "minecraft:gold",
+    "toolEfficiency": 13,
     "tints": {
         "glyph": "electrum_glyph",
         "texture": "electrum"
@@ -25,6 +25,6 @@
         "stabilizing": 15
     },
     "requiredTools": {
-        "hammer_dig": 1
+        "hammer_dig": "minecraft:wood"
     }
 }

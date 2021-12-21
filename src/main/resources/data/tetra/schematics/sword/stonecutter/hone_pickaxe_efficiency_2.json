@@ -21,7 +21,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer_dig": 4
+                "hammer_dig": "minecraft:iron"
             },
             "improvements": {
                 "stonecutter_hone/efficiency": 2

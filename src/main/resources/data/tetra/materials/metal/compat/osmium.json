@@ -1,15 +1,15 @@
 {
     "key": "osmium",
     "category": "metal",
-    "primary": "7",
-    "secondary": "4",
-    "tertiary": "1",
-    "durability": "500",
-    "integrityCost": "2",
-    "integrityGain": "5",
-    "magicCapacity": "80",
-    "toolLevel": "4",
-    "toolEfficiency": "10",
+    "primary": 7,
+    "secondary": 4,
+    "tertiary": 1,
+    "durability": 500,
+    "integrityCost": 2,
+    "integrityGain": 5,
+    "magicCapacity": 80,
+    "toolLevel": "minecraft:iron",
+    "toolEfficiency": 10,
     "tints": {
         "glyph": "7d91a0",
         "texture": "7d91a0"
@@ -22,6 +22,6 @@
         "tag": "forge:ingots/osmium"
     },
     "requiredTools": {
-        "hammer_dig": 4
+        "hammer_dig": "minecraft:iron"
     }
 }

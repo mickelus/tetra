@@ -1,15 +1,23 @@
 package se.mickelus.tetra.module.data;
 
 import com.google.common.collect.Multimap;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraftforge.common.TierSortingRegistry;
+import se.mickelus.tetra.data.deserializer.AttributesDeserializer;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
@@ -168,5 +176,100 @@ public class MaterialData {
         copyFields(this, copy);
 
         return copy;
+    }
+
+    public static class Deserializer implements JsonDeserializer<MaterialData> {
+        public static final Class<? super Map<String, Integer>> improvementClass = new TypeToken<Map<String, Integer>>() {
+        }.getRawType();
+
+        private static int getLevel(JsonElement element) {
+            if (element.getAsJsonPrimitive().isNumber()) {
+                return element.getAsInt();
+            }
+
+            return Optional.ofNullable(TierSortingRegistry.byName(new ResourceLocation(element.getAsString())))
+                    .map(TierSortingRegistry::getTiersLowerThan)
+                    .map(list -> list.size() + 1)
+                    .orElse(0);
+        }
+
+        @Override
+        public MaterialData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+            MaterialData data = new MaterialData();
+
+            if (jsonObject.has("replace")) {
+                data.replace = jsonObject.get("replace").getAsBoolean();
+            }
+            if (jsonObject.has("key")) {
+                data.key = jsonObject.get("key").getAsString();
+            }
+            if (jsonObject.has("category")) {
+                data.category = jsonObject.get("category").getAsString();
+            }
+            if (jsonObject.has("hidden")) {
+                data.hidden = jsonObject.get("hidden").getAsBoolean();
+            }
+            if (jsonObject.has("hiddenOutcomes")) {
+                data.hiddenOutcomes = jsonObject.get("hiddenOutcomes").getAsBoolean();
+            }
+            if (jsonObject.has("attributes")) {
+                data.attributes = context.deserialize(jsonObject.get("attributes"), AttributesDeserializer.typeToken.getRawType());
+            }
+            if (jsonObject.has("primary")) {
+                data.primary = jsonObject.get("primary").getAsFloat();
+            }
+            if (jsonObject.has("secondary")) {
+                data.secondary = jsonObject.get("secondary").getAsFloat();
+            }
+            if (jsonObject.has("tertiary")) {
+                data.tertiary = jsonObject.get("tertiary").getAsFloat();
+            }
+            if (jsonObject.has("durability")) {
+                data.durability = jsonObject.get("durability").getAsFloat();
+            }
+            if (jsonObject.has("integrityGain")) {
+                data.integrityGain = jsonObject.get("integrityGain").getAsFloat();
+            }
+            if (jsonObject.has("integrityCost")) {
+                data.integrityCost = jsonObject.get("integrityCost").getAsFloat();
+            }
+            if (jsonObject.has("magicCapacity")) {
+                data.magicCapacity = jsonObject.get("magicCapacity").getAsInt();
+            }
+            if (jsonObject.has("effects")) {
+                data.effects = context.deserialize(jsonObject.get("effects"), EffectData.class);
+            }
+            if (jsonObject.has("toolLevel")) {
+                data.toolLevel = getLevel(jsonObject.get("toolLevel"));
+            }
+            if (jsonObject.has("toolEfficiency")) {
+                data.toolEfficiency = jsonObject.get("toolEfficiency").getAsFloat();
+            }
+            if (jsonObject.has("tints")) {
+                data.tints = context.deserialize(jsonObject.get("tints"), MaterialColors.class);
+            }
+            if (jsonObject.has("textures")) {
+                data.textures = context.deserialize(jsonObject.get("textures"), String[].class);
+            }
+            if (jsonObject.has("textureOverride")) {
+                data.textureOverride = jsonObject.get("textureOverride").getAsBoolean();
+            }
+            if (jsonObject.has("material")) {
+                data.material = context.deserialize(jsonObject.get("material"), OutcomeMaterial.class);
+            }
+            if (jsonObject.has("requiredTools")) {
+                data.requiredTools = context.deserialize(jsonObject.get("requiredTools"), ToolData.class);
+            }
+            if (jsonObject.has("improvements")) {
+                JsonElement improvementsJson = jsonObject.get("improvements");
+                if (improvementsJson.isJsonObject()) {
+                    data.improvements = improvementsJson.getAsJsonObject().entrySet().stream()
+                            .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getAsInt()));
+                }
+            }
+
+            return data;
+        }
     }
 }

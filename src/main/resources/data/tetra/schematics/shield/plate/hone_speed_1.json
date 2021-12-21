@@ -20,7 +20,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer_dig": 2
+                "hammer_dig": "minecraft:gold"
             },
             "improvements": {
                 "plate_hone/speed": 1

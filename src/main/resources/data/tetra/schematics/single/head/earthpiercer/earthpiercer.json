@@ -17,7 +17,7 @@
                 "items": [ "tetra:earthpiercer" ]
             },
             "requiredTools": {
-                "hammer_dig": 1
+                "hammer_dig": "minecraft:wood"
             },
             "moduleKey": "single/earthpiercer",
             "moduleVariant": "earthpiercer/earthpiercer"

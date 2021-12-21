@@ -31,7 +31,7 @@ public class HoloVariantMajorItemGui extends HoloVariantItemGui {
             addChild(new GuiModuleGlyph(0, 0, 16, 16, outcome.glyph).setShift(false));
         }
 
-        material.setX(1);
+        material.setX(0);
         material.setY(0);
     }
 

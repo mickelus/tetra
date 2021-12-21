@@ -31,7 +31,7 @@
                 "count": 8
             },
             "requiredTools": {
-                "hammer_dig": 4
+                "hammer_dig": "minecraft:iron"
             },
             "improvements": {
                 "shield/trim/scrap": 0

@@ -3,15 +3,15 @@
     "hidden": true,
     "hiddenOutcomes": true,
     "category": "fabric",
-    "primary": "1",
-    "secondary": "1",
-    "tertiary": "5",
-    "durability": "200",
-    "integrityCost": "1",
-    "integrityGain": "4",
-    "magicCapacity": "90",
-    "toolLevel": "0",
-    "toolEfficiency": "0",
+    "primary": 1,
+    "secondary": 1,
+    "tertiary": 5,
+    "durability": 200,
+    "integrityCost": 1,
+    "integrityGain": 4,
+    "magicCapacity": 90,
+    "toolLevel": 0,
+    "toolEfficiency": 0,
     "tints": {
         "glyph": "81cc7a",
         "texture": "8aa653"
@@ -24,6 +24,6 @@
         "items": [ "minecraft:green_wool" ]
     },
     "requiredTools": {
-        "cut": 1
+        "cut": "minecraft:wood"
     }
 }

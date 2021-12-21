@@ -1,15 +1,15 @@
 {
     "key": "birch",
     "category": "wood",
-    "primary": "3",
-    "secondary": "1.7",
-    "tertiary": "6",
-    "durability": "59",
-    "integrityCost": "1",
-    "integrityGain": "4",
-    "magicCapacity": "90",
-    "toolLevel": "1",
-    "toolEfficiency": "2",
+    "primary": 3,
+    "secondary": 1.7,
+    "tertiary": 6,
+    "durability": 59,
+    "integrityCost": 1,
+    "integrityGain": 4,
+    "magicCapacity": 90,
+    "toolLevel": "minecraft:wood",
+    "toolEfficiency": 2,
     "tints": {
         "glyph": "birch_glyph",
         "texture": "birch"
@@ -22,6 +22,6 @@
         "items": [ "minecraft:birch_planks" ]
     },
     "requiredTools": {
-        "axe_dig": 1
+        "axe_dig": "minecraft:wood"
     }
 }

@@ -29,7 +29,7 @@
                 "count": 3
             },
             "requiredTools": {
-                "axe_dig": 3
+                "axe_dig": "minecraft:stone"
             },
             "moduleKey": "bow/recurve_stave",
             "moduleVariant": "recurve_stave/stick"

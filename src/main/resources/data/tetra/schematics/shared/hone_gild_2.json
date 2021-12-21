@@ -53,7 +53,7 @@
                 "count": 4
             },
             "requiredTools": {
-                "hammer_dig": 3
+                "hammer_dig": "minecraft:stone"
             },
             "experienceCost": 4,
             "improvements": {

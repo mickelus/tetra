@@ -1,15 +1,15 @@
 {
     "key": "flint",
     "category": "stone",
-    "primary": "5",
-    "secondary": "2.3",
-    "tertiary": "0",
-    "durability": "131",
-    "integrityCost": "1",
-    "integrityGain": "4",
-    "magicCapacity": "80",
-    "toolLevel": "3",
-    "toolEfficiency": "5",
+    "primary": 5,
+    "secondary": 2.3,
+    "tertiary": 0,
+    "durability": 131,
+    "integrityCost": 1,
+    "integrityGain": 4,
+    "magicCapacity": 80,
+    "toolLevel": "minecraft:gold",
+    "toolEfficiency": 5,
     "tints": {
         "glyph": "flint_glyph",
         "texture": "flint"
@@ -26,6 +26,6 @@
         "workable": 1
     },
     "requiredTools": {
-        "hammer_dig": 2
+        "hammer_dig": "minecraft:gold"
     }
 }

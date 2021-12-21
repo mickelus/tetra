@@ -4,7 +4,7 @@
         "count": 8
     },
     "requiredTools": {
-        "hammer_dig": 5
+        "hammer_dig": "minecraft:diamond"
     },
     "moduleKey": "single/earthpiercer",
     "moduleVariant": "earthpiercer/earthpiercer"

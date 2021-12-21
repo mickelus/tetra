@@ -1,6 +1,8 @@
 package se.mickelus.tetra.module.data;
 
 import com.google.gson.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.ToolAction;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -105,6 +107,17 @@ public class ToolData extends TierData<ToolAction> {
     }
 
     public static class Deserializer implements JsonDeserializer<ToolData> {
+        private static float getLevel(JsonElement element) {
+            if (element.getAsJsonPrimitive().isNumber()) {
+                return element.getAsFloat();
+            }
+
+            return Optional.ofNullable(TierSortingRegistry.byName(new ResourceLocation(element.getAsString())))
+                    .map(TierSortingRegistry::getTiersLowerThan)
+                    .map(list -> list.size() + 1)
+                    .orElse(0);
+        }
+
         @Override
         public ToolData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
@@ -116,11 +129,11 @@ public class ToolData extends TierData<ToolAction> {
                 if (entryValue.isJsonArray()) {
                     JsonArray entryArray = entryValue.getAsJsonArray();
                     if (entryArray.size() == 2) {
-                        data.levelMap.put(toolAction, entryArray.get(0).getAsFloat());
+                        data.levelMap.put(toolAction, getLevel(entryArray.get(0)));
                         data.efficiencyMap.put(toolAction, entryArray.get(1).getAsFloat());
                     }
                 } else {
-                    data.levelMap.put(toolAction, entryValue.getAsFloat());
+                    data.levelMap.put(toolAction, getLevel(entryValue));
                 }
             });
 

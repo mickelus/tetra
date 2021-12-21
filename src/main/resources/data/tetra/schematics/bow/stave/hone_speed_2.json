@@ -20,7 +20,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "axe_dig": 2
+                "axe_dig": "minecraft:gold"
             },
             "improvements": {
                 "stave_hone/speed": 2

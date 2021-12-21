@@ -19,7 +19,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer_dig": 5
+                "hammer_dig": "minecraft:diamond"
             },
             "improvements": {
                 "extractor_hone/potency": 2

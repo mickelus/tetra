@@ -18,7 +18,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer_dig": 3
+                "hammer_dig": "minecraft:stone"
             },
             "improvements": {
                 "blade/hooked": 1

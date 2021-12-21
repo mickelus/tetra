@@ -1,15 +1,15 @@
 {
     "key": "steel",
     "category": "metal",
-    "primary": "6",
-    "secondary": "3.8",
-    "tertiary": "3",
-    "durability": "650",
-    "integrityCost": "2",
-    "integrityGain": "5",
-    "magicCapacity": "72",
-    "toolLevel": "4",
-    "toolEfficiency": "8",
+    "primary": 6,
+    "secondary": 3.8,
+    "tertiary": 3,
+    "durability": 650,
+    "integrityCost": 2,
+    "integrityGain": 5,
+    "magicCapacity": 72,
+    "toolLevel": "minecraft:iron",
+    "toolEfficiency": 8,
     "tints": {
         "glyph": "steel_glyph",
         "texture": "steel"
@@ -22,6 +22,6 @@
         "tag": "forge:ingots/steel"
     },
     "requiredTools": {
-        "hammer_dig": 3
+        "hammer_dig": "minecraft:stone"
     }
 }

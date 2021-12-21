@@ -4,7 +4,7 @@
         "count": 8
     },
     "requiredTools": {
-        "hammer_dig": 5
+        "hammer_dig": "minecraft:diamond"
     },
     "moduleKey": "sword/basic_hilt",
     "moduleVariant": "basic_hilt/forged_beam"

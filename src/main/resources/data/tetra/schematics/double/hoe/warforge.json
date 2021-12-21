@@ -18,7 +18,7 @@
     "outcomes": [
         {
             "requiredTools": {
-                "hammer_dig": 4
+                "hammer_dig": "minecraft:iron"
             },
             "improvements": {
                 "double/warforged": 0

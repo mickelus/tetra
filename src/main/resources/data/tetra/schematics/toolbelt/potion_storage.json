@@ -22,7 +22,7 @@
                 "count": 1
             },
             "requiredTools": {
-                "hammer_dig": 4
+                "hammer_dig": "minecraft:iron"
             },
             "moduleKey": "toolbelt/potion_storage",
             "moduleVariant": "potion_storage/forged_mesh"
@@ -33,7 +33,7 @@
                 "count": 2
             },
             "requiredTools": {
-                "cut": 3
+                "cut": "minecraft:stone"
             },
             "moduleKey": "toolbelt/potion_storage",
             "moduleVariant": "potion_storage/leather"
@@ -43,7 +43,7 @@
                 "tag": "minecraft:wool"
             },
             "requiredTools": {
-                "cut": 1
+                "cut": "minecraft:wood"
             },
             "moduleKey": "toolbelt/potion_storage",
             "moduleVariant": "potion_storage/wool"
@@ -54,7 +54,7 @@
                 "count": 5
             },
             "requiredTools": {
-                "cut": 2
+                "cut": "minecraft:gold"
             },
             "moduleKey": "toolbelt/potion_storage",
             "moduleVariant": "potion_storage/hide"
