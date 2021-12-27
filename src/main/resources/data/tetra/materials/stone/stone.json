@@ -8,7 +8,7 @@
     "integrityCost": 1,
     "integrityGain": 4,
     "magicCapacity": 90,
-    "toolLevel": "minecraft:gold",
+    "toolLevel": "minecraft:stone",
     "toolEfficiency": 4,
     "tints": {
         "glyph": "stone_glyph",
