@@ -9,7 +9,7 @@
         "criteria": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [ { "item": "tetra:earthpiercer" } ]
+                "items": [ { "items": [ "tetra:earthpiercer" ] } ]
             }
         }
     }

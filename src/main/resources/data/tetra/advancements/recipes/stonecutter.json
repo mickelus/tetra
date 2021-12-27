@@ -7,7 +7,7 @@
         "criteria": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [ { "item": "tetra:stonecutter" } ]
+                "items": [ { "items": [ "tetra:stonecutter" ] } ]
             }
         }
     }

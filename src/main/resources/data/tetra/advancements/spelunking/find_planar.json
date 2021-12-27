@@ -15,7 +15,7 @@
         "find_planar": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [ { "item": "tetra:planar_stabilizer" } ]
+                "items": [ { "items": [ "tetra:planar_stabilizer" ] } ]
             }
         }
     }
