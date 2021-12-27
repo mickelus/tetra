@@ -31,6 +31,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
@@ -286,6 +287,13 @@ public class ItemModularHandheld extends ModularItem {
                     }
 
                     return InteractionResult.sidedSuccess(world.isClientSide);
+                } else if (ToolActions.HOE_DIG.equals(tool)) { // todo 1.18: temp solution until forge fixes hoes in IForgeBlock.getToolModifiedState
+                    InteractionResult result = Items.IRON_HOE.useOn(context);
+                    if (InteractionResult.SUCCESS == result) {
+                        applyDamage(blockDestroyDamage, context.getItemInHand(), player);
+                        applyUsageEffects(player, itemStack, 2);
+                    }
+                    return result;
                 }
             }
 
@@ -817,10 +825,13 @@ public class ItemModularHandheld extends ModularItem {
 
     @Override
     public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-        if (getToolActions(stack).contains(toolAction))
+        if (getToolActions(stack).contains(toolAction)) {
             return true;
-        if (ToolActions.DEFAULT_SHIELD_ACTIONS.contains(toolAction) && isShield(stack))
+        }
+        if (ToolActions.DEFAULT_SHIELD_ACTIONS.contains(toolAction) && isShield(stack)) {
             return true;
+        }
+
         return super.canPerformAction(stack, toolAction);
     }
 
