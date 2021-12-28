@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -104,7 +105,7 @@ public class DataManager implements DataDistributor {
                 replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData, featureData};
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public void addReloadListener(AddReloadListenerEvent event) {
         logger.debug("Setting up datastore reload listeners");
         Arrays.stream(dataStores).forEach(event::addListener);
