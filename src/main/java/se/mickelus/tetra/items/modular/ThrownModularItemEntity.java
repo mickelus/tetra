@@ -201,9 +201,10 @@ public class ThrownModularItemEntity extends AbstractArrowEntity implements IEnt
             if (ForgeHooks.isToolEffective(world, pos, thrownStack)
                     && shooter instanceof PlayerEntity
                     && item != null) {
-                double destroySpeed = item.getDestroySpeed(thrownStack, blockState) * item.getEffectEfficiency(thrownStack, ItemEffect.throwable);
+                double destroySpeed = item.getDestroySpeed(thrownStack, blockState);
 
-                if (destroySpeed > blockState.getBlockHardness(world, pos)) {
+                if (destroySpeed > 1
+                        && destroySpeed  * item.getEffectEfficiency(thrownStack, ItemEffect.throwable) > blockState.getBlockHardness(world, pos)) {
                     if (shooter instanceof ServerPlayerEntity) {
                         EffectHelper.sendEventToPlayer((ServerPlayerEntity) shooter, 2001, pos, Block.getStateId(blockState));
                     }
