@@ -17,8 +17,7 @@ import net.minecraft.item.ItemStack;
  *         "double/handle": [ "double/basic_handle", "basic_handle/stick" ]
  *     },
  *     "improvements": {
- *         "double/head_left:enchantment/efficiency": 1,
- *         "double/head_right:enchantment/fire_aspect": 1
+ *         "double/head_left:hone/efficiency": 1
  *     }
  * }
  */

@@ -42,6 +42,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.advancements.*;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.chthonic.*;
@@ -179,6 +180,7 @@ public class TetraMod {
         schematicRegistry.registerSchematic(new BookEnchantSchematic());
 
         new ItemUpgradeRegistry();
+        ItemUpgradeRegistry.instance.registerReplacementHook(TetraEnchantmentHelper::transferReplacementEnchantments);
 
         ModuleRegistry moduleRegistry = new ModuleRegistry();
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_module"), BasicModule::new);
@@ -360,7 +362,6 @@ public class TetraMod {
         DataGenerator dataGenerator = event.getGenerator();
         if(event.includeServer()) {
 //            dataGenerator.addProvider(new BlockstateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
-//            dataGenerator.addProvider(new EnchantmentProvider(dataGenerator, event.getExistingFileHelper()));
             dataGenerator.addProvider(new ModuleProvider(dataGenerator, event.getExistingFileHelper()));
         }
     }

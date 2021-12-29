@@ -2,24 +2,31 @@ package se.mickelus.tetra.module;
 
 
 import com.google.common.collect.Multimap;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.common.util.Constants;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
+import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.improvement.SettlePacket;
-import se.mickelus.tetra.network.PacketHandler;
 import se.mickelus.tetra.util.CastOptional;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class ItemModuleMajor extends ItemModule {
 
@@ -190,9 +197,49 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     public void removeEnchantments(ItemStack itemStack) {
-        Arrays.stream(improvements)
-                .filter(improvement -> improvement.enchantment)
-                .forEach(improvement -> removeImprovement(itemStack, improvement.key));
+        TetraEnchantmentHelper.removeEnchantments(itemStack, getSlot());
+    }
+
+    public boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment, boolean fromTable) {
+        return Optional.ofNullable(getVariantData(itemStack).aspects)
+                .map(AspectData::getLevelMap)
+                .filter(aspects -> TetraEnchantmentHelper.isApplicableForAspects(enchantment, fromTable, aspects))
+                .isPresent();
+    }
+
+    public EnchantmentType[] getApplicableEnchantmentTypes(ItemStack itemStack, boolean fromTable) {
+        int requiredLevel = fromTable ? 2 : 1;
+        return Optional.ofNullable(getVariantData(itemStack).aspects)
+                .map(AspectData::getLevelMap)
+                .map(Map::entrySet)
+                .map(Set::stream)
+                .orElseGet(Stream::empty)
+                .filter(entry -> entry.getValue() >= requiredLevel)
+                .map(Map.Entry::getKey)
+                .map(TetraEnchantmentHelper::getEnchantmentType)
+                .filter(Objects::nonNull)
+                .toArray(EnchantmentType[]::new);
+    }
+
+    public Map<Enchantment, Integer> getEnchantments(ItemStack itemStack) {
+        CompoundNBT mappings = itemStack.getChildTag("EnchantmentMapping");
+
+        if (itemStack.hasTag() && mappings != null) {
+            return itemStack.getTag().getList("Enchantments", Constants.NBT.TAG_COMPOUND).stream()
+                    .map(tag -> (CompoundNBT) tag)
+                    .filter(tag -> getSlot().equals(mappings.getString(tag.getString("id"))))
+                    .map(TetraEnchantmentHelper::getEnchantment)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
+        }
+
+        return Collections.emptyMap();
+    }
+
+    public int getEnchantmentMagicCapacityCost(ItemStack itemStack) {
+        return -getEnchantments(itemStack).entrySet().stream()
+                .mapToInt(entry -> TetraEnchantmentHelper.getEnchantmentCapacityCost(entry.getKey(), entry.getValue()))
+                .sum();
     }
 
     @Override
@@ -268,6 +315,12 @@ public abstract class ItemModuleMajor extends ItemModule {
                 .reduce(super.getToolData(itemStack), ToolData::merge);
     }
 
+    public boolean hasAspect(ItemStack itemStack, ItemAspect aspect) {
+        return Optional.ofNullable(getVariantData(itemStack).aspects)
+                .map(aspects -> aspects.contains(aspect))
+                .orElse(false);
+    }
+
     @Override
     public int getMagicCapacityGain(ItemStack itemStack) {
         return super.getMagicCapacityGain(itemStack) + getImprovementMagicCapacityGain(itemStack);
@@ -275,7 +328,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     @Override
     public int getMagicCapacityCost(ItemStack itemStack) {
-        return super.getMagicCapacityCost(itemStack) + getImprovementMagicCapacityCost(itemStack);
+        return super.getMagicCapacityCost(itemStack) + getImprovementMagicCapacityCost(itemStack) + getEnchantmentMagicCapacityCost(itemStack);
     }
 
     public int getImprovementMagicCapacityGain(ItemStack itemStack) {

@@ -61,6 +61,8 @@ public class MaterialData {
      */
     public EffectData effects = new EffectData();
 
+    public AspectData aspects = new AspectData();
+
     /**
      * Multipliers for tool levels and efficiency added by modules
      */

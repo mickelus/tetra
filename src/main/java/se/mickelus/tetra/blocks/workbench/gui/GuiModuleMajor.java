@@ -1,29 +1,30 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
-import se.mickelus.mgui.gui.GuiAttachment;
-import se.mickelus.mgui.gui.GuiString;
-import se.mickelus.mgui.gui.GuiStringSmall;
-import se.mickelus.mgui.gui.GuiTextureOffset;
+import net.minecraft.util.registry.Registry;
+import se.mickelus.mgui.gui.*;
 import se.mickelus.mgui.gui.animation.Applier;
 import se.mickelus.mgui.gui.animation.KeyframeAnimation;
+import se.mickelus.mgui.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GuiModuleMajor extends GuiModule {
 
     private GuiStringSmall slotString;
 
-    private GuiModuleImprovement[] improvementElements;
+    private GuiHorizontalLayoutGroup improvementGroup;
 
     public GuiModuleMajor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack,
                           String slotKey, String slotName,
@@ -34,7 +35,10 @@ public class GuiModuleMajor extends GuiModule {
 
         this.height = 17;
 
-        improvementElements = new GuiModuleImprovement[0];
+        improvementGroup = new GuiHorizontalLayoutGroup(GuiAttachment.topRight.equals(attachmentPoint) ? -17 : 19, 13, 3, 1);
+        improvementGroup.setAttachment(attachmentPoint);
+        addChild(improvementGroup);
+
         if (module != null && previewModule != null) {
             setupImprovements(previewModule, previewStack, module, itemStack);
         }
@@ -73,10 +77,12 @@ public class GuiModuleMajor extends GuiModule {
                     .applyTo(new Applier.Opacity(0, 1), new Applier.TranslateX(direction * 2, 0, true))
                     .start();
 
-            for (int i = 0; i < improvementElements.length; i++) {
-                new KeyframeAnimation(100, improvementElements[i])
+            for (int i = 0; i < improvementGroup.getNumChildren(); i++) {
+                GuiElement element = improvementGroup.getChild(i);
+                element.setOpacity(0);
+                new KeyframeAnimation(100, element)
                         .withDelay(offset * 200 + 280 + i * 80)
-                        .applyTo(new Applier.Opacity(0, 1))
+                        .applyTo(new Applier.Opacity(1))
                         .start();
             }
         }
@@ -126,12 +132,12 @@ public class GuiModuleMajor extends GuiModule {
         }
     }
 
-    private void setupImprovements(ItemModuleMajor previewModule, ItemStack previewStack, ItemModuleMajor module,
-            ItemStack itemStack) {
+    private void setupImprovements(ItemModuleMajor previewModule, ItemStack previewStack, ItemModuleMajor module, ItemStack itemStack) {
+        improvementGroup.clearChildren();
+
         String[] improvements = getImprovementUnion(module.getImprovements(itemStack), previewModule.getImprovements(previewStack));
-        improvementElements = new GuiModuleImprovement[improvements.length];
-        for (int i = 0; i < improvements.length; i++) {
-            final String improvementKey = improvements[i];
+
+        for (String improvementKey : improvements) {
             int currentValue = module.getImprovementLevel(itemStack, improvementKey);
             int previewValue = previewModule.getImprovementLevel(previewStack, improvementKey);
             int color;
@@ -146,26 +152,44 @@ public class GuiModuleMajor extends GuiModule {
                 color = module.getImprovement(itemStack, improvementKey).glyph.tint;
             }
 
-            if (GuiAttachment.topRight.equals(attachmentPoint)) {
-                improvementElements[i] = new GuiModuleImprovement(-17 + i * -5, 13, improvements[i], previewValue, color,
-                        () -> hoverHandler.accept(slotKey, improvementKey),
-                        () -> {
-                            if (hasFocus()) {
-                                hoverHandler.accept(slotKey, null);
-                            }
-                        });
-            } else {
-                improvementElements[i] = new GuiModuleImprovement(19 + i * 5, 13, improvements[i], previewValue, color,
-                        () -> hoverHandler.accept(slotKey, improvementKey),
-                        () -> {
-                            if (hasFocus()) {
-                                hoverHandler.accept(slotKey, null);
-                            }
-                        });
-            }
-            improvementElements[i].setAttachment(attachmentPoint);
-            addChild(improvementElements[i]);
+            GuiModuleImprovement improvement = new GuiModuleImprovement(0, 0, improvementKey, previewValue, color,
+                    () -> hoverHandler.accept(slotKey, improvementKey),
+                    () -> {
+                        if (hasFocus()) {
+                            hoverHandler.accept(slotKey, null);
+                        }
+                    });
+
+            improvementGroup.addChild(improvement);
         }
+
+        Map<Enchantment, Integer> currentEnchantments = module.getEnchantments(itemStack);
+        Map<Enchantment, Integer> previewEnchantments = module.getEnchantments(previewStack);
+        getEnchantmentUnion(currentEnchantments.keySet(), previewEnchantments.keySet()).forEach(enchantment -> {
+            int color;
+
+            int currentLevel = currentEnchantments.getOrDefault(enchantment, 0);
+            int previewLevel = previewEnchantments.getOrDefault(enchantment, 0);
+
+            if (currentLevel == 0) {
+                color = GuiColors.add;
+            } else if (previewLevel == 0) {
+                color = GuiColors.remove;
+            } else if (currentLevel != previewLevel) {
+                color = GuiColors.change;
+            } else {
+                color = GuiColors.normal;
+            }
+
+            String enchantmentKey = "enchantment:" + Registry.ENCHANTMENT.getKey(enchantment).toString();
+            improvementGroup.addChild(new GuiModuleEnchantment(0, 0, enchantment, previewLevel, color,
+                    () -> hoverHandler.accept(slotKey, enchantmentKey),
+                    () -> {
+                        if (hasFocus()) {
+                            hoverHandler.accept(slotKey, null);
+                        }
+                    }));
+        });
     }
 
     public static String[] getImprovementUnion(ImprovementData[] improvements, ImprovementData[] previewImprovements) {
@@ -175,15 +199,16 @@ public class GuiModuleMajor extends GuiModule {
                 .toArray(String[]::new);
     }
 
+    public static List<Enchantment> getEnchantmentUnion(Set<Enchantment> enchantments, Set<Enchantment> previewEnchantments) {
+        return Stream.concat(enchantments.stream(), previewEnchantments.stream())
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
     protected void setColor(int color) {
         super.setColor(color);
 
         slotString.setColor(color);
-
-        if(GuiColors.muted == color) {
-            Arrays.stream(improvementElements).forEach(element -> element.setOpacity(0.5f));
-        } else {
-            Arrays.stream(improvementElements).forEach(element -> element.setOpacity(1));
-        }
+        improvementGroup.setOpacity(color == GuiColors.muted ? 0.5f : 1);
     }
 }

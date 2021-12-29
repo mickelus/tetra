@@ -41,6 +41,7 @@ public class DataManager {
     // todo: use the same naming for all deserializers?
     public static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(ToolData.class, new ToolData.Deserializer())
+            .registerTypeAdapter(AspectData.class, new AspectData.Deserializer())
             .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
             .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
             .registerTypeAdapter(ModuleModel.class, new ModuleModelDeserializer())

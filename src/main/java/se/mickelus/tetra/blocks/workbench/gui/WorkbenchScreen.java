@@ -16,6 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import se.mickelus.mgui.gui.*;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
@@ -23,7 +24,6 @@ import se.mickelus.tetra.gui.HoneProgressGui;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.CastOptional;
 
@@ -391,6 +391,10 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer> {
             ItemStack result = schematic.applyUpgrade(targetStack, materials, false, slot, null);
 
             boolean willReplace = schematic.willReplace(targetStack, materials, slot);
+
+            if (willReplace) {
+                TetraEnchantmentHelper.removeEnchantments(result, slot);
+            }
 
             Map<ToolType, Integer> tools = schematic.getRequiredToolLevels(targetStack, materials);
 

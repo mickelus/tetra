@@ -28,6 +28,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
@@ -39,7 +40,6 @@ import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.properties.PropertyHelper;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -344,6 +344,10 @@ public class WorkbenchTile extends TileEntity implements INamedContainerProvider
         if (item != null && currentSchematic != null && currentSchematic.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableTools)) {
             float severity = currentSchematic.getSeverity(targetStack, materialsAltered, currentSlot);
             boolean willReplace = currentSchematic.willReplace(targetStack, materialsAltered, currentSlot);
+
+            if (willReplace) {
+                TetraEnchantmentHelper.removeEnchantments(targetStack, currentSlot);
+            }
 
             // store durability and honing factor so that it can be restored after the schematic is applied
             double durabilityFactor = upgradedStack.isDamageable() ? upgradedStack.getDamage() * 1d / upgradedStack.getMaxDamage() : 0;

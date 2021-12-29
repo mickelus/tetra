@@ -60,6 +60,8 @@ public class MaterialVariantData extends VariantData {
                 ToolData.multiply(extract.tools, material.toolLevel, material.toolEfficiency)
         ));
 
+        result.aspects = AspectData.merge(aspects, material.aspects);
+
         result.glyph = Optional.ofNullable(extract.glyph)
                 .map(glyph -> new GlyphData(glyph.textureLocation, glyph.textureX, glyph.textureY, material.tints.glyph))
                 .orElse(glyph);

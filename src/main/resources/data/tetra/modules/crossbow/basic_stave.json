@@ -15,6 +15,10 @@
                 "tetra:draw_speed": 1,
                 "tetra:draw_strength": 0.5
             },
+            "aspects": {
+                "crossbow": 2,
+                "breakable": 2
+            },
             "durability": 97,
             "extract": {
                 "primaryAttributes": {

@@ -12,23 +12,6 @@
         "tetra:shield/plate/piercing",
         "tetra:shield/plate/ricochet",
         "tetra:shield/plate/shared_hone",
-        "tetra:enchantment/unbreaking",
-        "tetra:enchantment/smite",
-        "tetra:enchantment/bane_of_arthropods",
-        "tetra:enchantment/fire_aspect",
-        "tetra:enchantment/ensorcellation_bulwark",
-        "tetra:enchantment/apotheosis_reflective",
-        "tetra:enchantment/apotheosis_apotheosis_shield_bash",
-        "tetra:enchantment/ma-enchants_curse_breaking",
-        "tetra:enchantment/ma-enchants_timeless",
-        "tetra:enchantment/vanishing_curse",
-        "tetra:enchantment/ensorcellation_soulbound",
-        "tetra:enchantment/ma-enchants_curse_death",
-        "tetra:enchantment/cursed_fragility",
-        "tetra:enchantment/cursed_misfortune",
-        "tetra:enchantment/cursed_fading",
-        "tetra:enchantment/cursed_obedience",
-        "tetra:enchantment/cursed_encumbrance",
         "tetra:shared/"
     ],
     "variants": [
@@ -38,6 +21,10 @@
             "attributes": {
                 "tetra:ability_damage": 5,
                 "tetra:ability_cooldown": 5
+            },
+            "aspects": {
+                "bluntWeapon": 1,
+                "breakable": 2
             },
             "effects": {
                 "blocking": 16

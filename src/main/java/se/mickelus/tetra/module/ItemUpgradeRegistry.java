@@ -57,7 +57,7 @@ public class ItemUpgradeRegistry {
             if (replacementDefinition.predicate.test(itemStack)) {
                 ItemStack replacementStack = replacementDefinition.itemStack.copy();
                 replacementStack.setDamage(itemStack.getDamage());
-                transferEnchantments(itemStack, replacementStack);
+//                transferEnchantments(itemStack, replacementStack);
 
                 for (BiFunction<ItemStack, ItemStack, ItemStack> hook: replacementHooks) {
                     replacementStack = hook.apply(itemStack, replacementStack);

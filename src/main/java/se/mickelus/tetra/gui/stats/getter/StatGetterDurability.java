@@ -30,7 +30,9 @@ public class StatGetterDurability implements IStatGetter {
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> {
                     ImprovementData data = module.getImprovement(itemStack, improvement);
-                    return data.durability + (int)((data.durabilityMultiplier - 1) * module.getDurability(itemStack));
+                    return data != null
+                            ? data.durability + (int)((data.durabilityMultiplier - 1) * module.getDurability(itemStack))
+                            : 0;
                 })
                 .orElse(0);
     }

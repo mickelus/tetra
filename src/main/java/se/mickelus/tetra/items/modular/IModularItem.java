@@ -7,6 +7,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.UnbreakingEnchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -15,15 +16,20 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.forgespi.Environment;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
@@ -47,6 +53,7 @@ import se.mickelus.tetra.util.CastOptional;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -410,8 +417,15 @@ public interface IModularItem {
                     .forEach(module -> {
                         tooltip.add(new StringTextComponent("\u00BB ").mergeStyle(TextFormatting.DARK_GRAY)
                                 .append(new StringTextComponent(module.getName(itemStack)).mergeStyle(TextFormatting.GRAY)));
+
+                        module.getEnchantments(itemStack).entrySet().stream()
+                                .map(entry -> entry.getKey().getDisplayName(entry.getValue()))
+                                .map(text -> new StringTextComponent("  - " + text.getString()))
+                                .map(text -> text.mergeStyle(TextFormatting.DARK_GRAY))
+                                .forEach(tooltip::add);
+
                         Arrays.stream(module.getImprovements(itemStack))
-                                .map(improvement -> String.format("  - %s", getImprovementTooltip(improvement.key, improvement.level, true)))
+                                .map(improvement -> "  - " + getImprovementTooltip(improvement.key, improvement.level, true))
                                 .map(StringTextComponent::new)
                                 .map(textComponent -> textComponent.mergeStyle(TextFormatting.DARK_GRAY))
                                 .forEach(tooltip::add);
@@ -436,17 +450,7 @@ public interface IModularItem {
                 }
             }
         } else {
-            Arrays.stream(getMajorModules(itemStack))
-                    .filter(Objects::nonNull)
-                    .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
-                    .filter(improvement -> improvement.enchantment)
-                    .collect(Collectors.groupingBy(ImprovementData::getKey, Collectors.summingInt(ImprovementData::getLevel)))
-                    .entrySet()
-                    .stream()
-                    .map(entry -> getImprovementTooltip(entry.getKey(), entry.getValue(), false))
-                    .map(StringTextComponent::new)
-                    .map(text -> text.mergeStyle(TextFormatting.GRAY))
-                    .forEach(tooltip::add);
+            ItemStack.addEnchantmentTooltips(tooltip, itemStack.getEnchantmentTagList());
 
             tooltip.add(Tooltips.expand);
         }
@@ -622,22 +626,6 @@ public interface IModularItem {
         getItem().setDamage(itemStack, getItem().getDamage(itemStack) - getRepairAmount(itemStack));
 
         incrementRepairCount(itemStack);
-    }
-
-    default Map<Enchantment, Integer> getEnchantmentsFromImprovements(ItemStack itemStack) {
-        Map<Enchantment, Integer> enchantments = new HashMap<>();
-        CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> Arrays.stream(item.getMajorModules(itemStack)))
-                .orElseGet(Stream::empty)
-                .filter(Objects::nonNull)
-                .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
-                .forEach(improvement -> {
-                    for (EnchantmentMapping mapping : ItemUpgradeRegistry.instance.getEnchantmentMappings(improvement.key)) {
-                        enchantments.merge(mapping.enchantment, (int) (improvement.level * mapping.multiplier), Integer::sum);
-                    }
-                });
-
-        return enchantments;
     }
 
     default int getEnchantmentLevelFromImprovements(ItemStack itemStack, Enchantment enchantment) {
@@ -1070,39 +1058,15 @@ public interface IModularItem {
         // this stops the tooltip renderer from showing enchantments
         nbt.putInt("HideFlags", 1);
 
-        EnchantmentHelper.setEnchantments(getEnchantmentsFromImprovements(itemStack), itemStack);
+//        EnchantmentHelper.setEnchantments(getEnchantmentsFromImprovements(itemStack), itemStack);
 
         updateIdentifier(itemStack);
     }
 
-    default boolean hasEnchantments(ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack)).anyMatch(improvement -> improvement.enchantment);
-    }
-
-    public static ItemStack removeAllEnchantments(ItemStack itemStack) {
-        itemStack.removeChildTag("Enchantments");
-        itemStack.removeChildTag("StoredEnchantments");
-        Arrays.stream(((IModularItem) itemStack.getItem()).getMajorModules(itemStack))
+    default boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment, boolean fromTable) {
+        return Arrays.stream(getMajorModules(itemStack))
                 .filter(Objects::nonNull)
-                .forEach(module -> module.removeEnchantments(itemStack));
-
-        IModularItem.updateIdentifier(itemStack);
-
-        return itemStack;
-    }
-
-    default boolean canEnchantInEnchantingTable(ItemStack itemStack) {
-        return getEnchantability(itemStack) > 0 && !hasEnchantments(itemStack);
-    }
-
-    default boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment) {
-        EnchantmentMapping[] mappings = ItemUpgradeRegistry.instance.getEnchantmentMappings(enchantment);
-        if (mappings.length > 0) {
-            return Arrays.stream(getMajorModules(itemStack))
-                    .filter(Objects::nonNull)
-                    .anyMatch(module -> Arrays.stream(mappings).anyMatch(mapping -> module.acceptsImprovement(mapping.improvement)));
-        }
-        return false;
+                .anyMatch(module -> module.acceptsEnchantment(itemStack, enchantment, fromTable));
     }
 
     default int getEnchantability(ItemStack itemStack) {

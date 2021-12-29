@@ -7,23 +7,6 @@
         "tetra:shield/grip/hone_speed_flat",
         "tetra:shield/grip/hone_durability",
         "tetra:shield/grip/shared",
-        "tetra:enchantment/mending",
-        "tetra:enchantment/loyalty",
-        "tetra:enchantment/knockback",
-        "tetra:enchantment/ensorcellation_phalanx",
-        "tetra:enchantment/naturesaura_aura_mending",
-        "tetra:enchantment/apotheosis_life_mending",
-        "tetra:enchantment/ma-enchants_curse_breaking",
-        "tetra:enchantment/cyclic_experience_boost",
-        "tetra:enchantment/ma-enchants_timeless",
-        "tetra:enchantment/vanishing_curse",
-        "tetra:enchantment/ensorcellation_soulbound",
-        "tetra:enchantment/ma-enchants_curse_death",
-        "tetra:enchantment/cursed_fragility",
-        "tetra:enchantment/cursed_misfortune",
-        "tetra:enchantment/cursed_fading",
-        "tetra:enchantment/cursed_obedience",
-        "tetra:enchantment/cursed_encumbrance",
         "tetra:shared/"
     ],
     "variants": [
@@ -31,6 +14,10 @@
             "materials": ["tetra:fibre/", "tetra:skin/"],
             "key": "straps/",
             "integrity": -1,
+            "aspects": {
+                "bluntWeapon": 1,
+                "breakable": 2
+            },
             "extract": {
                 "durability": 0.1,
                 "integrity": 1,
