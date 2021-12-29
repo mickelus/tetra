@@ -13,7 +13,7 @@
         "textureX": 64
     },
     "displayType": "major",
-    "applicableMaterials": [ "#wood", "#stone", "!iron", "!blackstone", "!obsidian", "!netherite" ],
+    "applicableMaterials": [ "#wood", "#stone", "!copper", "!iron", "!blackstone", "!obsidian", "!netherite" ],
     "translation": {
         "primaryAttributes": {
             "generic.attack_damage": 2
@@ -44,7 +44,8 @@
         },
         {
             "materials": [
-                "tetra:metal/iron"
+                "tetra:metal/iron",
+                "tetra:metal/copper"
             ],
             "countFactor": 2,
             "moduleKey": "double/basic_hammer",
