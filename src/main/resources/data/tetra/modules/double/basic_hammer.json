@@ -76,7 +76,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer_dig": 1
+                "hammer_dig": "minecraft:wood"
             },
             "models": [
                 {
@@ -110,7 +110,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer_dig": 1
+                "hammer_dig": "minecraft:wood"
             },
             "extract": {
                 "primaryAttributes": {
@@ -144,7 +144,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer_dig": 2
+                "hammer_dig": "minecraft:gold"
             },
             "extract": {
                 "primaryAttributes": {
@@ -178,7 +178,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer_dig": 3
+                "hammer_dig": "minecraft:stone"
             },
             "integrity": -1,
             "extract": {
@@ -213,7 +213,7 @@
                 "generic.attack_speed": -1.1
             },
             "tools": {
-                "hammer_dig": 5
+                "hammer_dig": "minecraft:diamond"
             },
             "models": [
                 {

@@ -22,6 +22,6 @@
         "items": [ "tetra:forged_beam" ]
     },
     "requiredTools": {
-        "hammer_dig": "minecraft:wood"
+        "hammer_dig": "minecraft:netherite"
     }
 }
