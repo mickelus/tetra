@@ -1,7 +1,6 @@
 package se.mickelus.tetra.module.data;
 
 import com.google.common.collect.Multimap;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -10,6 +9,7 @@ import net.minecraftforge.common.TierSortingRegistry;
 import se.mickelus.tetra.data.deserializer.AttributesDeserializer;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.properties.AttributeHelper;
+import se.mickelus.tetra.util.TierHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
@@ -179,17 +179,14 @@ public class MaterialData {
     }
 
     public static class Deserializer implements JsonDeserializer<MaterialData> {
-        public static final Class<? super Map<String, Integer>> improvementClass = new TypeToken<Map<String, Integer>>() {
-        }.getRawType();
-
         private static int getLevel(JsonElement element) {
             if (element.getAsJsonPrimitive().isNumber()) {
                 return element.getAsInt();
             }
 
             return Optional.ofNullable(TierSortingRegistry.byName(new ResourceLocation(element.getAsString())))
-                    .map(TierSortingRegistry::getTiersLowerThan)
-                    .map(list -> list.size() + 1)
+                    .map(TierHelper::getIndex)
+                    .map(index -> index + 1)
                     .orElse(0);
         }
 

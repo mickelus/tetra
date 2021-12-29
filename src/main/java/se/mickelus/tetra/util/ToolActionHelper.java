@@ -24,7 +24,7 @@ import static se.mickelus.tetra.items.modular.ItemModularHandheld.*;
 public class ToolActionHelper {
     public static final BiMap<ToolAction, Tag.Named<Block>> appropriateTools = HashBiMap.create(4);
 
-    static {
+    public static void init() {
         appropriateTools.put(ToolActions.AXE_DIG, MINEABLE_WITH_AXE);
         appropriateTools.put(ToolActions.PICKAXE_DIG, MINEABLE_WITH_PICKAXE);
         appropriateTools.put(ToolActions.SHOVEL_DIG, MINEABLE_WITH_SHOVEL);

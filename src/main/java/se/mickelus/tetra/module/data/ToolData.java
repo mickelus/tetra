@@ -4,6 +4,7 @@ import com.google.gson.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.tetra.util.TierHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
@@ -113,8 +114,8 @@ public class ToolData extends TierData<ToolAction> {
             }
 
             return Optional.ofNullable(TierSortingRegistry.byName(new ResourceLocation(element.getAsString())))
-                    .map(TierSortingRegistry::getTiersLowerThan)
-                    .map(list -> list.size() + 1)
+                    .map(TierHelper::getIndex)
+                    .map(index -> index + 1)
                     .orElse(0);
         }
 

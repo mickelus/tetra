@@ -32,7 +32,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -63,6 +62,7 @@ import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.properties.AttributeHelper;
+import se.mickelus.tetra.util.TierHelper;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.Nullable;
@@ -835,7 +835,7 @@ public class ItemModularHandheld extends ModularItem {
         return super.canPerformAction(stack, toolAction);
     }
 
-    public int getHarvestLevel(ItemStack stack, ToolAction tool, @Nullable Player player, @Nullable BlockState blockState) {
+    public int getHarvestTier(ItemStack stack, ToolAction tool) {
         if (!isBroken(stack)) {
             int toolTier = getToolLevel(stack, tool);
             if (toolTier > 0) {
@@ -851,16 +851,11 @@ public class ItemModularHandheld extends ModularItem {
             return true;
         }
 
-        ToolAction requiredTool = getEffectiveTool(state);
-        if (requiredTool != null) {
-            List<Tier> tiers = TierSortingRegistry.getSortedTiers();
-            int tier = getHarvestLevel(stack, requiredTool, null, state);
-
-            return tier > -1
-                    && tiers.size() > tier
-                    && TierSortingRegistry.isCorrectTierForDrops(tiers.get(tier), state);
-        }
-        return false;
+        return Optional.ofNullable(getEffectiveTool(state))
+                .map(requiredTool -> getHarvestTier(stack, requiredTool))
+                .map(TierHelper::getTier)
+                .map(tier -> TierSortingRegistry.isCorrectTierForDrops(tier, state))
+                .orElse(false);
     }
 
     @Override

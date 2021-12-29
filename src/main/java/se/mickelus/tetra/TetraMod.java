@@ -109,6 +109,8 @@ import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
 import se.mickelus.tetra.proxy.ServerProxy;
 import se.mickelus.tetra.trades.TradeHandler;
+import se.mickelus.tetra.util.TierHelper;
+import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
@@ -144,6 +146,9 @@ public class TetraMod {
         if (ConfigHandler.enableLookTrigger.get()) {
             MinecraftForge.EVENT_BUS.register(BlockLookTrigger.instance);
         }
+
+        ToolActionHelper.init();
+        TierHelper.init();
 
         ConfigHandler.setup();
 

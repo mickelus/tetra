@@ -68,6 +68,8 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
             .create();
     public static DataManager instance;
+
+    public final DataStore<ResourceLocation[]> tierData;
     public final DataStore<TweakData[]> tweakData;
     public final MaterialStore materialData;
     public final DataStore<ImprovementData[]> improvementData;
@@ -87,6 +89,7 @@ public class DataManager implements DataDistributor {
     public DataManager() {
         instance = this;
 
+        this.tierData = new DataStore<>(gson, TetraMod.MOD_ID, "tiers", ResourceLocation[].class, this);
         this.tweakData = new DataStore<>(gson, TetraMod.MOD_ID, "tweaks", TweakData[].class, this);
         this.materialData = new MaterialStore(gson, TetraMod.MOD_ID, "materials", this);
         this.improvementData = new ImprovementStore(gson, TetraMod.MOD_ID, "improvements", materialData, this);
@@ -101,7 +104,7 @@ public class DataManager implements DataDistributor {
         this.destabilizationData = new DataStore<>(gson, TetraMod.MOD_ID, "destabilization", DestabilizationEffect[].class, this);
         this.featureData = new FeatureStore(gson, TetraMod.MOD_ID, "structures", this);
 
-        dataStores = new DataStore[]{tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
+        dataStores = new DataStore[]{tierData, tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
                 replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData, featureData};
     }
 
