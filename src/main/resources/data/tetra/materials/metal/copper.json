@@ -18,7 +18,7 @@
         "metal"
     ],
     "material": {
-        "tag": "forge:ingots/copper"
+        "items": [ "minecraft:copper_ingot" ]
     },
     "requiredTools": {
         "hammer_dig": "minecraft:wood"

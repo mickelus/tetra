@@ -87,8 +87,8 @@
                     ]
                 },
                 {
-                    "type": "minecraft:tag",
-                    "name": "forge:ingots/copper",
+                    "type": "minecraft:item",
+                    "name": "minecraft:copper_ingot",
                     "expand": true,
                     "weight": 10,
                     "functions": [
