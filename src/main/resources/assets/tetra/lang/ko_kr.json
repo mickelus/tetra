@@ -153,9 +153,9 @@
   "tetra.tool.pry.requirement": "%d등급 해체 도구가 필요합니다\n§7해체하는데 클로를 사용할 수 있습니다",
   "tetra.tool.pry.craft_requirement": "%d등급 해체 도구가 필요합니다",
   "tetra.tool.pry.material_requirement": "이 재료는 기본적으로 %d등급 해체 도구가 필요하며, 재료의 용도에 따라 변경될 수도 있습니다.\n§7해체하는데 클로를 사용할 수 있습니다.",
-  
+
   "tetra.tool.available": "%d등급을 가지고 있습니다",
-  
+
   "tetra.stats.efficiency_suffix": "효율",
   "tetra.stats.strength_suffix": "힘",
   "tetra.stats.tier_suffix": "등급",
@@ -437,7 +437,7 @@
 
   "tetra.stats.fortune": "행운",
   "tetra.stats.fortune.tooltip": "블록의 채집량이 증가합니다",
-  
+
   "tetra.stats.flame": "화염",
   "tetra.stats.flame.tooltip": "엔티티를 피격하면 §e%s§r초간 불에 붙습니다, TNT나 모닥불 같은 블록을 점화할 수도 있습니다",
 
@@ -636,6 +636,36 @@
   "tetra.material.warped.prefix": "뒤틀린",
   "tetra.material.wool": "양털",
   "tetra.material.wool.prefix": "양털",
+  "tetra.material.wool_black": "양털",
+  "tetra.material.wool_black.prefix": "양털",
+  "tetra.material.wool_blue": "양털",
+  "tetra.material.wool_blue.prefix": "양털",
+  "tetra.material.wool_brown": "양털",
+  "tetra.material.wool_brown.prefix": "양털",
+  "tetra.material.wool_cyan": "양털",
+  "tetra.material.wool_cyan.prefix": "양털",
+  "tetra.material.wool_gray": "양털",
+  "tetra.material.wool_gray.prefix": "양털",
+  "tetra.material.wool_green": "양털",
+  "tetra.material.wool_green.prefix": "양털",
+  "tetra.material.wool_light_blue": "양털",
+  "tetra.material.wool_light_blue.prefix": "양털",
+  "tetra.material.wool_light_gray": "양털",
+  "tetra.material.wool_light_gray.prefix": "양털",
+  "tetra.material.wool_lime": "양털",
+  "tetra.material.wool_lime.prefix": "양털",
+  "tetra.material.wool_magenta": "양털",
+  "tetra.material.wool_magenta.prefix": "양털",
+  "tetra.material.wool_orange": "양털",
+  "tetra.material.wool_orange.prefix": "양털",
+  "tetra.material.wool_pink": "양털",
+  "tetra.material.wool_pink.prefix": "양털",
+  "tetra.material.wool_purple": "양털",
+  "tetra.material.wool_purple.prefix": "양털",
+  "tetra.material.wool_red": "양털",
+  "tetra.material.wool_red.prefix": "양털",
+  "tetra.material.wool_yellow": "양털",
+  "tetra.material.wool_yellow.prefix": "양털",
   "tetra.material.blackstone": "흑암",
   "tetra.material.blackstone.prefix": "흑암",
   "tetra.material.netherite": "네더라이트",
@@ -931,7 +961,7 @@
   "block.tetra.seeping_bedrock": "스며나오는 기반암",
 
   "block.multiblock_hint.1x2x1": "§8[§71x2x1멀티블록§8]",
-  
+
   "block.tetra.fractured_bedrock": "파열된 기반암",
   "block.tetra.depleted_bedrock": "파열된 기반암 (고갈)",
   "block.tetra.chthonic_extractor": "지하 추출기",
@@ -1520,7 +1550,7 @@
   "tetra/schematic/double/basic_handle/hone_speed_5.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 18%%에서 22%%로 증가합니다.",
 
   "tetra.improvement.handle_hone/speed.name": "연마: 속도",
-  "tetra.improvement.handle_hone/speed.description": "휘두르는 속도가 증가합니다",  
+  "tetra.improvement.handle_hone/speed.description": "휘두르는 속도가 증가합니다",
 
   "tetra.improvement.basic_handle/soot.name": "그을음",
   "tetra.improvement.basic_handle/soot.description": "검댕이에 뒤집어 씌워집니다",
@@ -1710,8 +1740,8 @@
 
   "tetra.improvement.single_handle/wrap.name": "%s 끈",
   "tetra.improvement.single_handle/wrap.description": "공격 피해와 속도가 약간 증가하고, 부정적인 손잡이 효과가 감소합니다.",
- 
- "tetra/schematic/single/handle/hone_speed_1.name": "연마: 속도 I",
+
+  "tetra/schematic/single/handle/hone_speed_1.name": "연마: 속도 I",
   "tetra/schematic/single/handle/hone_speed_1.description": "이 부품을 연마하여 전체적인 휘두르는 속도가 4%% 증가합니다.",
   "tetra/schematic/single/handle/hone_speed_2.name": "연마: 속도 II",
   "tetra/schematic/single/handle/hone_speed_2.description": "이 부품의 휘두르는 속도를 연마합니다, 추가 휘두르는 속도가 4%%에서 9%%로 증가합니다.",
@@ -1872,9 +1902,10 @@
   "tetra.variant.belt/rope.item_name": "밧줄",
   "tetra.variant.belt/rope.description": "밧줄로 만든 아주 기본적인 허리끈입니다. 매우 제한된 양의 부품을 장착할 수 있습니다.",
 
-  "tetra.variant.belt/sash": "양털 띠",
-  "tetra.variant.belt/sash.name": "띠",
-  "tetra.variant.belt/sash.description": "소량의 부품을 장착할 수 있는 양털 띠",
+  "tetra.module.toolbelt/belt_wool.name": "양털 띠",
+  "tetra.module.toolbelt/belt_wool.material_name": "%s 띠",
+  "tetra.module.toolbelt/belt_wool.item_name": "띠",
+  "tetra.module.toolbelt/belt_wool.description": "소량의 부품을 장착할 수 있는 양털 띠입니다.",
 
   "tetra.variant.belt/leather": "가죽 덮개",
   "tetra.variant.belt/leather.name": "덮개",
@@ -1988,21 +2019,21 @@
 
   "tetra.improvement.strap/quick_latch.name": "퀵래치",
   "tetra.improvement.strap/quick_latch.description": "공구허리띠의 빠른 접근 키를 눌렀을 때 적절한 도구를 꺼냅니다.",
-  
+
   "tetra/schematic/toolbelt/quiver/quickslot.name": "퀵래치",
   "tetra/schematic/toolbelt/quiver/quickslot.description": "퀵래치의 기계 장치로 화살통을 강화합니다. 화살통이 화살의 빠른 접근을 사용합니다.\n\n§7활의 잡아당길때 화살이 없다면 자동으로 화살통의 화살이 꺼내집니다.",
   "tetra/schematic/toolbelt/quiver/quickslot.slot1": "래치",
 
   "tetra.improvement.quiver/quick_latch.name": "퀵래치",
   "tetra.improvement.quiver/quick_latch.description": "화살이 없을 때 화살이 자동으로 화살통에서 뽑힙니다.",
-  
+
   "tetra/schematic/toolbelt/storage/quickslot.name": "퀵래치",
   "tetra/schematic/toolbelt/storage/quickslot.description": "퀵래치의 기계 장치로 주머니를 강화합니다. 아이템을 쉽게 보관할 수 있게 됩니다.\n\n§7추가 키를 눌러 들고있는 아이템을 주머니에 넣을 수 있습니다.",
   "tetra/schematic/toolbelt/storage/quickslot.slot1": "래치",
 
   "tetra.improvement.storage/quick_latch.name": "퀵래치",
   "tetra.improvement.storage/quick_latch.description": "추가 키를 눌러 들고있는 아이템을 주머니에 넣을 수 있습니다.",
-  
+
   "tetra.slot.bow/stave": "활대",
   "tetra.slot.bow/string": "활시위",
   "tetra.slot.bow/riser": "줌통",
@@ -2024,7 +2055,7 @@
   "tetra/schematic/bow/stave/straight_stave.name": "기본 활대",
   "tetra/schematic/bow/stave/straight_stave.description": "직선형 활대을 현재 활대와 교체합니다.",
   "tetra/schematic/bow/stave/straight_stave.slot1": "재료",
-  
+
   "tetra.module.bow/straight_stave.item_name": "활",
   "tetra.module.bow/straight_stave.name": "기본 활대",
   "tetra.module.bow/straight_stave.description": "기본 활대",
@@ -2285,7 +2316,7 @@
   "tetra/schematic/shield/grip/hone_speed_5_flat.description": "부품을 더 연마하여 기본 재사용 대기시간을 줄입니다 (균일하게).",
   "tetra.improvement.grip_hone/speed_flat.name": "연마: 속도",
   "tetra.improvement.grip_hone/speed_flat.description": "기본 재사용 대기시간이 감소합니다",
-  
+
   "tetra/schematic/shield/grip/hone_damage_1_flat.name": "연마: 공격 피해 I",
   "tetra/schematic/shield/grip/hone_damage_1_flat.description": "손잡이를 연마하여 기본 공격 피해를 균일하게 늘립니다.",
   "tetra/schematic/shield/grip/hone_damage_2_flat.name": "연마: 공격 피해 II",
@@ -2298,7 +2329,7 @@
   "tetra/schematic/shield/grip/hone_damage_5_flat.description": "부품을 더 연마하여 기본 공격 피해를 늘립니다 (균일하게).",
   "tetra.improvement.grip_hone/damage_flat.name": "연마: 공격 피해",
   "tetra.improvement.grip_hone/damage_flat.description": "기본 공격 피해가 증가합니다",
-  
+
   "tetra/schematic/shield/grip/hone_damage_1_mult.name": "연마: 공격 피해 I",
   "tetra/schematic/shield/grip/hone_damage_1_mult.description": "손잡이를 연마하여 기본 공격 피해를 상대적인 양만큼 늘립니다.",
   "tetra/schematic/shield/grip/hone_damage_2_mult.name": "연마: 공격 피해 II",
@@ -2322,7 +2353,7 @@
   "tetra/schematic/shield/grip/hone_durability_4.description": "부품을 더 연마하여, 추가 내구성이 균일하게 증가합니다.",
   "tetra/schematic/shield/grip/hone_durability_5.name": "연마: 내구성 V",
   "tetra/schematic/shield/grip/hone_durability_5.description": "부품을 더 연마하여, 추가 내구성이 균일하게 증가합니다.",
-  
+
   "tetra.improvement.grip_hone/durability.name": "연마: 내구성",
   "tetra.improvement.grip_hone/durability.description": "내구성이 증가합니다",
 
