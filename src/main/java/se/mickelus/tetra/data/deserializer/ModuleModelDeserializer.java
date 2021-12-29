@@ -24,18 +24,26 @@ public class ModuleModelDeserializer implements JsonDeserializer<ModuleModel> {
         }
 
         if (jsonObject.has("tint")) {
-            String tint = jsonObject.get("tint").getAsString();
-            if (ItemColors.exists(tint)) {
-                data.tint = ItemColors.get(tint);
-            } else {
-                try {
-                    data.tint = (int) Long.parseLong(tint, 16);
-                } catch (NumberFormatException e) {
-                    throw new JsonParseException("Could not parse tint '" + tint + "' when deserializing module model, unknown color or malformed hexadecimal", e);
-                }
-            }
+            data.tint = getTint(jsonObject.get("tint").getAsString());
+            data.overlayTint = data.tint;
+        }
+
+        if (jsonObject.has("overlayTint")) {
+            data.overlayTint = getTint(jsonObject.get("overlayTint").getAsString());
         }
 
         return data;
+    }
+
+    private int getTint(String value) {
+        if (ItemColors.exists(value)) {
+            return ItemColors.get(value);
+        } else {
+            try {
+                return (int) Long.parseLong(value, 16);
+            } catch (NumberFormatException e) {
+                throw new JsonParseException("Could not parse tint '" + value + "' when deserializing module model, unknown color or malformed hexadecimal", e);
+            }
+        }
     }
 }

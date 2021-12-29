@@ -66,28 +66,13 @@ public class MaterialVariantData extends VariantData {
                 .map(glyph -> new GlyphData(glyph.textureLocation, glyph.textureX, glyph.textureY, material.tints.glyph))
                 .orElse(glyph);
 
+        List<String> availableTextures = Arrays.asList(extract.availableTextures);
+        // note that map is run on one of the sub-streams
         result.models = Stream.concat(
                         Arrays.stream(models),
-                        Arrays.stream(extract.models).map(model -> new ModuleModel(model.type, combineModelLocation(model.location, material), material.tints.texture)))
+                        Arrays.stream(extract.models).map(model -> MaterialData.kneadModel(model, material, availableTextures)))
                 .toArray(ModuleModel[]::new);
 
         return result;
-    }
-
-    private ResourceLocation combineModelLocation(ResourceLocation modelLocation, MaterialData material) {
-        if (material.textureOverride) {
-            return appendString(modelLocation, material.textures[0]);
-        } else {
-            List<String> availableTextures = Arrays.asList(extract.availableTextures);
-            return Arrays.stream(material.textures)
-                    .filter(availableTextures::contains)
-                    .findFirst()
-                    .map(texture -> appendString(modelLocation, texture))
-                    .orElseGet(() -> appendString(modelLocation, availableTextures.get(0)));
-        }
-    }
-
-    private ResourceLocation appendString(ResourceLocation resourceLocation, String string) {
-        return new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath() + string);
     }
 }

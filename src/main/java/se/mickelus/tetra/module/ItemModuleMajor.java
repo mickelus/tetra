@@ -309,6 +309,6 @@ public abstract class ItemModuleMajor extends ItemModule {
     @Override
     public ModuleModel[] getModels(ItemStack itemStack) {
         ModuleModel[] models = super.getModels(itemStack);
-        return ArrayUtils.addAll(models, getImprovementModels(itemStack, models.length > 0 ? models[0].tint : 0xffffff));
+        return ArrayUtils.addAll(models, getImprovementModels(itemStack, models.length > 0 ? models[0].overlayTint : 0xffffff));
     }
 }
