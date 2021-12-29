@@ -144,5 +144,9 @@
     "improvement": "destabilized/apotheosis_magic_protection",
     "extract": false,
     "multiplier": -1.0
+  },
+  {
+    "enchantment": "apotheosis:true_infinity",
+    "improvement": "enchantment/apotheosis_true_infinity"
   }
 ]

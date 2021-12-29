@@ -2933,6 +2933,8 @@
   "tetra.improvement.enchantment/apotheosis_magic_protection.description": "사용자에 의해 및 사용자에게 가해지는 마법의 피해 감소합니다",
   "tetra.improvement.destabilized/apotheosis_magic_protection.name": "§5불안정한:주술 혐오",
   "tetra.improvement.destabilized/apotheosis_magic_protection.description": "주술 혐오의 마법 효과가 감소합니다",
+  "tetra.improvement.enchantment/apotheosis_true_infinity.name": "무한의 화살통",
+  "tetra.improvement.enchantment/apotheosis_true_infinity.description": "모든 화살을 무한으로 만듭니다",
   "tetra.improvement.enchantment/cyclic_excavate.name": "발굴",
   "tetra.improvement.enchantment/cyclic_excavate.description": "대각선을 포함하지 않고 연결된 같은 블록의 전체를 파괴합니다",
   "tetra.improvement.destabilized/cyclic_excavate.name": "§5불안정한:발굴",

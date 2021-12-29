@@ -2930,6 +2930,8 @@
   "tetra.improvement.enchantment/apotheosis_magic_protection.description": "Se reduce el daño mágico infligido por y al usuario.",
   "tetra.improvement.destabilized/apotheosis_magic_protection.name": "§5Desestabilizado: Aversión al ocultismo",
   "tetra.improvement.destabilized/apotheosis_magic_protection.description": "Reduce el efecto del encantamiento de Aversión al ocultismo",
+  "tetra.improvement.enchantment/apotheosis_true_infinity.name": "Carcaj sin fin",
+  "tetra.improvement.enchantment/apotheosis_true_infinity.description": "Hace que todas las flechas sean infinitas",
   "tetra.improvement.enchantment/cyclic_excavate.name": "Excavar",
   "tetra.improvement.enchantment/cyclic_excavate.description": "Recoge toda la veta de bloques adyacentes conectados, sin incluir las diagonales",
   "tetra.improvement.destabilized/cyclic_excavate.name": "§5Desestabilizado: Excavar",
