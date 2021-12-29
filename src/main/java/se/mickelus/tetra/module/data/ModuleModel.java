@@ -6,6 +6,7 @@ public class ModuleModel {
     public String type = "item";
     public ResourceLocation location;
     public int tint = 0xffffffff;
+    public int overlayTint = 0xffffffff;
 
     public ModuleModel() {}
 
@@ -22,5 +23,13 @@ public class ModuleModel {
         this.type = type;
         this.location = location;
         this.tint = tint;
+        this.overlayTint = tint;
+    }
+
+    public ModuleModel(String type, ResourceLocation location, int tint, int overlayTint) {
+        this.type = type;
+        this.location = location;
+        this.tint = tint;
+        this.overlayTint = overlayTint;
     }
 }

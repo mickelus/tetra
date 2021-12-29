@@ -3,11 +3,13 @@ package se.mickelus.tetra.module.data;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.util.ResourceLocation;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -77,11 +79,8 @@ public class MaterialData {
      */
     public String[] textures = {};
 
-    /**
-     * If true all variants of this material will use the first of it's provided textures rather than one from the textures available from the module.
-     * Useful where a modded material should use it's own texture rather than one of the defaults, e.g. metals from twilight forest
-     */
-    public boolean textureOverride = false;
+    public String[] textureOverrides = {};
+    public boolean tintOverrides = false;
 
     public OutcomeMaterial material;
     public ToolData requiredTools;
@@ -154,9 +153,9 @@ public class MaterialData {
             to.tints = from.tints;
         }
 
-        if (from.textureOverride != defaultValues.textureOverride) {
-            to.textureOverride = from.textureOverride;
-        }
+        to.textureOverrides = Stream.concat(Arrays.stream(to.textureOverrides), Arrays.stream(from.textureOverrides))
+                .distinct()
+                .toArray(String[]::new);
 
         to.attributes = AttributeHelper.overwrite(to.attributes, from.attributes);
         to.effects = EffectData.overwrite(to.effects, from.effects);
@@ -187,5 +186,25 @@ public class MaterialData {
         copyFields(this, copy);
 
         return copy;
+    }
+
+
+    public static ModuleModel kneadModel(ModuleModel model, MaterialData material, List<String> availableTextures) {
+        if (Arrays.stream(material.textureOverrides).anyMatch(override -> model.location.getPath().equals(override))) {
+            return new ModuleModel(model.type, appendString(model.location, material.textures[0]),
+                    material.tintOverrides ? material.tints.texture : 0xffffff, material.tints.texture);
+        }
+
+        ResourceLocation updatedLocation = Arrays.stream(material.textures)
+                .filter(availableTextures::contains)
+                .findFirst()
+                .map(texture -> appendString(model.location, texture))
+                .orElseGet(() -> appendString(model.location, availableTextures.get(0)));
+
+        return new ModuleModel(model.type, updatedLocation, material.tints.texture);
+    }
+
+    public static ResourceLocation appendString(ResourceLocation resourceLocation, String string) {
+        return new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath() + string);
     }
 }

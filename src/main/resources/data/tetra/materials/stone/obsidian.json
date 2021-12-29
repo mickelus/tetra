@@ -14,7 +14,10 @@
         "glyph": "obsidian_glyph",
         "texture": "obsidian"
     },
+    "textureOverrides": ["items/module/sword/blade/heavy/"],
+    "tintOverrides": false,
     "textures": [
+        "obsidian",
         "grainy",
         "crude",
         "default"
