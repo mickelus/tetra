@@ -5,6 +5,24 @@ import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+/**
+ * Used when converting vanilla or non-tetra items into modular items, the fields in the class differs a fair amount
+ * from the json format.
+ * <p>
+ * Example json:
+ * {
+ * "predicate": { "item": "minecraft:wooden_axe" },
+ * "item": "tetra:modular_double",
+ * "modules": {
+ * "double/head_left": [ "double/basic_axe_left", "basic_axe/oak" ],
+ * "double/head_right": [ "double/butt_right", "butt/oak" ],
+ * "double/handle": [ "double/basic_handle", "basic_handle/stick" ]
+ * },
+ * "improvements": {
+ * "double/head_left:hone/efficiency": 1
+ * }
+ * }
+ */
 @ParametersAreNonnullByDefault
 public class ReplacementDefinition {
 

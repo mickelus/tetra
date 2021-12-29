@@ -45,6 +45,10 @@
                 "generic.attack_speed": -1.1,
                 "forge:reach_distance": 1
             },
+            "aspects": {
+                "blockBreaker": 1,
+                "breakable": 2
+            },
             "extract": {
                 "primaryAttributes": {
                     "forge:reach_distance": 0.1

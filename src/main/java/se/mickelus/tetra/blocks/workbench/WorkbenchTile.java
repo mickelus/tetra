@@ -30,6 +30,7 @@ import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
@@ -380,6 +381,10 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
         if (item != null && currentSchematic != null && currentSchematic.canApplyUpgrade(player, targetStack, materialsAltered, currentSlot, availableTools)) {
             float severity = currentSchematic.getSeverity(targetStack, materialsAltered, currentSlot);
             boolean willReplace = currentSchematic.willReplace(targetStack, materialsAltered, currentSlot);
+
+            if (willReplace) {
+                TetraEnchantmentHelper.removeEnchantments(targetStack, currentSlot);
+            }
 
             // store durability and honing factor so that it can be restored after the schematic is applied
             double durabilityFactor = upgradedStack.isDamageableItem() ? upgradedStack.getDamageValue() * 1d / upgradedStack.getMaxDamage() : 0;

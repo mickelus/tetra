@@ -52,10 +52,14 @@ public class MaterialData {
     public float integrityGain = 0;
     public float integrityCost = 0;
     public int magicCapacity = 0;
+
     /**
      * Innate effects gained from the material
      */
     public EffectData effects = new EffectData();
+
+    public AspectData aspects = new AspectData();
+
     /**
      * Multipliers for tool levels and efficiency added by modules
      */

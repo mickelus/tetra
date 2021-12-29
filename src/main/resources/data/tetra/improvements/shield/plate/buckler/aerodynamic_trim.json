@@ -4,6 +4,9 @@
         "key": "shield/aerodynamic_trim/",
         "group": "trim",
         "integrity": -1,
+        "aspects": {
+            "throwable": 2
+        },
         "effects": {
             "throwable": [ 1, 0.8 ]
         },

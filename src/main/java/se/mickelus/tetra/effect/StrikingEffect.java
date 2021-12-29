@@ -92,7 +92,6 @@ public class StrikingEffect {
         int strikingLevel = 0;
         ToolAction tool = null;
 
-
         if (breakingPlayer.hasEffect(MobEffects.DIG_SLOWDOWN)) {
             return false;
         }
@@ -230,7 +229,6 @@ public class StrikingEffect {
             if (ItemModularHandheld.isToolEffective(tool, blockState) && blockHardness > 0) {
 
                 // check that the tool level is high enough and break the block
-
                 if (ToolActionHelper.playerCanDestroyBlock(breakingPlayer, blockState, pos, toolStack, tool)) {
 
                     // adds a fixed amount to make blocks like grass still "consume" some efficiency

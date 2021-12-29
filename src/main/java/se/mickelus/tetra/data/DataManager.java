@@ -45,6 +45,7 @@ public class DataManager implements DataDistributor {
     // todo: use the same naming for all deserializers?
     public static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(ToolData.class, new ToolData.Deserializer())
+            .registerTypeAdapter(AspectData.class, new AspectData.Deserializer())
             .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
             .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
             .registerTypeAdapter(ModuleModel.class, new ModuleModelDeserializer())
@@ -122,7 +123,7 @@ public class DataManager implements DataDistributor {
     @SubscribeEvent
     public void playerConnected(PlayerEvent.PlayerLoggedInEvent event) {
         // todo: stop this from sending to player in singleplayer (while still sending to others in lan worlds)
-        logger.info("Sending data to client: {}", event.getPlayer().getName().getContents());
+        logger.info("Sending data to client: {}", event.getPlayer().getName().getString());
         for (DataStore dataStore : dataStores) {
             dataStore.sendToPlayer((ServerPlayer) event.getPlayer());
         }

@@ -5,23 +5,6 @@
     ],
     "type": "tetra:basic_major_module",
     "improvements": [
-        "tetra:enchantment/power",
-        "tetra:enchantment/flame",
-        "tetra:enchantment/cyclic_multishot",
-        "tetra:enchantment/cyclic_quickshot",
-        "tetra:enchantment/ensorcellation_hunter",
-        "tetra:enchantment/ensorcellation_quick_draw",
-        "tetra:enchantment/ensorcellation_trueshot",
-        "tetra:enchantment/ensorcellation_volley",
-        "tetra:enchantment/ma-enchants_true_shot",
-        "tetra:enchantment/ma-enchants_quick_draw",
-        "tetra:enchantment/ma-enchants_timeless",
-        "tetra:enchantment/vanishing_curse",
-        "tetra:enchantment/ensorcellation_soulbound",
-        "tetra:enchantment/ma-enchants_curse_death",
-        "tetra:enchantment/cursed_misfortune",
-        "tetra:enchantment/cursed_fading",
-        "tetra:enchantment/cursed_obedience",
         "tetra:bow/straight_stave/",
         "tetra:bow/shared_stave/",
         "tetra:bow/shared/",
@@ -34,6 +17,10 @@
             "attributes": {
                 "tetra:draw_speed": 1.6,
                 "tetra:draw_strength": 1.5
+            },
+            "aspects": {
+                "bow": 2,
+                "breakable": 2
             },
             "effects": {
                 "overbowed": 60

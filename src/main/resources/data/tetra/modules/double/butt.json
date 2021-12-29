@@ -8,24 +8,6 @@
         "_right"
     ],
     "improvements": [
-        "tetra:enchantment/cyclic_excavate",
-        "tetra:enchantment/enchantable_ore_eater",
-        "tetra:enchantment/enchantable_excavator",
-        "tetra:enchantment/ensorcellation_excavating",
-        "tetra:enchantment/ensorcellation_soulbound",
-        "tetra:enchantment/ma-enchants_momentum",
-        "tetra:enchantment/cursed_fragility",
-        "tetra:enchantment/cursed_misfortune",
-        "tetra:enchantment/cursed_fading",
-        "tetra:enchantment/cursed_obedience",
-        "tetra:enchantment/cursed_encumbrance",
-        "tetra:enchantment/ma-enchants_timeless",
-        "tetra:enchantment/vanishing_curse",
-        "tetra:enchantment/ensorcellation_soulbound",
-        "tetra:enchantment/ma-enchants_curse_death",
-        "tetra:enchantment/ma-enchants_curse_breaking",
-        "tetra:enchantment/fortune",
-        "tetra:enchantment/unbreaking",
         "tetra:double/butt/",
         "tetra:double/shared_head/",
         "tetra:double/shared/",
@@ -37,6 +19,10 @@
             "key": "butt/",
             "attributes": {
                 "generic.attack_speed": -1
+            },
+            "aspects": {
+                "blockBreaker": 2,
+                "breakable": 2
             },
             "durability": -10,
             "extract": {

@@ -202,10 +202,10 @@ public class GuiStats {
     public static final GuiStatBar arthropod = new GuiStatBar(0, 0, barLength, "tetra.stats.arthropod",
             0, 25, false, arthropodGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterArthropod());
-    public static final IStatGetter unbreakingGetter = new StatGetterEffectLevel(ItemEffect.unbreaking, 1);
+    public static final IStatGetter unbreakingGetter = new StatGetterEnchantmentLevel(Enchantments.UNBREAKING, 1);
     public static final GuiStatBar unbreaking = new GuiStatBar(0, 0, barLength, "tetra.stats.unbreaking",
             0, 20, true, unbreakingGetter, LabelGetterBasic.integerLabel,
-            new TooltipGetterUnbreaking());
+            new TooltipGetterUnbreaking(unbreakingGetter));
     public static final IStatGetter mendingGetter = new StatGetterEnchantmentLevel(Enchantments.MENDING, 2);
     public static final GuiStatBar mending = new GuiStatBar(0, 0, barLength, "tetra.stats.mending",
             0, 10, false, mendingGetter, LabelGetterBasic.integerLabel,

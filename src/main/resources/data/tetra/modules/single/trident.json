@@ -34,6 +34,12 @@
                 "generic.attack_damage": 8,
                 "generic.attack_speed": -1.25
             },
+            "aspects": {
+                "blockBreaker": 2,
+                "pointyWeapon": 2,
+                "throwable": 2,
+                "breakable": 2
+            },
             "glyph": {
                 "textureX": 192,
                 "textureY": 32

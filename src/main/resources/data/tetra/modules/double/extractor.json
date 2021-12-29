@@ -16,6 +16,10 @@
             "attributes": {
                 "generic.attack_speed": -1.9
             },
+            "aspects": {
+                "blockBreaker": 2,
+                "breakable": 2
+            },
             "durability": 64,
             "effects": {
                 "extractor": 2

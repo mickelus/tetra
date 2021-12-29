@@ -45,6 +45,11 @@
             "attributes": {
                 "generic.attack_speed": -1.1
             },
+            "aspects": {
+                "blockBreaker": 1,
+                "throwable": 2,
+                "breakable": 2
+            },
             "effects": {
                 "throwable": [ 1, 0.8 ]
             },

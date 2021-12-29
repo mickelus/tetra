@@ -42,6 +42,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.advancements.*;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.chthonic.*;
 import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
@@ -175,6 +176,7 @@ public class TetraMod {
         schematicRegistry.registerSchematic(new BookEnchantSchematic());
 
         new ItemUpgradeRegistry();
+        ItemUpgradeRegistry.instance.registerReplacementHook(TetraEnchantmentHelper::transferReplacementEnchantments);
 
         ModuleRegistry moduleRegistry = new ModuleRegistry();
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_module"), BasicModule::new);

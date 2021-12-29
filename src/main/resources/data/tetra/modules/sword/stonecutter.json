@@ -1,31 +1,8 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": [
-        "sword/blade"
-    ],
+    "slots": ["sword/blade"],
     "improvements": [
-        "tetra:enchantment/efficiency_pickaxe",
-        "tetra:enchantment/silk_touch",
-        "tetra:enchantment/fortune",
-        "tetra:enchantment/vanishing_curse",
-        "tetra:enchantment/apotheosis_depth_miner",
-        "tetra:enchantment/cyclic_excavate",
-        "tetra:enchantment/enchantable_ore_eater",
-        "tetra:enchantment/enchantable_excavator",
-        "tetra:enchantment/ensorcellation_excavating",
-        "tetra:enchantment/ensorcellation_soulbound",
-        "tetra:enchantment/ma-enchants_reinforced_tip",
-        "tetra:enchantment/ma-enchants_stone_mending",
-        "tetra:enchantment/ma-enchants_momentum",
-        "tetra:enchantment/ma-enchants_curse_death",
-        "tetra:enchantment/cursed_curtail",
-        "tetra:enchantment/cursed_ignorance",
-        "tetra:enchantment/cursed_misfortune",
-        "tetra:enchantment/cursed_fragility",
-        "tetra:enchantment/cursed_fading",
-        "tetra:enchantment/cursed_obedience",
-        "tetra:enchantment/cursed_encumbrance",
         "tetra:sword/stonecutter/",
         "tetra:sword/shared_blade/",
         "tetra:sword/shared/",
@@ -40,6 +17,11 @@
             "attributes": {
                 "generic.attack_damage": 3,
                 "generic.attack_speed": -2.8
+            },
+            "aspects": {
+                "edgedWeapon": 1,
+                "blockBreaker": 2,
+                "breakable": 2
             },
             "tools": {
                 "pickaxe_dig": [ 3, 8 ]

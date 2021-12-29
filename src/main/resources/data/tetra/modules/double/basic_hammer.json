@@ -10,28 +10,6 @@
         "_right"
     ],
     "improvements": [
-        "tetra:enchantment/bane_of_arthropods",
-        "tetra:enchantment/fire_aspect",
-        "tetra:enchantment/looting",
-        "tetra:enchantment/efficiency_hammer",
-        "tetra:enchantment/silk_touch",
-        "tetra:enchantment/fortune",
-        "tetra:enchantment/smite",
-        "tetra:enchantment/apotheosis_depth_miner",
-        "tetra:enchantment/cyclic_excavate",
-        "tetra:enchantment/ensorcellation_excavating",
-        "tetra:enchantment/enchantable_excavator",
-        "tetra:enchantment/ma-enchants_momentum",
-        "tetra:enchantment/vanishing_curse",
-        "tetra:enchantment/ensorcellation_soulbound",
-        "tetra:enchantment/ma-enchants_curse_death",
-        "tetra:enchantment/cursed_curtail",
-        "tetra:enchantment/cursed_ignorance",
-        "tetra:enchantment/cursed_misfortune",
-        "tetra:enchantment/cursed_fragility",
-        "tetra:enchantment/cursed_fading",
-        "tetra:enchantment/cursed_obedience",
-        "tetra:enchantment/cursed_encumbrance",
         "tetra:double/hammer/",
         "tetra:double/shared_head/",
         "tetra:double/shared/",
@@ -43,6 +21,11 @@
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
+            },
+            "aspects": {
+                "blockBreaker": 2,
+                "breakable": 2,
+                "bluntWeapon": 1
             },
             "extract": {
                 "primaryAttributes": {
@@ -74,6 +57,11 @@
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
+            },
+            "aspects": {
+                "blockBreaker": 2,
+                "breakable": 2,
+                "bluntWeapon": 1
             },
             "tools": {
                 "hammer_dig": "minecraft:wood"
@@ -109,6 +97,11 @@
             "attributes": {
                 "generic.attack_speed": -1.1
             },
+            "aspects": {
+                "blockBreaker": 2,
+                "breakable": 2,
+                "bluntWeapon": 1
+            },
             "tools": {
                 "hammer_dig": "minecraft:wood"
             },
@@ -143,6 +136,11 @@
             "attributes": {
                 "generic.attack_speed": -1.1
             },
+            "aspects": {
+                "blockBreaker": 2,
+                "breakable": 2,
+                "bluntWeapon": 1
+            },
             "tools": {
                 "hammer_dig": "minecraft:gold"
             },
@@ -176,6 +174,11 @@
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
+            },
+            "aspects": {
+                "blockBreaker": 2,
+                "breakable": 2,
+                "bluntWeapon": 1
             },
             "tools": {
                 "hammer_dig": "minecraft:gold"
@@ -246,6 +249,11 @@
             "attributes": {
                 "generic.attack_speed": -1.1
             },
+            "aspects": {
+                "blockBreaker": 2,
+                "breakable": 2,
+                "bluntWeapon": 1
+            },
             "tools": {
                 "hammer_dig": "minecraft:diamond"
             },
@@ -278,6 +286,11 @@
             "key": "basic_hammer/",
             "attributes": {
                 "generic.attack_speed": -1.1
+            },
+            "aspects": {
+                "blockBreaker": 2,
+                "breakable": 2,
+                "bluntWeapon": 1
             },
             "tools": {
                 "hammer_dig": 6

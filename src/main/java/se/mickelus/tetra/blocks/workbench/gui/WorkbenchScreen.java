@@ -21,6 +21,7 @@ import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.mutil.gui.GuiTextureOffset;
 import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
@@ -150,7 +151,8 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
                     .map(TextComponent::new)
                     .collect(Collectors.toList());
 
-            renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, mouseY);
+            // Math.max magic to stop tooltip from rendering outside screen
+            renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, Math.max(mouseY, 14));
         }
 
         updateMaterialHoverPreview();
@@ -384,8 +386,11 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
 
             boolean willReplace = schematic.willReplace(targetStack, materials, slot);
 
-            Map<ToolAction, Integer> tools = schematic.getRequiredToolLevels(targetStack, materials);
+            if (willReplace) {
+                TetraEnchantmentHelper.removeEnchantments(result, slot);
+            }
 
+            Map<ToolAction, Integer> tools = schematic.getRequiredToolLevels(targetStack, materials);
             for (Map.Entry<ToolAction, Integer> entry : tools.entrySet()) {
                 result = WorkbenchTile.consumeCraftingToolEffects(result, slot, willReplace, entry.getKey(), entry.getValue(), viewingPlayer,
                         tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), false);

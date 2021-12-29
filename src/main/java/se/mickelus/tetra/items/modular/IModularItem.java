@@ -20,7 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -471,10 +470,18 @@ public interface IModularItem {
             Arrays.stream(getMajorModules(itemStack))
                     .filter(Objects::nonNull)
                     .forEach(module -> {
+
                         tooltip.add(new TextComponent("\u00BB ").withStyle(ChatFormatting.DARK_GRAY)
                                 .append(new TextComponent(module.getName(itemStack)).withStyle(ChatFormatting.GRAY)));
+
+                        module.getEnchantments(itemStack).entrySet().stream()
+                                .map(entry -> entry.getKey().getFullname(entry.getValue()))
+                                .map(text -> new TextComponent("  - " + text.getString()))
+                                .map(text -> text.withStyle(ChatFormatting.DARK_GRAY))
+                                .forEach(tooltip::add);
+
                         Arrays.stream(module.getImprovements(itemStack))
-                                .map(improvement -> String.format("  - %s", getImprovementTooltip(improvement.key, improvement.level, true)))
+                                .map(improvement -> "  - " + getImprovementTooltip(improvement.key, improvement.level, true))
                                 .map(TextComponent::new)
                                 .map(textComponent -> textComponent.withStyle(ChatFormatting.DARK_GRAY))
                                 .forEach(tooltip::add);
@@ -499,17 +506,7 @@ public interface IModularItem {
                 }
             }
         } else {
-            Arrays.stream(getMajorModules(itemStack))
-                    .filter(Objects::nonNull)
-                    .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
-                    .filter(improvement -> improvement.enchantment)
-                    .collect(Collectors.groupingBy(ImprovementData::getKey, Collectors.summingInt(ImprovementData::getLevel)))
-                    .entrySet()
-                    .stream()
-                    .map(entry -> getImprovementTooltip(entry.getKey(), entry.getValue(), false))
-                    .map(TextComponent::new)
-                    .map(text -> text.withStyle(ChatFormatting.GRAY))
-                    .forEach(tooltip::add);
+            ItemStack.appendEnchantmentNames(tooltip, itemStack.getEnchantmentTags());
 
             tooltip.add(Tooltips.expand);
         }
@@ -646,62 +643,6 @@ public interface IModularItem {
         getItem().setDamage(itemStack, getItem().getDamage(itemStack) - getRepairAmount(itemStack));
 
         incrementRepairCount(itemStack);
-    }
-
-    default Map<Enchantment, Integer> getEnchantmentsFromImprovements(ItemStack itemStack) {
-        Map<Enchantment, Integer> enchantments = new HashMap<>();
-        CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> Arrays.stream(item.getMajorModules(itemStack)))
-                .orElseGet(Stream::empty)
-                .filter(Objects::nonNull)
-                .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
-                .forEach(improvement -> {
-                    for (EnchantmentMapping mapping : ItemUpgradeRegistry.instance.getEnchantmentMappings(improvement.key)) {
-                        enchantments.merge(mapping.enchantment, (int) (improvement.level * mapping.multiplier), Integer::sum);
-                    }
-                });
-
-        return enchantments;
-    }
-
-    default int getEnchantmentLevelFromImprovements(ItemStack itemStack, Enchantment enchantment) {
-        return Arrays.stream(getMajorModules(itemStack))
-                .filter(Objects::nonNull)
-                .flatMap(module -> Arrays.stream(module.getImprovements(itemStack)))
-                .mapToInt(improvement ->
-                        (int) (Math.max(1, improvement.level) * Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(improvement.key))
-                                .filter(mapping -> enchantment.equals(mapping.enchantment))
-                                .map(mapping -> mapping.multiplier)
-                                .reduce(0f, Float::sum))
-                )
-                .sum();
-    }
-
-    default int getEnchantmentLevelFromImprovements(ItemStack itemStack, String slot, Enchantment enchantment) {
-        return CastOptional.cast(getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
-                .map(module -> Arrays.stream(module.getImprovements(itemStack)))
-                .orElseGet(Stream::empty)
-                .mapToInt(improvement ->
-                        (int) (Math.max(1, improvement.level) * Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(improvement.key))
-                                .filter(mapping -> enchantment.equals(mapping.enchantment))
-                                .map(mapping -> mapping.multiplier)
-                                .reduce(0f, Float::sum))
-                )
-                .sum();
-    }
-
-    default int getEnchantmentLevelFromImprovements(ItemStack itemStack, String slot, String improvementKey, Enchantment enchantment) {
-        return CastOptional.cast(getModuleFromSlot(itemStack, slot), ItemModuleMajor.class)
-                .map(module -> Arrays.stream(module.getImprovements(itemStack)))
-                .orElseGet(Stream::empty)
-                .filter(improvement -> improvementKey.equals(improvement.key))
-                .mapToInt(improvement ->
-                        (int) (Math.max(1, improvement.level) * Arrays.stream(ItemUpgradeRegistry.instance.getEnchantmentMappings(improvement.key))
-                                .filter(mapping -> enchantment.equals(mapping.enchantment))
-                                .map(mapping -> mapping.multiplier)
-                                .reduce(0f, Float::sum))
-                )
-                .sum();
     }
 
     /**
@@ -1096,27 +1037,15 @@ public interface IModularItem {
         // this stops the tooltip renderer from showing enchantments
         nbt.putInt("HideFlags", 1);
 
-        EnchantmentHelper.setEnchantments(getEnchantmentsFromImprovements(itemStack), itemStack);
+//        EnchantmentHelper.setEnchantments(getEnchantmentsFromImprovements(itemStack), itemStack);
 
         updateIdentifier(itemStack);
     }
 
-    default boolean hasEnchantments(ItemStack itemStack) {
-        return Arrays.stream(getImprovements(itemStack)).anyMatch(improvement -> improvement.enchantment);
-    }
-
-    default boolean canEnchantInEnchantingTable(ItemStack itemStack) {
-        return getEnchantability(itemStack) > 0 && !hasEnchantments(itemStack);
-    }
-
-    default boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment) {
-        EnchantmentMapping[] mappings = ItemUpgradeRegistry.instance.getEnchantmentMappings(enchantment);
-        if (mappings.length > 0) {
-            return Arrays.stream(getMajorModules(itemStack))
-                    .filter(Objects::nonNull)
-                    .anyMatch(module -> Arrays.stream(mappings).anyMatch(mapping -> module.acceptsImprovement(mapping.improvement)));
-        }
-        return false;
+    default boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment, boolean fromTable) {
+        return Arrays.stream(getMajorModules(itemStack))
+                .filter(Objects::nonNull)
+                .anyMatch(module -> module.acceptsEnchantment(itemStack, enchantment, fromTable));
     }
 
     default int getEnchantability(ItemStack itemStack) {

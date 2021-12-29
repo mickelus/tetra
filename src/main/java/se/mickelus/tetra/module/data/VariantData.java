@@ -50,6 +50,8 @@ public class VariantData extends ItemProperties {
      */
     public EffectData effects;
 
+    public AspectData aspects;
+
     /**
      * The priority for setting the name of the item. Multiple modules may want to provide an item name e.g. hammer,
      * or pickaxe, and this field is used to prioritize that.

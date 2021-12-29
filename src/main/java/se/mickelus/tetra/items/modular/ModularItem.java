@@ -227,8 +227,7 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     @Override
     public boolean isFoil(@Nonnull ItemStack itemStack) {
         if (ConfigHandler.enableGlint.get()) {
-            return Arrays.stream(getImprovements(itemStack))
-                    .anyMatch(improvement -> improvement.enchantment);
+            return super.isFoil(itemStack);
         }
 
         return false;
@@ -245,18 +244,13 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     }
 
     @Override
-    public boolean isEnchantable(ItemStack itemStack) {
-        return canEnchantInEnchantingTable(itemStack);
-    }
-
-    @Override
     public boolean isBookEnchantable(final ItemStack itemStack, final ItemStack bookStack) {
         return false;
     }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack itemStack, Enchantment enchantment) {
-        return acceptsEnchantment(itemStack, enchantment);
+        return acceptsEnchantment(itemStack, enchantment, true);
     }
 
     @Override

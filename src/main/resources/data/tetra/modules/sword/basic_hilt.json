@@ -1,29 +1,9 @@
 {
     "replace": true,
-    "slots": [
-        "sword/hilt"
-    ],
+    "slots": ["sword/hilt"],
     "type": "tetra:basic_major_module",
     "renderLayer": "lower",
     "improvements": [
-        "tetra:enchantment/knockback",
-        "tetra:enchantment/mending",
-        "tetra:enchantment/unbreaking",
-        "tetra:enchantment/apotheosis_life_mending",
-        "tetra:enchantment/cyclic_experience_boost",
-        "tetra:enchantment/cyclic_magnet",
-        "tetra:enchantment/ma-enchants_faster_attack",
-        "tetra:enchantment/ma-enchants_combo",
-        "tetra:enchantment/ma-enchants_wisdom",
-        "tetra:enchantment/ma-enchants_timeless",
-        "tetra:enchantment/ma-enchants_curse_butterfingers",
-        "tetra:enchantment/ma-enchants_curse_breaking",
-        "tetra:enchantment/naturesaura_aura_mending",
-        "tetra:enchantment/cursed_misfortune",
-        "tetra:enchantment/cursed_fragility",
-        "tetra:enchantment/cursed_fading",
-        "tetra:enchantment/cursed_obedience",
-        "tetra:enchantment/cursed_encumbrance",
         "tetra:sword/basic_hilt/",
         "tetra:sword/shared_hilt/",
         "tetra:sword/shared/",
@@ -38,6 +18,10 @@
             "key": "basic_hilt/",
             "attributes": {
                 "generic.attack_speed": -0.35
+            },
+            "aspects": {
+                "edgedWeapon": 2,
+                "breakable": 2
             },
             "durability": 8,
             "integrity": 1,

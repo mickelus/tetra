@@ -10,32 +10,6 @@
         "_right"
     ],
     "improvements": [
-        "tetra:enchantment/sharpness",
-        "tetra:enchantment/smite",
-        "tetra:enchantment/bane_of_arthropods",
-        "tetra:enchantment/fire_aspect",
-        "tetra:enchantment/looting",
-        "tetra:enchantment/efficiency_pickaxe",
-        "tetra:enchantment/silk_touch",
-        "tetra:enchantment/fortune",
-        "tetra:enchantment/vanishing_curse",
-        "tetra:enchantment/apotheosis_depth_miner",
-        "tetra:enchantment/cyclic_excavate",
-        "tetra:enchantment/enchantable_ore_eater",
-        "tetra:enchantment/enchantable_excavator",
-        "tetra:enchantment/ensorcellation_excavating",
-        "tetra:enchantment/ensorcellation_soulbound",
-        "tetra:enchantment/ma-enchants_reinforced_tip",
-        "tetra:enchantment/ma-enchants_stone_mending",
-        "tetra:enchantment/ma-enchants_momentum",
-        "tetra:enchantment/ma-enchants_curse_death",
-        "tetra:enchantment/cursed_curtail",
-        "tetra:enchantment/cursed_ignorance",
-        "tetra:enchantment/cursed_misfortune",
-        "tetra:enchantment/cursed_fragility",
-        "tetra:enchantment/cursed_fading",
-        "tetra:enchantment/cursed_obedience",
-        "tetra:enchantment/cursed_encumbrance",
         "tetra:double/pickaxe/",
         "tetra:double/shared_head/",
         "tetra:double/shared/",
@@ -48,6 +22,10 @@
             "attributes": {
                 "generic.attack_damage": -2,
                 "generic.attack_speed": -1.2
+            },
+            "aspects": {
+                "blockBreaker": 2,
+                "breakable": 2
             },
             "tools": {
                 "pickaxe_dig": -1
