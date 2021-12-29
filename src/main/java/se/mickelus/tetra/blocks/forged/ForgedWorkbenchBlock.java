@@ -2,14 +2,14 @@ package se.mickelus.tetra.blocks.forged;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -29,7 +29,7 @@ import static net.minecraft.fluid.Fluids.WATER;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
 public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWaterLoggable {
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction.Axis> axis = BlockStateProperties.HORIZONTAL_AXIS;
 
     public static final String unlocalizedName = "forged_workbench";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -54,10 +54,6 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
         setDefaultState(getDefaultState().with(WATERLOGGED, false));
     }
 
-    public static Direction getFacing(BlockState blockState) {
-        return blockState.get(FACING);
-    }
-
     @Override
     public void addInformation(ItemStack itemStack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
@@ -65,25 +61,20 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Direction facing = state.get(FACING);
+        Direction.Axis axis = state.get(ForgedWorkbenchBlock.axis);
 
-        switch (facing) {
-            case NORTH:
-            case SOUTH:
-                return zShape;
-            case EAST:
-            case WEST:
-                return xShape;
-            default:
-                return null;
+        if (axis == Direction.Axis.Z) {
+            return zShape;
         }
+
+        return xShape;
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
 
-        builder.add(WATERLOGGED, FACING);
+        builder.add(WATERLOGGED, axis);
     }
 
     @Override
@@ -96,7 +87,7 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements IWat
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return getDefaultState()
                 .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == WATER)
-                .with(FACING, context.getPlacementHorizontalFacing());
+                .with(axis, context.getPlacementHorizontalFacing().getAxis());
     }
 
     @Override
