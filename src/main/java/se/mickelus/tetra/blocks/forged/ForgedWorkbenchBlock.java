@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -29,8 +31,14 @@ import static net.minecraft.world.level.material.Fluids.WATER;
 
 @ParametersAreNonnullByDefault
 public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements SimpleWaterloggedBlock {
+    public static final EnumProperty<Direction.Axis> axis = BlockStateProperties.HORIZONTAL_AXIS;
+
     public static final String unlocalizedName = "forged_workbench";
-    private static final VoxelShape shape = Shapes.or(
+    private static final VoxelShape zShape = Shapes.or(
+            box(1, 0, 3, 15, 2, 13),
+            box(2, 2, 4, 14, 9, 12),
+            box(0, 9, 2, 16, 16, 14));
+    private static final VoxelShape xShape = Shapes.or(
             box(3, 0, 1, 13, 2, 15),
             box(4, 2, 2, 12, 9, 14),
             box(2, 9, 0, 14, 16, 16));
@@ -44,7 +52,7 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements Simp
 
         hasItem = true;
 
-        registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
+        registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(axis, Direction.Axis.X));
     }
 
     @Override
@@ -54,14 +62,20 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements Simp
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return shape;
+        Direction.Axis axis = state.getValue(ForgedWorkbenchBlock.axis);
+
+        if (axis == Direction.Axis.Z) {
+            return zShape;
+        }
+
+        return xShape;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
 
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED, axis);
     }
 
     @Override
@@ -73,7 +87,8 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements Simp
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState()
-                .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == WATER);
+                .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == WATER)
+                .setValue(axis, context.getHorizontalDirection().getAxis());
     }
 
     @Override
