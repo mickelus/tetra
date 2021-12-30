@@ -1346,7 +1346,7 @@
     "tetra.module.double/basic_hammer.description": "El cabezal del martillo se puede usar al fabricar artículos modulares, y a veces se utiliza para reutilizar objetos.\n \nLos cabezales doble de un martillo proporcionan bonificaciones de sinergia.",
     "tetra.module.double/basic_hammer.material_name": "Martillo %s",
     "tetra.module.double/basic_hammer.prefix": "Martillo %s",
-    "tetra.variant.basic_hammer/oak.prefix": "de madera",
+    "tetra.variant.basic_hammer/oak.prefix": "Martillo de madera",
     "tetra/schematic/double/adze/adze.name": "Cabezal de azuela",
     "tetra/schematic/double/adze/adze.description": "Crea un cabezal de azuela del material proporcionado. La azuela se puede utilizar para cavar y para talar madera.\n \nProporciona las capacidades de la §fpala§r y el §fhacha§r basadas en el material, a un ritmo reducido.\nLa §fdureza§r del material aumenta el §fdaño§r.",
     "tetra/schematic/double/adze/adze.slot1": "Material",
