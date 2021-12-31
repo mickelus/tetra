@@ -36,8 +36,8 @@ public class TierHelper {
 
     @Nullable
     public static Tier getTier(int index) {
-        if (index > -1 && index < tiers.size()) {
-            return tiers.get(index);
+        if (index > -1) {
+            return tiers.get(Math.min(index, tiers.size() - 1));
         }
         return null;
     }
