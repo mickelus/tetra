@@ -76,6 +76,11 @@ public class LungeEffect extends ChargedAbilityEffect {
         ItemStack itemStack = data.itemStack;
         ItemModularHandheld item = CastOptional.cast(itemStack.getItem(), ItemModularHandheld.class).orElse(null);
 
+        if (item == null) {
+            activeCache.invalidate(getIdentifier(player));
+            return;
+        }
+
         Vec3 bounceVector = player.position().subtract(target.position()).normalize().scale(0.1f);
         player.setDeltaMovement(bounceVector);
         player.hurtMarked = true;
