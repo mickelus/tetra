@@ -21,6 +21,7 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 import se.mickelus.tetra.properties.IToolProvider;
+import top.theillusivec4.curios.api.CuriosApi;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -122,7 +123,7 @@ public class ToolbeltHelper {
      */
     public static ItemStack findToolbelt(Player player) {
         if (CuriosCompat.isLoaded) {
-            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = Optional.empty(); // FIXME CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance, player);
+            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance, player);
             if (maybeToolbelt.isPresent()) {
                 return maybeToolbelt.get().right;
             }

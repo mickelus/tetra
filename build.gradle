@@ -1,6 +1,6 @@
-import groovy.json.JsonSlurper
 import groovy.json.JsonException
 import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 
 buildscript {
     repositories {
@@ -133,8 +133,8 @@ dependencies {
         implementation fg.deobf("curse.maven:mgui-351914:3456505")
     }*/
 
-//    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
-//    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
 
 //    compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
 
@@ -155,9 +155,9 @@ dependencies {
 //    compile fg.deobf("curse.maven:enchantable:2931023")
 //
 //    compile fg.deobf("curse.maven:bluepower:2934396")
-//    
+//
 //    compile fg.deobf("curse.maven:ma_enchants:2931675")
-//    
+//
 //    compile fg.deobf("curse.maven:cursed:2913022")
 //    compile fg.deobf("curse.maven:cursed-bookshelf:2935828")
 
