@@ -5,6 +5,9 @@
         "effects": {
             "crushing": 4
         },
+        "aspects": {
+            "bluntWeapon": 1
+        },
         "models": [
             {
                 "location": "tetra:items/module/double/head/basic_hammer/warforged",

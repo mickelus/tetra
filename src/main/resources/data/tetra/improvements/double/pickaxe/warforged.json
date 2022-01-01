@@ -5,6 +5,9 @@
         "effects": {
             "skewering": [ 5, 3 ]
         },
+        "aspects": {
+            "edgedWeapon": 2
+        },
         "models": [
             {
                 "location": "tetra:items/module/double/head/basic_pickaxe/warforged",

@@ -8,6 +8,9 @@
         "effects": {
             "armorPenetration": 35
         },
+        "aspects": {
+            "edgedWeapon": 2
+        },
         "models": [
             {
                 "location": "tetra:items/module/double/head/claw/warforged",

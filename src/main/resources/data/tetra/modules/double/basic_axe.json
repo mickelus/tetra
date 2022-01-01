@@ -28,6 +28,7 @@
             },
             "aspects": {
                 "blockBreaker": 2,
+                "edgedWeapon": 1,
                 "breakable": 2
             },
             "durability": -10,
