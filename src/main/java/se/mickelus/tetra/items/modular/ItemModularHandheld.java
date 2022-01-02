@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -229,6 +230,26 @@ public class ItemModularHandheld extends ModularItem {
                     applyUsageEffects(player, itemStack, 2);
                     player.resetCooldown();
                     return ActionResultType.func_233537_a_(world.isRemote);
+                }
+            }
+            BlockState blockState2 = null;
+            if (blockState.getBlock() instanceof CampfireBlock && blockState.get(CampfireBlock.LIT) && itemStack.getHarvestLevel(ToolType.SHOVEL ,null, null) >= 0) {
+
+                if (!world.isRemote()) {
+                    world.playEvent((PlayerEntity)null, 1009, pos, 0);
+                }
+
+                CampfireBlock.extinguish(world, pos, blockState);
+                blockState2 = blockState.with(CampfireBlock.LIT, Boolean.valueOf(false));
+
+                applyUsageEffects(player, itemStack, 1);
+                applyDamage(1, itemStack, player);
+                player.resetCooldown();
+                }
+
+                if (blockState2 != null) {
+                if (!world.isRemote) {
+                    world.setBlockState(pos, blockState2, 11);
                 }
             }
         }
