@@ -1,6 +1,7 @@
 package se.mickelus.tetra.data.deserializer;
 
 import com.google.gson.*;
+import se.mickelus.mutil.data.deserializer.ResourceLocationDeserializer;
 import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.module.data.ModuleModel;
 
