@@ -217,7 +217,7 @@ public class ModularBowItem extends ModularItem {
                         int powerLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, itemStack);
                         int punchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, itemStack);
                         int flameLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, itemStack);
-                        int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing);
+                        int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, itemStack);
 
                         for (int i = 0; i < count; i++) {
                             double yaw = player.getYRot() - spread * (count - 1) / 2f + spread * i;
@@ -323,7 +323,8 @@ public class ModularBowItem extends ModularItem {
     }
 
     public int getDrawDuration(ItemStack itemStack) {
-        return Math.max((int) (20 * getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())), 1);
+        return Math.max((int) (20 * (getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())
+                - EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
     }
 
     /**

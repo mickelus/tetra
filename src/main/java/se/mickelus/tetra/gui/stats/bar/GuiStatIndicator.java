@@ -9,6 +9,7 @@ import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -35,44 +36,45 @@ public class GuiStatIndicator extends GuiTexture {
      * @param improvement
      * @return true if the indicator should be displayed
      */
-    public boolean update(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public boolean update(Player player, ItemStack currentStack, ItemStack previewStack, @Nullable String slot, @Nullable String improvement) {
         double value;
         double diffValue;
 
-        if (!previewStack.isEmpty()) {
-            value = statGetter.getValue(player, currentStack);
-            diffValue = statGetter.getValue(player, previewStack);
-        } else {
-            value = statGetter.getValue(player, currentStack);
-
-            if (slot != null) {
-                diffValue = value;
-                if (improvement != null) {
-                    value = value - statGetter.getValue(player, currentStack, slot, improvement);
-                } else {
-                    value = value - statGetter.getValue(player, currentStack, slot);
-                }
+        if (statGetter.shouldShow(player, currentStack, previewStack)) {
+            if (!previewStack.isEmpty()) {
+                value = statGetter.getValue(player, currentStack);
+                diffValue = statGetter.getValue(player, previewStack);
             } else {
-                diffValue = value;
-            }
-        }
+                value = statGetter.getValue(player, currentStack);
 
-        if (value > 0 || diffValue > 0) {
-            setColor(getDiffColor(value, diffValue));
+                if (slot != null) {
+                    diffValue = value;
+                    if (improvement != null) {
+                        value = value - statGetter.getValue(player, currentStack, slot, improvement);
+                    } else {
+                        value = value - statGetter.getValue(player, currentStack, slot);
+                    }
+                } else {
+                    diffValue = value;
+                }
+            }
+
+
+            double baseValue = statGetter.getValue(player, ItemStack.EMPTY);
+            setColor(getDiffColor(baseValue, value, diffValue));
             return true;
         }
-
         return false;
     }
 
     public boolean isActive(Player player, ItemStack itemStack) {
-        return statGetter.getValue(player, itemStack) > 0;
+        return statGetter.shouldShow(player, itemStack, itemStack);
     }
 
-    protected int getDiffColor(double value, double diffValue) {
-        if (diffValue > 0 && value <= 0) {
+    protected int getDiffColor(double baseValue, double value, double diffValue) {
+        if (diffValue > baseValue && value <= baseValue) {
             return GuiColors.positive;
-        } else if (diffValue <= 0 && value > 0) {
+        } else if (diffValue <= baseValue && value > baseValue) {
             return GuiColors.negative;
         } else if (diffValue == value) {
             return GuiColors.normal;

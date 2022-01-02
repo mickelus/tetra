@@ -33,27 +33,30 @@ public class StatGetterEnchantmentLevel implements IStatGetter {
 
     @Override
     public double getValue(Player player, ItemStack itemStack) {
-        return base + CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> EnchantmentHelper.getItemEnchantmentLevel(enchantment, itemStack) * multiplier)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                .map(item -> EnchantmentHelper.getItemEnchantmentLevel(enchantment, itemStack))
+                .filter(level -> level > 0)
+                .map(level -> level * multiplier + base)
                 .orElse(0d);
     }
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot) {
-        return base + CastOptional.cast(itemStack.getItem(), IModularItem.class)
+        return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .flatMap(item -> CastOptional.cast(item.getModuleFromSlot(itemStack, slot), ItemModuleMajor.class))
                 .map(module -> module.getEnchantments(itemStack))
                 .map(enchantments -> enchantments.get(enchantment))
-                .map(level -> level * multiplier)
+                .filter(level -> level > 0)
+                .map(level -> level * multiplier + base)
                 .orElse(0d);
     }
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
         if (improvement.startsWith("enchantment:") && enchantmentKey.equals(improvement.substring(12))) {
-            return base + getValue(player, itemStack);
+            return getValue(player, itemStack);
         }
 
-        return base;
+        return 0;
     }
 }

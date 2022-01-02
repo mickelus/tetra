@@ -858,11 +858,22 @@ public class ItemModularHandheld extends ModularItem {
                 .orElse(false);
     }
 
+    public static double getAttackSpeedHarvestModifier(double attackSpeed) {
+        return attackSpeed * 0.5 + 0.5;
+    }
+
+    public static double getEfficiencyEnchantmentBonus(int level) {
+        if (level > 0) {
+            return level * level + 1;
+        }
+        return 0;
+    }
+
     @Override
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
         if (!isBroken(itemStack)) {
             ToolAction tool = getEffectiveTool(blockState);
-            float speed = (float) (getAttributeValue(itemStack, Attributes.ATTACK_SPEED, 4) * 0.5 + 0.5);
+            float speed = (float) getAttackSpeedHarvestModifier(getAttributeValue(itemStack, Attributes.ATTACK_SPEED, 4));
 
             if (tool != null) {
                 speed *= getToolEfficiency(itemStack, tool);

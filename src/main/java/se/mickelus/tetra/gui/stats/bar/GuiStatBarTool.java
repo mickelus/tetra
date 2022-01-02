@@ -1,7 +1,9 @@
 package se.mickelus.tetra.gui.stats.bar;
 
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.gui.GuiAlignment;
 import se.mickelus.mutil.util.CastOptional;
@@ -28,8 +30,9 @@ public class GuiStatBarTool extends GuiStatBar {
 
     public GuiStatBarTool(int x, int y, int width, ToolAction toolAction, boolean efficiencyVisibility) {
         super(x, y, width, null, 0, efficiencyMax,
-                false, new StatGetterToolEfficiency(toolAction), LabelGetterBasic.decimalLabel,
-                new TooltipGetterTool(toolAction));
+                false, new StatGetterToolCompoundEfficiency(new StatGetterToolEfficiency(toolAction),
+                        new StatGetterAttribute(Attributes.ATTACK_SPEED), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1)),
+                LabelGetterBasic.decimalLabel, new TooltipGetterTool(toolAction));
 
         this.efficiencyVisibility = efficiencyVisibility;
 
@@ -41,10 +44,13 @@ public class GuiStatBarTool extends GuiStatBar {
         addChild(icon);
 
         StatGetterEffectLevel extractorGetter = new StatGetterEffectLevel(ItemEffect.extractor, 4.5);
+        StatGetterEnchantmentLevel enchantmentGetter = new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1);
         setIndicators(
                 new StrikingStatIndicatorGui(toolAction),
                 new GuiStatIndicator(0, 0, "tetra.stats.tool.extractor", 7, extractorGetter,
-                        new TooltipGetterInteger("tetra.stats.tool.extractor.tooltip", extractorGetter)));
+                        new TooltipGetterInteger("tetra.stats.tool.extractor.tooltip", extractorGetter)),
+                new GuiStatIndicator(0, 0, "tetra.stats.tool.efficiency", 17, enchantmentGetter,
+                        new TooltipGetterInteger("tetra.stats.tool.efficiency.tooltip", enchantmentGetter)));
     }
 
     @Override
@@ -82,7 +88,7 @@ public class GuiStatBarTool extends GuiStatBar {
 
         icon.setAttachment(alignment.toAttachment());
 
-        int offset = icon.getWidth() + 2;
+        int offset = icon.getWidth();
         indicatorGroup.setX(GuiAlignment.right.equals(alignment) ? -offset : offset);
     }
 
@@ -104,13 +110,8 @@ public class GuiStatBarTool extends GuiStatBar {
 
     protected int getSlotLevel(Player player, ItemStack itemStack, String slot, String improvement) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                .map(item -> {
-                    if (improvement != null) {
-                        return levelGetter.getValue(player, itemStack, slot, improvement);
-                    }
-
-                    return levelGetter.getValue(player, itemStack, slot);
-                })
-                .orElse(-1d).intValue();
+                .map(item -> improvement != null ? levelGetter.getValue(player, itemStack, slot, improvement) : levelGetter.getValue(player, itemStack, slot))
+                .orElse(-1d)
+                .intValue();
     }
 }

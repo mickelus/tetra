@@ -21,10 +21,14 @@ import static se.mickelus.tetra.gui.stats.StatsHelper.*;
 
 @ParametersAreNonnullByDefault
 public class GuiStats {
-    public static final IStatGetter attackDamageGetter = new StatGetterAttribute(Attributes.ATTACK_DAMAGE);
+    public static final IStatGetter sharpnessGetter = new StatGetterEnchantmentLevel(Enchantments.SHARPNESS, 0.5, 0.5);
+    public static final IStatGetter attackDamageGetter = sum(new StatGetterAttribute(Attributes.ATTACK_DAMAGE), sharpnessGetter);
     public static final GuiStatBar attackDamage = new GuiStatBar(0, 0, barLength, "tetra.stats.attack_damage",
             0, 40, false, attackDamageGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.attack_damage.tooltip", attackDamageGetter));
+            new TooltipGetterDecimal("tetra.stats.attack_damage.tooltip", attackDamageGetter))
+            .setIndicators(
+                    new GuiStatIndicator(0, 0, "tetra.stats.sharpness", 17, sharpnessGetter,
+                            new TooltipGetterDecimalSingle("tetra.stats.sharpness.tooltip", sharpnessGetter)));
 
     public static final IStatGetter attackDamageNormalizedGetter = new StatGetterAttribute(Attributes.ATTACK_DAMAGE, true);
     public static final GuiStatBar attackDamageNormalized = new GuiStatBar(0, 0, barLength, "tetra.stats.attack_damage_normalized",
@@ -40,18 +44,33 @@ public class GuiStats {
     public static final GuiStatBar attackSpeedNormalized = new GuiStatBar(0, 0, barLength, "tetra.stats.speed_normalized",
             -3, 3, false, true, false, attackSpeedGetterNormalized, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("tetra.stats.speed_normalized.tooltip", attackSpeedGetterNormalized));
-    public static final IStatGetter drawStrengthGetter = new StatGetterAttribute(TetraAttributes.drawStrength.get());
+
+    public static final IStatGetter powerGetter = new StatGetterEnchantmentLevel(Enchantments.POWER_ARROWS, 0.5, 0.5);
+    public static final IStatGetter drawStrengthGetter = sum(new StatGetterAttribute(TetraAttributes.drawStrength.get()), powerGetter);
     public static final GuiStatBar drawStrength = new GuiStatBar(0, 0, barLength, "tetra.stats.draw_strength",
             0, 40, false, drawStrengthGetter, LabelGetterBasic.singleDecimalLabel,
-            new TooltipGetterDrawStrength(drawStrengthGetter));
-    public static final IStatGetter drawSpeedGetter = new StatGetterAttribute(TetraAttributes.drawSpeed.get());
+            new TooltipGetterDrawStrength(drawStrengthGetter))
+            .setIndicators(
+                    new GuiStatIndicator(0, 0, "tetra.stats.power", 17, powerGetter,
+                            new TooltipGetterDecimalSingle("tetra.stats.power.tooltip", powerGetter)));
+
+    public static final IStatGetter quickChargeGetter = new StatGetterEnchantmentLevel(Enchantments.QUICK_CHARGE, -0.2);
+    public static final IStatGetter quickChargeGetterInverted = new StatGetterEnchantmentLevel(Enchantments.QUICK_CHARGE, 0.2);
+    public static final IStatGetter drawSpeedGetter = sum(new StatGetterAttribute(TetraAttributes.drawSpeed.get()), quickChargeGetter);
     public static final GuiStatBar drawSpeed = new GuiStatBar(0, 0, barLength, "tetra.stats.draw_speed",
             0, 10, false, false, true, drawSpeedGetter, LabelGetterBasic.decimalLabelInverted,
-            new TooltipGetterDecimal("tetra.stats.draw_speed.tooltip", drawSpeedGetter));
+            new TooltipGetterDecimal("tetra.stats.draw_speed.tooltip", drawSpeedGetter))
+            .setIndicators(
+                    new GuiStatIndicator(0, 0, "tetra.stats.quick_charge", 17, quickChargeGetterInverted,
+                            new TooltipGetterDecimalSingle("tetra.stats.quick_charge.tooltip", quickChargeGetterInverted)));
+
     public static final GuiStatBar drawSpeedNormalized = new GuiStatBar(0, 0, barLength, "tetra.stats.draw_speed_normalized",
             -4, 4, false, true, true,
             drawSpeedGetter, LabelGetterBasic.decimalLabelInverted,
-            new TooltipGetterDecimal("tetra.stats.draw_speed_normalized.tooltip", drawSpeedGetter));
+            new TooltipGetterDecimal("tetra.stats.draw_speed_normalized.tooltip", drawSpeedGetter))
+            .setIndicators(
+                    new GuiStatIndicator(0, 0, "tetra.stats.quick_charge", 17, quickChargeGetterInverted,
+                            new TooltipGetterDecimalSingle("tetra.stats.quick_charge.tooltip", quickChargeGetterInverted)));
     public static final IStatGetter abilityDamageGetter = new StatGetterAttribute(TetraAttributes.abilityDamage.get());
     public static final GuiStatBar abilityDamage = new GuiStatBar(0, 0, barLength, "tetra.stats.ability_damage",
             0, 40, false, abilityDamageGetter, LabelGetterBasic.decimalLabel,
@@ -204,7 +223,7 @@ public class GuiStats {
             new TooltipGetterArthropod());
     public static final IStatGetter unbreakingGetter = new StatGetterEnchantmentLevel(Enchantments.UNBREAKING, 1);
     public static final GuiStatBar unbreaking = new GuiStatBar(0, 0, barLength, "tetra.stats.unbreaking",
-            0, 20, true, unbreakingGetter, LabelGetterBasic.integerLabel,
+            0, 3, true, unbreakingGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterUnbreaking(unbreakingGetter));
     public static final IStatGetter mendingGetter = new StatGetterEnchantmentLevel(Enchantments.MENDING, 2);
     public static final GuiStatBar mending = new GuiStatBar(0, 0, barLength, "tetra.stats.mending",
@@ -266,7 +285,8 @@ public class GuiStats {
     public static final GuiStatBar overbowed = new GuiStatBar(0, 0, barLength, "tetra.stats.bow.overbowed",
             0, 10, false, overbowedGetter, LabelGetterBasic.singleDecimalLabel,
             new TooltipGetterDecimalSingle("tetra.stats.bow.overbowed.tooltip", overbowedGetter));
-    public static final IStatGetter multishotGetter = new StatGetterEffectLevel(ItemEffect.multishot, 1);
+    public static final IStatGetter multishotGetter = sum(new StatGetterEffectLevel(ItemEffect.multishot, 1),
+            new StatGetterEnchantmentLevel(Enchantments.MULTISHOT, 3));
     public static final GuiStatBar multishot = new GuiStatBar(0, 0, barLength, "tetra.stats.multishot",
             0, 12, true, multishotGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterMultishot());

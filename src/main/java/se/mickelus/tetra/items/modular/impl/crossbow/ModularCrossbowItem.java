@@ -27,6 +27,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -78,6 +80,8 @@ public class ModularCrossbowItem extends ModularItem {
     // todo: based on vanilla, uses bool in singleton to keep track of which sound to play. Would break if multiple entities use this simultaneously
     private boolean isLoadingStart = false;
     private boolean isLoadingMiddle = false;
+
+    public static double multishotDefaultSpread = 10;
 
     public ModularCrossbowItem() {
         super(new Properties().stacksTo(1).fireResistant());
@@ -245,11 +249,16 @@ public class ModularCrossbowItem extends ModularItem {
     protected void fireProjectiles(ItemStack itemStack, Level world, LivingEntity entity) {
         if (entity instanceof Player player && !world.isClientSide) {
             ItemStack advancementCopy = itemStack.copy();
-            int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot), 1);
+            int multishotEnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, itemStack) * 3;
+            int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot) + multishotEnchantLevel, 1);
             List<ItemStack> list = takeProjectiles(itemStack, count);
 
             if (!list.isEmpty()) {
                 double spread = getEffectEfficiency(itemStack, ItemEffect.multishot);
+
+                if (spread == 0 && multishotEnchantLevel > 0) {
+                    spread = multishotDefaultSpread;
+                }
 
                 for (int i = 0; i < list.size(); i++) {
                     ItemStack ammoStack = list.get(i);
@@ -310,7 +319,7 @@ public class ModularCrossbowItem extends ModularItem {
             }
 
 
-            int piercingLevel = getEffectLevel(crossbowStack, ItemEffect.piercing);
+            int piercingLevel = getEffectLevel(crossbowStack, ItemEffect.piercing) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, crossbowStack);
             if (piercingLevel > 0) {
                 projectile.setPierceLevel((byte) piercingLevel);
             }
@@ -325,7 +334,8 @@ public class ModularCrossbowItem extends ModularItem {
     }
 
     public int getReloadDuration(ItemStack itemStack) {
-        return Math.max((int) (20 * getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())), 1);
+        return Math.max((int) (20 * (getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())
+                - EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
     }
 
     /**
@@ -348,7 +358,7 @@ public class ModularCrossbowItem extends ModularItem {
     }
 
     private boolean reload(LivingEntity entity, ItemStack crossbowStack) {
-        int count = Math.max(getEffectLevel(crossbowStack, ItemEffect.multishot), 1);
+        int count = Math.max(getEffectLevel(crossbowStack, ItemEffect.multishot) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, crossbowStack) * 3, 1);
         boolean infinite = CastOptional.cast(entity, Player.class)
                 .map(player -> player.getAbilities().instabuild)
                 .orElse(false);
