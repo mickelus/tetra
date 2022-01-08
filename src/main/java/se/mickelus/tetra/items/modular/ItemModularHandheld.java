@@ -39,6 +39,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
@@ -294,6 +295,14 @@ public class ItemModularHandheld extends ModularItem {
                         applyUsageEffects(player, itemStack, 2);
                     }
                     return result;
+                }else if (ToolActions.SHOVEL_DIG.equals(tool) && CampfireBlock.isLitCampfire(blockState)) {
+                    world.levelEvent((Player)null, 1009, pos, 0);
+                    CampfireBlock.dowse(player, world, pos, blockState);
+                    BlockState temp = blockState.setValue(CampfireBlock.LIT, false);
+                    world.setBlock(pos, temp, 11);
+                    applyDamage(blockDestroyDamage, context.getItemInHand(), player);
+                    applyUsageEffects(player, itemStack, 2);
+                    return InteractionResult.sidedSuccess(world.isClientSide);
                 }
             }
 
