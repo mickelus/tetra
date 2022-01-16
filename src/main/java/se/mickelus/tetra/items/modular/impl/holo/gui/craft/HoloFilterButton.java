@@ -2,7 +2,8 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.glfw.GLFW;
 import se.mickelus.mutil.gui.GuiElement;
@@ -18,7 +19,7 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class HoloFilterButton extends GuiElement {
-    private final List<String> tooltip = Collections.singletonList(I18n.get("tetra.holo.craft.variants_filter"));
+    private final List<Component> tooltip;
     private final GuiString label;
     private final Consumer<String> onChange;
     private final GuiTexture icon;
@@ -36,6 +37,8 @@ public class HoloFilterButton extends GuiElement {
 
         label = new GuiString(11, 0, "");
         addChild(label);
+
+        tooltip = Collections.singletonList(new TranslatableComponent("tetra.holo.craft.variants_filter"));
     }
 
     @Override
@@ -49,7 +52,7 @@ public class HoloFilterButton extends GuiElement {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus()) {
             return tooltip;
         }

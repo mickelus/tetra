@@ -1,7 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiString;
@@ -13,13 +14,14 @@ import se.mickelus.tetra.gui.stats.sorting.StatSorters;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class HoloSortButton extends GuiElement {
-    private final List<String> tooltip = Collections.singletonList(I18n.get("tetra.holo.craft.variants_sort"));
+    private final List<Component> tooltip;
     private final GuiString label;
     private final GuiTexture icon;
     private final HoloSortPopover popover;
@@ -38,6 +40,8 @@ public class HoloSortButton extends GuiElement {
 
         popover = new HoloSortPopover(0, 11, this::onSelect);
         addChild(popover);
+
+        tooltip = Collections.singletonList(new TranslatableComponent("tetra.holo.craft.variants_sort"));
     }
 
     public void update(OutcomePreview[] previews) {
@@ -75,7 +79,7 @@ public class HoloSortButton extends GuiElement {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus() && !popover.isVisible()) {
             return tooltip;
         }

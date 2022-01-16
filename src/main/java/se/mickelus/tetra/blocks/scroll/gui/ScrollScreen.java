@@ -17,10 +17,8 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
@@ -64,6 +62,7 @@ public class ScrollScreen extends Screen {
         renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
 
+        gui.updateFocusState((width - gui.getWidth()) / 2, (height - gui.getHeight()) / 2, mouseX, mouseY);
         gui.draw(matrixStack, (width - gui.getWidth()) / 2, (height - gui.getHeight()) / 2,
                 width, height, mouseX, mouseY, 1);
 
@@ -71,15 +70,9 @@ public class ScrollScreen extends Screen {
     }
 
     protected void renderHoveredToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
-        List<String> tooltipLines = gui.getTooltipLines();
+        List<Component> tooltipLines = gui.getTooltipLines();
         if (tooltipLines != null) {
-            List<Component> textComponents = tooltipLines.stream()
-                    .map(line -> line.replace("\\n", "\n"))
-                    .flatMap(line -> Arrays.stream(line.split("\n")))
-                    .map(TextComponent::new)
-                    .collect(Collectors.toList());
-
-            renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, mouseY);
+            renderTooltip(matrixStack, tooltipLines, Optional.empty(), mouseX, mouseY);
         }
     }
 

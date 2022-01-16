@@ -3,6 +3,8 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
@@ -264,11 +266,11 @@ public class HoloVariantDetailGui extends GuiElement {
         }
 
         @Override
-        public List<String> getTooltipLines() {
+        public List<Component> getTooltipLines() {
             if (hasFocus()) {
-                List<String> tooltip = super.getTooltipLines();
+                List<Component> tooltip = super.getTooltipLines();
                 if (tooltip != null && tooltip.size() > 0) {
-                    return ImmutableList.of(I18n.get("tetra.holo.craft.material_requirement", tooltip.get(0)));
+                    return ImmutableList.of(new TranslatableComponent("tetra.holo.craft.material_requirement", tooltip.get(0)));
                 }
             }
             return null;

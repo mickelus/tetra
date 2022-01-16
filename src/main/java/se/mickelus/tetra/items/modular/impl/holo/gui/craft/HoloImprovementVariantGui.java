@@ -1,6 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -18,7 +20,7 @@ public class HoloImprovementVariantGui extends GuiClickable {
     private final OutcomePreview preview;
     private final Consumer<OutcomePreview> onVariantHover;
     private final Consumer<OutcomePreview> onVariantBlur;
-    private final List<String> tooltip;
+    private final List<Component> tooltip;
     private boolean isMuted;
 
     public HoloImprovementVariantGui(int x, int y, String name, int labelStart, OutcomePreview preview, boolean isConnected,
@@ -52,7 +54,7 @@ public class HoloImprovementVariantGui extends GuiClickable {
         label.setAttachmentPoint(GuiAttachment.topCenter);
         addChild(label);
 
-        tooltip = ImmutableList.of(name);
+        tooltip = ImmutableList.of(new TextComponent(name));
     }
 
     @Override
@@ -75,7 +77,7 @@ public class HoloImprovementVariantGui extends GuiClickable {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         return hasFocus() ? tooltip : null;
     }
 

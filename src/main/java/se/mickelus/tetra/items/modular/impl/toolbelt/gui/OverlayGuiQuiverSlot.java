@@ -128,7 +128,7 @@ public class OverlayGuiQuiverSlot extends GuiElement {
     }
 
     @Override
-    protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
+    public void updateFocusState(int refX, int refY, int mouseX, int mouseY) {
         mouseX -= refX + x;
         mouseY -= refY + y;
         boolean gainFocus = mouseX + mouseY >= 12 // NW

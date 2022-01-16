@@ -21,10 +21,8 @@ import se.mickelus.tetra.items.modular.impl.holo.gui.system.HoloSystemRootGui;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
@@ -131,6 +129,7 @@ public class HoloGui extends Screen {
         renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
 
+        defaultGui.updateFocusState((width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2, mouseX, mouseY);
         defaultGui.draw(matrixStack, (width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2,
                 width, height, mouseX, mouseY, 1);
 
@@ -138,15 +137,9 @@ public class HoloGui extends Screen {
     }
 
     protected void renderHoveredToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
-        List<String> tooltipLines = defaultGui.getTooltipLines();
+        List<Component> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
-            List<Component> textComponents = tooltipLines.stream()
-                    .map(line -> line.replace("\\n", "\n"))
-                    .flatMap(line -> Arrays.stream(line.split("\n")))
-                    .map(TextComponent::new)
-                    .collect(Collectors.toList());
-
-            renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, mouseY);
+            renderTooltip(matrixStack, tooltipLines, Optional.empty(), mouseX, mouseY);
         }
     }
 

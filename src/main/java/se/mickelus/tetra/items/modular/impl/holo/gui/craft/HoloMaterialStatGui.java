@@ -2,6 +2,8 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -22,7 +24,7 @@ public class HoloMaterialStatGui extends GuiElement {
     protected ILabelGetter valueFormatter;
     protected Function<MaterialData, Float> getter;
 
-    List<String> tooltip;
+    List<Component> tooltip;
 
     public HoloMaterialStatGui(int x, int y, String key, ILabelGetter valueFormatter, Function<MaterialData, Float> getter) {
         super(x, y, 29, 29);
@@ -30,7 +32,7 @@ public class HoloMaterialStatGui extends GuiElement {
         this.valueFormatter = valueFormatter;
         this.getter = getter;
 
-        tooltip = ImmutableList.of(I18n.get("tetra.holo.craft.materials.stat." + key + ".tooltip"));
+        tooltip = ImmutableList.of(new TranslatableComponent("tetra.holo.craft.materials.stat." + key + ".tooltip"));
 
         backdrop = new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench);
         backdrop.setColor(0x222222);
@@ -58,7 +60,7 @@ public class HoloMaterialStatGui extends GuiElement {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         return hasFocus() ? tooltip : null;
     }
 }

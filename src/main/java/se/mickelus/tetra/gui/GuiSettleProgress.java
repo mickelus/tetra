@@ -2,6 +2,8 @@ package se.mickelus.tetra.gui;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
@@ -21,7 +23,7 @@ public class GuiSettleProgress extends GuiElement {
     protected GuiString valueString;
     protected GuiBar bar;
 
-    protected List<String> tooltip;
+    protected List<Component> tooltip;
 
     public GuiSettleProgress(int x, int y, int barLength) {
         super(x, y, barLength, 12);
@@ -52,7 +54,7 @@ public class GuiSettleProgress extends GuiElement {
         if (isArrested) {
             labelString.setString(ChatFormatting.RED + I18n.get("tetra.improvement.arrested.name"));
             labelString.setAttachment(GuiAttachment.topCenter);
-            tooltip = Collections.singletonList(I18n.get("tetra.improvement.arrested.description"));
+            tooltip = Collections.singletonList(new TranslatableComponent("tetra.improvement.arrested.description"));
 
             valueString.setString("");
             bar.setValue(0, 0);
@@ -61,9 +63,9 @@ public class GuiSettleProgress extends GuiElement {
             labelString.setAttachment(GuiAttachment.topCenter);
 
             if (isGain) {
-                tooltip = Collections.singletonList(I18n.get("item.tetra.modular.settle_full_gain.description"));
+                tooltip = Collections.singletonList(new TranslatableComponent("item.tetra.modular.settle_full_gain.description"));
             } else {
-                tooltip = Collections.singletonList(I18n.get("item.tetra.modular.settle_full_cost.description"));
+                tooltip = Collections.singletonList(new TranslatableComponent("item.tetra.modular.settle_full_cost.description"));
             }
 
             valueString.setString("");
@@ -71,7 +73,7 @@ public class GuiSettleProgress extends GuiElement {
         } else if (settleMaxCount == 0) {
             labelString.setString(I18n.get("item.tetra.modular.settle_full_null.label"));
             labelString.setAttachment(GuiAttachment.topCenter);
-            tooltip = Collections.singletonList(I18n.get("item.tetra.modular.settle_full_null.description"));
+            tooltip = Collections.singletonList(new TranslatableComponent("item.tetra.modular.settle_full_null.description"));
 
             valueString.setString("");
             bar.setValue(1f, 1f);
@@ -81,17 +83,17 @@ public class GuiSettleProgress extends GuiElement {
 
             labelString.setString(I18n.get("item.tetra.modular.settle_progress.label"));
             labelString.setAttachment(GuiAttachment.topLeft);
-            tooltip = Collections.singletonList(I18n.get(isGain ? "item.tetra.modular.settle_progress_gain.description" : "item.tetra.modular.settle_progress_cost.description",
+            tooltip = Collections.singletonList(new TranslatableComponent(isGain ? "item.tetra.modular.settle_progress_gain.description" : "item.tetra.modular.settle_progress_cost.description",
                     limit - value /*String.format("%.0f", (100f * progress))*/, limit, ConfigHandler.settleLimitBase.get(), (int) durabilityPenalty));
 
             valueString.setString(String.format("%.0f%%", (100f * progress)));
 
-            bar.setValue((1f * progress), (1f * progress));
+            bar.setValue(progress, progress);
         }
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus()) {
             return tooltip;
         }

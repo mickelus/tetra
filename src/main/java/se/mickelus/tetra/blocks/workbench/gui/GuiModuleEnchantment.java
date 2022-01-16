@@ -1,19 +1,20 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.enchantment.Enchantment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiRect;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public class GuiModuleEnchantment extends GuiElement {
 
-    private final List<String> tooltipLines;
+    private final List<Component> tooltipLines;
 
     private Runnable hoverHandler;
     private Runnable blurHandler;
@@ -26,25 +27,21 @@ public class GuiModuleEnchantment extends GuiElement {
         tooltipLines = new ArrayList<>();
 
         if (level < 0) {
-            tooltipLines.add(ChatFormatting.DARK_RED + "-" + TetraEnchantmentHelper.getEnchantmentName(enchantment, 0));
+            tooltipLines.add(new TextComponent("-").append(TetraEnchantmentHelper.getEnchantmentName(enchantment, 0)).withStyle(ChatFormatting.DARK_RED));
         } else {
-            tooltipLines.add(TetraEnchantmentHelper.getEnchantmentName(enchantment, level));
+            tooltipLines.add(new TextComponent(TetraEnchantmentHelper.getEnchantmentName(enchantment, level)));
         }
 
         Optional.ofNullable(TetraEnchantmentHelper.getEnchantmentDescription(enchantment))
-                .map(description -> description.split("\\\\n"))
-                .stream()
-                .flatMap(Arrays::stream)
-                .map(line -> line.replace(ChatFormatting.RESET.toString(), ChatFormatting.DARK_GRAY.toString()))
-                .map(line -> ChatFormatting.DARK_GRAY + line)
-                .forEachOrdered(tooltipLines::add);
+                .map(description -> new TextComponent(description).withStyle(ChatFormatting.DARK_GRAY))
+                .ifPresent(tooltipLines::add);
 
         this.hoverHandler = hoverHandler;
         this.blurHandler = blurHandler;
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus()) {
             return tooltipLines;
         }

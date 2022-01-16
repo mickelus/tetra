@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiString;
@@ -18,12 +19,12 @@ import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 public class GuiSlotEffect extends GuiElement {
-    String tooltip;
+    private List<Component> tooltip;
 
     public GuiSlotEffect(int x, int y, SlotType slotType, ItemEffect effect) {
         super(x, y, 8, 8);
 
-        tooltip = I18n.get(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType, effect.getKey()));
+        tooltip = Collections.singletonList(new TranslatableComponent(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType, effect.getKey())));
 
         if (ItemEffect.quickAccess.equals(effect)) {
             addChild(new GuiTexture(0, 0, 8, 8, 0, 64, GuiTextures.toolbelt).setColor(0xbbbbbb));
@@ -63,14 +64,9 @@ public class GuiSlotEffect extends GuiElement {
     }
 
     @Override
-    protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
-        super.calculateFocusState(refX, refY, mouseX, mouseY);
-    }
-
-    @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus()) {
-            return Collections.singletonList(tooltip);
+            return tooltip;
         }
         return super.getTooltipLines();
     }

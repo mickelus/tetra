@@ -1,6 +1,7 @@
 package se.mickelus.tetra.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiItem;
@@ -46,7 +47,7 @@ public class GuiItemRolling extends GuiElement {
         }
     }
 
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (showTooltip && items.length > 0) {
             int offset = (int) (System.currentTimeMillis() / 1000) % items.length;
             return items[offset].getTooltipLines();

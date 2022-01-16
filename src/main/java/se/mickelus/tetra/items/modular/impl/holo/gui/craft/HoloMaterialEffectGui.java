@@ -3,6 +3,8 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -17,14 +19,14 @@ public class HoloMaterialEffectGui extends GuiElement {
     protected GuiString label;
     protected GuiString value;
 
-    List<String> tooltip;
+    List<Component> tooltip;
 
     public HoloMaterialEffectGui(int x, int y, String key, boolean current, boolean preview) {
         super(x, y, 29, 29);
 
         tooltip = ImmutableList.of(
-                I18n.get("tetra.holo.craft.materials.stat_effect.tooltip", I18n.get("tetra.stats." + key)),
-                ChatFormatting.GRAY + I18n.get("tetra.stats." + key + ".tooltip_short"));
+                new TranslatableComponent("tetra.holo.craft.materials.stat_effect.tooltip", I18n.get("tetra.stats." + key)),
+                new TranslatableComponent("tetra.stats." + key + ".tooltip_short").withStyle(ChatFormatting.GRAY));
 
         backdrop = new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench);
         backdrop.setColor(0x222222);
@@ -45,7 +47,7 @@ public class HoloMaterialEffectGui extends GuiElement {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         return hasFocus() ? tooltip : null;
     }
 }

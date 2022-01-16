@@ -4,7 +4,6 @@ import se.mickelus.tetra.gui.stats.getter.LabelGetterBasic;
 import se.mickelus.tetra.module.data.MaterialData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class HoloMaterialIntegrityStatGui extends HoloMaterialStatGui {
@@ -19,10 +18,5 @@ public class HoloMaterialIntegrityStatGui extends HoloMaterialStatGui {
         String cost = valueFormatter.getLabelMerged(current.integrityCost, preview.integrityCost);
 
         value.setString(gain + " " + cost);
-    }
-
-    @Override
-    public List<String> getTooltipLines() {
-        return hasFocus() ? tooltip : null;
     }
 }

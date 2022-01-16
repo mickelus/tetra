@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiStringOutline;
@@ -20,7 +21,7 @@ public class GuiExperience extends GuiElement {
     private final GuiString levelString;
 
     private final String unlocalizedTooltip;
-    private List<String> formattedTooltip;
+    private List<Component> formattedTooltip;
 
     public GuiExperience(int x, int y) {
         this(x, y, null);
@@ -45,12 +46,12 @@ public class GuiExperience extends GuiElement {
         levelString.setColor(positive ? positiveColor : negativeColor);
 
         if (unlocalizedTooltip != null) {
-            formattedTooltip = Collections.singletonList(I18n.get(unlocalizedTooltip, level));
+            formattedTooltip = Collections.singletonList(new TranslatableComponent(unlocalizedTooltip, level));
         }
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (formattedTooltip != null && hasFocus()) {
             return formattedTooltip;
         }

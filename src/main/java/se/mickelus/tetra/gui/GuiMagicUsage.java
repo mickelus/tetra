@@ -3,6 +3,9 @@ package se.mickelus.tetra.gui;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
@@ -22,8 +25,8 @@ public class GuiMagicUsage extends GuiElement {
     protected GuiString valueString;
     protected GuiBar bar;
 
-    protected List<String> tooltip;
-    protected List<String> tooltipExtended;
+    protected List<Component> tooltip;
+    protected List<Component> tooltipExtended;
 
     public GuiMagicUsage(int x, int y, int barLength) {
         super(x, y, barLength, 12);
@@ -81,15 +84,15 @@ public class GuiMagicUsage extends GuiElement {
             bar.setMax(Math.max(max + diffMax, max));
 
             tooltip = Arrays.asList(
-                    I18n.get("item.tetra.modular.magic_capacity.description", max, value + diffValue, xpCost, risk),
-                    " ",
-                    Tooltips.expand.getString());
+                    new TranslatableComponent("item.tetra.modular.magic_capacity.description", max, value + diffValue, xpCost, risk),
+                    new TextComponent(""),
+                    Tooltips.expand);
 
             tooltipExtended = Arrays.asList(
-                    I18n.get("item.tetra.modular.magic_capacity.description", max, value + diffValue, xpCost, risk),
-                    " ",
-                    Tooltips.expanded.getString(),
-                    I18n.get("item.tetra.modular.magic_capacity.description_extended"));
+                    new TranslatableComponent("item.tetra.modular.magic_capacity.description", max, value + diffValue, xpCost, risk),
+                    new TextComponent(""),
+                    Tooltips.expanded,
+                    new TranslatableComponent("item.tetra.modular.magic_capacity.description_extended"));
 
             if (diffMax != 0) {
                 bar.setValue(max, max + diffMax);
@@ -111,15 +114,15 @@ public class GuiMagicUsage extends GuiElement {
             int xpCost = getExperienceCost(itemStack, slot);
 
             tooltip = Arrays.asList(
-                    I18n.get("item.tetra.modular.magic_capacity.description", max, value, xpCost, risk),
-                    " ",
-                    Tooltips.expand.getString());
+                    new TranslatableComponent("item.tetra.modular.magic_capacity.description", max, value, xpCost, risk),
+                    new TextComponent(""),
+                    Tooltips.expand);
 
             tooltipExtended = Arrays.asList(
-                    I18n.get("item.tetra.modular.magic_capacity.description", max, value, xpCost, risk),
-                    " ",
-                    Tooltips.expanded.getString(),
-                    I18n.get("item.tetra.modular.magic_capacity.description_extended"));
+                    new TranslatableComponent("item.tetra.modular.magic_capacity.description", max, value, xpCost, risk),
+                    new TextComponent(""),
+                    Tooltips.expanded,
+                    new TranslatableComponent("item.tetra.modular.magic_capacity.description_extended"));
             valueString.setString(String.format("%d/%d", max - value, max));
 
             bar.setMax(max);
@@ -136,7 +139,7 @@ public class GuiMagicUsage extends GuiElement {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus()) {
             if (Screen.hasShiftDown()) {
                 return tooltipExtended;

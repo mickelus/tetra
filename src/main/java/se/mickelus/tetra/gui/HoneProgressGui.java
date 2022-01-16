@@ -1,8 +1,12 @@
 package se.mickelus.tetra.gui;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiAttachment;
@@ -18,7 +22,6 @@ import se.mickelus.tetra.gui.stats.bar.GuiBar;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Collections;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
@@ -27,8 +30,8 @@ public class HoneProgressGui extends GuiElement {
     protected GuiString valueString;
     protected GuiBar bar;
 
-    protected List<String> tooltip;
-    protected List<String> extendedTooltip;
+    protected List<Component> tooltip;
+    protected List<Component> extendedTooltip;
 
     public HoneProgressGui(int x, int y) {
         super(x, y, 45, 12);
@@ -68,9 +71,9 @@ public class HoneProgressGui extends GuiElement {
                 tooltipBase += I18n.get("item.tetra.modular.hone_progress.description_workable", String.format("%.0f%%", workableFactor));
             }
 
-            tooltip = Collections.singletonList(tooltipBase + "\n \n" + Tooltips.expand.getString());
-            extendedTooltip = Collections.singletonList(tooltipBase + "\n \n" + Tooltips.expanded.getString()
-                    + "\n" + ChatFormatting.GRAY + I18n.get("item.tetra.modular.hone_progress.description_extended"));
+            tooltip = ImmutableList.of(new TranslatableComponent(tooltipBase), new TextComponent(""), Tooltips.expand);
+            extendedTooltip = ImmutableList.of(new TranslatableComponent(tooltipBase), new TextComponent(""), Tooltips.expanded,
+                    new TextComponent(""), new TranslatableComponent("item.tetra.modular.hone_progress.description_extended").withStyle(ChatFormatting.GRAY));
 
             valueString.setString(factorString);
 
@@ -98,7 +101,7 @@ public class HoneProgressGui extends GuiElement {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus()) {
             if (Screen.hasShiftDown()) {
                 return extendedTooltip;

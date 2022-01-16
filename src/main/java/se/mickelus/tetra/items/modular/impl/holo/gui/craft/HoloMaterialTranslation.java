@@ -1,9 +1,11 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.common.ToolAction;
@@ -17,28 +19,33 @@ import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 public class HoloMaterialTranslation extends GuiElement {
-    private final List<String> emptyTooltipImprovement = Collections.singletonList(I18n.get("tetra.holo.craft.empty_translation_improvement"));
-    private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_translation_module"));
+    private final List<Component> emptyTooltipImprovement;
+    private final List<Component> emptyTooltip;
     private final GuiTexture icon;
-    private List<String> tooltip;
+    private List<Component> tooltip;
 
     public HoloMaterialTranslation(int x, int y) {
         super(x, y, 9, 9);
 
         icon = new GuiTexture(0, 0, 9, 9, 224, 0, GuiTextures.workbench);
         addChild(icon);
+
+        emptyTooltipImprovement = Collections.singletonList(new TranslatableComponent("tetra.holo.craft.empty_translation_improvement"));
+        emptyTooltip = Collections.singletonList(new TranslatableComponent("tetra.holo.craft.empty_translation_module"));
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus()) {
             return tooltip;
         }
@@ -61,7 +68,7 @@ public class HoloMaterialTranslation extends GuiElement {
             extractEffects(translation.secondaryEffects, secondary);
             extractEffects(translation.tertiaryEffects, tertiary);
 
-            ImmutableList.Builder<String> result = new ImmutableList.Builder<>();
+            List<String> result = new LinkedList<>();
 
             if (schematic.getType() == SchematicType.improvement) {
                 result.add(I18n.get("tetra.holo.craft.translation_improvement"));
@@ -99,7 +106,9 @@ public class HoloMaterialTranslation extends GuiElement {
                 result.addAll(tertiary);
             }
 
-            tooltip = result.build();
+            tooltip = result.stream()
+                    .map(TextComponent::new)
+                    .collect(Collectors.toList());
         } else {
             if (schematic.getType() == SchematicType.improvement) {
                 tooltip = emptyTooltipImprovement;
@@ -113,7 +122,7 @@ public class HoloMaterialTranslation extends GuiElement {
         return getStatLine(unlocalizedStat, value, null);
     }
 
-    private String getStatLine(String unlocalizedStat, int value, String unlocalizedSuffix) {
+    private String getStatLine(String unlocalizedStat, int value, @Nullable String unlocalizedSuffix) {
         if (I18n.exists(unlocalizedStat)) {
             StringBuilder line = new StringBuilder(ChatFormatting.GRAY.toString());
 
@@ -185,7 +194,7 @@ public class HoloMaterialTranslation extends GuiElement {
         return null;
     }
 
-    private void extractTools(ToolData tools, ImmutableList.Builder<String> result) {
+    private void extractTools(ToolData tools, List<String> result) {
         if (tools != null) {
             result.add("");
             tools.getValues().stream()

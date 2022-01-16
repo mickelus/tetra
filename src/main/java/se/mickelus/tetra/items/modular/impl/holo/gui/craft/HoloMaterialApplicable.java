@@ -1,11 +1,12 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -23,17 +24,14 @@ import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 public class HoloMaterialApplicable extends GuiElement {
-    private final List<String> emptyTooltip = Collections.singletonList(I18n.get("tetra.holo.craft.empty_applicable_materials"));
+    private final List<Component> emptyTooltip;
     private final GuiTexture icon;
-    private List<String> tooltip;
+    private List<Component> tooltip;
     private IModularItem item;
     private String slot;
     private UpgradeSchematic schematic;
@@ -43,10 +41,12 @@ public class HoloMaterialApplicable extends GuiElement {
 
         icon = new GuiTexture(0, 0, 9, 9, 215, 0, GuiTextures.workbench);
         addChild(icon);
+
+        emptyTooltip = Collections.singletonList(new TranslatableComponent("tetra.holo.craft.empty_applicable_materials"));
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus()) {
             return tooltip;
         }
@@ -58,7 +58,7 @@ public class HoloMaterialApplicable extends GuiElement {
         this.slot = null;
         this.schematic = null;
 
-        ImmutableList.Builder<String> tooltipBuilder = new ImmutableList.Builder<>();
+        tooltip = new ArrayList<>();
 
         String[] materials = schematic.getApplicableMaterials();
         if (materials != null && materials.length > 0) {
@@ -76,25 +76,23 @@ public class HoloMaterialApplicable extends GuiElement {
                     })
                     .collect(Collectors.joining(", "));
 
-            tooltipBuilder.add(I18n.get("tetra.holo.craft.applicable_materials"), ChatFormatting.GRAY + materialsString);
-
-            tooltipBuilder.add(" ");
+            tooltip.add(new TranslatableComponent("tetra.holo.craft.applicable_materials"));
+            tooltip.add(new TextComponent(materialsString).withStyle(ChatFormatting.GRAY));
+            tooltip.add(new TextComponent(""));
 
             if ((schematic.getType() != SchematicType.major && schematic.getType() != SchematicType.minor)
                     || schematic.getRarity() != SchematicRarity.basic) {
-                tooltipBuilder.add(I18n.get("tetra.holo.craft.holosphere_shortcut_disabled"));
-                tooltipBuilder.add(ChatFormatting.DARK_GRAY + I18n.get("tetra.holo.craft.holosphere_shortcut_unavailable"));
+                tooltip.add(new TranslatableComponent("tetra.holo.craft.holosphere_shortcut_disabled"));
+                tooltip.add(new TranslatableComponent("tetra.holo.craft.holosphere_shortcut_unavailable").withStyle(ChatFormatting.DARK_GRAY));
             } else if (ModularHolosphereItem.findHolosphere(playerEntity).isEmpty() || !(itemStack.getItem() instanceof IModularItem)) {
-                tooltipBuilder.add(I18n.get("tetra.holo.craft.holosphere_shortcut_disabled"));
-                tooltipBuilder.add(ChatFormatting.DARK_GRAY + I18n.get("tetra.holo.craft.holosphere_shortcut_missing"));
+                tooltip.add(new TranslatableComponent("tetra.holo.craft.holosphere_shortcut_disabled"));
+                tooltip.add(new TranslatableComponent("tetra.holo.craft.holosphere_shortcut_missing").withStyle(ChatFormatting.DARK_GRAY));
             } else {
-                tooltipBuilder.add(I18n.get("tetra.holo.craft.holosphere_shortcut"));
+                tooltip.add(new TranslatableComponent("tetra.holo.craft.holosphere_shortcut"));
                 this.item = (IModularItem) itemStack.getItem();
                 this.slot = slot;
                 this.schematic = schematic;
             }
-
-            tooltip = tooltipBuilder.build();
         } else {
             tooltip = emptyTooltip;
         }

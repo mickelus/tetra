@@ -3,6 +3,8 @@ package se.mickelus.tetra.gui.stats.bar;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,6 +20,7 @@ import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -38,8 +41,8 @@ public class GuiStatBar extends GuiStatBase {
     protected GuiHorizontalLayoutGroup indicatorGroup;
     protected GuiStatIndicator[] indicators = new GuiStatIndicator[0];
 
-    protected List<String> tooltip;
-    protected List<String> extendedTooltip;
+    protected List<Component> tooltip;
+    protected List<Component> extendedTooltip;
 
     protected GuiAlignment alignment = GuiAlignment.left;
 
@@ -112,7 +115,7 @@ public class GuiStatBar extends GuiStatBase {
     }
 
     @Override
-    public void update(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
+    public void update(Player player, ItemStack currentStack, ItemStack previewStack, @Nullable String slot, @Nullable String improvement) {
         double value;
         double diffValue;
 
@@ -125,8 +128,8 @@ public class GuiStatBar extends GuiStatBase {
             value = statGetter.getValue(player, currentStack);
             diffValue = statGetter.getValue(player, previewStack);
 
-            tooltip = Collections.singletonList(getCombinedTooltip(player, previewStack));
-            extendedTooltip = Collections.singletonList(getCombinedTooltipExtended(player, previewStack));
+            tooltip = Collections.singletonList(new TextComponent(getCombinedTooltip(player, previewStack)));
+            extendedTooltip = Collections.singletonList(new TextComponent(getCombinedTooltipExtended(player, previewStack)));
         } else {
             value = statGetter.getValue(player, currentStack);
 
@@ -137,8 +140,8 @@ public class GuiStatBar extends GuiStatBase {
                 diffValue = value;
             }
 
-            tooltip = Collections.singletonList(getCombinedTooltip(player, currentStack));
-            extendedTooltip = Collections.singletonList(getCombinedTooltipExtended(player, currentStack));
+            tooltip = Collections.singletonList(new TextComponent(getCombinedTooltip(player, currentStack)));
+            extendedTooltip = Collections.singletonList(new TextComponent(getCombinedTooltipExtended(player, currentStack)));
         }
 
         updateValue(value, diffValue);
@@ -161,7 +164,7 @@ public class GuiStatBar extends GuiStatBase {
         return statGetter.shouldShow(player, currentStack, previewStack);
     }
 
-    protected double getSlotValue(Player player, ItemStack itemStack, String slot, String improvement) {
+    protected double getSlotValue(Player player, ItemStack itemStack, @Nullable String slot, @Nullable String improvement) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> {
                     if (improvement != null) {
@@ -183,7 +186,7 @@ public class GuiStatBar extends GuiStatBase {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus()) {
             if (Screen.hasShiftDown()) {
                 return extendedTooltip;

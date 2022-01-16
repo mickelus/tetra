@@ -1,6 +1,8 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiString;
@@ -19,7 +21,7 @@ public class GuiTweakSlider extends GuiElement {
     private final GuiString labelString;
     private final GuiSliderSegmented slider;
 
-    private final List<String> tooltip;
+    private final List<Component> tooltip;
 
     private final int steps;
 
@@ -39,7 +41,7 @@ public class GuiTweakSlider extends GuiElement {
 
         steps = tweak.steps;
 
-        tooltip = Collections.singletonList(I18n.get("tetra.tweak." + tweak.key + ".tooltip"));
+        tooltip = Collections.singletonList(new TranslatableComponent("tetra.tweak." + tweak.key + ".tooltip"));
     }
 
     public void setValue(int value) {
@@ -47,7 +49,7 @@ public class GuiTweakSlider extends GuiElement {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (labelString.hasFocus()) {
             return tooltip;
         }

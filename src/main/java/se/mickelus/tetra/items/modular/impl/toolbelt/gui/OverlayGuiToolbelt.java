@@ -62,6 +62,7 @@ public class OverlayGuiToolbelt extends GuiRoot {
             int mouseX = (int) (mc.mouseHandler.xpos() * window.getGuiScaledWidth() / window.getScreenWidth());
             int mouseY = (int) (mc.mouseHandler.ypos() * window.getGuiScaledHeight() / window.getScreenHeight());
 
+            this.updateFocusState(width / 2, height / 2, mouseX, mouseY);
             this.drawChildren(new PoseStack(), width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
         }
     }

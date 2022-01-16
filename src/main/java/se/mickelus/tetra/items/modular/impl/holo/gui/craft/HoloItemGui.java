@@ -162,20 +162,27 @@ public class HoloItemGui extends GuiClickable {
     }
 
     @Override
-    protected void calculateFocusState(int refX, int refY, int mouseX, int mouseY) {
-        mouseX -= refX + x;
-        mouseY -= refY + y;
-        boolean gainFocus = mouseX + mouseY >= 44;
+    public void updateFocusState(int refX, int refY, int mouseX, int mouseY) {
+        this.elements.stream()
+                .filter(GuiElement::isVisible)
+                .forEach((element) -> element.updateFocusState(
+                        refX + this.x + getXOffset(this, element.getAttachmentAnchor()) - getXOffset(element, element.getAttachmentPoint()),
+                        refY + this.y + getYOffset(this, element.getAttachmentAnchor()) - getYOffset(element, element.getAttachmentPoint()),
+                        mouseX, mouseY));
 
-        if (mouseX + mouseY > 84) {
+        int offsetMouseX = mouseX - refX - x;
+        int offsetMouseY = mouseY - refY - y;
+        boolean gainFocus = offsetMouseX + offsetMouseY >= 44;
+
+        if (offsetMouseX + offsetMouseY > 84) {
             gainFocus = false;
         }
 
-        if (mouseX - mouseY > 16) {
+        if (offsetMouseX - offsetMouseY > 16) {
             gainFocus = false;
         }
 
-        if (mouseY - mouseX > 19) {
+        if (offsetMouseY - offsetMouseX > 19) {
             gainFocus = false;
         }
 

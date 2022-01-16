@@ -7,7 +7,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
@@ -33,7 +32,6 @@ import se.mickelus.tetra.properties.PropertyHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
@@ -131,6 +129,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        defaultGui.updateFocusState(this.leftPos, this.topPos, mouseX, mouseY);
         defaultGui.draw(matrixStack, this.leftPos, this.topPos, width, height, mouseX, mouseY, 1);
     }
 
@@ -143,16 +142,10 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
     protected void renderTooltip(PoseStack matrixStack, int mouseX, int mouseY) {
         super.renderTooltip(matrixStack, mouseX, mouseY);
 
-        List<String> tooltipLines = defaultGui.getTooltipLines();
+        List<Component> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
-            List<Component> textComponents = tooltipLines.stream()
-                    .map(line -> line.replace("\\n", "\n"))
-                    .flatMap(line -> Arrays.stream(line.split("\n")))
-                    .map(TextComponent::new)
-                    .collect(Collectors.toList());
-
             // Math.max magic to stop tooltip from rendering outside screen
-            renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, Math.max(mouseY, 14));
+            renderTooltip(matrixStack, tooltipLines, Optional.empty(), mouseX, Math.max(mouseY, 14));
         }
 
         updateMaterialHoverPreview();

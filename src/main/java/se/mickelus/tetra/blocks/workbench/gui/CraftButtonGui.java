@@ -2,6 +2,9 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
@@ -26,7 +29,7 @@ public class CraftButtonGui extends GuiClickable {
     private final GuiTexture backdrop;
 
     private boolean enabled = true;
-    private String tooltip;
+    private List<Component> tooltip;
 
     private int labelColor = GuiColors.normal;
     private int backdropColor = GuiColors.normal;
@@ -52,7 +55,7 @@ public class CraftButtonGui extends GuiClickable {
     public void update(UpgradeSchematic schematic, Player player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
             Map<ToolAction, Integer> availableTools) {
         enabled = schematic.canApplyUpgrade(player, itemStack, materials, slot, availableTools);
-        tooltip = null;
+        tooltip = new ArrayList<>();
 
         if (enabled) {
             labelColor = GuiColors.normal;
@@ -64,8 +67,10 @@ public class CraftButtonGui extends GuiClickable {
 
                 if (!destabilizationChance.isEmpty()) {
                     backdropColor = GuiColors.destabilized;
-                    tooltip = ChatFormatting.GRAY + I18n.get("tetra.workbench.schematic_detail.destabilize_tooltip") + "\n";
-                    tooltip += String.join("\n", destabilizationChance);
+                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.destabilize_tooltip").withStyle(ChatFormatting.GRAY));
+                    destabilizationChance.stream()
+                            .map(TextComponent::new)
+                            .forEach(tooltip::add);
                 }
             } else {
                 boolean willRepair = CastOptional.cast(itemStack.getItem(), IModularItem.class)
@@ -74,7 +79,7 @@ public class CraftButtonGui extends GuiClickable {
                         .orElse(false);
 
                 if (willRepair) {
-                    tooltip = I18n.get("tetra.workbench.schematic_detail.repair_tooltip");
+                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.repair_tooltip"));
                 }
             }
 
@@ -82,25 +87,24 @@ public class CraftButtonGui extends GuiClickable {
             labelColor = GuiColors.muted;
             backdropColor = GuiColors.negative;
 
-            tooltip = "";
             if (!schematic.isMaterialsValid(itemStack, slot, materials)) {
                 if (hasEmptyMaterial(schematic, materials)) {
-                    tooltip += I18n.get("tetra.workbench.schematic_detail.no_material_tooltip");
+                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.no_material_tooltip"));
                     backdropColor = GuiColors.muted;
                 } else if (hasInsufficientQuantities(schematic, itemStack, slot, materials)) {
-                    tooltip += I18n.get("tetra.workbench.schematic_detail.material_count_tooltip");
+                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.material_count_tooltip"));
                 } else {
-                    tooltip += I18n.get("tetra.workbench.schematic_detail.material_tooltip");
+                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.material_tooltip"));
                 }
             } else {
                 if (schematic.isIntegrityViolation(player, itemStack, materials, slot)) {
-                    tooltip += I18n.get("tetra.workbench.schematic_detail.integrity_tooltip");
+                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.integrity_tooltip"));
                 }
                 if (!schematic.checkTools(itemStack, materials, availableTools)) {
-                    tooltip += I18n.get("tetra.workbench.schematic_detail.tools_tooltip");
+                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.tools_tooltip"));
                 }
                 if (!player.isCreative() && player.experienceLevel < schematic.getExperienceCost(itemStack, materials, slot)) {
-                    tooltip += I18n.get("tetra.workbench.schematic_detail.level_tooltip");
+                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.level_tooltip"));
                 }
             }
         }
@@ -164,9 +168,9 @@ public class CraftButtonGui extends GuiClickable {
     }
 
     @Override
-    public List<String> getTooltipLines() {
-        if (tooltip != null && hasFocus()) {
-            return Collections.singletonList(tooltip);
+    public List<Component> getTooltipLines() {
+        if (hasFocus()) {
+            return tooltip;
         }
         return null;
     }

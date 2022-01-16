@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["sword/blade"],
+    "slots": [ "sword/blade" ],
     "type": "tetra:basic_major_module",
     "improvements": [
         "tetra:sword/machete/",

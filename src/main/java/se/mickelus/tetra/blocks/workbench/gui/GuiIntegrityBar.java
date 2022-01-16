@@ -3,6 +3,8 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
@@ -27,7 +29,7 @@ public class GuiIntegrityBar extends GuiElement {
     private static final int overuseColor = 0x88ff5555;
     private static final float overuseOpacity = 0.55f;
     private final GuiString label;
-    private final List<String> tooltip;
+    private final List<Component> tooltip;
     private int segmentWidth = 8;
     private int integrityGain;
     private int integrityCost;
@@ -41,7 +43,7 @@ public class GuiIntegrityBar extends GuiElement {
 
         setAttachmentPoint(GuiAttachment.topCenter);
 
-        tooltip = Collections.singletonList(I18n.get("tetra.stats.integrity_usage.tooltip"));
+        tooltip = Collections.singletonList(new TranslatableComponent("tetra.stats.integrity_usage.tooltip"));
     }
 
     public void setItemStack(ItemStack itemStack, ItemStack previewStack) {
@@ -82,7 +84,7 @@ public class GuiIntegrityBar extends GuiElement {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (hasFocus()) {
             return tooltip;
         }

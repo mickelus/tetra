@@ -3,7 +3,6 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -19,10 +18,8 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.OverlayToolbelt;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
@@ -95,8 +92,6 @@ public class ToolbeltGui extends AbstractContainerScreen<ToolbeltContainer> {
         this.renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         renderTooltip(matrixStack, mouseX, mouseY);
-
-        renderLabels(matrixStack, mouseX, mouseY);
     }
 
     @Override
@@ -105,23 +100,19 @@ public class ToolbeltGui extends AbstractContainerScreen<ToolbeltContainer> {
         int y = (height - imageHeight) / 2;
 
         keybindGui.setWidth(width);
+        keybindGui.updateFocusState(0, height - keybindGui.getHeight(), mouseX, mouseY);
         keybindGui.draw(matrixStack, 0, height - keybindGui.getHeight(), width, height, mouseX, mouseY, 1);
+
+        defaultGui.updateFocusState(x, y, mouseX, mouseY);
         defaultGui.draw(matrixStack, x, y, width, height, mouseX, mouseY, 1);
     }
 
     @Override
     protected void renderTooltip(PoseStack matrixStack, int mouseX, int mouseY) {
         super.renderTooltip(matrixStack, mouseX, mouseY);
-        List<String> tooltipLines = defaultGui.getTooltipLines();
-
+        List<Component> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
-            List<Component> textComponents = tooltipLines.stream()
-                    .map(line -> line.replace("\\n", "\n"))
-                    .flatMap(line -> Arrays.stream(line.split("\n")))
-                    .map(TextComponent::new)
-                    .collect(Collectors.toList());
-
-            renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, mouseY);
+            renderTooltip(matrixStack, tooltipLines, Optional.empty(), mouseX, mouseY);
         }
     }
 

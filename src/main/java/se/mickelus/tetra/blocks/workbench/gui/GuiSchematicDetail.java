@@ -3,6 +3,8 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
@@ -39,7 +41,7 @@ public class GuiSchematicDetail extends GuiElement {
     private final HoloMaterialTranslation materialTranslation;
     private final HoloMaterialApplicable applicableMaterials;
     private UpgradeSchematic schematic;
-    private List<String> descriptionTooltip;
+    private List<Component> descriptionTooltip;
 
     public GuiSchematicDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 67);
@@ -106,7 +108,7 @@ public class GuiSchematicDetail extends GuiElement {
         String descriptionString = schematic.getDescription(itemStack);
         description.setString(ChatFormatting.GRAY + descriptionString
                 .replace(ChatFormatting.RESET.toString(), ChatFormatting.RESET.toString() + ChatFormatting.GRAY));
-        descriptionTooltip = ImmutableList.of(descriptionString);
+        descriptionTooltip = ImmutableList.of(new TextComponent(descriptionString));
 
         materialTranslation.setVisible(schematic.getNumMaterialSlots() > 0);
         applicableMaterials.setVisible(schematic.getNumMaterialSlots() > 0);
@@ -205,7 +207,7 @@ public class GuiSchematicDetail extends GuiElement {
     }
 
     @Override
-    public List<String> getTooltipLines() {
+    public List<Component> getTooltipLines() {
         if (description.hasFocus()) {
             return descriptionTooltip;
         }

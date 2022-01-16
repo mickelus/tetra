@@ -116,8 +116,6 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
         this.renderBackground(matrixStack, 0);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         renderTooltip(matrixStack, mouseX, mouseY);
-
-        renderLabels(matrixStack, mouseX, mouseY);
     }
 
 
@@ -126,6 +124,7 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
+        guiRoot.updateFocusState(x, y, mouseX, mouseY);
         guiRoot.draw(matrixStack, x, y, width, height, mouseX, mouseY, 1);
     }
 

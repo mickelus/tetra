@@ -26,7 +26,7 @@ credits="red1854th: korean localization, Jeffku0107: chinese localization, Arvid
 [[dependencies.tetra]]
     modId="mutil"
     mandatory=true
-    versionRange="[4.0,]"
+    versionRange="[4.2,]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.tetra]]
