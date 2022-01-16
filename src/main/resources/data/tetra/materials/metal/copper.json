@@ -1,21 +1,22 @@
 {
     "key": "copper",
     "category": "metal",
-    "primary": 4.5,
+    "primary": 4,
     "secondary": 4.2,
-    "tertiary": 3,
+    "tertiary": 2.5,
     "durability": 180,
-    "integrityCost": 2,
+    "integrityCost": 1,
     "integrityGain": 5,
     "magicCapacity": 78,
     "toolLevel": "minecraft:iron",
-    "toolEfficiency": 6,
+    "toolEfficiency": 5,
     "tints": {
         "glyph": "copper_glyph",
         "texture": "copper"
     },
     "textures": [
-        "metal"
+        "metal",
+        "default"
     ],
     "material": {
         "items": [ "minecraft:copper_ingot" ]
