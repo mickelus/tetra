@@ -47,11 +47,10 @@ public class HoloSortButton extends GuiElement {
     public void update(OutcomePreview[] previews) {
         this.label.setString(StatSorters.none.getName());
         if (previews.length > 0) {
-            OutcomePreview preview = previews[0];
             Player player = Minecraft.getInstance().player;
 
             popover.update(StatSorters.sorters.stream()
-                    .filter(sorter -> sorter.getWeight(player, preview.itemStack) > 0)
+                    .filter(sorter -> Arrays.stream(previews).anyMatch(preview -> sorter.getWeight(player, preview.itemStack) > 0))
                     .toArray(IStatSorter[]::new));
         }
 
