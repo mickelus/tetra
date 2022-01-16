@@ -125,7 +125,7 @@
     "tetra.tool.shovel_dig.requirement": "This action requires a tier %d shovel",
     "tetra.tool.shovel_dig.craft_requirement": "Crafting requires a tier %d shovel",
     "tetra.tool.shovel_dig.material_requirement": "The base requirement for working this material is a tier %d shovel, the requirement may shift based on what the material is used for.",
-    "tetra.tool.hoe_dig": "Cut",
+    "tetra.tool.hoe_dig": "Hoe",
     "tetra.tool.hoe_dig.requirement": "This action requires a tier %d hoe.",
     "tetra.tool.hoe_dig.craft_requirement": "Crafting requires a tier %d hoe.",
     "tetra.tool.hoe_dig.material_requirement": "The base requirement for working this material is a tier %d hoe, the requirement may shift based on what the material is used for.",
