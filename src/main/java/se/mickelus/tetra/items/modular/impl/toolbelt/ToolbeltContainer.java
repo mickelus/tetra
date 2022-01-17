@@ -189,13 +189,21 @@ public class ToolbeltContainer extends AbstractContainerMenu {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    ItemStack breakoff = itemStack.split(itemStack.getMaxStackSize());
+                    ItemStack copy = itemStack.copy();
+                    ItemStack breakoff = copy.split(itemStack.getMaxStackSize());
                     // move item from slot into player inventory
-                    if (!this.moveItemStackTo(breakoff, playerInventoryStart, slots.size(), true)) {
+                    if (this.moveItemStackTo(breakoff, playerInventoryStart, slots.size(), true)) {
+                        if (!copy.isEmpty()) {
+                            if (!breakoff.isEmpty()) {
+                                copy.grow(breakoff.getCount());
+                            }
+                            slot.set(copy);
+                        } else {
+                            slot.set(breakoff);
+                        }
                         slot.setChanged();
-                        return itemStack;
+                        return breakoff;
                     } else {
-                        itemStack.grow(breakoff.getCount());
                         slot.setChanged();
                         return ItemStack.EMPTY;
                     }
