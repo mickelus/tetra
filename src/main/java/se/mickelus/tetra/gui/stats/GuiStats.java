@@ -30,10 +30,13 @@ public class GuiStats {
                     new GuiStatIndicator(0, 0, "tetra.stats.sharpness", 17, sharpnessGetter,
                             new TooltipGetterDecimalSingle("tetra.stats.sharpness.tooltip", sharpnessGetter)));
 
-    public static final IStatGetter attackDamageNormalizedGetter = new StatGetterAttribute(Attributes.ATTACK_DAMAGE, true);
+    public static final IStatGetter attackDamageNormalizedGetter = sum(new StatGetterAttribute(Attributes.ATTACK_DAMAGE, true), sharpnessGetter);
     public static final GuiStatBar attackDamageNormalized = new GuiStatBar(0, 0, barLength, "tetra.stats.attack_damage_normalized",
             0, 20, false, attackDamageNormalizedGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.attack_damage_normalized.tooltip", attackDamageNormalizedGetter));
+            new TooltipGetterDecimal("tetra.stats.attack_damage_normalized.tooltip", attackDamageNormalizedGetter))
+            .setIndicators(
+                    new GuiStatIndicator(0, 0, "tetra.stats.sharpness", 17, sharpnessGetter,
+                            new TooltipGetterDecimalSingle("tetra.stats.sharpness.tooltip", sharpnessGetter)));
 
     public static final IStatGetter counterweightGetter = new StatGetterEffectLevel(ItemEffect.counterweight, 1);
     public static final IStatGetter attackSpeedGetter = new StatGetterAttribute(Attributes.ATTACK_SPEED);
