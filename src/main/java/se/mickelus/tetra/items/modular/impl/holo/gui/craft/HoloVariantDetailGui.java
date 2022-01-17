@@ -177,10 +177,9 @@ public class HoloVariantDetailGui extends GuiElement {
         currentOutcome = variantOutcome.clone();
 
         for (OutcomeStack stack : selectedOutcomes) {
-            OutcomePreview[] tempPreviews = stack.schematic.getPreviews(currentOutcome.itemStack, slot);
-            for (OutcomePreview tempPreview : tempPreviews) {
-                if (tempPreview.equals(stack.preview)) {
-                    currentOutcome = tempPreview;
+            for (OutcomePreview preview : stack.schematic.getPreviews(currentOutcome.itemStack, slot)) {
+                if (preview.equals(stack.preview)) {
+                    currentOutcome = preview;
                     break;
                 }
             }

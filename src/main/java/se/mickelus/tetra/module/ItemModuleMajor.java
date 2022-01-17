@@ -222,6 +222,16 @@ public abstract class ItemModuleMajor extends ItemModule {
                 .toArray(EnchantmentCategory[]::new);
     }
 
+    public Set<String> getEnchantmentKeys(ItemStack itemStack) {
+        CompoundTag mappings = itemStack.getTagElement("EnchantmentMapping");
+        if (mappings != null) {
+            return mappings.getAllKeys().stream()
+                    .filter(key -> getSlot().equals(mappings.get(key).getAsString()))
+                    .collect(Collectors.toSet());
+        }
+        return Collections.emptySet();
+    }
+
     public Map<Enchantment, Integer> getEnchantments(ItemStack itemStack) {
         CompoundTag mappings = itemStack.getTagElement("EnchantmentMapping");
 

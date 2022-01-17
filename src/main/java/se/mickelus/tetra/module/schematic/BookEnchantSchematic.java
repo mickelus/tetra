@@ -199,9 +199,12 @@ public class BookEnchantSchematic implements UpgradeSchematic {
                     .flatMap(enchantment -> IntStream.range(enchantment.getMinLevel(), enchantment.getMaxLevel() + 1)
                             .mapToObj(level -> {
                                 ItemStack enchantedStack = targetStack.copy();
+                                EnchantmentHelper.getEnchantments(enchantedStack).keySet().stream()
+                                        .filter(currentEnchantment -> !enchantment.isCompatibleWith(currentEnchantment))
+                                        .forEach(currentEnchantment -> TetraEnchantmentHelper.removeEnchantment(enchantedStack, currentEnchantment));
 
                                 TetraEnchantmentHelper.applyEnchantment(enchantedStack, module.getSlot(), enchantment, level);
-                                return new OutcomePreview(null, enchantment.getRegistryName().toString(),
+                                return new OutcomePreviewEnchantment(enchantment.getRegistryName().toString(),
                                         TetraEnchantmentHelper.getEnchantmentName(enchantment, level), "misc", level, glyph, enchantedStack,
                                         SchematicType.improvement, emptyTools, new ItemStack[0]);
                             }))

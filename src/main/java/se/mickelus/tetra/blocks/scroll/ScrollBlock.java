@@ -152,8 +152,8 @@ public class ScrollBlock extends TetraBlock implements EntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return new ScrollTile(p_153215_, p_153216_);
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new ScrollTile(blockPos, blockState);
     }
 
     public enum Arrangement {

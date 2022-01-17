@@ -52,6 +52,7 @@ public class OutcomePreview {
                 .orElse(false);
     }
 
+    @Override
     public OutcomePreview clone() {
         return new OutcomePreview(moduleKey, variantKey, variantName, category, level, glyph, itemStack.copy(), type, tools, materials);
     }

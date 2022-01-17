@@ -139,6 +139,19 @@ public class TetraEnchantmentHelper {
         return -(enchantment.getMaxCost(level) + enchantment.getMinCost(level)) / 2;
     }
 
+    public static void removeEnchantment(ItemStack itemStack, Enchantment enchantment) {
+        Optional.ofNullable(Registry.ENCHANTMENT.getKey(enchantment))
+                .ifPresent(enchantmentKey -> removeEnchantment(itemStack, enchantmentKey.toString()));
+    }
+
+    public static void removeEnchantment(ItemStack itemStack, String enchantment) {
+        Optional.ofNullable(itemStack.getTagElement("EnchantmentMapping"))
+                .ifPresent(map -> map.remove(enchantment));
+        Optional.ofNullable(itemStack.getTag())
+                .map(tag -> tag.getList("Enchantments", Tag.TAG_COMPOUND))
+                .ifPresent(enchantments -> enchantments.removeIf(nbt -> enchantment.equals(((CompoundTag) nbt).getString("id"))));
+    }
+
     public static void removeEnchantments(ItemStack itemStack, String slot) {
         CompoundTag map = itemStack.getTagElement("EnchantmentMapping");
         ListTag enchantments = Optional.ofNullable(itemStack.getTag())
