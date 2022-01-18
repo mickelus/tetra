@@ -84,7 +84,7 @@ public class PiercingEffect {
             if (ToolActionHelper.playerCanDestroyBlock(player, offsetState, pos, itemStack)
                     && blockHardness != -1
                     && blockHardness <= refHardness
-                    && ItemModularHandheld.isToolEffective(refTool, offsetState)) {
+                    && ToolActionHelper.isEffectiveOn(refTool, offsetState)) {
                 if (EffectHelper.breakBlock(world, player, itemStack, pos, offsetState, true)) {
                     EffectHelper.sendEventToPlayer((ServerPlayer) player, 2001, pos, Block.getId(offsetState));
 

@@ -2,6 +2,7 @@ package se.mickelus.tetra.effect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+import org.apache.commons.lang3.tuple.Pair;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
@@ -88,6 +90,14 @@ public class StrikingEffect {
             new BlockPos(1, -1, 0),
     };
 
+    static final List<Pair<ItemEffect, ToolAction>> effectActionMap = ImmutableList.of(
+            Pair.of(ItemEffect.strikingAxe, ToolActions.AXE_DIG),
+            Pair.of(ItemEffect.strikingPickaxe, ToolActions.PICKAXE_DIG),
+            Pair.of(ItemEffect.strikingCut, TetraToolActions.cut),
+            Pair.of(ItemEffect.strikingShovel, ToolActions.SHOVEL_DIG),
+            Pair.of(ItemEffect.strikingHoe, ToolActions.HOE_DIG)
+    );
+
     public static boolean causeEffect(Player breakingPlayer, ItemStack itemStack, ItemModularHandheld item, Level world, BlockPos pos, BlockState blockState) {
         int strikingLevel = 0;
         ToolAction tool = null;
@@ -96,39 +106,14 @@ public class StrikingEffect {
             return false;
         }
 
-        // essentially checks if the item is effective in for each tool type, and checks if it can strike for that type
-        if (ItemModularHandheld.isToolEffective(ToolActions.AXE_DIG, blockState)) {
-            strikingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.strikingAxe);
-            if (strikingLevel > 0) {
-                tool = ToolActions.AXE_DIG;
-            }
-        }
-
-        if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolActions.PICKAXE_DIG, blockState)) {
-            strikingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.strikingPickaxe);
-            if (strikingLevel > 0) {
-                tool = ToolActions.PICKAXE_DIG;
-            }
-        }
-
-        if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(TetraToolActions.cut, blockState)) {
-            strikingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.strikingCut);
-            if (strikingLevel > 0) {
-                tool = TetraToolActions.cut;
-            }
-        }
-
-        if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolActions.SHOVEL_DIG, blockState)) {
-            strikingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.strikingShovel);
-            if (strikingLevel > 0) {
-                tool = ToolActions.SHOVEL_DIG;
-            }
-        }
-
-        if (strikingLevel <= 0 && ItemModularHandheld.isToolEffective(ToolActions.HOE_DIG, blockState)) {
-            strikingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.strikingHoe);
-            if (strikingLevel > 0) {
-                tool = ToolActions.HOE_DIG;
+        // essentially checks if the item is effective for each tool type, and checks if it can strike for that type
+        for (Pair<ItemEffect, ToolAction> entry : effectActionMap) {
+            if (ToolActionHelper.isEffectiveOn(entry.getRight(), blockState)) {
+                strikingLevel = EffectHelper.getEffectLevel(itemStack, entry.getLeft());
+                if (strikingLevel > 0) {
+                    tool = entry.getRight();
+                    break;
+                }
             }
         }
 
@@ -226,7 +211,7 @@ public class StrikingEffect {
             float blockHardness = blockState.getDestroySpeed(world, pos);
 
             // make sure that only blocks which require the same tool are broken
-            if (ItemModularHandheld.isToolEffective(tool, blockState) && blockHardness > 0) {
+            if (ToolActionHelper.isEffectiveOn(tool, blockState) && blockHardness >= 0) {
 
                 // check that the tool level is high enough and break the block
                 if (ToolActionHelper.playerCanDestroyBlock(breakingPlayer, blockState, pos, toolStack, tool)) {

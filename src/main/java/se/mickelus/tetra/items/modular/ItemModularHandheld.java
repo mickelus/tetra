@@ -3,11 +3,9 @@ package se.mickelus.tetra.items.modular;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
-import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -40,7 +38,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -72,24 +69,9 @@ import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 public class ItemModularHandheld extends ModularItem {
-    public static final ResourceLocation nailedTag = new ResourceLocation("tetra:nailed");
+    public static final Tag.Named<Block> nailedTag = BlockTags.bind("tetra:nailed");
     // if the blocking level exceeds this value the item has an infinite blocking duration
     public static final int blockingDurationLimit = 16;
-    /**
-     * Below are lists of blocks, materials and tags that describe what different tools can harvest and efficiently destroy. Note that these
-     * are copies of what the vanilla tool counterparts explicitly state that they can destroy and harvest, some blocks (and required tiers)
-     * are not listed here as that's part of that block's implementation.
-     */
-
-    // FIXME add 1.18 materials
-    public static final Set<Material> hoeBonusMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT);
-    public static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD, Material.NETHER_WOOD, Material.PLANT, Material.REPLACEABLE_PLANT, Material.BAMBOO, Material.VEGETABLE);
-    public static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.METAL, Material.HEAVY_METAL, Material.STONE);
-    // copy of hardcoded values in SwordItem, materials & tag that it explicitly state it can efficiently DESTROY
-    public static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT, Material.VEGETABLE, Material.WEB, Material.BAMBOO);
-    public static final Set<Tag.Named<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
-    // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
-    public static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
     static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[]{
             ExecuteEffect.instance,
             LungeEffect.instance,
@@ -109,7 +91,7 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public static boolean canDenail(BlockState blockState) {
-        return blockState.getBlock().getTags().contains(nailedTag);
+        return blockState.is(nailedTag);
     }
 
     public static void handleChargedAbility(Player player, InteractionHand hand, @Nullable LivingEntity target, @Nullable BlockPos targetPos,
@@ -142,10 +124,6 @@ public class ItemModularHandheld extends ModularItem {
 
     public static double getCounterWeightBonus(int counterWeightLevel, int integrityCost) {
         return Math.max(0, 0.15 - Math.abs(counterWeightLevel - integrityCost) * 0.05);
-    }
-
-    public static boolean isToolEffective(ToolAction toolAction, BlockState blockState) {
-        return ToolActionHelper.isEffectiveOn(toolAction, blockState);
     }
 
     public static ToolAction getEffectiveTool(BlockState blockState) {
@@ -292,8 +270,9 @@ public class ItemModularHandheld extends ModularItem {
                     if (InteractionResult.SUCCESS == result) {
                         applyDamage(blockDestroyDamage, context.getItemInHand(), player);
                         applyUsageEffects(player, itemStack, 2);
+
+                        return result;
                     }
-                    return result;
                 }
             }
 
