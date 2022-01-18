@@ -34,7 +34,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.booster.JumpHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket;
-import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltGui;
+import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltScreen;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.JumpHandlerSuspend;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.ToggleSuspendPacket;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
@@ -102,7 +102,7 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
         MinecraftForge.EVENT_BUS.register(new JumpHandlerSuspend(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getInstance()));
-        MenuScreens.register(ModularToolbeltItem.containerType, ToolbeltGui::new);
+        MenuScreens.register(ModularToolbeltItem.containerType, ToolbeltScreen::new);
     }
 
     @Override

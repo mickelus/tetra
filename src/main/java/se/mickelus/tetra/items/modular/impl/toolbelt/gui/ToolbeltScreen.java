@@ -4,16 +4,16 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import se.mickelus.mutil.gui.GuiAttachment;
-import se.mickelus.mutil.gui.GuiElement;
-import se.mickelus.mutil.gui.GuiRect;
-import se.mickelus.mutil.gui.GuiTexture;
+import se.mickelus.mutil.gui.*;
 import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiKeybinding;
 import se.mickelus.tetra.gui.GuiTextures;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.OverlayToolbelt;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 
@@ -23,14 +23,14 @@ import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class ToolbeltGui extends AbstractContainerScreen<ToolbeltContainer> {
+public class ToolbeltScreen extends AbstractContainerScreen<ToolbeltContainer> {
 
-    private static ToolbeltGui instance;
+    private static ToolbeltScreen instance;
 
     private final GuiElement defaultGui;
     private final GuiElement keybindGui;
 
-    public ToolbeltGui(ToolbeltContainer container, Inventory playerInventory, Component title) {
+    public ToolbeltScreen(ToolbeltContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
 
         this.imageWidth = 179;
@@ -85,6 +85,14 @@ public class ToolbeltGui extends AbstractContainerScreen<ToolbeltContainer> {
         keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.openBinding));
 
         instance = this;
+    }
+
+    @Override
+    protected void slotClicked(Slot slot, int slotIndex, int barIndex, ClickType clickType) {
+        // todo: based on how quick swapping is implemented in AbstractContainerMenu.doClick, there has to be a cleaner way
+        if (!(slot instanceof DisabledSlot || minecraft.player.getInventory().getItem(barIndex).getItem() instanceof ModularToolbeltItem)) {
+            super.slotClicked(slot, slotIndex, barIndex, clickType);
+        }
     }
 
     @Override
