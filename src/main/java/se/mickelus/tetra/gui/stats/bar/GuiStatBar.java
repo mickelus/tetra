@@ -22,8 +22,8 @@ import se.mickelus.tetra.items.modular.IModularItem;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -128,8 +128,8 @@ public class GuiStatBar extends GuiStatBase {
             value = statGetter.getValue(player, currentStack);
             diffValue = statGetter.getValue(player, previewStack);
 
-            tooltip = Collections.singletonList(new TextComponent(getCombinedTooltip(player, previewStack)));
-            extendedTooltip = Collections.singletonList(new TextComponent(getCombinedTooltipExtended(player, previewStack)));
+            tooltip = getCombinedTooltip(player, previewStack);
+            extendedTooltip = getCombinedTooltipExtended(player, previewStack);
         } else {
             value = statGetter.getValue(player, currentStack);
 
@@ -140,8 +140,8 @@ public class GuiStatBar extends GuiStatBase {
                 diffValue = value;
             }
 
-            tooltip = Collections.singletonList(new TextComponent(getCombinedTooltip(player, currentStack)));
-            extendedTooltip = Collections.singletonList(new TextComponent(getCombinedTooltipExtended(player, currentStack)));
+            tooltip = getCombinedTooltip(player, currentStack);
+            extendedTooltip = getCombinedTooltipExtended(player, currentStack);
         }
 
         updateValue(value, diffValue);
@@ -213,38 +213,51 @@ public class GuiStatBar extends GuiStatBase {
         return tooltip;
     }
 
-    protected String getCombinedTooltip(Player player, ItemStack itemStack) {
-        String tooltip = getCombinedTooltipBase(player, itemStack);
+    protected List<Component> getCombinedTooltip(Player player, ItemStack itemStack) {
+        List<Component> result = new ArrayList<>();
+        Arrays.stream(getCombinedTooltipBase(player, itemStack).split("\\\\n"))
+                .map(TextComponent::new)
+                .forEach(result::add);
 
         if (tooltipGetter.hasExtendedTooltip(player, itemStack) || getActiveIndicators().stream().anyMatch(ind -> ind.hasExtendedTooltip(player, itemStack))) {
-            tooltip += "\n \n" + Tooltips.expand.getString();
+            result.add(new TextComponent(" "));
+            result.add(Tooltips.expand);
         }
 
-        return tooltip;
+        return result;
     }
 
-    protected String getCombinedTooltipExtended(Player player, ItemStack itemStack) {
+    protected List<Component> getCombinedTooltipExtended(Player player, ItemStack itemStack) {
         String tooltip = getCombinedTooltipBase(player, itemStack);
 
-        if (tooltipGetter.hasExtendedTooltip(player, itemStack) || getActiveIndicators().stream().anyMatch(ind -> ind.hasExtendedTooltip(player, itemStack))) {
-            tooltip += "\n \n" + Tooltips.expanded.getString() + "\n";
+        List<Component> result = new ArrayList<>();
+        Arrays.stream(getCombinedTooltipBase(player, itemStack).split("\\\\n"))
+                .map(TextComponent::new)
+                .forEach(result::add);
 
-            List<String> extendedTooltip = new LinkedList<>();
+        if (tooltipGetter.hasExtendedTooltip(player, itemStack) || getActiveIndicators().stream().anyMatch(ind -> ind.hasExtendedTooltip(player, itemStack))) {
+            result.add(new TextComponent(" "));
+            result.add(Tooltips.expanded);
+
             if (tooltipGetter.hasExtendedTooltip(player, itemStack)) {
-                extendedTooltip.add(ChatFormatting.GRAY + tooltipGetter.getTooltipExtension(player, itemStack)
-                        .replace(ChatFormatting.RESET.toString(), ChatFormatting.GRAY.toString()));
+                Arrays.stream(tooltipGetter.getTooltipExtension(player, itemStack).split("\\\\n"))
+                        .map(TextComponent::new)
+                        .map(component -> component.withStyle(ChatFormatting.GRAY))
+                        .forEach(result::add);
             }
 
-            getActiveIndicators().stream()
-                    .filter(indicator -> indicator.hasExtendedTooltip(player, itemStack))
-                    .map(indicator -> ChatFormatting.GRAY + indicator.getTooltipExtension(player, itemStack))
-                    .map(string -> string.replace(ChatFormatting.RESET.toString(), ChatFormatting.GRAY.toString()))
-                    .map(string -> "\n" + string)
-                    .forEach(extendedTooltip::add);
-
-            tooltip += String.join("\n \n", extendedTooltip);
+            boolean isFirst = true;
+            for (GuiStatIndicator indicator : getActiveIndicators()) {
+                if (indicator.hasExtendedTooltip(player, itemStack)) {
+                    if (!isFirst) {
+                        result.add(new TextComponent(" "));
+                    }
+                    result.add(new TextComponent(indicator.getTooltipExtension(player, itemStack)).withStyle(ChatFormatting.GRAY));
+                    isFirst = false;
+                }
+            }
         }
 
-        return tooltip;
+        return result;
     }
 }
