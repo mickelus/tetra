@@ -87,10 +87,13 @@ public class ToolData extends TierData<ToolAction> {
         ToolData result = new ToolData();
 
         dataCollection.forEach(data -> data.getValues().forEach(tool -> {
-            float level = data.levelMap.getOrDefault(tool, 0f);
-            if (level >= result.levelMap.getOrDefault(tool, 0f)) {
-                result.levelMap.put(tool, level);
-                if (data.getEfficiency(tool) > result.getEfficiency(tool)) {
+            float newLevel = data.levelMap.getOrDefault(tool, 0f);
+            float currentLevel = result.levelMap.getOrDefault(tool, 0f);
+            if (newLevel >= result.levelMap.getOrDefault(tool, 0f)) {
+                result.levelMap.put(tool, newLevel);
+                if (currentLevel < newLevel) {
+                    result.efficiencyMap.put(tool, data.getEfficiency(tool));
+                } else if (data.getEfficiency(tool) > result.getEfficiency(tool)) {
                     result.efficiencyMap.put(tool, data.getEfficiency(tool));
                 }
             }
