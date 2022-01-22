@@ -199,11 +199,11 @@ public class ConfigHandler {
 
         honeSingleBase = builder
                 .comment("The base value for number of uses required before a single headed implement can be honed")
-                .defineInRange("hone_single_headed_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                .defineInRange("hone_single_headed_base", 120, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeSingleIntegrityMultiplier = builder
                 .comment("Integrity multiplier for single headed implement honing, a value of 2 would cause an implement which uses 3 integrity to require 2*3 times as many uses before it can be honed")
-                .defineInRange("hone_single_headed_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                .defineInRange("hone_single_headed_integrity_multiplier", 60, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         builder.pop();
 
