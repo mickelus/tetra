@@ -116,6 +116,9 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
         super.init();
 
         viewingPlayer = minecraft.player;
+
+        // todo: this is only needed when re-opening the screen from the holosphere, figure out something cleaner
+        statGroup.realignBars();
     }
 
     @Override

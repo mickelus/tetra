@@ -125,7 +125,7 @@ public class WorkbenchStatsGui extends GuiElement {
                     .forEach(bar -> {
                         bar.update(player, itemStack, previewStack, slot, improvement);
 
-                        realignBar(bar);
+                        realignBar(bar, barGroup.getNumChildren());
                         barGroup.addChild(bar);
                     });
 
@@ -146,14 +146,20 @@ public class WorkbenchStatsGui extends GuiElement {
         }
     }
 
-    private void realignBar(GuiStatBase bar) {
-        int count = barGroup.getNumChildren();
+    public void realignBars() {
+        List<GuiStatBase> bars = barGroup.getChildren(GuiStatBase.class);
+        for (int i = 0; i < bars.size(); i++) {
+            realignBar(bars.get(i), i);
+        }
 
-        bar.setY(-17 * ((count % 6) / 2) - 3);
+    }
+
+    private void realignBar(GuiStatBase bar, int index) {
+        bar.setY(-17 * ((index % 6) / 2) - 3);
         bar.setAttachmentAnchor(GuiAttachment.bottomCenter);
 
-        int xOffset = 3 + (count / 6) * (StatsHelper.barLength + 3);
-        if (count % 2 == 0) {
+        int xOffset = 3 + (index / 6) * (StatsHelper.barLength + 3);
+        if (index % 2 == 0) {
             bar.setX(xOffset);
             bar.setAttachmentPoint(GuiAttachment.bottomLeft);
             bar.setAlignment(GuiAlignment.left);
