@@ -114,7 +114,7 @@ public class HoloVariantListGui extends GuiElement {
             return preview.category.contains(filter);
         }
 
-        return preview.variantName.contains(filter);
+        return preview.variantName.toLowerCase().contains(filter);
     }
 
     public void updateFilter(String newValue) {
