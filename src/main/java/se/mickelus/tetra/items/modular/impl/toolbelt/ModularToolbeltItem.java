@@ -117,6 +117,7 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
         ItemStack itemStack = new ItemStack(this);
         IModularItem.putModuleInSlot(itemStack, beltKey, "toolbelt/belt", "toolbelt/belt_material", beltMaterial);
         IModularItem.putModuleInSlot(itemStack, slot1Key, "toolbelt/strap_slot1", "toolbelt/strap_slot1_material", "strap1/leather");
+        IModularItem.updateIdentifier(itemStack);
         return itemStack;
     }
 
