@@ -7,6 +7,7 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.LinkedList;
 
@@ -176,14 +177,16 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         updateBreadcrumb();
     }
 
-    public void updateState(IModularItem item, String slot, UpgradeSchematic schematic) {
+    public void updateState(IModularItem item, @Nullable String slot, @Nullable UpgradeSchematic schematic) {
         this.item = item;
-        itemsView.changeItem(item);
+        if (slot == null && schematic == null) {
+            itemsView.changeItem(item);
+        }
 
         this.slot = slot;
 
         onSchematicSelect(schematic);
-        breadcrumbs.animateOpen(false);
+        breadcrumbs.animateOpen(true);
     }
 
     private void updateBreadcrumb() {
