@@ -1,5 +1,6 @@
 {
     "itemGroup.tetra": "Tetra",
+    "tetra.not_available": "n/a",
     "tetra.attribute.draw_strength.name": "Draw strength",
     "tetra.attribute.draw_speed.name": "Draw time",
     "tetra.attribute.ability_damage.name": "Ability damage",
@@ -448,7 +449,7 @@
     "tetra.stats.hoe_dig.tooltip": "This item can be used for harvesting plants",
     "tetra.stats.cut.tooltip": "This item can be used for cutting, usable for crafting and for breaking webs and plants",
     "tetra.stats.pry.tooltip": "This item can be used for prying things open, usable for salvaging",
-    "tetra.stats.tool.breakdown": "§7Tier: §e%s\n \n§7Efficiency: §e%s\n§7    Base: §e%s\n§7    Swing speed: %sx%s%s",
+    "tetra.stats.tool.breakdown": "§7Tier: §e%s\n \n§7Efficiency: §e%s\n§7    Base: §e%s\n§7    Swing speed: %s%s",
     "tetra.stats.tool.efficiency": "Efficiency enchantment",
     "tetra.stats.tool.efficiency.tooltip": "Magically increases harvest efficiency, unaffected by swing speed",
     "tetra.stats.tool.enchantment_bonus": "\n§7    Enchantment bonus: §a+%s",

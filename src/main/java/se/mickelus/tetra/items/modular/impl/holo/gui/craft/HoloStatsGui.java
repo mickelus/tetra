@@ -92,13 +92,13 @@ public class HoloStatsGui extends GuiElement {
             GuiStats.magicCapacity,
             GuiStats.stability,
             GuiStats.workable,
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.hammer, true),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.cut, true),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.AXE_DIG, true),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.PICKAXE_DIG, true),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.SHOVEL_DIG, true),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.pry, true),
-            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.HOE_DIG, true)
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.hammer, true, false),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.cut, true, false),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.AXE_DIG, true, false),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.PICKAXE_DIG, true, false),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.SHOVEL_DIG, true, false),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.pry, true, false),
+            new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.HOE_DIG, true, false)
     ));
 
     private final GuiElement barGroup;

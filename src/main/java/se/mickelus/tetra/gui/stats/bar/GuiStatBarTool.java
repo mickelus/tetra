@@ -25,14 +25,15 @@ public class GuiStatBarTool extends GuiStatBar {
     private final boolean efficiencyVisibility;
 
     public GuiStatBarTool(int x, int y, int width, ToolAction toolAction) {
-        this(x, y, width, toolAction, false);
+        this(x, y, width, toolAction, false, true);
     }
 
-    public GuiStatBarTool(int x, int y, int width, ToolAction toolAction, boolean efficiencyVisibility) {
+    public GuiStatBarTool(int x, int y, int width, ToolAction toolAction, boolean efficiencyVisibility, boolean includeSpeedModifier) {
         super(x, y, width, null, 0, efficiencyMax,
-                false, new StatGetterToolCompoundEfficiency(new StatGetterToolEfficiency(toolAction),
-                        new StatGetterAttribute(Attributes.ATTACK_SPEED), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1)),
-                LabelGetterBasic.decimalLabel, new TooltipGetterTool(toolAction));
+                false, includeSpeedModifier ? new StatGetterToolCompoundEfficiency(new StatGetterToolEfficiency(toolAction),
+                        new StatGetterAttribute(Attributes.ATTACK_SPEED), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1))
+                        : new StatGetterSum(new StatGetterToolEfficiency(toolAction), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1)),
+                LabelGetterBasic.decimalLabel, new TooltipGetterTool(toolAction, includeSpeedModifier));
 
         this.efficiencyVisibility = efficiencyVisibility;
 

@@ -20,16 +20,24 @@ public class TooltipGetterTool implements ITooltipGetter {
     private final IStatGetter enchantmentGetter;
     private final IStatGetter totalEfficiencyGetter;
     private final String localizationKey;
+    private final boolean includeSpeedModifier;
 
 
-    public TooltipGetterTool(ToolAction tool) {
+    public TooltipGetterTool(ToolAction tool, boolean includeSpeedModifier) {
         localizationKey = "tetra.stats." + tool.name() + ".tooltip";
+
+        this.includeSpeedModifier = includeSpeedModifier;
 
         levelGetter = new StatGetterToolLevel(tool);
         baseEfficiencyGetter = new StatGetterToolEfficiency(tool);
         attackSpeedGetter = new StatGetterAttribute(Attributes.ATTACK_SPEED);
         enchantmentGetter = new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1);
-        totalEfficiencyGetter = new StatGetterToolCompoundEfficiency(baseEfficiencyGetter, attackSpeedGetter, enchantmentGetter);
+
+        if (includeSpeedModifier) {
+            totalEfficiencyGetter = new StatGetterToolCompoundEfficiency(baseEfficiencyGetter, attackSpeedGetter, enchantmentGetter);
+        } else {
+            totalEfficiencyGetter = new StatGetterSum(baseEfficiencyGetter, enchantmentGetter);
+        }
     }
 
 
@@ -37,13 +45,24 @@ public class TooltipGetterTool implements ITooltipGetter {
     public String getTooltipBase(Player player, ItemStack itemStack) {
         double enchantmentBonus = ItemModularHandheld.getEfficiencyEnchantmentBonus((int) enchantmentGetter.getValue(player, itemStack));
         double speedMultiplier = ItemModularHandheld.getAttackSpeedHarvestModifier(attackSpeedGetter.getValue(player, itemStack));
+        String speedString = ChatFormatting.DARK_GRAY + I18n.get("tetra.not_available");
+        if (includeSpeedModifier) {
+            if (speedMultiplier < 1) {
+                speedString = ChatFormatting.RED.toString();
+            } else if (speedMultiplier > 1) {
+                speedString = ChatFormatting.GREEN.toString();
+            } else {
+                speedString = ChatFormatting.YELLOW.toString();
+            }
+            speedString += String.format("%.2fx", speedMultiplier);
+        }
+
         return I18n.get(localizationKey) + "\n \n" +
                 I18n.get("tetra.stats.tool.breakdown",
                         (int) levelGetter.getValue(player, itemStack),
                         String.format("%.2f", totalEfficiencyGetter.getValue(player, itemStack)),
                         String.format("%.2f", baseEfficiencyGetter.getValue(player, itemStack)),
-                        speedMultiplier < 1 ? ChatFormatting.RED : speedMultiplier > 1 ? ChatFormatting.GREEN : ChatFormatting.YELLOW,
-                        String.format("%.2f", speedMultiplier),
+                        speedString,
                         enchantmentBonus > 0 ? I18n.get("tetra.stats.tool.enchantment_bonus", String.format("%.0f", enchantmentBonus)) : "");
     }
 
