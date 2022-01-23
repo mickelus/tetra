@@ -156,7 +156,7 @@ public class HoloMaterialDetailGui extends GuiElement {
 
             for (int i = 0; i < modifiers.getNumChildren(); i++) {
                 GuiElement element = modifiers.getChild(i);
-                int offset = (i > 0) ? i + 3 : i + 1;
+                int offset = (i > 0) ? i + 2 : i + 1;
                 int y = (offset % 3);
                 element.setX(60 + (y % 2) * 20 + offset / 3 * 40);
                 element.setY(20 + y * 20);
