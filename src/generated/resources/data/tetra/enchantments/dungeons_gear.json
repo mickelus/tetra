@@ -1,0 +1,174 @@
+[
+  {
+    "enchantment": "dungeons_gear:leeching",
+    "improvement": "enchantment/dungeons_gear_leeching"
+  },
+  {
+    "enchantment": "dungeons_gear:anima_conduit",
+    "improvement": "enchantment/dungeons_gear_anima_conduit"
+  },
+  {
+    "enchantment": "dungeons_gear:dynamo",
+    "improvement": "enchantment/dungeons_gear_dynamo"
+  },
+  {
+    "enchantment": "dungeons_gear:enigma_resonator",
+    "improvement": "enchantment/dungeons_gear_enigma_resonator"
+  },
+  {
+    "enchantment": "dungeons_gear:gravity",
+    "improvement": "enchantment/dungeons_gear_gravity"
+  },
+  {
+    "enchantment": "dungeons_gear:poison_cloud",
+    "improvement": "enchantment/dungeons_gear_poison_cloud"
+  },
+  {
+    "enchantment": "dungeons_gear:refreshment",
+    "improvement": "enchantment/dungeons_gear_refreshment"
+  },
+  {
+    "enchantment": "dungeons_gear:artifact_synergy",
+    "improvement": "enchantment/dungeons_gear_artifact_synergy"
+  },
+  {
+    "enchantment": "dungeons_gear:busy_bee",
+    "improvement": "enchantment/dungeons_gear_busy_bee"
+  },
+  {
+    "enchantment": "dungeons_gear:chains",
+    "improvement": "enchantment/dungeons_gear_chains"
+  },
+  {
+    "enchantment": "dungeons_gear:committed",
+    "improvement": "enchantment/dungeons_gear_committed"
+  },
+  {
+    "enchantment": "dungeons_gear:critical_hit",
+    "improvement": "enchantment/dungeons_gear_critical_hit"
+  },
+  {
+    "enchantment": "dungeons_gear:echo",
+    "improvement": "enchantment/dungeons_gear_echo"
+  },
+  {
+    "enchantment": "dungeons_gear:exploding",
+    "improvement": "enchantment/dungeons_gear_exploding"
+  },
+  {
+    "enchantment": "dungeons_gear:freezing",
+    "improvement": "enchantment/dungeons_gear_freezing"
+  },
+  {
+    "enchantment": "dungeons_gear:guarding_strike",
+    "improvement": "enchantment/dungeons_gear_guarding_strike"
+  },
+  {
+    "enchantment": "dungeons_gear:illagers_bane",
+    "improvement": "enchantment/dungeons_gear_illagers_bane"
+  },
+  {
+    "enchantment": "dungeons_gear:pain_cycle",
+    "improvement": "enchantment/dungeons_gear_pain_cycle"
+  },
+  {
+    "enchantment": "dungeons_gear:prospector",
+    "improvement": "enchantment/dungeons_gear_prospector"
+  },
+  {
+    "enchantment": "dungeons_gear:radiance",
+    "improvement": "enchantment/dungeons_gear_radiance"
+  },
+  {
+    "enchantment": "dungeons_gear:rampaging",
+    "improvement": "enchantment/dungeons_gear_rampaging"
+  },
+  {
+    "enchantment": "dungeons_gear:rushdown",
+    "improvement": "enchantment/dungeons_gear_rushdown"
+  },
+  {
+    "enchantment": "dungeons_gear:shockwave",
+    "improvement": "enchantment/dungeons_gear_shockwave"
+  },
+  {
+    "enchantment": "dungeons_gear:soul_siphon",
+    "improvement": "enchantment/dungeons_gear_soul_siphon"
+  },
+  {
+    "enchantment": "dungeons_gear:stunning",
+    "improvement": "enchantment/dungeons_gear_stunning"
+  },
+  {
+    "enchantment": "dungeons_gear:swirling",
+    "improvement": "enchantment/dungeons_gear_swirling"
+  },
+  {
+    "enchantment": "dungeons_gear:thundering",
+    "improvement": "enchantment/dungeons_gear_thundering"
+  },
+  {
+    "enchantment": "dungeons_gear:weakening",
+    "improvement": "enchantment/dungeons_gear_weakening"
+  },
+  {
+    "enchantment": "dungeons_gear:accelerate",
+    "improvement": "enchantment/dungeons_gear_accelerate"
+  },
+  {
+    "enchantment": "dungeons_gear:bonus_shot",
+    "improvement": "enchantment/dungeons_gear_bonus_shot"
+  },
+  {
+    "enchantment": "dungeons_gear:burst_bowstring",
+    "improvement": "enchantment/dungeons_gear_burst_bowstring"
+  },
+  {
+    "enchantment": "dungeons_gear:chain_reaction",
+    "improvement": "enchantment/dungeons_gear_chain_reaction"
+  },
+  {
+    "enchantment": "dungeons_gear:cooldown_shot",
+    "improvement": "enchantment/dungeons_gear_cooldown_shot"
+  },
+  {
+    "enchantment": "dungeons_gear:fuse_shot",
+    "improvement": "enchantment/dungeons_gear_fuse_shot"
+  },
+  {
+    "enchantment": "dungeons_gear:growing",
+    "improvement": "enchantment/dungeons_gear_growing"
+  },
+  {
+    "enchantment": "dungeons_gear:overcharge",
+    "improvement": "enchantment/dungeons_gear_overcharge"
+  },
+  {
+    "enchantment": "dungeons_gear:radiance_shot",
+    "improvement": "enchantment/dungeons_gear_radiance_shot"
+  },
+  {
+    "enchantment": "dungeons_gear:replenish",
+    "improvement": "enchantment/dungeons_gear_replenish"
+  },
+  {
+    "enchantment": "dungeons_gear:ricochet",
+    "improvement": "enchantment/dungeons_gear_ricochet"
+  },
+  {
+    "enchantment": "dungeons_gear:roll_charge",
+    "improvement": "enchantment/dungeons_gear_roll_charge"
+  },
+  {
+    "enchantment": "dungeons_gear:shock_web",
+    "improvement": "enchantment/dungeons_gear_shock_web"
+  },
+  {
+    "enchantment": "dungeons_gear:tempo_theft",
+    "improvement": "enchantment/dungeons_gear_tempo_theft"
+  },
+  {
+    "enchantment": "dungeons_gear:wild_rage",
+    "improvement": "enchantment/dungeons_gear_wild_rage"
+  }
+]
