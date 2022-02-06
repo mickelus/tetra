@@ -1,13 +1,14 @@
 {
     "required": true,
     "package": "se.mickelus.tetra.mixin",
-    "compatibilityLevel": "JAVA_8",
+    "compatibilityLevel": "JAVA_17",
     "refmap": "tetra.refmap.json",
     "mixins": [
         "MixinGrindstoneContainer",
         "MixinItemStack",
         "MixinPlayerEntity",
-        "MixinServerPlayNetHandler"
+        "MixinServerPlayNetHandler",
+        "MixinEnchantmentHelper"
     ],
     "minVersion": "0.8"
 }
