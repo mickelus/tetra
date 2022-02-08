@@ -161,6 +161,10 @@ dependencies {
 //    compile fg.deobf("curse.maven:cursed:2913022")
 //    compile fg.deobf("curse.maven:cursed-bookshelf:2935828")
 
+//    compile fg.deobf("curse.maven:quark-243121:3578106")
+//    compile fg.deobf("curse.maven:quarkoddities-301051:3575623")
+//    compile fg.deobf("curse.maven:autoreglib-250363:3575622")
+
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
