@@ -1,0 +1,14 @@
+{
+    "key": "tetra",
+    "collapse_levels": true,
+    "predicate": {
+        "allow": [
+            "minecraft:wood",
+            "minecraft:gold",
+            "minecraft:stone",
+            "minecraft:iron",
+            "minecraft:diamond",
+            "minecraft:netherite"
+        ]
+    }
+}

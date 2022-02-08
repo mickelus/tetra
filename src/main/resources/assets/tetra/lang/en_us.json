@@ -1,5 +1,7 @@
 {
     "itemGroup.tetra": "Tetra",
+    "harvests.filter.tetra": "Tetra",
+    "harvests.filter.tetra.tooltip": "Tool tiers used by items in Tetra",
     "tetra.not_available": "n/a",
     "tetra.attribute.draw_strength.name": "Draw strength",
     "tetra.attribute.draw_speed.name": "Draw time",
