@@ -1,5 +1,6 @@
 {
   "itemGroup.tetra":"Tetra",
+  "tetra.langSetting.noSpace": "1",
   "tetra.attribute.draw_strength.name":"拉弓力量",
   "tetra.attribute.draw_speed.name":"拉弓時間",
   "tetra.attribute.ability_damage.name":"特殊功能傷害",
