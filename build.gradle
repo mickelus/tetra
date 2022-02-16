@@ -37,15 +37,6 @@ version = "${mc_version}-${tetra_version}"
 group = 'se.mickelus.tetra'
 archivesBaseName = "tetra"
 
-allprojects {
-    // Allow 400 errors.
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xmaxerrs" << "4000"
-        }
-    }
-}
-
 repositories {
     mavenLocal()
     maven { url = "https://maven.theillusivec4.top/" }
@@ -186,17 +177,34 @@ jar {
     }
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xmaxerrs" << "4000"
+}
+
 jar.finalizedBy('reobfJar')
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
             artifact jar
+
+            pom.withXml {
+
+                // Go through all the dependencies.
+                asNode().dependencies.dependency.each { dep ->
+
+                    println 'Surpressing artifact ' + dep.artifactId.last().value().last() + ' from maven dependencies.'
+                    assert dep.parent().remove(dep)
+                }
+            }
         }
     }
     repositories {
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            url = uri("file://${System.getenv("local_maven")}")
         }
     }
 }
