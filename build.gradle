@@ -24,6 +24,13 @@ apply plugin: 'maven-publish'
 
 if (System.getenv('VERSION') != null) {
     tetra_version = System.getenv('VERSION')
+} else {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags', '--abbrev=0'
+        standardOutput = stdout
+    }
+    tetra_version = stdout.toString().replace("\n", "").replace("\r", "").trim()
 }
 
 version = "${mc_version}-${tetra_version}"
