@@ -24,6 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 @ParametersAreNonnullByDefault
@@ -77,6 +78,10 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     @Override
     public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack) {
+        if (materialStack.isEmpty()) {
+            return false;
+        }
+
         ItemModuleMajor module = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, itemSlot))
                 .flatMap(mod -> CastOptional.cast(mod, ItemModuleMajor.class))
@@ -84,10 +89,24 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
         Map<Enchantment, Integer> currentEnchantments = EnchantmentHelper.getEnchantments(itemStack);
 
-        return module != null && !materialStack.isEmpty() && materialStack.getItem() instanceof EnchantedBookItem
+        return module != null && materialStack.getItem() instanceof EnchantedBookItem
                 && EnchantmentHelper.getEnchantments(materialStack).entrySet().stream()
-                .filter(entry -> EnchantmentHelper.isEnchantmentCompatible(currentEnchantments.keySet(), entry.getKey()))
-                .anyMatch(entry -> module.acceptsEnchantment(itemStack, entry.getKey(), false));
+                .anyMatch(entry -> acceptsEnchantment(itemStack, module, currentEnchantments.keySet(), entry.getKey(), entry.getValue()));
+    }
+
+    protected boolean stacksEnchantment(ItemStack itemStack, ItemModuleMajor module, Enchantment enchantment, int level) {
+        Map<Enchantment, Integer> moduleEnchantments = module.getEnchantments(itemStack);
+        if (moduleEnchantments.containsKey(enchantment)) {
+            int currentLevel = moduleEnchantments.get(enchantment);
+            return level >= currentLevel && currentLevel < enchantment.getMaxLevel();
+        }
+        return false;
+    }
+
+    protected boolean acceptsEnchantment(ItemStack itemStack, ItemModuleMajor module, Set<Enchantment> currentEnchantments, Enchantment enchantment, int level) {
+        return module.acceptsEnchantment(itemStack, enchantment, false)
+                && (stacksEnchantment(itemStack, module, enchantment, level)
+                || EnchantmentHelper.isEnchantmentCompatible(currentEnchantments, enchantment));
     }
 
     @Override
@@ -129,18 +148,24 @@ public class BookEnchantSchematic implements UpgradeSchematic {
                 .map(mod -> (ItemModuleMajor) mod)
                 .orElse(null);
 
-        Map<Enchantment, Integer> currentEnchantments = EnchantmentHelper.getEnchantments(itemStack);
 
         if (module != null) {
+            Map<Enchantment, Integer> currentEnchantments = EnchantmentHelper.getEnchantments(itemStack);
             EnchantmentHelper.getEnchantments(materials[0]).entrySet().stream()
-                    .filter(entry -> module.acceptsEnchantment(itemStack, entry.getKey(), false))
-                    .filter(entry -> EnchantmentHelper.isEnchantmentCompatible(currentEnchantments.keySet(), entry.getKey()))
+                    .filter(entry -> acceptsEnchantment(itemStack, module, currentEnchantments.keySet(), entry.getKey(), entry.getValue()))
                     .forEach(entry -> {
-                        TetraEnchantmentHelper.applyEnchantment(upgradedStack, module.getSlot(), entry.getKey(), entry.getValue());
+                        int level = entry.getValue();
+                        if (stacksEnchantment(upgradedStack, module, entry.getKey(), level)) {
+                            level = Math.max(currentEnchantments.get(entry.getKey()) + 1, level);
+                            currentEnchantments.put(entry.getKey(), level);
+                            EnchantmentHelper.setEnchantments(currentEnchantments, upgradedStack);
+                        } else {
+                            TetraEnchantmentHelper.applyEnchantment(upgradedStack, module.getSlot(), entry.getKey(), level);
+                        }
 
                         if (consumeMaterials && player instanceof ServerPlayer) {
                             ImprovementCraftCriterion.trigger((ServerPlayer) player, itemStack, upgradedStack, getKey(), slot,
-                                    "enchantment:" + Registry.ENCHANTMENT.getKey(entry.getKey()).toString(), entry.getValue(), null, -1);
+                                    "enchantment:" + Registry.ENCHANTMENT.getKey(entry.getKey()).toString(), level, null, -1);
                         }
                     });
 
