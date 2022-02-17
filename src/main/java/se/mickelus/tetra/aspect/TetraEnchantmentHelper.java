@@ -44,6 +44,14 @@ public class TetraEnchantmentHelper {
         aspectMap.put(ItemAspect.vanishable, new EnchantmentRules(EnchantmentCategory.VANISHABLE, "additions/vanishable", "exclusions/vanishable"));
     }
 
+    public static void registerMapping(ItemAspect aspect, @Nullable EnchantmentCategory category, String additions, String exclusions) {
+        registerMapping(aspect, new EnchantmentRules(category, additions, exclusions));
+    }
+    
+    public static void registerMapping(ItemAspect aspect, EnchantmentRules rules) {
+        aspectMap.put(aspect, rules);
+    }
+
     public static boolean isApplicableForAspects(Enchantment enchantment, boolean fromTable, Map<ItemAspect, Integer> aspects) {
         int requiredLevel = fromTable ? 2 : 1;
 
