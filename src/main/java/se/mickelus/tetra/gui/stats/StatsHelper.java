@@ -11,23 +11,27 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class StatsHelper {
     public static final int barLength = 59;
 
-    static IStatGetter sum(IStatGetter... statGetters) {
+    public static IStatGetter sum(IStatGetter... statGetters) {
         return new StatGetterSum(statGetters);
     }
 
-    static IStatGetter sum(double offset, IStatGetter... statGetters) {
+    public static IStatGetter sum(double offset, IStatGetter... statGetters) {
         return new StatGetterSum(offset, statGetters);
     }
 
-    static IStatGetter multiply(IStatGetter... statGetters) {
+    public static IStatGetter multiply(IStatGetter... statGetters) {
         return new StatGetterMultiply(statGetters);
     }
 
-    static IStatGetter[] withStats(IStatGetter... statGetters) {
+    public static IStatGetter multiply(double multiplier, IStatGetter... statGetters) {
+        return new StatGetterMultiply(multiplier, statGetters);
+    }
+
+    public static IStatGetter[] withStats(IStatGetter... statGetters) {
         return statGetters;
     }
 
-    static StatFormat[] withFormat(StatFormat... statGetters) {
+    public static StatFormat[] withFormat(StatFormat... statGetters) {
         return statGetters;
     }
 }
