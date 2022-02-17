@@ -200,7 +200,7 @@ public class TetraEnchantmentHelper {
         ResourceLocation exclusions;
         ResourceLocation additions;
 
-        public EnchantmentRules(@Nullable EnchantmentCategory category, String exclusions, String additions) {
+        public EnchantmentRules(@Nullable EnchantmentCategory category, String additions, String exclusions) {
             this.category = category;
             this.exclusions = new ResourceLocation(TetraMod.MOD_ID, exclusions);
             this.additions = new ResourceLocation(TetraMod.MOD_ID, additions);
