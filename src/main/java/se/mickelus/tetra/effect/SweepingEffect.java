@@ -23,6 +23,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class SweepingEffect {
 
+    public static int getSweepingLevel(ItemStack itemStack) {
+        return EffectHelper.getEffectLevel(itemStack, ItemEffect.sweeping) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SWEEPING_EDGE, itemStack);
+    }
+
     /**
      * Perfoms a sweeping attack, dealing damage and playing effects similar to vanilla swords.
      *
@@ -80,7 +84,7 @@ public class SweepingEffect {
      * @param attacker  the attacked entity
      */
     public static void truesweep(ItemStack itemStack, LivingEntity attacker) {
-        int sweepingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.sweeping);
+        int sweepingLevel = getSweepingLevel(itemStack);
         float damage = (float) Math.max(attacker.getAttributeValue(Attributes.ATTACK_DAMAGE) * (sweepingLevel * 0.125f), 1);
         float knockback = 0.5f + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
         double range = 2 + EffectHelper.getEffectEfficiency(itemStack, ItemEffect.sweeping);

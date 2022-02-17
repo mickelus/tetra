@@ -161,7 +161,7 @@ public class GuiStats {
     public static final GuiStatBar suspendSelf = new GuiStatBar(0, 0, barLength, "tetra.stats.toolbelt.suspend_self",
             0, 1, false, suspendSelfGetter, LabelGetterBasic.noLabel,
             new TooltipGetterNone("tetra.stats.toolbelt.suspend_self.tooltip"));
-    public static final IStatGetter sweepingGetter = new StatGetterEffectLevel(ItemEffect.sweeping, 12.5);
+    public static final IStatGetter sweepingGetter = sum(new StatGetterEffectLevel(ItemEffect.sweeping, 12.5), new StatGetterEnchantmentLevel(Enchantments.SWEEPING_EDGE, 12.5));
     public static final GuiStatBar sweeping = new GuiStatBar(0, 0, barLength, "tetra.stats.sweeping",
             0, 100, false, sweepingGetter, LabelGetterBasic.percentageLabelDecimal,
             new TooltipGetterSweeping(sweepingGetter))

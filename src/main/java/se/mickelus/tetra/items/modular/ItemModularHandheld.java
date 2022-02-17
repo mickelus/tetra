@@ -195,7 +195,7 @@ public class ItemModularHandheld extends ModularItem {
                     .orElse(1f);
 
             if (attackStrength > 0.9) {
-                int sweepingLevel = getEffectLevel(itemStack, ItemEffect.sweeping);
+                int sweepingLevel = SweepingEffect.getSweepingLevel(itemStack);
                 if (sweepingLevel > 0 && attacker.isOnGround() && !EffectHelper.getSprinting(attacker)) {
                     SweepingEffect.sweepAttack(itemStack, target, attacker, sweepingLevel);
                 }
