@@ -12,7 +12,7 @@
     ],
     "variants": [
         {
-            "materials": [ "tetra:wood/", "tetra:misc/stick", "tetra:metal/" ],
+            "materials": [ "tetra:wood/", "tetra:rods/stick", "tetra:metal/" ],
             "key": "recurve_stave/",
             "attributes": {
                 "tetra:draw_speed": 0.95

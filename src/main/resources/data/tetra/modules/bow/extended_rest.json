@@ -34,7 +34,7 @@
             }
         },
         {
-            "materials": [ "tetra:misc/stick" ],
+            "materials": [ "tetra:rods/stick" ],
             "key": "extended_rest/",
             "effects": {
                 "multishot": [ 2, 5 ]

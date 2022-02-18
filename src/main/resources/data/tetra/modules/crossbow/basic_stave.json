@@ -9,7 +9,7 @@
     ],
     "variants": [
         {
-            "materials": [ "tetra:wood/", "tetra:misc/stick", "tetra:metal/" ],
+            "materials": [ "tetra:wood/", "tetra:rods/stick", "tetra:metal/" ],
             "key": "basic_stave/",
             "attributes": {
                 "tetra:draw_speed": 1,

@@ -36,10 +36,7 @@
     ],
     "variants": [
         {
-            "materials": [
-                "tetra:wood/", "tetra:metal/",
-                "tetra:bone/", "tetra:misc/blaze_rod", "tetra:misc/end_rod", "tetra:misc/forged_beam", "tetra:misc/stick"
-            ],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rods/" ],
             "key": "long_handle/",
             "attributes": {
                 "generic.attack_speed": -1.1,

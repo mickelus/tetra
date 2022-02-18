@@ -30,7 +30,7 @@
             }
         },
         {
-            "materials": [ "tetra:misc/stick" ],
+            "materials": [ "tetra:rods/stick" ],
             "key": "sights/",
             "effects": {
                 "zoom": 20
