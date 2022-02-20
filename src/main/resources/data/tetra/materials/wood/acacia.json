@@ -1,6 +1,8 @@
 {
     "key": "acacia",
     "category": "wood",
+    "hidden": true,
+    "hiddenOutcomes": true,
     "primary": 3,
     "secondary": 1.7,
     "tertiary": 6,
