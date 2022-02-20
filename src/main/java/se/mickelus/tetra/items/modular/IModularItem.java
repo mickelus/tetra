@@ -668,29 +668,30 @@ public interface IModularItem {
                             DestabilizationEffect[] possibleEffects =
                                     DestabilizationEffect.getEffectsForImprovement(instability, module.getImprovements(itemStack));
 
-                            do {
-                                if (destabilizationChance > world.random.nextFloat()) {
-                                    DestabilizationEffect effect = possibleEffects[world.random.nextInt(possibleEffects.length)];
-                                    int currentEffectLevel = module.getImprovementLevel(itemStack, effect.destabilizationKey);
-                                    int newLevel;
+                            if (possibleEffects.length > 0) {
+                                do {
+                                    if (destabilizationChance > world.random.nextFloat()) {
+                                        DestabilizationEffect effect = possibleEffects[world.random.nextInt(possibleEffects.length)];
+                                        int currentEffectLevel = module.getImprovementLevel(itemStack, effect.destabilizationKey);
+                                        int newLevel;
 
-                                    if (currentEffectLevel >= 0) {
-                                        newLevel = currentEffectLevel + 1;
-                                    } else if (effect.minLevel == effect.maxLevel) {
-                                        newLevel = effect.minLevel;
-                                    } else {
-                                        newLevel = effect.minLevel + world.random.nextInt(effect.maxLevel - effect.minLevel);
+                                        if (currentEffectLevel >= 0) {
+                                            newLevel = currentEffectLevel + 1;
+                                        } else if (effect.minLevel == effect.maxLevel) {
+                                            newLevel = effect.minLevel;
+                                        } else {
+                                            newLevel = effect.minLevel + world.random.nextInt(effect.maxLevel - effect.minLevel);
+                                        }
+
+                                        if (module.acceptsImprovementLevel(effect.destabilizationKey, newLevel)) {
+                                            module.addImprovement(itemStack, effect.destabilizationKey, newLevel);
+                                        }
                                     }
 
-                                    if (module.acceptsImprovementLevel(effect.destabilizationKey, newLevel)) {
-                                        module.addImprovement(itemStack, effect.destabilizationKey, newLevel);
-                                    }
-                                }
-
-                                destabilizationChance--;
-                            } while (destabilizationChance > 1);
+                                    destabilizationChance--;
+                                } while (destabilizationChance > 1);
+                            }
                         }
-
                     });
         }
     }
