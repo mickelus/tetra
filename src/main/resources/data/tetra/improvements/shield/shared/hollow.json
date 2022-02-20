@@ -1,0 +1,10 @@
+[
+    {
+        "key": "hollow",
+        "textured": false,
+        "durabilityMultiplier": 0.9,
+        "attributes": {
+            "tetra:ability_cooldown": -0.2
+        }
+    }
+]
