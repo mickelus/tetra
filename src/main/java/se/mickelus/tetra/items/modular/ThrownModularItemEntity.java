@@ -417,7 +417,6 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         if (this.pickup != Pickup.ALLOWED || level <= 0) {
             super.tickDespawn();
         }
-
     }
 
     protected float getWaterInertia() {
