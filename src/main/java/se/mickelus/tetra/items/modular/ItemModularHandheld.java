@@ -830,11 +830,11 @@ public class ItemModularHandheld extends ModularItem {
             return true;
         }
 
-        return Optional.ofNullable(getEffectiveTool(state))
+        return ToolActionHelper.getAppropriateTools(state).stream()
                 .map(requiredTool -> getHarvestTier(stack, requiredTool))
                 .map(TierHelper::getTier)
-                .map(tier -> TierSortingRegistry.isCorrectTierForDrops(tier, state))
-                .orElse(false);
+                .filter(Objects::nonNull)
+                .anyMatch(tier -> TierSortingRegistry.isCorrectTierForDrops(tier, state));
     }
 
     public static double getAttackSpeedHarvestModifier(double attackSpeed) {
@@ -851,11 +851,14 @@ public class ItemModularHandheld extends ModularItem {
     @Override
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
         if (!isBroken(itemStack)) {
-            ToolAction tool = getEffectiveTool(blockState);
             float speed = (float) getAttackSpeedHarvestModifier(getAttributeValue(itemStack, Attributes.ATTACK_SPEED, 4));
+            Set<ToolAction> appropriateTools = ToolActionHelper.getAppropriateTools(blockState);
 
-            if (tool != null) {
-                speed *= getToolEfficiency(itemStack, tool);
+            if (!appropriateTools.isEmpty()) {
+                speed *= appropriateTools.stream()
+                        .mapToDouble(tool -> getToolEfficiency(itemStack, tool))
+                        .max()
+                        .orElse(0f);
             } else {
                 speed *= getToolActions(itemStack).stream()
                         .filter(toolAction -> ToolActionHelper.isEffectiveOn(toolAction, blockState))
