@@ -126,10 +126,6 @@ public class ItemModularHandheld extends ModularItem {
         return Math.max(0, 0.15 - Math.abs(counterWeightLevel - integrityCost) * 0.05);
     }
 
-    public static ToolAction getEffectiveTool(BlockState blockState) {
-        return ToolActionHelper.getAppropriateTool(blockState);
-    }
-
     public int getBlockDestroyDamage() {
         return blockDestroyDamage;
     }

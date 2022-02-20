@@ -28,50 +28,39 @@ import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 public class PiercingEffect {
-    public static void pierceBlocks(ItemModularHandheld item, ItemStack itemStack, int pierceAmount, ServerLevel world, BlockState state, BlockPos pos, LivingEntity entity) {
+    public static void pierceBlocks(ItemModularHandheld item, ItemStack itemStack, int pierceAmount, ServerLevel world, BlockState state,
+            BlockPos pos, LivingEntity entity) {
         Player player = CastOptional.cast(entity, Player.class).orElse(null);
 
         if (pierceAmount > 0) {
-            double critMultiplier = CritEffect.rollMultiplier(entity.getRandom(), item, itemStack);
-            if (critMultiplier != 1) {
-                pierceAmount *= critMultiplier;
-                world.sendParticles(ParticleTypes.ENCHANTED_HIT, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, 15, 0.2D, 0.2D, 0.2D, 0.0D);
-            }
+            float referenceHardness = state.getDestroySpeed(world, pos);
+            ToolAction referenceTool = ToolActionHelper.getAppropriateTools(state).stream()
+                    .filter(tool -> item.canPerformAction(itemStack, tool))
+                    .findFirst()
+                    .orElse(null);
 
-            Vec3 entityPosition = entity.getEyePosition(0);
-            double lookDistance = Optional.ofNullable(entity.getAttribute(ForgeMod.REACH_DISTANCE.get()))
-                    .map(AttributeInstance::getValue)
-                    .orElse(5d);
+            if (referenceTool != null && item.getToolLevel(itemStack, referenceTool) > 0) {
 
-            Vec3 lookingPosition = entity.getLookAngle().scale(lookDistance).add(entityPosition);
-            BlockHitResult rayTrace = world.clip(new ClipContext(entityPosition, lookingPosition,
-                    ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
+                double critMultiplier = CritEffect.rollMultiplier(entity.getRandom(), item, itemStack);
+                if (critMultiplier != 1) {
+                    pierceAmount *= critMultiplier;
+                    world.sendParticles(ParticleTypes.ENCHANTED_HIT, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, 15, 0.2D, 0.2D, 0.2D, 0.0D);
+                }
 
-            Direction direction = rayTrace.getType() == HitResult.Type.BLOCK
-                    ? rayTrace.getDirection().getOpposite()
-                    : Direction.orderedByNearest(entity)[0];
+                Vec3 entityPosition = entity.getEyePosition(0);
+                double lookDistance = Optional.ofNullable(entity.getAttribute(ForgeMod.REACH_DISTANCE.get()))
+                        .map(AttributeInstance::getValue)
+                        .orElse(5d);
 
-            float refHardness = state.getDestroySpeed(world, pos);
-            ToolAction refTool = ItemModularHandheld.getEffectiveTool(state);
+                Vec3 lookingPosition = entity.getLookAngle().scale(lookDistance).add(entityPosition);
+                BlockHitResult rayTrace = world.clip(new ClipContext(entityPosition, lookingPosition,
+                        ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
 
-//            for (int i = 0; i < pierceAmount; i++) {
-//                BlockPos offsetPos = pos.offset(facing, i + 1);
-//                BlockState offsetState = world.getBlockState(offsetPos);
-//                ToolAction effectiveTool = ItemModularHandheld.getEffectiveTool(offsetState);
-//
-//                int toolLevel = itemStack.getItem().getHarvestLevel(itemStack, effectiveTool, player, offsetState);
-//                if (((toolLevel >= 0 && toolLevel >= offsetState.getBlock().getHarvestLevel(offsetState))
-//                        || itemStack.canHarvestBlock(offsetState))
-//                        && offsetState.getBlockHardness(world, offsetPos) <= refHardness
-//                        && refTool != null && ItemModularHandheld.isToolEffective(refTool, offsetState)) {
-//                    if (EffectHelper.breakBlock(world, player, itemStack, offsetPos, offsetState, true)) {
-//                        continue;
-//                    }
-//                }
-//                break;
-//            }
-            if (refTool != null && item.getToolLevel(itemStack, refTool) > 0) {
-                enqueueBlockBreak(world, player, item, itemStack, direction, pos.relative(direction), refHardness, refTool, pierceAmount);
+                Direction direction = rayTrace.getType() == HitResult.Type.BLOCK
+                        ? rayTrace.getDirection().getOpposite()
+                        : Direction.orderedByNearest(entity)[0];
+
+                enqueueBlockBreak(world, player, item, itemStack, direction, pos.relative(direction), referenceHardness, referenceTool, pierceAmount);
             }
         }
     }

@@ -49,11 +49,6 @@ public class ToolActionHelper {
         appropriateTools.put(ToolActions.HOE_DIG, BlockTags.MINEABLE_WITH_HOE);
     }
 
-    private static Stream<ToolAction> getActionsFor(BlockState state) {
-        return ToolAction.getActions().stream()
-                .filter(action -> isEffectiveOn(action, state));
-    }
-
     public static Set<ToolAction> getAppropriateTools(BlockState state) {
         return getActionsFor(state).collect(Collectors.toSet());
     }
@@ -65,9 +60,13 @@ public class ToolActionHelper {
                 .orElse(null);
     }
 
-
     public static boolean isEffectiveOn(ItemStack stack, BlockState state) {
         return getActionsFor(state).anyMatch(stack::canPerformAction);
+    }
+
+    private static Stream<ToolAction> getActionsFor(BlockState state) {
+        return ToolAction.getActions().stream()
+                .filter(action -> isEffectiveOn(action, state));
     }
 
     public static boolean isEffectiveOn(ToolAction action, BlockState state) {
