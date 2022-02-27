@@ -67,7 +67,6 @@ public class ConfigHandler {
 
     public static ForgeConfigSpec.BooleanValue enableExtractor;
 
-    public static ForgeConfigSpec.BooleanValue enableLookTrigger;
     public static ForgeConfigSpec.BooleanValue enableReach;
 
     static {
@@ -106,11 +105,6 @@ public class ConfigHandler {
                 .comment("Multiplier for magic capacity gains, increasing this may be useful when having a large set enchantments added by other mods")
                 .defineInRange("magic_cap_multiplier", 1, 0, Double.MAX_VALUE);
 
-        enableLookTrigger = builder
-                .comment("Enable the look advancement trigger, used for some advancements. ")
-                .worldRestart()
-                .define("look_trigger", true);
-
         enableReach = builder
                 .comment("Allow the reach attribute to modify the distance at which players can hit entities")
                 .worldRestart()
@@ -126,7 +120,7 @@ public class ConfigHandler {
         geodeDensity = builder
                 .comment("The number of geodes that should generate per chunk, set to 0 to disable")
                 .worldRestart()
-                .defineInRange("geode_density", 120, 0, 65536);
+                .defineInRange("geode_density", 320, 0, 65536);
 
         generateFeatures = builder
                 .comment("Generates features in the world, further configuration available in \"tetra/data/structures/\"")

@@ -144,10 +144,6 @@ public class TetraMod {
         MinecraftForge.EVENT_BUS.register(ServerScheduler.class);
         MinecraftForge.EVENT_BUS.register(ClientScheduler.class);
 
-        if (ConfigHandler.enableLookTrigger.get()) {
-            MinecraftForge.EVENT_BUS.register(BlockLookTrigger.instance);
-        }
-
         ToolActionHelper.init();
         TierHelper.init();
 
@@ -187,7 +183,6 @@ public class TetraMod {
 
         new TetraItemGroup();
 
-        CriteriaTriggers.register(BlockLookTrigger.instance);
         CriteriaTriggers.register(BlockUseCriterion.trigger);
         CriteriaTriggers.register(BlockInteractionCriterion.trigger);
         CriteriaTriggers.register(ModuleCraftCriterion.trigger);
