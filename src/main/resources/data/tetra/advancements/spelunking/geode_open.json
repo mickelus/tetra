@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:gold_nugget"
+            "item": "minecraft:raw_gold"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.geode_open.title"
@@ -15,7 +15,7 @@
         "consume_geode": {
             "trigger": "minecraft:consume_item",
             "conditions": {
-                "item": [ { "items": [ "tetra:geode" ] } ]
+                "item": { "items": [ "tetra:geode" ] }
             }
         }
     }

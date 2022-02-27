@@ -7,6 +7,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -21,6 +23,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
@@ -41,12 +44,17 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
-import se.mickelus.tetra.advancements.*;
+import se.mickelus.tetra.advancements.BlockInteractionCriterion;
+import se.mickelus.tetra.advancements.BlockUseCriterion;
+import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
+import se.mickelus.tetra.advancements.ModuleCraftCriterion;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.ITetraBlock;
 import se.mickelus.tetra.blocks.forged.chthonic.*;
 import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
 import se.mickelus.tetra.blocks.geode.*;
+import se.mickelus.tetra.blocks.geode.particle.SparkleParticle;
+import se.mickelus.tetra.blocks.geode.particle.SparkleParticleType;
 import se.mickelus.tetra.blocks.rack.RackBlock;
 import se.mickelus.tetra.blocks.rack.RackTile;
 import se.mickelus.tetra.blocks.scroll.*;
@@ -378,7 +386,7 @@ public class TetraMod {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onBiomeLoading(BiomeLoadingEvent event) {
-        GeodeBlock.registerFeature(event.getGeneration());
+        GeodeBlock.registerFeature(event);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -517,6 +525,16 @@ public class TetraMod {
                             .build(ExtractorProjectileEntity.unlocalizedName)
                             .setRegistryName(MOD_ID, ExtractorProjectileEntity.unlocalizedName)
             );
+        }
+
+        @SubscribeEvent
+        public static void registerParticles(final RegistryEvent.Register<ParticleType<?>> event) {
+            event.getRegistry().register(new SimpleParticleType(false).setRegistryName(TetraMod.MOD_ID, SparkleParticleType.identifier));
+        }
+
+        @SubscribeEvent
+        public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
+            Minecraft.getInstance().particleEngine.register(SparkleParticleType.instance, SparkleParticle.Provider::new);
         }
     }
 }

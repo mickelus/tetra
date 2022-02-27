@@ -6,113 +6,173 @@
             "entries": [
                 {
                     "type": "group",
-                    "weight": 8,
+                    "weight": 16,
                     "children": [
                         {
                             "type": "minecraft:item",
-                            "name": "minecraft:gold_nugget",
+                            "name": "minecraft:raw_gold",
                             "functions": [
                                 {
                                     "function": "set_count",
                                     "count": {
-                                        "min": 8,
-                                        "max": 14
+                                        "min": 1,
+                                        "max": 3
                                     }
                                 },
                                 {
                                     "function": "minecraft:apply_bonus",
                                     "enchantment": "minecraft:fortune",
-                                    "formula": "uniform_bonus_count",
-                                    "parameters": {
-                                        "bonusMultiplier": 3
-                                    }
+                                    "formula": "minecraft:ore_drops"
                                 }
                             ]
                         },
                         {
                             "type": "minecraft:item",
-                            "name": "minecraft:iron_nugget",
+                            "name": "minecraft:raw_iron",
                             "functions": [
                                 {
                                     "function": "set_count",
                                     "count": {
-                                        "min": 8,
-                                        "max": 14
+                                        "min": 1,
+                                        "max": 3
                                     }
                                 },
                                 {
                                     "function": "minecraft:apply_bonus",
                                     "enchantment": "minecraft:fortune",
-                                    "formula": "uniform_bonus_count",
-                                    "parameters": {
-                                        "bonusMultiplier": 3
+                                    "formula": "minecraft:ore_drops"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "minecraft:item",
+                            "name": "minecraft:raw_copper",
+                            "functions": [
+                                {
+                                    "function": "set_count",
+                                    "count": {
+                                        "min": 1,
+                                        "max": 3
                                     }
+                                },
+                                {
+                                    "function": "minecraft:apply_bonus",
+                                    "enchantment": "minecraft:fortune",
+                                    "formula": "minecraft:ore_drops"
                                 }
                             ]
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:nuggets/copper",
+                            "name": "forge:raw_materials/tin",
                             "expand": true,
                             "functions": [
                                 {
                                     "function": "set_count",
                                     "count": {
-                                        "min": 8,
-                                        "max": 14
+                                        "min": 1,
+                                        "max": 3
                                     }
                                 },
                                 {
                                     "function": "minecraft:apply_bonus",
                                     "enchantment": "minecraft:fortune",
-                                    "formula": "uniform_bonus_count",
-                                    "parameters": {
-                                        "bonusMultiplier": 3
-                                    }
+                                    "formula": "minecraft:ore_drops"
                                 }
                             ]
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:nuggets/aluminum",
+                            "name": "forge:raw_materials/lead",
                             "expand": true,
                             "functions": [
                                 {
                                     "function": "set_count",
                                     "count": {
-                                        "min": 8,
-                                        "max": 14
+                                        "min": 1,
+                                        "max": 3
                                     }
                                 },
                                 {
                                     "function": "minecraft:apply_bonus",
                                     "enchantment": "minecraft:fortune",
-                                    "formula": "uniform_bonus_count",
-                                    "parameters": {
-                                        "bonusMultiplier": 3
-                                    }
+                                    "formula": "minecraft:ore_drops"
                                 }
                             ]
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:nuggets/silver",
+                            "name": "forge:raw_materials/osmium",
                             "expand": true,
                             "functions": [
                                 {
                                     "function": "set_count",
                                     "count": {
-                                        "min": 8,
-                                        "max": 14
+                                        "min": 1,
+                                        "max": 3
                                     }
                                 },
                                 {
                                     "function": "minecraft:apply_bonus",
                                     "enchantment": "minecraft:fortune",
-                                    "formula": "uniform_bonus_count",
-                                    "parameters": {
-                                        "bonusMultiplier": 3
+                                    "formula": "minecraft:ore_drops"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "minecraft:tag",
+                            "name": "forge:raw_materials/nickel",
+                            "expand": true,
+                            "functions": [
+                                {
+                                    "function": "set_count",
+                                    "count": {
+                                        "min": 1,
+                                        "max": 3
                                     }
+                                },
+                                {
+                                    "function": "minecraft:apply_bonus",
+                                    "enchantment": "minecraft:fortune",
+                                    "formula": "minecraft:ore_drops"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "minecraft:tag",
+                            "name": "forge:raw_materials/aluminum",
+                            "expand": true,
+                            "functions": [
+                                {
+                                    "function": "set_count",
+                                    "count": {
+                                        "min": 1,
+                                        "max": 3
+                                    }
+                                },
+                                {
+                                    "function": "minecraft:apply_bonus",
+                                    "enchantment": "minecraft:fortune",
+                                    "formula": "minecraft:ore_drops"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "minecraft:tag",
+                            "name": "forge:raw_materials/silver",
+                            "expand": true,
+                            "functions": [
+                                {
+                                    "function": "set_count",
+                                    "count": {
+                                        "min": 1,
+                                        "max": 3
+                                    }
+                                },
+                                {
+                                    "function": "minecraft:apply_bonus",
+                                    "enchantment": "minecraft:fortune",
+                                    "formula": "minecraft:ore_drops"
                                 }
                             ]
                         }
@@ -178,8 +238,30 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "minecraft:emerald",
+                    "name": "minecraft:amethyst_shard",
                     "weight": 2,
+                    "conditions": [
+                        {
+                            "condition": "tetra:random_chance_with_fortune",
+                            "chance": 0.5,
+                            "fortuneMultiplier": 0.2
+                        }
+                    ],
+                    "functions": [
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:emerald",
+                    "weight": 4,
                     "conditions": [
                         {
                             "condition": "tetra:random_chance_with_fortune",

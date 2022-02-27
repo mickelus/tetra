@@ -40,10 +40,7 @@ archivesBaseName = "tetra"
 repositories {
     mavenLocal()
     maven { url = "https://maven.theillusivec4.top/" }
-    maven {
-        name = 'patchouli/botania'
-        url = 'https://maven.blamejared.com/'
-    }
+    maven { url = 'https://maven.blamejared.com/' }
     maven {
         url "https://cursemaven.com"
         content {
