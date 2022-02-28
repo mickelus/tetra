@@ -35,7 +35,6 @@
                 "generic.attack_speed": -1.25
             },
             "aspects": {
-                "blockBreaker": 2,
                 "pointyWeapon": 2,
                 "throwable": 2,
                 "breakable": 2
