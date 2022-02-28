@@ -322,6 +322,9 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     // possibly stops this from being removed after sitting around for too long
     @Override
     public void tickDespawn() {
+        if (this.pickup != Pickup.ALLOWED) {
+            super.tickDespawn();
+        }
     }
 
     @Override

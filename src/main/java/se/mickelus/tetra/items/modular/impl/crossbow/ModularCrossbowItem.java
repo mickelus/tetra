@@ -251,7 +251,7 @@ public class ModularCrossbowItem extends ModularItem {
             ItemStack advancementCopy = itemStack.copy();
             int multishotEnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, itemStack) * 3;
             int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot) + multishotEnchantLevel, 1);
-            List<ItemStack> list = takeProjectiles(itemStack, count);
+            List<ItemStack> list = takeProjectiles(itemStack, 1);
 
             if (!list.isEmpty()) {
                 double spread = getEffectEfficiency(itemStack, ItemEffect.multishot);
@@ -260,10 +260,11 @@ public class ModularCrossbowItem extends ModularItem {
                     spread = multishotDefaultSpread;
                 }
 
-                for (int i = 0; i < list.size(); i++) {
-                    ItemStack ammoStack = list.get(i);
+                for (int i = 0; i < count; i++) {
+                    ItemStack ammoStack = list.get(0);
                     double yaw = player.getYRot() - spread * (count - 1) / 2f + spread * i;
-                    fireProjectile(world, itemStack, ammoStack, player, yaw);
+                    boolean isDupe = player.getAbilities().instabuild || count > 1 && i != count / 2;
+                    fireProjectile(world, itemStack, ammoStack, player, yaw, isDupe);
                 }
 
                 // todo: needs to apply 3 points of damage if it's firework
@@ -282,7 +283,31 @@ public class ModularCrossbowItem extends ModularItem {
         }
     }
 
-    protected void fireProjectile(Level world, ItemStack crossbowStack, ItemStack ammoStack, Player player, double yaw) {
+    public int getReloadDuration(ItemStack itemStack) {
+        return Math.max((int) (20 * (getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())
+                - EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
+    }
+
+    /**
+     * Returns a value between 0 - 1 representing how far the crossbow has been drawn, a value of 1 means that the crossbow is fully drawn
+     *
+     * @param itemStack
+     * @param entity
+     * @return
+     */
+    public float getProgress(ItemStack itemStack, @Nullable LivingEntity entity) {
+        return Optional.ofNullable(entity)
+                .filter(e -> e.getUseItemRemainingTicks() > 0)
+                .filter(e -> itemStack.equals(e.getUseItem()))
+                .map(e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getReloadDuration(itemStack))
+                .orElse(0f);
+    }
+
+    private ItemStack findAmmo(LivingEntity entity) {
+        return entity.getProjectile(shootableDummy);
+    }
+
+    protected void fireProjectile(Level world, ItemStack crossbowStack, ItemStack ammoStack, Player player, double yaw, boolean isDupe) {
         double strength = getAttributeValue(crossbowStack, TetraAttributes.drawStrength.get());
         float velocityBonus = getEffectLevel(crossbowStack, ItemEffect.velocity) / 100f;
         float projectileVelocity = getProjectileVelocity(strength, velocityBonus);
@@ -290,7 +315,7 @@ public class ModularCrossbowItem extends ModularItem {
         if (ChthonicExtractorBlock.item.equals(ammoStack.getItem()) || ChthonicExtractorBlock.usedItem.equals(ammoStack.getItem())) {
             ExtractorProjectileEntity projectileEntity = new ExtractorProjectileEntity(world, player, ammoStack);
 
-            if (player.getAbilities().instabuild) {
+            if (isDupe) {
                 projectileEntity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             }
 
@@ -324,84 +349,12 @@ public class ModularCrossbowItem extends ModularItem {
                 projectile.setPierceLevel((byte) piercingLevel);
             }
 
-            if (player.getAbilities().instabuild) {
+            if (isDupe) {
                 projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             }
 
             projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 3.15F, 1.0F);
             world.addFreshEntity(projectile);
-        }
-    }
-
-    public int getReloadDuration(ItemStack itemStack) {
-        return Math.max((int) (20 * (getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())
-                - EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
-    }
-
-    /**
-     * Returns a value between 0 - 1 representing how far the crossbow has been drawn, a value of 1 means that the crossbow is fully drawn
-     *
-     * @param itemStack
-     * @param entity
-     * @return
-     */
-    public float getProgress(ItemStack itemStack, @Nullable LivingEntity entity) {
-        return Optional.ofNullable(entity)
-                .filter(e -> e.getUseItemRemainingTicks() > 0)
-                .filter(e -> itemStack.equals(e.getUseItem()))
-                .map(e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getReloadDuration(itemStack))
-                .orElse(0f);
-    }
-
-    private ItemStack findAmmo(LivingEntity entity) {
-        return entity.getProjectile(shootableDummy);
-    }
-
-    private boolean reload(LivingEntity entity, ItemStack crossbowStack) {
-        int count = Math.max(getEffectLevel(crossbowStack, ItemEffect.multishot) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, crossbowStack) * 3, 1);
-        boolean infinite = CastOptional.cast(entity, Player.class)
-                .map(player -> player.getAbilities().instabuild)
-                .orElse(false);
-
-        // todo: this has to be improved
-        ItemStack ammoStack = findAmmo(entity);
-        ItemStack itemstack1 = ammoStack.copy();
-
-        for (int i = 0; i < count; i++) {
-            if (i > 0) {
-                ammoStack = itemstack1.copy();
-            }
-
-            if (ammoStack.isEmpty() && infinite) {
-                ammoStack = new ItemStack(Items.ARROW);
-                itemstack1 = ammoStack.copy();
-            }
-
-            if (!loadProjectiles(entity, crossbowStack, ammoStack, i > 0, infinite)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private boolean loadProjectiles(LivingEntity entity, ItemStack crossbowStack, ItemStack ammoStack, boolean p_220023_3_, boolean p_220023_4_) {
-        if (ammoStack.isEmpty()) {
-            return false;
-        } else {
-            boolean flag = p_220023_4_ && ammoStack.getItem() instanceof ArrowItem;
-            ItemStack itemstack;
-            if (!flag && !p_220023_4_ && !p_220023_3_) {
-                itemstack = ammoStack.split(1);
-                if (ammoStack.isEmpty() && entity instanceof Player player) {
-                    player.getInventory().removeItem(ammoStack);
-                }
-            } else {
-                itemstack = ammoStack.copy();
-            }
-
-            writeProjectile(crossbowStack, itemstack);
-            return true;
         }
     }
 
@@ -586,6 +539,32 @@ public class ModularCrossbowItem extends ModularItem {
         return models;
     }
 
+    private boolean reload(LivingEntity entity, ItemStack crossbowStack) {
+        int count = Math.max(getEffectLevel(crossbowStack, ItemEffect.ammoCapacity), 1);
+        boolean infinite = CastOptional.cast(entity, Player.class)
+                .map(player -> player.getAbilities().instabuild)
+                .orElse(false);
+
+        // todo: this has to be improved
+        ItemStack ammoStack = ItemStack.EMPTY;
+
+        for (int i = 0; i < count; i++) {
+            if (ammoStack.isEmpty()) {
+                ammoStack = findAmmo(entity);
+            }
+
+            if (ammoStack.isEmpty() && infinite) {
+                ammoStack = new ItemStack(Items.ARROW);
+            }
+
+            if (!loadProjectiles(entity, crossbowStack, ammoStack, infinite && ammoStack.getItem() instanceof ArrowItem)) {
+                return i > 0;
+            }
+        }
+
+        return true;
+    }
+
     @Override
     @OnlyIn(Dist.CLIENT)
     public GuiModuleOffsets getMajorGuiOffsets() {
@@ -596,5 +575,24 @@ public class ModularCrossbowItem extends ModularItem {
     @OnlyIn(Dist.CLIENT)
     public GuiModuleOffsets getMinorGuiOffsets() {
         return minorOffsets;
+    }
+
+    private boolean loadProjectiles(LivingEntity entity, ItemStack crossbowStack, ItemStack ammoStack, boolean infiniteAmmo) {
+        if (ammoStack.isEmpty()) {
+            return false;
+        } else {
+            ItemStack itemstack;
+            if (!infiniteAmmo) {
+                itemstack = ammoStack.split(1);
+                if (ammoStack.isEmpty() && entity instanceof Player player) {
+                    player.getInventory().removeItem(ammoStack);
+                }
+            } else {
+                itemstack = ammoStack.copy();
+            }
+
+            writeProjectile(crossbowStack, itemstack);
+            return true;
+        }
     }
 }
