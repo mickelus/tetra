@@ -75,6 +75,11 @@
             "effects": {
                 "throwable": [ 1, 0.9 ]
             },
+            "aspects": {
+                "blockBreaker": 1,
+                "throwable": 2,
+                "breakable": 2
+            },
             "durability": 261,
             "integrity": 4,
             "magicCapacity": 90,
