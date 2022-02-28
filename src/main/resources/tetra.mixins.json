@@ -4,11 +4,13 @@
     "compatibilityLevel": "JAVA_17",
     "refmap": "tetra.refmap.json",
     "mixins": [
+        "ItemInHandRendererMixin",
+        "MixinEnchantmentHelper",
         "MixinGrindstoneContainer",
         "MixinItemStack",
         "MixinPlayerEntity",
-        "MixinServerPlayNetHandler",
-        "MixinEnchantmentHelper"
+        "MixinPlayerRenderer",
+        "MixinServerPlayNetHandler"
     ],
     "minVersion": "0.8"
 }
