@@ -47,7 +47,7 @@ public class TetraEnchantmentHelper {
     public static void registerMapping(ItemAspect aspect, @Nullable EnchantmentCategory category, String additions, String exclusions) {
         registerMapping(aspect, new EnchantmentRules(category, additions, exclusions));
     }
-    
+
     public static void registerMapping(ItemAspect aspect, EnchantmentRules rules) {
         aspectMap.put(aspect, rules);
     }
@@ -195,7 +195,7 @@ public class TetraEnchantmentHelper {
                 .orElse(null);
     }
 
-    static class EnchantmentRules {
+    public static class EnchantmentRules {
         EnchantmentCategory category;
         ResourceLocation exclusions;
         ResourceLocation additions;
