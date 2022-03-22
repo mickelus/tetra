@@ -98,7 +98,7 @@ public class MaterialData {
             to.hiddenOutcomes = from.hiddenOutcomes;
         }
 
-        if (from.category != null) {
+        if (!defaultValues.category.equals(from.category)) {
             to.category = from.category;
         }
 
