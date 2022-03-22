@@ -68,7 +68,9 @@ public class GeodeBlock extends TetraBlock {
     }
 
     public static void registerFeature(BiomeLoadingEvent event) {
-        if (event.getCategory() != Biome.BiomeCategory.THEEND && event.getCategory() != Biome.BiomeCategory.NETHER) {
+        if (instance.feature != null
+                && event.getCategory() != Biome.BiomeCategory.THEEND
+                && event.getCategory() != Biome.BiomeCategory.NETHER) {
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, instance.feature);
         }
     }
