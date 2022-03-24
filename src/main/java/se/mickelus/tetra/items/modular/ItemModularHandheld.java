@@ -136,7 +136,7 @@ public class ItemModularHandheld extends ModularItem {
 
     @Override
     public boolean isDamageable(ItemStack stack) {
-        return stack.hasTag();
+        return getMaxDamage(stack) > 0;
     }
 
     @Override
