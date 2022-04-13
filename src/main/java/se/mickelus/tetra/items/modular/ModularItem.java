@@ -21,8 +21,10 @@ import net.minecraftforge.common.ToolType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.compat.botania.ManaRepair;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.properties.IToolProvider;
@@ -35,6 +37,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
+import vazkii.botania.api.mana.ManaItemHandler;
 
 public abstract class ModularItem extends TetraItem implements IModularItem, IToolProvider {
     private static final Logger logger = LogManager.getLogger();
@@ -208,6 +211,22 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
+        if (BotaniaCompat.isLoaded && entity instanceof PlayerEntity) {
+            final PlayerEntity player = (PlayerEntity) entity;
+            int manaRepairLevel = EffectHelper.getEffectLevel(stack, ManaRepair.effect);
+            if (manaRepairLevel > 0) {
+                while (amount > 0) {
+                    if (ManaItemHandler.instance().requestManaExactForTool(stack, player, manaRepairLevel * 2, true)) {
+                        amount--;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                return amount;
+            }
+        }
+
         return Math.min(stack.getMaxDamage() - stack.getDamage() - 1, amount);
     }
 
