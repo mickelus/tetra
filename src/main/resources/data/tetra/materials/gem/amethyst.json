@@ -19,7 +19,7 @@
         "crude"
     ],
     "material": {
-        "items": [ "minecraft:amethyst" ]
+        "items": [ "minecraft:amethyst_shard" ]
     },
     "requiredTools": {
         "hammer_dig": "minecraft:stone"
