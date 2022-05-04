@@ -1,0 +1,354 @@
+[
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_leeching",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_leeching"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_anima_conduit",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_anima_conduit"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_dynamo",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_dynamo"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_enigma_resonator",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_enigma_resonator"
+  },
+  {
+  "destabilizationKey": "destabilized/dungeons_gear_gravity",
+  "minLevel": 1,
+  "maxLevel": 3,
+  "requiredMod": "dungeons_gear",
+  "probability": 0.04,
+  "improvementKey": "enchantment/dungeons_gear_gravity"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_poison_cloud",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_poison_cloud"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_refreshment",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_refreshment"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_artifact_synergy",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_artifact_synergy"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_busy_bee",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_busy_bee"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_chains",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_chains"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_committed",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_committed"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_critical_hit",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_critical_hit"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_echo",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_echo"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_exploding",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_exploding"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_freezing",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_freezing"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_guarding_strike",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_guarding_strike"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_illagers_bane",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_illagers_bane"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_pain_cycle",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_pain_cycle"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_prospector",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_prospector"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_radiance",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_radiance"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_rampaging",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_rampaging"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_rushdown",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_rushdown"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_shockwave",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_shockwave"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_soul_siphon",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_soul_siphon"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_stunning",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_stunning"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_swirling",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_swirling"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_thundering",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_thundering"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_weakening",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_weakening"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_accelerate",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_accelerate"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_bonus_shot",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_bonus_shot"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_burst_bowstring",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_burst_bowstring"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_chain_reaction",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_chain_reaction"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_cooldown_shot",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_cooldown_shot"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_fuse_shot",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_fuse_shot"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_growing",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_growing"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_overcharge",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_overcharge"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_radiance_shot",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_radiance_shot"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_replenish",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_replenish"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_ricochet",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_ricochet"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_roll_charge",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_roll_charge"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_shock_web",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_shock_web"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_supercharge",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_supercharge"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_tempo_theft",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_tempo_theft"
+  },
+  {
+    "destabilizationKey": "destabilized/dungeons_gear_wild_rage",
+    "minLevel": 1,
+    "maxLevel": 3,
+    "requiredMod": "dungeons_gear",
+    "probability": 0.04,
+    "improvementKey": "enchantment/dungeons_gear_wild_rage"
+  }
+]

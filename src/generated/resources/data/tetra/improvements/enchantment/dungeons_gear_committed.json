@@ -1,0 +1,20 @@
+[
+  {
+    "key": "enchantment/dungeons_gear_committed",
+    "level": 1,
+    "enchantment": true,
+    "magicCapacity": -20.0
+  },
+  {
+    "key": "enchantment/dungeons_gear_committed",
+    "level": 2,
+    "enchantment": true,
+    "magicCapacity": -30.0
+  },
+  {
+    "key": "enchantment/dungeons_gear_committed",
+    "level": 3,
+    "enchantment": true,
+    "magicCapacity": -40.0
+  }
+]
