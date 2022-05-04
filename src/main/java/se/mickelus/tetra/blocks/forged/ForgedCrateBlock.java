@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -29,12 +28,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
-import se.mickelus.tetra.blocks.ITetraBlock;
+import se.mickelus.tetra.blocks.InitializableBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.effect.EffectHelper;
@@ -49,12 +46,12 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 import static net.minecraft.world.level.material.Fluids.WATER;
 
 @ParametersAreNonnullByDefault
-public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInteractiveBlock, SimpleWaterloggedBlock {
+public class ForgedCrateBlock extends FallingBlock implements InitializableBlock, IInteractiveBlock, SimpleWaterloggedBlock {
     public static final DirectionProperty propFacing = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty propStacked = BooleanProperty.create("stacked");
     public static final IntegerProperty propIntegrity = IntegerProperty.create("integrity", 0, 3);
     public static final ResourceLocation interactionLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/crate_content");
-    static final String unlocalizedName = "forged_crate";
+    static final String identifier = "forged_crate";
     static final BlockInteraction[] interactions = new BlockInteraction[]{
             new BlockInteraction(TetraToolActions.pry, 1, Direction.EAST, 6, 8, 6, 8,
                     BlockStatePredicate.ANY,
@@ -69,8 +66,6 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     private static final VoxelShape shape = box(1, 0, 1, 15, 14, 15);
     private static final VoxelShape[] shapesNormal = new VoxelShape[4];
     private static final VoxelShape[] shapesOffset = new VoxelShape[4];
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ForgedCrateBlock instance;
 
     static {
         for (Direction dir : Direction.Plane.HORIZONTAL) {
@@ -83,8 +78,6 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
         super(Properties.of(ForgedBlockCommon.forgedMaterial)
                 .sound(SoundType.METAL)
                 .strength(5));
-
-        setRegistryName(unlocalizedName);
 
         this.registerDefaultState(defaultBlockState()
                 .setValue(propFacing, Direction.EAST)
@@ -200,15 +193,5 @@ public class ForgedCrateBlock extends FallingBlock implements ITetraBlock, IInte
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(propFacing)));
-    }
-
-    @Override
-    public boolean hasItem() {
-        return true;
-    }
-
-    @Override
-    public void registerItem(IForgeRegistry<Item> registry) {
-        registerItem(registry, this);
     }
 }

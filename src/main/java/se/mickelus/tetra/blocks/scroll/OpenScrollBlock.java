@@ -17,7 +17,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class OpenScrollBlock extends ScrollBlock {
-
     public static final String identifier = "scroll_open";
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ScrollBlock instance;

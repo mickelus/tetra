@@ -33,21 +33,17 @@ import java.util.Random;
 @ParametersAreNonnullByDefault
 public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements EntityBlock {
     public static final String unlocalizedName = "extractor_piston";
-    public static final net.minecraft.world.level.block.state.properties.BooleanProperty hackProp = BooleanProperty.create("hack");
+    public static final BooleanProperty hackProp = BooleanProperty.create("hack");
     public static final VoxelShape boundingBox = box(5, 0, 5, 11, 16, 11);
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static CoreExtractorPistonBlock instance;
 
     public CoreExtractorPistonBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
-
-        setRegistryName(unlocalizedName);
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
-        super.init(packetHandler);
-
+    public void commonInit(PacketHandler packetHandler) {
         packetHandler.registerPacket(CoreExtractorPistonUpdatePacket.class, CoreExtractorPistonUpdatePacket::new);
     }
 

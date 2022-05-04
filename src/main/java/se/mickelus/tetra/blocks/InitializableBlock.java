@@ -1,13 +1,15 @@
-package se.mickelus.tetra.items;
+package se.mickelus.tetra.blocks;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.mutil.network.PacketHandler;
 
-public interface ITetraItem {
+public interface InitializableBlock {
+
     @OnlyIn(Dist.CLIENT)
     default void clientInit() {
     }
 
-    void init(PacketHandler packetHandler);
+    default void commonInit(PacketHandler packetHandler) {
+    }
 }

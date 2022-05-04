@@ -15,12 +15,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class SmallAbsorbPotionEffect extends MobEffect {
+    public static final String identifier = "small_absorb";
     public static SmallAbsorbPotionEffect instance;
 
     public SmallAbsorbPotionEffect() {
         super(MobEffectCategory.BENEFICIAL, 2445989);
-
-        setRegistryName("small_absorb");
 
         instance = this;
     }

@@ -23,13 +23,12 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class EarthpiercerItem extends TetraItem {
-    private static final String unlocalizedName = "earthpiercer";
+    public static final String unlocalizedName = "earthpiercer";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static EarthpiercerItem instance;
 
     public EarthpiercerItem() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

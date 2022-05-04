@@ -51,7 +51,7 @@ import static com.google.common.base.Predicates.equalTo;
 
 @ParametersAreNonnullByDefault
 public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInteractiveBlock, EntityBlock {
-    public static final String unlocalizedName = "forged_container";
+    public static final String identifier = "forged_container";
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty flippedProp = BooleanProperty.create("flipped");
     public static final BooleanProperty locked1Prop = BooleanProperty.create("locked1");
@@ -92,15 +92,12 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     private static final VoxelShape shapeZ2Open = box(1, 0, 1, 15, 9, 31);
     private static final VoxelShape shapeX1Open = box(-15, 0, 1, 15, 9, 15);
     private static final VoxelShape shapeX2Open = box(1, 0, 1, 31, 9, 15);
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ForgedContainerBlock instance;
 
     public ForgedContainerBlock() {
         super(ForgedBlockCommon.propertiesSolid);
-
-        setRegistryName(unlocalizedName);
-
-        hasItem = true;
 
         registerDefaultState(defaultBlockState()
                 .setValue(facingProp, Direction.EAST)
@@ -136,7 +133,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
+    public void commonInit(PacketHandler packetHandler) {
         packetHandler.registerPacket(ChangeCompartmentPacket.class, ChangeCompartmentPacket::new);
     }
 

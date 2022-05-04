@@ -337,7 +337,7 @@ public class SlamEffect extends ChargedAbilityEffect {
                         if (targetState.canOcclude() && !world.getBlockState(targetPos.above()).canOcclude()) {
                             targetPos.below();
 
-                            double distance = targetPos.distSqr(origin.x, origin.y, origin.z, true);
+                            double distance = targetPos.distToCenterSqr(origin.x, origin.y, origin.z);
 
                             if (distance < range * range) {
                                 double yOffset = targetState.getShape(world, targetPos).bounds().maxY;

@@ -17,12 +17,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class PriedPotionEffect extends MobEffect {
+    public static final String identifier = "pried";
     public static PriedPotionEffect instance;
 
     public PriedPotionEffect() {
         super(MobEffectCategory.HARMFUL, 0x880000);
-
-        setRegistryName("pried");
 
         addAttributeModifier(Attributes.ARMOR, "8ce1d367-cb9f-48a3-a748-e6b73ef686e2", -1, AttributeModifier.Operation.ADDITION);
 

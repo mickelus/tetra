@@ -18,13 +18,12 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class ItemBeam extends TetraItem {
-    private static final String unlocalizedName = "forged_beam";
+    public static final String unlocalizedName = "forged_beam";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemBeam instance;
 
     public ItemBeam() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

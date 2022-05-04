@@ -27,7 +27,6 @@ public class LubricantDispenser extends TetraItem {
 
     public LubricantDispenser() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

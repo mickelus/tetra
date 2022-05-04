@@ -18,13 +18,12 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class ItemMesh extends TetraItem {
-    private static final String unlocalizedName = "forged_mesh";
+    public static final String unlocalizedName = "forged_mesh";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemMesh instance;
 
     public ItemMesh() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

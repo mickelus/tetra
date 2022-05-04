@@ -18,8 +18,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 
 import javax.annotation.Nullable;
@@ -31,9 +29,8 @@ import static net.minecraft.world.level.material.Fluids.WATER;
 
 @ParametersAreNonnullByDefault
 public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements SimpleWaterloggedBlock {
+    public static final String identifier = "forged_workbench";
     public static final EnumProperty<Direction.Axis> axis = BlockStateProperties.HORIZONTAL_AXIS;
-
-    public static final String unlocalizedName = "forged_workbench";
     private static final VoxelShape zShape = Shapes.or(
             box(1, 0, 3, 15, 2, 13),
             box(2, 2, 4, 14, 9, 12),
@@ -42,15 +39,9 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements Simp
             box(3, 0, 1, 13, 2, 15),
             box(4, 2, 2, 12, 9, 14),
             box(2, 9, 0, 14, 16, 16));
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static AbstractWorkbenchBlock instance;
 
     public ForgedWorkbenchBlock() {
         super(ForgedBlockCommon.propertiesSolid);
-
-        setRegistryName(unlocalizedName);
-
-        hasItem = true;
 
         registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(axis, Direction.Axis.X));
     }

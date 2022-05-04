@@ -56,12 +56,13 @@ import static com.google.common.base.Predicates.equalTo;
 
 @ParametersAreNonnullByDefault
 public class TransferUnitBlock extends TetraWaterloggedBlock implements IInteractiveBlock, EntityBlock {
+    public static final String identifier = "transfer_unit";
+
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty plateProp = BooleanProperty.create("plate");
     public static final IntegerProperty cellProp = IntegerProperty.create("cell", 0, 2);
     public static final EnumProperty<EnumTransferConfig> configProp = EnumProperty.create("config", EnumTransferConfig.class);
     public static final EnumProperty<EnumTransferState> transferProp = EnumProperty.create("transfer", EnumTransferState.class);
-    public static final String unlocalizedName = "transfer_unit";
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
             new BlockInteraction(TetraToolActions.pry, 1, Direction.SOUTH, 3, 11, 4, 6,
@@ -75,15 +76,12 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     private static final VoxelShape northShape = box(1, 0, 0, 15, 12, 13);
     private static final VoxelShape westShape = box(0, 0, 1, 13, 12, 15);
     private static final VoxelShape southShape = box(1, 0, 3, 15, 12, 16);
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static TransferUnitBlock instance;
 
     public TransferUnitBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
-
-        setRegistryName(unlocalizedName);
-
-        hasItem = true;
 
         registerDefaultState(defaultBlockState()
                 .setValue(plateProp, false)

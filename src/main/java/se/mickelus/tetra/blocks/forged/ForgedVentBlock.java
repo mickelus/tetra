@@ -48,7 +48,7 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
     public static final IntegerProperty propRotation = IntegerProperty.create("rotation", 0, 3);
     public static final BooleanProperty propX = BooleanProperty.create("x");
     public static final BooleanProperty propBroken = BooleanProperty.create("broken");
-    static final String unlocalizedName = "forged_vent";
+    static final String identifier = "forged_vent";
     private static final ResourceLocation boltLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/bolt_break");
     private static final ResourceLocation ventLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/vent_break");
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
@@ -85,15 +85,11 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
                     new PropertyMatcher().where(propBroken, equalTo(true)),
                     ForgedVentBlock::breakBeam),
     };
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ForgedVentBlock instance;
 
     public ForgedVentBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
-
-        hasItem = true;
-
-        setRegistryName(unlocalizedName);
     }
 
     private static boolean breakBolt(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction hitFace) {

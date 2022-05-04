@@ -3,21 +3,21 @@ package se.mickelus.tetra.loot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import se.mickelus.tetra.TetraMod;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.tetra.blocks.scroll.ScrollData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ScrollDataFunction extends LootItemConditionalFunction {
-    public static final ResourceLocation identifier = new ResourceLocation(TetraMod.MOD_ID, "scroll");
-    public static final LootItemFunctionType type = new LootItemFunctionType(new Serializer());
+    public static final String identifier = "scroll";
+
+    public static RegistryObject<LootItemFunctionType> type;
 
     private final ScrollData data;
 
@@ -35,7 +35,7 @@ public class ScrollDataFunction extends LootItemConditionalFunction {
 
     @Override
     public LootItemFunctionType getType() {
-        return type;
+        return type.get();
     }
 
     public static class Serializer extends LootItemConditionalFunction.Serializer<ScrollDataFunction> {

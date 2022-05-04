@@ -18,11 +18,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class SuspendPotionEffect extends MobEffect {
+    public static final String identifier = "suspended";
     public static SuspendPotionEffect instance;
 
     public SuspendPotionEffect() {
         super(MobEffectCategory.BENEFICIAL, 0x006600);
-        setRegistryName("suspended");
 
         addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "07607dcd-4ee5-42b1-bc39-90a7bf06b4b5", -1, AttributeModifier.Operation.MULTIPLY_TOTAL);
 

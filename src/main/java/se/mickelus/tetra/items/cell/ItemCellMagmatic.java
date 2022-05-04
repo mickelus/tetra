@@ -35,8 +35,6 @@ public class ItemCellMagmatic extends TetraItem {
                 .stacksTo(1)
                 .durability(maxCharge)
                 .tab(TetraItemGroup.instance));
-
-        setRegistryName(unlocalizedName);
     }
 
     @Override

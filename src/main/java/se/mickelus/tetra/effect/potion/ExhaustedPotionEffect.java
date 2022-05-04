@@ -16,12 +16,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class ExhaustedPotionEffect extends MobEffect {
+    public static final String identifier = "exhausted";
     public static ExhaustedPotionEffect instance;
 
     public ExhaustedPotionEffect() {
         super(MobEffectCategory.HARMFUL, 0x222222);
-
-        setRegistryName("exhausted");
 
         addAttributeModifier(Attributes.MOVEMENT_SPEED, "19be7b9d-fff9-4ccf-a811-0a378da5a269", -0.1, AttributeModifier.Operation.MULTIPLY_TOTAL);
         addAttributeModifier(Attributes.ATTACK_SPEED, "05b3352c-4c10-4c52-92ce-9dc8a679e7f0", -0.05, AttributeModifier.Operation.MULTIPLY_TOTAL);

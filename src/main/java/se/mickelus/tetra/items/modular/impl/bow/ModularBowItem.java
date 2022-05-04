@@ -60,11 +60,11 @@ public class ModularBowItem extends ModularItem {
     public final static String stringKey = "bow/string";
     public final static String riserKey = "bow/riser";
 
-    public static final String unlocalizedName = "modular_bow";
+    public static final String identifier = "modular_bow";
     public static final double velocityFactor = 1 / 8d;
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, 21, -11, -3);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ModularBowItem instance;
     protected ModuleModel arrowModel0 = new ModuleModel("draw_0", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_0"));
     protected ModuleModel arrowModel1 = new ModuleModel("draw_1", new ResourceLocation(TetraMod.MOD_ID, "items/module/bow/arrow_1"));
@@ -73,7 +73,6 @@ public class ModularBowItem extends ModularItem {
 
     public ModularBowItem() {
         super(new Properties().stacksTo(1).fireResistant());
-        setRegistryName(unlocalizedName);
 
         majorModuleKeys = new String[]{stringKey, staveKey};
         minorModuleKeys = new String[]{riserKey};
@@ -84,8 +83,8 @@ public class ModularBowItem extends ModularItem {
 
         updateConfig(ConfigHandler.honeBowBase.get(), ConfigHandler.honeBowIntegrityMultiplier.get());
 
-        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
-        RemoveSchematic.registerRemoveSchematics(this);
+        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
+        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     /**
@@ -113,7 +112,7 @@ public class ModularBowItem extends ModularItem {
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
+    public void commonInit(PacketHandler packetHandler) {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("bow/"));
     }
 

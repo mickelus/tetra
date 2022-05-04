@@ -37,6 +37,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.blocks.scroll.gui.ScrollScreen;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
+import se.mickelus.tetra.items.InitializableItem;
 import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
@@ -45,8 +46,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
-public class ScrollItem extends BlockItem {
-    static final String identifier = "scroll_rolled";
+public class ScrollItem extends BlockItem implements InitializableItem {
+    public static final String identifier = "scroll_rolled";
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ScrollItem instance;
 
@@ -70,8 +71,6 @@ public class ScrollItem extends BlockItem {
     public ScrollItem(Block block) {
         super(block, new Properties().tab(TetraItemGroup.instance).stacksTo(1));
 
-        setRegistryName(TetraMod.MOD_ID, identifier);
-
         MinecraftForge.EVENT_BUS.register(new ScrollDrops());
 
         gemExpertise = setupTreatise("gem_expertise", false, 0, 0x2bffee, 14, 13, 14, 15);
@@ -92,8 +91,10 @@ public class ScrollItem extends BlockItem {
         howlingBlade = setupSchematic("sword/howling", null, false, 1, 0xfaf396, 8, 9, 10, 5);
     }
 
+
     @OnlyIn(Dist.CLIENT)
-    public static void clientPostInit() {
+    @Override
+    public void clientInit() {
         Minecraft.getInstance().getItemColors().register(new ScrollItemColor(), instance);
         ItemProperties.register(instance, new ResourceLocation(TetraMod.MOD_ID, "scroll_mat"),
                 (itemStack, world, livingEntity, i) -> ScrollData.readMaterialFast(itemStack));

@@ -20,7 +20,9 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.blocks.ITetraBlock;
+import se.mickelus.tetra.blocks.ICraftingEffectProviderBlock;
+import se.mickelus.tetra.blocks.ISchematicProviderBlock;
+import se.mickelus.tetra.blocks.IToolProviderBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
@@ -69,46 +71,48 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
         }
     }
 
-    @Override
-    public Collection<ToolAction> getTools(Level world, BlockPos pos, BlockState blockState) {
+    /**
+     * Returns a stream of block state/position pairs around the given position where each block in the stream implements IToolProviderBlock
+     *
+     * @param world
+     * @param pos
+     * @return
+     */
+    protected Stream<Pair<BlockPos, BlockState>> getToolProviderBlockStream(Level world, BlockPos pos) {
         return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
-                .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
-                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canProvideTools(world, pair.getFirst(), pos))
-                .map(pair -> ((ITetraBlock) pair.getSecond().getBlock()).getTools(world, pair.getFirst(), pair.getSecond()))
+                .filter(pair -> pair.getSecond().getBlock() instanceof IToolProviderBlock)
+                .filter(pair -> ((IToolProviderBlock) pair.getSecond().getBlock()).canProvideTools(world, pair.getFirst(), pos));
+    }
+
+    public Collection<ToolAction> getTools(Level world, BlockPos pos, BlockState blockState) {
+        return getToolProviderBlockStream(world, pos)
+                .map(pair -> ((IToolProviderBlock) pair.getSecond().getBlock()).getTools(world, pair.getFirst(), pair.getSecond()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toSet());
     }
 
-    @Override
     public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolAction) {
-        return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
-                .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
-                .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
-                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canProvideTools(world, pair.getFirst(), pos))
-                .map(pair -> ((ITetraBlock) pair.getSecond().getBlock()).getToolLevel(world, pair.getFirst(), pair.getSecond(), toolAction))
+        return getToolProviderBlockStream(world, pos)
+                .map(pair -> ((IToolProviderBlock) pair.getSecond().getBlock()).getToolLevel(world, pair.getFirst(), pair.getSecond(), toolAction))
                 .max(Integer::compare)
                 .orElse(-1);
     }
 
     private Pair<BlockPos, BlockState> getProvidingBlockstate(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack,
             ToolAction toolAction, int level) {
-        return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
-                .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
-                .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
-                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canProvideTools(world, pair.getFirst(), pos))
-                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).getToolLevel(world, pair.getFirst(), pair.getSecond(), toolAction) >= level)
+        return getToolProviderBlockStream(world, pos)
+                .filter(pair -> ((IToolProviderBlock) pair.getSecond().getBlock()).getToolLevel(world, pair.getFirst(), pair.getSecond(), toolAction) >= level)
                 .findFirst()
                 .orElse(null);
     }
 
-    @Override
     public ItemStack onCraftConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing, Player player,
             ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
         Pair<BlockPos, BlockState> provider = getProvidingBlockstate(world, pos, blockState, targetStack, requiredTool, requiredLevel);
 
         if (provider != null) {
-            ITetraBlock block = ((ITetraBlock) provider.getSecond().getBlock());
+            IToolProviderBlock block = ((IToolProviderBlock) provider.getSecond().getBlock());
             return block.onCraftConsumeTool(world, provider.getFirst(), provider.getSecond(), targetStack, slot, isReplacing, player, requiredTool,
                     requiredLevel, consumeResources);
         }
@@ -116,13 +120,12 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
         return null;
     }
 
-    @Override
     public ItemStack onActionConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
             ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
         Pair<BlockPos, BlockState> provider = getProvidingBlockstate(world, pos, blockState, targetStack, requiredTool, requiredLevel);
 
         if (provider != null) {
-            ITetraBlock block = ((ITetraBlock) provider.getSecond().getBlock());
+            IToolProviderBlock block = ((IToolProviderBlock) provider.getSecond().getBlock());
             return block.onActionConsumeTool(world, provider.getFirst(), provider.getSecond(), targetStack, player, requiredTool,
                     requiredLevel, consumeResources);
         }
@@ -130,24 +133,22 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
         return null;
     }
 
-    @Override
     public ResourceLocation[] getSchematics(Level world, BlockPos pos, BlockState blockState) {
         return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
-                .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
-                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canUnlockSchematics(world, pair.getFirst(), pos))
-                .map(pair -> ((ITetraBlock) pair.getSecond().getBlock()).getSchematics(world, pair.getFirst(), blockState))
+                .filter(pair -> pair.getSecond().getBlock() instanceof ISchematicProviderBlock)
+                .filter(pair -> ((ISchematicProviderBlock) pair.getSecond().getBlock()).canUnlockSchematics(world, pair.getFirst(), pos))
+                .map(pair -> ((ISchematicProviderBlock) pair.getSecond().getBlock()).getSchematics(world, pair.getFirst(), blockState))
                 .flatMap(Stream::of)
                 .toArray(ResourceLocation[]::new);
     }
 
-    @Override
     public ResourceLocation[] getCraftingEffects(Level world, BlockPos pos, BlockState blockState) {
         return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
                 .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
-                .filter(pair -> pair.getSecond().getBlock() instanceof ITetraBlock)
-                .filter(pair -> ((ITetraBlock) pair.getSecond().getBlock()).canUnlockCraftingEffects(world, pair.getFirst(), pos))
-                .map(pair -> ((ITetraBlock) pair.getSecond().getBlock()).getCraftingEffects(world, pair.getFirst(), blockState))
+                .filter(pair -> pair.getSecond().getBlock() instanceof ICraftingEffectProviderBlock)
+                .filter(pair -> ((ICraftingEffectProviderBlock) pair.getSecond().getBlock()).canUnlockCraftingEffects(world, pair.getFirst(), pos))
+                .map(pair -> ((ICraftingEffectProviderBlock) pair.getSecond().getBlock()).getCraftingEffects(world, pair.getFirst(), blockState))
                 .flatMap(Stream::of)
                 .toArray(ResourceLocation[]::new);
     }

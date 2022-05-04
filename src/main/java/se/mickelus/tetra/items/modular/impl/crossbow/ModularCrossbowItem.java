@@ -34,6 +34,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
+import org.jetbrains.annotations.NotNull;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
@@ -66,12 +67,13 @@ public class ModularCrossbowItem extends ModularItem {
     public final static String attachmentAKey = "crossbow/attachment_0";
     public final static String attachmentBKey = "crossbow/attachment_1";
 
-    public static final String unlocalizedName = "modular_crossbow";
+    public static final String identifier = "modular_crossbow";
     public static final double velocityFactor = 1 / 8d;
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, 0, -13, 18);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(4, -1, 13, 12, 4, 25);
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ModularCrossbowItem instance;
+    public static double multishotDefaultSpread = 10;
     protected ModuleModel arrowModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "items/module/crossbow/arrow"));
     protected ModuleModel extractorModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "items/module/crossbow/extractor"));
     protected ModuleModel fireworkModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "items/module/crossbow/firework"));
@@ -81,23 +83,20 @@ public class ModularCrossbowItem extends ModularItem {
     private boolean isLoadingStart = false;
     private boolean isLoadingMiddle = false;
 
-    public static double multishotDefaultSpread = 10;
-
-    public ModularCrossbowItem() {
+    public ModularCrossbowItem(@NotNull Item shootableDummy) {
         super(new Properties().stacksTo(1).fireResistant());
-        setRegistryName(unlocalizedName);
 
         majorModuleKeys = new String[]{staveKey, stockKey};
         minorModuleKeys = new String[]{attachmentAKey, stringKey, attachmentBKey};
 
         requiredModules = new String[]{stringKey, stockKey, staveKey};
 
-        shootableDummy = new ItemStack(new ShootableDummyItem());
+        this.shootableDummy = new ItemStack(shootableDummy);
 
         updateConfig(ConfigHandler.honeCrossbowBase.get(), ConfigHandler.honeCrossbowIntegrityMultiplier.get());
 
-        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
-        RemoveSchematic.registerRemoveSchematics(this);
+        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
+        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     /**
@@ -112,7 +111,7 @@ public class ModularCrossbowItem extends ModularItem {
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
+    public void commonInit(PacketHandler packetHandler) {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("crossbow/"));
     }
 

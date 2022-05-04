@@ -27,13 +27,14 @@ public class RepairSchematic extends BaseSchematic {
     private static final String extendedDescriptionSuffix = ".description_details";
 
     private final String key = "repair";
-
     private final IModularItem item;
+    private final String identifier;
 
     private final GlyphData glyph = new GlyphData(GuiTextures.workbench, 0, 52);
 
-    public RepairSchematic(IModularItem item) {
+    public RepairSchematic(IModularItem item, String identifier) {
         this.item = item;
+        this.identifier = key + "/" + identifier;
     }
 
     public String getSlot(ItemStack itemStack) {
@@ -44,7 +45,7 @@ public class RepairSchematic extends BaseSchematic {
 
     @Override
     public String getKey() {
-        return key + "/" + item.getItem().getRegistryName().getPath();
+        return identifier;
     }
 
     @Override

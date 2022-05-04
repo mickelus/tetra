@@ -28,7 +28,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContainerTile> {
     public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "blocks/forged_container/forged_container"));
     private static final float openDuration = 300;
-    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, ForgedContainerBlock.unlocalizedName), "main");
+    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, ForgedContainerBlock.identifier), "main");
     public ModelPart lid;
     public ModelPart base;
     public ModelPart[] locks;

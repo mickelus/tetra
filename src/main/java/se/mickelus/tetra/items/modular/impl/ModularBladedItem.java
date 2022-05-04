@@ -20,7 +20,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ModularBladedItem extends ItemModularHandheld {
-
     public final static String bladeKey = "sword/blade";
     public final static String hiltKey = "sword/hilt";
 
@@ -28,14 +27,13 @@ public class ModularBladedItem extends ItemModularHandheld {
     public final static String pommelKey = "sword/pommel";
     public final static String fullerKey = "sword/fuller";
 
-    public static final String unlocalizedName = "modular_sword";
+    public static final String identifier = "modular_sword";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ModularBladedItem instance;
 
     public ModularBladedItem() {
         super(new Item.Properties().stacksTo(1).fireResistant());
-        setRegistryName(unlocalizedName);
 
         blockDestroyDamage = 2;
 
@@ -46,12 +44,12 @@ public class ModularBladedItem extends ItemModularHandheld {
 
         updateConfig(ConfigHandler.honeSwordBase.get(), ConfigHandler.honeSwordIntegrityMultiplier.get());
 
-        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
-        RemoveSchematic.registerRemoveSchematics(this);
+        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
+        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
+    public void commonInit(PacketHandler packetHandler) {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("sword/"));
     }
 

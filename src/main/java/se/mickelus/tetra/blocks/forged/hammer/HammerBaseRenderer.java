@@ -25,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @OnlyIn(Dist.CLIENT)
 public class HammerBaseRenderer implements BlockEntityRenderer<HammerBaseTile> {
     public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "blocks/forged_hammer/base_sheet"));
-    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, HammerBaseBlock.unlocalizedName), "main");
+    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, HammerBaseBlock.identifier), "main");
 
     private /*final*/ ModelPart unpowered;
     private /*final*/ ModelPart powered;

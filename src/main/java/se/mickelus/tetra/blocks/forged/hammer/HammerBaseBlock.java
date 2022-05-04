@@ -58,11 +58,10 @@ import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
 @ParametersAreNonnullByDefault
 public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, EntityBlock {
+    public static final String identifier = "hammer_base";
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
 
     public static final String qualityImprovementKey = "quality";
-
-    public static final String unlocalizedName = "hammer_base";
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
             new TileBlockInteraction<>(TetraToolActions.pry, 1, Direction.EAST, 5, 11, 10, 12,
                     HammerBaseTile.class, tile -> tile.getEffect(true) != null,
@@ -71,15 +70,11 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
                     HammerBaseTile.class, tile -> tile.getEffect(false) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, false))
     };
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static HammerBaseBlock instance;
 
     public HammerBaseBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
-
-        setRegistryName(unlocalizedName);
-
-        hasItem = true;
     }
 
     public static boolean removeModule(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace, boolean isA) {

@@ -18,12 +18,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class StunPotionEffect extends MobEffect {
+    public static final String identifier = "stun";
     public static StunPotionEffect instance;
 
     public StunPotionEffect() {
         super(MobEffectCategory.HARMFUL, 0xeeeeee);
-
-        setRegistryName("stun");
 
         addAttributeModifier(Attributes.MOVEMENT_SPEED, "c2e930ec-9683-4bd7-bc04-8e6ff6587def", -1, AttributeModifier.Operation.MULTIPLY_TOTAL);
         addAttributeModifier(Attributes.ATTACK_DAMAGE, "d59dc254-beb1-4db6-8dfd-c55c0f5554af", -1, AttributeModifier.Operation.MULTIPLY_TOTAL);

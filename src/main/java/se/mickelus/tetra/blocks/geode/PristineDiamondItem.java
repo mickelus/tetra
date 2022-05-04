@@ -19,14 +19,13 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class PristineDiamondItem extends TetraItem {
-    private static final String unlocalizedName = "pristine_diamond";
+    public static final String unlocalizedName = "pristine_diamond";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static PristineDiamondItem instance;
 
     public PristineDiamondItem() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @Override

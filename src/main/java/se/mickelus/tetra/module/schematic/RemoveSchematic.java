@@ -30,26 +30,28 @@ public class RemoveSchematic extends BaseSchematic {
 
     private final IModularItem item;
     private final String slot;
+    private final String identifier;
 
     private final GlyphData glyph = new GlyphData(GuiTextures.workbench, 52, 32);
 
-    public RemoveSchematic(IModularItem item, String slot) {
+    public RemoveSchematic(IModularItem item, String slot, String identifier) {
         this.item = item;
         this.slot = slot;
+        this.identifier = key + "/" + identifier + "/" + slot;
     }
 
-    public static void registerRemoveSchematics(IModularItem item) {
+    public static void registerRemoveSchematics(IModularItem item, String identifier) {
         Stream.concat(Arrays.stream(item.getMajorModuleKeys()), Arrays.stream(item.getMinorModuleKeys()))
                 .filter(slot -> !item.isModuleRequired(slot))
                 .forEach(slot -> {
-                    RemoveSchematic schematic = new RemoveSchematic(item, slot);
+                    RemoveSchematic schematic = new RemoveSchematic(item, slot, identifier);
                     SchematicRegistry.instance.registerSchematic(schematic);
                 });
     }
 
     @Override
     public String getKey() {
-        return key + "/" + item.getItem().getRegistryName().getPath() + "/" + slot;
+        return identifier;
     }
 
     @Override

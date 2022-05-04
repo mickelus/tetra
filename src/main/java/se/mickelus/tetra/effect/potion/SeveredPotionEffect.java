@@ -20,12 +20,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class SeveredPotionEffect extends MobEffect {
+    public static final String identifier = "severed";
     public static SeveredPotionEffect instance;
 
     public SeveredPotionEffect() {
         super(MobEffectCategory.HARMFUL, 0x880000);
-
-        setRegistryName("severed");
 
         addAttributeModifier(Attributes.MAX_HEALTH, "7e68e993-e133-41c0-aea3-703afc401831", -0.1, AttributeModifier.Operation.MULTIPLY_TOTAL);
         addAttributeModifier(Attributes.ATTACK_DAMAGE, "3ca939c9-62fe-41a6-a722-22235066f808", -0.05, AttributeModifier.Operation.MULTIPLY_TOTAL);

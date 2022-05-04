@@ -42,18 +42,17 @@ public class ModularShieldItem extends ItemModularHandheld {
     public final static String gripKey = "shield/grip";
     public final static String bossKey = "shield/boss";
 
-    public static final String unlocalizedName = "modular_shield";
+    public static final String identifier = "modular_shield";
 
     public static final String bannerImprovementKey = "shield/banner";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ModularShieldItem instance;
 
     public ModularShieldItem() {
         super(new Properties()
                 .stacksTo(1)
                 .fireResistant());
-        setRegistryName(unlocalizedName);
 
         majorModuleKeys = new String[]{plateKey, gripKey};
         minorModuleKeys = new String[]{bossKey};
@@ -62,9 +61,9 @@ public class ModularShieldItem extends ItemModularHandheld {
 
         updateConfig(ConfigHandler.honeShieldBase.get(), ConfigHandler.honeShieldIntegrityMultiplier.get());
 
-        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
+        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
         SchematicRegistry.instance.registerSchematic(new ApplyBannerSchematic());
-        RemoveSchematic.registerRemoveSchematics(this);
+        RemoveSchematic.registerRemoveSchematics(this, identifier);
 
         ItemUpgradeRegistry.instance.registerReplacementHook(this::copyBanner);
 
@@ -86,7 +85,7 @@ public class ModularShieldItem extends ItemModularHandheld {
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
+    public void commonInit(PacketHandler packetHandler) {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("shield/"));
     }
 

@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 
 @ParametersAreNonnullByDefault
 public class ShootableDummyItem extends ProjectileWeaponItem {
+    public static final String identifier = "shootable_dummy";
 
     public static final Predicate<ItemStack> ammoPredicate = ARROW_OR_FIREWORK
             .or(stack -> stack.getItem() == ChthonicExtractorBlock.item)

@@ -43,7 +43,7 @@ import java.util.Random;
 public class ForgedContainerTile extends BlockEntity implements MenuProvider {
     private static final String inventoryKey = "inv";
     private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
-    @ObjectHolder(TetraMod.MOD_ID + ":" + ForgedContainerBlock.unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + ForgedContainerBlock.identifier)
     public static BlockEntityType<ForgedContainerTile> type;
     public static int lockIntegrityMax = 4;
     public static int lockCount = 4;
@@ -209,7 +209,7 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return new TextComponent(ForgedContainerBlock.unlocalizedName);
+        return new TextComponent(ForgedContainerBlock.identifier);
     }
 
     @Nullable

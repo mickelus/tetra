@@ -15,12 +15,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class SmallStrengthPotionEffect extends MobEffect {
+    public static final String identifier = "small_strength";
     public static SmallStrengthPotionEffect instance;
 
     public SmallStrengthPotionEffect() {
         super(MobEffectCategory.BENEFICIAL, 0x880000);
-
-        setRegistryName("small_strength");
 
         addAttributeModifier(Attributes.ATTACK_DAMAGE, "fc8d272d-056c-43b4-9d18-f3d7f6cf3983", 1, AttributeModifier.Operation.ADDITION);
 

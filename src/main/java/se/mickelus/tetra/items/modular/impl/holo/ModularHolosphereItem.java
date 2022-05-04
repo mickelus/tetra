@@ -43,10 +43,10 @@ public class ModularHolosphereItem extends ModularItem {
     public final static String frameKey = "holo/frame";
     public final static String attachmentAKey = "holo/attachment_0";
     public final static String attachmentBKey = "holo/attachment_1";
-    private static final String unlocalizedName = "holo";
+    public static final String identifier = "holo";
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 0, -14, 18, 4, 0, 4, 18);
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ModularHolosphereItem instance;
 
     public ModularHolosphereItem() {
@@ -57,12 +57,12 @@ public class ModularHolosphereItem extends ModularItem {
 
         canHone = false;
 
-        setRegistryName(unlocalizedName);
-
         majorModuleKeys = new String[]{coreKey, frameKey, attachmentAKey, attachmentBKey};
         minorModuleKeys = new String[0];
 
         requiredModules = new String[]{coreKey, frameKey};
+
+        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     public static ItemStack findHolosphere(Player player) {
@@ -77,11 +77,8 @@ public class ModularHolosphereItem extends ModularItem {
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
-        super.init(packetHandler);
-
+    public void commonInit(PacketHandler packetHandler) {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("holo/"));
-        RemoveSchematic.registerRemoveSchematics(this);
     }
 
     @Override

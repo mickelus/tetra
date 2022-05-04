@@ -23,12 +23,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class HowlingPotionEffect extends MobEffect {
+    public static final String identifier = "howling";
     public static HowlingPotionEffect instance;
 
     public HowlingPotionEffect() {
         super(MobEffectCategory.BENEFICIAL, 0xeeeeee);
-
-        setRegistryName("howling");
 
         addAttributeModifier(Attributes.MOVEMENT_SPEED, "f80b9432-480d-4846-b9f9-178157dbac07", -0.05, AttributeModifier.Operation.MULTIPLY_BASE);
         instance = this;

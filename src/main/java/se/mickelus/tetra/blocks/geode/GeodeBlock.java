@@ -2,10 +2,10 @@ package se.mickelus.tetra.blocks.geode;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.SectionPos;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.features.OreFeatures;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.*;
@@ -37,13 +38,12 @@ import java.util.Random;
 
 @ParametersAreNonnullByDefault
 public class GeodeBlock extends TetraBlock {
-
     public static final String identifier = "block_geode";
 
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static GeodeBlock instance;
 
-    private PlacedFeature feature;
+    private static Holder<PlacedFeature> feature;
 
     public GeodeBlock() {
         super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.DEEPSLATE)
@@ -51,27 +51,24 @@ public class GeodeBlock extends TetraBlock {
                 .strength(3.0F, 6.0F)
                 .sound(SoundType.DEEPSLATE));
 
-        setRegistryName(identifier);
-
         int density = ConfigHandler.geodeDensity.get();
         if (density > 0) {
             int size = 3;
 
             OreConfiguration config = new OreConfiguration(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, defaultBlockState(), size);
-            feature = BuiltinRegistries.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(TetraMod.MOD_ID, identifier),
-                            Feature.ORE.configured(config))
-                    .placed(CountPlacement.of(density),
-                            InSquarePlacement.spread(),
-                            BiomeFilter.biome(),
-                            HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(0)));
+            feature = PlacementUtils.register("ore_geode", Holder.direct(new ConfiguredFeature<>(Feature.ORE, config)),
+                    CountPlacement.of(density),
+                    InSquarePlacement.spread(),
+                    BiomeFilter.biome(),
+                    HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(0)));
         }
     }
 
     public static void registerFeature(BiomeLoadingEvent event) {
-        if (instance.feature != null
+        if (feature != null
                 && event.getCategory() != Biome.BiomeCategory.THEEND
                 && event.getCategory() != Biome.BiomeCategory.NETHER) {
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, instance.feature);
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, feature);
         }
     }
 

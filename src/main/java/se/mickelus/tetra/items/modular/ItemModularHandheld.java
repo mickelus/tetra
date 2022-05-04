@@ -6,13 +6,14 @@ import com.google.common.collect.Multimaps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -69,7 +70,7 @@ import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 public class ItemModularHandheld extends ModularItem {
-    public static final Tag.Named<Block> nailedTag = BlockTags.bind("tetra:nailed");
+    public static final TagKey<Block> nailedTag = BlockTags.create(new ResourceLocation("tetra", "nailed"));
     // if the blocking level exceeds this value the item has an infinite blocking duration
     public static final int blockingDurationLimit = 16;
     static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[]{
@@ -124,6 +125,17 @@ public class ItemModularHandheld extends ModularItem {
 
     public static double getCounterWeightBonus(int counterWeightLevel, int integrityCost) {
         return Math.max(0, 0.15 - Math.abs(counterWeightLevel - integrityCost) * 0.05);
+    }
+
+    public static double getAttackSpeedHarvestModifier(double attackSpeed) {
+        return attackSpeed * 0.5 + 0.5;
+    }
+
+    public static double getEfficiencyEnchantmentBonus(int level) {
+        if (level > 0) {
+            return level * level + 1;
+        }
+        return 0;
     }
 
     public int getBlockDestroyDamage() {
@@ -235,7 +247,7 @@ public class ItemModularHandheld extends ModularItem {
                     .collect(Collectors.toList());
 
             for (ToolAction tool : tools) {
-                BlockState block = blockState.getToolModifiedState(world, pos, context.getPlayer(), context.getItemInHand(), tool);
+                BlockState block = blockState.getToolModifiedState(context, tool, false);
                 if (block != null) {
                     if (ToolActions.AXE_STRIP.equals(tool)) {
                         world.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -831,17 +843,6 @@ public class ItemModularHandheld extends ModularItem {
                 .map(TierHelper::getTier)
                 .filter(Objects::nonNull)
                 .anyMatch(tier -> TierSortingRegistry.isCorrectTierForDrops(tier, state));
-    }
-
-    public static double getAttackSpeedHarvestModifier(double attackSpeed) {
-        return attackSpeed * 0.5 + 0.5;
-    }
-
-    public static double getEfficiencyEnchantmentBonus(int level) {
-        if (level > 0) {
-            return level * level + 1;
-        }
-        return 0;
     }
 
     @Override

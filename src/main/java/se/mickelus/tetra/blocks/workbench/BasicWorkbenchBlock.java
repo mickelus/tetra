@@ -28,18 +28,14 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
-    public static final String unlocalizedName = "basic_workbench";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static final String identifier = "basic_workbench";
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static AbstractWorkbenchBlock instance;
 
     public BasicWorkbenchBlock() {
         super(Properties.of(Material.WOOD)
                 .strength(2.5f)
                 .sound(SoundType.WOOD));
-
-        setRegistryName(unlocalizedName);
-
-        hasItem = true;
     }
 
     public static InteractionResult upgradeWorkbench(Player player, Level world, BlockPos pos, InteractionHand hand, Direction facing) {

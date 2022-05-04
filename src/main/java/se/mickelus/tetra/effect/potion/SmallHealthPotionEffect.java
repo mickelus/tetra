@@ -15,12 +15,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class SmallHealthPotionEffect extends MobEffect {
+    public static final String identifier = "small_health";
     public static SmallHealthPotionEffect instance;
 
     public SmallHealthPotionEffect() {
         super(MobEffectCategory.BENEFICIAL, 0xbb4444);
-
-        setRegistryName("small_health");
 
         addAttributeModifier(Attributes.MAX_HEALTH, "c89b4203-0804-4607-b320-f6b8daf2d272", 1, AttributeModifier.Operation.ADDITION);
 

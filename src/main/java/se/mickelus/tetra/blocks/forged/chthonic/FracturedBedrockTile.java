@@ -65,7 +65,7 @@ public class FracturedBedrockTile extends BlockEntity {
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier3"),
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier4")
     };
-    @ObjectHolder(TetraMod.MOD_ID + ":" + FracturedBedrockBlock.unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + FracturedBedrockBlock.identifier)
     public static BlockEntityType<FracturedBedrockTile> type;
     private final float spawnRatio = 0.5f;
     private final int spawnYLimit = 4;
@@ -104,7 +104,7 @@ public class FracturedBedrockTile extends BlockEntity {
 
     public void updateLuck() {
         if (spawnInfo == null) {
-            spawnInfo = level.getBiome(worldPosition).getMobSettings();
+            spawnInfo = level.getBiome(worldPosition).value().getMobSettings();
         }
 
         boolean spawnBonus = spawnInfo.getMobs(MobCategory.MONSTER).unwrap().stream()
@@ -260,7 +260,7 @@ public class FracturedBedrockTile extends BlockEntity {
      */
     private void spawnMob(BlockPos pos) {
         if (spawnInfo == null) {
-            spawnInfo = level.getBiome(pos).getMobSettings();
+            spawnInfo = level.getBiome(pos).value().getMobSettings();
         }
 
         if (getBlockPos().distSqr(pos) < 42 || level.getRandom().nextFloat() >= spawnInfo.getCreatureProbability() / 4) {

@@ -2,7 +2,6 @@ package se.mickelus.tetra.blocks.forged.chthonic;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -35,7 +34,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.ConfigHandler;
@@ -58,7 +57,8 @@ import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBlock, EntityBlock {
-    public static final String unlocalizedName = "chthonic_extractor";
+    public static final String identifier = "chthonic_extractor";
+    public static final String usedIdentifier = "chthonic_extractor_used";
     public static final String description = "block.tetra.chthonic_extractor.description";
     public static final String extendedDescription = "block.tetra.chthonic_extractor.description_extended";
     public static final int maxDamage = 1024;
@@ -75,21 +75,17 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
             new BlockInteraction(TetraToolActions.hammer, 7, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand))
     };
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ChthonicExtractorBlock instance;
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static Item item;
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName + "_used")
+    @ObjectHolder(TetraMod.MOD_ID + ":" + usedIdentifier)
     public static Item usedItem;
 
     public ChthonicExtractorBlock() {
         super(Block.Properties.of(ForgedBlockCommon.forgedMaterialNotSolid, MaterialColor.COLOR_GRAY)
                 .sound(SoundType.NETHERITE_BLOCK)
-                .strength(4F, 2400.0F));
-
-        setRegistryName(unlocalizedName);
-
-        hasItem = true;
+                .strength(2.5F, 2400.0F));
     }
 
     private static boolean hit(Level world, BlockPos pos, @Nullable Player playerEntity, InteractionHand hand) {
@@ -115,23 +111,9 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
                 .orElseGet(() -> FracturedBedrockBlock.canPierce(world, pos.below()) ? 0 : -1);
     }
 
-    @Override
-    public void clientInit() {
-        EntityRenderers.register(ExtractorProjectileEntity.type, ExtractorProjectileRenderer::new);
-    }
-
-    @Override
-    public void registerItem(IForgeRegistry<Item> registry) {
-        Item usedItem = new BlockItem(this, new Item.Properties()
-                .durability(maxDamage))
-                .setRegistryName(getRegistryName() + "_used");
-        registry.register(usedItem);
-
-        Item item = new BlockItem(this, new Item.Properties()
-                .tab(TetraItemGroup.instance)
-                .stacksTo(64))
-                .setRegistryName(getRegistryName());
-        registry.register(item);
+    public static void registerItems(DeferredRegister<Item> registry) {
+        registry.register(usedIdentifier, () -> new BlockItem(instance, new Item.Properties().durability(maxDamage)));
+        registry.register(identifier, () -> new BlockItem(instance, new Item.Properties().tab(TetraItemGroup.instance).stacksTo(64)));
     }
 
     @Override

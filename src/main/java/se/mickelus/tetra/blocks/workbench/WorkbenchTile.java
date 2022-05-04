@@ -26,6 +26,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
@@ -55,16 +56,16 @@ import java.util.Map;
 
 @ParametersAreNonnullByDefault
 public class WorkbenchTile extends BlockEntity implements MenuProvider {
-    public static final String unlocalizedName = "workbench";
+    public static final String identifier = "workbench";
     public static final int inventorySlots = 4;
     private static final String inventoryKey = "inv";
     private static final String currentSlotKey = "current_slot";
     private static final String schematicKey = "schematic";
     private static final WorkbenchAction[] defaultActions = new WorkbenchAction[]{new RepairAction()};
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static BlockEntityType<WorkbenchTile> type;
-    @ObjectHolder(TetraMod.MOD_ID + ":" + WorkbenchTile.unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static MenuType<WorkbenchContainer> containerType;
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    public static BlockEntityType<WorkbenchTile> type;
     private static WorkbenchAction[] actions = new WorkbenchAction[0];
 
     static {
@@ -76,16 +77,18 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
         });
     }
 
+    private final LazyOptional<ItemStackHandler> handler;
     private final ItemStack previousTarget = ItemStack.EMPTY;
     private final Map<String, Runnable> changeListeners;
     private UpgradeSchematic currentSchematic;
-    private final LazyOptional<ItemStackHandler> handler = LazyOptional.of(this::createHandler);
     private String currentSlot;
     private ActionInteraction interaction;
 
     public WorkbenchTile(BlockPos p_155268_, BlockState p_155269_) {
         super(type, p_155268_, p_155269_);
         changeListeners = new HashMap<>();
+
+        handler = LazyOptional.of(this::createHandler);
     }
 
     public static void init(PacketHandler packetHandler) {
@@ -144,6 +147,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
         return super.getCapability(cap, side);
     }
 
+    @NotNull
     private ItemStackHandler createHandler() {
         return new ItemStackHandler(inventorySlots) {
 
@@ -585,7 +589,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return new TextComponent(unlocalizedName);
+        return new TextComponent(identifier);
     }
 
     @Nullable

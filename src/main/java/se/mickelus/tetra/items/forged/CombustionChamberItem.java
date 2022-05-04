@@ -27,7 +27,6 @@ public class CombustionChamberItem extends TetraItem {
 
     public CombustionChamberItem() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

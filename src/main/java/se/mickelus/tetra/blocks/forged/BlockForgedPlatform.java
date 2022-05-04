@@ -14,17 +14,13 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class BlockForgedPlatform extends TetraBlock {
-    static final String unlocalizedName = "forged_platform";
+    static final String identifier = "forged_platform";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static BlockForgedPlatform instance;
 
     public BlockForgedPlatform() {
         super(ForgedBlockCommon.propertiesSolid);
-
-        hasItem = true;
-
-        setRegistryName(unlocalizedName);
     }
 
     @Override

@@ -21,13 +21,12 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class PlanarStabilizerItem extends TetraItem {
-    private static final String unlocalizedName = "planar_stabilizer";
+    public static final String unlocalizedName = "planar_stabilizer";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static PlanarStabilizerItem instance;
 
     public PlanarStabilizerItem() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

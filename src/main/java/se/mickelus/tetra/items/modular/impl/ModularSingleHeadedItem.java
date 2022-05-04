@@ -26,17 +26,16 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
 
     public final static String bindingKey = "single/binding";
 
-    private static final String unlocalizedName = "modular_single";
+    public static final String identifier = "modular_single";
 
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, -3, -11, 21);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 0);
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ModularSingleHeadedItem instance;
 
     public ModularSingleHeadedItem() {
         super(new Properties().stacksTo(1).fireResistant());
-        setRegistryName(unlocalizedName);
 
         entityHitDamage = 1;
 
@@ -48,12 +47,12 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
         updateConfig(ConfigHandler.honeSingleBase.get(), ConfigHandler.honeSingleIntegrityMultiplier.get());
 
 
-        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
-        RemoveSchematic.registerRemoveSchematics(this);
+        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
+        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
+    public void commonInit(PacketHandler packetHandler) {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("single/"));
     }
 

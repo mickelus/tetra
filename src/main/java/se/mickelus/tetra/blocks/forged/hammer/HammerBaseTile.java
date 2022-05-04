@@ -45,7 +45,7 @@ public class HammerBaseTile extends BlockEntity {
     private static final String slotsKey = "slots";
     private static final String indexKey = "slot";
     private static final String redstoneKey = "rs";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + HammerBaseBlock.identifier)
     public static BlockEntityType<HammerBaseTile> type;
     private HammerEffect moduleA;
     private HammerEffect moduleB;

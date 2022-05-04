@@ -23,7 +23,6 @@ public class ReverberatingPearlItem extends TetraItem {
 
     public ReverberatingPearlItem() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

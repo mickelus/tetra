@@ -16,7 +16,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class HammerHeadTile extends BlockEntity {
     private static final String jamKey = "jam";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + HammerHeadBlock.unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + HammerHeadBlock.identifier)
     public static BlockEntityType<HammerHeadTile> type;
     private long activationTime = -1;
     private long unjamTime = -1;

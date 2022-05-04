@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.InventoryStream;
-import se.mickelus.tetra.blocks.ITetraBlock;
+import se.mickelus.tetra.blocks.IToolProviderBlock;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
@@ -200,24 +200,24 @@ public class PropertyHelper {
 
     public static int getBlockToolLevel(Level world, BlockPos pos, BlockState blockStateIn, ToolAction tool) {
         return Optional.of(blockStateIn)
-                .filter(blockState -> blockState.getBlock() instanceof ITetraBlock)
-                .map(blockState -> (ITetraBlock) blockState.getBlock())
+                .filter(blockState -> blockState.getBlock() instanceof IToolProviderBlock)
+                .map(blockState -> (IToolProviderBlock) blockState.getBlock())
                 .map(block -> block.getToolLevel(world, pos, blockStateIn, tool))
                 .orElse(0);
     }
 
     public static Collection<ToolAction> getBlockTools(Level world, BlockPos pos, BlockState blockStateIn) {
         return Optional.of(blockStateIn)
-                .filter(blockState -> blockState.getBlock() instanceof ITetraBlock)
-                .map(blockState -> (ITetraBlock) blockState.getBlock())
+                .filter(blockState -> blockState.getBlock() instanceof IToolProviderBlock)
+                .map(blockState -> (IToolProviderBlock) blockState.getBlock())
                 .map(block -> block.getTools(world, pos, blockStateIn))
                 .orElse(Collections.emptyList());
     }
 
     public static Map<ToolAction, Integer> getBlockToolLevels(Level world, BlockPos pos, BlockState blockStateIn) {
         return Optional.of(blockStateIn)
-                .filter(blockState -> blockState.getBlock() instanceof ITetraBlock)
-                .map(blockState -> (ITetraBlock) blockState.getBlock())
+                .filter(blockState -> blockState.getBlock() instanceof IToolProviderBlock)
+                .map(blockState -> (IToolProviderBlock) blockState.getBlock())
                 .map(block -> block.getToolLevels(world, pos, blockStateIn))
                 .orElse(Collections.emptyMap());
     }

@@ -23,13 +23,12 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class StonecutterItem extends TetraItem {
-    private static final String unlocalizedName = "stonecutter";
+    public static final String unlocalizedName = "stonecutter";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static StonecutterItem instance;
 
     public StonecutterItem() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

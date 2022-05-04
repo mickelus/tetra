@@ -15,7 +15,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class ChthonicExtractorTile extends BlockEntity {
     private static final String damageKey = "dmg";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + ChthonicExtractorBlock.unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + ChthonicExtractorBlock.identifier)
     public static BlockEntityType<ChthonicExtractorTile> type;
     private int damage = 0;
 
@@ -42,7 +42,6 @@ public class ChthonicExtractorTile extends BlockEntity {
             level.setBlock(getBlockPos(), Blocks.AIR.defaultBlockState(), 2);
         }
     }
-
 
     @Override
     public void load(CompoundTag compound) {

@@ -3,7 +3,6 @@ package se.mickelus.tetra.loot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -13,7 +12,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.common.ToolAction;
-import se.mickelus.tetra.TetraMod;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.properties.IToolProvider;
 
@@ -21,9 +20,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class FortuneBonusCondition implements LootItemCondition {
+    public static final String identifier = "random_chance_with_fortune";
+    public static RegistryObject<LootItemConditionType> type;
 
-    public static final ResourceLocation identifier = new ResourceLocation(TetraMod.MOD_ID, "random_chance_with_fortune");
-    public static final LootItemConditionType type = new LootItemConditionType(new ConditionSerializer());
     private final int requiredToolLevel = -1;
     private float chance;
     private float fortuneMultiplier;
@@ -53,7 +52,7 @@ public class FortuneBonusCondition implements LootItemCondition {
 
     @Override
     public LootItemConditionType getType() {
-        return type;
+        return type.get();
     }
 
     public static class ConditionSerializer implements Serializer<FortuneBonusCondition> {

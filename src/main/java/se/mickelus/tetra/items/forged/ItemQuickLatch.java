@@ -28,13 +28,12 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class ItemQuickLatch extends TetraItem {
-    private static final String unlocalizedName = "quick_latch";
+    public static final String unlocalizedName = "quick_latch";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemQuickLatch instance;
 
     public ItemQuickLatch() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

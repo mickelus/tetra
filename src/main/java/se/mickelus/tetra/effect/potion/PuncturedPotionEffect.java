@@ -23,12 +23,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class PuncturedPotionEffect extends MobEffect {
+    public static final String identifier = "punctured";
     public static PuncturedPotionEffect instance;
 
     public PuncturedPotionEffect() {
         super(MobEffectCategory.HARMFUL, 0x880000);
-
-        setRegistryName("punctured");
 
         addAttributeModifier(Attributes.ARMOR, "69967662-e7e9-4671-8f48-81d0de9d2098", -0.05, AttributeModifier.Operation.MULTIPLY_TOTAL);
 

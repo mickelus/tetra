@@ -15,12 +15,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class SteeledPotionEffect extends MobEffect {
+    public static final String identifier = "steeled";
     public static SteeledPotionEffect instance;
 
     public SteeledPotionEffect() {
         super(MobEffectCategory.BENEFICIAL, 0x880000);
-
-        setRegistryName("steeled");
 
         addAttributeModifier(Attributes.ARMOR, "62eba42f-3fe5-436c-812d-2f5ef72bc55f", 1, AttributeModifier.Operation.ADDITION);
 

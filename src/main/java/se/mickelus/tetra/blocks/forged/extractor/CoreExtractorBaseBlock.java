@@ -39,8 +39,8 @@ import static net.minecraft.world.level.material.Fluids.WATER;
 
 @ParametersAreNonnullByDefault
 public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements EntityBlock {
+    public static final String identifier = "core_extractor";
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
-    public static final String unlocalizedName = "core_extractor";
     private static final VoxelShape capShape = box(3, 14, 3, 13, 16, 13);
     private static final VoxelShape shaftShape = box(4, 13, 4, 12, 14, 12);
     private static final VoxelShape smallCoverShapeZ = box(1, 0, 0, 15, 12, 16);
@@ -51,14 +51,11 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeZ, largeCoverShapeZ, BooleanOp.OR), capShape, shaftShape);
     private static final VoxelShape combinedShapeX
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeX, largeCoverShapeX, BooleanOp.OR), capShape, shaftShape);
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static CoreExtractorBaseBlock instance;
 
     public CoreExtractorBaseBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
-        setRegistryName(unlocalizedName);
-
-        hasItem = true;
     }
 
     @Override

@@ -8,9 +8,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
 import org.apache.commons.lang3.tuple.Pair;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -197,18 +200,17 @@ public class TetraEnchantmentHelper {
 
     public static class EnchantmentRules {
         EnchantmentCategory category;
-        ResourceLocation exclusions;
-        ResourceLocation additions;
+        ITag<Enchantment> exclusions;
+        ITag<Enchantment> additions;
 
         public EnchantmentRules(@Nullable EnchantmentCategory category, String additions, String exclusions) {
             this.category = category;
-            this.exclusions = new ResourceLocation(TetraMod.MOD_ID, exclusions);
-            this.additions = new ResourceLocation(TetraMod.MOD_ID, additions);
+            this.additions = ForgeRegistries.ENCHANTMENTS.tags().getTag(TagKey.create(Registry.ENCHANTMENT_REGISTRY, new ResourceLocation(TetraMod.MOD_ID, additions)));
+            this.exclusions = ForgeRegistries.ENCHANTMENTS.tags().getTag(TagKey.create(Registry.ENCHANTMENT_REGISTRY, new ResourceLocation(TetraMod.MOD_ID, exclusions)));
         }
 
         public boolean isApplicable(Enchantment enchantment) {
-            Set<ResourceLocation> tags = enchantment.getTags();
-            return ((category != null && category.equals(enchantment.category)) || tags.contains(additions)) && !tags.contains(exclusions);
+            return ((category != null && category.equals(enchantment.category)) || additions.contains(enchantment)) && !exclusions.contains(enchantment);
         }
     }
 }

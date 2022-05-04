@@ -30,6 +30,7 @@ import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.blocks.IToolProviderBlock;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -46,8 +47,8 @@ import java.util.Random;
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
 @ParametersAreNonnullByDefault
-public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteractiveBlock, EntityBlock {
-    public static final String unlocalizedName = "hammer_head";
+public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteractiveBlock, IToolProviderBlock, EntityBlock {
+    public static final String identifier = "hammer_head";
     public static final VoxelShape shape = box(2, 14, 2, 14, 16, 14);
     public static final VoxelShape jamShape = box(2, 4, 2, 14, 16, 14);
     static final BlockInteraction[] interactions = new BlockInteraction[]{
@@ -55,15 +56,11 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
                     HammerHeadTile.class, HammerHeadTile::isJammed,
                     (world, pos, blockState, player, hand, hitFace) -> unjam(world, pos, player))
     };
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static HammerHeadBlock instance;
 
     public HammerHeadBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
-
-        setRegistryName(unlocalizedName);
-
-        hasItem = false;
     }
 
     private static boolean unjam(Level world, BlockPos pos, Player playerEntity) {
@@ -106,7 +103,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
         if (isFunctional(world, pos)) {
             return Collections.singletonList(TetraToolActions.hammer);
         }
-        return super.getTools(world, pos, blockState);
+        return Collections.emptyList();
     }
 
     @Override
@@ -116,7 +113,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
             HammerBaseBlock baseBlock = (HammerBaseBlock) world.getBlockState(basePos).getBlock();
             return baseBlock.getHammerLevel(world, basePos);
         }
-        return super.getToolLevel(world, pos, blockState, toolAction);
+        return -1;
     }
 
     @Override

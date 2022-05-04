@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class DragonSinewItem extends TetraItem {
-    private static final String unlocalizedName = "dragon_sinew";
+    public static final String unlocalizedName = "dragon_sinew";
     private static final ResourceLocation dragonLootTable = new ResourceLocation("entities/ender_dragon");
     private static final ResourceLocation sinewLootTable = new ResourceLocation(TetraMod.MOD_ID, "entities/ender_dragon_extended");
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
@@ -29,7 +29,6 @@ public class DragonSinewItem extends TetraItem {
 
     public DragonSinewItem() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
 
         MinecraftForge.EVENT_BUS.register(new LootTableHandler());
     }

@@ -19,14 +19,13 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class PristineLapisItem extends TetraItem {
-    private static final String unlocalizedName = "pristine_lapis";
+    public static final String identifier = "pristine_lapis";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static PristineLapisItem instance;
 
     public PristineLapisItem() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @Override

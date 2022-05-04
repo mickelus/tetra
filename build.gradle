@@ -162,14 +162,14 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "tetra",
-            "Specification-Vendor": "mickelus",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${tetra_version}",
-            "Implementation-Vendor" :"tetra",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "tetra.mixins.json"
+                "Specification-Title"     : "tetra",
+                "Specification-Vendor"    : "mickelus",
+                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${tetra_version}",
+                "Implementation-Vendor"   : "tetra",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs"            : "tetra.mixins.json"
         ])
     }
 }
@@ -220,7 +220,7 @@ processResources {
                 def oldLength = file.length()
                 try {
                     file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-                } catch(JsonException e) {
+                } catch (JsonException e) {
                     throw new JsonException("Failed to parse json in " + file.path)
                 }
                 file.text = JsonOutput.toJson(new JsonSlurper().parse(file))

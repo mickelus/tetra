@@ -8,11 +8,14 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipBlockStateContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -35,7 +38,7 @@ import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class ScannerOverlayGui extends GuiRoot {
-    private static final ResourceLocation tag = new ResourceLocation("tetra:scannable");
+    public static final TagKey<Block> tag = BlockTags.create(new ResourceLocation("tetra", "scannable"));
     private static final int snoozeLength = 6000; // 5 min
     public static ScannerOverlayGui instance;
     private final ScannerBarGui scanner;
@@ -232,7 +235,7 @@ public class ScannerOverlayGui extends GuiRoot {
         Vec3 endVector = eyePosition.add(lookVector.x * range, lookVector.y * range, lookVector.z * range);
 
         return world.isBlockInLine(new ClipBlockStateContext(eyePosition, endVector,
-                blockState -> blockState.getBlock().getTags().contains(tag)));
+                blockState -> blockState.is(tag)));
     }
 
     private Vec3 getVectorForRotation(float pitch, float yaw) {

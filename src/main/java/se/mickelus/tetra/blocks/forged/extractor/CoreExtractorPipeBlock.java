@@ -30,16 +30,13 @@ public class CoreExtractorPipeBlock extends TetraBlock {
     public static final DirectionProperty facingProp = BlockStateProperties.FACING;
     public static final BooleanProperty poweredProp = BooleanProperty.create("powered");
 
-    public static final String unlocalizedName = "extractor_pipe";
+    public static final String identifier = "extractor_pipe";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static CoreExtractorPipeBlock instance;
 
     public CoreExtractorPipeBlock() {
         super(ForgedBlockCommon.propertiesSolid);
-        setRegistryName(unlocalizedName);
-
-        hasItem = true;
     }
 
     public static boolean isPowered(Level world, BlockPos pos) {

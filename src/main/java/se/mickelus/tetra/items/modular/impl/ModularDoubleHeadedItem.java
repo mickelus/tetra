@@ -56,18 +56,16 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     public final static String accessoryKey = "double/accessory";
     public final static String leftSuffix = "_left";
     public final static String rightSuffix = "_right";
+    public static final String identifier = "modular_double";
     private static final Logger logger = LogManager.getLogger();
-    private static final String unlocalizedName = "modular_double";
-
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(6, 1);
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ModularDoubleHeadedItem instance;
 
     public ModularDoubleHeadedItem() {
         super(new Item.Properties().stacksTo(1).tab(TetraItemGroup.instance).fireResistant());
-        setRegistryName(unlocalizedName);
 
         entityHitDamage = 2;
 
@@ -79,8 +77,8 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         updateConfig(ConfigHandler.honedoubleBase.get(), ConfigHandler.honedoubleIntegrityMultiplier.get());
 
 
-        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this));
-        RemoveSchematic.registerRemoveSchematics(this);
+        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
+        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {
@@ -89,7 +87,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
+    public void commonInit(PacketHandler packetHandler) {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("double/"));
     }
 

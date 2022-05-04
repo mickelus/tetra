@@ -43,6 +43,7 @@ import se.mickelus.mutil.util.ItemHandlerWrapper;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
+import se.mickelus.tetra.blocks.IToolProviderBlock;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.properties.IToolProvider;
@@ -53,15 +54,15 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
 @ParametersAreNonnullByDefault
-public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
-    public static final String unlocalizedName = "rack";
+public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, IToolProviderBlock {
+    public static final String identifier = "rack";
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
     private static final Map<Direction, VoxelShape> shapes = Maps.newEnumMap(ImmutableMap.of(
             Direction.NORTH, Block.box(0.0, 11.0, 14.0, 16.0, 14.0, 16.0),
             Direction.SOUTH, Block.box(0.0, 11.0, 0.0, 16.0, 14.0, 2.0),
             Direction.WEST, Block.box(14.0, 11.0, 0.0, 16.0, 14.0, 16.0),
             Direction.EAST, Block.box(0.0, 11.0, 0.0, 2.0, 14.0, 16.0)));
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static RackBlock instance;
 
 
@@ -69,10 +70,6 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock {
         super(Block.Properties.of(Material.WOOD, MaterialColor.WOOD)
                 .strength(1.0F)
                 .sound(SoundType.WOOD));
-
-        hasItem = true;
-
-        setRegistryName(unlocalizedName);
     }
 
     private static double getHitX(Direction facing, AABB boundingBox, double hitX, double hitY, double hitZ) {

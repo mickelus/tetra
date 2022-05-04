@@ -19,12 +19,10 @@ public class EffectTooltipRenderer extends EffectRenderer {
 
     @Override
     public void renderInventoryEffect(MobEffectInstance effect, EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, float z) {
-        EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                new TextComponent(constructEffectTooltip.apply(effect)));
+        EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () -> new TextComponent(constructEffectTooltip.apply(effect)));
     }
 
     @Override
     public void renderHUDEffect(MobEffectInstance effect, GuiComponent gui, PoseStack mStack, int x, int y, float z, float alpha) {
-
     }
 }

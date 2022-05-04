@@ -5,7 +5,7 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ToolActionHelper {
-    public static final BiMap<ToolAction, Tag.Named<Block>> appropriateTools = HashBiMap.create(4);
+    public static final BiMap<ToolAction, TagKey<Block>> appropriateTools = HashBiMap.create(4);
     /**
      * Below are lists of blocks, materials and tags that describe what different tools can harvest and efficiently destroy. Note that these
      * are copies of what the vanilla tool counterparts explicitly state that they can destroy and harvest, some blocks (and required tiers)
@@ -37,7 +37,7 @@ public class ToolActionHelper {
 
     // copy of hardcoded values in SwordItem, materials & tag that it explicitly state it can efficiently DESTROY
     public static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT, Material.VEGETABLE, Material.WEB, Material.BAMBOO);
-    public static final Set<Tag.Named<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
+    public static final Set<TagKey<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
 
     // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
     public static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);

@@ -21,13 +21,12 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class ItemMetalScrap extends TetraItem {
-    private static final String unlocalizedName = "metal_scrap";
+    public static final String unlocalizedName = "metal_scrap";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemMetalScrap instance;
 
     public ItemMetalScrap() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

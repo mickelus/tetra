@@ -14,12 +14,11 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class MiningSpeedPotionEffect extends MobEffect {
+    public static final String identifier = "mining_speed";
     public static MiningSpeedPotionEffect instance;
 
     public MiningSpeedPotionEffect() {
         super(MobEffectCategory.BENEFICIAL, 0xeeeeee);
-
-        setRegistryName("mining_speed");
 
         instance = this;
     }

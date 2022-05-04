@@ -26,16 +26,13 @@ import java.util.List;
 public class SeepingBedrockBlock extends TetraBlock {
     public static final IntegerProperty activeProp = IntegerProperty.create("active", 0, 1);
 
-    public static final String unlocalizedName = "seeping_bedrock";
+    public static final String identifier = "seeping_bedrock";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static SeepingBedrockBlock instance;
 
     public SeepingBedrockBlock() {
         super(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
-        setRegistryName(unlocalizedName);
-
-        hasItem = true;
 
         registerDefaultState(defaultBlockState().setValue(activeProp, 1));
     }

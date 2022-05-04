@@ -18,9 +18,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class TetraBlock extends Block implements ITetraBlock {
-
-    protected boolean hasItem = false;
+public class TetraBlock extends Block implements InitializableBlock {
 
     public TetraBlock(BlockBehaviour.Properties properties) {
         super(properties);
@@ -49,10 +47,5 @@ public class TetraBlock extends Block implements ITetraBlock {
     protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> getTicker(BlockEntityType<A> givenType,
             BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
         return expectedType == givenType ? (BlockEntityTicker<A>) ticker : null;
-    }
-
-    @Override
-    public boolean hasItem() {
-        return hasItem;
     }
 }

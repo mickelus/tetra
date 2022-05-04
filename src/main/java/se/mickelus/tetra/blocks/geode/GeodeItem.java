@@ -17,14 +17,13 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class GeodeItem extends TetraItem {
-    private static final String unlocalizedName = "geode";
+    public static final String identifier = "geode";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static GeodeItem instance;
 
     public GeodeItem() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @Override

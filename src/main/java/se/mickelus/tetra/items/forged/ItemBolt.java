@@ -18,13 +18,12 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class ItemBolt extends TetraItem {
-    private static final String unlocalizedName = "forged_bolt";
+    public static final String unlocalizedName = "forged_bolt";
     @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
     public static ItemBolt instance;
 
     public ItemBolt() {
         super(new Properties().tab(TetraItemGroup.instance));
-        setRegistryName(unlocalizedName);
     }
 
     @OnlyIn(Dist.CLIENT)

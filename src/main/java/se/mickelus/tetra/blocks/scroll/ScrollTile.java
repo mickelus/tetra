@@ -21,10 +21,10 @@ import java.util.Collection;
 
 @ParametersAreNonnullByDefault
 public class ScrollTile extends BlockEntity {
-    public static final String unlocalizedName = "scroll";
-    private static final String scrollsKey = "scrolls";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static final String identifier = "scroll";
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static BlockEntityType<ScrollTile> type;
+
     private ScrollData[] scrolls = new ScrollData[0];
 
     public ScrollTile(BlockPos p_155268_, BlockState p_155269_) {
@@ -66,7 +66,6 @@ public class ScrollTile extends BlockEntity {
         return !Arrays.stream(scrolls)
                 .anyMatch(data -> !data.isIntricate);
     }
-
 
     public CompoundTag[] getItemTags() {
         return Arrays.stream(scrolls)

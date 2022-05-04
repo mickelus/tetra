@@ -4,12 +4,15 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
@@ -43,10 +46,11 @@ public class ToolbeltInventory implements Container {
     }
 
     protected static Predicate<ItemStack> getPredicate(String inventory) {
-        Tag<Item> acceptTag = TetraMod.proxy.getItemTags().getTagOrEmpty(new ResourceLocation(TetraMod.MOD_ID, "toolbelt/" + inventory + "_accept"));
-        Tag<Item> rejectTag = TetraMod.proxy.getItemTags().getTagOrEmpty(new ResourceLocation(TetraMod.MOD_ID, "toolbelt/" + inventory + "_reject"));
+        TagKey<Item> acceptKey = ItemTags.create(new ResourceLocation(TetraMod.MOD_ID, "toolbelt/" + inventory + "_accept"));
+        TagKey<Item> rejectKey = ItemTags.create(new ResourceLocation(TetraMod.MOD_ID, "toolbelt/" + inventory + "_reject"));
+        ITag<Item> acceptTag = ForgeRegistries.ITEMS.tags().getTag(acceptKey);
 
-        return (itemStack -> (acceptTag.getValues().isEmpty() || itemStack.is(acceptTag)) && !itemStack.is(rejectTag));
+        return (itemStack -> (acceptTag.isEmpty() || itemStack.is(acceptKey)) && !itemStack.is(rejectKey));
     }
 
 

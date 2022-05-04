@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 public class ModularToolbeltItem extends ModularItem implements MenuProvider {
-    public final static String unlocalizedName = "modular_toolbelt";
+    public final static String identifier = "modular_toolbelt";
 
     public final static String slot1Key = "toolbelt/slot1";
     public final static String slot2Key = "toolbelt/slot2";
@@ -60,10 +60,10 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 18, 4, 0, 4, 18);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-13, 0);
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ModularToolbeltItem instance;
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static MenuType<ToolbeltContainer> containerType;
 
     public ModularToolbeltItem() {
@@ -74,8 +74,6 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
 
         canHone = false;
 
-        setRegistryName(unlocalizedName);
-
         majorModuleKeys = new String[]{slot1Key, slot2Key, slot3Key};
         minorModuleKeys = new String[]{beltKey};
 
@@ -83,14 +81,14 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     }
 
     @Override
-    public void init(PacketHandler packetHandler) {
+    public void commonInit(PacketHandler packetHandler) {
         packetHandler.registerPacket(EquipToolbeltItemPacket.class, EquipToolbeltItemPacket::new);
         packetHandler.registerPacket(OpenToolbeltItemPacket.class, OpenToolbeltItemPacket::new);
         packetHandler.registerPacket(UpdateBoosterPacket.class, UpdateBoosterPacket::new);
         packetHandler.registerPacket(ToggleSuspendPacket.class, ToggleSuspendPacket::new);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
-        RemoveSchematic.registerRemoveSchematics(this);
+        RemoveSchematic.registerRemoveSchematics(this, identifierKey);
 
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("toolbelt/"));
     }

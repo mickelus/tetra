@@ -24,7 +24,7 @@ public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer 
     private static final String chargeKey = "charge";
     private static final int maxCharge = 128;
     private static final int drainAmount = 4;
-    @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.unlocalizedName)
+    @ObjectHolder(TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.identifier)
     public static BlockEntityType<CoreExtractorBaseTile> type;
     private boolean isSending = false;
     private int currentCharge = 0;
