@@ -4,9 +4,10 @@
     "materialSlotCount": 0,
     "displayType": "improvement",
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "!blade/serrated": -1
+        "type": "tetra:not",
+        "requirement": {
+            "type": "tetra:improvement",
+            "improvement": "blade/serrated"
         }
     },
     "outcomes": [

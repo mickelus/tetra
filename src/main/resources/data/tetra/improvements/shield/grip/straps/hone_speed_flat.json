@@ -2,6 +2,9 @@
     {
         "key": "grip_hone/speed_flat",
         "level": 1,
+        "aspects": {
+            "honed": 1
+        },
         "attributes": {
             "tetra:ability_cooldown": -0.5
         }
@@ -10,6 +13,9 @@
         "key": "grip_hone/speed_flat",
         "level": 2,
         "integrity": -1,
+        "aspects": {
+            "honed": 2
+        },
         "attributes": {
             "tetra:ability_cooldown": -1.0
         }
@@ -18,6 +24,9 @@
         "key": "grip_hone/speed_flat",
         "level": 3,
         "integrity": -1,
+        "aspects": {
+            "honed": 3
+        },
         "attributes": {
             "tetra:ability_cooldown": -1.5
         }
@@ -26,6 +35,9 @@
         "key": "grip_hone/speed_flat",
         "level": 4,
         "integrity": -2,
+        "aspects": {
+            "honed": 4
+        },
         "attributes": {
             "tetra:ability_cooldown": -2
         }
@@ -34,6 +46,9 @@
         "key": "grip_hone/speed_flat",
         "level": 5,
         "integrity": -2,
+        "aspects": {
+            "honed": 5
+        },
         "attributes": {
             "tetra:ability_cooldown": -2.5
         }

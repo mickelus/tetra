@@ -11,9 +11,10 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "!plate_hone/durability": -1
+        "type": "tetra:not",
+        "requirement": {
+            "type": "tetra:improvement",
+            "improvement": "plate_hone/durability"
         }
     },
     "outcomes": [

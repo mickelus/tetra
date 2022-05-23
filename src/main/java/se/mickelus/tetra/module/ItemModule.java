@@ -14,6 +14,7 @@ import net.minecraftforge.common.ToolAction;
 import org.apache.commons.lang3.StringUtils;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.*;
@@ -424,5 +425,13 @@ public abstract class ItemModule implements IToolProvider {
                 .map(tweak -> tweak.getToolData(getTweakStep(itemStack, tweak)))
                 .filter(Objects::nonNull)
                 .reduce(getVariantData(itemStack).tools, ToolData::merge);
+    }
+
+    public AspectData getAspects(ItemStack itemStack) {
+        return getVariantData(itemStack).aspects;
+    }
+
+    public boolean hasAspect(ItemStack itemStack, ItemAspect aspect) {
+        return getAspects(itemStack).contains(aspect);
     }
 }

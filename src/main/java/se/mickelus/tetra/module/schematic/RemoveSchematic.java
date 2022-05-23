@@ -85,7 +85,7 @@ public class RemoveSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean isApplicableForItem(ItemStack itemStack) {
+    public boolean isRelevant(ItemStack itemStack) {
         return item.getClass().isInstance(itemStack.getItem());
     }
 

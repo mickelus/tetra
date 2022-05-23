@@ -21,11 +21,9 @@
     },
     "displayType": "improvement",
     "requirement": {
-        "type": "tetra:modular_item",
-        "variants": {
-            "strap3/leather": "#slot",
-            "strap3/iron": "#slot"
-        }
+        "type": "tetra:aspect",
+        "aspect": "strap",
+        "level": 3
     },
     "outcomes": [
         {

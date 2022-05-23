@@ -26,7 +26,7 @@
                 "data": [
                     {
                         "key": "hone_gild_3",
-                        "schematics": [ "tetra:shared/hone_gild_1", "tetra:shared/hone_gild_2", "tetra:shared/hone_gild_3" ],
+                        "schematics": [ "tetra:hone/gild_1", "tetra:hone/gild_2", "tetra:hone/gild_3" ],
                         "intricate": true,
                         "material": 2,
                         "ribbon": "deb243",

@@ -10,13 +10,28 @@
         "textureY": 32
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "!spearhead/tempered": -1
-        },
-        "modules": [
-            [ "single/spearhead" ],
-            [ "single/trident" ]
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:or",
+                "requirements": [
+                    {
+                        "type": "tetra:module",
+                        "module": "single/spearhead"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "single/trident"
+                    }
+                ]
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "spearhead/tempered"
+                }
+            }
         ]
     },
     "outcomes": [

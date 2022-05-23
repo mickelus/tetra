@@ -12,11 +12,9 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [ [ "shield/straps" ] ],
-        "improvements": {
-            "grip_hone/damage_mult": 2
-        }
+        "type": "tetra:improvement",
+        "improvement": "grip_hone/damage_mult",
+        "level": 2
     },
     "outcomes": [
         {

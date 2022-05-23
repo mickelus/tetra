@@ -10,10 +10,9 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "head_hone/durability": 1
-        }
+        "type": "tetra:improvement",
+        "improvement": "head_hone/durability",
+        "level": 1
     },
     "outcomes": [
         {

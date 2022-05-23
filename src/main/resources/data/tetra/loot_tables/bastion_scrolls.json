@@ -11,13 +11,13 @@
                     "functions": [
                         {
                             "function": "tetra:scroll",
-                            "key": "double/adze/warforge",
+                            "key": "warforge/adze",
                             "details": "warforge",
                             "intricate": false,
                             "material": 2,
                             "ribbon": "8559b3",
                             "glyphs": [ 6, 7, 11, 7 ],
-                            "schematics": [ "double/adze/warforge" ]
+                            "schematics": [ "warforge/adze" ]
                         }
                     ]
                 },
@@ -27,12 +27,13 @@
                     "functions": [
                         {
                             "function": "tetra:scroll",
-                            "key": "double/basic_axe/warforge",
+                            "key": "warforge/axe",
                             "details": "warforge",
                             "intricate": false,
                             "material": 2,
                             "ribbon": "b35973",
-                            "glyphs": [ 5, 10, 8, 9 ], "schematics": [ "double/basic_axe/warforge" ]
+                            "glyphs": [ 5, 10, 8, 9 ],
+                            "schematics": [ "warforge/axe" ]
                         }
                     ]
                 },
@@ -42,13 +43,13 @@
                     "functions": [
                         {
                             "function": "tetra:scroll",
-                            "key": "double/basic_hammer/warforge",
+                            "key": "warforge/hammer",
                             "details": "warforge",
                             "intricate": false,
                             "material": 2,
                             "ribbon": "3d4299",
                             "glyphs": [ 9, 8, 11, 10 ],
-                            "schematics": [ "double/basic_hammer/warforge" ]
+                            "schematics": [ "warforge/hammer" ]
                         }
                     ]
                 },
@@ -58,13 +59,13 @@
                     "functions": [
                         {
                             "function": "tetra:scroll",
-                            "key": "double/basic_pickaxe/warforge",
+                            "key": "warforge/pickaxe",
                             "details": "warforge",
                             "intricate": false,
                             "material": 2,
                             "ribbon": "508cb3",
                             "glyphs": [ 6, 11, 8, 7 ],
-                            "schematics": [ "double/basic_pickaxe/warforge" ]
+                            "schematics": [ "warforge/pickaxe" ]
                         }
                     ]
                 },
@@ -74,13 +75,13 @@
                     "functions": [
                         {
                             "function": "tetra:scroll",
-                            "key": "double/claw/warforge",
+                            "key": "warforge/claw",
                             "details": "warforge",
                             "intricate": false,
                             "material": 2,
                             "ribbon": "1d262f",
                             "glyphs": [ 8, 10, 5, 11 ],
-                            "schematics": [ "double/claw/warforge" ]
+                            "schematics": [ "warforge/claw" ]
                         }
                     ]
                 },
@@ -90,13 +91,13 @@
                     "functions": [
                         {
                             "function": "tetra:scroll",
-                            "key": "double/hoe/warforge",
+                            "key": "warforge/hoe",
                             "details": "warforge",
                             "intricate": false,
                             "material": 2,
                             "ribbon": "93b350",
                             "glyphs": [ 10, 7, 9, 5 ],
-                            "schematics": [ "double/hoe/warforge" ]
+                            "schematics": [ "warforge/hoe" ]
                         }
                     ]
                 },
@@ -106,13 +107,13 @@
                     "functions": [
                         {
                             "function": "tetra:scroll",
-                            "key": "double/sickle/warforge",
+                            "key": "warforge/sickle",
                             "details": "warforge",
                             "intricate": false,
                             "material": 2,
                             "ribbon": "d99e4c",
                             "glyphs": [ 5, 9, 6, 10 ],
-                            "schematics": [ "double/sickle/warforge" ]
+                            "schematics": [ "warforge/sickle" ]
                         }
                     ]
                 },
@@ -122,13 +123,13 @@
                     "functions": [
                         {
                             "function": "tetra:scroll",
-                            "key": "double/butt/warforge",
+                            "key": "warforge/butt",
                             "details": "warforge",
                             "intricate": false,
                             "material": 2,
                             "ribbon": "b33636",
                             "glyphs": [ 11, 5, 8, 9 ],
-                            "schematics": [ "double/butt_shared/warforge/" ]
+                            "schematics": [ "warforge/butt" ]
                         }
                     ]
                 }

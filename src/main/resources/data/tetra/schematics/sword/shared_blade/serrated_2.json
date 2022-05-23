@@ -8,10 +8,9 @@
     "rarity": "hone",
     "displayType": "improvement",
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "blade/serrated": 1
-        }
+        "type": "tetra:improvement",
+        "improvement": "blade/serrated",
+        "level": 1
     },
     "outcomes": [
         {

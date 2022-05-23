@@ -11,12 +11,12 @@
                     "functions": [
                         {
                             "function": "tetra:scroll",
-                            "key": "hone_gild_1",
+                            "key": "hone/gild_1",
                             "intricate": true,
                             "material": 2,
                             "ribbon": "c9ae69",
                             "glyphs": [ 15, 14, 15, 15 ],
-                            "schematics": [ "shared/hone_gild_1" ]
+                            "schematics": [ "hone/gild_1" ]
                         }
                     ]
                 }

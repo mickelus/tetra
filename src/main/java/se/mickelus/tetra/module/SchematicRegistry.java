@@ -1,15 +1,17 @@
 package se.mickelus.tetra.module;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.schematic.*;
 
@@ -47,21 +49,31 @@ public class SchematicRegistry {
         return instance.schematicMap.values();
     }
 
-    public static UpgradeSchematic[] getAvailableSchematics(Player player, WorkbenchTile tile, ItemStack itemStack) {
+    public static UpgradeSchematic[] getSchematics(ItemStack itemStack) {
         return getAllSchematics().stream()
-                .filter(upgradeSchematic -> playerHasSchematic(player, tile, itemStack, upgradeSchematic))
-                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForItem(itemStack))
+                .filter(upgradeSchematic -> upgradeSchematic.isRelevant(itemStack))
                 .toArray(UpgradeSchematic[]::new);
     }
 
-    public static UpgradeSchematic[] getSchematics(String slot, ItemStack itemStack) {
+    public static UpgradeSchematic[] getSchematics(ItemStack itemStack, String slot) {
         return getAllSchematics().stream()
+                .filter(upgradeSchematic -> upgradeSchematic.isRelevant(itemStack))
                 .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(slot, itemStack))
                 .toArray(UpgradeSchematic[]::new);
     }
 
-    public static boolean playerHasSchematic(Player player, WorkbenchTile tile, ItemStack targetStack, UpgradeSchematic schematic) {
-        return schematic.isVisibleForPlayer(player, tile, targetStack);
+
+    public static UpgradeSchematic[] getSchematics(CraftingContext context) {
+        return getAllSchematics().stream()
+                .filter(upgradeSchematic -> upgradeSchematic.isRelevant(context.targetStack))
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(context.slot, context.targetStack))
+                .filter(upgradeSchematic -> upgradeSchematic.matchesRequirements(context))
+                .toArray(UpgradeSchematic[]::new);
+    }
+
+
+    public static UpgradeSchematic[] getSchematics(ItemStack itemStack, String slot, Player player, Level level, BlockPos pos, BlockState blockState, ResourceLocation[] unlocks) {
+        return getSchematics(new CraftingContext(level, pos, blockState, player, itemStack, slot, unlocks));
     }
 
     /**

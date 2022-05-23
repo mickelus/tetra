@@ -1,7 +1,14 @@
 package se.mickelus.tetra.aspect;
 
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+
+import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ItemAspect {
@@ -37,5 +44,15 @@ public class ItemAspect {
 
     public String getKey() {
         return key;
+    }
+
+    public static class Deserializer implements JsonDeserializer<ItemAspect> {
+        @Override
+        public ItemAspect deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return Optional.ofNullable(json)
+                    .map(JsonElement::getAsString)
+                    .map(ItemAspect::get)
+                    .orElse(null);
+        }
     }
 }

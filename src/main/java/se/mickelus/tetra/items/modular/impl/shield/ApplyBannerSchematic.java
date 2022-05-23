@@ -84,7 +84,7 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean isApplicableForItem(ItemStack itemStack) {
+    public boolean isRelevant(ItemStack itemStack) {
         return itemStack.getItem() instanceof ModularShieldItem;
     }
 

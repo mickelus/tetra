@@ -13,11 +13,18 @@
         "textureY": 32
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [ [ "single/basic_shovel" ] ],
-        "improvements": {
-            "head_hone/shovel_efficiency": 4
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:module",
+                "module": "single/basic_shovel"
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "head_hone/shovel_efficiency",
+                "level": 4
+            }
+        ]
     },
     "outcomes": [
         {

@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -12,7 +13,6 @@ import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.items.modular.ItemPredicateModular;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -151,16 +151,15 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean isApplicableForItem(ItemStack itemStack) {
-        if (definition.hone && (!ConfigHandler.moduleProgression.get() || !IModularItem.isHoneable(itemStack))) {
-            return false;
+    public boolean isRelevant(ItemStack itemStack) {
+        if (moduleSlot != null) {
+            return CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                    .map(item -> Stream.concat(Arrays.stream(item.getMajorModuleKeys()), Arrays.stream(item.getMinorModuleKeys())))
+                    .orElseGet(Stream::empty)
+                    .anyMatch(moduleSlot::equals);
         }
 
-        if (definition.requirement instanceof ItemPredicateModular) {
-            return ((ItemPredicateModular) definition.requirement).test(itemStack, moduleSlot);
-        }
-
-        return definition.requirement.matches(itemStack);
+        return true;
     }
 
     @Override
@@ -174,27 +173,32 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean isVisibleForPlayer(Player player, @Nullable WorkbenchTile tile, ItemStack targetStack) {
-        if (definition.locked) {
-            return Optional.ofNullable(tile)
-                    .map(WorkbenchTile::getUnlockedSchematics)
-                    .map(Arrays::stream)
-                    .orElseGet(Stream::empty)
-                    .anyMatch(rl -> definition.key.startsWith(rl.getPath()));
-        }
-
-        if (definition.materialRevealSlot > -1) {
-            for (int x = 0; x < 9; x++) {
-                for (int y = 0; y < 4; y++) {
-                    if (getOutcomeFromMaterial(player.getInventory().getItem(y * 9 + x), definition.materialRevealSlot).isPresent()) {
-                        return true;
-                    }
-                }
-            }
-
+    public boolean matchesRequirements(CraftingContext context) {
+        if (definition.hone && (!ConfigHandler.moduleProgression.get() || !IModularItem.isHoneable(context.targetStack))) {
             return false;
         }
 
+        if (definition.materialRevealSlot > -1 && (context.player == null || !hasAnyMaterial(context.player))) {
+            return false;
+        }
+
+        return definition.requirement == null || definition.requirement.test(context);
+    }
+
+    private boolean hasAnyMaterial(Player player) {
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 4; y++) {
+                if (getOutcomeFromMaterial(player.getInventory().getItem(y * 9 + x), definition.materialRevealSlot).isPresent()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean isVisibleForPlayer(Player player, @Nullable WorkbenchTile tile, ItemStack targetStack) {
         return true;
     }
 

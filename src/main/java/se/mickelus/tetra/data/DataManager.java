@@ -24,6 +24,7 @@ import se.mickelus.mutil.data.deserializer.BlockPosDeserializer;
 import se.mickelus.mutil.data.deserializer.ItemDeserializer;
 import se.mickelus.mutil.data.deserializer.ResourceLocationDeserializer;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.workbench.action.ConfigActionImpl;
 import se.mickelus.tetra.craftingeffect.CraftingEffect;
@@ -38,6 +39,10 @@ import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.schematic.OutcomeDefinition;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
+import se.mickelus.tetra.module.schematic.requirement.CraftingRequirement;
+import se.mickelus.tetra.module.schematic.requirement.CraftingRequirementDeserializer;
+import se.mickelus.tetra.module.schematic.requirement.IntegerPredicate;
+import se.mickelus.tetra.module.schematic.requirement.ModuleRequirement;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
@@ -50,6 +55,7 @@ public class DataManager implements DataDistributor {
     public static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(ToolData.class, new ToolData.Deserializer())
             .registerTypeAdapter(AspectData.class, new AspectData.Deserializer())
+            .registerTypeAdapter(ItemAspect.class, new ItemAspect.Deserializer())
             .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
             .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
             .registerTypeAdapter(ModuleModel.class, new ModuleModelDeserializer())
@@ -68,6 +74,9 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(MaterialColors.class, new MaterialColors.Deserializer())
             .registerTypeAdapter(CraftingEffectCondition.class, new CraftingEffectCondition.Deserializer())
             .registerTypeAdapter(CraftingEffectOutcome.class, new CraftingEffectOutcome.Deserializer())
+            .registerTypeAdapter(CraftingRequirement.class, new CraftingRequirementDeserializer())
+            .registerTypeAdapter(ModuleRequirement.class, new ModuleRequirement.Deserializer())
+            .registerTypeAdapter(IntegerPredicate.class, new IntegerPredicate.Deserializer())
             .registerTypeAdapter(Item.class, new ItemDeserializer())
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())

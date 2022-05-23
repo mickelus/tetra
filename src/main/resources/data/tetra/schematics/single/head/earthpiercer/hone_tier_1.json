@@ -12,12 +12,27 @@
         "textureX": 176
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [ [ "single/earthpiercer" ] ],
-        "improvements": {
-            "!head_hone/pickaxe_tier": -1,
-            "head_hone/pickaxe_efficiency": 5
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:module",
+                "module": "single/earthpiercer"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "head_hone/pickaxe_tier"
+                }
+            },
+            {
+                "type": "tetra:aspect",
+                "aspect": "honed",
+                "level": {
+                    "min": 5
+                }
+            }
+        ]
     },
     "outcomes": [
         {

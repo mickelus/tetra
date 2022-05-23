@@ -2,6 +2,9 @@
     {
         "key": "head_hone/piercing",
         "level": 1,
+        "aspects": {
+            "honed": 1
+        },
         "effects": {
             "piercing": 1
         }
@@ -10,6 +13,9 @@
         "key": "head_hone/piercing",
         "level": 2,
         "integrity": -1,
+        "aspects": {
+            "honed": 2
+        },
         "effects": {
             "piercing": 2
         }
@@ -18,6 +24,9 @@
         "key": "head_hone/piercing",
         "level": 3,
         "integrity": -1,
+        "aspects": {
+            "honed": 3
+        },
         "effects": {
             "piercing": 3
         }
@@ -26,6 +35,9 @@
         "key": "head_hone/piercing",
         "level": 4,
         "integrity": -1,
+        "aspects": {
+            "honed": 4
+        },
         "effects": {
             "piercing": 4
         }

@@ -16,6 +16,9 @@
         "key": "blade/tempered",
         "level": 2,
         "integrity": -1,
+        "aspects": {
+            "honed": 1
+        },
         "effects": {
             "armorPenetration": 30
         },
@@ -29,6 +32,9 @@
         "key": "blade/tempered",
         "level": 3,
         "integrity": -2,
+        "aspects": {
+            "honed": 2
+        },
         "effects": {
             "armorPenetration": 45
         },

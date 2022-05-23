@@ -8,6 +8,9 @@
         {
             "key": "quiver/forged_mesh",
             "integrity": -2,
+            "aspects": {
+                "quiver": 2
+            },
             "effects": {
                 "quiverSlot": 8
             },
@@ -19,6 +22,9 @@
         {
             "key": "quiver/leather",
             "integrity": -3,
+            "aspects": {
+                "quiver": 2
+            },
             "effects": {
                 "quiverSlot": 9
             },
@@ -30,6 +36,9 @@
         {
             "key": "quiver/wool",
             "integrity": -1,
+            "aspects": {
+                "quiver": 2
+            },
             "effects": {
                 "quiverSlot": 6
             },
@@ -41,6 +50,9 @@
         {
             "key": "quiver/hide",
             "integrity": 0,
+            "aspects": {
+                "quiver": 2
+            },
             "effects": {
                 "quiverSlot": 2
             },

@@ -12,10 +12,9 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "plate_hone/speed": 3
-        }
+        "type": "tetra:improvement",
+        "improvement": "plate_hone/speed",
+        "level": 3
     },
     "outcomes": [
         {

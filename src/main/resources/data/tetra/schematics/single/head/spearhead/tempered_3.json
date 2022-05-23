@@ -12,10 +12,9 @@
         "textureY": 32
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "spearhead/tempered": 2
-        }
+        "type": "tetra:improvement",
+        "improvement": "spearhead/tempered",
+        "level": 2
     },
     "outcomes": [
         {

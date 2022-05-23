@@ -2,6 +2,9 @@
     {
         "key": "head_hone/pickaxe_tier",
         "integrity": -1,
+        "aspects": {
+            "honed": 1
+        },
         "tools": {
             "pickaxe_dig": 1
         }

@@ -5,13 +5,8 @@
         "shield/plate"
     ],
     "improvements": [
-        "tetra:shield/plate/heater/studs",
-        "tetra:shield/plate/heater/trim",
-        "tetra:shield/plate/heater/aerodynamic_trim",
-        "tetra:shield/plate/heater/banner",
-        "tetra:shield/plate/piercing",
-        "tetra:shield/plate/ricochet",
-        "tetra:shield/plate/shared_hone",
+        "tetra:shield/plate/heater/",
+        "tetra:shield/plate/shared/",
         "tetra:shared/"
     ],
     "variants": [

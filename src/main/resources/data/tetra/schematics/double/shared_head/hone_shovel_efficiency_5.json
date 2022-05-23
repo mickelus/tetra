@@ -17,14 +17,27 @@
         "textureY": 32
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [
-            [ "double/adze_right" ],
-            [ "double/adze_left" ]
-        ],
-        "improvements": {
-            "head_hone/shovel_efficiency": 4
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:or",
+                "requirements": [
+                    {
+                        "type": "tetra:module",
+                        "module": "double/adze_right"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "double/adze_left"
+                    }
+                ]
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "head_hone/shovel_efficiency",
+                "level": 4
+            }
+        ]
     },
     "outcomes": [
         {

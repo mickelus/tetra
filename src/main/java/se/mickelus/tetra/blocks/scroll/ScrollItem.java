@@ -120,17 +120,19 @@ public class ScrollItem extends BlockItem implements InitializableItem {
             items.add(throwingKnife);
             items.add(howlingBlade);
 
-            items.add(setupSchematic("double/adze/warforge", "warforge", false, 2, 0x8559b3, 6, 7, 11, 7));
-            items.add(setupSchematic("double/basic_axe/warforge", "warforge", false, 2, 0xb35973, 5, 10, 8, 9));
-            items.add(setupSchematic("double/basic_hammer/warforge", "warforge", false, 2, 0x3d4299, 9, 8, 11, 10));
-            items.add(setupSchematic("double/basic_pickaxe/warforge", "warforge", false, 2, 0x508cb3, 6, 11, 8, 7));
-            items.add(setupSchematic("double/claw/warforge", "warforge", false, 2, 0x1d262f, 8, 10, 5, 11));
-            items.add(setupSchematic("double/hoe/warforge", "warforge", false, 2, 0x93b350, 10, 7, 9, 5));
-            items.add(setupSchematic("double/sickle/warforge", "warforge", false, 2, 0xd99e4c, 5, 9, 6, 10));
-            items.add(setupSchematic("double/butt/warforge", "warforge", new String[]{"double/butt_shared/warforge/"}, false, 2, 0xb33636, 11, 5, 8, 9));
+            items.add(setupSchematic("warforge/adze", "warforge", false, 2, 0x8559b3, 6, 7, 11, 7));
+            items.add(setupSchematic("warforge/axe", "warforge", false, 2, 0xb35973, 5, 10, 8, 9));
+            items.add(setupSchematic("warforge/hammer", "warforge", false, 2, 0x3d4299, 9, 8, 11, 10));
+            items.add(setupSchematic("warforge/pickaxe", "warforge", false, 2, 0x508cb3, 6, 11, 8, 7));
+            items.add(setupSchematic("warforge/claw", "warforge", false, 2, 0x1d262f, 8, 10, 5, 11));
+            items.add(setupSchematic("warforge/hoe", "warforge", false, 2, 0x93b350, 10, 7, 9, 5));
+            items.add(setupSchematic("warforge/sickle", "warforge", false, 2, 0xd99e4c, 5, 9, 6, 10));
+            items.add(setupSchematic("warforge/butt", "warforge", false, 2, 0xb33636, 11, 5, 8, 9));
 
-            items.add(setupSchematic("hone_gild_1", null, new String[]{"shared/hone_gild_1"}, true, 2, 0xc9ae69, 15, 14, 15, 15));
-            items.add(setupSchematic("hone_gild_5", null, new String[]{"shared/hone_gild_"}, true, 2, 0xf2b313, 12, 12, 12, 12));
+            items.add(setupSchematic("hone/gild_1", null, true, 2, 0xc9ae69, 15, 14, 15, 15));
+            items.add(setupSchematic("hone/gild_5", null,
+                    new String[]{"hone/gild_1", "hone/gild_2", "hone/gild_3", "hone/gild_4", "hone/gild_5"},
+                    true, 2, 0xf2b313, 12, 12, 12, 12));
         }
     }
 
@@ -140,7 +142,8 @@ public class ScrollItem extends BlockItem implements InitializableItem {
 
     private ItemStack setupSchematic(String key, String details, String[] schematics, boolean isIntricate, int material, int tint, Integer... glyphs) {
         ScrollData data = new ScrollData(key, Optional.ofNullable(details), isIntricate, material, tint, Arrays.asList(glyphs),
-                Arrays.stream(schematics).map(s -> new ResourceLocation(TetraMod.MOD_ID, s)).collect(Collectors.toList()),
+                Arrays.stream(schematics).map(s -> new ResourceLocation(TetraMod.MOD_ID, s))
+                        .collect(Collectors.toList()),
                 Collections.emptyList());
 
         ItemStack itemStack = new ItemStack(this);

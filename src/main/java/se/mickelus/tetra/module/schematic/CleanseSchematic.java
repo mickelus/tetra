@@ -80,7 +80,7 @@ public class CleanseSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean isApplicableForItem(ItemStack itemStack) {
+    public boolean isRelevant(ItemStack itemStack) {
         return true;
     }
 

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.module.schematic;
 
-import net.minecraft.advancements.critereon.ItemPredicate;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.MaterialMultiplier;
+import se.mickelus.tetra.module.schematic.requirement.CraftingRequirement;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
@@ -50,15 +50,9 @@ public class SchematicDefinition {
      * Defines if this schematic should only be applicable when the player has a honing attempt available for the item.
      */
     public boolean hone = false;
-    /**
-     * An item predicate which has to be met for this schematic to be applicable. Will not show up in the schematic list
-     * if this is not met. Optional, allows all items by default (as long as they have the required slots)
-     */
-    public ItemPredicate requirement = ItemPredicate.ANY;
-    /**
-     * If true this schematic will only be visible if it is unlocked, either by the workbench or by a nearby block.
-     */
-    public boolean locked = false;
+
+    public CraftingRequirement requirement = CraftingRequirement.any;
+
     /**
      * If set this schematic will only be visible if the player carries at least one itemstack that will produce an outcome if placed in the slot at the
      * provided index.
@@ -115,6 +109,9 @@ public class SchematicDefinition {
             to.localizationKey = from.localizationKey;
         }
 
+        if (!Objects.equals(from.requirement, defaultValues.requirement)) {
+            to.requirement = from.requirement;
+        }
 
         if (from.materialSlotCount != defaultValues.materialSlotCount) {
             to.materialSlotCount = from.materialSlotCount;

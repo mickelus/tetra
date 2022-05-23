@@ -5,10 +5,8 @@
         "shield/grip"
     ],
     "improvements": [
-        "tetra:shield/grip/hone_damage_flat",
-        "tetra:shield/grip/hone_speed_mult",
-        "tetra:shield/grip/hone_durability",
-        "tetra:shield/grip/shared",
+        "tetra:shield/grip/basic_grip/",
+        "tetra:shield/grip/shared/",
         "tetra:shared/"
     ],
     "variants": [

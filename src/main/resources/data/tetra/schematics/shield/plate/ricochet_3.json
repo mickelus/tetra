@@ -12,10 +12,9 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "shield/ricochet": 2
-        }
+        "type": "tetra:improvement",
+        "improvement": "shield/ricochet",
+        "level": 2
     },
     "outcomes": [
         {

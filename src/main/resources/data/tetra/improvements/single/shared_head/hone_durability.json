@@ -2,30 +2,45 @@
     {
         "key": "head_hone/durability",
         "level": 1,
+        "aspects": {
+            "honed": 1
+        },
         "durability": 25
     },
     {
         "key": "head_hone/durability",
         "level": 2,
         "integrity": -1,
+        "aspects": {
+            "honed": 2
+        },
         "durability": 50
     },
     {
         "key": "head_hone/durability",
         "level": 3,
         "integrity": -1,
+        "aspects": {
+            "honed": 3
+        },
         "durability": 100
     },
     {
         "key": "head_hone/durability",
         "level": 4,
         "integrity": -2,
+        "aspects": {
+            "honed": 4
+        },
         "durability": 175
     },
     {
         "key": "head_hone/durability",
         "level": 5,
         "integrity": -2,
+        "aspects": {
+            "honed": 5
+        },
         "durability": 275
     }
 ]

@@ -1,0 +1,46 @@
+[
+    {
+        "key": "plate_hone/durability",
+        "level": 1,
+        "aspects": {
+            "honed": 1
+        },
+        "durabilityMultiplier": 1.1
+    },
+    {
+        "key": "plate_hone/durability",
+        "level": 2,
+        "integrity": -1,
+        "aspects": {
+            "honed": 2
+        },
+        "durabilityMultiplier": 1.2
+    },
+    {
+        "key": "plate_hone/durability",
+        "level": 3,
+        "integrity": -1,
+        "aspects": {
+            "honed": 3
+        },
+        "durabilityMultiplier": 1.3
+    },
+    {
+        "key": "plate_hone/durability",
+        "level": 4,
+        "integrity": -2,
+        "aspects": {
+            "honed": 4
+        },
+        "durabilityMultiplier": 1.4
+    },
+    {
+        "key": "plate_hone/durability",
+        "level": 5,
+        "integrity": -2,
+        "aspects": {
+            "honed": 5
+        },
+        "durabilityMultiplier": 1.5
+    }
+]

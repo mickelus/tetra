@@ -8,6 +8,9 @@
         {
             "key": "storage/forged_mesh",
             "integrity": -3,
+            "aspects": {
+                "storage": 1
+            },
             "effects": {
                 "storageSlot": 13
             },
@@ -19,6 +22,9 @@
         {
             "key": "storage/leather",
             "integrity": -4,
+            "aspects": {
+                "storage": 1
+            },
             "effects": {
                 "storageSlot": 16
             },
@@ -30,6 +36,9 @@
         {
             "key": "storage/wool",
             "integrity": -1,
+            "aspects": {
+                "storage": 1
+            },
             "effects": {
                 "storageSlot": 6
             },
@@ -41,6 +50,9 @@
         {
             "key": "storage/hide",
             "integrity": 0,
+            "aspects": {
+                "storage": 1
+            },
             "effects": {
                 "storageSlot": 4
             },

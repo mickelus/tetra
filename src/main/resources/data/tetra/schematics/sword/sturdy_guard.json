@@ -1,6 +1,5 @@
 {
     "replace": true,
-    "locked": true,
     "slots": [ "sword/guard" ],
     "materialSlotCount": 1,
     "rarity": "temporary",
@@ -8,6 +7,10 @@
     "glyph": {
         "textureX": 147,
         "textureY": 16
+    },
+    "requirement": {
+        "type": "tetra:locked",
+        "key": "sword/sturdy_guard"
     },
     "translation": {
         "primaryEffects": {

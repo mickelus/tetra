@@ -51,7 +51,7 @@ public abstract class BasicSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean isApplicableForItem(ItemStack itemStack) {
+    public boolean isRelevant(ItemStack itemStack) {
         return item.equals(itemStack.getItem());
     }
 

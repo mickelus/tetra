@@ -6,13 +6,28 @@
     "materialSlotCount": 0,
     "displayType": "improvement",
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "!blade/hooked": -1
-        },
-        "modules": [
-            [ "sword/short_blade" ],
-            [ "sword/basic_blade" ]
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:or",
+                "requirements": [
+                    {
+                        "type": "tetra:module",
+                        "module": "sword/short_blade"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "sword/basic_blade"
+                    }
+                ]
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "blade/hooked"
+                }
+            }
         ]
     },
     "outcomes": [

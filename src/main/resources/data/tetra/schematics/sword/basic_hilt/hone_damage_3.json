@@ -12,10 +12,9 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "hilt_hone/damage": 2
-        }
+        "type": "tetra:improvement",
+        "improvement": "hilt_hone/damage",
+        "level": 2
     },
     "outcomes": [
         {

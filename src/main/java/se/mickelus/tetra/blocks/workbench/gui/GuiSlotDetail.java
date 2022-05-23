@@ -20,6 +20,7 @@ import se.mickelus.tetra.gui.VerticalTabGroupGui;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
+import se.mickelus.tetra.module.schematic.CraftingContext;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.properties.PropertyHelper;
 
@@ -162,10 +163,9 @@ public class GuiSlotDetail extends GuiElement {
     }
 
     private void updateSchematicList(Player player, WorkbenchTile tileEntity, String selectedSlot) {
-        ItemStack targetStack = tileEntity.getTargetItemStack();
-        UpgradeSchematic[] schematics = SchematicRegistry.getAvailableSchematics(player, tileEntity, targetStack);
-        schematics = Arrays.stream(schematics)
-                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(selectedSlot, targetStack))
+        CraftingContext context = new CraftingContext(tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), player,
+                tileEntity.getTargetItemStack(), selectedSlot, tileEntity.getUnlockedSchematics());
+        UpgradeSchematic[] schematics = Arrays.stream(SchematicRegistry.getSchematics(context))
                 .sorted(Comparator.comparing(UpgradeSchematic::getRarity).thenComparing(UpgradeSchematic::getType).thenComparing(UpgradeSchematic::getKey))
                 .toArray(UpgradeSchematic[]::new);
         schematicList.setSchematics(schematics);

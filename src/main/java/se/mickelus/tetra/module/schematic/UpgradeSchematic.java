@@ -73,12 +73,20 @@ public interface UpgradeSchematic {
     boolean isMaterialsValid(ItemStack itemStack, String itemSlot, ItemStack[] materials);
 
     /**
-     * Returns true if this upgrade can be applied to the given item.
+     * Returns true if this upgrade is relevant for the given item, is it applicable
      *
      * @param itemStack the itemstack that is to be upgraded
      * @return
      */
-    boolean isApplicableForItem(ItemStack itemStack);
+    boolean isRelevant(ItemStack itemStack);
+
+    /**
+     * @param context
+     * @return
+     */
+    default boolean matchesRequirements(CraftingContext context) {
+        return true;
+    }
 
     /**
      * Returns true if this upgrade can be applied to the given slot on the given item.

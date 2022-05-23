@@ -1,7 +1,6 @@
 {
     "replace": true,
     "localizationKey": "double/warforge",
-    "locked": true,
     "slots": [ "double/head_left", "double/head_right" ],
     "keySuffixes": [ "_left", "_right" ],
     "materialSlotCount": 0,
@@ -12,8 +11,26 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [ [ "double/claw_right" ], [ "double/claw_left" ] ]
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:warforge/claw"
+            },
+            {
+                "type": "tetra:or",
+                "requirements": [
+                    {
+                        "type": "tetra:module",
+                        "module": "double/claw_right"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "double/claw_left"
+                    }
+                ]
+            }
+        ]
     },
     "outcomes": [
         {

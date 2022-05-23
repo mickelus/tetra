@@ -16,7 +16,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemColors;
@@ -330,11 +329,7 @@ public abstract class ItemModuleMajor extends ItemModule {
         return Arrays.stream(getImprovements(itemStack))
                 .map(improvement -> improvement.aspects)
                 .filter(Objects::nonNull)
-                .reduce(getVariantData(itemStack).aspects, AspectData::merge);
-    }
-
-    public boolean hasAspect(ItemStack itemStack, ItemAspect aspect) {
-        return getAspects(itemStack).contains(aspect);
+                .reduce(super.getAspects(itemStack), AspectData::merge);
     }
 
     @Override

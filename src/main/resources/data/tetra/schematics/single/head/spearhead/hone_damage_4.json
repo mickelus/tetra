@@ -13,10 +13,9 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "spearhead_hone/damage": 3
-        }
+        "type": "tetra:improvement",
+        "improvement": "spearhead_hone/damage",
+        "level": 3
     },
     "outcomes": [
         {

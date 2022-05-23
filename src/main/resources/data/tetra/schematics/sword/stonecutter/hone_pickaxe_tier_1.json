@@ -12,12 +12,27 @@
         "textureX": 176
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [ [ "sword/stonecutter" ] ],
-        "improvements": {
-            "!stonecutter_hone/tier": -1,
-            "stonecutter_hone/efficiency": 5
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:module",
+                "module": "sword/stonecutter"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "stonecutter_hone/tier"
+                }
+            },
+            {
+                "type": "tetra:aspect",
+                "aspect": "honed",
+                "level": {
+                    "min": 5
+                }
+            }
+        ]
     },
     "outcomes": [
         {

@@ -2,6 +2,9 @@
     {
         "key": "head_hone/shovel_tier",
         "integrity": -1,
+        "aspects": {
+            "honed": 1
+        },
         "tools": {
             "shovel_dig": 1
         }

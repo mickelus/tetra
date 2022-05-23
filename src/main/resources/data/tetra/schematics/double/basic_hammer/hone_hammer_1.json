@@ -17,20 +17,36 @@
         "textureX": 64
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [
-            [
-                "double/basic_hammer_right"
-            ],
-            [
-                "double/basic_hammer_left"
-            ]
-        ],
-        "improvements": {
-            "!head_hone/hammer_tier": -1,
-            "head_hone/durability": 3,
-            "head_hone/speed": 3
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:or",
+                "requirements": [
+                    {
+                        "type": "tetra:module",
+                        "module": "double/basic_hammer_right"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "double/basic_hammer_left"
+                    }
+                ]
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "head_hone/hammer_tier"
+                }
+            },
+            {
+                "type": "tetra:aspect",
+                "aspect": "honed",
+                "level": {
+                    "min": 5
+                }
+            }
+        ]
     },
     "outcomes": [
         {

@@ -1,7 +1,6 @@
 {
     "replace": true,
     "localizationKey": "shared/hone_gild_1",
-    "locked": true,
     "slots": [
         "double/handle",
         "double/head_left",
@@ -41,10 +40,20 @@
     },
     "materialSlotCount": 1,
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "!hone_gild": -1
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:hone/gild_1"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "hone_gild"
+                }
+            }
+        ]
     },
     "outcomes": [
         {

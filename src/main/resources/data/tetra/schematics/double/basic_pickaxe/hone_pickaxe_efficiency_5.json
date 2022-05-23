@@ -17,18 +17,27 @@
         "textureX": 176
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [
-            [
-                "double/basic_pickaxe_right"
-            ],
-            [
-                "double/basic_pickaxe_left"
-            ]
-        ],
-        "improvements": {
-            "head_hone/pickaxe_efficiency": 4
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:or",
+                "requirements": [
+                    {
+                        "type": "tetra:module",
+                        "module": "double/basic_pickaxe_right"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "double/basic_pickaxe_left"
+                    }
+                ]
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "head_hone/pickaxe_efficiency",
+                "level": 4
+            }
+        ]
     },
     "outcomes": [
         {

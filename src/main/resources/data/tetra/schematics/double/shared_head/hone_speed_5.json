@@ -17,10 +17,9 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "improvements": {
-            "head_hone/speed": 4
-        }
+        "type": "tetra:improvement",
+        "improvement": "head_hone/speed",
+        "level": 4
     },
     "outcomes": [
         {

@@ -1,7 +1,6 @@
 {
     "replace": true,
     "localizationKey": "double/warforge",
-    "locked": true,
     "slots": [ "double/head_right" ],
     "materialSlotCount": 0,
     "rarity": "temporary",
@@ -11,8 +10,17 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [ [ "double/extractor_right" ] ]
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:warforge/butt"
+            },
+            {
+                "type": "tetra:module",
+                "module": "double/extractor_right"
+            }
+        ]
     },
     "outcomes": [
         {

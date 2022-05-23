@@ -363,7 +363,6 @@ public class TetraRegistries {
 
             MinecraftForge.EVENT_BUS.register(new HowlingOverlay(Minecraft.getInstance()));
             MinecraftForge.EVENT_BUS.register(new AbilityOverlays(Minecraft.getInstance()));
-            // todo 1.18.2: was in postInit, still works?
             MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
 
             BotaniaCompat.clientInit();

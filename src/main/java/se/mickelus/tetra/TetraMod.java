@@ -51,6 +51,7 @@ import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.module.schematic.BookEnchantSchematic;
 import se.mickelus.tetra.module.schematic.CleanseSchematic;
+import se.mickelus.tetra.module.schematic.requirement.*;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.proxy.ClientProxy;
 import se.mickelus.tetra.proxy.IProxy;
@@ -118,6 +119,15 @@ public class TetraMod {
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_major_module"), BasicMajorModule::new);
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "multi_major_module"), MultiSlotMajorModule::new);
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "toolbelt_module"), ToolbeltModule::new);
+
+        CraftingRequirementDeserializer.registerSupplier("tetra:and", AndRequirement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:or", OrRequirement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:not", NotRequirement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:locked", LockedRequirement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:improvement", HasImprovementRequirement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:accepts_improvement", AcceptsImprovementRequirement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:module", ModuleRequirement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:aspect", AspectRequirement.class);
 
         new TetraItemGroup();
 

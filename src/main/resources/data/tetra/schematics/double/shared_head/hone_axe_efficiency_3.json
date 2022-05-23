@@ -16,16 +16,35 @@
         "textureX": 144
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [
-            [ "double/adze_right" ],
-            [ "double/adze_left" ],
-            [ "double/basic_axe_right" ],
-            [ "double/basic_axe_left" ]
-        ],
-        "improvements": {
-            "head_hone/axe_efficiency": 2
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:or",
+                "requirements": [
+                    {
+                        "type": "tetra:module",
+                        "module": "double/adze_right"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "double/adze_left"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "double/basic_axe_right"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "double/basic_axe_left"
+                    }
+                ]
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "head_hone/axe_efficiency",
+                "level": 2
+            }
+        ]
     },
     "outcomes": [
         {

@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
@@ -20,6 +21,7 @@ import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiSynergyIndicator;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
+import se.mickelus.tetra.module.schematic.CraftingContext;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -134,10 +136,9 @@ public class HoloVariantDetailGui extends GuiElement {
 
             Player player = Minecraft.getInstance().player;
             ItemStack improvementStack = baseOutcome.itemStack;
-            UpgradeSchematic[] improvementSchematics = Arrays.stream(SchematicRegistry.getSchematics(slot, improvementStack))
+            CraftingContext context = new CraftingContext(null, null, null, player, improvementStack, slot, new ResourceLocation[0]);
+            UpgradeSchematic[] improvementSchematics = Arrays.stream(SchematicRegistry.getSchematics(context))
                     .filter(improvementSchematic -> SchematicType.improvement.equals(improvementSchematic.getType()))
-                    .filter(improvementSchematic -> improvementSchematic.isApplicableForItem(improvementStack))
-                    .filter(improvementSchematic -> improvementSchematic.isVisibleForPlayer(player, null, improvementStack))
                     .toArray(UpgradeSchematic[]::new);
 
             improvementButton.updateCount(improvementSchematics.length);

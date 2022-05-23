@@ -18,18 +18,27 @@
         "textureY": 240
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [
-            [
-                "double/basic_axe_right"
-            ],
-            [
-                "double/basic_axe_left"
-            ]
-        ],
-        "improvements": {
-            "head_hone/damage": 1
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:or",
+                "requirements": [
+                    {
+                        "type": "tetra:module",
+                        "module": "double/basic_axe_right"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "double/basic_axe_left"
+                    }
+                ]
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "head_hone/damage",
+                "level": 1
+            }
+        ]
     },
     "outcomes": [
         {

@@ -20,18 +20,8 @@
     },
     "displayType": "improvement",
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [
-            [
-                "toolbelt/storage_slot1"
-            ],
-            [
-                "toolbelt/storage_slot2"
-            ],
-            [
-                "toolbelt/storage_slot3"
-            ]
-        ]
+        "type": "tetra:aspect",
+        "aspect": "storage"
     },
     "outcomes": [
         {

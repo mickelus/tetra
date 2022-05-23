@@ -8,6 +8,9 @@
         {
             "key": "strap1/leather",
             "integrity": -1,
+            "aspects": {
+                "strap": 1
+            },
             "effects": {
                 "quickSlot": 1
             },
@@ -19,6 +22,9 @@
         {
             "key": "strap1/iron",
             "integrity": 0,
+            "aspects": {
+                "strap": 1
+            },
             "effects": {
                 "quickSlot": 1
             },
@@ -30,6 +36,9 @@
         {
             "key": "strap2/leather",
             "integrity": -2,
+            "aspects": {
+                "strap": 2
+            },
             "effects": {
                 "quickSlot": 2
             },
@@ -41,6 +50,9 @@
         {
             "key": "strap2/iron",
             "integrity": -1,
+            "aspects": {
+                "strap": 2
+            },
             "effects": {
                 "quickSlot": 2
             },
@@ -52,6 +64,9 @@
         {
             "key": "strap3/leather",
             "integrity": -3,
+            "aspects": {
+                "strap": 3
+            },
             "effects": {
                 "quickSlot": 3
             },
@@ -63,6 +78,9 @@
         {
             "key": "strap3/iron",
             "integrity": -2,
+            "aspects": {
+                "strap": 3
+            },
             "effects": {
                 "quickSlot": 3
             },
@@ -74,6 +92,9 @@
         {
             "key": "strap4/leather",
             "integrity": -5,
+            "aspects": {
+                "strap": 4
+            },
             "effects": {
                 "quickSlot": 4
             },
@@ -85,6 +106,9 @@
         {
             "key": "strap4/iron",
             "integrity": -4,
+            "aspects": {
+                "strap": 4
+            },
             "effects": {
                 "quickSlot": 4
             },

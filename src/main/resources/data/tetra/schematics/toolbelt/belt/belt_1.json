@@ -5,8 +5,8 @@
     ],
     "materialSlotCount": 1,
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [ [ "toolbelt/belt_wool" ] ]
+        "type": "tetra:module",
+        "module": "toolbelt/belt_wool"
     },
     "glyph": {
         "textureY": 16

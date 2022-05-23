@@ -12,11 +12,20 @@
         "textureX": 176
     },
     "requirement": {
-        "type": "tetra:modular_item",
-        "modules": [ [ "sword/stonecutter" ] ],
-        "improvements": {
-            "!stonecutter_hone/efficiency": -1
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:module",
+                "module": "sword/stonecutter"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "stonecutter_hone/efficiency"
+                }
+            }
+        ]
     },
     "outcomes": [
         {

@@ -77,10 +77,6 @@ public class VariantData extends ItemProperties {
 
     public int magicCapacity = 0;
 
-    public String getKey() {
-        return key;
-    }
-
     public static class Deserializer implements JsonDeserializer<VariantData> {
         @Override
         public VariantData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
