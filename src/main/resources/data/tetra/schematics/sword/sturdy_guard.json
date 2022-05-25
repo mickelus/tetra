@@ -10,7 +10,7 @@
     },
     "requirement": {
         "type": "tetra:locked",
-        "key": "sword/sturdy_guard"
+        "key": "tetra:sword/sturdy_guard"
     },
     "translation": {
         "primaryEffects": {

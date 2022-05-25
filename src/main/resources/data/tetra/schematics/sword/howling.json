@@ -2,15 +2,15 @@
     "replace": true,
     "slots": [ "sword/fuller" ],
     "materialSlotCount": 1,
-    "requirement": {
-        "type": "tetra:locked",
-        "key": "tetra:sword/howling"
-    },
     "rarity": "temporary",
     "displayType": "minor",
     "glyph": {
         "textureX": 72,
         "textureY": 16
+    },
+    "requirement": {
+        "type": "tetra:locked",
+        "key": "tetra:sword/howling"
     },
     "translation": {
         "secondaryAttributes": {

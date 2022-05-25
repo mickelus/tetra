@@ -2,15 +2,15 @@
     "replace": true,
     "slots": [ "sword/blade" ],
     "materialSlotCount": 1,
-    "requirement": {
-        "type": "tetra:locked",
-        "key": "tetra:sword/throwing_knife"
-    },
     "rarity": "temporary",
     "displayType": "major",
     "glyph": {
         "textureX": 160,
         "textureY": 48
+    },
+    "requirement": {
+        "type": "tetra:locked",
+        "key": "tetra:sword/throwing_knife"
     },
     "translation": {
         "primaryAttributes": {
