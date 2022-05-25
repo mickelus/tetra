@@ -2,7 +2,6 @@
     {
         "key": "quality",
         "level": 1,
-        "textured": false,
         "attributes": {
             "**generic.attack_damage": 0.05,
             "**tetra:draw_damage": 0.05,
@@ -19,7 +18,6 @@
     {
         "key": "quality",
         "level": 2,
-        "textured": false,
         "attributes": {
             "**generic.attack_damage": 0.1,
             "**tetra:draw_damage": 0.1,

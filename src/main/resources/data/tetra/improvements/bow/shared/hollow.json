@@ -1,7 +1,6 @@
 [
     {
         "key": "hollow",
-        "textured": false,
         "durabilityMultiplier": 0.9,
         "attributes": {
             "**tetra:draw_speed": -0.1
