@@ -29,6 +29,7 @@ import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -97,6 +98,14 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
                 .map(pair -> ((IToolProviderBlock) pair.getSecond().getBlock()).getToolLevel(world, pair.getFirst(), pair.getSecond(), toolAction))
                 .max(Integer::compare)
                 .orElse(-1);
+    }
+
+    public Map<ToolAction, Integer> getToolLevels(Level world, BlockPos pos, BlockState blockState) {
+        return getToolProviderBlockStream(world, pos)
+                .map(pair -> ((IToolProviderBlock) pair.getSecond().getBlock()).getToolLevels(world, pos, pair.getSecond()))
+                .map(Map::entrySet)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::max));
     }
 
     private Pair<BlockPos, BlockState> getProvidingBlockstate(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack,
