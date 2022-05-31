@@ -3,7 +3,7 @@
     "ingredients": [
         {
             "type": "tetra:scroll",
-            "key": "hone_gild_3",
+            "key": "hone/gild_3",
             "schematics": [ "" ],
             "intricate": true,
             "material": 2,
@@ -11,7 +11,7 @@
         },
         {
             "type": "tetra:scroll",
-            "key": "hone_gild_3",
+            "key": "hone/gild_3",
             "schematics": [ "" ],
             "intricate": true,
             "material": 2,
@@ -25,7 +25,7 @@
             "BlockEntityTag": {
                 "data": [
                     {
-                        "key": "hone_gild_4",
+                        "key": "hone/gild_4",
                         "schematics": [ "tetra:hone/gild_1", "tetra:hone/gild_2", "tetra:hone/gild_3", "tetra:hone/gild_4" ],
                         "intricate": true,
                         "material": 2,
