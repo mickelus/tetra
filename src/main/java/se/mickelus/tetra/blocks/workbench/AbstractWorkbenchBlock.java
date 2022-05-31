@@ -102,7 +102,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
 
     public Map<ToolAction, Integer> getToolLevels(Level world, BlockPos pos, BlockState blockState) {
         return getToolProviderBlockStream(world, pos)
-                .map(pair -> ((IToolProviderBlock) pair.getSecond().getBlock()).getToolLevels(world, pos, pair.getSecond()))
+                .map(pair -> ((IToolProviderBlock) pair.getSecond().getBlock()).getToolLevels(world, pair.getFirst(), pair.getSecond()))
                 .map(Map::entrySet)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::max));
