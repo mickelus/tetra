@@ -32,7 +32,7 @@ public class StatGetterToolCompoundEfficiency implements IStatGetter {
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
-        return efficiencyGetter.getValue(player, itemStack, improvement) * ItemModularHandheld.getAttackSpeedHarvestModifier(attackSpeedGetter.getValue(player, itemStack))
-                + ItemModularHandheld.getEfficiencyEnchantmentBonus((int) enchantmentGetter.getValue(player, itemStack, improvement));
+        return efficiencyGetter.getValue(player, itemStack, slot, improvement) * ItemModularHandheld.getAttackSpeedHarvestModifier(attackSpeedGetter.getValue(player, itemStack))
+                + ItemModularHandheld.getEfficiencyEnchantmentBonus((int) enchantmentGetter.getValue(player, itemStack, slot, improvement));
     }
 }
