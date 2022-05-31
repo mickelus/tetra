@@ -29,7 +29,8 @@
                 },
                 "tools": {
                     "shovel_dig": [ 1, 1 ],
-                    "shovel_flatten": 1
+                    "shovel_flatten": 1,
+                    "dowse": 1
                 },
                 "durability": 1,
                 "integrity": -1,

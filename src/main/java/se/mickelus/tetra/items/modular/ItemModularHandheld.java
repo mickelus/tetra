@@ -30,7 +30,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -38,6 +37,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -273,14 +273,14 @@ public class ItemModularHandheld extends ModularItem {
                     }
 
                     return InteractionResult.sidedSuccess(world.isClientSide);
-                } else if (ToolActions.HOE_DIG.equals(tool)) { // todo 1.18: temp solution until forge fixes hoes in IForgeBlock.getToolModifiedState
-                    InteractionResult result = Items.IRON_HOE.useOn(context);
-                    if (InteractionResult.SUCCESS == result) {
-                        applyDamage(blockDestroyDamage, context.getItemInHand(), player);
-                        applyUsageEffects(player, itemStack, 2);
+                }
+            }
 
-                        return result;
-                    }
+            if (tools.contains(TetraToolActions.dowse)) {
+                if (dowseBlock(player, world, blockState, pos)) {
+                    applyDamage(blockDestroyDamage, itemStack, player);
+                    applyUsageEffects(player, itemStack, 2);
+                    return InteractionResult.sidedSuccess(world.isClientSide);
                 }
             }
 
@@ -499,6 +499,18 @@ public class ItemModularHandheld extends ModularItem {
 
         player.awardStat(Stats.ITEM_USED.get(this));
 
+    }
+
+    public boolean dowseBlock(Player player, Level world, BlockState blockState, BlockPos pos) {
+        if (blockState.getBlock() instanceof CampfireBlock && blockState.getValue(CampfireBlock.LIT)) {
+            CampfireBlock.dowse(player, world, pos, blockState);
+            if (!world.isClientSide()) {
+                world.levelEvent(null, 1009, pos, 0);
+                world.setBlock(pos, blockState.setValue(CampfireBlock.LIT, false), 11);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
