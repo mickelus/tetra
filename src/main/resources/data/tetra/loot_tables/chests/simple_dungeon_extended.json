@@ -25,7 +25,7 @@
                                     "material": 1,
                                     "ribbon": "bcb8b5",
                                     "glyphs": [ 3, 2, 2, 1 ],
-                                    "schematics": [ "sword/sturdy_guard" ]
+                                    "schematics": [ "tetra:sword/sturdy_guard" ]
                                 }
                             ]
                         },
@@ -40,7 +40,7 @@
                                     "material": 1,
                                     "ribbon": "b8ced9",
                                     "glyphs": [ 4, 1, 0, 5 ],
-                                    "schematics": [ "sword/throwing_knife" ]
+                                    "schematics": [ "tetra:sword/throwing_knife" ]
                                 }
                             ]
                         },
@@ -55,7 +55,7 @@
                                     "material": 1,
                                     "ribbon": "faf396",
                                     "glyphs": [ 8, 9, 10, 5 ],
-                                    "schematics": [ "sword/howling" ]
+                                    "schematics": [ "tetra:sword/howling" ]
                                 }
                             ]
                         }

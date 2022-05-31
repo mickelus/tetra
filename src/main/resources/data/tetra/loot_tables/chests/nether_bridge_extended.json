@@ -16,7 +16,7 @@
                             "material": 2,
                             "ribbon": "c9ae69",
                             "glyphs": [ 15, 14, 15, 15 ],
-                            "schematics": [ "hone/gild_1" ]
+                            "schematics": [ "tetra:hone/gild_1" ]
                         }
                     ]
                 }

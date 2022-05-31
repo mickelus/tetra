@@ -17,7 +17,7 @@
                             "material": 2,
                             "ribbon": "8559b3",
                             "glyphs": [ 6, 7, 11, 7 ],
-                            "schematics": [ "warforge/adze" ]
+                            "schematics": [ "tetra:warforge/adze" ]
                         }
                     ]
                 },
@@ -33,7 +33,7 @@
                             "material": 2,
                             "ribbon": "b35973",
                             "glyphs": [ 5, 10, 8, 9 ],
-                            "schematics": [ "warforge/axe" ]
+                            "schematics": [ "tetra:warforge/axe" ]
                         }
                     ]
                 },
@@ -49,7 +49,7 @@
                             "material": 2,
                             "ribbon": "3d4299",
                             "glyphs": [ 9, 8, 11, 10 ],
-                            "schematics": [ "warforge/hammer" ]
+                            "schematics": [ "tetra:warforge/hammer" ]
                         }
                     ]
                 },
@@ -65,7 +65,7 @@
                             "material": 2,
                             "ribbon": "508cb3",
                             "glyphs": [ 6, 11, 8, 7 ],
-                            "schematics": [ "warforge/pickaxe" ]
+                            "schematics": [ "tetra:warforge/pickaxe" ]
                         }
                     ]
                 },
@@ -81,7 +81,7 @@
                             "material": 2,
                             "ribbon": "1d262f",
                             "glyphs": [ 8, 10, 5, 11 ],
-                            "schematics": [ "warforge/claw" ]
+                            "schematics": [ "tetra:warforge/claw" ]
                         }
                     ]
                 },
@@ -97,7 +97,7 @@
                             "material": 2,
                             "ribbon": "93b350",
                             "glyphs": [ 10, 7, 9, 5 ],
-                            "schematics": [ "warforge/hoe" ]
+                            "schematics": [ "tetra:warforge/hoe" ]
                         }
                     ]
                 },
@@ -113,7 +113,7 @@
                             "material": 2,
                             "ribbon": "d99e4c",
                             "glyphs": [ 5, 9, 6, 10 ],
-                            "schematics": [ "warforge/sickle" ]
+                            "schematics": [ "tetra:warforge/sickle" ]
                         }
                     ]
                 },
@@ -129,7 +129,7 @@
                             "material": 2,
                             "ribbon": "b33636",
                             "glyphs": [ 11, 5, 8, 9 ],
-                            "schematics": [ "warforge/butt" ]
+                            "schematics": [ "tetra:warforge/butt" ]
                         }
                     ]
                 }
