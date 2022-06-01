@@ -23,6 +23,7 @@ public class MaterialImprovementData extends ImprovementData {
         result.level = level;
         result.group = group;
         result.enchantment = enchantment;
+        result.aspects = AspectData.merge(aspects, material.aspects);
 
         if (material.category != null) {
             result.category = material.category;
