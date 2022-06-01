@@ -76,6 +76,7 @@ public class TetraMod {
 
     public TetraMod() {
         TetraRegistries.init(FMLJavaModLoadingContext.get().getModEventBus());
+        TetraEnchantmentHelper.init();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(CuriosCompat::enqueueIMC);

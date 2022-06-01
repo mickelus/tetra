@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITag;
+import net.minecraftforge.registries.tags.ITagManager;
 import org.apache.commons.lang3.tuple.Pair;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class TetraEnchantmentHelper {
     private static final Map<ItemAspect, EnchantmentRules> aspectMap = HashBiMap.create();
 
-    static {
+    public static void init() {
         aspectMap.put(ItemAspect.armor, new EnchantmentRules(EnchantmentCategory.ARMOR, "additions/armor", "exclusions/armor"));
         aspectMap.put(ItemAspect.armorFeet, new EnchantmentRules(EnchantmentCategory.ARMOR_FEET, "additions/armor_feet", "exclusions/armor_feet"));
         aspectMap.put(ItemAspect.armorLegs, new EnchantmentRules(EnchantmentCategory.ARMOR_LEGS, "additions/armor_legs", "exclusions/armor_legs"));
@@ -200,17 +200,22 @@ public class TetraEnchantmentHelper {
 
     public static class EnchantmentRules {
         EnchantmentCategory category;
-        ITag<Enchantment> exclusions;
-        ITag<Enchantment> additions;
+        TagKey<Enchantment> exclusions;
+        TagKey<Enchantment> additions;
 
         public EnchantmentRules(@Nullable EnchantmentCategory category, String additions, String exclusions) {
             this.category = category;
-            this.additions = ForgeRegistries.ENCHANTMENTS.tags().getTag(TagKey.create(Registry.ENCHANTMENT_REGISTRY, new ResourceLocation(TetraMod.MOD_ID, additions)));
-            this.exclusions = ForgeRegistries.ENCHANTMENTS.tags().getTag(TagKey.create(Registry.ENCHANTMENT_REGISTRY, new ResourceLocation(TetraMod.MOD_ID, exclusions)));
+
+            ITagManager<Enchantment> tags = ForgeRegistries.ENCHANTMENTS.tags();
+            this.additions = tags.createTagKey(new ResourceLocation(TetraMod.MOD_ID, additions));
+            this.exclusions = tags.createTagKey(new ResourceLocation(TetraMod.MOD_ID, exclusions));
+
         }
 
         public boolean isApplicable(Enchantment enchantment) {
-            return ((category != null && category.equals(enchantment.category)) || additions.contains(enchantment)) && !exclusions.contains(enchantment);
+            ITagManager<Enchantment> tags = ForgeRegistries.ENCHANTMENTS.tags();
+            return ((category != null && category.equals(enchantment.category))
+                    || tags.getTag(additions).contains(enchantment)) && !tags.getTag(exclusions).contains(enchantment);
         }
     }
 }
