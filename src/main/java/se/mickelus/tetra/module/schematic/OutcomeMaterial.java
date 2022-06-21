@@ -119,7 +119,6 @@ public class OutcomeMaterial {
                 JsonObject jsonObject = GsonHelper.convertToJsonObject(element, "material");
 
                 material.count = GsonHelper.getAsInt(jsonObject, "count", 1);
-                jsonObject.remove("count");
 
                 if (jsonObject.has("items")) {
                     try {
@@ -149,28 +148,27 @@ public class OutcomeMaterial {
                 }
 
                 if (!jsonObject.has("type") && jsonObject.has("tag")) {
-                    material.predicate = deserializeTagPredicate(element);
+                    material.predicate = deserializeTagPredicate(jsonObject);
                 } else {
-                    material.predicate = ItemPredicateDeserializer.deserialize(element);
+                    JsonObject copy = jsonObject.deepCopy();
+                    copy.remove("count");
+                    material.predicate = ItemPredicateDeserializer.deserialize(copy);
                 }
             }
             return material;
         }
 
         // todo: workaround as vanilla predicates always use the non-networked tag manager
-        private ItemPredicate deserializeTagPredicate(@Nullable JsonElement element) {
-            JsonObject jsonObject = GsonHelper.convertToJsonObject(element, "item");
-
+        private ItemPredicate deserializeTagPredicate(JsonObject jsonObject) {
             ResourceLocation resourceLocation = new ResourceLocation(GsonHelper.getAsString(jsonObject, "tag"));
             TagKey<Item> tagKey = ItemTags.create(resourceLocation);
 
-            MinMaxBounds.Ints count = MinMaxBounds.Ints.fromJson(jsonObject.get("count"));
             MinMaxBounds.Ints durability = MinMaxBounds.Ints.fromJson(jsonObject.get("durability"));
             EnchantmentPredicate[] enchantments = EnchantmentPredicate.fromJsonArray(jsonObject.get("enchantments"));
             EnchantmentPredicate[] storedEnchantments = EnchantmentPredicate.fromJsonArray(jsonObject.get("stored_enchantments"));
             NbtPredicate nbt = NbtPredicate.fromJson(jsonObject.get("nbt"));
 
-            return new ItemPredicate(tagKey, null, count, durability, enchantments, storedEnchantments, null, nbt);
+            return new ItemPredicate(tagKey, null, MinMaxBounds.Ints.ANY, durability, enchantments, storedEnchantments, null, nbt);
         }
     }
 }
