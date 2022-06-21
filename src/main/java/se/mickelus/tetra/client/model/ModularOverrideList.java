@@ -93,7 +93,6 @@ public class ModularOverrideList extends ItemOverrides {
     }
 
     protected static class CacheKey {
-
         final BakedModel parent;
         final String data;
 

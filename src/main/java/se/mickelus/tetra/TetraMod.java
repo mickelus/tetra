@@ -39,7 +39,6 @@ import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.revenge.AddRevengePacket;
 import se.mickelus.tetra.effect.revenge.RemoveRevengePacket;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.forged.VibrationDebuffer;
 import se.mickelus.tetra.items.modular.ChargedAbilityPacket;
 import se.mickelus.tetra.items.modular.SecondaryAbilityPacket;
@@ -129,8 +128,6 @@ public class TetraMod {
         CraftingRequirementDeserializer.registerSupplier("tetra:accepts_improvement", AcceptsImprovementRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:module", ModuleRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:aspect", AspectRequirement.class);
-
-        new TetraItemGroup();
 
         packetHandler = new PacketHandler(MOD_ID, "main", "1");
     }

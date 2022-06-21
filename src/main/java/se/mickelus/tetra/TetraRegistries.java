@@ -104,7 +104,7 @@ public class TetraRegistries {
     public static final DeferredRegister<LootItemConditionType> lootConditions = DeferredRegister.create(Registry.LOOT_ITEM_REGISTRY, TetraMod.MOD_ID);
     public static final DeferredRegister<LootItemFunctionType> lootFunctions = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, TetraMod.MOD_ID);
 
-    private static final Item.Properties itemProperties = new Item.Properties().tab(TetraItemGroup.instance);
+    private static Item.Properties itemProperties;
 
     public static void init(IEventBus bus) {
         bus.register(TetraRegistries.class);
@@ -121,6 +121,9 @@ public class TetraRegistries {
         lootModifiers.register(bus);
         structures.register(bus);
 
+        new TetraItemGroup();
+        itemProperties = new Item.Properties().tab(TetraItemGroup.instance);
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // BLOCKS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,7 +131,7 @@ public class TetraRegistries {
         registerBlockItem(basicWorkbench);
         blocks.register(GeodeBlock.identifier, GeodeBlock::new);
         RegistryObject<SeepingBedrockBlock> seepingBedrock = blocks.register(SeepingBedrockBlock.identifier, SeepingBedrockBlock::new);
-        registerBlockItem(seepingBedrock);
+//        registerBlockItem(seepingBedrock);
 
         RegistryObject<RackBlock> rack = blocks.register(RackBlock.identifier, RackBlock::new);
         registerBlockItem(rack);
