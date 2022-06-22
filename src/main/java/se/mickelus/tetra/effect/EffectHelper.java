@@ -34,7 +34,7 @@ import java.util.function.Supplier;
 public class EffectHelper {
     private static final Cache<UUID, Float> cooledAttackStrengthCache = CacheBuilder.newBuilder()
             .maximumSize(50)
-            .expireAfterWrite(10, TimeUnit.SECONDS)
+            .expireAfterWrite(1, TimeUnit.SECONDS)
             .build();
     private static final Cache<UUID, Boolean> sprintingCache = CacheBuilder.newBuilder()
             .maximumSize(50)
