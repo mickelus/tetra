@@ -1,5 +1,6 @@
 package se.mickelus.tetra.trades;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Item;
@@ -39,7 +40,8 @@ class ItemsForScrapTrade implements VillagerTrades.ItemListing {
         this.priceMultiplier = 0.05F;
     }
 
-    public MerchantOffer getOffer(Entity trader, Random rand) {
+    @Override
+    public MerchantOffer getOffer(Entity trader, RandomSource rand) {
         return new MerchantOffer(new ItemStack(Items.EMERALD, this.scrapCount), new ItemStack(this.sellingItem.getItem(), this.sellingItemCount), this.maxUses, this.xpValue, this.priceMultiplier);
     }
 }

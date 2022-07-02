@@ -31,7 +31,7 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, -3, -11, 21);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 0);
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularSingleHeadedItem instance;
 
     public ModularSingleHeadedItem() {

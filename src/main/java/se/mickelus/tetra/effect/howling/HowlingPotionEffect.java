@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -61,7 +61,7 @@ public class HowlingPotionEffect extends MobEffect {
             public void renderInventoryEffect(MobEffectInstance effect, EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, float z) {
                 int amp = effect.getAmplifier() + 1;
                 EffectHelper.renderInventoryEffectTooltip(gui, mStack, x, y, () ->
-                        new TextComponent(I18n.get("effect.tetra.howling.tooltip",
+                        Component.literal(I18n.get("effect.tetra.howling.tooltip",
                                 String.format("%d", amp * -5), String.format("%.01f", Math.min(amp * 12.5, 100)), String.format("%.01f", amp * 2.5))));
             }
 

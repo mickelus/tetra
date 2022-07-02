@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiRect;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -28,13 +28,13 @@ public class GuiModuleImprovement extends GuiElement {
         tooltipLines = new ArrayList<>();
 
         if (level < 0) {
-            tooltipLines.add(new TextComponent("-" + IModularItem.getImprovementName(improvement, 0)).withStyle(ChatFormatting.DARK_RED));
+            tooltipLines.add(Component.literal("-" + IModularItem.getImprovementName(improvement, 0)).withStyle(ChatFormatting.DARK_RED));
         } else {
-            tooltipLines.add(new TextComponent(IModularItem.getImprovementName(improvement, level)));
+            tooltipLines.add(Component.literal(IModularItem.getImprovementName(improvement, level)));
         }
 
         Arrays.stream(IModularItem.getImprovementDescription(improvement).split("\\\\n"))
-                .map(line -> new TextComponent(line).withStyle(ChatFormatting.DARK_GRAY))
+                .map(line -> Component.literal(line).withStyle(ChatFormatting.DARK_GRAY))
                 .forEachOrdered(tooltipLines::add);
 
         this.hoverHandler = hoverHandler;

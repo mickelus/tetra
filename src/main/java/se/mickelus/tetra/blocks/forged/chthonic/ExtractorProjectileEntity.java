@@ -49,7 +49,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     public static final String unlocalizedName = "extractor_projectile";
     public static final String damageKey = "dmg";
     public static final String heatKey = "heat";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(registryName = "entity_type", value = TetraMod.MOD_ID + ":" + unlocalizedName)
     public static EntityType<ExtractorProjectileEntity> type;
     private int damage;
     private int heat;
@@ -172,7 +172,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
             heat += 10;
 
             // custom exp drop check since player is not holding an item that can harvest the block
-            int exp = blockState.getExpDrop(world, pos, 0, 0);
+            int exp = blockState.getExpDrop(world, world.getRandom(), pos, 0, 0);
             if (exp > 0) {
                 blockState.getBlock().popExperience(serverWorld, pos, exp);
             }

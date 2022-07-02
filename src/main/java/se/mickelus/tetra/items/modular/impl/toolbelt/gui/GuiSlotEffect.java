@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiString;
@@ -24,7 +24,7 @@ public class GuiSlotEffect extends GuiElement {
     public GuiSlotEffect(int x, int y, SlotType slotType, ItemEffect effect) {
         super(x, y, 8, 8);
 
-        tooltip = Collections.singletonList(new TranslatableComponent(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType, effect.getKey())));
+        tooltip = Collections.singletonList(Component.translatable(String.format("tetra.toolbelt.effect.tooltip.%s.%s", slotType, effect.getKey())));
 
         if (ItemEffect.quickAccess.equals(effect)) {
             addChild(new GuiTexture(0, 0, 8, 8, 0, 64, GuiTextures.toolbelt).setColor(0xbbbbbb));

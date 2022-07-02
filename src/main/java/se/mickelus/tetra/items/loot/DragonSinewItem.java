@@ -24,7 +24,7 @@ public class DragonSinewItem extends TetraItem {
     public static final String unlocalizedName = "dragon_sinew";
     private static final ResourceLocation dragonLootTable = new ResourceLocation("entities/ender_dragon");
     private static final ResourceLocation sinewLootTable = new ResourceLocation(TetraMod.MOD_ID, "entities/ender_dragon_extended");
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
     public static DragonSinewItem instance;
 
     public DragonSinewItem() {

@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.geode;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -21,7 +21,7 @@ import java.util.List;
 public class PristineEmeraldItem extends TetraItem {
     public static final String unlocalizedName = "pristine_emerald";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
     public static PristineEmeraldItem instance;
 
     public PristineEmeraldItem() {
@@ -32,7 +32,7 @@ public class PristineEmeraldItem extends TetraItem {
     public void appendHoverText(ItemStack itemStack, @Nullable Level world, List<Component> tooltip, TooltipFlag advanced) {
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
-            tooltip.add(new TranslatableComponent("item.tetra.pristine_gem.description").withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("item.tetra.pristine_gem.description").withStyle(ChatFormatting.GRAY));
         } else {
             tooltip.add(Tooltips.expand);
         }

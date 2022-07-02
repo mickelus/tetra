@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -270,7 +270,7 @@ public class HoloVariantDetailGui extends GuiElement {
             if (hasFocus()) {
                 List<Component> tooltip = super.getTooltipLines();
                 if (tooltip != null && tooltip.size() > 0) {
-                    return ImmutableList.of(new TranslatableComponent("tetra.holo.craft.material_requirement", tooltip.get(0)));
+                    return ImmutableList.of(Component.translatable("tetra.holo.craft.material_requirement", tooltip.get(0)));
                 }
             }
             return null;

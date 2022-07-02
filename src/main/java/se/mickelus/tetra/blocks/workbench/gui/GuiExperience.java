@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiStringOutline;
@@ -46,7 +46,7 @@ public class GuiExperience extends GuiElement {
         levelString.setColor(positive ? positiveColor : negativeColor);
 
         if (unlocalizedTooltip != null) {
-            formattedTooltip = Collections.singletonList(new TranslatableComponent(unlocalizedTooltip, level));
+            formattedTooltip = Collections.singletonList(Component.translatable(unlocalizedTooltip, level));
         }
     }
 

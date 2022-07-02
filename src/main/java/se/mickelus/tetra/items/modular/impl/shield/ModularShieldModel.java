@@ -47,12 +47,10 @@ public class ModularShieldModel extends Model {
         this.root = modelPart;
     }
 
-    private static Optional<Pair<ResourceLocation, ShieldModelData>> getModel(ResourceManager resourceManager, ResourceLocation resourceLocation) {
-        try {
-            return Optional.of(resourceManager.getResource(resourceLocation))
-                    .map(Resource::getInputStream)
-                    .map(inputStream -> new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)))
-                    .map(reader -> GsonHelper.fromJson(DataManager.gson, reader, JsonElement.class))
+    private static Optional<Pair<ResourceLocation, ShieldModelData>> getModel(ResourceLocation resourceLocation, Resource resource) {
+        try (BufferedReader reader = resource.openAsReader()){
+            return Optional.of(reader)
+                    .map(r -> GsonHelper.fromJson(DataManager.gson, r, JsonElement.class))
                     .map(json -> ShieldModelData.codec.decode(JsonOps.INSTANCE, json))
                     .map(DataResult::result)
                     .filter(Optional::isPresent)
@@ -75,8 +73,8 @@ public class ModularShieldModel extends Model {
         PartDefinition parts = mesh.getRoot();
 
         ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
-        resourceManager.listResources("models/modular/shield/", path -> path.endsWith(".json")).stream()
-                .map(rl -> getModel(resourceManager, rl))
+        resourceManager.listResources("models/modular/shield/", rl -> rl.getPath().endsWith(".json")).entrySet().stream()
+                .map(entry -> getModel(entry.getKey(), entry.getValue()))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .forEach(pair -> pair.getSecond().populatePartDefinition(parts.addOrReplaceChild(trimResourceLocation(pair.getFirst()),

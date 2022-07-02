@@ -22,7 +22,7 @@ import java.util.Collection;
 @ParametersAreNonnullByDefault
 public class ScrollTile extends BlockEntity {
     public static final String identifier = "scroll";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + identifier)
     public static BlockEntityType<ScrollTile> type;
 
     private ScrollData[] scrolls = new ScrollData[0];

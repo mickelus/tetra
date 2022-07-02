@@ -5,6 +5,7 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +28,7 @@ public class SeveringEffect {
             target.addEffect(new MobEffectInstance(SeveredPotionEffect.instance, 1200, Math.min(currentAmplifier + 1, stackCap), false, false));
 
             if (!target.level.isClientSide) {
-                Random rand = target.getRandom();
+                RandomSource rand = target.getRandom();
                 target.getCommandSenderWorld().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.PLAYER_ATTACK_STRONG,
                         SoundSource.PLAYERS, 0.8f, 0.9f);
                 ((ServerLevel) target.getCommandSenderWorld()).sendParticles(new DustParticleOptions(new Vector3f(0.5f, 0, 0), 0.5f),

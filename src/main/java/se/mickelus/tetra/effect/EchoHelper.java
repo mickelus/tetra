@@ -2,6 +2,7 @@ package se.mickelus.tetra.effect;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.ServerScheduler;
@@ -13,7 +14,7 @@ import java.util.Random;
 public class EchoHelper {
     public static void echo(Player attacker, int delay, Runnable callback) {
         Vec3 origin = attacker.position();
-        Random rand = attacker.getRandom();
+        RandomSource rand = attacker.getRandom();
         for (int i = 0; i < delay / 10; i++) {
             ServerScheduler.schedule(i * 10, () -> {
                 ((ServerLevel) attacker.level).sendParticles(ParticleTypes.WITCH,

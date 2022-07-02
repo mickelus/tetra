@@ -29,7 +29,7 @@ public class ModularBladedItem extends ItemModularHandheld {
 
     public static final String identifier = "modular_sword";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularBladedItem instance;
 
     public ModularBladedItem() {

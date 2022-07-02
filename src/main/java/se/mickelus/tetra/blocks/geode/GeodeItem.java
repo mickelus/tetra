@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.geode;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -19,7 +19,7 @@ import java.util.List;
 public class GeodeItem extends TetraItem {
     public static final String identifier = "geode";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static GeodeItem instance;
 
     public GeodeItem() {
@@ -28,6 +28,6 @@ public class GeodeItem extends TetraItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(new TranslatableComponent("item.tetra.geode.tooltip").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("item.tetra.geode.tooltip").withStyle(ChatFormatting.GRAY));
     }
 }

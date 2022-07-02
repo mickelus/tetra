@@ -7,6 +7,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -56,7 +57,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
                     HammerHeadTile.class, HammerHeadTile::isJammed,
                     (world, pos, blockState, player, hand, hitFace) -> unjam(world, pos, player))
     };
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static HammerHeadBlock instance;
 
     public HammerHeadBlock() {
@@ -134,7 +135,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     @Override
-    public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
         if (isJammed(world, pos) && rand.nextBoolean()) {
             boolean flipped = rand.nextBoolean();
             float x = pos.getX() + (flipped ? rand.nextBoolean() ? 0.1f : 0.9f : rand.nextFloat());

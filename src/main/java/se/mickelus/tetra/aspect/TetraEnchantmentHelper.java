@@ -140,6 +140,11 @@ public class TetraEnchantmentHelper {
     }
 
     @Nullable
+    public static Pair<String, Integer> getEnchantmentPrimitive(CompoundTag nbt) {
+        return Pair.of(nbt.getString("id"), nbt.getInt("lvl"));
+    }
+
+    @Nullable
     public static Pair<Enchantment, Integer> getEnchantment(CompoundTag nbt) {
         return Registry.ENCHANTMENT.getOptional(new ResourceLocation(nbt.getString("id")))
                 .map(enchantment -> Pair.of(enchantment, nbt.getInt("lvl")))

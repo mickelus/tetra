@@ -20,7 +20,7 @@ import java.util.Map;
 @ParametersAreNonnullByDefault
 public class WallScrollBlock extends ScrollBlock {
     public static final String identifier = "scroll_wall";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static ScrollBlock instance;
     private final Map<Direction, VoxelShape> shapes;
     private final VoxelShape baseShape = Shapes.or(

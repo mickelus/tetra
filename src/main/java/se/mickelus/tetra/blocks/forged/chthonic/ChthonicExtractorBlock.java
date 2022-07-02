@@ -5,8 +5,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -35,6 +33,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.ConfigHandler;
@@ -75,11 +74,11 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
             new BlockInteraction(TetraToolActions.hammer, 7, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand))
     };
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static ChthonicExtractorBlock instance;
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static Item item;
-    @ObjectHolder(TetraMod.MOD_ID + ":" + usedIdentifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + usedIdentifier)
     public static Item usedItem;
 
     public ChthonicExtractorBlock() {
@@ -118,15 +117,15 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
 
     @Override
     public void appendHoverText(final ItemStack stack, @Nullable final BlockGetter world, final List<Component> tooltip, final TooltipFlag advanced) {
-        tooltip.add(new TranslatableComponent(description).withStyle(ChatFormatting.GRAY));
-        tooltip.add(new TextComponent(" "));
+        tooltip.add(Component.translatable(description).withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.literal(" "));
 
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
-            tooltip.add(new TextComponent(" "));
+            tooltip.add(Component.literal(" "));
             tooltip.add(ForgedBlockCommon.locationTooltip);
-            tooltip.add(new TextComponent(" "));
-            tooltip.add(new TranslatableComponent(extendedDescription).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.literal(" "));
+            tooltip.add(Component.translatable(extendedDescription).withStyle(ChatFormatting.GRAY));
         } else {
             tooltip.add(Tooltips.expand);
         }

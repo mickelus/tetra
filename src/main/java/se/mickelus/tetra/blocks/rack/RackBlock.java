@@ -10,7 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -62,7 +62,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
             Direction.SOUTH, Block.box(0.0, 11.0, 0.0, 16.0, 14.0, 2.0),
             Direction.WEST, Block.box(14.0, 11.0, 0.0, 16.0, 14.0, 16.0),
             Direction.EAST, Block.box(0.0, 11.0, 0.0, 2.0, 14.0, 16.0)));
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static RackBlock instance;
 
 
@@ -165,7 +165,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
             final TooltipFlag advanced) {
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
-            tooltip.add(new TranslatableComponent("block.tetra.rack.description").withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("block.tetra.rack.description").withStyle(ChatFormatting.GRAY));
         } else {
             tooltip.add(Tooltips.expand);
         }

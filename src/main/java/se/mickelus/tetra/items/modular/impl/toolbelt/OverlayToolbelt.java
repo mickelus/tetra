@@ -3,7 +3,7 @@ package se.mickelus.tetra.items.modular.impl.toolbelt;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -110,7 +110,7 @@ public class OverlayToolbelt {
         } else {
             boolean storeItemSuccess = ToolbeltHelper.storeItemInToolbelt(mc.player);
             if (!storeItemSuccess) {
-                mc.player.displayClientMessage(new TranslatableComponent("tetra.toolbelt.full"), true);
+                mc.player.displayClientMessage(Component.translatable("tetra.toolbelt.full"), true);
             }
         }
     }

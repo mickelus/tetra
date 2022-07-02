@@ -16,7 +16,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -96,7 +95,7 @@ public class TetraRegistries {
     public static final DeferredRegister<BlockEntityType<?>> blockEntities = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, TetraMod.MOD_ID);
     public static final DeferredRegister<MenuType<?>> containers = DeferredRegister.create(ForgeRegistries.CONTAINERS, TetraMod.MOD_ID);
     public static final DeferredRegister<EntityType<?>> entities = DeferredRegister.create(ForgeRegistries.ENTITIES, TetraMod.MOD_ID);
-    public static final DeferredRegister<StructureFeature<?>> structures = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, TetraMod.MOD_ID);
+    //    public static final DeferredRegister<StructureFeature<?>> structures = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, TetraMod.MOD_ID);
     public static final DeferredRegister<ParticleType<?>> particles = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, TetraMod.MOD_ID);
     public static final DeferredRegister<MobEffect> effects = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, TetraMod.MOD_ID);
     public static final DeferredRegister<GlobalLootModifierSerializer<?>> lootModifiers = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, TetraMod.MOD_ID);
@@ -119,7 +118,7 @@ public class TetraRegistries {
         lootConditions.register(bus);
         lootFunctions.register(bus);
         lootModifiers.register(bus);
-        structures.register(bus);
+//        structures.register(bus);
 
         new TetraItemGroup();
         itemProperties = new Item.Properties().tab(TetraItemGroup.instance);
@@ -177,11 +176,11 @@ public class TetraRegistries {
         items.register(PristineDiamondItem.unlocalizedName, PristineDiamondItem::new);
 
 
-        items.register(ItemBolt.unlocalizedName, ItemBolt::new);
-        items.register(ItemBeam.unlocalizedName, ItemBeam::new);
-        items.register(ItemMesh.unlocalizedName, ItemMesh::new);
-        items.register(ItemQuickLatch.unlocalizedName, ItemQuickLatch::new);
-        items.register(ItemMetalScrap.unlocalizedName, ItemMetalScrap::new);
+        items.register(BoltItem.unlocalizedName, BoltItem::new);
+        items.register(BeamItem.unlocalizedName, BeamItem::new);
+        items.register(MeshItem.unlocalizedName, MeshItem::new);
+        items.register(QuickLatchItem.unlocalizedName, QuickLatchItem::new);
+        items.register(MetalScrapItem.unlocalizedName, MetalScrapItem::new);
         items.register(InsulatedPlateItem.unlocalizedName, InsulatedPlateItem::new);
         items.register(PlanarStabilizerItem.unlocalizedName, PlanarStabilizerItem::new);
         items.register(ModularHolosphereItem.identifier, ModularHolosphereItem::new);
@@ -192,16 +191,16 @@ public class TetraRegistries {
 
 //      new CombustionChamberItem()
 //      new LubricantDispenser()
-//      new ItemCellMagmatic()
+//      ItemCellMagmatic.instance.get() = new ItemCellMagmatic()
 //      new ReverberatingPearlItem()
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // BLOCK ENTITIES
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        blockEntities.register(WorkbenchTile.identifier,
+        WorkbenchTile.type = blockEntities.register(WorkbenchTile.identifier,
                 () -> BlockEntityType.Builder.of(WorkbenchTile::new, basicWorkbench.get()).build(null));
-        blockEntities.register(ChthonicExtractorBlock.identifier,
+        ChthonicExtractorTile.type = blockEntities.register(ChthonicExtractorBlock.identifier,
                 () -> BlockEntityType.Builder.of(ChthonicExtractorTile::new, chthonicExtractor.get()).build(null));
         blockEntities.register(FracturedBedrockBlock.identifier,
                 () -> BlockEntityType.Builder.of(FracturedBedrockTile::new, fracturedBedrock.get()).build(null));
@@ -260,7 +259,7 @@ public class TetraRegistries {
                 () -> IForgeMenuType.create(((windowId, inv, data) -> ToolbeltContainer.create(windowId, inv))));
 
         // workbench
-        containers.register(WorkbenchTile.identifier,
+        WorkbenchContainer.containerType = containers.register(WorkbenchTile.identifier,
                 () -> IForgeMenuType.create(((windowId, inv, data) -> WorkbenchContainer.create(windowId, data.readBlockPos(), inv))));
 
 //        // forged container
@@ -319,20 +318,25 @@ public class TetraRegistries {
     @SubscribeEvent
     public static void setup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // ADVANCEMENT CRITERIA
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            CriteriaTriggers.register(BlockUseCriterion.trigger);
-            CriteriaTriggers.register(BlockInteractionCriterion.trigger);
-            CriteriaTriggers.register(ModuleCraftCriterion.trigger);
-            CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
+            // enqueueWork swallows exceptions without logging
+            try {
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // ADVANCEMENT CRITERIA
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                CriteriaTriggers.register(BlockUseCriterion.trigger);
+                CriteriaTriggers.register(BlockInteractionCriterion.trigger);
+                CriteriaTriggers.register(ModuleCraftCriterion.trigger);
+                CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // ITEM PREDICATES
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
-            ItemPredicate.register(new ResourceLocation("tetra:material"), MaterialItemPredicate::new);
-            ItemPredicate.register(new ResourceLocation("tetra:loose"), LooseItemPredicate::new);
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // ITEM PREDICATES
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
+                ItemPredicate.register(new ResourceLocation("tetra:material"), MaterialItemPredicate::new);
+                ItemPredicate.register(new ResourceLocation("tetra:loose"), LooseItemPredicate::new);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
         blocks.getEntries().stream()
@@ -350,27 +354,32 @@ public class TetraRegistries {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            blocks.getEntries().stream()
-                    .map(RegistryObject::get)
-                    .filter(block -> block instanceof InitializableBlock)
-                    .map(block -> (InitializableBlock) block)
-                    .forEach(InitializableBlock::clientInit);
-            items.getEntries().stream()
-                    .map(RegistryObject::get)
-                    .filter(item -> item instanceof InitializableItem)
-                    .map(item -> (InitializableItem) item)
-                    .forEach(InitializableItem::clientInit);
+            // enqueueWork swallows exceptions without logging
+            try {
+                blocks.getEntries().stream()
+                        .map(RegistryObject::get)
+                        .filter(block -> block instanceof InitializableBlock)
+                        .map(block -> (InitializableBlock) block)
+                        .forEach(InitializableBlock::clientInit);
+                items.getEntries().stream()
+                        .map(RegistryObject::get)
+                        .filter(item -> item instanceof InitializableItem)
+                        .map(item -> (InitializableItem) item)
+                        .forEach(InitializableItem::clientInit);
 
-            // these are registered here as there are multiple instances of workbench blocks
-            MenuScreens.register(WorkbenchTile.containerType, WorkbenchScreen::new);
+                // these are registered here as there are multiple instances of workbench blocks
+                MenuScreens.register(WorkbenchContainer.containerType.get(), WorkbenchScreen::new);
 
-            MinecraftForge.EVENT_BUS.register(new HowlingOverlay(Minecraft.getInstance()));
-            MinecraftForge.EVENT_BUS.register(new AbilityOverlays(Minecraft.getInstance()));
-            MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
+                MinecraftForge.EVENT_BUS.register(new HowlingOverlay(Minecraft.getInstance()));
+                MinecraftForge.EVENT_BUS.register(new AbilityOverlays(Minecraft.getInstance()));
+                MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
 
-            BotaniaCompat.clientInit();
+                BotaniaCompat.clientInit();
 
-            MinecraftForge.EVENT_BUS.register(ReachEntityFix.class);
+                MinecraftForge.EVENT_BUS.register(ReachEntityFix.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -402,7 +411,7 @@ public class TetraRegistries {
         event.registerEntityRenderer(ExtractorProjectileEntity.type, ExtractorProjectileRenderer::new);
         event.registerEntityRenderer(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
 
-        event.registerBlockEntityRenderer(WorkbenchTile.type, WorkbenchTESR::new);
+        event.registerBlockEntityRenderer(WorkbenchTile.type.get(), WorkbenchTESR::new);
         event.registerBlockEntityRenderer(ScrollTile.type, ScrollRenderer::new);
 
 //        event.registerBlockEntityRenderer(ForgedContainerTile.type, ForgedContainerRenderer::new);

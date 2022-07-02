@@ -8,8 +8,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -19,7 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
-import se.mickelus.tetra.blocks.geode.GeodeBlock;
 import se.mickelus.tetra.blocks.scroll.ScrollRenderer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
@@ -137,8 +134,10 @@ public class TetraMod {
     public static void provideTextures(final TextureStitchEvent.Pre event) {
         // todo 1.15: Move this to ModularItemModel.getTextures?
         if (TextureAtlas.LOCATION_BLOCKS.equals(event.getAtlas().location())) {
-            Minecraft.getInstance().getResourceManager().listResources("textures/items/module", s -> s.endsWith(".png")).stream()
-                    .filter(resourceLocation -> MOD_ID.equals(resourceLocation.getNamespace()))
+            Minecraft.getInstance().getResourceManager().listResources("textures/items/module", rl -> rl.getPath().endsWith(".png"))
+                    .keySet()
+                    .stream()
+                    .filter(rl -> MOD_ID.equals(rl.getNamespace()))
                     // 9 is the length of "textures/" & 4 is the length of ".png"
                     .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
                     .forEach(event::addSprite);
@@ -179,10 +178,5 @@ public class TetraMod {
     @SubscribeEvent
     public void serverStarting(ServerStartingEvent event) {
         ModuleDevCommand.register(event.getServer().getCommands().getDispatcher());
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onBiomeLoading(BiomeLoadingEvent event) {
-        GeodeBlock.registerFeature(event);
     }
 }

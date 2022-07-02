@@ -76,8 +76,8 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     private static final VoxelShape northShape = box(1, 0, 0, 15, 12, 13);
     private static final VoxelShape westShape = box(0, 0, 1, 13, 12, 15);
     private static final VoxelShape southShape = box(1, 0, 3, 15, 12, 16);
-    
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static TransferUnitBlock instance;
 
     public TransferUnitBlock() {

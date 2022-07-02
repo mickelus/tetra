@@ -21,9 +21,9 @@ public class TradeHandler {
         List<VillagerTrades.ItemListing> rare = event.getRareTrades();
 
         generic.add(new ItemsForScrapTrade(InsulatedPlateItem.instance, 1, 24, 1));
-        generic.add(new ItemsForEmeraldsAndScrapTrade(LubricantDispenser.instance, 1, 8, 16, 1));
-        generic.add(new ItemsForEmeraldsAndScrapTrade(ItemQuickLatch.instance, 1, 5, 16, 1));
-        generic.add(new ItemsForScrapTrade(ItemBolt.instance, 1, 32, 2));
+        generic.add(new ItemsForEmeraldsAndScrapTrade(LubricantDispenserItem.instance, 1, 8, 16, 1));
+        generic.add(new ItemsForEmeraldsAndScrapTrade(QuickLatchItem.instance, 1, 5, 16, 1));
+        generic.add(new ItemsForScrapTrade(BoltItem.instance, 1, 32, 2));
 
         rare.add(new ItemsForEmeraldsAndScrapTrade(StonecutterItem.instance, 1, 32, 16, 1));
         rare.add(new ItemsForEmeraldsAndScrapTrade(EarthpiercerItem.instance, 1, 24, 16, 1));

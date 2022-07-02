@@ -85,7 +85,7 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
                     new PropertyMatcher().where(propBroken, equalTo(true)),
                     ForgedVentBlock::breakBeam),
     };
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static ForgedVentBlock instance;
 
     public ForgedVentBlock() {

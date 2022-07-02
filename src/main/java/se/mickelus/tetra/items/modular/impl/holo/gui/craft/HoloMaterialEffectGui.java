@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -25,8 +25,8 @@ public class HoloMaterialEffectGui extends GuiElement {
         super(x, y, 29, 29);
 
         tooltip = ImmutableList.of(
-                new TranslatableComponent("tetra.holo.craft.materials.stat_effect.tooltip", I18n.get("tetra.stats." + key)),
-                new TranslatableComponent("tetra.stats." + key + ".tooltip_short").withStyle(ChatFormatting.GRAY));
+                Component.translatable("tetra.holo.craft.materials.stat_effect.tooltip", I18n.get("tetra.stats." + key)),
+                Component.translatable("tetra.stats." + key + ".tooltip_short").withStyle(ChatFormatting.GRAY));
 
         backdrop = new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench);
         backdrop.setColor(0x222222);

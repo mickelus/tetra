@@ -93,7 +93,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     private static final VoxelShape shapeX1Open = box(-15, 0, 1, 15, 9, 15);
     private static final VoxelShape shapeX2Open = box(1, 0, 1, 31, 9, 15);
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static ForgedContainerBlock instance;
 
     public ForgedContainerBlock() {

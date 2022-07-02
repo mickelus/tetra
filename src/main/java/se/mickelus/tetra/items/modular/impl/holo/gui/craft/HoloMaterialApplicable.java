@@ -5,8 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -42,7 +41,7 @@ public class HoloMaterialApplicable extends GuiElement {
         icon = new GuiTexture(0, 0, 9, 9, 215, 0, GuiTextures.workbench);
         addChild(icon);
 
-        emptyTooltip = Collections.singletonList(new TranslatableComponent("tetra.holo.craft.empty_applicable_materials"));
+        emptyTooltip = Collections.singletonList(Component.translatable("tetra.holo.craft.empty_applicable_materials"));
     }
 
     @Override
@@ -76,19 +75,19 @@ public class HoloMaterialApplicable extends GuiElement {
                     })
                     .collect(Collectors.joining(", "));
 
-            tooltip.add(new TranslatableComponent("tetra.holo.craft.applicable_materials"));
-            tooltip.add(new TextComponent(materialsString).withStyle(ChatFormatting.GRAY));
-            tooltip.add(new TextComponent(""));
+            tooltip.add(Component.translatable("tetra.holo.craft.applicable_materials"));
+            tooltip.add(Component.literal(materialsString).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.literal(""));
 
             if ((schematic.getType() != SchematicType.major && schematic.getType() != SchematicType.minor)
                     || schematic.getRarity() != SchematicRarity.basic) {
-                tooltip.add(new TranslatableComponent("tetra.holo.craft.holosphere_shortcut_disabled"));
-                tooltip.add(new TranslatableComponent("tetra.holo.craft.holosphere_shortcut_unavailable").withStyle(ChatFormatting.DARK_GRAY));
+                tooltip.add(Component.translatable("tetra.holo.craft.holosphere_shortcut_disabled"));
+                tooltip.add(Component.translatable("tetra.holo.craft.holosphere_shortcut_unavailable").withStyle(ChatFormatting.DARK_GRAY));
             } else if (ModularHolosphereItem.findHolosphere(playerEntity).isEmpty() || !(itemStack.getItem() instanceof IModularItem)) {
-                tooltip.add(new TranslatableComponent("tetra.holo.craft.holosphere_shortcut_disabled"));
-                tooltip.add(new TranslatableComponent("tetra.holo.craft.holosphere_shortcut_missing").withStyle(ChatFormatting.DARK_GRAY));
+                tooltip.add(Component.translatable("tetra.holo.craft.holosphere_shortcut_disabled"));
+                tooltip.add(Component.translatable("tetra.holo.craft.holosphere_shortcut_missing").withStyle(ChatFormatting.DARK_GRAY));
             } else {
-                tooltip.add(new TranslatableComponent("tetra.holo.craft.holosphere_shortcut"));
+                tooltip.add(Component.translatable("tetra.holo.craft.holosphere_shortcut"));
                 this.item = (IModularItem) itemStack.getItem();
                 this.slot = slot;
                 this.schematic = schematic;

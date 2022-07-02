@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -74,7 +75,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             }
 
             if (result == AbilityUseResult.crit) {
-                Random rand = target.getRandom();
+                RandomSource rand = target.getRandom();
                 CastOptional.cast(target.level, ServerLevel.class).ifPresent(world ->
                         world.sendParticles(ParticleTypes.CRIT,
                                 target.getX(), target.getY(), target.getZ(), 10,
@@ -173,7 +174,7 @@ public class SlamEffect extends ChargedAbilityEffect {
                 knockbackExhilaration(attacker, attacker.position(), target, target.level.getGameTime() + 200, exhilarationEfficiency);
             }
 
-            Random rand = target.getRandom();
+            RandomSource rand = target.getRandom();
             CastOptional.cast(target.level, ServerLevel.class).ifPresent(world ->
                     world.sendParticles(ParticleTypes.CRIT,
                             hitVec.x, hitVec.y, hitVec.z, 10,
@@ -314,7 +315,7 @@ public class SlamEffect extends ChargedAbilityEffect {
     }
 
     private void spawnGroundParticles(Level world, Vec3 origin, Vec3 direction, double yaw, double range) {
-        Random rand = world.random;
+        RandomSource rand = world.getRandom();
 
         BlockState originState = world.getBlockState(new BlockPos(origin));
         ((ServerLevel) world).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, originState),

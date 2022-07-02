@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.enchantment.Enchantment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiRect;
@@ -27,13 +27,13 @@ public class GuiModuleEnchantment extends GuiElement {
         tooltipLines = new ArrayList<>();
 
         if (level < 0) {
-            tooltipLines.add(new TextComponent("-").append(TetraEnchantmentHelper.getEnchantmentName(enchantment, 0)).withStyle(ChatFormatting.DARK_RED));
+            tooltipLines.add(Component.literal("-").append(TetraEnchantmentHelper.getEnchantmentName(enchantment, 0)).withStyle(ChatFormatting.DARK_RED));
         } else {
-            tooltipLines.add(new TextComponent(TetraEnchantmentHelper.getEnchantmentName(enchantment, level)));
+            tooltipLines.add(Component.literal(TetraEnchantmentHelper.getEnchantmentName(enchantment, level)));
         }
 
         Optional.ofNullable(TetraEnchantmentHelper.getEnchantmentDescription(enchantment))
-                .map(description -> new TextComponent(description).withStyle(ChatFormatting.DARK_GRAY))
+                .map(description -> Component.literal(description).withStyle(ChatFormatting.DARK_GRAY))
                 .ifPresent(tooltipLines::add);
 
         this.hoverHandler = hoverHandler;

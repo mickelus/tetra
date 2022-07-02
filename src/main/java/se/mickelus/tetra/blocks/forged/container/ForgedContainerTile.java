@@ -6,7 +6,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -43,7 +42,7 @@ import java.util.Random;
 public class ForgedContainerTile extends BlockEntity implements MenuProvider {
     private static final String inventoryKey = "inv";
     private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
-    @ObjectHolder(TetraMod.MOD_ID + ":" + ForgedContainerBlock.identifier)
+    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + ForgedContainerBlock.identifier)
     public static BlockEntityType<ForgedContainerTile> type;
     public static int lockIntegrityMax = 4;
     public static int lockCount = 4;
@@ -209,7 +208,7 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return new TextComponent(ForgedContainerBlock.identifier);
+        return Component.literal(ForgedContainerBlock.identifier);
     }
 
     @Nullable

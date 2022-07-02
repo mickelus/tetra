@@ -2,6 +2,7 @@ package se.mickelus.tetra.generation.processing;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -27,21 +28,21 @@ public class ForgedHammerProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo process(LevelReader world, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo $, StructureTemplate.StructureBlockInfo blockInfo,
             StructurePlaceSettings placementSettings, @Nullable StructureTemplate template) {
         if (blockInfo.state.getBlock() instanceof HammerBaseBlock) {
-            Random random = placementSettings.getRandom(blockInfo.pos);
+            RandomSource random = placementSettings.getRandom(blockInfo.pos);
             CompoundTag newCompound = blockInfo.nbt.copy();
 
             // randomize cells
-            ItemStack cell1 = random.nextBoolean() ? new ItemStack(ItemCellMagmatic.instance) : null;
-            ItemStack cell2 = random.nextBoolean() ? new ItemStack(ItemCellMagmatic.instance) : null;
+            ItemStack cell1 = random.nextBoolean() ? new ItemStack(ItemCellMagmatic.instance.get()) : null;
+            ItemStack cell2 = random.nextBoolean() ? new ItemStack(ItemCellMagmatic.instance.get()) : null;
 
             int charge1 = random.nextInt(ItemCellMagmatic.maxCharge);
             if (cell1 != null) {
-                ItemCellMagmatic.instance.recharge(cell1, charge1);
+                ItemCellMagmatic.recharge(cell1, charge1);
             }
 
             int charge2 = ItemCellMagmatic.maxCharge - random.nextInt(Math.max(charge1, 1));
             if (cell2 != null) {
-                ItemCellMagmatic.instance.recharge(cell2, charge2);
+                ItemCellMagmatic.recharge(cell2, charge2);
             }
 
             HammerBaseTile.writeCells(newCompound, cell1, cell2);

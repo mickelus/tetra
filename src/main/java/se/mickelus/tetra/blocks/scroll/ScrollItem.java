@@ -10,8 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,6 +30,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.forgespi.Environment;
 import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
@@ -48,7 +47,7 @@ import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 public class ScrollItem extends BlockItem implements InitializableItem {
     public static final String identifier = "scroll_rolled";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ScrollItem instance;
 
 
@@ -72,7 +71,10 @@ public class ScrollItem extends BlockItem implements InitializableItem {
         super(block, new Properties().tab(TetraItemGroup.instance).stacksTo(1));
 
         MinecraftForge.EVENT_BUS.register(new ScrollDrops());
+    }
 
+    @Override
+    public void commonInit(PacketHandler packetHandler) {
         gemExpertise = setupTreatise("gem_expertise", false, 0, 0x2bffee, 14, 13, 14, 15);
         metalExpertise = setupTreatise("metal_expertise", false, 0, 0xffffff, 4, 6, 6, 5);
         woodExpertise = setupTreatise("wood_expertise", false, 0, 0xbf934b, 2, 1, 2, 1);
@@ -91,7 +93,6 @@ public class ScrollItem extends BlockItem implements InitializableItem {
         howlingBlade = setupSchematic("sword/howling", null, false, 1, 0xfaf396, 8, 9, 10, 5);
     }
 
-
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
@@ -102,7 +103,7 @@ public class ScrollItem extends BlockItem implements InitializableItem {
 
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowdedIn(group)) {
+        if (allowedIn(group)) {
             items.add(gemExpertise);
             items.add(metalExpertise);
             items.add(woodExpertise);
@@ -169,13 +170,13 @@ public class ScrollItem extends BlockItem implements InitializableItem {
         if (!Environment.get().getDist().isDedicatedServer()) {
             String prefixKey = "item.tetra.scroll." + key + ".prefix";
             if (I18n.exists(prefixKey)) {
-                return new TranslatableComponent("item.tetra.scroll." + key + ".prefix")
-                        .append(new TextComponent(": "))
-                        .append(new TranslatableComponent("item.tetra.scroll." + key + ".name"));
+                return Component.translatable("item.tetra.scroll." + key + ".prefix")
+                        .append(Component.literal(": "))
+                        .append(Component.translatable("item.tetra.scroll." + key + ".name"));
             }
         }
 
-        return new TranslatableComponent("item.tetra.scroll." + key + ".name");
+        return Component.translatable("item.tetra.scroll." + key + ".name");
     }
 
     @Override
@@ -195,45 +196,45 @@ public class ScrollItem extends BlockItem implements InitializableItem {
             attributes.add(ChatFormatting.GOLD + I18n.get("item.tetra.scroll.intricate"));
         }
 
-        tooltip.add(new TextComponent(attributes.toString()));
-        tooltip.add(new TextComponent(" "));
-        tooltip.add(new TranslatableComponent("item.tetra.scroll." + data.key + ".description").withStyle(ChatFormatting.GRAY));
-        tooltip.add(new TextComponent(" "));
+        tooltip.add(Component.literal(attributes.toString()));
+        tooltip.add(Component.literal(" "));
+        tooltip.add(Component.translatable("item.tetra.scroll." + data.key + ".description").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.literal(" "));
 
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
 
             if (!ScrollData.read(itemStack).schematics.isEmpty()) {
-                tooltip.add(new TextComponent(" "));
-                tooltip.add(new TranslatableComponent("item.tetra.scroll.schematics").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.DARK_PURPLE));
-                tooltip.add(new TranslatableComponent("item.tetra.scroll.schematics.description").withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.literal(" "));
+                tooltip.add(Component.translatable("item.tetra.scroll.schematics").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.DARK_PURPLE));
+                tooltip.add(Component.translatable("item.tetra.scroll.schematics.description").withStyle(ChatFormatting.GRAY));
             }
 
             if (!ScrollData.read(itemStack).craftingEffects.isEmpty()) {
-                tooltip.add(new TextComponent(" "));
-                tooltip.add(new TranslatableComponent("item.tetra.scroll.effects").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.DARK_AQUA));
-                tooltip.add(new TranslatableComponent("item.tetra.scroll.effects.description").withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.literal(" "));
+                tooltip.add(Component.translatable("item.tetra.scroll.effects").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.DARK_AQUA));
+                tooltip.add(Component.translatable("item.tetra.scroll.effects.description").withStyle(ChatFormatting.GRAY));
             }
 
             if (data.isIntricate) {
-                tooltip.add(new TextComponent(" "));
-                tooltip.add(new TranslatableComponent("item.tetra.scroll.intricate").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GOLD));
-                tooltip.add(new TranslatableComponent("item.tetra.scroll.intricate.description").withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.literal(" "));
+                tooltip.add(Component.translatable("item.tetra.scroll.intricate").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GOLD));
+                tooltip.add(Component.translatable("item.tetra.scroll.intricate.description").withStyle(ChatFormatting.GRAY));
             } else {
-                tooltip.add(new TextComponent(" "));
-                tooltip.add(new TranslatableComponent("item.tetra.scroll.range.description").withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.literal(" "));
+                tooltip.add(Component.translatable("item.tetra.scroll.range.description").withStyle(ChatFormatting.GRAY));
             }
 
             if (I18n.exists("item.tetra.scroll." + data.key + ".description_extended")) {
-                tooltip.add(new TextComponent(" "));
-                tooltip.add(new TranslatableComponent("item.tetra.scroll." + data.key + ".description_extended").withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.literal(" "));
+                tooltip.add(Component.translatable("item.tetra.scroll." + data.key + ".description_extended").withStyle(ChatFormatting.GRAY));
             }
         } else {
             tooltip.add(Tooltips.expand);
         }
 
         if (flagIn.isAdvanced()) {
-            tooltip.add(new TextComponent("s: " + data.schematics + ",e: " + data.craftingEffects));
+            tooltip.add(Component.literal("s: " + data.schematics + ",e: " + data.craftingEffects));
         }
     }
 

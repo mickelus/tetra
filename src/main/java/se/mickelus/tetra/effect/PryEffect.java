@@ -4,6 +4,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -105,7 +106,7 @@ public class PryEffect {
                 amplifier++;
 
                 if (!target.getCommandSenderWorld().isClientSide) {
-                    Random rand = target.getCommandSenderWorld().getRandom();
+                    RandomSource rand = target.getCommandSenderWorld().getRandom();
                     ((ServerLevel) target.getCommandSenderWorld()).sendParticles(ParticleTypes.CRIT,
                             target.getX(), target.getY() + target.getBbHeight() / 2, target.getZ(), 10,
                             rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getBbHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);

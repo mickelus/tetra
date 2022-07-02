@@ -3,7 +3,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.glfw.GLFW;
 import se.mickelus.mutil.gui.GuiElement;
@@ -38,7 +38,7 @@ public class HoloFilterButton extends GuiElement {
         label = new GuiString(11, 0, "");
         addChild(label);
 
-        tooltip = Collections.singletonList(new TranslatableComponent("tetra.holo.craft.variants_filter"));
+        tooltip = Collections.singletonList(Component.translatable("tetra.holo.craft.variants_filter"));
     }
 
     @Override

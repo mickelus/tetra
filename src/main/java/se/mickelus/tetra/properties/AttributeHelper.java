@@ -216,7 +216,7 @@ public class AttributeHelper {
     }
 
     private static UUID getAttributeId(Attribute attribute, AttributeModifier.Operation operation) {
-        return attributeIdMap.computeIfAbsent(getAttributeKey(attribute, operation), k -> Mth.createInsecureUUID(ThreadLocalRandom.current()));
+        return attributeIdMap.computeIfAbsent(getAttributeKey(attribute, operation), k -> Mth.createInsecureUUID());
     }
 
     public static AttributeModifier fixIdentifiers(Attribute attribute, AttributeModifier modifier) {

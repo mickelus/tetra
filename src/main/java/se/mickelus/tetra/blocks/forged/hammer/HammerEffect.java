@@ -4,7 +4,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import se.mickelus.tetra.items.forged.CombustionChamberItem;
 import se.mickelus.tetra.items.forged.InsulatedPlateItem;
-import se.mickelus.tetra.items.forged.LubricantDispenser;
+import se.mickelus.tetra.items.forged.LubricantDispenserItem;
 import se.mickelus.tetra.items.forged.PlanarStabilizerItem;
 
 import java.util.Arrays;
@@ -14,7 +14,7 @@ public enum HammerEffect implements StringRepresentable {
     efficient(InsulatedPlateItem.instance),
     power(CombustionChamberItem.instance),
     precise(PlanarStabilizerItem.instance),
-    reliable(LubricantDispenser.instance);
+    reliable(LubricantDispenserItem.instance);
 
     private final Item item;
 

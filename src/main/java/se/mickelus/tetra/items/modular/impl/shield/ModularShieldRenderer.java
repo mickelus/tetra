@@ -16,6 +16,8 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -24,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.mutil.util.CastOptional;
@@ -33,6 +36,7 @@ import se.mickelus.tetra.module.data.ModuleModel;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
@@ -104,28 +108,30 @@ public class ModularShieldRenderer extends BlockEntityWithoutLevelRenderer {
 
     private void renderBanner(ItemStack itemStack, ModelPart modelRenderer, PoseStack matrixStack, MultiBufferSource buffer,
             int combinedLight, int combinedOverlay) {
-        List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.createPatterns(ShieldItem.getColor(itemStack), BannerBlockEntity.getItemPatterns(itemStack));
+        List<Pair<Holder<BannerPattern>, DyeColor>> list = BannerBlockEntity.createPatterns(ShieldItem.getColor(itemStack), BannerBlockEntity.getItemPatterns(itemStack));
 
         for (int i = 0; i < 17 && i < list.size(); ++i) {
-            Pair<BannerPattern, DyeColor> pair = list.get(i);
+            Pair<Holder<BannerPattern>, DyeColor> pair = list.get(i);
             float[] tint = pair.getSecond().getTextureDiffuseColors();
-            Material material = new Material(Sheets.SHIELD_SHEET, pair.getFirst().location(false));
-            VertexConsumer vertexBuilder = material.sprite().wrap(ItemRenderer.getFoilBuffer(buffer, RenderType.entitySmoothCutout(material.atlasLocation()), false, itemStack.hasFoil()));
-            modelRenderer.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, tint[0], tint[1], tint[2], 1.0f);
+            pair.getFirst().unwrapKey().map(Sheets::getShieldMaterial).ifPresent(material -> {
+                VertexConsumer vertexBuilder = material.sprite().wrap(ItemRenderer.getFoilBuffer(buffer, RenderType.entitySmoothCutout(material.atlasLocation()), false, itemStack.hasFoil()));
+                modelRenderer.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, tint[0], tint[1], tint[2], 1.0f);
+            });
         }
     }
 
     private void renderEtching(ItemStack itemStack, ModelPart modelRenderer, PoseStack matrixStack, MultiBufferSource buffer,
             int combinedLight, int combinedOverlay) {
-        List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.createPatterns(ShieldItem.getColor(itemStack), BannerBlockEntity.getItemPatterns(itemStack));
+        List<Pair<Holder<BannerPattern>, DyeColor>> list = BannerBlockEntity.createPatterns(ShieldItem.getColor(itemStack), BannerBlockEntity.getItemPatterns(itemStack));
 
         for (int i = 0; i < 17 && i < list.size(); ++i) {
-            Pair<BannerPattern, DyeColor> pair = list.get(i);
-            if (!pair.getFirst().equals(BannerPattern.BASE)) {
+            Pair<Holder<BannerPattern>, DyeColor> pair = list.get(i);
+            if (!BannerPatterns.BASE.equals(pair.getFirst().unwrapKey().orElse(null))) {
                 float[] tint = pair.getSecond().getTextureDiffuseColors();
-                Material material = new Material(Sheets.SHIELD_SHEET, pair.getFirst().location(false));
-                VertexConsumer vertexBuilder = material.sprite().wrap(ItemRenderer.getFoilBuffer(buffer, RenderType.entityNoOutline(material.atlasLocation()), false, itemStack.hasFoil()));
-                modelRenderer.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, tint[0], tint[1], tint[2], 0.7f);
+                pair.getFirst().unwrapKey().map(Sheets::getShieldMaterial).ifPresent(material -> {
+                    VertexConsumer vertexBuilder = material.sprite().wrap(ItemRenderer.getFoilBuffer(buffer, RenderType.entityNoOutline(material.atlasLocation()), false, itemStack.hasFoil()));
+                    modelRenderer.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, tint[0], tint[1], tint[2], 0.7f);
+                });
             }
         }
     }

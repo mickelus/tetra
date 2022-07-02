@@ -16,7 +16,7 @@ import java.util.List;
 public class BlockForgedPlatform extends TetraBlock {
     static final String identifier = "forged_platform";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static BlockForgedPlatform instance;
 
     public BlockForgedPlatform() {

@@ -11,10 +11,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class DepletedBedrockBlock extends TetraBlock {
     public static final String identifier = "depleted_bedrock";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static DepletedBedrockBlock instance;
 
     public DepletedBedrockBlock() {
-        super(Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
+        super(Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable());
     }
 }

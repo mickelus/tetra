@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.scan;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -17,7 +18,7 @@ public class ScannerSound extends AbstractTickableSoundInstance {
     private boolean hasStarted;
 
     public ScannerSound(Minecraft mc) {
-        super(TetraSounds.scannerLoop, SoundSource.BLOCKS);
+        super(TetraSounds.scannerLoop, SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
 
         this.mc = mc;
 

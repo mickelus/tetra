@@ -6,13 +6,15 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -29,9 +31,12 @@ public class ModuleDevCommand {
     private static final Logger logger = LogManager.getLogger();
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        CommandBuildContext context = new CommandBuildContext(RegistryAccess.BUILTIN.get());
+        context.missingTagAccessPolicy(CommandBuildContext.MissingTagAccessPolicy.RETURN_EMPTY);
+
         dispatcher.register(Commands.literal("tmdev")
                 .requires(source -> source.hasPermission(2))
-                .then(Commands.argument("item", ItemArgument.item())
+                .then(Commands.argument("item", ItemArgument.item(context))
                         .then(Commands.argument("module", StringArgumentType.greedyString())
                                 .suggests(ModuleDevCommand::getModuleSuggestions)
                                 .executes(ModuleDevCommand::run))));
@@ -62,7 +67,7 @@ public class ModuleDevCommand {
     }
 
     private static void plopFrame(Level world, BlockPos pos, ItemStack itemStack, String label) {
-        itemStack.setHoverName(new TextComponent(label));
+        itemStack.setHoverName(Component.literal(label));
         ItemFrame itemFrame = new ItemFrame(world, pos, Direction.SOUTH);
         itemFrame.setItem(itemStack);
         world.addFreshEntity(itemFrame);

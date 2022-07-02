@@ -5,8 +5,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -70,7 +69,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
                     HammerBaseTile.class, tile -> tile.getEffect(false) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, false))
     };
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static HammerBaseBlock instance;
 
     public HammerBaseBlock() {
@@ -115,8 +114,8 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     @Override
     public void appendHoverText(final ItemStack stack, @Nullable final BlockGetter world, final List<Component> tooltip, final TooltipFlag advanced) {
         tooltip.add(locationTooltip);
-        tooltip.add(new TextComponent(" "));
-        tooltip.add(new TranslatableComponent("block.multiblock_hint.1x2x1")
+        tooltip.add(Component.literal(" "));
+        tooltip.add(Component.translatable("block.multiblock_hint.1x2x1")
                 .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 

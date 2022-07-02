@@ -1,5 +1,6 @@
 package se.mickelus.tetra.trades;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +30,8 @@ class ItemsForEmeraldsTrade implements VillagerTrades.ItemListing {
         this.priceMultiplier = priceMultiplier;
     }
 
-    public MerchantOffer getOffer(Entity trader, Random rand) {
+    @Override
+    public MerchantOffer getOffer(Entity trader, RandomSource rand) {
         ItemStack itemCopy = sellingItem.copy();
         itemCopy.setCount(sellingItemCount);
         return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCount), itemCopy, this.maxUses, this.xpValue, this.priceMultiplier);

@@ -4,7 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -216,11 +216,11 @@ public class GuiStatBar extends GuiStatBase {
     protected List<Component> getCombinedTooltip(Player player, ItemStack itemStack) {
         List<Component> result = new ArrayList<>();
         Arrays.stream(getCombinedTooltipBase(player, itemStack).split("\\\\n"))
-                .map(TextComponent::new)
+                .map(Component::literal)
                 .forEach(result::add);
 
         if (tooltipGetter.hasExtendedTooltip(player, itemStack) || getActiveIndicators().stream().anyMatch(ind -> ind.hasExtendedTooltip(player, itemStack))) {
-            result.add(new TextComponent(" "));
+            result.add(Component.literal(" "));
             result.add(Tooltips.expand);
         }
 
@@ -232,16 +232,16 @@ public class GuiStatBar extends GuiStatBase {
 
         List<Component> result = new ArrayList<>();
         Arrays.stream(getCombinedTooltipBase(player, itemStack).split("\\\\n"))
-                .map(TextComponent::new)
+                .map(Component::literal)
                 .forEach(result::add);
 
         if (tooltipGetter.hasExtendedTooltip(player, itemStack) || getActiveIndicators().stream().anyMatch(ind -> ind.hasExtendedTooltip(player, itemStack))) {
-            result.add(new TextComponent(" "));
+            result.add(Component.literal(" "));
             result.add(Tooltips.expanded);
 
             if (tooltipGetter.hasExtendedTooltip(player, itemStack)) {
                 Arrays.stream(tooltipGetter.getTooltipExtension(player, itemStack).split("\\\\n"))
-                        .map(TextComponent::new)
+                        .map(Component::literal)
                         .map(component -> component.withStyle(ChatFormatting.GRAY))
                         .forEach(result::add);
             }
@@ -250,9 +250,9 @@ public class GuiStatBar extends GuiStatBase {
             for (GuiStatIndicator indicator : getActiveIndicators()) {
                 if (indicator.hasExtendedTooltip(player, itemStack)) {
                     if (!isFirst) {
-                        result.add(new TextComponent(" "));
+                        result.add(Component.literal(" "));
                     }
-                    result.add(new TextComponent(indicator.getTooltipExtension(player, itemStack)).withStyle(ChatFormatting.GRAY));
+                    result.add(Component.literal(indicator.getTooltipExtension(player, itemStack)).withStyle(ChatFormatting.GRAY));
                     isFirst = false;
                 }
             }

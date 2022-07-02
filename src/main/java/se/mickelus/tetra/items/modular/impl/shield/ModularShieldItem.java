@@ -46,7 +46,7 @@ public class ModularShieldItem extends ItemModularHandheld {
 
     public static final String bannerImprovementKey = "shield/banner";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularShieldItem instance;
 
     public ModularShieldItem() {

@@ -1,7 +1,6 @@
 package se.mickelus.tetra.items.forged;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,12 +26,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class ItemQuickLatch extends TetraItem {
+public class QuickLatchItem extends TetraItem {
     public static final String unlocalizedName = "quick_latch";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemQuickLatch instance;
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static QuickLatchItem instance;
 
-    public ItemQuickLatch() {
+    public QuickLatchItem() {
         super(new Properties().tab(TetraItemGroup.instance));
     }
 
@@ -40,7 +39,7 @@ public class ItemQuickLatch extends TetraItem {
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Tooltips.reveal);
-        tooltip.add(new TextComponent(" "));
+        tooltip.add(Component.literal(" "));
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 

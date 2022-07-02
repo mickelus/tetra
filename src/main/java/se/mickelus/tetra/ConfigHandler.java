@@ -26,8 +26,6 @@ public class ConfigHandler {
     public static ForgeConfigSpec.BooleanValue development;
     public static ForgeConfigSpec.BooleanValue toolbeltCurioOnly;
 
-    public static ForgeConfigSpec.IntValue geodeDensity;
-
     public static ForgeConfigSpec.BooleanValue generateFeatures;
     public static ForgeConfigSpec.IntValue maxFeatureDepth;
 
@@ -116,11 +114,6 @@ public class ConfigHandler {
         builder
                 .comment("World generation settings")
                 .push("worldgen");
-
-        geodeDensity = builder
-                .comment("The number of geodes that should generate per chunk, set to 0 to disable")
-                .worldRestart()
-                .defineInRange("geode_density", 320, 0, 65536);
 
         generateFeatures = builder
                 .comment("Generates features in the world, further configuration available in \"tetra/data/structures/\"")

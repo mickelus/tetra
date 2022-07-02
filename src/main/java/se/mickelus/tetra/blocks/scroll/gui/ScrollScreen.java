@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,7 +30,7 @@ public class ScrollScreen extends Screen {
     private final GuiText text;
 
     public ScrollScreen(String key) {
-        super(new TextComponent("tetra:scroll"));
+        super(Component.literal("tetra:scroll"));
 
         pages = I18n.get("item.tetra.scroll." + key + ".details").split("\r");
 

@@ -43,7 +43,7 @@ public class AbilityOverlays extends GuiRoot {
         comboPoints.update(mc.player);
         revengeIndicator.update(mc.player, mc.hitResult);
 
-        draw(event.getMatrixStack());
+        draw(event.getPoseStack());
     }
 
     public void draw(PoseStack matrixStack) {

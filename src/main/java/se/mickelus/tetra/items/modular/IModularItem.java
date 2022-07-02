@@ -8,8 +8,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
@@ -221,13 +220,13 @@ public interface IModularItem {
     default String getDataCacheKey(ItemStack itemStack) {
         return Optional.ofNullable(getIdentifier(itemStack))
                 .filter(id -> !id.isEmpty())
-                .orElseGet(() -> itemStack.hasTag() ? itemStack.getTag().toString() : "INVALID-" + getItem().getRegistryName());
+                .orElseGet(() -> itemStack.hasTag() ? itemStack.getTag().toString() : "INVALID-" + getItem().toString());
     }
 
     default String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
         return Optional.ofNullable(getIdentifier(itemStack))
                 .filter(id -> !id.isEmpty())
-                .orElseGet(() -> itemStack.hasTag() ? itemStack.getTag().toString() : "INVALID-" + getItem().getRegistryName());
+                .orElseGet(() -> itemStack.hasTag() ? itemStack.getTag().toString() : "INVALID-" + getItem().toString());
     }
 
     void clearCaches();
@@ -461,7 +460,7 @@ public interface IModularItem {
     default List<Component> getTooltip(ItemStack itemStack, @Nullable Level world, TooltipFlag advanced) {
         List<Component> tooltip = Lists.newArrayList();
         if (isBroken(itemStack)) {
-            tooltip.add(new TranslatableComponent("item.tetra.modular.broken")
+            tooltip.add(Component.translatable("item.tetra.modular.broken")
                     .withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
         }
 
@@ -471,38 +470,38 @@ public interface IModularItem {
                     .filter(Objects::nonNull)
                     .forEach(module -> {
 
-                        tooltip.add(new TextComponent("\u00BB ").withStyle(ChatFormatting.DARK_GRAY)
-                                .append(new TextComponent(module.getName(itemStack)).withStyle(ChatFormatting.GRAY)));
+                        tooltip.add(Component.literal("\u00BB ").withStyle(ChatFormatting.DARK_GRAY)
+                                .append(Component.literal(module.getName(itemStack)).withStyle(ChatFormatting.GRAY)));
 
                         module.getEnchantments(itemStack).entrySet().stream()
                                 .map(entry -> entry.getKey().getFullname(entry.getValue()))
-                                .map(text -> new TextComponent("  - " + text.getString()))
+                                .map(text -> Component.literal("  - " + text.getString()))
                                 .map(text -> text.withStyle(ChatFormatting.DARK_GRAY))
                                 .forEach(tooltip::add);
 
                         Arrays.stream(module.getImprovements(itemStack))
                                 .map(improvement -> "  - " + getImprovementTooltip(improvement.key, improvement.level, true))
-                                .map(TextComponent::new)
+                                .map(Component::literal)
                                 .map(textComponent -> textComponent.withStyle(ChatFormatting.DARK_GRAY))
                                 .forEach(tooltip::add);
                     });
             Arrays.stream(getMinorModules(itemStack))
                     .filter(Objects::nonNull)
-                    .map(module -> new TextComponent(" * ").withStyle(ChatFormatting.DARK_GRAY)
-                            .append(new TextComponent(module.getName(itemStack)).withStyle(ChatFormatting.GRAY)))
+                    .map(module -> Component.literal(" * ").withStyle(ChatFormatting.DARK_GRAY)
+                            .append(Component.literal(module.getName(itemStack)).withStyle(ChatFormatting.GRAY)))
                     .forEach(tooltip::add);
 
             // honing tooltip
             if (ConfigHandler.moduleProgression.get() && canGainHoneProgress()) {
                 if (isHoneable(itemStack)) {
-                    tooltip.add(new TextComponent(" > ").withStyle(ChatFormatting.AQUA)
-                            .append(new TranslatableComponent("tetra.hone.available").setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY))));
+                    tooltip.add(Component.literal(" > ").withStyle(ChatFormatting.AQUA)
+                            .append(Component.translatable("tetra.hone.available").setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY))));
                 } else {
                     int progress = getHoningProgress(itemStack);
                     int base = getHoningLimit(itemStack);
                     String percentage = String.format("%.0f", 100f * (base - progress) / base);
-                    tooltip.add(new TextComponent(" > ").withStyle(ChatFormatting.DARK_AQUA)
-                            .append(new TranslatableComponent("tetra.hone.progress", base - progress, base, percentage).withStyle(ChatFormatting.GRAY)));
+                    tooltip.add(Component.literal(" > ").withStyle(ChatFormatting.DARK_AQUA)
+                            .append(Component.translatable("tetra.hone.progress", base - progress, base, percentage).withStyle(ChatFormatting.GRAY)));
                 }
             }
         } else {

@@ -3,8 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
@@ -67,9 +66,9 @@ public class CraftButtonGui extends GuiClickable {
 
                 if (!destabilizationChance.isEmpty()) {
                     backdropColor = GuiColors.destabilized;
-                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.destabilize_tooltip").withStyle(ChatFormatting.GRAY));
+                    tooltip.add(Component.translatable("tetra.workbench.schematic_detail.destabilize_tooltip").withStyle(ChatFormatting.GRAY));
                     destabilizationChance.stream()
-                            .map(TextComponent::new)
+                            .map(Component::literal)
                             .forEach(tooltip::add);
                 }
             } else {
@@ -79,7 +78,7 @@ public class CraftButtonGui extends GuiClickable {
                         .orElse(false);
 
                 if (willRepair) {
-                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.repair_tooltip"));
+                    tooltip.add(Component.translatable("tetra.workbench.schematic_detail.repair_tooltip"));
                 }
             }
 
@@ -89,22 +88,22 @@ public class CraftButtonGui extends GuiClickable {
 
             if (!schematic.isMaterialsValid(itemStack, slot, materials)) {
                 if (hasEmptyMaterial(schematic, materials)) {
-                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.no_material_tooltip"));
+                    tooltip.add(Component.translatable("tetra.workbench.schematic_detail.no_material_tooltip"));
                     backdropColor = GuiColors.muted;
                 } else if (hasInsufficientQuantities(schematic, itemStack, slot, materials)) {
-                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.material_count_tooltip"));
+                    tooltip.add(Component.translatable("tetra.workbench.schematic_detail.material_count_tooltip"));
                 } else {
-                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.material_tooltip"));
+                    tooltip.add(Component.translatable("tetra.workbench.schematic_detail.material_tooltip"));
                 }
             } else {
                 if (schematic.isIntegrityViolation(player, itemStack, materials, slot)) {
-                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.integrity_tooltip"));
+                    tooltip.add(Component.translatable("tetra.workbench.schematic_detail.integrity_tooltip"));
                 }
                 if (!schematic.checkTools(itemStack, materials, availableTools)) {
-                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.tools_tooltip"));
+                    tooltip.add(Component.translatable("tetra.workbench.schematic_detail.tools_tooltip"));
                 }
                 if (!player.isCreative() && player.experienceLevel < schematic.getExperienceCost(itemStack, materials, slot)) {
-                    tooltip.add(new TranslatableComponent("tetra.workbench.schematic_detail.level_tooltip"));
+                    tooltip.add(Component.translatable("tetra.workbench.schematic_detail.level_tooltip"));
                 }
             }
         }

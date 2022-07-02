@@ -10,7 +10,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -60,7 +60,7 @@ public class OutcomeMaterial {
     @OnlyIn(Dist.CLIENT)
     public Component[] getDisplayNames() {
         if (getPredicate() == null) {
-            return new Component[]{new TextComponent("Unknown material")};
+            return new Component[]{Component.literal("Unknown material")};
         } else if (itemStacks != null) {
             return itemStacks.stream().map(ItemStack::getHoverName).toArray(Component[]::new);
         } else if (tagLocation != null) {
@@ -71,7 +71,7 @@ public class OutcomeMaterial {
                     .toArray(Component[]::new);
         }
 
-        return new Component[]{new TextComponent("Unknown material")};
+        return new Component[]{Component.literal("Unknown material")};
     }
 
     public ItemStack[] getApplicableItemStacks() {

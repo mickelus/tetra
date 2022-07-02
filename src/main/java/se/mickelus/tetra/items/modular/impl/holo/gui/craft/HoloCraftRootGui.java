@@ -195,7 +195,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         if (item != null) {
             result.add(I18n.get("tetra.holo.craft.breadcrumb.root"));
 
-            result.add(I18n.get("tetra.holo.craft." + item.getItem().getRegistryName().getPath()));
+            result.add(I18n.get("tetra.holo.craft." + item.getItem().toString()));
 
             if (slot != null) {
                 result.add(getSlotName());

@@ -22,7 +22,7 @@ import java.util.Map;
 @ParametersAreNonnullByDefault
 public class RolledScrollBlock extends ScrollBlock {
     public static final String identifier = "scroll_rolled";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static ScrollBlock instance;
 
     private final VoxelShape[] baseShapes = new VoxelShape[]{

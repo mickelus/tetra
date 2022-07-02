@@ -5,8 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiAttachment;
@@ -71,9 +70,9 @@ public class HoneProgressGui extends GuiElement {
                 tooltipBase += I18n.get("item.tetra.modular.hone_progress.description_workable", String.format("%.0f%%", workableFactor));
             }
 
-            tooltip = ImmutableList.of(new TranslatableComponent(tooltipBase), new TextComponent(""), Tooltips.expand);
-            extendedTooltip = ImmutableList.of(new TranslatableComponent(tooltipBase), new TextComponent(""), Tooltips.expanded,
-                    new TextComponent(""), new TranslatableComponent("item.tetra.modular.hone_progress.description_extended").withStyle(ChatFormatting.GRAY));
+            tooltip = ImmutableList.of(Component.translatable(tooltipBase), Component.literal(""), Tooltips.expand);
+            extendedTooltip = ImmutableList.of(Component.translatable(tooltipBase), Component.literal(""), Tooltips.expanded,
+                    Component.literal(""), Component.translatable("item.tetra.modular.hone_progress.description_extended").withStyle(ChatFormatting.GRAY));
 
             valueString.setString(factorString);
 

@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -54,7 +54,7 @@ public class HoloImprovementVariantGui extends GuiClickable {
         label.setAttachmentPoint(GuiAttachment.topCenter);
         addChild(label);
 
-        tooltip = ImmutableList.of(new TextComponent(name));
+        tooltip = ImmutableList.of(Component.literal(name));
     }
 
     @Override

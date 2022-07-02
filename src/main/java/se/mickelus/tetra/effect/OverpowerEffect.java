@@ -7,6 +7,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -66,7 +67,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
             if (comboEfficiency > 0 && attacker.getCommandSenderWorld().getRandom().nextFloat() < (comboEfficiency * ComboPoints.get(attacker) / 100f)) {
                 newAmp--;
 
-                Random rand = attacker.getCommandSenderWorld().getRandom();
+                RandomSource rand = attacker.getCommandSenderWorld().getRandom();
                 ((ServerLevel) attacker.getCommandSenderWorld()).sendParticles(ParticleTypes.HAPPY_VILLAGER,
                         attacker.getX(), attacker.getY() + attacker.getBbHeight() / 2, attacker.getZ(), 10,
                         rand.nextGaussian() * 0.3, rand.nextGaussian() * attacker.getBbHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);

@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -188,7 +189,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         if (isSuccess) {
             target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 1, 0.8f);
 
-            Random rand = target.getRandom();
+            RandomSource rand = target.getRandom();
             CastOptional.cast(target.level, ServerLevel.class).ifPresent(world ->
                     world.sendParticles(new DustParticleOptions(new Vector3f(0.6f, 0, 0), 0.8f),
                             hitVec.x, hitVec.y, hitVec.z, 10,

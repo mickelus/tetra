@@ -17,12 +17,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class ItemBeam extends TetraItem {
-    public static final String unlocalizedName = "forged_beam";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemBeam instance;
+public class MeshItem extends TetraItem {
+    public static final String unlocalizedName = "forged_mesh";
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static MeshItem instance;
 
-    public ItemBeam() {
+    public MeshItem() {
         super(new Properties().tab(TetraItemGroup.instance));
     }
 

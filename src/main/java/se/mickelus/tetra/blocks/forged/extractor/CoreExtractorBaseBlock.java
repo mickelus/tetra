@@ -4,8 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -51,7 +50,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeZ, largeCoverShapeZ, BooleanOp.OR), capShape, shaftShape);
     private static final VoxelShape combinedShapeX
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeX, largeCoverShapeX, BooleanOp.OR), capShape, shaftShape);
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static CoreExtractorBaseBlock instance;
 
     public CoreExtractorBaseBlock() {
@@ -70,8 +69,8 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
-        tooltip.add(new TextComponent(" "));
-        tooltip.add(new TranslatableComponent("block.multiblock_hint.1x2x1")
+        tooltip.add(Component.literal(" "));
+        tooltip.add(Component.translatable("block.multiblock_hint.1x2x1")
                 .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 

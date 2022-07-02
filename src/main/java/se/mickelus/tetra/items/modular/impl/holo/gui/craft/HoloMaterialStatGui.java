@@ -3,7 +3,7 @@ package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -32,7 +32,7 @@ public class HoloMaterialStatGui extends GuiElement {
         this.valueFormatter = valueFormatter;
         this.getter = getter;
 
-        tooltip = ImmutableList.of(new TranslatableComponent("tetra.holo.craft.materials.stat." + key + ".tooltip"));
+        tooltip = ImmutableList.of(Component.translatable("tetra.holo.craft.materials.stat." + key + ".tooltip"));
 
         backdrop = new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench);
         backdrop.setColor(0x222222);

@@ -4,7 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Multimap;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -74,7 +74,7 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     }
 
     public void clearCaches() {
-        logger.debug("Clearing item data caches for {}...", getRegistryName());
+        logger.debug("Clearing item data caches for {}...", toString());
         attributeCache.invalidateAll();
         toolCache.invalidateAll();
         effectCache.invalidateAll();
@@ -170,7 +170,7 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     @Override
     public Component getName(ItemStack stack) {
-        return new TextComponent(getItemName(stack));
+        return Component.literal(getItemName(stack));
     }
 
     @Override

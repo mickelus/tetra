@@ -65,7 +65,7 @@ public class FracturedBedrockTile extends BlockEntity {
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier3"),
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier4")
     };
-    @ObjectHolder(TetraMod.MOD_ID + ":" + FracturedBedrockBlock.identifier)
+    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + FracturedBedrockBlock.identifier)
     public static BlockEntityType<FracturedBedrockTile> type;
     private final float spawnRatio = 0.5f;
     private final int spawnYLimit = 4;

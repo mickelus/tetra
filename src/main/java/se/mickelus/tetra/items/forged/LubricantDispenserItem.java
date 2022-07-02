@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.forged;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -17,18 +18,20 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class ItemBolt extends TetraItem {
-    public static final String unlocalizedName = "forged_bolt";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static ItemBolt instance;
+public class LubricantDispenserItem extends TetraItem {
+    private static final String unlocalizedName = "lubricant_dispenser";
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static LubricantDispenserItem instance;
 
-    public ItemBolt() {
+    public LubricantDispenserItem() {
         super(new Properties().tab(TetraItemGroup.instance));
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.translatable("item.tetra.lubricant_dispenser.description").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.literal(" "));
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 }

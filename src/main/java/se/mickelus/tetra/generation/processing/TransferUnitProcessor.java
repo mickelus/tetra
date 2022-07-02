@@ -2,6 +2,7 @@ package se.mickelus.tetra.generation.processing;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,7 +29,7 @@ public class TransferUnitProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo process(LevelReader world, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo $, StructureTemplate.StructureBlockInfo blockInfo,
             StructurePlaceSettings placementSettings, @Nullable StructureTemplate template) {
         if (blockInfo.state.getBlock() instanceof TransferUnitBlock) {
-            Random random = placementSettings.getRandom(blockInfo.pos);
+            RandomSource random = placementSettings.getRandom(blockInfo.pos);
 
             CompoundTag newCompound = blockInfo.nbt.copy();
 
@@ -37,14 +38,14 @@ public class TransferUnitProcessor extends StructureProcessor {
             // randomize cell
             if (random.nextFloat() < 0.05) {
                 int charge = random.nextInt(ItemCellMagmatic.maxCharge);
-                ItemStack itemStack = new ItemStack(ItemCellMagmatic.instance);
-                ItemCellMagmatic.instance.recharge(itemStack, charge);
+                ItemStack itemStack = new ItemStack(ItemCellMagmatic.instance.get());
+                ItemCellMagmatic.recharge(itemStack, charge);
 
                 cellState = charge > 0 ? 2 : 1;
 
                 TransferUnitTile.writeCell(newCompound, itemStack);
             } else if (random.nextFloat() < 0.1) {
-                TransferUnitTile.writeCell(newCompound, new ItemStack(ItemCellMagmatic.instance));
+                TransferUnitTile.writeCell(newCompound, new ItemStack(ItemCellMagmatic.instance.get()));
             }
 
             // randomize configuration & plate

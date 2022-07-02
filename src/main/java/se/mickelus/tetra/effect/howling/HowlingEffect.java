@@ -1,5 +1,6 @@
 package se.mickelus.tetra.effect.howling;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -56,7 +57,7 @@ public class HowlingEffect {
                 });
     }
 
-    private static boolean willDeflect(MobEffectInstance effectInstance, Random random) {
+    private static boolean willDeflect(MobEffectInstance effectInstance, RandomSource random) {
         return effectInstance != null && random.nextDouble() < effectInstance.getAmplifier() * 0.125;
     }
 }

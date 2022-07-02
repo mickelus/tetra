@@ -2,7 +2,7 @@ package se.mickelus.tetra.gui.stats.bar;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.*;
@@ -85,9 +85,9 @@ public class GuiStatBarIntegrity extends GuiStatBase {
         }
 
         if (value < 0) {
-            tooltip = Collections.singletonList(new TextComponent(tooltipGetterNegative.getTooltip(player, previewStack)));
+            tooltip = Collections.singletonList(Component.literal(tooltipGetterNegative.getTooltip(player, previewStack)));
         } else {
-            tooltip = Collections.singletonList(new TextComponent(tooltipGetterPositive.getTooltip(player, previewStack)));
+            tooltip = Collections.singletonList(Component.literal(tooltipGetterPositive.getTooltip(player, previewStack)));
         }
 
         updateValue(value, diffValue);

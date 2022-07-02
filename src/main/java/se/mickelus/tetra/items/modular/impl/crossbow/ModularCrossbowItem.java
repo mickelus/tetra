@@ -8,8 +8,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -71,7 +70,7 @@ public class ModularCrossbowItem extends ModularItem {
     public static final double velocityFactor = 1 / 8d;
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, 0, -13, 18);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(4, -1, 13, 12, 4, 25);
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularCrossbowItem instance;
     public static double multishotDefaultSpread = 10;
     protected ModuleModel arrowModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "items/module/crossbow/arrow"));
@@ -134,13 +133,13 @@ public class ModularCrossbowItem extends ModularItem {
         List<ItemStack> list = getProjectiles(stack);
         if (isLoaded(stack) && !list.isEmpty()) {
             ItemStack itemstack = list.get(0);
-            tooltip.add((new TranslatableComponent("item.minecraft.crossbow.projectile")).append(" ").append(itemstack.getDisplayName()));
+            tooltip.add((Component.translatable("item.minecraft.crossbow.projectile")).append(" ").append(itemstack.getDisplayName()));
             if (flagIn.isAdvanced() && itemstack.getItem() == Items.FIREWORK_ROCKET) {
                 List<Component> list1 = Lists.newArrayList();
                 Items.FIREWORK_ROCKET.appendHoverText(itemstack, worldIn, list1, flagIn);
                 if (!list1.isEmpty()) {
                     for (int i = 0; i < list1.size(); ++i) {
-                        list1.set(i, (new TextComponent("  ")).append(list1.get(i)).withStyle(ChatFormatting.GRAY));
+                        list1.set(i, (Component.literal("  ")).append(list1.get(i)).withStyle(ChatFormatting.GRAY));
                     }
 
                     tooltip.addAll(list1);
@@ -151,9 +150,9 @@ public class ModularCrossbowItem extends ModularItem {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         if (Screen.hasShiftDown()) {
-            tooltip.add(new TextComponent(" "));
-            tooltip.add(new TranslatableComponent("item.tetra.crossbow.wip").withStyle(ChatFormatting.GRAY));
-            tooltip.add(new TextComponent(" "));
+            tooltip.add(Component.literal(" "));
+            tooltip.add(Component.translatable("item.tetra.crossbow.wip").withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.literal(" "));
         }
     }
 

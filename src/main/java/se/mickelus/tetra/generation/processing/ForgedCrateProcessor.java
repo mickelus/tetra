@@ -2,6 +2,7 @@ package se.mickelus.tetra.generation.processing;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -24,7 +25,7 @@ public class ForgedCrateProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo process(LevelReader world, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo $, StructureTemplate.StructureBlockInfo blockInfo,
             StructurePlaceSettings placementSettings, @Nullable StructureTemplate template) {
         if (blockInfo.state.getBlock() instanceof ForgedCrateBlock) {
-            Random random = placementSettings.getRandom(blockInfo.pos);
+            RandomSource random = placementSettings.getRandom(blockInfo.pos);
 
             BlockState blockState = blockInfo.state
                     .setValue(ForgedCrateBlock.propIntegrity, random.nextInt(4))

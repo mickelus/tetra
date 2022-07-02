@@ -4,8 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -46,7 +45,7 @@ public class ModularHolosphereItem extends ModularItem {
     public static final String identifier = "holo";
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 0, -14, 18, 4, 0, 4, 18);
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularHolosphereItem instance;
 
     public ModularHolosphereItem() {
@@ -90,7 +89,7 @@ public class ModularHolosphereItem extends ModularItem {
 
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowdedIn(group)) {
+        if (allowedIn(group)) {
             ItemStack itemStack = new ItemStack(this);
 
             IModularItem.putModuleInSlot(itemStack, coreKey, "holo/core", "frame/dim");
@@ -102,18 +101,18 @@ public class ModularHolosphereItem extends ModularItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(new TranslatableComponent("item.tetra.holo.tooltip1").withStyle(ChatFormatting.GRAY));
-        tooltip.add(new TextComponent(" "));
+        tooltip.add(Component.translatable("item.tetra.holo.tooltip1").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.literal(" "));
 
         if (ScannerOverlayGui.instance != null && ScannerOverlayGui.instance.isAvailable()) {
-            tooltip.add(new TranslatableComponent("tetra.holo.scan.status", ScannerOverlayGui.instance.getStatus())
+            tooltip.add(Component.translatable("tetra.holo.scan.status", ScannerOverlayGui.instance.getStatus())
                     .withStyle(ChatFormatting.GRAY));
 
-            tooltip.add(new TextComponent(" "));
-            tooltip.add(new TranslatableComponent("tetra.holo.scan.snooze"));
+            tooltip.add(Component.literal(" "));
+            tooltip.add(Component.translatable("tetra.holo.scan.snooze"));
         }
 
-        tooltip.add(new TranslatableComponent("item.tetra.holo.tooltip2"));
+        tooltip.add(Component.translatable("item.tetra.holo.tooltip2"));
 
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }

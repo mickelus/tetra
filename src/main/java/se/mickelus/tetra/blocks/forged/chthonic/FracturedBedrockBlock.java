@@ -23,11 +23,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class FracturedBedrockBlock extends TetraBlock implements EntityBlock {
     public static final String identifier = "fractured_bedrock";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static FracturedBedrockBlock instance;
 
     public FracturedBedrockBlock() {
-        super(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
+        super(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable());
     }
 
     public static boolean canPierce(Level world, BlockPos pos) {

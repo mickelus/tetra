@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
@@ -108,7 +108,7 @@ public class GuiSchematicDetail extends GuiElement {
         String descriptionString = schematic.getDescription(itemStack);
         description.setString(ChatFormatting.GRAY + descriptionString
                 .replace(ChatFormatting.RESET.toString(), ChatFormatting.RESET.toString() + ChatFormatting.GRAY));
-        descriptionTooltip = ImmutableList.of(new TextComponent(descriptionString));
+        descriptionTooltip = ImmutableList.of(Component.literal(descriptionString));
 
         materialTranslation.setVisible(schematic.getNumMaterialSlots() > 0);
         applicableMaterials.setVisible(schematic.getNumMaterialSlots() > 0);

@@ -4,8 +4,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.common.ToolAction;
@@ -40,8 +39,8 @@ public class HoloMaterialTranslation extends GuiElement {
         icon = new GuiTexture(0, 0, 9, 9, 224, 0, GuiTextures.workbench);
         addChild(icon);
 
-        emptyTooltipImprovement = Collections.singletonList(new TranslatableComponent("tetra.holo.craft.empty_translation_improvement"));
-        emptyTooltip = Collections.singletonList(new TranslatableComponent("tetra.holo.craft.empty_translation_module"));
+        emptyTooltipImprovement = Collections.singletonList(Component.translatable("tetra.holo.craft.empty_translation_improvement"));
+        emptyTooltip = Collections.singletonList(Component.translatable("tetra.holo.craft.empty_translation_module"));
     }
 
     @Override
@@ -107,7 +106,7 @@ public class HoloMaterialTranslation extends GuiElement {
             }
 
             tooltip = result.stream()
-                    .map(TextComponent::new)
+                    .map(Component::literal)
                     .collect(Collectors.toList());
         } else {
             if (schematic.getType() == SchematicType.improvement) {

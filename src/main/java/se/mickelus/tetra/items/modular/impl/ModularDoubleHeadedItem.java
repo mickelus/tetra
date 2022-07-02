@@ -61,7 +61,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(6, 1);
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularDoubleHeadedItem instance;
 
     public ModularDoubleHeadedItem() {
@@ -93,7 +93,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowdedIn(group)) {
+        if (allowedIn(group)) {
             items.add(setupHammerStack("oak", "stick"));
             items.add(setupHammerStack("stone", "stick"));
             items.add(setupHammerStack("iron", "spruce"));

@@ -3,8 +3,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.gui.GuiColors;
 
@@ -62,14 +61,14 @@ public class ToolRequirementGui extends GuiTool {
         if (hasFocus() && showTooltip) {
             if (showTooltipRequirement) {
                 return ImmutableList.of(
-                        new TranslatableComponent(requirementTooltip, requiredLevel),
-                        new TextComponent(""),
-                        new TranslatableComponent("tetra.tool.available", availableLevel)
+                        Component.translatable(requirementTooltip, requiredLevel),
+                        Component.literal(""),
+                        Component.translatable("tetra.tool.available", availableLevel)
                                 .withStyle(requiredLevel > availableLevel ? ChatFormatting.RED : ChatFormatting.GREEN));
 
             }
 
-            return Collections.singletonList(new TranslatableComponent(requirementTooltip, requiredLevel));
+            return Collections.singletonList(Component.translatable(requirementTooltip, requiredLevel));
         }
         return super.getTooltipLines();
     }

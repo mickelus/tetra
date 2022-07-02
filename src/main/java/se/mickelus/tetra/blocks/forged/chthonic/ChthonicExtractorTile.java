@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -15,12 +16,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class ChthonicExtractorTile extends BlockEntity {
     private static final String damageKey = "dmg";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + ChthonicExtractorBlock.identifier)
-    public static BlockEntityType<ChthonicExtractorTile> type;
+    public static RegistryObject<BlockEntityType<ChthonicExtractorTile>> type;
     private int damage = 0;
 
     public ChthonicExtractorTile(BlockPos p_155268_, BlockState p_155269_) {
-        super(type, p_155268_, p_155269_);
+        super(type.get(), p_155268_, p_155269_);
     }
 
     public int getDamage() {

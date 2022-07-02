@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
@@ -163,7 +164,7 @@ public class SchematicRegistry {
                         } else if (outcome.material.isValid()) {
                             ItemStack[] applicableItemStacks = outcome.material.getApplicableItemStacks();
                             if (applicableItemStacks.length > 0) {
-                                return Stream.of(applicableItemStacks[0].getItem().getRegistryName().toString());
+                                return Stream.of(ForgeRegistries.ITEMS.getKey(applicableItemStacks[0].getItem()).toString());
                             }
                         }
 

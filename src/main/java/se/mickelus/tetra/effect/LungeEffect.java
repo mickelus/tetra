@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -199,7 +200,7 @@ public class LungeEffect extends ChargedAbilityEffect {
                 SoundSource.PLAYERS, 1, 1.3f);
 
         if (!entity.level.isClientSide) {
-            Random rand = entity.getRandom();
+            RandomSource rand = entity.getRandom();
             ((ServerLevel) entity.level).sendParticles(ParticleTypes.WITCH,
                     entity.getX() + (rand.nextGaussian() - 0.5) * 0.5,
                     entity.getY(),

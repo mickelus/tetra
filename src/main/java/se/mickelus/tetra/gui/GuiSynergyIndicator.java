@@ -3,8 +3,7 @@ package se.mickelus.tetra.gui;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiElement;
@@ -50,7 +49,7 @@ public class GuiSynergyIndicator extends GuiElement {
         boolean hasActive = alwaysShowStats;
 
         tooltip = new ArrayList<>();
-        tooltip.add(new TranslatableComponent("item.tetra.modular.synergy_indicator.header").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("item.tetra.modular.synergy_indicator.header").withStyle(ChatFormatting.GRAY));
 
         if (itemStack.getItem() instanceof IModularItem) {
             IModularItem item = (IModularItem) itemStack.getItem();
@@ -66,20 +65,20 @@ public class GuiSynergyIndicator extends GuiElement {
                     .filter(data -> Arrays.asList(data.modules).contains(moduleKey))
                     .filter(this::providesStats)
                     .flatMap(data -> getModuleLines(activeSynergies.contains(data), data).stream())
-                    .map(TextComponent::new)
+                    .map(Component::literal)
                     .collect(Collectors.toCollection(() -> tooltip));
 
             Arrays.stream(item.getAllSynergyData(itemStack))
                     .filter(data -> Arrays.asList(data.moduleVariants).contains(moduleVariant))
                     .filter(this::providesStats)
                     .flatMap(data -> getVariantLines(activeSynergies.contains(data), data).stream())
-                    .map(TextComponent::new)
+                    .map(Component::literal)
                     .collect(Collectors.toCollection(() -> tooltip));
         }
 
 
         if (tooltip.size() <= 1) {
-            tooltip = Collections.singletonList(new TranslatableComponent("item.tetra.modular.synergy_indicator.empty").withStyle(ChatFormatting.GRAY));
+            tooltip = Collections.singletonList(Component.translatable("item.tetra.modular.synergy_indicator.empty").withStyle(ChatFormatting.GRAY));
             indicator.setTextureCoordinates(emptyCoord, 0);
         } else if (!hasActive) {
             indicator.setTextureCoordinates(inactiveCoord, 0);

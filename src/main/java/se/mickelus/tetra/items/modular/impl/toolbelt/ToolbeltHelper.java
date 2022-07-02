@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -65,7 +65,7 @@ public class ToolbeltHelper {
                 if (!player.getInventory().add(heldItemStack)) {
                     inventory.storeItemInInventory(player.getItemInHand(hand));
                     player.setItemInHand(hand, heldItemStack);
-                    player.displayClientMessage(new TranslatableComponent("tetra.toolbelt.blocked"), true);
+                    player.displayClientMessage(Component.translatable("tetra.toolbelt.blocked"), true);
                 }
             }
         }

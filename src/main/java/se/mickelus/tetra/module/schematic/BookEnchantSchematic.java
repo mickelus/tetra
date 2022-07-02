@@ -10,6 +10,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.registries.ForgeRegistries;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -229,7 +230,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
                                         .forEach(currentEnchantment -> TetraEnchantmentHelper.removeEnchantment(enchantedStack, currentEnchantment));
 
                                 TetraEnchantmentHelper.applyEnchantment(enchantedStack, module.getSlot(), enchantment, level);
-                                return new OutcomePreviewEnchantment(enchantment.getRegistryName().toString(),
+                                return new OutcomePreviewEnchantment(ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString(),
                                         TetraEnchantmentHelper.getEnchantmentName(enchantment, level), "misc", level, glyph, enchantedStack,
                                         SchematicType.improvement, emptyTools, new ItemStack[0]);
                             }))

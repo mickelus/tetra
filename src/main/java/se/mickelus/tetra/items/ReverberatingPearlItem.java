@@ -2,8 +2,7 @@ package se.mickelus.tetra.items;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -28,14 +27,14 @@ public class ReverberatingPearlItem extends TetraItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(new TranslatableComponent("item." + unlocalizedName + ".tooltip"));
-        tooltip.add(new TextComponent(" "));
+        tooltip.add(Component.translatable("item." + unlocalizedName + ".tooltip"));
+        tooltip.add(Component.literal(" "));
 
         if (Screen.hasShiftDown()) {
             tooltip.add(Tooltips.expanded);
             tooltip.add(Tooltips.reveal);
-            tooltip.add(new TextComponent(" "));
-            tooltip.add(new TranslatableComponent("item." + unlocalizedName + ".tooltip_extended"));
+            tooltip.add(Component.literal(" "));
+            tooltip.add(Component.translatable("item." + unlocalizedName + ".tooltip_extended"));
         } else {
             tooltip.add(Tooltips.expand);
         }

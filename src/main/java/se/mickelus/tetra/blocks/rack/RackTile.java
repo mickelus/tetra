@@ -29,7 +29,7 @@ public class RackTile extends BlockEntity {
     public static final String unlocalizedName = "rack";
     public static final int inventorySize = 2;
     private static final String inventoryKey = "inv";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + unlocalizedName)
     public static BlockEntityType<RackTile> type;
     private final LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(inventorySize) {
         protected void onContentsChanged(int slot) {

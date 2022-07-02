@@ -39,6 +39,6 @@ public class BlockProgressOverlay {
                         .map(item -> item.getBlockProgress(activeStack, mc.player))
                         .orElse(0f));
 
-        gui.draw(event.getMatrixStack());
+        gui.draw(event.getPoseStack());
     }
 }

@@ -55,7 +55,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     public static final String stackKey = "stack";
     public static final String dealtDamageKey = "dealtDamage";
     private static final EntityDataAccessor<Byte> LOYALTY_LEVEL = SynchedEntityData.defineId(ThrownModularItemEntity.class, EntityDataSerializers.BYTE);
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(registryName = "entity_type", value = TetraMod.MOD_ID + ":" + unlocalizedName)
     public static EntityType<ThrownModularItemEntity> type;
     public int returningTicks;
     private ItemStack thrownStack = new ItemStack(Items.TRIDENT);

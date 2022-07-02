@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -60,10 +60,10 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 18, 4, 0, 4, 18);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-13, 0);
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularToolbeltItem instance;
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "menu_type", value = TetraMod.MOD_ID + ":" + identifier)
     public static MenuType<ToolbeltContainer> containerType;
 
     public ModularToolbeltItem() {
@@ -105,7 +105,7 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
 
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowdedIn(group)) {
+        if (allowedIn(group)) {
             items.add(createStack("belt/rope"));
             items.add(createStack("belt/inlaid"));
         }
@@ -130,7 +130,7 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return new TextComponent(getRegistryName().getPath());
+        return Component.literal(toString());
     }
 
     @Nullable

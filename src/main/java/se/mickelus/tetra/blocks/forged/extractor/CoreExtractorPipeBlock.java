@@ -32,7 +32,7 @@ public class CoreExtractorPipeBlock extends TetraBlock {
 
     public static final String identifier = "extractor_pipe";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static CoreExtractorPipeBlock instance;
 
     public CoreExtractorPipeBlock() {

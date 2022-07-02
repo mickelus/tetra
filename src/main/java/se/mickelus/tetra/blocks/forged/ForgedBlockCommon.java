@@ -3,7 +3,7 @@ package se.mickelus.tetra.blocks.forged;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -39,10 +39,10 @@ public class ForgedBlockCommon {
             .isViewBlocking(ForgedBlockCommon::notSolid)
             .strength(12F, 600.0F);
 
-    public static final Component locationTooltip = new TranslatableComponent("item.tetra.forged_description")
+    public static final Component locationTooltip = Component.translatable("item.tetra.forged_description")
             .withStyle(ChatFormatting.GRAY);
 
-    public static final Component unsettlingTooltip = new TranslatableComponent("item.tetra.forged_unsettling")
+    public static final Component unsettlingTooltip = Component.translatable("item.tetra.forged_unsettling")
             .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
 
     private static boolean notSolid(BlockState state, BlockGetter reader, BlockPos pos) {

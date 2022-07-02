@@ -5,7 +5,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -14,7 +13,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -24,7 +22,7 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 import se.mickelus.mutil.network.PacketHandler;
@@ -62,20 +60,8 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     private static final String currentSlotKey = "current_slot";
     private static final String schematicKey = "schematic";
     private static final WorkbenchAction[] defaultActions = new WorkbenchAction[]{new RepairAction()};
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
-    public static MenuType<WorkbenchContainer> containerType;
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
-    public static BlockEntityType<WorkbenchTile> type;
+    public static RegistryObject<BlockEntityType<WorkbenchTile>> type;
     private static WorkbenchAction[] actions = new WorkbenchAction[0];
-
-    static {
-        DataManager.instance.actionData.onReload(() -> {
-            WorkbenchAction[] configActions = DataManager.instance.actionData.getData().values().stream()
-                    .flatMap(Arrays::stream).toArray(ConfigAction[]::new);
-
-            actions = ArrayUtils.addAll(WorkbenchTile.defaultActions, configActions);
-        });
-    }
 
     private final LazyOptional<ItemStackHandler> handler;
     private final ItemStack previousTarget = ItemStack.EMPTY;
@@ -85,7 +71,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     private ActionInteraction interaction;
 
     public WorkbenchTile(BlockPos p_155268_, BlockState p_155269_) {
-        super(type, p_155268_, p_155269_);
+        super(type.get(), p_155268_, p_155269_);
         changeListeners = new HashMap<>();
 
         handler = LazyOptional.of(this::createHandler);
@@ -96,6 +82,13 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
         packetHandler.registerPacket(WorkbenchPacketCraft.class, WorkbenchPacketCraft::new);
         packetHandler.registerPacket(WorkbenchActionPacket.class, WorkbenchActionPacket::new);
         packetHandler.registerPacket(WorkbenchPacketTweak.class, WorkbenchPacketTweak::new);
+
+        DataManager.instance.actionData.onReload(() -> {
+            WorkbenchAction[] configActions = DataManager.instance.actionData.getData().values().stream()
+                    .flatMap(Arrays::stream).toArray(ConfigAction[]::new);
+
+            actions = ArrayUtils.addAll(WorkbenchTile.defaultActions, configActions);
+        });
     }
 
     /**
@@ -589,7 +582,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return new TextComponent(identifier);
+        return Component.literal(identifier);
     }
 
     @Nullable

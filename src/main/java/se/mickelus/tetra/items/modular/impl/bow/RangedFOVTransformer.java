@@ -16,7 +16,7 @@ public class RangedFOVTransformer {
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onFOVUpdate(FOVModifierEvent event) {
-        Player player = event.getEntity();
+        Player player = event.getPlayer();
         if (player.isUsingItem()) {
             ItemStack itemStack = player.getUseItem();
             CastOptional.cast(itemStack.getItem(), ModularBowItem.class)
@@ -28,12 +28,12 @@ public class RangedFOVTransformer {
                             progress = progress * progress;
                         }
 
-                        event.setNewfov((event.getNewfov() * 1.0F - progress * 0.15F) / getZoom(item, itemStack));
+                        event.setNewFov((event.getNewFov() - progress * 0.15F) / getZoom(item, itemStack));
                     });
         } else if (player.isCrouching()) {
             ItemStack itemStack = player.getMainHandItem();
             CastOptional.cast(itemStack.getItem(), ModularBowItem.class)
-                    .ifPresent(item -> event.setNewfov(event.getNewfov() / getZoom(item, itemStack)));
+                    .ifPresent(item -> event.setNewFov(event.getNewFov() / getZoom(item, itemStack)));
         }
     }
 

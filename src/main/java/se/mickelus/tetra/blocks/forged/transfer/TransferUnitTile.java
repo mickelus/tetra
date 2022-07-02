@@ -27,7 +27,7 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
     private static final int baseAmount = 8;
-    @ObjectHolder(TetraMod.MOD_ID + ":" + TransferUnitBlock.identifier)
+    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + TransferUnitBlock.identifier)
     public static BlockEntityType<TransferUnitTile> type;
     private ItemStack cell;
     private float efficiency = 1;

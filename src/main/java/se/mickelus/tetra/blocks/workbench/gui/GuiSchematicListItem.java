@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import se.mickelus.mutil.gui.GuiClickable;
 import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiTexture;
@@ -84,7 +84,7 @@ public class GuiSchematicListItem extends GuiClickable {
     @Override
     public List<Component> getTooltipLines() {
         if (hasFocus() && rarity.equals(SchematicRarity.temporary)) {
-            return Collections.singletonList(new TranslatableComponent("tetra.workbench.schematic_list.temporary"));
+            return Collections.singletonList(Component.translatable("tetra.workbench.schematic_list.temporary"));
         }
 
         return null;

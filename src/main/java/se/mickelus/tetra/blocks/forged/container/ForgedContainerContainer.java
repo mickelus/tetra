@@ -25,7 +25,7 @@ import java.util.Arrays;
 
 @ParametersAreNonnullByDefault
 public class ForgedContainerContainer extends AbstractContainerMenu {
-    @ObjectHolder(TetraMod.MOD_ID + ":" + ForgedContainerBlock.identifier)
+    @ObjectHolder(registryName = "container", value = TetraMod.MOD_ID + ":" + ForgedContainerBlock.identifier)
     public static MenuType<ForgedContainerContainer> type;
 
     private final ForgedContainerTile tile;

@@ -3,6 +3,7 @@ package se.mickelus.tetra.blocks.forged.extractor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -35,7 +36,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements E
     public static final String unlocalizedName = "extractor_piston";
     public static final BooleanProperty hackProp = BooleanProperty.create("hack");
     public static final VoxelShape boundingBox = box(5, 0, 5, 11, 16, 11);
-    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + unlocalizedName)
     public static CoreExtractorPistonBlock instance;
 
     public CoreExtractorPistonBlock() {
@@ -48,7 +49,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements E
     }
 
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
         TileEntityOptional.from(worldIn, pos, CoreExtractorPistonTile.class)
                 .ifPresent(te -> {
                     if (te.isActive()) {

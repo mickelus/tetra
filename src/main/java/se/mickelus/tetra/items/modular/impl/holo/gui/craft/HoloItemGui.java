@@ -48,7 +48,7 @@ public class HoloItemGui extends GuiClickable {
         addChild(icon);
 
         GuiElement labelGroup = new GuiElement(0, 0, 0, 0);
-        String[] labelStrings = I18n.get("tetra.holo.craft." + item.getItem().getRegistryName().getPath()).split(" ");
+        String[] labelStrings = I18n.get("tetra.holo.craft." + item.getItem().toString()).split(" ");
 
         for (int i = 0; i < labelStrings.length; i++) {
             GuiString labelLine = new GuiStringOutline(0, i * 10, labelStrings[i]);

@@ -38,6 +38,6 @@ public class HowlingOverlay {
 
         gui.updateAmplifier(amplifier);
 
-        gui.draw(event.getMatrixStack());
+        gui.draw(event.getPoseStack());
     }
 }

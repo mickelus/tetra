@@ -231,6 +231,21 @@ public abstract class ItemModuleMajor extends ItemModule {
         return Collections.emptySet();
     }
 
+    public Map<String, Integer> getEnchantmentsPrimitive(ItemStack itemStack) {
+        CompoundTag mappings = itemStack.getTagElement("EnchantmentMapping");
+
+        if (itemStack.hasTag() && mappings != null) {
+            return itemStack.getTag().getList("Enchantments", Tag.TAG_COMPOUND).stream()
+                    .map(tag -> (CompoundTag) tag)
+                    .filter(tag -> getSlot().equals(mappings.getString(tag.getString("id"))))
+                    .map(TetraEnchantmentHelper::getEnchantmentPrimitive)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
+        }
+
+        return Collections.emptyMap();
+    }
+
     public Map<Enchantment, Integer> getEnchantments(ItemStack itemStack) {
         CompoundTag mappings = itemStack.getTagElement("EnchantmentMapping");
 

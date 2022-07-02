@@ -18,9 +18,10 @@ public class OutcomePreviewEnchantment extends OutcomePreview {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .flatMap(module -> CastOptional.cast(module, ItemModuleMajor.class))
-                .map(module -> module.getEnchantmentKeys(itemStack))
-                .map(keys -> keys.contains(variantKey))
-                .orElse(false);
+                .map(module -> module.getEnchantmentsPrimitive(itemStack))
+                .filter(enchantments -> enchantments.containsKey(variantKey))
+                .filter(enchantments -> enchantments.get(variantKey) == level)
+                .isPresent();
     }
 
     @Override

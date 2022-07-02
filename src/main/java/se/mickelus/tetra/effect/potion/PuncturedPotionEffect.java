@@ -5,6 +5,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -36,7 +37,7 @@ public class PuncturedPotionEffect extends MobEffect {
 
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.getCommandSenderWorld().isClientSide) {
-            Random rand = entity.getRandom();
+            RandomSource rand = entity.getRandom();
             EquipmentSlot slot = EquipmentSlot.values()[2 + rand.nextInt(4)];
             ItemStack itemStack = entity.getItemBySlot(slot);
             if (!itemStack.isEmpty()) {

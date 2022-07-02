@@ -28,11 +28,11 @@ public class SeepingBedrockBlock extends TetraBlock {
 
     public static final String identifier = "seeping_bedrock";
 
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static SeepingBedrockBlock instance;
 
     public SeepingBedrockBlock() {
-        super(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops());
+        super(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable());
 
         registerDefaultState(defaultBlockState().setValue(activeProp, 1));
     }

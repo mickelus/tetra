@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
@@ -43,7 +43,7 @@ public class GuiIntegrityBar extends GuiElement {
 
         setAttachmentPoint(GuiAttachment.topCenter);
 
-        tooltip = Collections.singletonList(new TranslatableComponent("tetra.stats.integrity_usage.tooltip"));
+        tooltip = Collections.singletonList(Component.translatable("tetra.stats.integrity_usage.tooltip"));
     }
 
     public void setItemStack(ItemStack itemStack, ItemStack previewStack) {

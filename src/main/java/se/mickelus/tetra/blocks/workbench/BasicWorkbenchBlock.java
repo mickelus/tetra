@@ -4,7 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -29,7 +29,7 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
     public static final String identifier = "basic_workbench";
-    @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static AbstractWorkbenchBlock instance;
 
     public BasicWorkbenchBlock() {
@@ -61,6 +61,6 @@ public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag advanced) {
-        tooltip.add(new TranslatableComponent("block.tetra.basic_workbench.description").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("block.tetra.basic_workbench.description").withStyle(ChatFormatting.GRAY));
     }
 }
