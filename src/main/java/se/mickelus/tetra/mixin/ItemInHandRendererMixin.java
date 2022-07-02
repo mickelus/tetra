@@ -10,6 +10,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 
+@OnlyIn(Dist.CLIENT)
 @Mixin(ItemInHandRenderer.class)
 public abstract class ItemInHandRendererMixin {
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/renderer/block/model/ItemTransforms$TransformType;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", ordinal = 1), method = "renderArmWithItem")
@@ -49,7 +52,7 @@ public abstract class ItemInHandRendererMixin {
             poseStack.mulPose(Vector3f.YP.rotationDegrees(i * 65.3F));
             poseStack.mulPose(Vector3f.ZP.rotationDegrees(i * -9.785F));
             float f9 = itemStack.getUseDuration() - (player.getUseItemRemainingTicks() - partialTicks + 1.0F);
-            float f13 = f9 /  ((ModularCrossbowItem) itemStack.getItem()).getReloadDuration(itemStack);
+            float f13 = f9 / ((ModularCrossbowItem) itemStack.getItem()).getReloadDuration(itemStack);
             if (f13 > 1.0F) {
                 f13 = 1.0F;
             }
@@ -58,15 +61,15 @@ public abstract class ItemInHandRendererMixin {
                 float f16 = Mth.sin((f9 - 0.1F) * 1.3F);
                 float f3 = f13 - 0.1F;
                 float f4 = f16 * f3;
-                poseStack.translate((double)(f4 * 0.0F), (double)(f4 * 0.004F), (double)(f4 * 0.0F));
+                poseStack.translate(f4 * 0.0F, f4 * 0.004F, f4 * 0.0F);
             }
 
             poseStack.translate(0, 0, f13 * 0.04);
             poseStack.scale(1.0F, 1.0F, 1.0F + f13 * 0.2F);
-            poseStack.mulPose(Vector3f.YN.rotationDegrees((float)i * 45.0F));
+            poseStack.mulPose(Vector3f.YN.rotationDegrees((float) i * 45.0F));
         } else if (isCharged && p_109376_ < 0.001F && isMainhand) {
             poseStack.translate(i * -0.641864F, 0.0D, 0.0D);
-            poseStack.mulPose(Vector3f.YP.rotationDegrees((float)i * 10.0F));
+            poseStack.mulPose(Vector3f.YP.rotationDegrees((float) i * 10.0F));
         }
     }
 }
