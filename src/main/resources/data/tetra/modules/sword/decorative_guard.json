@@ -1,0 +1,21 @@
+{
+    "replace": true,
+    "slots": [ "sword/guard" ],
+    "type": "tetra:basic_module",
+    "renderLayer": "higher",
+    "variants": [
+        {
+            "materials": [ "tetra:metal/", "tetra:wood/", "tetra:gem/" ],
+            "key": "decorative_guard/",
+            "extract": {
+                "durability": 0.01,
+                "glyph": {
+                    "textureX": 152,
+                    "textureY": 16
+                },
+                "availableTextures": [ "default" ],
+                "models": [ { "location": "tetra:items/module/sword/guard/decorative_guard/" } ]
+            }
+        }
+    ]
+}

@@ -20,7 +20,7 @@
                 },
                 "durability": 0.05,
                 "glyph": {
-                    "textureX": 138,
+                    "textureX": 136,
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],

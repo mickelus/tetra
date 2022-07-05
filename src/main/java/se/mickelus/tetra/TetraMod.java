@@ -125,6 +125,7 @@ public class TetraMod {
         CraftingRequirementDeserializer.registerSupplier("tetra:accepts_improvement", AcceptsImprovementRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:module", ModuleRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:aspect", AspectRequirement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:perk", PerkRequrement.class);
 
         packetHandler = new PacketHandler(MOD_ID, "main", "1");
     }
