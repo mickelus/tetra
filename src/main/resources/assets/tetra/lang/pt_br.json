@@ -429,7 +429,7 @@
     "tetra.stats.holo.scannerVerticalSpread.tooltip": "O scanner cobre uma extensão vertical de §e%s grau",
     "tetra.stats.holo.scannerVerticalSpread.tooltip_extended": "A extensão vertical é dividida em três fatias, a fatia central cobre §e20 grau§7 ao redor do centro. A fatia superior e inferior cobre tudo acima entre §e+-25 grau§7, as fatias superior e inferior só estarão ativas se a propagação vertical for de §e50 grau§7 ou maior",
     "tetra.stats.intuit": "intuição",
-    "tetra.stats.intuit.tooltip": "A experiência adquirida ao matar entidades e destruir blocos permite acelerar o progresso de aprimorar em uma taxa de §e%sx§r §e%sx§r",
+    "tetra.stats.intuit.tooltip": "A experiência adquirida ao matar entidades e destruir blocos permite acelerar o progresso de aprimorar em uma taxa de §e%sx§r",
     "tetra.stats.earthbind": "Ligação terrestre",
     "tetra.stats.earthbind.tooltip": "Atingir uma entidade tem uma chance de §e10%%§r para bloqueá-la no lugar por §e%s segundos§r. Ocorre mais frequentemente em níveis y mais baixos, até uma chance de §e50%%§r na rocha-mãe",
     "tetra.stats.manaRepair": "Rep. de mana",
