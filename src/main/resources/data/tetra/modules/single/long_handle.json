@@ -6,29 +6,6 @@
     ],
     "renderLayer": "lower",
     "improvements": [
-        "tetra:enchantment/riptide",
-        "tetra:enchantment/knockback",
-        "tetra:enchantment/mending",
-        "tetra:enchantment/unbreaking",
-        "tetra:enchantment/vanishing_curse",
-        "tetra:enchantment/apotheosis_life_mending",
-        "tetra:enchantment/cyclic_magnet",
-        "tetra:enchantment/cyclic_experience_boost",
-        "tetra:enchantment/ensorcellation_soulbound",
-        "tetra:enchantment/ma-enchants_curse_death",
-        "tetra:enchantment/ma-enchants_faster_attack",
-        "tetra:enchantment/ma-enchants_combo",
-        "tetra:enchantment/ma-enchants_wisdom",
-        "tetra:enchantment/ma-enchants_timeless",
-        "tetra:enchantment/ma-enchants_curse_butterfingers",
-        "tetra:enchantment/ma-enchants_curse_breaking",
-        "tetra:enchantment/ma-enchants_timeless",
-        "tetra:enchantment/naturesaura_aura_mending",
-        "tetra:enchantment/cursed_misfortune",
-        "tetra:enchantment/cursed_fragility",
-        "tetra:enchantment/cursed_fading",
-        "tetra:enchantment/cursed_obedience",
-        "tetra:enchantment/cursed_encumbrance",
         "tetra:single/long_handle/",
         "tetra:single/shared_handle/",
         "tetra:single/shared/",
@@ -40,7 +17,8 @@
             "key": "long_handle/",
             "attributes": {
                 "generic.attack_speed": -1.1,
-                "forge:reach_distance": 1
+                "forge:reach_distance": 1,
+                "forge:attack_range": 0.5
             },
             "aspects": {
                 "blockBreaker": 1,
@@ -48,13 +26,15 @@
             },
             "extract": {
                 "primaryAttributes": {
-                    "forge:reach_distance": 0.1
+                    "forge:reach_distance": 0.1,
+                    "forge:attack_range": 0.05
                 },
                 "secondaryAttributes": {
                     "generic.attack_speed": -0.25
                 },
                 "tertiaryAttributes": {
-                    "forge:reach_distance": 0.2
+                    "forge:reach_distance": 0.2,
+                    "forge:attack_range": 0.1
                 },
                 "durability": 0.25,
                 "integrity": 1,
