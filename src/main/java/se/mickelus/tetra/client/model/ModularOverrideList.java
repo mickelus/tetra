@@ -2,8 +2,12 @@ package se.mickelus.tetra.client.model;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.ImmutableList;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
@@ -14,7 +18,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.model.IModelConfiguration;
+import net.minecraftforge.client.model.QuadTransformers;
+import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -27,6 +32,7 @@ import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 public class ModularOverrideList extends ItemOverrides {
@@ -38,20 +44,20 @@ public class ModularOverrideList extends ItemOverrides {
             .build();
 
 
-    private final ModularItemModel model;
-    private final IModelConfiguration owner;
+    private final UnresolvedItemModel model;
+    private final IGeometryBakingContext context;
     private final ModelBakery bakery;
     private final Function<Material, TextureAtlasSprite> spriteGetter;
-    private final ModelState modelTransform;
+    private final ModelState modelState;
     private final ResourceLocation modelLocation;
 
-    public ModularOverrideList(ModularItemModel model, IModelConfiguration owner, ModelBakery bakery,
-            Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ResourceLocation modelLocation) {
+    public ModularOverrideList(UnresolvedItemModel model, IGeometryBakingContext context, ModelBakery bakery,
+            Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ResourceLocation modelLocation) {
         this.model = model;
-        this.owner = owner;
+        this.context = context;
         this.bakery = bakery;
         this.spriteGetter = spriteGetter;
-        this.modelTransform = modelTransform;
+        this.modelState = modelState;
         this.modelLocation = modelLocation;
     }
 
@@ -84,8 +90,34 @@ public class ModularOverrideList extends ItemOverrides {
 
         List<ModuleModel> models = item.getModels(itemStack, entity);
         String transformVariant = item.getTransformVariant(itemStack, entity);
+        ItemTransforms cameraTransforms = model.getCameraTransforms(transformVariant);
+        BakingContextWrapper wrappedContext = new BakingContextWrapper(context, cameraTransforms);
+        ImmutableList<Material> textures = models.stream()
+                .map(moduleModel -> new Material(TextureAtlas.LOCATION_BLOCKS, moduleModel.location))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 
-        return model.realBake(models, transformVariant, owner, bakery, spriteGetter, modelTransform, ItemOverrides.EMPTY, modelLocation);
+        var renderTypes = new Int2ObjectOpenHashMap<ResourceLocation>();
+        var builder = new QuadTransformerBuilder();
+        for (int i = 0; i < models.size(); i++) {
+            var model = models.get(i);
+            if (model.tint != 0xffffffff) {
+                builder.add(i, new ColorQuadTransformer(model.tint));
+            }
+            if (model.emission >= 0 && model.emission < 16) {
+                builder.add(i, QuadTransformers.settingEmissivity(model.emission));
+            }
+            if (model.transform != null) {
+                builder.add(i, QuadTransformers.applying(model.transform));
+            }
+            if (model.renderType != null) {
+                renderTypes.put(i, model.renderType);
+            }
+        }
+
+        ItemLayerModel itemLayerModel = new ItemLayerModel(textures, builder.get(), renderTypes);
+        return itemLayerModel.bake(wrappedContext, bakery, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
+
+//        return realBake(models, transformVariant, context, bakery, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
     }
 
     protected CacheKey getCacheKey(ItemStack itemStack, LivingEntity entity, BakedModel original) {

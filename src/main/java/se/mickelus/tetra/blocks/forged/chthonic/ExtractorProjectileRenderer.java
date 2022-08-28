@@ -14,7 +14,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.data.EmptyModelData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -39,8 +38,7 @@ public class ExtractorProjectileRenderer extends EntityRenderer<ExtractorProject
 
         BakedModel model = blockRenderer.getBlockModelShaper().getBlockModel(ChthonicExtractorBlock.instance.defaultBlockState());
         blockRenderer.getModelRenderer().renderModel(matrixStack.last(), renderTypeBuffer.getBuffer(Sheets.solidBlockSheet()),
-                ChthonicExtractorBlock.instance.defaultBlockState(), model, 1, 1, 1, packedLightIn, OverlayTexture.NO_OVERLAY,
-                EmptyModelData.INSTANCE);
+                ChthonicExtractorBlock.instance.defaultBlockState(), model, 1, 1, 1, packedLightIn, OverlayTexture.NO_OVERLAY);
 
         matrixStack.popPose();
         super.render(entity, entityYaw, partialTicks, matrixStack, renderTypeBuffer, packedLightIn);

@@ -8,9 +8,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.EffectRenderer;
+import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
+import se.mickelus.mutil.effect.EffectTooltipRenderer;
 import se.mickelus.mutil.util.ParticleHelper;
-import se.mickelus.tetra.effect.gui.EffectTooltipRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
@@ -42,7 +42,7 @@ public class PriedPotionEffect extends MobEffect {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<EffectRenderer> consumer) {
+    public void initializeClient(Consumer<IClientMobEffectExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(new EffectTooltipRenderer(effect -> I18n.get("effect.tetra.pried.tooltip", effect.getAmplifier() + 1)));
     }

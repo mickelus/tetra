@@ -7,9 +7,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.EffectRenderer;
+import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import se.mickelus.tetra.effect.gui.EffectTooltipRenderer;
+import se.mickelus.mutil.effect.EffectTooltipRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
@@ -29,8 +29,8 @@ public class ExhaustedPotionEffect extends MobEffect {
     }
 
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (event.getEntityLiving().hasEffect(instance)) {
-            float multiplier = 1 - (event.getEntityLiving().getEffect(instance).getAmplifier() + 1) * 0.05f;
+        if (event.getEntity().hasEffect(instance)) {
+            float multiplier = 1 - (event.getEntity().getEffect(instance).getAmplifier() + 1) * 0.05f;
             event.setNewSpeed(event.getNewSpeed() * multiplier);
         }
     }
@@ -38,7 +38,7 @@ public class ExhaustedPotionEffect extends MobEffect {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<EffectRenderer> consumer) {
+    public void initializeClient(Consumer<IClientMobEffectExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(new EffectTooltipRenderer(effect -> {
             int amount = effect.getAmplifier() + 1;

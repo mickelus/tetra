@@ -2,7 +2,7 @@ package se.mickelus.tetra.effect.howling;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -26,11 +26,7 @@ public class HowlingOverlay {
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
-            return;
-        }
-
+    public void onRenderOverlay(RenderGuiOverlayEvent.Post event) {
         int amplifier = Optional.ofNullable(mc.player)
                 .map(player -> player.getEffect(HowlingPotionEffect.instance))
                 .map(MobEffectInstance::getAmplifier)

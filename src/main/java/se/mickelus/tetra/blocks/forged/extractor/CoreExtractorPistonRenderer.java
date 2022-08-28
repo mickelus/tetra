@@ -11,7 +11,6 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.data.EmptyModelData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -40,13 +39,13 @@ public class CoreExtractorPistonRenderer implements BlockEntityRenderer<CoreExtr
         BlockState shaftState = state.setValue(CoreExtractorPistonBlock.hackProp, true);
         BakedModel shaftModel = blockRenderer.getBlockModelShaper().getBlockModel(shaftState);
         blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()),
-                shaftState, shaftModel, 1f, 1f, 1f, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+                shaftState, shaftModel, 1f, 1f, 1f, combinedLight, combinedOverlay);
 
         matrixStack.translate(0, offset, 0);
 
         BlockState coverState = state.setValue(CoreExtractorPistonBlock.hackProp, false);
         BakedModel coverModel = blockRenderer.getBlockModelShaper().getBlockModel(coverState);
         blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()),
-                coverState, coverModel, 1f, 1f, 1f, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+                coverState, coverModel, 1f, 1f, 1f, combinedLight, combinedOverlay);
     }
 }

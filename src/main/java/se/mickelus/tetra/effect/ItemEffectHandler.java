@@ -130,13 +130,13 @@ public class ItemEffectHandler {
 
     @SubscribeEvent
     public void onLivingAttack(LivingAttackEvent event) {
-        if (!event.getSource().isBypassArmor() && event.getEntityLiving().isBlocking()) {
-            Optional.ofNullable(event.getEntityLiving())
+        if (!event.getSource().isBypassArmor() && event.getEntity().isBlocking()) {
+            Optional.ofNullable(event.getEntity())
                     .map(LivingEntity::getUseItem)
                     .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
                     .ifPresent(itemStack -> {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
-                        LivingEntity blocker = event.getEntityLiving();
+                        LivingEntity blocker = event.getEntity();
                         if (UseAnim.BLOCK.equals(itemStack.getUseAnimation())) {
                             item.applyUsageEffects(blocker, itemStack, Mth.ceil(event.getAmount() / 2f));
                         }
@@ -212,7 +212,7 @@ public class ItemEffectHandler {
                 });
 
         if (!event.getSource().isBypassArmor()) {
-            Optional.ofNullable(event.getEntityLiving())
+            Optional.ofNullable(event.getEntity())
                     .map(entity -> Stream.of(entity.getMainHandItem(), entity.getOffhandItem()))
                     .orElseGet(Stream::empty)
                     .filter(itemStack -> !itemStack.isEmpty())
@@ -221,10 +221,10 @@ public class ItemEffectHandler {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
                         if (item.getAttributeValue(itemStack, Attributes.ARMOR) > 0 || item.getAttributeValue(itemStack, Attributes.ARMOR_TOUGHNESS) > 0) {
                             int reducedAmount = (int) Math.ceil(event.getAmount() - CombatRules.getDamageAfterAbsorb(event.getAmount(),
-                                    (float) event.getEntityLiving().getArmorValue(),
-                                    (float) event.getEntityLiving().getAttribute(Attributes.ARMOR_TOUGHNESS).getValue()));
-                            item.applyUsageEffects(event.getEntityLiving(), itemStack, reducedAmount);
-                            item.applyDamage(reducedAmount, itemStack, event.getEntityLiving());
+                                    (float) event.getEntity().getArmorValue(),
+                                    (float) event.getEntity().getAttribute(Attributes.ARMOR_TOUGHNESS).getValue()));
+                            item.applyUsageEffects(event.getEntity(), itemStack, reducedAmount);
+                            item.applyDamage(reducedAmount, itemStack, event.getEntity());
                         }
                     });
         }
@@ -255,20 +255,20 @@ public class ItemEffectHandler {
 
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
-        Optional.ofNullable(event.getEntityLiving().getEffect(EarthboundPotionEffect.instance))
-                .ifPresent(effect -> event.getEntityLiving().setDeltaMovement(event.getEntityLiving().getDeltaMovement().multiply(1, 0.5, 1)));
+        Optional.ofNullable(event.getEntity().getEffect(EarthboundPotionEffect.instance))
+                .ifPresent(effect -> event.getEntity().setDeltaMovement(event.getEntity().getDeltaMovement().multiply(1, 0.5, 1)));
     }
 
     @SubscribeEvent
     public void onCriticalHit(CriticalHitEvent event) {
-        Optional.ofNullable(event.getEntityLiving())
+        Optional.ofNullable(event.getEntity())
                 .map(LivingEntity::getMainHandItem)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
                 .ifPresent(itemStack -> {
                     int backstabLevel = getEffectLevel(itemStack, ItemEffect.backstab);
                     if (backstabLevel > 0 && event.getTarget() instanceof LivingEntity) {
-                        LivingEntity attacker = event.getEntityLiving();
+                        LivingEntity attacker = event.getEntity();
                         LivingEntity target = (LivingEntity) event.getTarget();
                         if (180 - Math.abs(Math.abs(attacker.yHeadRot - target.yHeadRot) % 360 - 180) < 60) {
                             event.setDamageModifier(Math.max(1.25f + 0.25f * backstabLevel, event.getDamageModifier()));
@@ -285,7 +285,7 @@ public class ItemEffectHandler {
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onClickInput(InputEvent.ClickInputEvent event) {
+    public void onClickInput(InputEvent.InteractionKeyMappingTriggered event) {
         Minecraft mc = Minecraft.getInstance();
         ItemStack itemStack = mc.player.getMainHandItem();
         if (event.isAttack()
@@ -308,7 +308,7 @@ public class ItemEffectHandler {
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onKeyInput(InputEvent.KeyInputEvent event) {
+    public void onKeyInput(InputEvent.Key event) {
         KeyMapping jumpKey = Minecraft.getInstance().options.keyJump;
         if (jumpKey.matches(event.getKey(), event.getScanCode()) && jumpKey.isDown()) {
             LungeEffect.onJump(Minecraft.getInstance().player);
@@ -323,9 +323,9 @@ public class ItemEffectHandler {
                 .ifPresent(itemStack -> {
                     ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
                     BlockPos pos = event.getPos();
-                    Level world = event.getWorld();
+                    Level world = event.getLevel();
                     BlockState blockState = world.getBlockState(pos);
-                    Player breakingPlayer = event.getPlayer();
+                    Player breakingPlayer = event.getEntity();
 
                     boolean didStrike = StrikingEffect.causeEffect(breakingPlayer, itemStack, item, world, pos, blockState);
                     if (didStrike) {
@@ -333,7 +333,7 @@ public class ItemEffectHandler {
                         return;
                     }
 
-                    if (!event.getWorld().isClientSide) {
+                    if (!event.getLevel().isClientSide) {
                         int critLevel = getEffectLevel(itemStack, ItemEffect.criticalStrike);
                         if (critLevel > 0) {
                             if (CritEffect.critBlock(world, breakingPlayer, pos, blockState, itemStack, critLevel)) {
@@ -385,7 +385,7 @@ public class ItemEffectHandler {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onArrowNock(ArrowNockEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         if (!event.hasAmmo() && player.getItemInHand(InteractionHand.OFF_HAND).isEmpty()) {
             ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
             if (!itemStack.isEmpty()) {

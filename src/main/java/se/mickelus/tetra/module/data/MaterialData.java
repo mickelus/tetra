@@ -174,17 +174,13 @@ public class MaterialData {
         }
     }
 
-    public MaterialData shallowCopy() {
-        MaterialData copy = new MaterialData();
-        copyFields(this, copy);
-
-        return copy;
-    }
-
     public static ModuleModel kneadModel(ModuleModel model, MaterialData material, List<String> availableTextures) {
         if (Arrays.stream(material.textureOverrides).anyMatch(override -> model.location.getPath().equals(override))) {
-            return new ModuleModel(model.type, appendString(model.location, material.textures[0]),
-                    material.tintOverrides ? material.tints.texture : 0xffffff, material.tints.texture);
+            ModuleModel copy = model.copy();
+            copy.location = appendString(model.location, material.textures[0]);
+            copy.tint = material.tintOverrides ? material.tints.texture : 0xffffff;
+            copy.overlayTint = material.tints.texture;
+            return copy;
         }
 
         ResourceLocation updatedLocation = Arrays.stream(material.textures)
@@ -192,12 +188,22 @@ public class MaterialData {
                 .findFirst()
                 .map(texture -> appendString(model.location, texture))
                 .orElseGet(() -> appendString(model.location, availableTextures.get(0)));
-
-        return new ModuleModel(model.type, updatedLocation, material.tints.texture);
+        ModuleModel copy = model.copy();
+        copy.location = updatedLocation;
+        copy.tint = material.tints.texture;
+        copy.overlayTint = material.tints.texture;
+        return copy;
     }
 
     public static ResourceLocation appendString(ResourceLocation resourceLocation, String string) {
         return new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath() + string);
+    }
+
+    public MaterialData shallowCopy() {
+        MaterialData copy = new MaterialData();
+        copyFields(this, copy);
+
+        return copy;
     }
 
     public static class Deserializer implements JsonDeserializer<MaterialData> {

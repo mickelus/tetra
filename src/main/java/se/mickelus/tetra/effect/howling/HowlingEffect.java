@@ -16,7 +16,6 @@ import se.mickelus.tetra.effect.ItemEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-import java.util.Random;
 
 @ParametersAreNonnullByDefault
 public class HowlingEffect {

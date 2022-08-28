@@ -159,7 +159,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
                         .ifPresent(te -> {
                             ForgedContainerTile delegate = te.getOrDelegate();
                             if (delegate.isOpen()) {
-                                NetworkHooks.openGui((ServerPlayer) player, delegate, delegate.getBlockPos());
+                                NetworkHooks.openScreen((ServerPlayer) player, delegate, delegate.getBlockPos());
                             }
                         });
             }

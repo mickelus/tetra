@@ -28,7 +28,7 @@ public class OpenToolbeltItemPacket extends AbstractPacket {
     public void handle(Player player) {
         ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
         if (!itemStack.isEmpty()) {
-            NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) itemStack.getItem());
+            NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) itemStack.getItem());
         }
     }
 }

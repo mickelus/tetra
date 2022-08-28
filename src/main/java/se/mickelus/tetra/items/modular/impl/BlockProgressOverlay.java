@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.modular.impl;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.mutil.util.CastOptional;
@@ -27,11 +27,7 @@ public class BlockProgressOverlay {
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
-            return;
-        }
-
+    public void onRenderOverlay(RenderGuiOverlayEvent.Post event) {
         ItemStack activeStack = mc.player.getUseItem();
 
         gui.setProgress(

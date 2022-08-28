@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.modular.impl.bow;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -25,11 +25,7 @@ public class RangedProgressOverlay {
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
-            return;
-        }
-
+    public void onRenderOverlay(RenderGuiOverlayEvent.Post event) {
         ItemStack activeStack = mc.player.getUseItem();
 
         if (activeStack.getItem() instanceof ModularBowItem) {

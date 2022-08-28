@@ -31,7 +31,6 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault

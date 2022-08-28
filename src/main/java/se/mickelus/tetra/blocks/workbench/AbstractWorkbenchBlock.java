@@ -47,7 +47,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
 
         if (!world.isClientSide) {
             TileEntityOptional.from(world, pos, WorkbenchTile.class)
-                    .ifPresent(te -> NetworkHooks.openGui((ServerPlayer) player, te, pos));
+                    .ifPresent(te -> NetworkHooks.openScreen((ServerPlayer) player, te, pos));
         }
 
         return InteractionResult.SUCCESS;

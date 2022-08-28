@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.EffectRenderer;
+import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 import net.minecraftforge.common.ForgeMod;
 import se.mickelus.tetra.effect.gui.EffectUnRenderer;
 
@@ -61,7 +61,7 @@ public class SuspendPotionEffect extends MobEffect {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<EffectRenderer> consumer) {
+    public void initializeClient(Consumer<IClientMobEffectExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(EffectUnRenderer.INSTANCE);
     }

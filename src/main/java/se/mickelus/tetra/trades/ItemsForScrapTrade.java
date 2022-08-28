@@ -9,8 +9,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.block.Block;
 
-import java.util.Random;
-
 class ItemsForScrapTrade implements VillagerTrades.ItemListing {
     private final ItemStack sellingItem;
     private final int scrapCount;

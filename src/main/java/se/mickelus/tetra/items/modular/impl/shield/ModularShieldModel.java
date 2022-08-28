@@ -30,8 +30,6 @@ import se.mickelus.tetra.data.DataManager;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -48,7 +46,7 @@ public class ModularShieldModel extends Model {
     }
 
     private static Optional<Pair<ResourceLocation, ShieldModelData>> getModel(ResourceLocation resourceLocation, Resource resource) {
-        try (BufferedReader reader = resource.openAsReader()){
+        try (BufferedReader reader = resource.openAsReader()) {
             return Optional.of(reader)
                     .map(r -> GsonHelper.fromJson(DataManager.gson, r, JsonElement.class))
                     .map(json -> ShieldModelData.codec.decode(JsonOps.INSTANCE, json))

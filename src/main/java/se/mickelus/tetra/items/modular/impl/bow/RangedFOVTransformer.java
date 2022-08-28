@@ -2,7 +2,7 @@ package se.mickelus.tetra.items.modular.impl.bow;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.FOVModifierEvent;
+import net.minecraftforge.client.event.ComputeFovModifierEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.mutil.util.CastOptional;
@@ -15,7 +15,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class RangedFOVTransformer {
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onFOVUpdate(FOVModifierEvent event) {
+    public void onFOVUpdate(ComputeFovModifierEvent event) {
         Player player = event.getPlayer();
         if (player.isUsingItem()) {
             ItemStack itemStack = player.getUseItem();
@@ -28,12 +28,12 @@ public class RangedFOVTransformer {
                             progress = progress * progress;
                         }
 
-                        event.setNewFov((event.getNewFov() - progress * 0.15F) / getZoom(item, itemStack));
+                        event.setNewFovModifier((event.getNewFovModifier() - progress * 0.15F) / getZoom(item, itemStack));
                     });
         } else if (player.isCrouching()) {
             ItemStack itemStack = player.getMainHandItem();
             CastOptional.cast(itemStack.getItem(), ModularBowItem.class)
-                    .ifPresent(item -> event.setNewFov(event.getNewFov() / getZoom(item, itemStack)));
+                    .ifPresent(item -> event.setNewFovModifier(event.getNewFovModifier() / getZoom(item, itemStack)));
         }
     }
 

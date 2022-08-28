@@ -6,7 +6,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.EffectRenderer;
+import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 import se.mickelus.tetra.effect.gui.EffectUnRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -36,7 +36,7 @@ public class BleedingPotionEffect extends MobEffect {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<EffectRenderer> consumer) {
+    public void initializeClient(Consumer<IClientMobEffectExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(EffectUnRenderer.INSTANCE);
     }

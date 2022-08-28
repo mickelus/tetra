@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiRoot;
 
@@ -34,11 +34,7 @@ public class AbilityOverlays extends GuiRoot {
     }
 
     @SubscribeEvent
-    public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
-            return;
-        }
-
+    public void onRenderOverlay(RenderGuiOverlayEvent.Post event) {
         chargeBar.update(mc.player);
         comboPoints.update(mc.player);
         revengeIndicator.update(mc.player, mc.hitResult);

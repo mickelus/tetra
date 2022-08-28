@@ -9,9 +9,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -49,15 +49,18 @@ public class OverlayToolbelt {
         openBinding = new KeyMapping("tetra.toolbelt.binding.open", KeyConflictContext.IN_GAME, KeyModifier.ALT,
                 InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, bindingGroup);
 
-        ClientRegistry.registerKeyBinding(accessBinding);
-        ClientRegistry.registerKeyBinding(restockBinding);
-        ClientRegistry.registerKeyBinding(openBinding);
-
         instance = this;
     }
 
     @SubscribeEvent
-    public void onKeyInput(InputEvent.KeyInputEvent event) {
+    public void registerKeyMappings(RegisterKeyMappingsEvent event) {
+        event.register(accessBinding);
+        event.register(restockBinding);
+        event.register(openBinding);
+    }
+
+    @SubscribeEvent
+    public void onKeyInput(InputEvent.Key event) {
         if (restockBinding.isDown()) {
             equipToolbeltItem(ToolbeltSlotType.quickslot, -1, InteractionHand.OFF_HAND);
         } else if (openBinding.isDown()) {
@@ -68,11 +71,7 @@ public class OverlayToolbelt {
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
-            return;
-        }
-
+    public void onRenderOverlay(RenderGuiOverlayEvent.Post event) {
         if (!accessBinding.isDown() && isActive) {
             hideView();
         }

@@ -8,7 +8,6 @@ import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.ServerScheduler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Random;
 
 @ParametersAreNonnullByDefault
 public class EchoHelper {

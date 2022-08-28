@@ -1,6 +1,8 @@
 package se.mickelus.tetra.data.deserializer;
 
 import com.google.gson.*;
+import com.mojang.math.Transformation;
+import net.minecraft.util.Mth;
 import se.mickelus.mutil.data.deserializer.ResourceLocationDeserializer;
 import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.module.data.ModuleModel;
@@ -31,6 +33,18 @@ public class ModuleModelDeserializer implements JsonDeserializer<ModuleModel> {
 
         if (jsonObject.has("overlayTint")) {
             data.overlayTint = getTint(jsonObject.get("overlayTint").getAsString());
+        }
+
+        if (jsonObject.has("emission")) {
+            data.emission = Mth.clamp(0, jsonObject.get("emission").getAsInt(), 15);
+        }
+
+        if (jsonObject.has("renderType")) {
+            data.renderType = ResourceLocationDeserializer.deserialize(jsonObject.get("renderType"));
+        }
+
+        if (jsonObject.has("transform")) {
+            data.transform = context.deserialize(jsonObject.getAsJsonObject("transform"), Transformation.class);
         }
 
         return data;

@@ -3,6 +3,9 @@ package se.mickelus.tetra.data;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Transformation;
+import com.mojang.math.Vector3f;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -80,6 +83,9 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(Item.class, new ItemDeserializer())
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
+            .registerTypeAdapter(Vector3f.class, new VectorDeserializer())
+            .registerTypeAdapter(Quaternion.class, new QuaternionDeserializer())
+            .registerTypeAdapter(Transformation.class, new TransformationDeserializer())
             .create();
     public static DataManager instance;
 
@@ -136,9 +142,9 @@ public class DataManager implements DataDistributor {
     @SubscribeEvent
     public void playerConnected(PlayerEvent.PlayerLoggedInEvent event) {
         // todo: stop this from sending to player in singleplayer (while still sending to others in lan worlds)
-        logger.info("Sending data to client: {}", event.getPlayer().getName().getString());
+        logger.info("Sending data to client: {}", event.getEntity().getName().getString());
         for (DataStore dataStore : dataStores) {
-            dataStore.sendToPlayer((ServerPlayer) event.getPlayer());
+            dataStore.sendToPlayer((ServerPlayer) event.getEntity());
         }
     }
 

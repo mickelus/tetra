@@ -73,9 +73,9 @@ public class ComboPoints {
 
     public static void onAttackEntity(AttackEntityEvent event) {
         if (event.getTarget().isAttackable()
-                && canSpend(event.getPlayer())
-                && event.getPlayer().getAttackStrengthScale(0) > 0.9) {
-            increment(event.getPlayer());
+                && canSpend(event.getEntity())
+                && event.getEntity().getAttackStrengthScale(0) > 0.9) {
+            increment(event.getEntity());
         }
     }
 }

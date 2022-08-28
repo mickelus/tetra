@@ -11,7 +11,6 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.data.EmptyModelData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -43,7 +42,6 @@ public class HammerHeadTESR implements BlockEntityRenderer<HammerHeadTile> {
         matrixStack.translate(0, offset, 0);
 
         blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()),
-                HammerHeadBlock.instance.defaultBlockState(), model, 1f, 1f, 1f, combinedLight, combinedOverlay,
-                EmptyModelData.INSTANCE);
+                HammerHeadBlock.instance.defaultBlockState(), model, 1f, 1f, 1f, combinedLight, combinedOverlay);
     }
 }

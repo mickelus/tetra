@@ -13,7 +13,6 @@ import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-import java.util.Random;
 
 @ParametersAreNonnullByDefault
 public class SeveringEffect {

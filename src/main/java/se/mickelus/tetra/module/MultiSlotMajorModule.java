@@ -73,7 +73,8 @@ public class MultiSlotMajorModule extends ItemModuleMajor {
     @Override
     public ModuleModel[] getModels(ItemStack itemStack) {
         return Arrays.stream(super.getModels(itemStack))
-                .map(model -> new ModuleModel(model.type, new ResourceLocation(TetraMod.MOD_ID, model.location.getPath() + slotSuffix), model.tint))
+                .map(ModuleModel::copy)
+                .peek(model -> model.location = new ResourceLocation(TetraMod.MOD_ID, model.location.getPath() + slotSuffix))
                 .toArray(ModuleModel[]::new);
     }
 }

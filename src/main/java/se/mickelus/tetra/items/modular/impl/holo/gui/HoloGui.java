@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
@@ -196,7 +195,7 @@ public class HoloGui extends Screen {
                     gui.onShow();
                     break;
                 case 't':
-                    getMinecraft().player.chat("/reload");
+                    getMinecraft().player.commandUnsigned("/reload");
                     spinner.setVisible(true);
                     break;
             }

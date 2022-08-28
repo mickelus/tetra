@@ -24,7 +24,7 @@ public class JumpHandlerBooster {
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onKeyInput(InputEvent.KeyInputEvent event) {
+    public void onKeyInput(InputEvent.Key event) {
         if (mc.isWindowActive()) {
             if (jumpKey.isDown() && mc.player.isOnGround() && mc.player.isCrouching()) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(true, true);

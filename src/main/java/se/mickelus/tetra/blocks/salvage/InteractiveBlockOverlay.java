@@ -9,7 +9,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.event.DrawSelectionEvent;
+import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -35,7 +35,7 @@ public class InteractiveBlockOverlay {
     }
 
     @SubscribeEvent
-    public void renderOverlay(DrawSelectionEvent.HighlightBlock event) {
+    public void renderOverlay(RenderHighlightEvent.Block event) {
         if (event.getTarget().getType().equals(HitResult.Type.BLOCK)) {
             BlockHitResult rayTrace = event.getTarget();
 

@@ -23,7 +23,7 @@ public class ArmorPenetrationEffect {
      * @param effectLevel
      */
     public static void onLivingHurt(LivingHurtEvent event, int effectLevel) {
-        Optional.of(event.getEntityLiving())
+        Optional.of(event.getEntity())
                 .map(LivingEntity::getAttributes)
                 .filter(manager -> manager.hasAttribute(Attributes.ARMOR))
                 .map(manager -> manager.getInstance(Attributes.ARMOR))
@@ -33,7 +33,7 @@ public class ArmorPenetrationEffect {
     }
 
     public static void onLivingDamage(LivingDamageEvent event) {
-        Optional.of(event.getEntityLiving())
+        Optional.of(event.getEntity())
                 .map(LivingEntity::getAttributes)
                 .filter(manager -> manager.hasAttribute(Attributes.ARMOR))
                 .map(manager -> manager.getInstance(Attributes.ARMOR))

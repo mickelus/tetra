@@ -8,7 +8,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class SkeweringEffect {
     public static void onLivingDamage(LivingDamageEvent event, int skeweringLevel, ItemStack itemStack) {
-        if (event.getEntityLiving().getArmorValue() <= EffectHelper.getEffectEfficiency(itemStack, ItemEffect.skewering)) {
+        if (event.getEntity().getArmorValue() <= EffectHelper.getEffectEfficiency(itemStack, ItemEffect.skewering)) {
             event.setAmount(event.getAmount() + skeweringLevel);
         }
     }

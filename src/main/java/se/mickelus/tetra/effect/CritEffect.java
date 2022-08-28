@@ -20,7 +20,6 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -77,7 +76,7 @@ public class CritEffect {
     }
 
     public static void critEntity(CriticalHitEvent event, ItemStack itemStack, int critLevel) {
-        if (event.getEntityLiving().getRandom().nextFloat() < critLevel * 0.01) {
+        if (event.getEntity().getRandom().nextFloat() < critLevel * 0.01) {
             event.setDamageModifier(Math.max((float) EffectHelper.getEffectEfficiency(itemStack, ItemEffect.criticalStrike), event.getDamageModifier()));
             event.setResult(Event.Result.ALLOW);
         }

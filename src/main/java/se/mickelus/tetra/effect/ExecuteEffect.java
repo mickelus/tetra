@@ -24,7 +24,6 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-import java.util.Random;
 
 @ParametersAreNonnullByDefault
 public class ExecuteEffect extends ChargedAbilityEffect {

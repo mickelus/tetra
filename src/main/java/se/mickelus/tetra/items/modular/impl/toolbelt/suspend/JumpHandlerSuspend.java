@@ -23,7 +23,7 @@ public class JumpHandlerSuspend {
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onKeyInput(InputEvent.KeyInputEvent event) {
+    public void onKeyInput(InputEvent.Key event) {
         if (mc.isWindowActive()) {
             Player player = mc.player;
             if (jumpKey.isDown() && !wasJumpKeyDown

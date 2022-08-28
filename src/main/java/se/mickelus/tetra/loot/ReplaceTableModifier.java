@@ -1,23 +1,29 @@
 package se.mickelus.tetra.loot;
 
-import com.google.gson.JsonObject;
+import com.google.common.base.Suppliers;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class ReplaceTableModifier extends LootModifier {
-    ResourceLocation table;
+    public static final Supplier<Codec<ReplaceTableModifier>> codec = Suppliers.memoize(() -> RecordCodecBuilder.create(instance -> instance.group(
+            LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions),
+            ResourceLocation.CODEC.fieldOf("table").forGetter(i -> i.table)
+    ).apply(instance, ReplaceTableModifier::new)));
+
+    public ResourceLocation table;
 
     protected ReplaceTableModifier(LootItemCondition[] conditions, ResourceLocation table) {
         super(conditions);
@@ -40,16 +46,8 @@ public class ReplaceTableModifier extends LootModifier {
                 .getRandomItems(newContext);
     }
 
-    public static class Serializer extends GlobalLootModifierSerializer<ReplaceTableModifier> {
-        public ReplaceTableModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] conditions) {
-            return new ReplaceTableModifier(conditions, new ResourceLocation(object.get("table").getAsString()));
-        }
-
-        public JsonObject write(ReplaceTableModifier instance) {
-            JsonObject result = makeConditions(instance.conditions);
-            result.addProperty("table", instance.table.toString());
-
-            return result;
-        }
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return codec.get();
     }
 }

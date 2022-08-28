@@ -3,9 +3,11 @@ package se.mickelus.tetra.client.model;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraftforge.client.model.IModelLoader;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import net.minecraftforge.client.model.geometry.IGeometryLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.DataManager;
@@ -16,14 +18,19 @@ import java.util.List;
 import java.util.Map;
 
 @ParametersAreNonnullByDefault
-public class ModularModelLoader implements IModelLoader<ModularItemModel> {
+public class ModularModelLoader implements IGeometryLoader<UnresolvedItemModel>, ResourceManagerReloadListener {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static List<ModularItemModel> newModels = new LinkedList<>();
-    private static List<ModularItemModel> models = new LinkedList<>();
+    private static List<UnresolvedItemModel> newModels = new LinkedList<>();
+    private static List<UnresolvedItemModel> models = new LinkedList<>();
 
     public ModularModelLoader() {
+//        ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(this);
+        models.forEach(UnresolvedItemModel::clearCache);
+    }
+
+    public static void init() {
         // module data is the last data store that contains model information
         DataManager.instance.moduleData.onReload(ModularModelLoader::clearCaches);
     }
@@ -40,9 +47,9 @@ public class ModularModelLoader implements IModelLoader<ModularItemModel> {
     }
 
     public static void clearCaches() {
-        shuffle();
         logger.info("Clearing model cache for {} items, let's get bakin'", models.size());
-        models.forEach(ModularItemModel::clearCache);
+        models.forEach(UnresolvedItemModel::clearCache);
+        shuffle();
     }
 
     @Override
@@ -52,7 +59,7 @@ public class ModularModelLoader implements IModelLoader<ModularItemModel> {
     }
 
     @Override
-    public ModularItemModel read(JsonDeserializationContext deserializationContext, JsonObject modelContents) {
+    public UnresolvedItemModel read(JsonObject modelContents, JsonDeserializationContext deserializationContext) throws JsonParseException {
         ItemTransforms cameraTransforms = deserializationContext.deserialize(modelContents.get("display"), ItemTransforms.class);
 
         if (modelContents.has("variants")) {
@@ -60,12 +67,12 @@ public class ModularModelLoader implements IModelLoader<ModularItemModel> {
                     new TypeToken<Map<String, ItemTransforms>>() {
                     }.getType());
 
-            ModularItemModel model = new ModularItemModel(cameraTransforms, transformVariants);
+            UnresolvedItemModel model = new UnresolvedItemModel(cameraTransforms, transformVariants);
             newModels.add(model);
             return model;
         }
 
-        ModularItemModel model = new ModularItemModel(cameraTransforms);
+        UnresolvedItemModel model = new UnresolvedItemModel(cameraTransforms);
         newModels.add(model);
         return model;
     }
