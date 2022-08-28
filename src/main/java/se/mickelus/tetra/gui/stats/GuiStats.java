@@ -86,14 +86,15 @@ public class GuiStats {
             -16, 16, false, true, true,
             abilityCooldownGetter, LabelGetterBasic.decimalLabelInverted,
             new TooltipGetterDecimal("tetra.stats.ability_speed_normalized.tooltip", abilityCooldownGetter));
-    public static final IStatGetter reachGetter = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get()).withOffset(-0.5);
+    public static final IStatGetter reachGetter = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get(), true);
     public static final GuiStatBar reach = new GuiStatBar(0, 0, barLength, "tetra.stats.reach",
-            0, 20, false, reachGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterReach(reachGetter));
-    public static final IStatGetter reachGetterNormalized = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get(), true);
-    public static final GuiStatBar reachNormalized = new GuiStatBar(0, 0, barLength, "tetra.stats.reach_normalized",
-            0, 20, false, true, false, reachGetterNormalized, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.reach_normalized.tooltip", reachGetterNormalized));
+            -10, 10, false, true, false, reachGetter, LabelGetterBasic.singleDecimalLabel,
+            new TooltipGetterDecimalSingle("tetra.stats.reach.tooltip", reachGetter));
+
+    public static final IStatGetter attackRangeGetter = new StatGetterAttribute(ForgeMod.ATTACK_RANGE.get(), true);
+    public static final GuiStatBar attackRange = new GuiStatBar(0, 0, barLength, "tetra.stats.attack_range",
+            -10, 10, false, true, false, attackRangeGetter, LabelGetterBasic.singleDecimalLabel,
+            new TooltipGetterDecimalSingle("tetra.stats.attack_range.tooltip", attackRangeGetter));
     public static final IStatGetter durabilityGetter = new StatGetterDurability();
     public static final GuiStatBar durability = new GuiStatBar(0, 0, barLength, "tetra.stats.durability",
             0, 2400, false, durabilityGetter, LabelGetterBasic.integerLabel,
@@ -167,6 +168,10 @@ public class GuiStats {
             new TooltipGetterSweeping(sweepingGetter))
             .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.truesweep", 4,
                     new StatGetterEffectLevel(ItemEffect.truesweep, 1), new TooltipGetterNone("tetra.stats.truesweep.tooltip")));
+    public static final IStatGetter sweepingRangeGetter = new StatGetterSweepingRange();
+    public static final GuiStatBar sweepingRange = new GuiStatBar(0, 0, barLength, "tetra.stats.sweeping.efficiency",
+            0, 10, false, sweepingRangeGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterDecimalSingle("tetra.stats.sweeping.efficiency.tooltip", sweepingRangeGetter));
     public static final IStatGetter bleedingGetter = new StatGetterEffectLevel(ItemEffect.bleeding, 4);
     public static final GuiStatBar bleeding = new GuiStatBar(0, 0, barLength, "tetra.stats.bleeding",
             0, 20, false, bleedingGetter, LabelGetterBasic.integerLabel,

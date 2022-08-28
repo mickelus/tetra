@@ -32,6 +32,7 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.abilityDamage,
             GuiStats.abilityCooldown,
             GuiStats.reach,
+            GuiStats.attackRange,
             GuiStats.durability,
             GuiStats.armor,
             GuiStats.toughness,

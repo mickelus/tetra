@@ -65,8 +65,6 @@ public class ConfigHandler {
 
     public static ForgeConfigSpec.BooleanValue enableExtractor;
 
-    public static ForgeConfigSpec.BooleanValue enableReach;
-
     static {
         // misc config
         builder.push("misc");
@@ -102,11 +100,6 @@ public class ConfigHandler {
         magicCapacityMultiplier = builder
                 .comment("Multiplier for magic capacity gains, increasing this may be useful when having a large set enchantments added by other mods")
                 .defineInRange("magic_cap_multiplier", 1, 0, Double.MAX_VALUE);
-
-        enableReach = builder
-                .comment("Allow the reach attribute to modify the distance at which players can hit entities")
-                .worldRestart()
-                .define("entity_reach", true);
 
         builder.pop();
 

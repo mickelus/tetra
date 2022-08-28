@@ -11,13 +11,15 @@
     },
     "translation": {
         "primaryAttributes": {
-            "forge:reach_distance": 1
+            "forge:reach_distance": 1,
+            "forge:attack_range": 1
         },
         "secondaryAttributes": {
             "generic.attack_speed": -2
         },
         "tertiaryAttributes": {
-            "forge:reach_distance": 2
+            "forge:reach_distance": 2,
+            "forge:attack_range": 2
         },
         "durability": 1,
         "integrity": 3,

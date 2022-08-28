@@ -87,7 +87,6 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.SuspendPotionEffect
 import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.ReplaceTableModifier;
 import se.mickelus.tetra.loot.ScrollDataFunction;
-import se.mickelus.tetra.properties.ReachEntityFix;
 
 public class TetraRegistries {
     public static final DeferredRegister<Block> blocks = DeferredRegister.create(ForgeRegistries.BLOCKS, TetraMod.MOD_ID);
@@ -375,8 +374,6 @@ public class TetraRegistries {
                 MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
 
                 BotaniaCompat.clientInit();
-
-                MinecraftForge.EVENT_BUS.register(ReachEntityFix.class);
 
                 ModularModelLoader.init();
             } catch (Exception e) {

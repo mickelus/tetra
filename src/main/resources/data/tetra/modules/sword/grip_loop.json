@@ -9,7 +9,7 @@
             "durability": 10,
             "integrity": -1,
             "attributes": {
-                "forge:reach_distance": 1.5
+                "forge:attack_range": 0.5
             },
             "effects": {
                 "sweeping": [ 0, 1 ]
