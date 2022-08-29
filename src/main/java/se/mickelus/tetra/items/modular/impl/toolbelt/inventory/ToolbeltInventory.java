@@ -197,7 +197,7 @@ public class ToolbeltInventory implements Container {
     }
 
     public boolean isItemValid(ItemStack itemStack) {
-        return !ModularToolbeltItem.instance.equals(itemStack.getItem()) && predicate.test(itemStack);
+        return !ModularToolbeltItem.instance.get().equals(itemStack.getItem()) && predicate.test(itemStack);
     }
 
     public boolean storeItemInInventory(ItemStack itemStack) {
@@ -243,6 +243,6 @@ public class ToolbeltInventory implements Container {
     }
 
     public List<Collection<ItemEffect>> getSlotEffects() {
-        return ModularToolbeltItem.instance.getSlotEffects(toolbeltItemStack, inventoryType);
+        return ModularToolbeltItem.instance.get().getSlotEffects(toolbeltItemStack, inventoryType);
     }
 }

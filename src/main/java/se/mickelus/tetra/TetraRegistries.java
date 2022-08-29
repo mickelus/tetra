@@ -168,7 +168,7 @@ public class TetraRegistries {
         items.register(ModularCrossbowItem.identifier, () -> new ModularCrossbowItem(shootableDummy.get()));
         items.register(ModularSingleHeadedItem.identifier, ModularSingleHeadedItem::new);
         items.register(ModularShieldItem.identifier, ModularShieldItem::new);
-        items.register(ModularToolbeltItem.identifier, ModularToolbeltItem::new);
+        ModularToolbeltItem.instance = items.register(ModularToolbeltItem.identifier, ModularToolbeltItem::new);
         items.register(GeodeItem.identifier, GeodeItem::new);
         items.register(PristineLapisItem.identifier, PristineLapisItem::new);
         items.register(PristineEmeraldItem.unlocalizedName, PristineEmeraldItem::new);
@@ -254,7 +254,7 @@ public class TetraRegistries {
         // CONTAINERS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // toolbelt
-        containers.register(ModularToolbeltItem.identifier,
+        ToolbeltContainer.type = containers.register(ModularToolbeltItem.identifier,
                 () -> IForgeMenuType.create(((windowId, inv, data) -> ToolbeltContainer.create(windowId, inv))));
 
         // workbench

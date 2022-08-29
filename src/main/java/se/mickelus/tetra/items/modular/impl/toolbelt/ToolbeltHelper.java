@@ -88,7 +88,7 @@ public class ToolbeltHelper {
             sourceHand = InteractionHand.MAIN_HAND;
         }
 
-        if (toolbeltStack.isEmpty() || itemStack.isEmpty() || itemStack.getItem() == ModularToolbeltItem.instance) {
+        if (toolbeltStack.isEmpty() || itemStack.isEmpty() || itemStack.getItem() == ModularToolbeltItem.instance.get()) {
             return true;
         }
 
@@ -123,7 +123,7 @@ public class ToolbeltHelper {
      */
     public static ItemStack findToolbelt(Player player) {
         if (CuriosCompat.isLoaded) {
-            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance, player);
+            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance.get(), player);
             if (maybeToolbelt.isPresent()) {
                 return maybeToolbelt.get().right;
             }
@@ -134,7 +134,7 @@ public class ToolbeltHelper {
         Inventory inventoryPlayer = player.getInventory();
         for (int i = 0; i < inventoryPlayer.items.size(); ++i) {
             ItemStack itemStack = inventoryPlayer.getItem(i);
-            if (ModularToolbeltItem.instance.equals(itemStack.getItem())) {
+            if (ModularToolbeltItem.instance.get().equals(itemStack.getItem())) {
                 return itemStack;
             }
         }

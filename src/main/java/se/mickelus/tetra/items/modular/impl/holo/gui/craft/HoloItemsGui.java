@@ -38,8 +38,8 @@ public class HoloItemsGui extends GuiElement {
                 () -> onItemSelect.accept(ModularBladedItem.instance), onSlotSelect)
                 .setAttachment(GuiAttachment.topCenter));
 
-        addChild(new HoloItemGui(1, -40, ModularToolbeltItem.instance, 4,
-                () -> onItemSelect.accept(ModularToolbeltItem.instance), onSlotSelect)
+        addChild(new HoloItemGui(1, -40, ModularToolbeltItem.instance.get(), 4,
+                () -> onItemSelect.accept(ModularToolbeltItem.instance.get()), onSlotSelect)
                 .setAttachment(GuiAttachment.topCenter));
 
         addChild(new HoloItemGui(41, 0, ModularDoubleHeadedItem.instance, 1,

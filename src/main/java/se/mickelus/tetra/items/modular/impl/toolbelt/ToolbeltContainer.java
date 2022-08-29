@@ -4,10 +4,12 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.gui.DisabledSlot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 
@@ -15,6 +17,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ToolbeltContainer extends AbstractContainerMenu {
+    public static RegistryObject<MenuType<ToolbeltContainer>> type;
     private final ItemStack itemStackToolbelt;
     private final QuickslotInventory quickslotInventory;
     private final StorageInventory storageInventory;
@@ -22,7 +25,7 @@ public class ToolbeltContainer extends AbstractContainerMenu {
     private final QuiverInventory quiverInventory;
 
     public ToolbeltContainer(int windowId, Container playerInventory, ItemStack itemStackToolbelt, Player player) {
-        super(ModularToolbeltItem.containerType, windowId);
+        super(type.get(), windowId);
         this.quickslotInventory = new QuickslotInventory(itemStackToolbelt);
         this.storageInventory = new StorageInventory(itemStackToolbelt);
         this.potionsInventory = new PotionsInventory(itemStackToolbelt);
@@ -93,11 +96,11 @@ public class ToolbeltContainer extends AbstractContainerMenu {
     @OnlyIn(Dist.CLIENT)
     public static ToolbeltContainer create(int windowId, Inventory inv) {
         ItemStack itemStack = inv.player.getMainHandItem();
-        if (!ModularToolbeltItem.instance.equals(itemStack.getItem())) {
+        if (!ModularToolbeltItem.instance.get().equals(itemStack.getItem())) {
             itemStack = inv.player.getOffhandItem();
         }
 
-        if (!ModularToolbeltItem.instance.equals(itemStack.getItem())) {
+        if (!ModularToolbeltItem.instance.get().equals(itemStack.getItem())) {
             itemStack = ToolbeltHelper.findToolbelt(inv.player);
         }
 

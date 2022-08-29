@@ -12,7 +12,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -21,6 +20,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
@@ -60,10 +60,7 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-13, 0);
 
     @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
-    public static ModularToolbeltItem instance;
-
-    @ObjectHolder(registryName = "menu_type", value = TetraMod.MOD_ID + ":" + identifier)
-    public static MenuType<ToolbeltContainer> containerType;
+    public static RegistryObject<ModularToolbeltItem> instance;
 
     public ModularToolbeltItem() {
         super(new Properties()
@@ -99,7 +96,7 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
         MinecraftForge.EVENT_BUS.register(new JumpHandlerSuspend(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getInstance()));
-        MenuScreens.register(ModularToolbeltItem.containerType, ToolbeltScreen::new);
+        MenuScreens.register(ToolbeltContainer.type.get(), ToolbeltScreen::new);
     }
 
     @Override
