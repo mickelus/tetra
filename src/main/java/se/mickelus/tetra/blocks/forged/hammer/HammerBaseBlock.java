@@ -42,7 +42,7 @@ import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.salvage.TileBlockInteraction;
-import se.mickelus.tetra.items.cell.ItemCellMagmatic;
+import se.mickelus.tetra.items.cell.ThermalCellItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
 import javax.annotation.Nullable;
@@ -210,7 +210,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
                 }
 
                 return InteractionResult.sidedSuccess(player.level.isClientSide);
-            } else if (heldStack.getItem() instanceof ItemCellMagmatic) {
+            } else if (heldStack.getItem() instanceof ThermalCellItem) {
                 te.putCellInSlot(heldStack, slotIndex);
                 player.setItemInHand(hand, ItemStack.EMPTY);
                 world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.5f);

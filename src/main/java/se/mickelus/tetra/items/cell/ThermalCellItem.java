@@ -20,55 +20,17 @@ import java.util.List;
 import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 
 @ParametersAreNonnullByDefault
-public class ItemCellMagmatic extends TetraItem {
+public class ThermalCellItem extends TetraItem {
     public static final int maxCharge = 128;
-    private static final String unlocalizedName = "magmatic_cell";
-    public static RegistryObject<ItemCellMagmatic> instance;
+    public static final String identifier = "thermal_cell";
+    public static RegistryObject<ThermalCellItem> instance;
     private final String chargedPropKey = "tetra:charged";
 
-    public ItemCellMagmatic() {
+    public ThermalCellItem() {
         super(new Properties()
                 .stacksTo(1)
                 .durability(maxCharge)
                 .tab(TetraItemGroup.instance));
-    }
-
-    @Override
-    public void clientInit() {
-        ItemProperties.register(this, new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity, i) -> getCharge(itemStack) > 0 ? 1 : 0);
-    }
-
-    @Override
-    public void appendHoverText(final ItemStack stack, @Nullable final Level world, final List<Component> tooltip, final TooltipFlag advanced) {
-        int charge = getCharge(stack);
-
-        MutableComponent chargeLine = Component.translatable("item.tetra.magmatic_cell.charge");
-
-        if (charge == maxCharge) {
-            chargeLine.append(Component.translatable("item.tetra.magmatic_cell.charge_full"));
-        } else if (charge > maxCharge * 0.4) {
-            chargeLine.append(Component.translatable("item.tetra.magmatic_cell.charge_good"));
-        } else if (charge > 0) {
-            chargeLine.append(Component.translatable("item.tetra.magmatic_cell.charge_low"));
-        } else {
-            chargeLine.append(Component.translatable("item.tetra.magmatic_cell.charge_empty"));
-        }
-
-        tooltip.add(chargeLine);
-        tooltip.add(Component.literal(" "));
-        tooltip.add(Component.literal(" "));
-        tooltip.add(locationTooltip);
-    }
-
-    @Override
-    public void fillItemCategory(final CreativeModeTab itemGroup, final NonNullList<ItemStack> itemList) {
-        if (allowedIn(itemGroup)) {
-            itemList.add(new ItemStack(this));
-
-            ItemStack emptyStack = new ItemStack(this);
-            emptyStack.setDamageValue(maxCharge);
-            itemList.add(emptyStack);
-        }
     }
 
     public static int getCharge(ItemStack itemStack) {
@@ -95,6 +57,44 @@ public class ItemCellMagmatic extends TetraItem {
         int overfill = amount - itemStack.getDamageValue();
         itemStack.setDamageValue(0);
         return overfill;
+    }
+
+    @Override
+    public void clientInit() {
+        ItemProperties.register(this, new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity, i) -> getCharge(itemStack) > 0 ? 1 : 0);
+    }
+
+    @Override
+    public void appendHoverText(final ItemStack stack, @Nullable final Level world, final List<Component> tooltip, final TooltipFlag advanced) {
+        int charge = getCharge(stack);
+
+        MutableComponent chargeLine = Component.translatable("item.tetra.thermal_cell.charge");
+
+        if (charge == maxCharge) {
+            chargeLine.append(Component.translatable("item.tetra.thermal_cell.charge_full"));
+        } else if (charge > maxCharge * 0.4) {
+            chargeLine.append(Component.translatable("item.tetra.thermal_cell.charge_good"));
+        } else if (charge > 0) {
+            chargeLine.append(Component.translatable("item.tetra.thermal_cell.charge_low"));
+        } else {
+            chargeLine.append(Component.translatable("item.tetra.thermal_cell.charge_empty"));
+        }
+
+        tooltip.add(chargeLine);
+        tooltip.add(Component.literal(" "));
+        tooltip.add(Component.literal(" "));
+        tooltip.add(locationTooltip);
+    }
+
+    @Override
+    public void fillItemCategory(final CreativeModeTab itemGroup, final NonNullList<ItemStack> itemList) {
+        if (allowedIn(itemGroup)) {
+            itemList.add(new ItemStack(this));
+
+            ItemStack emptyStack = new ItemStack(this);
+            emptyStack.setDamageValue(maxCharge);
+            itemList.add(emptyStack);
+        }
     }
 
     // todo: change these for metered upgrade

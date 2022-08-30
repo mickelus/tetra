@@ -30,7 +30,7 @@ import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
-import se.mickelus.tetra.items.cell.ItemCellMagmatic;
+import se.mickelus.tetra.items.cell.ThermalCellItem;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -185,8 +185,8 @@ public class HammerBaseTile extends BlockEntity {
     }
 
     public void consumeFuel(int index, int amount) {
-        if (index >= 0 && index < slots.length && slots[index] != null && slots[index].getItem() instanceof ItemCellMagmatic) {
-            ItemCellMagmatic item = (ItemCellMagmatic) slots[index].getItem();
+        if (index >= 0 && index < slots.length && slots[index] != null && slots[index].getItem() instanceof ThermalCellItem) {
+            ThermalCellItem item = (ThermalCellItem) slots[index].getItem();
             item.drainCharge(slots[index], amount);
         }
     }
@@ -285,8 +285,8 @@ public class HammerBaseTile extends BlockEntity {
 
     public int getCellFuel(int index) {
         if (index >= 0 && index < slots.length && slots[index] != null) {
-            if (slots[index].getItem() instanceof ItemCellMagmatic) {
-                ItemCellMagmatic item = (ItemCellMagmatic) slots[index].getItem();
+            if (slots[index].getItem() instanceof ThermalCellItem) {
+                ThermalCellItem item = (ThermalCellItem) slots[index].getItem();
                 return item.getCharge(slots[index]);
             }
         }
@@ -315,7 +315,7 @@ public class HammerBaseTile extends BlockEntity {
     }
 
     public boolean putCellInSlot(ItemStack itemStack, int index) {
-        if (itemStack.getItem() instanceof ItemCellMagmatic
+        if (itemStack.getItem() instanceof ThermalCellItem
                 && index >= 0 && index < slots.length && slots[index] == null) {
             slots[index] = itemStack;
 

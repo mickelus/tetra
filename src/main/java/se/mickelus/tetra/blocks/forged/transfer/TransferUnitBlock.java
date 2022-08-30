@@ -43,7 +43,7 @@ import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
-import se.mickelus.tetra.items.cell.ItemCellMagmatic;
+import se.mickelus.tetra.items.cell.ThermalCellItem;
 import se.mickelus.tetra.items.forged.InsulatedPlateItem;
 
 import javax.annotation.Nullable;
@@ -214,7 +214,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
                 }
 
                 return InteractionResult.SUCCESS;
-            } else if (heldStack.getItem() instanceof ItemCellMagmatic) { // put cell
+            } else if (heldStack.getItem() instanceof ThermalCellItem) { // put cell
                 tile.putCell(heldStack);
                 player.setItemInHand(hand, ItemStack.EMPTY);
                 world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.5f);

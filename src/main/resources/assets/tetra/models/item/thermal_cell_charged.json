@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "tetra:items/magmatic_cell_charged"
+        "layer0": "tetra:items/thermal_cell_charged"
     }
 }

@@ -17,7 +17,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:magmatic_cell",
+                        "item": "tetra:thermal_cell",
                         "durability": 128
                     }
                 ]

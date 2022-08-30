@@ -68,6 +68,7 @@ import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.generation.ExtendedStructureRenderer;
 import se.mickelus.tetra.items.InitializableItem;
 import se.mickelus.tetra.items.TetraItemGroup;
+import se.mickelus.tetra.items.cell.ThermalCellItem;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.loot.DragonSinewItem;
 import se.mickelus.tetra.items.modular.ItemPredicateModular;
@@ -190,13 +191,14 @@ public class TetraRegistries {
         items.register(ModularHolosphereItem.identifier, ModularHolosphereItem::new);
         items.register(EarthpiercerItem.unlocalizedName, EarthpiercerItem::new);
         items.register(StonecutterItem.unlocalizedName, StonecutterItem::new);
-        items.register(DragonSinewItem.unlocalizedName, DragonSinewItem::new);
-        items.register(ScrollItem.identifier, () -> new ScrollItem(rolledScroll.get()));
+        items.register(DragonSinewItem.identifier, DragonSinewItem::new);
 
 //      new CombustionChamberItem()
 //      new LubricantDispenser()
-//      ItemCellMagmatic.instance.get() = new ItemCellMagmatic()
+        ThermalCellItem.instance = items.register(ThermalCellItem.identifier, ThermalCellItem::new);
 //      new ReverberatingPearlItem()
+
+        items.register(ScrollItem.identifier, () -> new ScrollItem(rolledScroll.get()));
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -18,7 +18,7 @@ import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
-import se.mickelus.tetra.items.cell.ItemCellMagmatic;
+import se.mickelus.tetra.items.cell.ThermalCellItem;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -48,7 +48,7 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
     public boolean canRecieve() {
         return TransferUnitBlock.getEffectPowered(level, worldPosition, getBlockState()).equals(EnumTransferEffect.receive)
                 && hasCell()
-                && getCharge() < ItemCellMagmatic.maxCharge;
+                && getCharge() < ThermalCellItem.maxCharge;
     }
 
     public boolean canSend() {
@@ -95,7 +95,7 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
     }
 
     public boolean putCell(ItemStack itemStack) {
-        if (itemStack.getItem() instanceof ItemCellMagmatic) {
+        if (itemStack.getItem() instanceof ThermalCellItem) {
             cell = itemStack;
 
             TransferUnitBlock.updateCellProp(level, worldPosition, hasCell(), getCharge());
@@ -111,7 +111,7 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
 
     @Override
     public int getCharge() {
-        return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
+        return CastOptional.cast(cell.getItem(), ThermalCellItem.class)
                 .map(item -> item.getCharge(cell))
                 .orElse(0);
     }
@@ -133,7 +133,7 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
 
     @Override
     public int drain(int amount) {
-        return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
+        return CastOptional.cast(cell.getItem(), ThermalCellItem.class)
                 .map(item -> {
                     int drained = item.drainCharge(cell, amount);
 
@@ -149,13 +149,13 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
 
     @Override
     public int fill(int amount) {
-        return CastOptional.cast(cell.getItem(), ItemCellMagmatic.class)
+        return CastOptional.cast(cell.getItem(), ThermalCellItem.class)
                 .map(item -> {
                     int initialCharge = item.getCharge(cell);
 
                     int overfill = item.recharge(cell, amount);
 
-                    if (item.getCharge(cell) == ItemCellMagmatic.maxCharge) {
+                    if (item.getCharge(cell) == ThermalCellItem.maxCharge) {
                         runFilledEffects();
                     }
 

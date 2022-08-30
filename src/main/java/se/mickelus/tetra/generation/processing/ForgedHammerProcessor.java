@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseTile;
 import se.mickelus.tetra.blocks.forged.hammer.HammerEffect;
-import se.mickelus.tetra.items.cell.ItemCellMagmatic;
+import se.mickelus.tetra.items.cell.ThermalCellItem;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -31,17 +31,17 @@ public class ForgedHammerProcessor extends StructureProcessor {
             CompoundTag newCompound = blockInfo.nbt.copy();
 
             // randomize cells
-            ItemStack cell1 = random.nextBoolean() ? new ItemStack(ItemCellMagmatic.instance.get()) : null;
-            ItemStack cell2 = random.nextBoolean() ? new ItemStack(ItemCellMagmatic.instance.get()) : null;
+            ItemStack cell1 = random.nextBoolean() ? new ItemStack(ThermalCellItem.instance.get()) : null;
+            ItemStack cell2 = random.nextBoolean() ? new ItemStack(ThermalCellItem.instance.get()) : null;
 
-            int charge1 = random.nextInt(ItemCellMagmatic.maxCharge);
+            int charge1 = random.nextInt(ThermalCellItem.maxCharge);
             if (cell1 != null) {
-                ItemCellMagmatic.recharge(cell1, charge1);
+                ThermalCellItem.recharge(cell1, charge1);
             }
 
-            int charge2 = ItemCellMagmatic.maxCharge - random.nextInt(Math.max(charge1, 1));
+            int charge2 = ThermalCellItem.maxCharge - random.nextInt(Math.max(charge1, 1));
             if (cell2 != null) {
-                ItemCellMagmatic.recharge(cell2, charge2);
+                ThermalCellItem.recharge(cell2, charge2);
             }
 
             HammerBaseTile.writeCells(newCompound, cell1, cell2);
