@@ -675,6 +675,7 @@
     "tetra.shatter_lapis_action.label": "Shatter",
     "item.tetra.pristine_gem.description": "Yields increased bonuses when used for item improvements. Can be shattered at a workbench, which may yield several regular-quality pieces\n \n§8Drops are affected by the fortune enchantment",
     "item.tetra.dragon_sinew": "Dragon Sinew",
+    "item.tetra.dragon_sinew.description": "Commonly found suspended in the air where an ender dragon has perished",
     "item.tetra.scroll.gem_expertise.prefix": "Treatise",
     "item.tetra.scroll.gem_expertise.name": "Gemstone expertise",
     "item.tetra.scroll.gem_expertise.description": "Major modules crafted from materials classified as gemstone provide additional damage and efficiency",
