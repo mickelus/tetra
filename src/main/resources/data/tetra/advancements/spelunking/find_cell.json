@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:barrier"
+            "item": "tetra:magmatic_cell",
+            "nbt": "{\"Damage\": 128}"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.find_cell.title"
@@ -12,8 +13,17 @@
     },
     "parent": "tetra:spelunking/ancient_ruins",
     "criteria": {
-        "automation": {
-            "trigger": "impossible"
+        "get_cell": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+              "items": [
+                {
+                  "items": [
+                    "tetra:magmatic_cell"
+                  ]
+                }
+              ]
+            }
         }
     }
 }

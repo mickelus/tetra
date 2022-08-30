@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:barrier"
+            "item": "tetra:forged_workbench"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.hammer_craft.title"

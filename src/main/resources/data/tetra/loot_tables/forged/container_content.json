@@ -1,0 +1,230 @@
+{
+    "pools": [
+        {
+            "name": "forged/container_content_hammer",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:vent_plate"
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:lubricant_dispenser"
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:combustion_chamber",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:planar_stabilizer",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:magmatic_cell",
+                    "functions": [
+                        {
+                            "function": "set_damage",
+                            "damage": {
+                                "min": 0,
+                                "max": 1
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "forged/container_content_good",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:stonecutter"
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:earthpiercer"
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:forged_mesh"
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:forged_beam"
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:vent_plate"
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:quick_latch"
+                }
+            ]
+        },
+        {
+            "name": "forged/container_extractors",
+            "rolls": {
+                "min": 1,
+                "max": 5
+            },
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:chthonic_extractor"
+                }
+            ]
+        },
+        {
+            "name": "forged/container_content",
+            "rolls": {
+                "min": 4,
+                "max": 9
+            },
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tetra:metal_scrap",
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 10,
+                                "max": 30
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "tetra:forged_bolt",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:diamond",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:emerald",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:redstone",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 15
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:piston",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:hopper",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:rail",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 64
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:powered_rail",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 16
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:detector_rail",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 8
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:observer",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:daylight_detector",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:gunpowder",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 64
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

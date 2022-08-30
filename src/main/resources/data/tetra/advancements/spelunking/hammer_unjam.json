@@ -13,8 +13,14 @@
     },
     "parent": "tetra:spelunking/hammer_jam",
     "criteria": {
-        "impossible": {
-            "trigger": "minecraft:impossible"
+        "crit1": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "tool": "hammer_dig",
+                "after": {
+                    "block": "tetra:hammer_head"
+                }
+            }
         }
     }
 }

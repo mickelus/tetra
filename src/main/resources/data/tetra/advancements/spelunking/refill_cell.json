@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:barrier"
+            "item": "tetra:magmatic_cell"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.refill_cell.title"

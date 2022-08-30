@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:barrier"
+            "item": "tetra:forged_crate"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.containers.title"
@@ -12,8 +12,29 @@
     },
     "parent": "tetra:spelunking/ancient_ruins",
     "criteria": {
-        "impossible": {
-            "trigger": "minecraft:impossible"
+        "crate1": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "tool": "pry",
+                "after": {
+                    "block": "minecraft:air"
+                }
+            }
+        },
+        "crate2": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "tool": "hammer_dig",
+                "after": {
+                    "block": "minecraft:air"
+                }
+            }
         }
-    }
+    },
+    "requirements": [
+        [
+            "crate1",
+            "crate2"
+        ]
+    ]
 }

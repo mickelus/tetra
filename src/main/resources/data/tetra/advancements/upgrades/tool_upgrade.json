@@ -13,13 +13,13 @@
     },
     "parent": "tetra:upgrades/workbench",
     "criteria": {
-        "pickaxe": {
+        "pickaxe_dig": {
             "trigger": "tetra:craft_module",
             "conditions": {
                 "module": "double/basic_pickaxe"
             }
         },
-        "axe": {
+        "axe_dig": {
             "trigger": "tetra:craft_module",
             "conditions": {
                 "module": "double/basic_axe"

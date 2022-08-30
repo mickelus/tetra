@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:barrier"
+            "item": "tetra:forged_platform_slab"
         },
         "title": {
             "translate": "tetra.advancements.spelunking.loot_ruins.title"
@@ -12,8 +12,35 @@
     },
     "parent": "tetra:spelunking/hammer_power",
     "criteria": {
-        "impossible": {
-            "trigger": "minecraft:impossible"
+        "platform": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+              "items": [
+                {
+                  "items": [
+                    "tetra:forged_platform"
+                  ]
+                }
+              ]
+            }
+        },
+        "platform_slab": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+              "items": [
+                {
+                  "items": [
+                    "tetra:forged_platform_slab"
+                  ]
+                }
+              ]
+            }
         }
-    }
+    },
+    "requirements": [
+        [
+            "platform",
+            "platform_slab"
+        ]
+    ]
 }
