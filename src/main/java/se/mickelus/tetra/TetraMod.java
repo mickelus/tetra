@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerRenderer;
 import se.mickelus.tetra.blocks.scroll.ScrollRenderer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
@@ -143,7 +144,7 @@ public class TetraMod {
                     .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
                     .forEach(event::addSprite);
 
-//            event.addSprite(ForgedContainerRenderer.material.texture());
+            event.addSprite(ForgedContainerRenderer.material.texture());
 //            event.addSprite(HammerBaseRenderer.material.texture());
             event.addSprite(ScrollRenderer.material.texture());
         }

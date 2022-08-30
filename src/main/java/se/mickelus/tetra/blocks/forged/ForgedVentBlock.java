@@ -48,7 +48,7 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
     public static final IntegerProperty propRotation = IntegerProperty.create("rotation", 0, 3);
     public static final BooleanProperty propX = BooleanProperty.create("x");
     public static final BooleanProperty propBroken = BooleanProperty.create("broken");
-    static final String identifier = "forged_vent";
+    public static final String identifier = "forged_vent";
     private static final ResourceLocation boltLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/bolt_break");
     private static final ResourceLocation ventLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/vent_break");
     public static final BlockInteraction[] interactions = new BlockInteraction[]{

@@ -10,7 +10,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
-import se.mickelus.tetra.blocks.forged.container.ForgedContainerTile;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlockEntity;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -36,16 +36,16 @@ public class ForgedContainerProcessor extends StructureProcessor {
 
             CompoundTag newCompound = blockInfo.nbt.copy();
 
-            int[] lockIntegrity = new int[ForgedContainerTile.lockCount];
+            int[] lockIntegrity = new int[ForgedContainerBlockEntity.lockCount];
             for (int i = 0; i < lockIntegrity.length; i++) {
-                lockIntegrity[i] = 1 + random.nextInt(ForgedContainerTile.lockIntegrityMax - 1);
+                lockIntegrity[i] = 1 + random.nextInt(ForgedContainerBlockEntity.lockIntegrityMax - 1);
             }
-            ForgedContainerTile.writeLockData(newCompound, lockIntegrity);
+            ForgedContainerBlockEntity.writeLockData(newCompound, lockIntegrity);
 
-            int lidIntegrity = 1 + random.nextInt(ForgedContainerTile.lidIntegrityMax - 1);
-            ForgedContainerTile.writeLidData(newCompound, lidIntegrity);
+            int lidIntegrity = 1 + random.nextInt(ForgedContainerBlockEntity.lidIntegrityMax - 1);
+            ForgedContainerBlockEntity.writeLidData(newCompound, lidIntegrity);
 
-            BlockState newState = ForgedContainerTile.getUpdatedBlockState(blockInfo.state, lockIntegrity, lidIntegrity);
+            BlockState newState = ForgedContainerBlockEntity.getUpdatedBlockState(blockInfo.state, lockIntegrity, lidIntegrity);
 
             return new StructureTemplate.StructureBlockInfo(blockInfo.pos, newState, newCompound);
         }

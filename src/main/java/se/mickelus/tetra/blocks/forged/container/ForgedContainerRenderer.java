@@ -25,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContainerTile> {
+public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContainerBlockEntity> {
     public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "blocks/forged_container/forged_container"));
     private static final float openDuration = 300;
     public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, ForgedContainerBlock.identifier), "main");
@@ -49,7 +49,7 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
         PartDefinition parts = mesh.getRoot();
         parts.addOrReplaceChild("lid", CubeListBuilder.create()
                 .texOffs(0, 0)
-                .addBox(0, -3, -14, 30, 3, 14), PartPose.ZERO);
+                .addBox(1, 4, 1, 30, 3, 14), PartPose.ZERO);
 //        lid.x = 1;
 //        lid.y = 7;
 //        lid.z = 15;
@@ -57,7 +57,7 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
         for (int i = 0; i < 4; i++) {
             parts.addOrReplaceChild("locks" + i, CubeListBuilder.create()
                     .texOffs(0, 0)
-                    .addBox(-2 + i * 6, -1, -14.03f, 2, 3, 1), PartPose.ZERO);
+                    .addBox(6 + i * 6, 6, 0.97f, 2, 3, 1), PartPose.ZERO);
 //            locks[i].x = 8;
 //            locks[i].y = 7;
 //            locks[i].z = 15;
@@ -65,7 +65,7 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
 
         parts.addOrReplaceChild("base", CubeListBuilder.create()
                 .texOffs(0, 17)
-                .addBox(0, 1, 0, 30, 9, 14), PartPose.ZERO);
+                .addBox(1, 7, 1, 30, 9, 14), PartPose.ZERO);
 //        base.x = 1;
 //        base.y = 6;
 //        base.z = 1;
@@ -74,7 +74,7 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
     }
 
     @Override
-    public void render(ForgedContainerTile tile, float partialTicks, PoseStack matrixStack, MultiBufferSource renderTypeBuffer,
+    public void render(ForgedContainerBlockEntity tile, float partialTicks, PoseStack matrixStack, MultiBufferSource renderTypeBuffer,
             int combinedLight, int combinedOverlay) {
         if (tile.isFlipped()) {
             return;
@@ -98,7 +98,7 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
         }
     }
 
-    private void renderLid(ForgedContainerTile tile, float partialTicks, PoseStack matrixStack, VertexConsumer vertexBuilder,
+    private void renderLid(ForgedContainerBlockEntity tile, float partialTicks, PoseStack matrixStack, VertexConsumer vertexBuilder,
             int combinedLight, int combinedOverlay) {
         if (tile.isOpen()) {
             float progress = Math.min(1, (System.currentTimeMillis() - tile.openTime) / openDuration);
@@ -114,7 +114,7 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
         }
     }
 
-    private void renderLocks(ForgedContainerTile tile, float partialTicks, PoseStack matrixStack, VertexConsumer vertexBuilder,
+    private void renderLocks(ForgedContainerBlockEntity tile, float partialTicks, PoseStack matrixStack, VertexConsumer vertexBuilder,
             int combinedLight, int combinedOverlay) {
         Boolean[] locked = tile.isLocked();
         for (int i = 0; i < locks.length; i++) {

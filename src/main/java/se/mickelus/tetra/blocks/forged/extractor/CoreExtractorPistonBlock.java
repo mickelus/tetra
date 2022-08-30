@@ -32,10 +32,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements EntityBlock {
-    public static final String unlocalizedName = "extractor_piston";
+    public static final String identifier = "extractor_piston";
     public static final BooleanProperty hackProp = BooleanProperty.create("hack");
     public static final VoxelShape boundingBox = box(5, 0, 5, 11, 16, 11);
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static CoreExtractorPistonBlock instance;
 
     public CoreExtractorPistonBlock() {

@@ -24,11 +24,11 @@ import java.util.stream.IntStream;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContainerContainer> {
+public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContainerMenu> {
     private static final ResourceLocation containerTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/forged-container.png");
 
-    private final ForgedContainerTile tileEntity;
-    private final ForgedContainerContainer container;
+    private final ForgedContainerBlockEntity tileEntity;
+    private final ForgedContainerMenu container;
 
     private final GuiElement guiRoot;
 
@@ -36,7 +36,7 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
 
     private final VerticalTabGroupGui compartmentButtons;
 
-    public ForgedContainerScreen(ForgedContainerContainer container, Inventory playerInventory, Component title) {
+    public ForgedContainerScreen(ForgedContainerMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
 
         this.imageWidth = 179;
@@ -50,7 +50,7 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
         guiRoot.addChild(new GuiTexture(0, 103, 179, 106, GuiTextures.playerInventory));
 
         compartmentButtons = new VerticalTabGroupGui(10, 26, this::changeCompartment, containerTexture, 0, 128,
-                IntStream.range(0, ForgedContainerTile.compartmentCount)
+                IntStream.range(0, ForgedContainerBlockEntity.compartmentCount)
                         .mapToObj(i -> I18n.get("tetra.forged_container.compartment_" + i))
                         .toArray(String[]::new));
         guiRoot.addChild(compartmentButtons);
@@ -96,9 +96,9 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
     public void containerTick() {
         super.containerTick();
 
-        int size = ForgedContainerTile.compartmentSize;
+        int size = ForgedContainerBlockEntity.compartmentSize;
         tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(itemHandler -> {
-            for (int i = 0; i < ForgedContainerTile.compartmentCount; i++) {
+            for (int i = 0; i < ForgedContainerBlockEntity.compartmentCount; i++) {
                 boolean hasContent = false;
                 for (int j = 0; j < size; j++) {
                     if (!itemHandler.getStackInSlot(i * size + j).isEmpty()) {

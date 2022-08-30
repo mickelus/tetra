@@ -12,7 +12,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class BlockForgedWall extends TetraBlock {
-    static final String identifier = "forged_wall";
+    public static final String identifier = "forged_wall";
 
     public BlockForgedWall() {
         super(ForgedBlockCommon.propertiesSolid);

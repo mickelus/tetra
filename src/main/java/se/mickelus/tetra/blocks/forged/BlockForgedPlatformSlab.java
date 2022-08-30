@@ -13,7 +13,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class BlockForgedPlatformSlab extends SlabBlock implements InitializableBlock {
-    static final String identifier = "forged_platform_slab";
+    public static final String identifier = "forged_platform_slab";
 
     public BlockForgedPlatformSlab() {
         super(ForgedBlockCommon.propertiesSolid);

@@ -13,7 +13,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class BlockForgedPillar extends RotatedPillarBlock implements InitializableBlock {
-    private static final String identifier = "forged_pillar";
+    public static final String identifier = "forged_pillar";
 
     public BlockForgedPillar() {
         super(ForgedBlockCommon.propertiesSolid);

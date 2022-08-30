@@ -41,6 +41,10 @@ import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
 import se.mickelus.tetra.blocks.InitializableBlock;
 import se.mickelus.tetra.blocks.forged.chthonic.*;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlockEntity;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerMenu;
+import se.mickelus.tetra.blocks.forged.container.ForgedContainerRenderer;
 import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
 import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticle;
@@ -143,20 +147,21 @@ public class TetraRegistries {
         RegistryObject<WallScrollBlock> wallScroll = blocks.register(WallScrollBlock.identifier, WallScrollBlock::new);
         RegistryObject<OpenScrollBlock> openScroll = blocks.register(OpenScrollBlock.identifier, OpenScrollBlock::new);
 
-//                new HammerHeadBlock(),
-//                new HammerBaseBlock(),
-//                new BlockForgedWall(),
-//                new BlockForgedPillar(),
-//                new BlockForgedPlatform(),
-//                new BlockForgedPlatformSlab(),
-//                new ForgedVentBlock(),
-//                new ForgedWorkbenchBlock(),
-//                new ForgedContainerBlock(),
-//                new ForgedCrateBlock(),
-//                new TransferUnitBlock(),
-//                new CoreExtractorBaseBlock(),
-//                new CoreExtractorPistonBlock(),
-//                new CoreExtractorPipeBlock(),
+//                blocks.register(HammerHeadBlock.identifier, HammerHeadBlock::new);
+//                blocks.register(HammerBaseBlock.identifier, HammerBaseBlock::new);
+//                blocks.register(BlockForgedWall.identifier, BlockForgedWall::new);
+//                blocks.register(BlockForgedPillar.identifier, BlockForgedPillar::new);
+//                blocks.register(BlockForgedPlatform.identifier, BlockForgedPlatform::new);
+//                blocks.register(BlockForgedPlatformSlab.identifier, BlockForgedPlatformSlab::new);
+//                blocks.register(ForgedVentBlock.identifier, ForgedVentBlock::new);
+//                blocks.register(ForgedWorkbenchBlock.identifier, ForgedWorkbenchBlock::new);
+        ForgedContainerBlock.instance = blocks.register(ForgedContainerBlock.identifier, ForgedContainerBlock::new);
+        registerBlockItem(ForgedContainerBlock.instance);
+//                blocks.register(ForgedCrateBlock.identifier, ForgedCrateBlock::new);
+//                blocks.register(TransferUnitBlock.identifier, TransferUnitBlock::new);
+//                blocks.register(CoreExtractorBaseBlock.identifier, CoreExtractorBaseBlock::new);
+//                blocks.register(CoreExtractorPistonBlock.identifier, CoreExtractorPistonBlock::new);
+//                blocks.register(CoreExtractorPipeBlock.identifier, CoreExtractorPipeBlock::new);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ITEMS
@@ -223,8 +228,8 @@ public class TetraRegistries {
 //        blockEntities.register(CoreExtractorPistonBlock.identifier, () -> BlockEntityType.Builder.of(CoreExtractorPistonTile::new, CoreExtractorPistonBlock.instance)
 //                .build(null));
 //
-//        blockEntities.register(ForgedContainerBlock.identifier, () -> BlockEntityType.Builder.of(ForgedContainerTile::new, ForgedContainerBlock.instance)
-//                .build(null));
+        blockEntities.register(ForgedContainerBlock.identifier, () -> BlockEntityType.Builder.of(ForgedContainerBlockEntity::new, ForgedContainerBlock.instance.get())
+                .build(null));
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -261,9 +266,9 @@ public class TetraRegistries {
         WorkbenchContainer.containerType = containers.register(WorkbenchTile.identifier,
                 () -> IForgeMenuType.create(((windowId, inv, data) -> WorkbenchContainer.create(windowId, data.readBlockPos(), inv))));
 
-//        // forged container
-//        containers.register(ForgedContainerBlock.identifier,
-//                () -> IForgeMenuType.create(((windowId, inv, data) -> ForgedContainerContainer.create(windowId, data.readBlockPos(), inv))));
+        // forged container
+        ForgedContainerMenu.type = containers.register(ForgedContainerBlock.identifier,
+                () -> IForgeMenuType.create(((windowId, inv, data) -> ForgedContainerMenu.create(windowId, data.readBlockPos(), inv))));
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -396,7 +401,7 @@ public class TetraRegistries {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void registerEntityLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-//        event.registerLayerDefinition(ForgedContainerRenderer.layer, ForgedContainerRenderer::createLayer);
+        event.registerLayerDefinition(ForgedContainerRenderer.layer, ForgedContainerRenderer::createLayer);
 //        event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
 
         event.registerLayerDefinition(ScrollRenderer.layer, ScrollRenderer::createLayer);
@@ -413,7 +418,7 @@ public class TetraRegistries {
         event.registerBlockEntityRenderer(WorkbenchTile.type.get(), WorkbenchTESR::new);
         event.registerBlockEntityRenderer(ScrollTile.type, ScrollRenderer::new);
 
-//        event.registerBlockEntityRenderer(ForgedContainerTile.type, ForgedContainerRenderer::new);
+        event.registerBlockEntityRenderer(ForgedContainerBlockEntity.type, ForgedContainerRenderer::new);
 //        event.registerBlockEntityRenderer(CoreExtractorPistonTile.type, CoreExtractorPistonRenderer::new);
 //        event.registerBlockEntityRenderer(HammerBaseTile.type, HammerBaseRenderer::new);
 //        event.registerBlockEntityRenderer(HammerHeadTile.type, HammerHeadTESR::new);

@@ -39,11 +39,11 @@ import java.util.Optional;
 import java.util.Random;
 
 @ParametersAreNonnullByDefault
-public class ForgedContainerTile extends BlockEntity implements MenuProvider {
+public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvider {
     private static final String inventoryKey = "inv";
     private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
     @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + ForgedContainerBlock.identifier)
-    public static BlockEntityType<ForgedContainerTile> type;
+    public static BlockEntityType<ForgedContainerBlockEntity> type;
     public static int lockIntegrityMax = 4;
     public static int lockCount = 4;
     public static int lidIntegrityMax = 5;
@@ -54,7 +54,7 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
     public long openTime = -1;
     private int lidIntegrity = 0;
 
-    public ForgedContainerTile(BlockPos p_155268_, BlockState p_155269_) {
+    public ForgedContainerBlockEntity(BlockPos p_155268_, BlockState p_155269_) {
         super(type, p_155268_, p_155269_);
 
         lockIntegrity = new int[lockCount];
@@ -86,9 +86,9 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
         compound.putInt("lid_integrity", lidIntegrity);
     }
 
-    public ForgedContainerTile getOrDelegate() {
+    public ForgedContainerBlockEntity getOrDelegate() {
         if (level != null && getBlockState().getBlock() instanceof ForgedContainerBlock && isFlipped()) {
-            return TileEntityOptional.from(level, worldPosition.relative(getFacing().getCounterClockWise()), ForgedContainerTile.class)
+            return TileEntityOptional.from(level, worldPosition.relative(getFacing().getCounterClockWise()), ForgedContainerBlockEntity.class)
                     .orElse(null);
         }
         return this;
@@ -214,7 +214,7 @@ public class ForgedContainerTile extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
-        return new ForgedContainerContainer(windowId, this, playerInventory, playerEntity);
+        return new ForgedContainerMenu(windowId, this, playerInventory, playerEntity);
     }
 
     @Nullable

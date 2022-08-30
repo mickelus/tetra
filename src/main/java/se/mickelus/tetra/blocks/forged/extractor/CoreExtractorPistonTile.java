@@ -20,7 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class CoreExtractorPistonTile extends BlockEntity {
     static final long activationDuration = 105;
     private static final int fillAmount = 40;
-    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + CoreExtractorPistonBlock.unlocalizedName)
+    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + CoreExtractorPistonBlock.identifier)
     public static BlockEntityType<CoreExtractorPistonTile> type;
     private long endTime = Long.MAX_VALUE;
 

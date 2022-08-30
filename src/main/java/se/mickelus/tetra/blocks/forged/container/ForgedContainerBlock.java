@@ -30,10 +30,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
@@ -92,9 +91,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     private static final VoxelShape shapeZ2Open = box(1, 0, 1, 15, 9, 31);
     private static final VoxelShape shapeX1Open = box(-15, 0, 1, 15, 9, 15);
     private static final VoxelShape shapeX2Open = box(1, 0, 1, 31, 9, 15);
-
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
-    public static ForgedContainerBlock instance;
+    public static RegistryObject<ForgedContainerBlock> instance;
 
     public ForgedContainerBlock() {
         super(ForgedBlockCommon.propertiesSolid);
@@ -109,7 +106,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     private static boolean breakLock(Level world, BlockPos pos, @Nullable Player player, int index, @Nullable InteractionHand hand) {
-        ForgedContainerTile te = (ForgedContainerTile) world.getBlockEntity(pos);
+        ForgedContainerBlockEntity te = (ForgedContainerBlockEntity) world.getBlockEntity(pos);
         if (te != null) {
             te.getOrDelegate().breakLock(player, index, hand);
         }
@@ -118,7 +115,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     private static boolean open(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction facing) {
-        ForgedContainerTile te = (ForgedContainerTile) world.getBlockEntity(pos);
+        ForgedContainerBlockEntity te = (ForgedContainerBlockEntity) world.getBlockEntity(pos);
         if (te != null) {
             te.getOrDelegate().open(player);
         }
@@ -129,7 +126,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        MenuScreens.register(ForgedContainerContainer.type, ForgedContainerScreen::new);
+        MenuScreens.register(ForgedContainerMenu.type.get(), ForgedContainerScreen::new);
     }
 
     @Override
@@ -155,9 +152,9 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
 
         if (didInteract != InteractionResult.SUCCESS) {
             if (!world.isClientSide) {
-                TileEntityOptional.from(world, pos, ForgedContainerTile.class)
+                TileEntityOptional.from(world, pos, ForgedContainerBlockEntity.class)
                         .ifPresent(te -> {
-                            ForgedContainerTile delegate = te.getOrDelegate();
+                            ForgedContainerBlockEntity delegate = te.getOrDelegate();
                             if (delegate.isOpen()) {
                                 NetworkHooks.openScreen((ServerPlayer) player, delegate, delegate.getBlockPos());
                             }
@@ -177,7 +174,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
             if (state.getValue(openProp) && !state.getValue(flippedProp)) {
                 dropBlockInventory(this, world, pos, newState);
             } else {
-                TileEntityOptional.from(world, pos, ForgedContainerTile.class).ifPresent(BlockEntity::setRemoved);
+                TileEntityOptional.from(world, pos, ForgedContainerBlockEntity.class).ifPresent(BlockEntity::setRemoved);
             }
         }
     }
@@ -258,6 +255,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     }
 
     // based on same method implementation in BedBlock
+    @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         Direction facing = state.getValue(facingProp);
         world.setBlock(pos.relative(facing.getClockWise()), defaultBlockState().setValue(flippedProp, true).setValue(facingProp, facing), 3);
@@ -306,6 +304,6 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return new ForgedContainerTile(p_153215_, p_153216_);
+        return new ForgedContainerBlockEntity(p_153215_, p_153216_);
     }
 }
