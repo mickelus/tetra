@@ -13,10 +13,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
 
@@ -25,15 +24,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 
 @ParametersAreNonnullByDefault
-public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
+public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfer {
     private static final int baseAmount = 8;
-    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + TransferUnitBlock.identifier)
-    public static BlockEntityType<TransferUnitTile> type;
+    public static RegistryObject<BlockEntityType<TransferUnitBlockEntity>> type;
     private ItemStack cell;
     private float efficiency = 1;
 
-    public TransferUnitTile(BlockPos p_155268_, BlockState p_155269_) {
-        super(type, p_155268_, p_155269_);
+    public TransferUnitBlockEntity(BlockPos p_155268_, BlockState p_155269_) {
+        super(type.get(), p_155268_, p_155269_);
         cell = ItemStack.EMPTY;
     }
 
@@ -169,9 +167,8 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
                 .orElse(0);
     }
 
-    public void tick(Level level, BlockPos pos, BlockState blockState) {
-        if (!level.isClientSide
-                && level.getGameTime() % 5 == 0
+    public void serverTick(Level level, BlockPos pos, BlockState blockState) {
+        if (level.getGameTime() % 5 == 0
                 && TransferUnitBlock.isSending(blockState)) {
             transfer();
         }
@@ -288,6 +285,6 @@ public class TransferUnitTile extends BlockEntity implements IHeatTransfer {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
-        this.load(packet.getTag());
+        super.onDataPacket(net, packet);
     }
 }

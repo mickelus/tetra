@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import se.mickelus.tetra.blocks.forged.transfer.EnumTransferConfig;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
-import se.mickelus.tetra.blocks.forged.transfer.TransferUnitTile;
+import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlockEntity;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
 
 import javax.annotation.Nullable;
@@ -42,9 +42,9 @@ public class TransferUnitProcessor extends StructureProcessor {
 
                 cellState = charge > 0 ? 2 : 1;
 
-                TransferUnitTile.writeCell(newCompound, itemStack);
+                TransferUnitBlockEntity.writeCell(newCompound, itemStack);
             } else if (random.nextFloat() < 0.1) {
-                TransferUnitTile.writeCell(newCompound, new ItemStack(ThermalCellItem.instance.get()));
+                TransferUnitBlockEntity.writeCell(newCompound, new ItemStack(ThermalCellItem.instance.get()));
             }
 
             // randomize configuration & plate

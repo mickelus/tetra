@@ -46,6 +46,8 @@ import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlockEntity;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerMenu;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerRenderer;
 import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
+import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
+import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlockEntity;
 import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticle;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticleType;
@@ -159,7 +161,8 @@ public class TetraRegistries {
         ForgedContainerBlock.instance = blocks.register(ForgedContainerBlock.identifier, ForgedContainerBlock::new);
         registerBlockItem(ForgedContainerBlock.instance);
 //                blocks.register(ForgedCrateBlock.identifier, ForgedCrateBlock::new);
-//                blocks.register(TransferUnitBlock.identifier, TransferUnitBlock::new);
+        RegistryObject<TransferUnitBlock> transferUnit = blocks.register(TransferUnitBlock.identifier, TransferUnitBlock::new);
+        registerBlockItem(transferUnit);
 //                blocks.register(CoreExtractorBaseBlock.identifier, CoreExtractorBaseBlock::new);
 //                blocks.register(CoreExtractorPistonBlock.identifier, CoreExtractorPistonBlock::new);
 //                blocks.register(CoreExtractorPipeBlock.identifier, CoreExtractorPipeBlock::new);
@@ -221,8 +224,9 @@ public class TetraRegistries {
 //        blockEntities.register(HammerHeadBlock.identifier, () -> BlockEntityType.Builder.of(HammerHeadTile::new, HammerHeadBlock.instance)
 //                .build(null));
 //
-//        blockEntities.register(TransferUnitBlock.identifier, () -> BlockEntityType.Builder.of(TransferUnitTile::new, TransferUnitBlock.instance)
-//                .build(null));
+        TransferUnitBlockEntity.type = blockEntities.register(TransferUnitBlock.identifier,
+                () -> BlockEntityType.Builder.of(TransferUnitBlockEntity::new, transferUnit.get())
+                        .build(null));
 //
 //        blockEntities.register(CoreExtractorBaseBlock.identifier, () -> BlockEntityType.Builder.of(CoreExtractorBaseTile::new, CoreExtractorBaseBlock.instance)
 //                .build(null));
@@ -230,9 +234,9 @@ public class TetraRegistries {
 //        blockEntities.register(CoreExtractorPistonBlock.identifier, () -> BlockEntityType.Builder.of(CoreExtractorPistonTile::new, CoreExtractorPistonBlock.instance)
 //                .build(null));
 //
-        blockEntities.register(ForgedContainerBlock.identifier, () -> BlockEntityType.Builder.of(ForgedContainerBlockEntity::new, ForgedContainerBlock.instance.get())
-                .build(null));
-
+        ForgedContainerBlockEntity.type = blockEntities.register(ForgedContainerBlock.identifier,
+                () -> BlockEntityType.Builder.of(ForgedContainerBlockEntity::new, ForgedContainerBlock.instance.get())
+                        .build(null));
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ENTITIES
@@ -420,7 +424,7 @@ public class TetraRegistries {
         event.registerBlockEntityRenderer(WorkbenchTile.type.get(), WorkbenchTESR::new);
         event.registerBlockEntityRenderer(ScrollTile.type, ScrollRenderer::new);
 
-        event.registerBlockEntityRenderer(ForgedContainerBlockEntity.type, ForgedContainerRenderer::new);
+        event.registerBlockEntityRenderer(ForgedContainerBlockEntity.type.get(), ForgedContainerRenderer::new);
 //        event.registerBlockEntityRenderer(CoreExtractorPistonTile.type, CoreExtractorPistonRenderer::new);
 //        event.registerBlockEntityRenderer(HammerBaseTile.type, HammerBaseRenderer::new);
 //        event.registerBlockEntityRenderer(HammerHeadTile.type, HammerHeadTESR::new);

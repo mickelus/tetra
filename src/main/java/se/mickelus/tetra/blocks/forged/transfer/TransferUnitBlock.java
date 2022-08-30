@@ -1,7 +1,5 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -118,7 +116,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         world.playSound(player, pos, SoundEvents.ANVIL_HIT, SoundSource.PLAYERS, 1, 1);
         world.setBlock(pos, blockState.setValue(configProp, config), 3);
 
-        TileEntityOptional.from(world, pos, TransferUnitTile.class).ifPresent(TransferUnitTile::updateTransferState);
+        world.getBlockEntity(pos, TransferUnitBlockEntity.type.get()).ifPresent(TransferUnitBlockEntity::updateTransferState);
 
         return true;
     }
@@ -175,11 +173,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     @Override
-    public void clientInit() {
-        ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutout());
-    }
-
-    @Override
     public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolAction> tools) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(world, pos, blockState, blockState.getValue(facingProp), face, tools))
@@ -189,7 +182,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         Direction blockFacing = state.getValue(facingProp);
-        TransferUnitTile tile = TileEntityOptional.from(world, pos, TransferUnitTile.class).orElse(null);
+        TransferUnitBlockEntity tile = TileEntityOptional.from(world, pos, TransferUnitBlockEntity.class).orElse(null);
         ItemStack heldStack = player.getItemInHand(hand);
 
         if (tile == null) {
@@ -246,22 +239,22 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
-            TileEntityOptional.from(world, pos, TransferUnitTile.class)
+            TileEntityOptional.from(world, pos, TransferUnitBlockEntity.class)
                     .ifPresent(tile -> {
                         if (tile.hasCell()) {
                             Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), tile.getCell().copy());
                         }
                     });
 
-            TileEntityOptional.from(world, pos, TransferUnitTile.class).ifPresent(BlockEntity::setRemoved);
+            TileEntityOptional.from(world, pos, TransferUnitBlockEntity.class).ifPresent(BlockEntity::setRemoved);
         }
     }
 
     @Override
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block fromBlock, BlockPos fromPos, boolean isMoving) {
         if (!pos.relative(world.getBlockState(pos).getValue(facingProp)).equals(fromPos)) {
-            TileEntityOptional.from(world, pos, TransferUnitTile.class)
-                    .ifPresent(TransferUnitTile::updateTransferState);
+            TileEntityOptional.from(world, pos, TransferUnitBlockEntity.class)
+                    .ifPresent(TransferUnitBlockEntity::updateTransferState);
         }
     }
 
@@ -315,12 +308,14 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new TransferUnitTile(pos, state);
+        return new TransferUnitBlockEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> entityType) {
-        return getTicker(entityType, TransferUnitTile.type, (lvl, pos, blockState, tile) -> tile.tick(lvl, pos, blockState));
+        return !level.isClientSide
+                ? getTicker(entityType, TransferUnitBlockEntity.type.get(), (lvl, pos, blockState, tile) -> tile.serverTick(lvl, pos, blockState))
+                : null;
     }
 }

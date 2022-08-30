@@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -42,8 +42,7 @@ import java.util.Random;
 public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvider {
     private static final String inventoryKey = "inv";
     private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
-    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + ForgedContainerBlock.identifier)
-    public static BlockEntityType<ForgedContainerBlockEntity> type;
+    public static RegistryObject<BlockEntityType<ForgedContainerBlockEntity>> type;
     public static int lockIntegrityMax = 4;
     public static int lockCount = 4;
     public static int lidIntegrityMax = 5;
@@ -55,7 +54,7 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
     private int lidIntegrity = 0;
 
     public ForgedContainerBlockEntity(BlockPos p_155268_, BlockState p_155269_) {
-        super(type, p_155268_, p_155269_);
+        super(type.get(), p_155268_, p_155269_);
 
         lockIntegrity = new int[lockCount];
     }
