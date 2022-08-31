@@ -40,12 +40,14 @@ import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
 import se.mickelus.tetra.blocks.InitializableBlock;
+import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.chthonic.*;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlockEntity;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerMenu;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerRenderer;
-import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
+import se.mickelus.tetra.blocks.forged.extractor.*;
+import se.mickelus.tetra.blocks.forged.hammer.*;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlockEntity;
 import se.mickelus.tetra.blocks.geode.*;
@@ -136,7 +138,7 @@ public class TetraRegistries {
         registerBlockItem(basicWorkbench);
         blocks.register(GeodeBlock.identifier, GeodeBlock::new);
         RegistryObject<SeepingBedrockBlock> seepingBedrock = blocks.register(SeepingBedrockBlock.identifier, SeepingBedrockBlock::new);
-//        registerBlockItem(seepingBedrock);
+        registerBlockItem(seepingBedrock);
 
         RegistryObject<RackBlock> rack = blocks.register(RackBlock.identifier, RackBlock::new);
         registerBlockItem(rack);
@@ -150,22 +152,23 @@ public class TetraRegistries {
         RegistryObject<WallScrollBlock> wallScroll = blocks.register(WallScrollBlock.identifier, WallScrollBlock::new);
         RegistryObject<OpenScrollBlock> openScroll = blocks.register(OpenScrollBlock.identifier, OpenScrollBlock::new);
 
-//                blocks.register(HammerHeadBlock.identifier, HammerHeadBlock::new);
-//                blocks.register(HammerBaseBlock.identifier, HammerBaseBlock::new);
-//                blocks.register(BlockForgedWall.identifier, BlockForgedWall::new);
-//                blocks.register(BlockForgedPillar.identifier, BlockForgedPillar::new);
-//                blocks.register(BlockForgedPlatform.identifier, BlockForgedPlatform::new);
-//                blocks.register(BlockForgedPlatformSlab.identifier, BlockForgedPlatformSlab::new);
-//                blocks.register(ForgedVentBlock.identifier, ForgedVentBlock::new);
-//                blocks.register(ForgedWorkbenchBlock.identifier, ForgedWorkbenchBlock::new);
+        registerBlockItem(blocks.register(ForgedWallBlock.identifier, ForgedWallBlock::new));
+        registerBlockItem(blocks.register(ForgedPillarBlock.identifier, ForgedPillarBlock::new));
+        registerBlockItem(blocks.register(ForgedPlatformBlock.identifier, ForgedPlatformBlock::new));
+        registerBlockItem(blocks.register(ForgedPlatformSlabBlock.identifier, ForgedPlatformSlabBlock::new));
+        registerBlockItem(blocks.register(ForgedVentBlock.identifier, ForgedVentBlock::new));
+        blocks.register(HammerHeadBlock.identifier, HammerHeadBlock::new);
+        registerBlockItem(blocks.register(HammerBaseBlock.identifier, HammerBaseBlock::new));
+        registerBlockItem(blocks.register(ForgedWorkbenchBlock.identifier, ForgedWorkbenchBlock::new));
         ForgedContainerBlock.instance = blocks.register(ForgedContainerBlock.identifier, ForgedContainerBlock::new);
         registerBlockItem(ForgedContainerBlock.instance);
-//                blocks.register(ForgedCrateBlock.identifier, ForgedCrateBlock::new);
+        registerBlockItem(blocks.register(ForgedCrateBlock.identifier, ForgedCrateBlock::new));
         RegistryObject<TransferUnitBlock> transferUnit = blocks.register(TransferUnitBlock.identifier, TransferUnitBlock::new);
         registerBlockItem(transferUnit);
-//                blocks.register(CoreExtractorBaseBlock.identifier, CoreExtractorBaseBlock::new);
-//                blocks.register(CoreExtractorPistonBlock.identifier, CoreExtractorPistonBlock::new);
-//                blocks.register(CoreExtractorPipeBlock.identifier, CoreExtractorPipeBlock::new);
+        CoreExtractorBaseBlock.instance = blocks.register(CoreExtractorBaseBlock.identifier, CoreExtractorBaseBlock::new);
+        registerBlockItem(CoreExtractorBaseBlock.instance);
+        CoreExtractorPistonBlock.instance = blocks.register(CoreExtractorPistonBlock.identifier, CoreExtractorPistonBlock::new);
+        registerBlockItem(blocks.register(CoreExtractorPipeBlock.identifier, CoreExtractorPipeBlock::new));
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ITEMS
@@ -191,15 +194,14 @@ public class TetraRegistries {
         items.register(MetalScrapItem.unlocalizedName, MetalScrapItem::new);
         items.register(InsulatedPlateItem.unlocalizedName, InsulatedPlateItem::new);
         items.register(PlanarStabilizerItem.unlocalizedName, PlanarStabilizerItem::new);
+        ThermalCellItem.instance = items.register(ThermalCellItem.identifier, ThermalCellItem::new);
+        CombustionChamberItem.instance = items.register(CombustionChamberItem.identifier, CombustionChamberItem::new);
+        LubricantDispenserItem.instance = items.register(LubricantDispenserItem.identifier, LubricantDispenserItem::new);
         items.register(ModularHolosphereItem.identifier, ModularHolosphereItem::new);
         items.register(EarthpiercerItem.unlocalizedName, EarthpiercerItem::new);
         items.register(StonecutterItem.unlocalizedName, StonecutterItem::new);
         items.register(DragonSinewItem.identifier, DragonSinewItem::new);
-
-//      new CombustionChamberItem()
-//      new LubricantDispenser()
-        ThermalCellItem.instance = items.register(ThermalCellItem.identifier, ThermalCellItem::new);
-//      new ReverberatingPearlItem()
+//        ReverberatingPearlItem.instance = items.register(ReverberatingPearlItem.identifier, ReverberatingPearlItem::new);
 
         items.register(ScrollItem.identifier, () -> new ScrollItem(rolledScroll.get()));
 
@@ -218,22 +220,26 @@ public class TetraRegistries {
         blockEntities.register(ScrollTile.identifier,
                 () -> BlockEntityType.Builder.of(ScrollTile::new, openScroll.get(), wallScroll.get(), rolledScroll.get()).build(null));
 
-//        blockEntities.register(HammerBaseBlock.identifier, () -> BlockEntityType.Builder.of(HammerBaseTile::new, HammerBaseBlock.instance)
-//                .build(null));
-//
-//        blockEntities.register(HammerHeadBlock.identifier, () -> BlockEntityType.Builder.of(HammerHeadTile::new, HammerHeadBlock.instance)
-//                .build(null));
-//
+        HammerBaseBlockEntity.type = blockEntities.register(HammerBaseBlock.identifier,
+                () -> BlockEntityType.Builder.of(HammerBaseBlockEntity::new, HammerBaseBlock.instance)
+                        .build(null));
+
+        HammerHeadBlockEntity.type = blockEntities.register(HammerHeadBlock.identifier,
+                () -> BlockEntityType.Builder.of(HammerHeadBlockEntity::new, HammerHeadBlock.instance)
+                        .build(null));
+
         TransferUnitBlockEntity.type = blockEntities.register(TransferUnitBlock.identifier,
                 () -> BlockEntityType.Builder.of(TransferUnitBlockEntity::new, transferUnit.get())
                         .build(null));
-//
-//        blockEntities.register(CoreExtractorBaseBlock.identifier, () -> BlockEntityType.Builder.of(CoreExtractorBaseTile::new, CoreExtractorBaseBlock.instance)
-//                .build(null));
-//
-//        blockEntities.register(CoreExtractorPistonBlock.identifier, () -> BlockEntityType.Builder.of(CoreExtractorPistonTile::new, CoreExtractorPistonBlock.instance)
-//                .build(null));
-//
+
+        blockEntities.register(CoreExtractorBaseBlock.identifier,
+                () -> BlockEntityType.Builder.of(CoreExtractorBaseBlockEntity::new, CoreExtractorBaseBlock.instance.get())
+                        .build(null));
+
+        CoreExtractorPistonBlockEntity.type = blockEntities.register(CoreExtractorPistonBlock.identifier,
+                () -> BlockEntityType.Builder.of(CoreExtractorPistonBlockEntity::new, CoreExtractorPistonBlock.instance.get())
+                        .build(null));
+
         ForgedContainerBlockEntity.type = blockEntities.register(ForgedContainerBlock.identifier,
                 () -> BlockEntityType.Builder.of(ForgedContainerBlockEntity::new, ForgedContainerBlock.instance.get())
                         .build(null));
@@ -408,7 +414,7 @@ public class TetraRegistries {
     @OnlyIn(Dist.CLIENT)
     public static void registerEntityLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ForgedContainerRenderer.layer, ForgedContainerRenderer::createLayer);
-//        event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
+        event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
 
         event.registerLayerDefinition(ScrollRenderer.layer, ScrollRenderer::createLayer);
         event.registerLayerDefinition(ModularShieldRenderer.layer, ModularShieldModel::createLayer);
@@ -425,9 +431,9 @@ public class TetraRegistries {
         event.registerBlockEntityRenderer(ScrollTile.type, ScrollRenderer::new);
 
         event.registerBlockEntityRenderer(ForgedContainerBlockEntity.type.get(), ForgedContainerRenderer::new);
-//        event.registerBlockEntityRenderer(CoreExtractorPistonTile.type, CoreExtractorPistonRenderer::new);
-//        event.registerBlockEntityRenderer(HammerBaseTile.type, HammerBaseRenderer::new);
-//        event.registerBlockEntityRenderer(HammerHeadTile.type, HammerHeadTESR::new);
+        event.registerBlockEntityRenderer(CoreExtractorPistonBlockEntity.type.get(), CoreExtractorPistonRenderer::new);
+        event.registerBlockEntityRenderer(HammerBaseBlockEntity.type.get(), HammerBaseRenderer::new);
+        event.registerBlockEntityRenderer(HammerHeadBlockEntity.type.get(), HammerHeadRenderer::new);
 
         if (ConfigHandler.development.get()) {
             event.registerBlockEntityRenderer(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureRenderer::new);

@@ -7,23 +7,21 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.tetra.TetraMod;
+import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class HammerHeadTile extends BlockEntity {
+public class HammerHeadBlockEntity extends BlockEntity {
     private static final String jamKey = "jam";
-    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + HammerHeadBlock.identifier)
-    public static BlockEntityType<HammerHeadTile> type;
+    public static RegistryObject<BlockEntityType<HammerHeadBlockEntity>> type;
     private long activationTime = -1;
     private long unjamTime = -1;
     private boolean jammed;
 
-    public HammerHeadTile(BlockPos p_155268_, BlockState p_155269_) {
-        super(type, p_155268_, p_155269_);
+    public HammerHeadBlockEntity(BlockPos p_155268_, BlockState p_155269_) {
+        super(type.get(), p_155268_, p_155269_);
     }
 
     public void activate() {

@@ -16,17 +16,17 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class HammerHeadTESR implements BlockEntityRenderer<HammerHeadTile> {
+public class HammerHeadRenderer implements BlockEntityRenderer<HammerHeadBlockEntity> {
     private static final float animationDuration = 400;
     private static final float unjamDuration = 800;
     private static BlockRenderDispatcher blockRenderer;
 
-    public HammerHeadTESR(BlockEntityRendererProvider.Context context) {
+    public HammerHeadRenderer(BlockEntityRendererProvider.Context context) {
         blockRenderer = Minecraft.getInstance().getBlockRenderer();
     }
 
     @Override
-    public void render(HammerHeadTile tile, float v, PoseStack matrixStack, MultiBufferSource buffer,
+    public void render(HammerHeadBlockEntity tile, float v, PoseStack matrixStack, MultiBufferSource buffer,
             int combinedLight, int combinedOverlay) {
 
         BakedModel model = blockRenderer.getBlockModelShaper().getBlockModel(HammerHeadBlock.instance.defaultBlockState());

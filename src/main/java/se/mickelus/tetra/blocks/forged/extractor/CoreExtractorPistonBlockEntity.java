@@ -10,22 +10,21 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class CoreExtractorPistonTile extends BlockEntity {
+public class CoreExtractorPistonBlockEntity extends BlockEntity {
     static final long activationDuration = 105;
     private static final int fillAmount = 40;
-    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + CoreExtractorPistonBlock.identifier)
-    public static BlockEntityType<CoreExtractorPistonTile> type;
+    public static RegistryObject<BlockEntityType<CoreExtractorPistonBlockEntity>> type;
     private long endTime = Long.MAX_VALUE;
 
-    public CoreExtractorPistonTile(BlockPos blockPos, BlockState blockState) {
-        super(type, blockPos, blockState);
+    public CoreExtractorPistonBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(type.get(), blockPos, blockState);
     }
 
 
@@ -72,7 +71,7 @@ public class CoreExtractorPistonTile extends BlockEntity {
         if (endTime < level.getGameTime()) {
             endTime = Long.MAX_VALUE;
             if (!level.isClientSide) {
-                TileEntityOptional.from(level, pos.relative(Direction.DOWN), CoreExtractorBaseTile.class)
+                TileEntityOptional.from(level, pos.relative(Direction.DOWN), CoreExtractorBaseBlockEntity.class)
                         .ifPresent(base -> base.fill(fillAmount));
 
                 runEndEffects();

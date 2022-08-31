@@ -62,10 +62,10 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     public static final String qualityImprovementKey = "quality";
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
             new TileBlockInteraction<>(TetraToolActions.pry, 1, Direction.EAST, 5, 11, 10, 12,
-                    HammerBaseTile.class, tile -> tile.getEffect(true) != null,
+                    HammerBaseBlockEntity.class, tile -> tile.getEffect(true) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, true)),
             new TileBlockInteraction<>(TetraToolActions.pry, 1, Direction.WEST, 5, 11, 10, 12,
-                    HammerBaseTile.class, tile -> tile.getEffect(false) != null,
+                    HammerBaseBlockEntity.class, tile -> tile.getEffect(false) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, false))
     };
     @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
@@ -76,7 +76,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     }
 
     public static boolean removeModule(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace, boolean isA) {
-        ItemStack moduleStack = TileEntityOptional.from(world, pos, HammerBaseTile.class)
+        ItemStack moduleStack = TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class)
                 .map(te -> te.removeModule(isA))
                 .map(ItemStack::new)
                 .orElse(null);
@@ -102,7 +102,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        BlockEntityRenderers.register(HammerBaseTile.type, HammerBaseRenderer::new);
+        BlockEntityRenderers.register(HammerBaseBlockEntity.type.get(), HammerBaseRenderer::new);
     }
 
     @Override
@@ -119,19 +119,19 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     }
 
     public boolean isFunctional(Level world, BlockPos pos) {
-        return TileEntityOptional.from(world, pos, HammerBaseTile.class)
-                .map(HammerBaseTile::isFunctional)
+        return TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class)
+                .map(HammerBaseBlockEntity::isFunctional)
                 .orElse(false);
     }
 
     public void consumeFuel(Level world, BlockPos pos) {
-        TileEntityOptional.from(world, pos, HammerBaseTile.class)
-                .ifPresent(HammerBaseTile::consumeFuel);
+        TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class)
+                .ifPresent(HammerBaseBlockEntity::consumeFuel);
     }
 
     public int getHammerLevel(Level world, BlockPos pos) {
-        return TileEntityOptional.from(world, pos, HammerBaseTile.class)
-                .map(HammerBaseTile::getHammerLevel)
+        return TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class)
+                .map(HammerBaseBlockEntity::getHammerLevel)
                 .orElse(0);
     }
 
@@ -142,7 +142,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
         }
 
         if (isReplacing) {
-            int preciseLevel = TileEntityOptional.from(world, pos, HammerBaseTile.class)
+            int preciseLevel = TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class)
                     .map(te -> te.getEffectLevel(HammerEffect.precise))
                     .orElse(0);
 
@@ -166,7 +166,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     }
 
     private Map<String, String> getAdvancementData(Level world, BlockPos pos) {
-        return TileEntityOptional.from(world, pos, HammerBaseTile.class)
+        return TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class)
                 .map(tile -> {
                     Map<String, String> result = new HashMap<>();
                     result.put("functional", String.valueOf(tile.isFunctional()));
@@ -185,7 +185,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     public InteractionResult use(final BlockState blockState, final Level world, final BlockPos pos, final Player player, final InteractionHand hand,
             final BlockHitResult rayTraceResult) {
         Direction blockFacing = blockState.getValue(facingProp);
-        HammerBaseTile te = TileEntityOptional.from(world, pos, HammerBaseTile.class).orElse(null);
+        HammerBaseBlockEntity te = TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class).orElse(null);
         ItemStack heldStack = player.getItemInHand(hand);
         Direction facing = rayTraceResult.getDirection();
 
@@ -249,7 +249,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
-            TileEntityOptional.from(world, pos, HammerBaseTile.class)
+            TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class)
                     .ifPresent(tile -> {
                         for (int i = 0; i < 2; i++) {
                             if (tile.hasCellInSlot(i)) {
@@ -264,7 +264,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
                                 .forEach(stack -> Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
                     });
 
-            TileEntityOptional.from(world, pos, HammerBaseTile.class).ifPresent(BlockEntity::setRemoved);
+            TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class).ifPresent(BlockEntity::setRemoved);
         }
     }
 
@@ -277,7 +277,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
 
     @Override
     public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-        TileEntityOptional.from(world, currentPos, HammerBaseTile.class).ifPresent(HammerBaseTile::updateRedstonePower);
+        TileEntityOptional.from(world, currentPos, HammerBaseBlockEntity.class).ifPresent(HammerBaseBlockEntity::updateRedstonePower);
         if (Direction.DOWN.equals(facing) && !HammerHeadBlock.instance.equals(facingState.getBlock())) {
             return Blocks.AIR.defaultBlockState();
         }
@@ -305,7 +305,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
 
     @Override
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
-        TileEntityOptional.from(world, pos, HammerBaseTile.class).ifPresent(HammerBaseTile::updateRedstonePower);
+        TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class).ifPresent(HammerBaseBlockEntity::updateRedstonePower);
     }
 
     @Override
@@ -321,12 +321,12 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new HammerBaseTile(pos, state);
+        return new HammerBaseBlockEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> entityType) {
-        return getTicker(entityType, HammerBaseTile.type, (lvl, pos, blockState, tile) -> tile.tick(lvl, pos, blockState));
+        return getTicker(entityType, HammerBaseBlockEntity.type.get(), (lvl, pos, blockState, tile) -> tile.tick(lvl, pos, blockState));
     }
 }

@@ -22,10 +22,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
@@ -39,21 +38,20 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 @ParametersAreNonnullByDefault
-public class HammerBaseTile extends BlockEntity {
+public class HammerBaseBlockEntity extends BlockEntity {
     private static final String moduleAKey = "modA";
     private static final String moduleBKey = "modB";
     private static final String slotsKey = "slots";
     private static final String indexKey = "slot";
     private static final String redstoneKey = "rs";
-    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + HammerBaseBlock.identifier)
-    public static BlockEntityType<HammerBaseTile> type;
+    public static RegistryObject<BlockEntityType<HammerBaseBlockEntity>> type;
     private HammerEffect moduleA;
     private HammerEffect moduleB;
     private ItemStack[] slots;
     private int redstonePower = 0;
 
-    public HammerBaseTile(BlockPos p_155268_, BlockState p_155269_) {
-        super(type, p_155268_, p_155269_);
+    public HammerBaseBlockEntity(BlockPos p_155268_, BlockState p_155269_) {
+        super(type.get(), p_155268_, p_155269_);
         slots = new ItemStack[2];
     }
 
@@ -263,7 +261,7 @@ public class HammerBaseTile extends BlockEntity {
         }
 
         if (level.random.nextFloat() < getJamChance()) {
-            TileEntityOptional.from(level, getBlockPos().below(), HammerHeadTile.class).ifPresent(head -> head.setJammed(true));
+            TileEntityOptional.from(level, getBlockPos().below(), HammerHeadBlockEntity.class).ifPresent(head -> head.setJammed(true));
             level.getEntitiesOfClass(ServerPlayer.class, new AABB(getBlockPos()).inflate(10, 5, 10))
                     .forEach(player -> BlockUseCriterion.trigger(player, getBlockState(), ItemStack.EMPTY));
             level.playSound(null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.8f, 0.5f);
@@ -414,7 +412,7 @@ public class HammerBaseTile extends BlockEntity {
             BlockPos targetPos = pos.below(2);
             BlockState targetState = level.getBlockState(targetPos);
 
-            HammerHeadTile head = TileEntityOptional.from(level, pos.below(), HammerHeadTile.class).orElse(null);
+            HammerHeadBlockEntity head = TileEntityOptional.from(level, pos.below(), HammerHeadBlockEntity.class).orElse(null);
 
             if (head == null || head.isJammed()) {
                 return;

@@ -7,8 +7,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.tetra.TetraMod;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.items.TetraItemGroup;
@@ -19,9 +18,8 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class CombustionChamberItem extends TetraItem {
-    private static final String unlocalizedName = "combustion_chamber";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
-    public static CombustionChamberItem instance;
+    public static final String identifier = "combustion_chamber";
+    public static RegistryObject<CombustionChamberItem> instance;
 
     public CombustionChamberItem() {
         super(new Properties().tab(TetraItemGroup.instance));

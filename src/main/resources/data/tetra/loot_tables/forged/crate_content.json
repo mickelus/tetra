@@ -67,7 +67,7 @@
                 },
                 {
                     "type": "item",
-                    "name": "tetra:magmatic_cell",
+                    "name": "tetra:thermal_cell",
                     "weight": 1,
                     "functions": [
                         {
@@ -100,7 +100,7 @@
                         },
                         {
                             "function": "minecraft:apply_bonus",
-                            "enchantment":"minecraft:fortune",
+                            "enchantment": "minecraft:fortune",
                             "formula": "uniform_bonus_count",
                             "parameters": {
                                 "bonusMultiplier": 1

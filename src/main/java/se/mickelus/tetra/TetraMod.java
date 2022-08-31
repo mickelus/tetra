@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerRenderer;
+import se.mickelus.tetra.blocks.forged.hammer.HammerBaseRenderer;
 import se.mickelus.tetra.blocks.scroll.ScrollRenderer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
@@ -134,7 +135,7 @@ public class TetraMod {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void provideTextures(final TextureStitchEvent.Pre event) {
-        // todo 1.15: Move this to ModularItemModel.getTextures?
+        // todo: Move this to ModularItemModel.getTextures?
         if (TextureAtlas.LOCATION_BLOCKS.equals(event.getAtlas().location())) {
             Minecraft.getInstance().getResourceManager().listResources("textures/items/module", rl -> rl.getPath().endsWith(".png"))
                     .keySet()
@@ -145,7 +146,7 @@ public class TetraMod {
                     .forEach(event::addSprite);
 
             event.addSprite(ForgedContainerRenderer.material.texture());
-//            event.addSprite(HammerBaseRenderer.material.texture());
+            event.addSprite(HammerBaseRenderer.material.texture());
             event.addSprite(ScrollRenderer.material.texture());
         }
     }

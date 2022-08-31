@@ -16,7 +16,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class CoreExtractorPistonRenderer implements BlockEntityRenderer<CoreExtractorPistonTile> {
+public class CoreExtractorPistonRenderer implements BlockEntityRenderer<CoreExtractorPistonBlockEntity> {
     private static BlockRenderDispatcher blockRenderer;
 
     public CoreExtractorPistonRenderer(BlockEntityRendererProvider.Context context) {
@@ -24,13 +24,11 @@ public class CoreExtractorPistonRenderer implements BlockEntityRenderer<CoreExtr
     }
 
     @Override
-    public void render(CoreExtractorPistonTile tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight,
+    public void render(CoreExtractorPistonBlockEntity tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight,
             int combinedOverlay) {
-
-        BlockState state = CoreExtractorPistonBlock.instance.defaultBlockState();
+        BlockState state = CoreExtractorPistonBlock.instance.get().defaultBlockState();
 
         double offset = tile.getProgress(partialTicks);
-
         if (offset > 0.98) {
             // 49 = 0.98 / ( 1 - 0.98)
             offset = -49 * offset + 49;

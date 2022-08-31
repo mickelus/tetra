@@ -4,18 +4,22 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import se.mickelus.tetra.blocks.InitializableBlock;
+import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.TetraBlock;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class BlockForgedPillar extends RotatedPillarBlock implements InitializableBlock {
-    public static final String identifier = "forged_pillar";
+public class ForgedPlatformBlock extends TetraBlock {
+    public static final String identifier = "forged_platform";
 
-    public BlockForgedPillar() {
+    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
+    public static ForgedPlatformBlock instance;
+
+    public ForgedPlatformBlock() {
         super(ForgedBlockCommon.propertiesSolid);
     }
 

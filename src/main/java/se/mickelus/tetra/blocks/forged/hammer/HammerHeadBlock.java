@@ -53,7 +53,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     public static final VoxelShape jamShape = box(2, 4, 2, 14, 16, 14);
     static final BlockInteraction[] interactions = new BlockInteraction[]{
             new TileBlockInteraction<>(TetraToolActions.hammer, 4, Direction.EAST, 1, 11, 7, 11,
-                    HammerHeadTile.class, HammerHeadTile::isJammed,
+                    HammerHeadBlockEntity.class, HammerHeadBlockEntity::isJammed,
                     (world, pos, blockState, player, hand, hitFace) -> unjam(world, pos, player))
     };
     @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
@@ -64,7 +64,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     private static boolean unjam(Level world, BlockPos pos, Player playerEntity) {
-        TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(tile -> tile.setJammed(false));
+        TileEntityOptional.from(world, pos, HammerHeadBlockEntity.class).ifPresent(tile -> tile.setJammed(false));
         world.playSound(playerEntity, pos, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, SoundSource.PLAYERS, 1, 0.5f);
         return true;
     }
@@ -76,7 +76,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     private boolean isJammed(BlockGetter world, BlockPos pos) {
-        return TileEntityOptional.from(world, pos, HammerHeadTile.class).map(HammerHeadTile::isJammed).orElse(false);
+        return TileEntityOptional.from(world, pos, HammerHeadBlockEntity.class).map(HammerHeadBlockEntity::isJammed).orElse(false);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
                 .orElse(targetStack);
 
         if (consumeResources) {
-            TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(HammerHeadTile::activate);
+            TileEntityOptional.from(world, pos, HammerHeadBlockEntity.class).ifPresent(HammerHeadBlockEntity::activate);
             world.playSound(player, pos, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.2f, (float) (0.5 + Math.random() * 0.2));
         }
 
@@ -153,7 +153,7 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
                 .orElse(targetStack);
 
         if (consumeResources) {
-            TileEntityOptional.from(world, pos, HammerHeadTile.class).ifPresent(HammerHeadTile::activate);
+            TileEntityOptional.from(world, pos, HammerHeadBlockEntity.class).ifPresent(HammerHeadBlockEntity::activate);
             world.playSound(player, pos, SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.2f, (float) (0.5 + Math.random() * 0.2));
         }
         return upgradedStack;
@@ -194,6 +194,6 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return new HammerHeadTile(p_153215_, p_153216_);
+        return new HammerHeadBlockEntity(p_153215_, p_153216_);
     }
 }

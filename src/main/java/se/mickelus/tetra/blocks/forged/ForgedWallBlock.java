@@ -11,10 +11,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class BlockForgedWall extends TetraBlock {
+public class ForgedWallBlock extends TetraBlock {
     public static final String identifier = "forged_wall";
 
-    public BlockForgedWall() {
+    public ForgedWallBlock() {
         super(ForgedBlockCommon.propertiesSolid);
     }
 

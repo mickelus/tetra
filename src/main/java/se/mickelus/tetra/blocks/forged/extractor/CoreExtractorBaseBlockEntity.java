@@ -19,18 +19,18 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 
 @ParametersAreNonnullByDefault
-public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer {
+public class CoreExtractorBaseBlockEntity extends BlockEntity implements IHeatTransfer {
     private static final int sendLimit = 4;
     private static final String chargeKey = "charge";
     private static final int maxCharge = 128;
     private static final int drainAmount = 4;
     @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.identifier)
-    public static BlockEntityType<CoreExtractorBaseTile> type;
+    public static BlockEntityType<CoreExtractorBaseBlockEntity> type;
     private boolean isSending = false;
     private int currentCharge = 0;
     private float efficiency;
 
-    public CoreExtractorBaseTile(BlockPos p_155268_, BlockState p_155269_) {
+    public CoreExtractorBaseBlockEntity(BlockPos p_155268_, BlockState p_155269_) {
         super(type, p_155268_, p_155269_);
     }
 
@@ -133,7 +133,7 @@ public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer 
             efficiency = getEfficiency() * connected.getEfficiency();
 
             if (!canSend && canRecieve && canRefill()) {
-                getPiston().ifPresent(CoreExtractorPistonTile::activate);
+                getPiston().ifPresent(CoreExtractorPistonBlockEntity::activate);
             }
         });
     }
@@ -161,7 +161,7 @@ public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer 
                         }
 
                         if (canRefill()) {
-                            getPiston().ifPresent(CoreExtractorPistonTile::activate);
+                            getPiston().ifPresent(CoreExtractorPistonBlockEntity::activate);
                         }
                     } else {
                         setSending(false);
@@ -187,8 +187,8 @@ public class CoreExtractorBaseTile extends BlockEntity implements IHeatTransfer 
         return TileEntityOptional.from(level, worldPosition.relative(getFacing()), IHeatTransfer.class);
     }
 
-    private Optional<CoreExtractorPistonTile> getPiston() {
-        return TileEntityOptional.from(level, worldPosition.relative(Direction.UP), CoreExtractorPistonTile.class);
+    private Optional<CoreExtractorPistonBlockEntity> getPiston() {
+        return TileEntityOptional.from(level, worldPosition.relative(Direction.UP), CoreExtractorPistonBlockEntity.class);
     }
 
     @Override

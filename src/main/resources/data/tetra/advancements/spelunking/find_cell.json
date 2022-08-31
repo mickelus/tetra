@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "tetra:magmatic_cell",
+            "item": "tetra:thermal_cell",
             "nbt": "{\"Damage\": 128}"
         },
         "title": {
@@ -16,13 +16,13 @@
         "get_cell": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-              "items": [
-                {
-                  "items": [
-                    "tetra:magmatic_cell"
-                  ]
-                }
-              ]
+                "items": [
+                    {
+                        "items": [
+                            "tetra:thermal_cell"
+                        ]
+                    }
+                ]
             }
         }
     }

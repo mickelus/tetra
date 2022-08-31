@@ -22,9 +22,8 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 
@@ -49,8 +48,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeZ, largeCoverShapeZ, BooleanOp.OR), capShape, shaftShape);
     private static final VoxelShape combinedShapeX
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeX, largeCoverShapeX, BooleanOp.OR), capShape, shaftShape);
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
-    public static CoreExtractorBaseBlock instance;
+    public static RegistryObject<CoreExtractorBaseBlock> instance;
 
     public CoreExtractorBaseBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
@@ -76,8 +74,8 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
     @Override
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block fromBlock, BlockPos fromPos, boolean isMoving) {
         if (!pos.relative(world.getBlockState(pos).getValue(facingProp)).equals(fromPos)) {
-            TileEntityOptional.from(world, pos, CoreExtractorBaseTile.class)
-                    .ifPresent(CoreExtractorBaseTile::updateTransferState);
+            TileEntityOptional.from(world, pos, CoreExtractorBaseBlockEntity.class)
+                    .ifPresent(CoreExtractorBaseBlockEntity::updateTransferState);
         }
     }
 
@@ -89,7 +87,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
 
     @Override
     public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-        if (Direction.UP.equals(facing) && !CoreExtractorPistonBlock.instance.equals(facingState.getBlock())) {
+        if (Direction.UP.equals(facing) && !facingState.is(CoreExtractorPistonBlock.instance.get())) {
             return state.getValue(WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
         }
 
@@ -98,7 +96,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
 
     // based on same method implementation in BedBlock
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        BlockState pistonState = CoreExtractorPistonBlock.instance.defaultBlockState()
+        BlockState pistonState = CoreExtractorPistonBlock.instance.get().defaultBlockState()
                 .setValue(WATERLOGGED, world.getFluidState(pos.above()).getType() == WATER);
         world.setBlock(pos.above(), pistonState, 3);
     }
@@ -128,12 +126,12 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new CoreExtractorBaseTile(pos, state);
+        return new CoreExtractorBaseBlockEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> entityType) {
-        return getTicker(entityType, CoreExtractorBaseTile.type, (lvl, pos, blockState, tile) -> tile.tick(lvl, pos, blockState));
+        return getTicker(entityType, CoreExtractorBaseBlockEntity.type, (lvl, pos, blockState, tile) -> tile.tick(lvl, pos, blockState));
     }
 }

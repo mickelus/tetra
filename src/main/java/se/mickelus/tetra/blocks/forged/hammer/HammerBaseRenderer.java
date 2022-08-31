@@ -5,9 +5,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -15,6 +14,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
@@ -23,69 +23,88 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class HammerBaseRenderer implements BlockEntityRenderer<HammerBaseTile> {
+public class HammerBaseRenderer implements BlockEntityRenderer<HammerBaseBlockEntity> {
     public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "blocks/forged_hammer/base_sheet"));
     public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, HammerBaseBlock.identifier), "main");
 
-    private /*final*/ ModelPart unpowered;
-    private /*final*/ ModelPart powered;
+    private final ModelPart unpowered;
+    private final ModelPart powered;
 
-    private /*final*/ ModelPart[] modulesA;
-    private /*final*/ ModelPart[] modulesB;
+    private final ModelPart[] modulesA;
+    private final ModelPart[] modulesB;
 
 
-    private /*final*/ ModelPart cellAunpowered;
-    private /*final*/ ModelPart cellBunpowered;
-    private /*final*/ ModelPart cellApowered;
-    private /*final*/ ModelPart cellBpowered;
+    private final ModelPart cellAunpowered;
+    private final ModelPart cellBunpowered;
+    private final ModelPart cellApowered;
+    private final ModelPart cellBpowered;
 
     public HammerBaseRenderer(BlockEntityRendererProvider.Context context) {
+        ModelPart modelpart = context.bakeLayer(layer);
 
+        unpowered = modelpart.getChild("unpowered");
+        powered = modelpart.getChild("powered");
+        HammerEffect[] effects = HammerEffect.values();
+        modulesA = new ModelPart[effects.length];
+        modulesB = new ModelPart[effects.length];
+        for (int i = 0; i < effects.length; i++) {
+            modulesA[i] = modelpart.getChild("moduleA" + i);
+            modulesB[i] = modelpart.getChild("moduleB" + i);
+        }
+        cellAunpowered = modelpart.getChild("cellAunpowered");
+        cellBunpowered = modelpart.getChild("cellBunpowered");
+        cellApowered = modelpart.getChild("cellApowered");
+        cellBpowered = modelpart.getChild("cellBpowered");
     }
 
     public static LayerDefinition createLayer() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition parts = mesh.getRoot();
-//        unpowered = new ModelPart(128, 64, 0, 0);
-//        unpowered.addBox(0, 0, 0, 16, 16, 16, 0);
-//
-//        powered = new ModelPart(128, 64, 64, 0);
-//        powered.addBox(0, 0, 0, 16, 16, 16, 0);
-//
-//        HammerEffect[] effects = HammerEffect.values();
-//        modulesA = new ModelPart[effects.length];
-//        for (int i = 0; i < effects.length; i++) {
-//            modulesA[i] = new ModelPart(128, 64, i * 16, 32);
-//            modulesA[i].addBox(0, 0, -16, 16, 16, 0, 0.03f);
-//            modulesA[i].yRot = (float) -Math.PI / 2f;
-//        }
-//
-//        modulesB = new ModelPart[effects.length];
-//        for (int i = 0; i < effects.length; i++) {
-//            modulesB[i] = new ModelPart(128, 64, i * 16, 32);
-//            modulesB[i].addBox(-16, 0, 0, 16, 16, 0, 0.03f);
-//            modulesB[i].yRot = (float) Math.PI / 2f;
-//        }
-//
-//        cellAunpowered = new ModelPart(128, 64, 48, 0);
-//        cellAunpowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
-//        cellAunpowered.xRot = (float) -Math.PI / 2f;
-//        cellApowered = new ModelPart(128, 64, 48, 8);
-//        cellApowered.addBox(5.5f, -19, 5.5f, 5, 3, 5, 0);
-//        cellApowered.xRot = (float) -Math.PI / 2f;
-//
-//        cellBunpowered = new ModelPart(128, 64, 48, 0);
-//        cellBunpowered.addBox(5.5f, -3, -10f, 5, 3, 5, 0);
-//        cellBunpowered.xRot = (float) Math.PI / 2f;
-//        cellBpowered = new ModelPart(128, 64, 48, 8);
-//        cellBpowered.addBox(5.5f, -3, -10f, 5, 3, 5, 0);
-//        cellBpowered.xRot = (float) Math.PI / 2f;
+        parts.addOrReplaceChild("unpowered", CubeListBuilder.create()
+                .texOffs(0, 0)
+                .addBox(0, 0, 0, 16, 16, 16), PartPose.ZERO);
+
+        parts.addOrReplaceChild("powered", CubeListBuilder.create()
+                .texOffs(64, 0)
+                .addBox(0, 0, 0, 16, 16, 16), PartPose.ZERO);
+
+        HammerEffect[] effects = HammerEffect.values();
+        for (int i = 0; i < effects.length; i++) {
+            parts.addOrReplaceChild("moduleA" + i, CubeListBuilder.create()
+                            .texOffs(i * 16, 32)
+                            .addBox(0, 0, -16, 16, 16, 0, new CubeDeformation(0.03f)),
+                    PartPose.offsetAndRotation(0, 0, 0, 0, -Mth.PI / 2f, 0));
+            parts.addOrReplaceChild("moduleB" + i, CubeListBuilder.create()
+                            .texOffs(i * 16, 32)
+                            .addBox(-16, 0, 0, 16, 16, 0, new CubeDeformation(0.03f)),
+                    PartPose.offsetAndRotation(0, 0, 0, 0, Mth.PI / 2f, 0));
+        }
+
+
+        parts.addOrReplaceChild("cellAunpowered", CubeListBuilder.create()
+                        .texOffs(48, 0)
+                        .addBox(5.5f, -19, 5.5f, 5, 3, 5),
+                PartPose.offsetAndRotation(0, 0, 0, -Mth.PI / 2f, 0, 0));
+        parts.addOrReplaceChild("cellApowered", CubeListBuilder.create()
+                        .texOffs(48, 8)
+                        .addBox(5.5f, -19, 5.5f, 5, 3, 5),
+                PartPose.offsetAndRotation(0, 0, 0, -Mth.PI / 2f, 0, 0));
+
+
+        parts.addOrReplaceChild("cellBunpowered", CubeListBuilder.create()
+                        .texOffs(48, 0)
+                        .addBox(5.5f, -3, -10.5f, 5, 3, 5),
+                PartPose.offsetAndRotation(0, 0, 0, Mth.PI / 2f, 0, 0));
+        parts.addOrReplaceChild("cellBpowered", CubeListBuilder.create()
+                        .texOffs(48, 8)
+                        .addBox(5.5f, -3, -10.5f, 5, 3, 5),
+                PartPose.offsetAndRotation(0, 0, 0, Mth.PI / 2f, 0, 0));
 
         return LayerDefinition.create(mesh, 128, 64);
     }
 
     @Override
-    public void render(HammerBaseTile tile, float v, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void render(HammerBaseBlockEntity tile, float v, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         if (tile.hasLevel()) {
             matrixStack.pushPose();
             matrixStack.translate(0.5F, 0.5F, 0.5F);
@@ -96,7 +115,7 @@ public class HammerBaseRenderer implements BlockEntityRenderer<HammerBaseTile> {
 
             VertexConsumer vertexBuilder = material.buffer(buffer, RenderType::entityCutout);
 
-            if (tile.isFueled()) {
+            if (tile.isFunctional()) {
                 powered.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
             } else {
                 unpowered.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);

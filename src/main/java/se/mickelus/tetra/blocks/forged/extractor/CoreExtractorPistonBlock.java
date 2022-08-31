@@ -20,10 +20,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 
@@ -35,8 +34,8 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements E
     public static final String identifier = "extractor_piston";
     public static final BooleanProperty hackProp = BooleanProperty.create("hack");
     public static final VoxelShape boundingBox = box(5, 0, 5, 11, 16, 11);
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
-    public static CoreExtractorPistonBlock instance;
+
+    public static RegistryObject<CoreExtractorPistonBlock> instance;
 
     public CoreExtractorPistonBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
@@ -49,7 +48,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements E
 
     @Override
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
-        TileEntityOptional.from(worldIn, pos, CoreExtractorPistonTile.class)
+        TileEntityOptional.from(worldIn, pos, CoreExtractorPistonBlockEntity.class)
                 .ifPresent(te -> {
                     if (te.isActive()) {
                         float random = rand.nextFloat();
@@ -67,7 +66,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements E
 
     @Override
     public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-        if (Direction.DOWN.equals(facing) && !CoreExtractorBaseBlock.instance.equals(facingState.getBlock())) {
+        if (Direction.DOWN.equals(facing) && !CoreExtractorBaseBlock.instance.get().equals(facingState.getBlock())) {
             return state.getValue(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
         }
 
@@ -93,12 +92,12 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements E
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new CoreExtractorPistonTile(pos, state);
+        return new CoreExtractorPistonBlockEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> entityType) {
-        return getTicker(entityType, CoreExtractorPistonTile.type, (lvl, pos, blockState, tile) -> tile.tick(lvl, pos, blockState));
+        return getTicker(entityType, CoreExtractorPistonBlockEntity.type.get(), (lvl, pos, blockState, tile) -> tile.tick(lvl, pos, blockState));
     }
 }

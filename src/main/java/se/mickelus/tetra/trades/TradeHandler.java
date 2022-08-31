@@ -15,24 +15,24 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class TradeHandler {
+    private static void add(VillagerTradesEvent event, int level, VillagerTrades.ItemListing... listings) {
+        event.getTrades().get(level).addAll(Arrays.asList(listings));
+    }
+
     @SubscribeEvent
     public void setupWandererTrades(WandererTradesEvent event) {
         List<VillagerTrades.ItemListing> generic = event.getGenericTrades();
         List<VillagerTrades.ItemListing> rare = event.getRareTrades();
 
         generic.add(new ItemsForScrapTrade(InsulatedPlateItem.instance, 1, 24, 1));
-        generic.add(new ItemsForEmeraldsAndScrapTrade(LubricantDispenserItem.instance, 1, 8, 16, 1));
+        generic.add(new ItemsForEmeraldsAndScrapTrade(LubricantDispenserItem.instance.get(), 1, 8, 16, 1));
         generic.add(new ItemsForEmeraldsAndScrapTrade(QuickLatchItem.instance, 1, 5, 16, 1));
         generic.add(new ItemsForScrapTrade(BoltItem.instance, 1, 32, 2));
 
         rare.add(new ItemsForEmeraldsAndScrapTrade(StonecutterItem.instance, 1, 32, 16, 1));
         rare.add(new ItemsForEmeraldsAndScrapTrade(EarthpiercerItem.instance, 1, 24, 16, 1));
-        rare.add(new ItemsForEmeraldsAndScrapTrade(CombustionChamberItem.instance, 1, 25, 16, 1));
+        rare.add(new ItemsForEmeraldsAndScrapTrade(CombustionChamberItem.instance.get(), 1, 25, 16, 1));
         rare.add(new ItemsForEmeraldsAndScrapTrade(ChthonicExtractorBlock.instance, 1, 8, 16, 5));
-    }
-
-    private static void add(VillagerTradesEvent event, int level, VillagerTrades.ItemListing... listings) {
-        event.getTrades().get(level).addAll(Arrays.asList(listings));
     }
 
     @SubscribeEvent

@@ -35,7 +35,7 @@ public class CoreExtractorPistonUpdatePacket extends BlockPosPacket {
 
     @Override
     public void handle(Player player) {
-        TileEntityOptional.from(player.level, pos, CoreExtractorPistonTile.class)
+        TileEntityOptional.from(player.level, pos, CoreExtractorPistonBlockEntity.class)
                 .ifPresent(tile -> tile.setEndTime(timestamp));
     }
 }

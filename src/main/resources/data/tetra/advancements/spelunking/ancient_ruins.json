@@ -12,44 +12,21 @@
     },
     "parent": "tetra:spelunking/root",
     "criteria": {
-        "wall": {
-            "trigger": "tetra:block_look",
+        "ruin": {
+            "trigger": "minecraft:location",
             "conditions": {
-                "block": "tetra:forged_wall"
-            }
-        },
-        "pillar": {
-            "trigger": "tetra:block_look",
-            "conditions": {
-                "block": "tetra:forged_pillar"
-            }
-        },
-        "platform": {
-            "trigger": "tetra:block_look",
-            "conditions": {
-                "block": "tetra:forged_platform"
-            }
-        },
-        "platform_slab": {
-            "trigger": "tetra:block_look",
-            "conditions": {
-                "block": "tetra:forged_platform_slab"
-            }
-        },
-        "vent": {
-            "trigger": "tetra:block_look",
-            "conditions": {
-                "block": "tetra:forged_vent"
+                "player": [
+                    {
+                        "condition": "minecraft:entity_properties",
+                        "entity": "this",
+                        "predicate": {
+                            "location": {
+                                "structure": "tetra:ancient_ruin"
+                            }
+                        }
+                    }
+                ]
             }
         }
-    },
-    "requirements": [
-        [
-            "wall",
-            "pillar",
-            "platform",
-            "platform_slab",
-            "vent"
-        ]
-    ]
+    }
 }

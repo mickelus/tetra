@@ -33,7 +33,7 @@ public class FracturedBedrockBlock extends TetraBlock implements EntityBlock {
     public static boolean canPierce(Level world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos);
         return Blocks.BEDROCK.equals(blockState.getBlock())
-                || (SeepingBedrockBlock.instance.equals(blockState.getBlock()) && !SeepingBedrockBlock.isActive(blockState));
+                || (blockState.is(SeepingBedrockBlock.instance) && !SeepingBedrockBlock.isActive(blockState));
     }
 
     public static void pierce(Level world, BlockPos pos, int amount) {

@@ -41,7 +41,7 @@ public class CoreExtractorPipeBlock extends TetraBlock {
 
     public static boolean isPowered(Level world, BlockPos pos) {
         BlockState pipeState = world.getBlockState(pos);
-        return instance.equals(pipeState.getBlock()) && pipeState.getValue(poweredProp);
+        return pipeState.is(instance) && pipeState.getValue(poweredProp);
     }
 
     @Override

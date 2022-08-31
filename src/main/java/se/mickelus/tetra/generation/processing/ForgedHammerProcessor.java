@@ -10,7 +10,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
-import se.mickelus.tetra.blocks.forged.hammer.HammerBaseTile;
+import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlockEntity;
 import se.mickelus.tetra.blocks.forged.hammer.HammerEffect;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
 
@@ -44,7 +44,7 @@ public class ForgedHammerProcessor extends StructureProcessor {
                 ThermalCellItem.recharge(cell2, charge2);
             }
 
-            HammerBaseTile.writeCells(newCompound, cell1, cell2);
+            HammerBaseBlockEntity.writeCells(newCompound, cell1, cell2);
 
             HammerEffect module = HammerEffect.efficient;
             if (random.nextFloat() < 0.1) {
@@ -54,9 +54,9 @@ public class ForgedHammerProcessor extends StructureProcessor {
             }
 
             if (random.nextBoolean()) {
-                HammerBaseTile.writeModules(newCompound, module, null);
+                HammerBaseBlockEntity.writeModules(newCompound, module, null);
             } else {
-                HammerBaseTile.writeModules(newCompound, null, module);
+                HammerBaseBlockEntity.writeModules(newCompound, null, module);
             }
 
 

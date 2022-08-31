@@ -12,10 +12,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class BlockForgedPlatformSlab extends SlabBlock implements InitializableBlock {
+public class ForgedPlatformSlabBlock extends SlabBlock implements InitializableBlock {
     public static final String identifier = "forged_platform_slab";
 
-    public BlockForgedPlatformSlab() {
+    public ForgedPlatformSlabBlock() {
         super(ForgedBlockCommon.propertiesSolid);
     }
 

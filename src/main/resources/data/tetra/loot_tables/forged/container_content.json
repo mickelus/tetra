@@ -24,7 +24,7 @@
                 },
                 {
                     "type": "item",
-                    "name": "tetra:magmatic_cell",
+                    "name": "tetra:thermal_cell",
                     "functions": [
                         {
                             "function": "set_damage",
