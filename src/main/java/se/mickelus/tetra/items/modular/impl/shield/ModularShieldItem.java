@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.NonNullLazy;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.network.PacketHandler;
@@ -23,7 +22,6 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.items.modular.impl.BlockProgressOverlay;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
@@ -95,8 +93,6 @@ public class ModularShieldItem extends ItemModularHandheld {
 
         ItemProperties.register(this, new ResourceLocation("blocking"),
                 (itemStack, world, entity, i) -> entity != null && entity.isUsingItem() && entity.getUseItem() == itemStack ? 1.0F : 0.0F);
-
-        MinecraftForge.EVENT_BUS.register(new BlockProgressOverlay(Minecraft.getInstance()));
     }
 
     private ItemStack copyBanner(ItemStack original, ItemStack replacement) {

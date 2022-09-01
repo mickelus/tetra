@@ -19,10 +19,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.network.PacketHandler;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
@@ -30,7 +28,6 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.JumpHandlerBooster;
-import se.mickelus.tetra.items.modular.impl.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket;
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltScreen;
@@ -59,7 +56,6 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 18, 4, 0, 4, 18);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-13, 0);
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static RegistryObject<ModularToolbeltItem> instance;
 
     public ModularToolbeltItem() {
@@ -94,8 +90,6 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
         super.clientInit();
         MinecraftForge.EVENT_BUS.register(new JumpHandlerBooster(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new JumpHandlerSuspend(Minecraft.getInstance()));
-        MinecraftForge.EVENT_BUS.register(new OverlayToolbelt(Minecraft.getInstance()));
-        MinecraftForge.EVENT_BUS.register(new OverlayBooster(Minecraft.getInstance()));
         MenuScreens.register(ToolbeltContainer.type.get(), ToolbeltScreen::new);
     }
 

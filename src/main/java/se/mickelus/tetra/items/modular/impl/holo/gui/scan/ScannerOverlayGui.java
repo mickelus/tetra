@@ -19,11 +19,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiRoot;
@@ -37,7 +37,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
-public class ScannerOverlayGui extends GuiRoot {
+public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
     public static final TagKey<Block> tag = BlockTags.create(new ResourceLocation("tetra", "scannable"));
     private static final int snoozeLength = 6000; // 5 min
     public static ScannerOverlayGui instance;
@@ -143,7 +143,6 @@ public class ScannerOverlayGui extends GuiRoot {
         }
     }
 
-
     @SubscribeEvent
     public void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         mc.getSoundManager().stop(sound);
@@ -248,13 +247,8 @@ public class ScannerOverlayGui extends GuiRoot {
         return new Vec3(f3 * f4, -f5, f2 * f4);
     }
 
-    @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onRenderOverlay(RenderGuiOverlayEvent.Post event) {
-        draw();
-    }
-
     @Override
-    public void draw() {
+    public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
         if (isVisible()) {
             Window window = mc.getWindow();
             width = window.getGuiScaledWidth();
@@ -263,7 +257,7 @@ public class ScannerOverlayGui extends GuiRoot {
             int mouseX = (int) (mc.mouseHandler.xpos() * width / window.getScreenWidth());
             int mouseY = (int) (mc.mouseHandler.ypos() * height / window.getScreenHeight());
 
-            this.drawChildren(new PoseStack(), 0, 0, width, height, mouseX, mouseY, 1.0F);
+            this.drawChildren(poseStack, 0, 0, width, height, mouseX, mouseY, 1.0F);
 
             widthRatio = scanner.getWidth() * 1f / width;
         }

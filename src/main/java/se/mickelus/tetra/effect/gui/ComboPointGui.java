@@ -22,7 +22,7 @@ public class ComboPointGui extends GuiElement {
 
         setAttachment(GuiAttachment.middleCenter);
 
-        container = new InvertColorGui(0, 0, 15, 3);
+        container = new InvertColorGui(0, 0, 16, 3);
         addChild(container);
 
         points = new Point[4];

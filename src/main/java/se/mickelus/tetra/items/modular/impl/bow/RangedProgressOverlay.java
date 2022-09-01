@@ -1,42 +1,44 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class RangedProgressOverlay {
-    public static RangedProgressOverlay instance;
-
+public class RangedProgressOverlay implements IGuiOverlay {
     private final Minecraft mc;
-
     private final GuiRangedProgress gui;
 
     public RangedProgressOverlay(Minecraft mc) {
         this.mc = mc;
 
         gui = new GuiRangedProgress(mc);
-
-        instance = this;
     }
 
-    @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onRenderOverlay(RenderGuiOverlayEvent.Post event) {
-        ItemStack activeStack = mc.player.getUseItem();
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        if (TickEvent.Phase.END == event.phase && mc.player != null) {
+            ItemStack activeStack = mc.player.getUseItem();
 
-        if (activeStack.getItem() instanceof ModularBowItem) {
-            ModularBowItem item = (ModularBowItem) activeStack.getItem();
-            gui.setProgress(
-                    item.getProgress(activeStack, mc.player),
-                    item.getOverbowProgress(activeStack, mc.player));
-        } else {
-            gui.setProgress(0, 0);
+            if (activeStack.getItem() instanceof ModularBowItem) {
+                ModularBowItem item = (ModularBowItem) activeStack.getItem();
+                gui.setProgress(
+                        item.getProgress(activeStack, mc.player),
+                        item.getOverbowProgress(activeStack, mc.player));
+            } else {
+                gui.setProgress(0, 0);
+            }
         }
+    }
 
-        gui.draw();
+    @Override
+    public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+        this.gui.draw(poseStack);
     }
 }

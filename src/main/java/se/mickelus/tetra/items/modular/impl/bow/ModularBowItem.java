@@ -4,7 +4,6 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -124,7 +123,6 @@ public class ModularBowItem extends ModularItem {
     @Override
     public void clientInit() {
         super.clientInit();
-        MinecraftForge.EVENT_BUS.register(new RangedProgressOverlay(Minecraft.getInstance()));
         MinecraftForge.EVENT_BUS.register(new RangedFOVTransformer());
     }
 

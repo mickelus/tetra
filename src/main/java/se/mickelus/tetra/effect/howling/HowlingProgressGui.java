@@ -62,16 +62,23 @@ public class HowlingProgressGui extends GuiRoot {
 
         hideAnimation = new KeyframeAnimation(100, container)
                 .applyTo(new Applier.Opacity(0), new Applier.TranslateY(42))
-                .withDelay(500);
+                .withDelay(500)
+                .onStop(finished -> {
+                    if (finished) {
+                        container.setVisible(false);
+                    }
+                });
     }
 
     public void updateAmplifier(int progress) {
         if (progress > -1) {
-
             if (!showAnimation.isActive() && container.getOpacity() < 1) {
+                container.setVisible(true);
                 showAnimation.start();
             }
-            hideAnimation.stop();
+            if (hideAnimation.isActive()) {
+                hideAnimation.stop();
+            }
 
             for (int i = 0; i < indicators.length; i++) {
                 if (i <= progress) {
@@ -89,7 +96,7 @@ public class HowlingProgressGui extends GuiRoot {
     }
 
     public void draw(PoseStack matrixStack) {
-        if (isVisible()) {
+        if (container.isVisible()) {
             Window window = mc.getWindow();
             int width = window.getGuiScaledWidth();
             int height = window.getGuiScaledHeight();

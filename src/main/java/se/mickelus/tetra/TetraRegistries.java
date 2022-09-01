@@ -19,11 +19,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -79,19 +79,25 @@ import se.mickelus.tetra.items.modular.ItemPredicateModular;
 import se.mickelus.tetra.items.modular.MaterialItemPredicate;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.ThrownModularItemRenderer;
+import se.mickelus.tetra.items.modular.impl.BlockProgressOverlay;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
+import se.mickelus.tetra.items.modular.impl.bow.RangedProgressOverlay;
+import se.mickelus.tetra.items.modular.impl.crossbow.CrossbowOverlay;
 import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.crossbow.ShootableDummyItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
+import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldBannerModel;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldModel;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldRenderer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
+import se.mickelus.tetra.items.modular.impl.toolbelt.OverlayToolbelt;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
+import se.mickelus.tetra.items.modular.impl.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.SuspendPotionEffect;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.ReplaceTableModifier;
@@ -221,25 +227,15 @@ public class TetraRegistries {
                 () -> BlockEntityType.Builder.of(ScrollTile::new, openScroll.get(), wallScroll.get(), rolledScroll.get()).build(null));
 
         HammerBaseBlockEntity.type = blockEntities.register(HammerBaseBlock.identifier,
-                () -> BlockEntityType.Builder.of(HammerBaseBlockEntity::new, HammerBaseBlock.instance)
-                        .build(null));
-
+                () -> BlockEntityType.Builder.of(HammerBaseBlockEntity::new, HammerBaseBlock.instance).build(null));
         HammerHeadBlockEntity.type = blockEntities.register(HammerHeadBlock.identifier,
-                () -> BlockEntityType.Builder.of(HammerHeadBlockEntity::new, HammerHeadBlock.instance)
-                        .build(null));
-
+                () -> BlockEntityType.Builder.of(HammerHeadBlockEntity::new, HammerHeadBlock.instance).build(null));
         TransferUnitBlockEntity.type = blockEntities.register(TransferUnitBlock.identifier,
-                () -> BlockEntityType.Builder.of(TransferUnitBlockEntity::new, transferUnit.get())
-                        .build(null));
-
+                () -> BlockEntityType.Builder.of(TransferUnitBlockEntity::new, transferUnit.get()).build(null));
         blockEntities.register(CoreExtractorBaseBlock.identifier,
-                () -> BlockEntityType.Builder.of(CoreExtractorBaseBlockEntity::new, CoreExtractorBaseBlock.instance.get())
-                        .build(null));
-
+                () -> BlockEntityType.Builder.of(CoreExtractorBaseBlockEntity::new, CoreExtractorBaseBlock.instance.get()).build(null));
         CoreExtractorPistonBlockEntity.type = blockEntities.register(CoreExtractorPistonBlock.identifier,
-                () -> BlockEntityType.Builder.of(CoreExtractorPistonBlockEntity::new, CoreExtractorPistonBlock.instance.get())
-                        .build(null));
-
+                () -> BlockEntityType.Builder.of(CoreExtractorPistonBlockEntity::new, CoreExtractorPistonBlock.instance.get()).build(null));
         ForgedContainerBlockEntity.type = blockEntities.register(ForgedContainerBlock.identifier,
                 () -> BlockEntityType.Builder.of(ForgedContainerBlockEntity::new, ForgedContainerBlock.instance.get())
                         .build(null));
@@ -386,8 +382,6 @@ public class TetraRegistries {
                 // these are registered here as there are multiple instances of workbench blocks
                 MenuScreens.register(WorkbenchContainer.containerType.get(), WorkbenchScreen::new);
 
-                MinecraftForge.EVENT_BUS.register(new HowlingOverlay(Minecraft.getInstance()));
-                MinecraftForge.EVENT_BUS.register(new AbilityOverlays(Minecraft.getInstance()));
                 MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
 
                 BotaniaCompat.clientInit();
@@ -405,13 +399,11 @@ public class TetraRegistries {
     }
 
     @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
     public static void modelRegistryReady(RegisterGeometryLoaders event) {
         event.register("modular_loader", new ModularModelLoader());
     }
 
     @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
     public static void registerEntityLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ForgedContainerRenderer.layer, ForgedContainerRenderer::createLayer);
         event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
@@ -422,7 +414,6 @@ public class TetraRegistries {
     }
 
     @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ExtractorProjectileEntity.type, ExtractorProjectileRenderer::new);
         event.registerEntityRenderer(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
@@ -438,5 +429,23 @@ public class TetraRegistries {
         if (ConfigHandler.development.get()) {
             event.registerBlockEntityRenderer(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureRenderer::new);
         }
+    }
+
+    @SubscribeEvent
+    public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+        var mc = Minecraft.getInstance();
+        registerOverlay(event, "howling", new HowlingOverlay(mc));
+        registerOverlay(event, "ability_overlays", new AbilityOverlays(mc));
+        registerOverlay(event, "toolbelt", new OverlayToolbelt(mc));
+        registerOverlay(event, "booster", new OverlayBooster(mc));
+        registerOverlay(event, "block_progresss", new BlockProgressOverlay(mc));
+        registerOverlay(event, "ranged_progresss", new RangedProgressOverlay(mc));
+        registerOverlay(event, "crossbow", new CrossbowOverlay(mc));
+        registerOverlay(event, "scanner", new ScannerOverlayGui());
+    }
+
+    private static void registerOverlay(RegisterGuiOverlaysEvent event, String identifier, IGuiOverlay overlay) {
+        event.registerBelowAll(identifier, overlay);
+        MinecraftForge.EVENT_BUS.register(overlay);
     }
 }

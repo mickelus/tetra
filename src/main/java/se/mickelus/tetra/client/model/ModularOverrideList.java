@@ -114,7 +114,7 @@ public class ModularOverrideList extends ItemOverrides {
             }
         }
 
-        ItemLayerModel itemLayerModel = new ItemLayerModel(textures, builder.get(), renderTypes);
+        var itemLayerModel = new ItemLayerModel(textures, builder.get(), renderTypes);
         return itemLayerModel.bake(wrappedContext, bakery, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
 
 //        return realBake(models, transformVariant, context, bakery, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);

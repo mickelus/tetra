@@ -53,7 +53,7 @@ public class OverlayGuiToolbelt extends GuiRoot {
     }
 
     @Override
-    public void draw() {
+    public void draw(PoseStack poseStack) {
         if (isVisible()) {
             Window window = mc.getWindow();
             int width = window.getGuiScaledWidth();
