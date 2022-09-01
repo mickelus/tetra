@@ -24,7 +24,7 @@
                 "breakable": 2
             },
             "tools": {
-                "pickaxe_dig": [ 3, 8 ]
+                "pickaxe_dig": [ 3, 12 ]
             },
             "effects": {
                 "strikingPickaxe": 1,
