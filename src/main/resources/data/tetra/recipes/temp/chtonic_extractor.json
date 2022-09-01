@@ -7,10 +7,11 @@
     ],
     "key": {
         "c": { "item": "minecraft:copper_ingot" },
-        "p": { "item": "minecraft:ender_pearl" },
+        "p": { "item": "minecraft:echo_shard" },
         "s": { "item": "minecraft:netherite_scrap" }
     },
     "result": {
-        "item": "tetra:chthonic_extractor"
+        "item": "tetra:chthonic_extractor",
+        "count": 4
     }
 }
