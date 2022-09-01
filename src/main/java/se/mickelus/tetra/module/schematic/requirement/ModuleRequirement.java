@@ -27,8 +27,9 @@ public class ModuleRequirement implements CraftingRequirement {
             if (moduleVariant != null && !moduleVariant.equals(context.targetModule.getVariantData(context.targetStack).key)) {
                 return false;
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
     public static class Deserializer implements JsonDeserializer<CraftingRequirement> {
