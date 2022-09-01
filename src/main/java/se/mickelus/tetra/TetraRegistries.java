@@ -19,6 +19,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
@@ -364,6 +366,7 @@ public class TetraRegistries {
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             // enqueueWork swallows exceptions without logging
@@ -394,16 +397,19 @@ public class TetraRegistries {
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
-        Minecraft.getInstance().particleEngine.register(SparkleParticleType.instance, SparkleParticle.Provider::new);
+        event.register(SparkleParticleType.instance, SparkleParticle.Provider::new);
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void modelRegistryReady(RegisterGeometryLoaders event) {
         event.register("modular_loader", new ModularModelLoader());
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void registerEntityLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ForgedContainerRenderer.layer, ForgedContainerRenderer::createLayer);
         event.registerLayerDefinition(HammerBaseRenderer.layer, HammerBaseRenderer::createLayer);
@@ -414,6 +420,7 @@ public class TetraRegistries {
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ExtractorProjectileEntity.type, ExtractorProjectileRenderer::new);
         event.registerEntityRenderer(ThrownModularItemEntity.type, ThrownModularItemRenderer::new);
@@ -432,6 +439,7 @@ public class TetraRegistries {
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
         var mc = Minecraft.getInstance();
         registerOverlay(event, "howling", new HowlingOverlay(mc));
