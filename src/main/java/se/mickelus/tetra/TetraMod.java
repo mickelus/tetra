@@ -1,11 +1,7 @@
 package se.mickelus.tetra;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,9 +13,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
-import se.mickelus.tetra.blocks.forged.container.ForgedContainerRenderer;
-import se.mickelus.tetra.blocks.forged.hammer.HammerBaseRenderer;
-import se.mickelus.tetra.blocks.scroll.ScrollRenderer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
@@ -51,9 +44,6 @@ import se.mickelus.tetra.module.schematic.BookEnchantSchematic;
 import se.mickelus.tetra.module.schematic.CleanseSchematic;
 import se.mickelus.tetra.module.schematic.requirement.*;
 import se.mickelus.tetra.properties.TetraAttributes;
-import se.mickelus.tetra.proxy.ClientProxy;
-import se.mickelus.tetra.proxy.IProxy;
-import se.mickelus.tetra.proxy.ServerProxy;
 import se.mickelus.tetra.trades.TradeHandler;
 import se.mickelus.tetra.util.TierHelper;
 import se.mickelus.tetra.util.ToolActionHelper;
@@ -67,7 +57,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class TetraMod {
     public static final String MOD_ID = "tetra";
     private static final Logger logger = LogManager.getLogger();
-    public static IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
     public static TetraMod instance;
     public static PacketHandler packetHandler;
@@ -75,6 +64,7 @@ public class TetraMod {
     public TetraMod() {
         TetraRegistries.init(FMLJavaModLoadingContext.get().getModEventBus());
         TetraEnchantmentHelper.init();
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientSetup::init);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(CuriosCompat::enqueueIMC);
@@ -84,7 +74,6 @@ public class TetraMod {
         MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
         MinecraftForge.EVENT_BUS.register(new TradeHandler());
         MinecraftForge.EVENT_BUS.register(new DataManager());
-        MinecraftForge.EVENT_BUS.register(TetraMod.proxy);
         MinecraftForge.EVENT_BUS.register(new VibrationDebuffer());
         MinecraftForge.EVENT_BUS.register(ServerScheduler.class);
         MinecraftForge.EVENT_BUS.register(ClientScheduler.class);
@@ -130,25 +119,6 @@ public class TetraMod {
         CraftingRequirementDeserializer.registerSupplier("tetra:perk", PerkRequrement.class);
 
         packetHandler = new PacketHandler(MOD_ID, "main", "1");
-    }
-
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void provideTextures(final TextureStitchEvent.Pre event) {
-        // todo: Move this to ModularItemModel.getTextures?
-        if (TextureAtlas.LOCATION_BLOCKS.equals(event.getAtlas().location())) {
-            Minecraft.getInstance().getResourceManager().listResources("textures/items/module", rl -> rl.getPath().endsWith(".png"))
-                    .keySet()
-                    .stream()
-                    .filter(rl -> MOD_ID.equals(rl.getNamespace()))
-                    // 9 is the length of "textures/" & 4 is the length of ".png"
-                    .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
-                    .forEach(event::addSprite);
-
-            event.addSprite(ForgedContainerRenderer.material.texture());
-            event.addSprite(HammerBaseRenderer.material.texture());
-            event.addSprite(ScrollRenderer.material.texture());
-        }
     }
 
 //    @SubscribeEvent

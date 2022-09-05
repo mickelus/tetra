@@ -1,8 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -11,13 +9,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.client.settings.KeyConflictContext;
-import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.lwjgl.glfw.GLFW;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.OverlayGuiToolbelt;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
@@ -25,55 +19,32 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class OverlayToolbelt implements IGuiOverlay {
-
-    public static final String bindingGroup = "tetra.toolbelt.binding.group";
-    public static OverlayToolbelt instance;
+public class ToolbeltOverlay implements IGuiOverlay {
     private final Minecraft mc;
     private final OverlayGuiToolbelt gui;
-    public KeyMapping accessBinding;
-    public KeyMapping restockBinding;
-    public KeyMapping openBinding;
     private long openTime = -1;
     // due to gui visibility tricks, let's use this to keep track of when we should show or hide the gui
     private boolean isActive = false;
 
-    public OverlayToolbelt(Minecraft mc) {
+    public ToolbeltOverlay(Minecraft mc) {
         this.mc = mc;
-
         gui = new OverlayGuiToolbelt(mc);
-
-        accessBinding = new KeyMapping("tetra.toolbelt.binding.access", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_B, bindingGroup);
-        restockBinding = new KeyMapping("tetra.toolbelt.binding.restock", KeyConflictContext.IN_GAME, KeyModifier.SHIFT,
-                InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, bindingGroup);
-        openBinding = new KeyMapping("tetra.toolbelt.binding.open", KeyConflictContext.IN_GAME, KeyModifier.ALT,
-                InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, bindingGroup);
-
-        instance = this;
-    }
-
-    @SubscribeEvent
-    public void registerKeyMappings(RegisterKeyMappingsEvent event) {
-        event.register(accessBinding);
-        event.register(restockBinding);
-        event.register(openBinding);
     }
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.Key event) {
-        if (restockBinding.isDown()) {
+        if (ToolbeltKeyMappings.restockBinding.isDown()) {
             equipToolbeltItem(ToolbeltSlotType.quickslot, -1, InteractionHand.OFF_HAND);
-        } else if (openBinding.isDown()) {
+        } else if (ToolbeltKeyMappings.openBinding.isDown()) {
             openToolbelt();
-        } else if (accessBinding.isDown() && mc.isWindowActive() && !isActive) {
+        } else if (ToolbeltKeyMappings.accessBinding.isDown() && mc.isWindowActive() && !isActive) {
             showView();
         }
     }
 
     @Override
     public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
-        if (!accessBinding.isDown() && isActive) {
+        if (!ToolbeltKeyMappings.accessBinding.isDown() && isActive) {
             hideView();
         }
 

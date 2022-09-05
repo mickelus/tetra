@@ -14,8 +14,8 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiKeybinding;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
-import se.mickelus.tetra.items.modular.impl.toolbelt.OverlayToolbelt;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltKeyMappings;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -78,11 +78,11 @@ public class ToolbeltScreen extends AbstractContainerScreen<ToolbeltContainer> {
         GuiHorizontalLayoutGroup keybindGroup = new GuiHorizontalLayoutGroup(0, -5, 11, 8);
         keybindGroup.setAttachment(GuiAttachment.bottomCenter);
         keybindGui.addChild(keybindGroup);
-        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.accessBinding));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, ToolbeltKeyMappings.accessBinding));
         keybindGroup.addChild(new GuiRect(0, -1, 1, 13, GuiColors.mutedStrong));
-        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.restockBinding));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, ToolbeltKeyMappings.restockBinding));
         keybindGroup.addChild(new GuiRect(0, -1, 1, 13, GuiColors.mutedStrong));
-        keybindGroup.addChild(new GuiKeybinding(0, 0, OverlayToolbelt.instance.openBinding));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, ToolbeltKeyMappings.openBinding));
 
         instance = this;
     }
