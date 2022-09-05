@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -134,14 +135,19 @@ public class ClientSetup {
     @SubscribeEvent
     public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
         var mc = Minecraft.getInstance();
-        event.registerBelowAll("howling", new HowlingOverlay(mc));
-        event.registerBelowAll("ability_overlays", new AbilityOverlays(mc));
-        event.registerBelowAll("toolbelt", new ToolbeltOverlay(mc));
-        event.registerBelowAll("booster", new OverlayBooster(mc));
-        event.registerBelowAll("block_progresss", new BlockProgressOverlay(mc));
-        event.registerBelowAll("ranged_progresss", new RangedProgressOverlay(mc));
-        event.registerBelowAll("crossbow", new CrossbowOverlay(mc));
-        event.registerBelowAll("scanner", new ScannerOverlayGui());
+        registerOverlay(event, "howling", new HowlingOverlay(mc));
+        registerOverlay(event, "ability_overlays", new AbilityOverlays(mc));
+        registerOverlay(event, "toolbelt", new ToolbeltOverlay(mc));
+        registerOverlay(event, "booster", new OverlayBooster(mc));
+        registerOverlay(event, "block_progresss", new BlockProgressOverlay(mc));
+        registerOverlay(event, "ranged_progresss", new RangedProgressOverlay(mc));
+        registerOverlay(event, "crossbow", new CrossbowOverlay(mc));
+        registerOverlay(event, "scanner", new ScannerOverlayGui());
+    }
+
+    private static void registerOverlay(RegisterGuiOverlaysEvent event, String id, IGuiOverlay overlay) {
+        event.registerBelowAll(id, overlay);
+        MinecraftForge.EVENT_BUS.register(overlay);
     }
 
     @SubscribeEvent
