@@ -1,6 +1,7 @@
 package se.mickelus.tetra.client.model;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
@@ -8,6 +9,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.RenderTypeGroup;
 import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
@@ -79,13 +81,10 @@ public final class UnresolvedItemModel implements IUnbakedGeometry<UnresolvedIte
 
     private static class Baked extends SimpleBakedModel {
         private static final Material MISSING_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, MissingTextureAtlasSprite.getLocation());
-        private final ItemOverrides itemOverrideList;
 
         public Baked(ItemOverrides itemOverrideList) {
             super(List.of(), Map.of(), false, false, false, UnitTextureAtlasSprite.INSTANCE, ItemTransforms.NO_TRANSFORMS,
-                    ItemOverrides.EMPTY, RenderTypeGroup.EMPTY);
-
-            this.itemOverrideList = itemOverrideList;
+                    itemOverrideList, RenderTypeGroup.EMPTY);
         }
 
         @Override
@@ -94,8 +93,8 @@ public final class UnresolvedItemModel implements IUnbakedGeometry<UnresolvedIte
         }
 
         @Override
-        public ItemOverrides getOverrides() {
-            return itemOverrideList;
+        public List<RenderType> getRenderTypes(ItemStack itemStack, boolean fabulous) {
+            return List.of();
         }
     }
 }
