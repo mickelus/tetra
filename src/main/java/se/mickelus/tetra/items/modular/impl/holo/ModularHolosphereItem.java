@@ -14,7 +14,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.TetraMod;
@@ -77,13 +76,6 @@ public class ModularHolosphereItem extends ModularItem {
     @Override
     public void commonInit(PacketHandler packetHandler) {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("holo/"));
-    }
-
-    @Override
-    public void clientInit() {
-        super.clientInit();
-
-        MinecraftForge.EVENT_BUS.register(new ScannerOverlayGui());
     }
 
     @Override
