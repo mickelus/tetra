@@ -84,7 +84,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         registerDefaultState(defaultBlockState()
                 .setValue(plateProp, false)
                 .setValue(cellProp, 0)
-                .setValue(configProp, EnumTransferConfig.a)
+                .setValue(configProp, EnumTransferConfig.send)
                 .setValue(transferProp, EnumTransferState.none));
     }
 
@@ -127,24 +127,22 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
      *
      * @return the effect with redstone power taken into consideration
      */
-    public static EnumTransferEffect getEffectPowered(Level world, BlockPos pos, BlockState blockState) {
-        EnumTransferEffect effect = EnumTransferEffect.fromConfig(blockState.getValue(configProp), 0);
-        if (effect.equals(EnumTransferEffect.redstone)) {
-            Direction facing = blockState.getValue(facingProp);
-
-            if (world.hasSignal(pos.relative(facing.getClockWise()), facing.getClockWise())) {
-                return EnumTransferEffect.send;
-            }
-
-            if (world.hasSignal(pos.relative(facing.getCounterClockWise()), facing.getCounterClockWise())) {
-                return EnumTransferEffect.receive;
-            }
+    public static EnumTransferConfig getEffectPowered(Level world, BlockPos pos, BlockState blockState) {
+        EnumTransferConfig effect = blockState.getValue(configProp);
+        if (effect.equals(EnumTransferConfig.redstone)) {
+            return world.hasNeighborSignal(pos)
+                    ? EnumTransferConfig.send
+                    : EnumTransferConfig.receive;
         }
         return effect;
     }
 
     public static void setReceiving(Level world, BlockPos pos, BlockState blockState, boolean receiving) {
-        EnumTransferState newState = receiving ? EnumTransferState.receiving : EnumTransferState.none;
+        if (receiving) {
+            world.setBlock(pos, blockState.setValue(transferProp, EnumTransferState.receiving), Block.UPDATE_CLIENTS);
+        } else {
+            world.setBlock(pos, blockState.setValue(transferProp, EnumTransferState.none), Block.UPDATE_CLIENTS);
+        }
     }
 
     public static boolean isReceiving(BlockState blockState) {
@@ -152,7 +150,11 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     }
 
     public static void setSending(Level world, BlockPos pos, BlockState blockState, boolean sending) {
-        EnumTransferState newState = sending ? EnumTransferState.sending : EnumTransferState.none;
+        if (sending) {
+            world.setBlock(pos, blockState.setValue(transferProp, EnumTransferState.sending), Block.UPDATE_CLIENTS);
+        } else {
+            world.setBlock(pos, blockState.setValue(transferProp, EnumTransferState.none), Block.UPDATE_CLIENTS);
+        }
     }
 
     public static boolean isSending(BlockState blockState) {

@@ -57,51 +57,51 @@
             "apply": { "model": "tetra:block/cell_protude_top_charged" }
         },
         {
-            "when": { "config": "a", "facing": "north" },
+            "when": { "config": "send", "facing": "north" },
             "apply": { "model": "tetra:block/transfer_unit_config0", "y": 0 }
         },
         {
-            "when": { "config": "a", "facing": "south" },
+            "when": { "config": "send", "facing": "south" },
             "apply": { "model": "tetra:block/transfer_unit_config0", "y": 180 }
         },
         {
-            "when": { "config": "a", "facing": "west" },
+            "when": { "config": "send", "facing": "west" },
             "apply": { "model": "tetra:block/transfer_unit_config0", "y": -90 }
         },
         {
-            "when": { "config": "a", "facing": "east" },
+            "when": { "config": "send", "facing": "east" },
             "apply": { "model": "tetra:block/transfer_unit_config0", "y": 90 }
         },
         {
-            "when": { "config": "b", "facing": "north" },
+            "when": { "config": "redstone", "facing": "north" },
             "apply": { "model": "tetra:block/transfer_unit_config1", "y": 0 }
         },
         {
-            "when": { "config": "b", "facing": "south" },
+            "when": { "config": "redstone", "facing": "south" },
             "apply": { "model": "tetra:block/transfer_unit_config1", "y": 180 }
         },
         {
-            "when": { "config": "b", "facing": "west" },
+            "when": { "config": "redstone", "facing": "west" },
             "apply": { "model": "tetra:block/transfer_unit_config1", "y": -90 }
         },
         {
-            "when": { "config": "b", "facing": "east" },
+            "when": { "config": "redstone", "facing": "east" },
             "apply": { "model": "tetra:block/transfer_unit_config1", "y": 90 }
         },
         {
-            "when": { "config": "c", "facing": "north" },
+            "when": { "config": "receive", "facing": "north" },
             "apply": { "model": "tetra:block/transfer_unit_config2", "y": 0 }
         },
         {
-            "when": { "config": "c", "facing": "south" },
+            "when": { "config": "receive", "facing": "south" },
             "apply": { "model": "tetra:block/transfer_unit_config2", "y": 180 }
         },
         {
-            "when": { "config": "c", "facing": "west" },
+            "when": { "config": "receive", "facing": "west" },
             "apply": { "model": "tetra:block/transfer_unit_config2", "y": -90 }
         },
         {
-            "when": { "config": "c", "facing": "east" },
+            "when": { "config": "receive", "facing": "east" },
             "apply": { "model": "tetra:block/transfer_unit_config2", "y": 90 }
         },
         {

@@ -1,6 +1,5 @@
 {
     "parent": "block/block",
-    "render_type": "cutout",
     "textures": {
         "particle": "tetra:blocks/transfer_unit",
         "down": "tetra:blocks/transfer_unit",
@@ -8,8 +7,7 @@
         "north": "tetra:blocks/transfer_unit",
         "south": "tetra:blocks/transfer_unit_config1",
         "east": "tetra:blocks/transfer_unit_indicator_idle",
-        "west": "tetra:blocks/transfer_unit_indicator_idle",
-        "plate": "tetra:blocks/transfer_unit_plate"
+        "west": "tetra:blocks/transfer_unit_indicator_idle"
     },
     "elements": [
         {

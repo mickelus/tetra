@@ -44,13 +44,13 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
     }
 
     public boolean canRecieve() {
-        return TransferUnitBlock.getEffectPowered(level, worldPosition, getBlockState()).equals(EnumTransferEffect.receive)
+        return TransferUnitBlock.getEffectPowered(level, worldPosition, getBlockState()).equals(EnumTransferConfig.receive)
                 && hasCell()
                 && getCharge() < ThermalCellItem.maxCharge;
     }
 
     public boolean canSend() {
-        return TransferUnitBlock.getEffectPowered(level, worldPosition, getBlockState()).equals(EnumTransferEffect.send)
+        return TransferUnitBlock.getEffectPowered(level, worldPosition, getBlockState()).equals(EnumTransferConfig.send)
                 && hasCell()
                 && getCharge() > 0;
     }

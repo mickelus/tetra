@@ -3,10 +3,11 @@
     "textures": {
         "plate": "tetra:blocks/transfer_unit_plate"
     },
+    "render_type": "cutout",
     "elements": [
         {
-            "from": [ 1, 0, 0 ],
-            "to": [ 15, 12, 13 ],
+            "from": [ 1.01, 0, 0 ],
+            "to": [ 15, 12, 13.01 ],
             "faces": {
                 "south": { "texture": "#plate", "uv": [ 0, 0, 14, 12 ] }
             }

@@ -3,9 +3,9 @@ package se.mickelus.tetra.blocks.forged.transfer;
 import net.minecraft.util.StringRepresentable;
 
 public enum EnumTransferConfig implements StringRepresentable {
-    a,
-    b,
-    c;
+    send,
+    redstone,
+    receive;
 
     public static EnumTransferConfig getNextConfiguration(EnumTransferConfig config) {
         int index = (config.ordinal() + 1) % values().length;
