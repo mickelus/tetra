@@ -8,6 +8,7 @@ import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
@@ -120,6 +121,7 @@ public class RemoveSchematic extends BaseSchematic {
 
         ItemModule previousModule = item.getModuleFromSlot(upgradedStack, slot);
         if (previousModule != null) {
+            TetraEnchantmentHelper.removeEnchantments(upgradedStack, slot);
             previousModule.removeModule(upgradedStack);
             if (consumeMaterials) {
                 previousModule.postRemove(upgradedStack, player);
