@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.modular.impl;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -35,6 +36,7 @@ import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
@@ -132,17 +134,20 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
     @Override
     public String getDisplayNamePrefixes(ItemStack itemStack) {
-        String modulePrefix = Optional.ofNullable(getModuleFromSlot(itemStack, headLeftKey))
-                .map(module -> module.getItemPrefix(itemStack))
-                .map(prefix -> prefix + " ")
-                .orElse("");
-        return Arrays.stream(getImprovements(itemStack))
-                .map(improvement -> improvement.key + ".prefix")
-                .filter(I18n::exists)
-                .map(I18n::get)
-                .findFirst()
-                .map(prefix -> prefix + " " + modulePrefix)
-                .orElse(modulePrefix);
+        return Stream.concat(
+                        Arrays.stream(getImprovements(itemStack))
+                                .map(improvement -> Pair.of(improvement.prefixPriority, "tetra.improvement." + improvement.key + ".prefix"))
+                                .filter(pair -> I18n.exists(pair.getSecond()))
+                                .map(pair -> Pair.of(pair.getFirst(), I18n.get(pair.getSecond()))),
+                        getAllModules(itemStack).stream()
+                                .filter(module -> headLeftKey.equals(module.getSlot()) || module.getItemPrefixPriority(itemStack) != Priority.BASE)
+                                .map(module -> Pair.of(module.getItemPrefixPriority(itemStack), module.getItemPrefix(itemStack)))
+                                .filter(pair -> pair.getSecond() != null)
+                )
+                .sorted(Comparator.<Pair<Priority, String>, Priority>comparing(Pair::getFirst).reversed())
+                .limit(2)
+                .map(Pair::getSecond)
+                .reduce("", (result, prefix) -> result + prefix + " ");
     }
 
     // overridden to not stack the damage attribute between heads

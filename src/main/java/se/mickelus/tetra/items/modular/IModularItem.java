@@ -2,6 +2,7 @@ package se.mickelus.tetra.items.modular;
 
 import com.google.common.cache.Cache;
 import com.google.common.collect.*;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
@@ -25,6 +26,7 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.forgespi.Environment;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.util.CastOptional;
@@ -39,6 +41,7 @@ import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
+import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
@@ -878,15 +881,16 @@ public interface IModularItem {
     default String getDisplayNamePrefixes(ItemStack itemStack) {
         return Stream.concat(
                         Arrays.stream(getImprovements(itemStack))
-                                .map(improvement -> improvement.key + ".prefix")
-                                .filter(I18n::exists)
-                                .map(I18n::get),
+                                .map(improvement -> Pair.of(improvement.prefixPriority, "tetra.improvement." + improvement.key + ".prefix"))
+                                .filter(pair -> I18n.exists(pair.getSecond()))
+                                .map(pair -> Pair.of(pair.getFirst(), I18n.get(pair.getSecond()))),
                         getAllModules(itemStack).stream()
-                                .sorted(Comparator.comparing(module -> module.getItemPrefixPriority(itemStack)))
-                                .map(module -> module.getItemPrefix(itemStack))
-                                .filter(Objects::nonNull)
+                                .map(module -> Pair.of(module.getItemPrefixPriority(itemStack), module.getItemPrefix(itemStack)))
+                                .filter(pair -> pair.getSecond() != null)
                 )
+                .sorted(Comparator.<Pair<Priority, String>, Priority>comparing(Pair::getFirst).reversed())
                 .limit(2)
+                .map(Pair::getSecond)
                 .reduce("", (result, prefix) -> result + prefix + " ");
     }
 
@@ -907,14 +911,14 @@ public interface IModularItem {
 
         if (name == null) {
             name = getAllModules(itemStack).stream()
-                    .sorted(Comparator.comparing(module -> module.getItemNamePriority(itemStack)))
+                    .sorted(Comparator.<ItemModule, Priority>comparing(module -> module.getItemNamePriority(itemStack)).reversed())
                     .map(module -> module.getItemName(itemStack))
                     .filter(Objects::nonNull)
                     .findFirst().orElse("");
         }
 
         String prefixes = getDisplayNamePrefixes(itemStack);
-        return StringUtils.capitalize(prefixes + name);
+        return WordUtils.capitalize(prefixes + name);
     }
 
     SynergyData[] getAllSynergyData(ItemStack itemStack);

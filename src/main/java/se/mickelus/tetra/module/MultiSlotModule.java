@@ -27,6 +27,8 @@ public class MultiSlotModule extends ItemModule {
         unlocalizedName = identifier.getPath().substring(0, identifier.getPath().length() - data.slotSuffixes[0].length());
 
         renderLayer = data.renderLayer;
+        namePriority = data.namePriority;
+        prefixPriority = data.prefixPriority;
 
         variantData = data.variants;
 

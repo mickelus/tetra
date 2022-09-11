@@ -19,6 +19,8 @@ public class BasicMajorModule extends ItemModuleMajor {
         variantData = data.variants;
 
         renderLayer = data.renderLayer;
+        namePriority = data.namePriority;
+        prefixPriority = data.prefixPriority;
 
         if (data.improvements.length > 0) {
             improvements = Arrays.stream(data.improvements)

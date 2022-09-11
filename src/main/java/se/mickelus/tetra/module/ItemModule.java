@@ -33,6 +33,8 @@ public abstract class ItemModule implements IToolProvider {
     protected VariantData[] variantData = new VariantData[0];
     protected TweakData[] tweaks = new TweakData[0];
     protected Priority renderLayer = Priority.BASE;
+    protected Priority namePriority = Priority.BASE;
+    protected Priority prefixPriority = Priority.BASE;
 
     public ItemModule(String slotKey, String moduleKey) {
         this.slotTagKey = slotKey;
@@ -144,7 +146,7 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public Priority getItemNamePriority(ItemStack itemStack) {
-        return Priority.BASE;
+        return namePriority;
     }
 
     public String getItemPrefix(ItemStack itemStack) {
@@ -171,7 +173,7 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public Priority getItemPrefixPriority(ItemStack itemStack) {
-        return Priority.BASE;
+        return prefixPriority;
     }
 
 

@@ -15,6 +15,10 @@ public class BasicModule extends ItemModule {
 
         variantData = data.variants;
 
+        renderLayer = data.renderLayer;
+        namePriority = data.namePriority;
+        prefixPriority = data.prefixPriority;
+
         if (data.tweakKey != null) {
             TweakData[] tweaks = DataManager.instance.tweakData.getData(data.tweakKey);
             if (tweaks != null) {

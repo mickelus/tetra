@@ -24,6 +24,8 @@ public class ModuleData {
     public ResourceLocation type;
     public boolean replace = false;
     public Priority renderLayer = Priority.BASE;
+    public Priority namePriority = Priority.BASE;
+    public Priority prefixPriority = Priority.BASE;
     public ResourceLocation tweakKey;
     public ResourceLocation[] improvements = new ResourceLocation[0];
 
@@ -51,6 +53,14 @@ public class ModuleData {
 
         if (from.renderLayer != defaultValues.renderLayer) {
             to.renderLayer = from.renderLayer;
+        }
+
+        if (from.namePriority != defaultValues.namePriority) {
+            to.namePriority = from.namePriority;
+        }
+
+        if (from.prefixPriority != defaultValues.prefixPriority) {
+            to.prefixPriority = from.prefixPriority;
         }
 
         to.improvements = Stream.concat(Arrays.stream(to.improvements), Arrays.stream(from.improvements))

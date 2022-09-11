@@ -3,6 +3,7 @@
     "type": "tetra:multi_major_module",
     "slots": [ "double/head_right" ],
     "slotSuffixes": [ "_right" ],
+    "prefixPriority": "lower",
     "improvements": [
         "tetra:double/extractor/",
         "tetra:double/shared_head/",
