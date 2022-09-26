@@ -13,7 +13,7 @@
     },
     "requirement": {
         "type": "tetra:improvement",
-        "improvement": "stave_hone/speed",
+        "improvement": "bowstring_hone/damage",
         "level": 2
     },
     "outcomes": [
