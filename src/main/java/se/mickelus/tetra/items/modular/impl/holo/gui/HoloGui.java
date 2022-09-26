@@ -65,7 +65,7 @@ public class HoloGui extends Screen {
         defaultGui.addChild(spinner);
 
         if (ConfigHandler.development.get() && !hasListener) {
-            DataManager.instance.featureData.onReload(() -> {
+            DataManager.instance.destabilizationData.onReload(() -> {
                 Minecraft.getInstance().executeBlocking(HoloGui::onReload);
             });
             hasListener = true;

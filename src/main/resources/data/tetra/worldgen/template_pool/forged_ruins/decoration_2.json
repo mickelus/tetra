@@ -1,0 +1,69 @@
+{
+    "elements": [
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/crate_2_1",
+                "processors": "tetra:crate_setup",
+                "projection": "rigid"
+            },
+            "weight": 5
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/crate_2_2",
+                "processors": "tetra:crate_setup",
+                "projection": "rigid"
+            },
+            "weight": 5
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/crate_2_3",
+                "processors": "tetra:crate_setup",
+                "projection": "rigid"
+            },
+            "weight": 5
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/crate_2_4",
+                "processors": "tetra:crate_setup",
+                "projection": "rigid"
+            },
+            "weight": 5
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/crate_2_5",
+                "processors": "tetra:crate_setup",
+                "projection": "rigid"
+            },
+            "weight": 5
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/container",
+                "processors": "tetra:container_setup",
+                "projection": "rigid"
+            },
+            "weight": 1
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/transfer_unit",
+                "processors": "tetra:transfer_setup",
+                "projection": "rigid"
+            },
+            "weight": 2
+        }
+    ],
+    "fallback": "minecraft:empty",
+    "name": "tetra:forged_ruins/decoration_2"
+}

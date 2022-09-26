@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:jigsaw",
+    "biomes": "#tetra:has_structure/forged_ruins",
+    "size": 7,
+    "start_height": {
+        "absolute": 0
+    },
+    "max_distance_from_center": 60,
+    "start_pool": "tetra:forged_ruins/regular_entry",
+    "step": "underground_structures",
+    "terrain_adaptation": "none",
+    "use_expansion_hack": false,
+    "spawn_overrides": {
+        "monster": {
+            "bounding_box": "piece",
+            "spawns": [
+                {
+                    "type": "minecraft:stray",
+                    "maxCount": 16,
+                    "minCount": 4,
+                    "weight": 1
+                }
+            ]
+        }
+    }
+}

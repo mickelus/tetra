@@ -1,0 +1,51 @@
+{
+    "elements": [
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/crate_3_1",
+                "processors": "tetra:crate_setup",
+                "projection": "rigid"
+            },
+            "weight": 5
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/crate_3_2",
+                "processors": "tetra:crate_setup",
+                "projection": "rigid"
+            },
+            "weight": 5
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/crate_3_3",
+                "processors": "tetra:crate_setup",
+                "projection": "rigid"
+            },
+            "weight": 5
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/crate_3_4",
+                "processors": "tetra:crate_setup",
+                "projection": "rigid"
+            },
+            "weight": 5
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/crate_3_5",
+                "processors": "tetra:crate_setup",
+                "projection": "rigid"
+            },
+            "weight": 5
+        }
+    ],
+    "fallback": "minecraft:empty",
+    "name": "tetra:forged_ruins/decoration_3"
+}

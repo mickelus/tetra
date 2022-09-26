@@ -1,0 +1,42 @@
+{
+    "elements": [
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/intersection_5_a",
+                "processors": "minecraft:empty",
+                "projection": "rigid"
+            },
+            "weight": 1
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/intersection_5_c",
+                "processors": "minecraft:empty",
+                "projection": "rigid"
+            },
+            "weight": 1
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/intersection_6",
+                "processors": "minecraft:empty",
+                "projection": "rigid"
+            },
+            "weight": 5
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/intersection_split_7_a",
+                "processors": "minecraft:empty",
+                "projection": "rigid"
+            },
+            "weight": 5
+        }
+    ],
+    "fallback": "tetra:forged_ruins/vertical_cap",
+    "name": "tetra:forged_ruins/vertical_room"
+}

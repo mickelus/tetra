@@ -16,10 +16,14 @@
         "spelunking": {
             "trigger": "minecraft:location",
             "conditions": {
-                "dimension": "overworld",
-                "position": {
-                    "y": {
-                        "max": 0
+                "player": {
+                    "location": {
+                        "position": {
+                            "y": {
+                                "max": 0
+                            }
+                        },
+                        "dimension": "minecraft:overworld"
                     }
                 }
             }

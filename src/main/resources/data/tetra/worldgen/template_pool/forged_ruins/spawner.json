@@ -1,0 +1,21 @@
+{
+    "elements": [
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/spawner",
+                "processors": "minecraft:empty",
+                "projection": "rigid"
+            },
+            "weight": 1
+        },
+        {
+            "element": {
+                "element_type": "minecraft:empty_pool_element"
+            },
+            "weight": 9
+        }
+    ],
+    "fallback": "minecraft:empty",
+    "name": "tetra:forged_ruins/spawner"
+}

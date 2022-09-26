@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.*;
@@ -36,7 +35,6 @@ import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
-import se.mickelus.tetra.generation.ExtendedStructureRenderer;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.ThrownModularItemRenderer;
 import se.mickelus.tetra.items.modular.impl.BlockProgressOverlay;
@@ -126,10 +124,6 @@ public class ClientSetup {
         event.registerBlockEntityRenderer(CoreExtractorPistonBlockEntity.type.get(), CoreExtractorPistonRenderer::new);
         event.registerBlockEntityRenderer(HammerBaseBlockEntity.type.get(), HammerBaseRenderer::new);
         event.registerBlockEntityRenderer(HammerHeadBlockEntity.type.get(), HammerHeadRenderer::new);
-
-        if (ConfigHandler.development.get()) {
-            event.registerBlockEntityRenderer(BlockEntityType.STRUCTURE_BLOCK, ExtendedStructureRenderer::new);
-        }
     }
 
     @SubscribeEvent

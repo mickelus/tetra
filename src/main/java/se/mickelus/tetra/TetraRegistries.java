@@ -15,6 +15,8 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -76,6 +78,10 @@ import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.SuspendPotionEffect;
+import se.mickelus.tetra.levelgen.ForgedContainerProcessor;
+import se.mickelus.tetra.levelgen.ForgedCrateProcessor;
+import se.mickelus.tetra.levelgen.ForgedHammerProcessor;
+import se.mickelus.tetra.levelgen.TransferUnitProcessor;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.ReplaceTableModifier;
 import se.mickelus.tetra.loot.ScrollDataFunction;
@@ -86,13 +92,13 @@ class TetraRegistries {
     public static final DeferredRegister<BlockEntityType<?>> blockEntities = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TetraMod.MOD_ID);
     public static final DeferredRegister<MenuType<?>> containers = DeferredRegister.create(ForgeRegistries.MENU_TYPES, TetraMod.MOD_ID);
     public static final DeferredRegister<EntityType<?>> entities = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, TetraMod.MOD_ID);
-    //    public static final DeferredRegister<StructureFeature<?>> structures = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, TetraMod.MOD_ID);
     public static final DeferredRegister<ParticleType<?>> particles = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, TetraMod.MOD_ID);
     public static final DeferredRegister<MobEffect> effects = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, TetraMod.MOD_ID);
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> lootModifiers = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, TetraMod.MOD_ID);
 
     public static final DeferredRegister<LootItemConditionType> lootConditions = DeferredRegister.create(Registry.LOOT_ITEM_REGISTRY, TetraMod.MOD_ID);
     public static final DeferredRegister<LootItemFunctionType> lootFunctions = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, TetraMod.MOD_ID);
+    public static final DeferredRegister<StructureProcessorType<?>> structureProcessors = DeferredRegister.create(Registry.STRUCTURE_PROCESSOR_REGISTRY, TetraMod.MOD_ID);
 
     private static Item.Properties itemProperties;
 
@@ -109,7 +115,7 @@ class TetraRegistries {
         lootConditions.register(bus);
         lootFunctions.register(bus);
         lootModifiers.register(bus);
-//        structures.register(bus);
+        structureProcessors.register(bus);
 
         new TetraItemGroup();
         itemProperties = new Item.Properties().tab(TetraItemGroup.instance);
@@ -291,8 +297,12 @@ class TetraRegistries {
         lootModifiers.register("replace_table", ReplaceTableModifier.codec);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // STRUCTURES
+        // STRUCTURE PROCESSORS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ForgedHammerProcessor.type = registerStructureProcessor("hammer", () -> ForgedHammerProcessor.codec);
+        ForgedCrateProcessor.type = registerStructureProcessor("crate", () -> ForgedCrateProcessor.codec);
+        ForgedContainerProcessor.type = registerStructureProcessor("container", () -> ForgedContainerProcessor.codec);
+        TransferUnitProcessor.type = registerStructureProcessor("transfer_unit", () -> TransferUnitProcessor.codec);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // INGREDIENT SERIALIZERS
@@ -302,6 +312,10 @@ class TetraRegistries {
 
     public static <B extends Block> RegistryObject<Item> registerBlockItem(RegistryObject<B> block) {
         return items.register(block.getId().getPath(), () -> new BlockItem(block.get(), itemProperties));
+    }
+
+    public static <P extends StructureProcessor> RegistryObject<StructureProcessorType<?>> registerStructureProcessor(String id, StructureProcessorType<P> type) {
+        return structureProcessors.register(id, () -> type);
     }
 
     @SubscribeEvent

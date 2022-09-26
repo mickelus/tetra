@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged.container;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -9,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -22,11 +24,16 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.RegistryObject;
+import se.mickelus.mutil.util.ItemHandlerWrapper;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
@@ -42,6 +49,7 @@ import java.util.Random;
 public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvider {
     private static final String inventoryKey = "inv";
     private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
+    private static final ResourceLocation containerLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/container_content");
     public static RegistryObject<BlockEntityType<ForgedContainerBlockEntity>> type;
     public static int lockIntegrityMax = 4;
     public static int lockCount = 4;
@@ -96,7 +104,7 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return getOrDelegate().handler.cast();
         }
         return super.getCapability(cap, side);
@@ -110,6 +118,7 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
             if (!level.isClientSide) {
                 ServerLevel worldServer = (ServerLevel) level;
                 if (lidIntegrity == 0) {
+                    populateInventory(worldServer, (ServerPlayer) player);
                     causeOpeningEffects(worldServer);
                 } else {
                     worldServer.playSound(null, worldPosition, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 1.3f);
@@ -124,6 +133,22 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
 
             updateBlockState();
         }
+    }
+
+    private void populateInventory(ServerLevel serverWorld, @Nullable ServerPlayer player) {
+        handler.ifPresent(handler -> {
+            LootTable lootTable = serverWorld.getServer().getLootTables().get(containerLootTable);
+            LootContext.Builder builder = new LootContext.Builder(serverWorld)
+                    .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition));
+
+            if (player != null) {
+                CriteriaTriggers.GENERATE_LOOT.trigger(player, containerLootTable);
+                builder = builder.withParameter(LootContextParams.THIS_ENTITY, player)
+                        .withLuck(player.getLuck());
+            }
+
+            lootTable.fill(new ItemHandlerWrapper(handler), builder.create(LootContextParamSets.CHEST));
+        });
     }
 
     private void causeOpeningEffects(ServerLevel worldServer) {
