@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,11 +26,13 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
+import se.mickelus.tetra.TetraRegistries;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
+import se.mickelus.tetra.util.TierHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -152,7 +155,13 @@ public class HammerBaseBlockEntity extends BlockEntity {
     }
 
     public int getHammerLevel() {
-        return 5 + getEffectLevel(HammerEffect.power);
+        switch (getEffectLevel(HammerEffect.power)) {
+            case 2:
+                return TierHelper.getIndex(TetraRegistries.forgeHammerTier) + 1;
+            case 1:
+                return TierHelper.getIndex(Tiers.NETHERITE) + 1;
+        }
+        return TierHelper.getIndex(Tiers.DIAMOND) + 1;
     }
 
     public boolean isFunctional() {

@@ -7,12 +7,17 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
@@ -21,6 +26,8 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeTier;
+import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
@@ -86,7 +93,9 @@ import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.ReplaceTableModifier;
 import se.mickelus.tetra.loot.ScrollDataFunction;
 
-class TetraRegistries {
+import java.util.List;
+
+public class TetraRegistries {
     public static final DeferredRegister<Block> blocks = DeferredRegister.create(ForgeRegistries.BLOCKS, TetraMod.MOD_ID);
     public static final DeferredRegister<Item> items = DeferredRegister.create(ForgeRegistries.ITEMS, TetraMod.MOD_ID);
     public static final DeferredRegister<BlockEntityType<?>> blockEntities = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TetraMod.MOD_ID);
@@ -99,6 +108,10 @@ class TetraRegistries {
     public static final DeferredRegister<LootItemConditionType> lootConditions = DeferredRegister.create(Registry.LOOT_ITEM_REGISTRY, TetraMod.MOD_ID);
     public static final DeferredRegister<LootItemFunctionType> lootFunctions = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, TetraMod.MOD_ID);
     public static final DeferredRegister<StructureProcessorType<?>> structureProcessors = DeferredRegister.create(Registry.STRUCTURE_PROCESSOR_REGISTRY, TetraMod.MOD_ID);
+
+    public static final TagKey<Block> forgeHammerBreakTag = BlockTags.create(new ResourceLocation("tetra:needs_forge_hammer_tool"));
+    public static final Tier forgeHammerTier = TierSortingRegistry.registerTier(new ForgeTier(Tiers.NETHERITE.getLevel() + 1, 0, 0, 0, 0,
+            forgeHammerBreakTag, () -> Ingredient.EMPTY), new ResourceLocation("tetra:maxed_forge_hammer"), List.of(Tiers.NETHERITE), List.of());
 
     private static Item.Properties itemProperties;
 

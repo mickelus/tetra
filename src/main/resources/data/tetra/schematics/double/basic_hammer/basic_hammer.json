@@ -13,7 +13,15 @@
         "textureX": 64
     },
     "displayType": "major",
-    "applicableMaterials": [ "#wood", "#stone", "!copper", "!iron", "!blackstone", "!obsidian", "!netherite" ],
+    "applicableMaterials": [
+        "#wood",
+        "#stone",
+        "!copper",
+        "!iron",
+        "!blackstone",
+        "!obsidian",
+        "!netherite"
+    ],
     "translation": {
         "primaryAttributes": {
             "generic.attack_damage": 2
@@ -23,7 +31,10 @@
             "generic.attack_speed": -1
         },
         "tools": {
-            "hammer_dig": [ 0, 2 ]
+            "hammer_dig": [
+                0,
+                2
+            ]
         },
         "durability": 2,
         "integrity": -3,
@@ -63,7 +74,7 @@
                 "tag": "forge:obsidian"
             },
             "requiredTools": {
-                "hammer_dig": "minecraft:stone"
+                "hammer_dig": "minecraft:netherite"
             },
             "moduleKey": "double/basic_hammer",
             "moduleVariant": "basic_hammer/obsidian",
@@ -73,11 +84,13 @@
         },
         {
             "material": {
-                "items": [ "minecraft:netherite_ingot" ],
+                "items": [
+                    "minecraft:netherite_ingot"
+                ],
                 "count": 2
             },
             "requiredTools": {
-                "hammer_dig": "minecraft:diamond"
+                "hammer_dig": "tetra:maxed_forge_hammer"
             },
             "moduleKey": "double/basic_hammer",
             "moduleVariant": "basic_hammer/netherite"

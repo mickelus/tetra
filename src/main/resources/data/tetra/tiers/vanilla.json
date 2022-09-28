@@ -4,5 +4,6 @@
     "minecraft:stone",
     "minecraft:iron",
     "minecraft:diamond",
-    "minecraft:netherite"
+    "minecraft:netherite",
+    "tetra:maxed_forge_hammer"
 ]
