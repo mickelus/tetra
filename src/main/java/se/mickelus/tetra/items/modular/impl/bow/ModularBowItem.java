@@ -37,6 +37,7 @@ import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.effect.FocusEffect;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
@@ -209,7 +210,10 @@ public class ModularBowItem extends ModularItem {
                     int count = Mth.clamp(getEffectLevel(itemStack, ItemEffect.multishot), 1, infiniteAmmo ? 64 : ammoStack.getCount());
 
                     if (!world.isClientSide) {
-                        double spread = getEffectEfficiency(itemStack, ItemEffect.multishot);
+                        double multishotSpread = getEffectEfficiency(itemStack, ItemEffect.multishot);
+                        float accuracy = (float) Math.max(0, 100
+                                - getEffectEfficiency(itemStack, ItemEffect.spread)
+                                - FocusEffect.getSpreadReduction(player, itemStack));
 
                         int powerLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, itemStack);
                         int punchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, itemStack);
@@ -217,9 +221,9 @@ public class ModularBowItem extends ModularItem {
                         int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, itemStack);
 
                         for (int i = 0; i < count; i++) {
-                            double yaw = player.getYRot() - spread * (count - 1) / 2f + spread * i;
+                            double yaw = player.getYRot() - multishotSpread * (count - 1) / 2f + multishotSpread * i;
                             AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player);
-                            projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 3.0F, 1.0F);
+                            projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 3.0F, accuracy);
 
                             if (drawProgress >= 20) {
                                 projectile.setCritArrow(true);
@@ -305,6 +309,8 @@ public class ModularBowItem extends ModularItem {
                         }
                     }
 
+                    FocusEffect.onFireArrow(player, itemStack);
+
                     player.awardStat(Stats.ITEM_USED.get(this));
                 }
             }
@@ -325,7 +331,8 @@ public class ModularBowItem extends ModularItem {
     }
 
     /**
-     * Returns a value between 0 - 1 representing how far the bow has been drawn, a value of 1 means that the bow is fully drawn
+     * Returns a value representing how far the bow has been drawn, 0 means the bow is not drawn while a value of 1 means that the bow is fully drawn.
+     * Can exceed 1 when a draw is held longer than neccessary.
      *
      * @param itemStack
      * @param entity

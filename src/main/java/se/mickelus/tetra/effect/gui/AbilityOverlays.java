@@ -19,6 +19,7 @@ public class AbilityOverlays extends GuiRoot implements IGuiOverlay {
     private final ChargeBarGui chargeBar;
     private final ComboPointGui comboPoints;
     private final RevengeGui revengeIndicator;
+    private final FocusGui focusIndicator;
 
     public AbilityOverlays(Minecraft mc) {
         super(mc);
@@ -32,6 +33,9 @@ public class AbilityOverlays extends GuiRoot implements IGuiOverlay {
         revengeIndicator = new RevengeGui();
         addChild(revengeIndicator);
 
+        focusIndicator = new FocusGui();
+        addChild(focusIndicator);
+
         instance = this;
     }
 
@@ -41,6 +45,7 @@ public class AbilityOverlays extends GuiRoot implements IGuiOverlay {
             chargeBar.update(mc.player);
             comboPoints.update(mc.player);
             revengeIndicator.update(mc.player, mc.hitResult);
+            focusIndicator.update(mc.player);
         }
     }
 
@@ -51,7 +56,7 @@ public class AbilityOverlays extends GuiRoot implements IGuiOverlay {
             int width = window.getGuiScaledWidth();
             int height = window.getGuiScaledHeight();
 
-            this.drawChildren(poseStack, width / 2, height / 2, 0, 0, 0, 0, 1.0F);
+            this.drawChildren(poseStack, Math.round(width / 2f), Math.round(height / 2f), 0, 0, 0, 0, 1.0F);
             RenderSystem.setShaderColor(1, 1, 1, 1);
         }
     }

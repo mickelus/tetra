@@ -4,6 +4,7 @@
     "compatibilityLevel": "JAVA_17",
     "refmap": "tetra.refmap.json",
     "mixins": [
+        "LivingEntityMixin",
         "MixinEnchantmentHelper",
         "MixinGrindstoneContainer",
         "MixinItemStack",

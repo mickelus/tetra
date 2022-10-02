@@ -28,9 +28,11 @@ public class RangedFOVTransformer {
                             progress = progress * progress;
                         }
 
-                        event.setNewFovModifier((event.getNewFovModifier() - progress * 0.15F) / getZoom(item, itemStack));
+                        event.setNewFovModifier((event.getNewFovModifier() - progress * 0.15F));
                     });
-        } else if (player.isCrouching()) {
+        }
+
+        if (player.isCrouching()) {
             ItemStack itemStack = player.getMainHandItem();
             CastOptional.cast(itemStack.getItem(), ModularBowItem.class)
                     .ifPresent(item -> event.setNewFovModifier(event.getNewFovModifier() / getZoom(item, itemStack)));

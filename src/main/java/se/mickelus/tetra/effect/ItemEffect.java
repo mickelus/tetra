@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @ParametersAreNonnullByDefault
 public class ItemEffect {
-    private static final Map<String, ItemEffect> effectMap = new ConcurrentHashMap<>();
     public static final String hauntedKey = "destabilized/haunted";
+    private static final Map<String, ItemEffect> effectMap = new ConcurrentHashMap<>();
     public static final ItemEffect workable = get("workable");
     public static final ItemEffect unstable = get("unstable");
 
@@ -356,6 +356,9 @@ public class ItemEffect {
     public static final ItemEffect multishot = get("multishot");
     public static final ItemEffect ammoCapacity = get("ammoCapacity");
     public static final ItemEffect zoom = get("zoom");
+    public static final ItemEffect spread = get("spread");
+    public static final ItemEffect focus = get("focus");
+    public static final ItemEffect focusEcho = get("focusEcho");
     public static final ItemEffect velocity = get("velocity");
     public static final ItemEffect suspend = get("suspend");
     public static final ItemEffect rangeCritical = get("rangeCritical");

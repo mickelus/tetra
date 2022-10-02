@@ -178,6 +178,7 @@ public class ItemEffectHandler {
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (TickEvent.Phase.START == event.phase) {
             LungeEffect.onPlayerTick(event.player);
+            FocusEffect.onPlayerTick(event);
         }
     }
 
@@ -248,6 +249,10 @@ public class ItemEffectHandler {
                         SkeweringEffect.onLivingDamage(event, skeweringLevel, itemStack);
                     }
                 });
+
+        Optional.ofNullable(event.getEntity())
+                .filter(entity -> entity instanceof Player)
+                .ifPresent(player -> FocusEffect.onLivingDamage(event));
 
         ArmorPenetrationEffect.onLivingDamage(event);
     }

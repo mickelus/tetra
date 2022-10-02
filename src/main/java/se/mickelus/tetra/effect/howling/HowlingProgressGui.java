@@ -9,7 +9,6 @@ import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiRoot;
 import se.mickelus.mutil.gui.animation.Applier;
 import se.mickelus.mutil.gui.animation.KeyframeAnimation;
-import se.mickelus.tetra.gui.InvertColorGui;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -31,8 +30,8 @@ public class HowlingProgressGui extends GuiRoot {
                 .setOpacity(0);
         addChild(container);
 
-
-        GuiElement indicatorGroup = new InvertColorGui(0, 0);
+        // todo: swap back to InvertColorGui once alpha support is back
+        GuiElement indicatorGroup = new GuiElement(0, 0, 15, 15);
         container.addChild(indicatorGroup);
 
 //        backdrop = new GuiTexture(0, 0, 15, 15, 5, 0, GuiTextures.hud).setColor(GuiColors.muted);

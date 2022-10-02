@@ -12,7 +12,7 @@
     ],
     "variants": [
         {
-            "materials": [ "tetra:wood/", "tetra:rods/stick", "tetra:metal/" ],
+            "materials": ["tetra:wood/", "tetra:rods/stick", "tetra:metal/"],
             "key": "recurve_stave/",
             "attributes": {
                 "tetra:draw_speed": 0.95
@@ -20,6 +20,9 @@
             "aspects": {
                 "bow": 2,
                 "breakable": 2
+            },
+            "effects": {
+                "spread": [0, 95]
             },
             "durability": 200,
             "integrity": -1,
@@ -39,7 +42,7 @@
                     "textureX": 160,
                     "textureY": 32
                 },
-                "availableTextures": [ "crude" ],
+                "availableTextures": ["crude"],
                 "models": [
                     {
                         "location": "tetra:items/module/bow/stave/recurve/"

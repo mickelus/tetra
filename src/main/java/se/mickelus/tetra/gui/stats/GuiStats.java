@@ -298,6 +298,22 @@ public class GuiStats {
     public static final GuiStatBar multishot = new GuiStatBar(0, 0, barLength, "tetra.stats.multishot",
             0, 12, true, multishotGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterMultishot());
+
+    public static final IStatGetter focusEchoGetter = new StatGetterEffectLevel(ItemEffect.focusEcho, 1);
+    public static final IStatGetter focusGetter = new StatGetterFocus();
+    public static final GuiStatBar focus = new GuiStatBar(0, 0, barLength, "tetra.stats.focus",
+            0, 2, false, focusGetter, LabelGetterBasic.singleDecimalLabel,
+            new TooltipGetterDecimalSingle("tetra.stats.focus.tooltip", focusGetter))
+            .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.focusEcho", 19, focusEchoGetter,
+                    new TooltipGetterNone("tetra.stats.focusEcho.tooltip")));
+    public static final IStatGetter spreadGetter = new StatGetterSpread(ItemEffect.spread);
+    public static final GuiStatBar spread = new GuiStatBar(0, 0, barLength, "tetra.stats.spread",
+            0, 20, false, spreadGetter, LabelGetterBasic.decimalLabel,
+            new TooltipGetterDecimalSingle("tetra.stats.spread.tooltip", spreadGetter))
+            .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.focus", 18, focusGetter,
+                            new TooltipGetterDecimal("tetra.stats.focus.tooltip", focusGetter)),
+                    new GuiStatIndicator(0, 0, "tetra.stats.focusEcho", 19, focusEchoGetter,
+                            new TooltipGetterNone("tetra.stats.focusEcho.tooltip")));
     public static final IStatGetter zoomGetter = new StatGetterEffectLevel(ItemEffect.zoom, 0.1);
     public static final GuiStatBar zoom = new GuiStatBar(0, 0, barLength, "tetra.stats.zoom",
             0, 10, false, zoomGetter, LabelGetterBasic.singleDecimalLabel,
@@ -306,7 +322,8 @@ public class GuiStats {
     public static final IStatGetter suspendGetter = new StatGetterEffectLevel(ItemEffect.suspend, 1);
     public static final GuiStatBar velocity = new GuiStatBar(0, 0, barLength, "tetra.stats.velocity",
             0, 200, false, velocityGetter, LabelGetterBasic.percentageLabel, new TooltipGetterVelocity())
-            .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.suspend", 3, suspendGetter, new TooltipGetterNone("tetra.stats.suspend.tooltip")));
+            .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.suspend", 3, suspendGetter,
+                    new TooltipGetterNone("tetra.stats.suspend.tooltip")));
     public static final IStatGetter magicCapacityGetter = new StatGetterMagicCapacity();
     public static final GuiStatBar magicCapacity = new GuiStatBar(0, 0, barLength, "tetra.stats.magicCapacity",
             0, 150, false, magicCapacityGetter, LabelGetterBasic.integerLabel,

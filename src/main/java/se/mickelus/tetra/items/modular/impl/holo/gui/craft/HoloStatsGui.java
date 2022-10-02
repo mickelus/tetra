@@ -89,6 +89,8 @@ public class HoloStatsGui extends GuiElement {
             GuiStats.overbowed,
             GuiStats.multishot,
             GuiStats.zoom,
+            GuiStats.spread,
+            GuiStats.focus,
             GuiStats.velocity,
             GuiStats.intuit,
             GuiStats.magicCapacity,

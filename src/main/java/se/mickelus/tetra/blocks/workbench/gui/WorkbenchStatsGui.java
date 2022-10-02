@@ -87,6 +87,7 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.overbowed,
             GuiStats.multishot,
             GuiStats.zoom,
+            GuiStats.spread,
             GuiStats.velocity,
             GuiStats.scannerRange,
             GuiStats.scannerHorizontalSpread,
