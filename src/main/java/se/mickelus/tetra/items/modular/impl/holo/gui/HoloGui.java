@@ -195,7 +195,7 @@ public class HoloGui extends Screen {
                     gui.onShow();
                     break;
                 case 't':
-                    getMinecraft().player.commandUnsigned("/reload");
+                    getMinecraft().player.commandUnsigned("reload");
                     spinner.setVisible(true);
                     break;
             }
