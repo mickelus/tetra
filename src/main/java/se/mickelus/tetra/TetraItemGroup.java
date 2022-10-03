@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items;
+package se.mickelus.tetra;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;

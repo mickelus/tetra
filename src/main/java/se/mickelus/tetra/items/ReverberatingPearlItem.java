@@ -9,6 +9,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import se.mickelus.tetra.TetraItemGroup;
 import se.mickelus.tetra.Tooltips;
 
 import javax.annotation.Nullable;

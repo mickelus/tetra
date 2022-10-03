@@ -32,7 +32,7 @@ import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
-import se.mickelus.tetra.items.TetraItemGroup;
+import se.mickelus.tetra.TetraItemGroup;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchematicRegistry;

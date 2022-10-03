@@ -46,7 +46,7 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
-import se.mickelus.tetra.items.TetraItemGroup;
+import se.mickelus.tetra.TetraItemGroup;
 import se.mickelus.tetra.properties.IToolProvider;
 
 import javax.annotation.Nullable;

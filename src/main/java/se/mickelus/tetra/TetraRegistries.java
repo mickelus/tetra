@@ -64,7 +64,6 @@ import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.generation.ExtendedStructureRenderer;
 import se.mickelus.tetra.items.InitializableItem;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.loot.DragonSinewItem;
 import se.mickelus.tetra.items.modular.ItemPredicateModular;
