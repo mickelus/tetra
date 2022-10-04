@@ -20,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.geode.GeodeBlock;
+import se.mickelus.tetra.compat.apotheosis.AffixReplacementHook;
 import se.mickelus.tetra.items.scroll.ScrollRenderer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
@@ -112,6 +113,7 @@ public class TetraMod {
 
         new ItemUpgradeRegistry();
         ItemUpgradeRegistry.instance.registerReplacementHook(TetraEnchantmentHelper::transferReplacementEnchantments);
+        ItemUpgradeRegistry.instance.registerReplacementHook(new AffixReplacementHook());
 
         ModuleRegistry moduleRegistry = new ModuleRegistry();
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_module"), BasicModule::new);
