@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.scroll;
+package se.mickelus.tetra.items.scroll;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

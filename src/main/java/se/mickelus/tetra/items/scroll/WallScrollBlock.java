@@ -1,9 +1,8 @@
-package se.mickelus.tetra.blocks.scroll;
+package se.mickelus.tetra.items.scroll;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -14,24 +13,31 @@ import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.EnumMap;
+import java.util.Map;
 
 @ParametersAreNonnullByDefault
-public class OpenScrollBlock extends ScrollBlock {
-    public static final String identifier = "scroll_open";
+public class WallScrollBlock extends ScrollBlock {
+    public static final String identifier = "scroll_wall";
     @ObjectHolder(TetraMod.MOD_ID + ":" + identifier)
     public static ScrollBlock instance;
+    private final Map<Direction, VoxelShape> shapes;
+    private final VoxelShape baseShape = Shapes.or(
+            box(1.0, 14.0, 0.0, 15.0, 16.0, 2.0),
+            box(1.0, 1.0, 0.0, 15.0, 14.0, 0.1));
 
-    public OpenScrollBlock() {
-        super(identifier, Arrangement.open);
+    public WallScrollBlock() {
+        super(identifier, Arrangement.wall);
+
+        shapes = new EnumMap<>(Direction.class);
+        for (int i = 0; i < 4; i++) {
+            Direction direction = Direction.from2DDataValue(i);
+            shapes.put(direction, RotationHelper.rotateDirection(baseShape, direction));
+        }
     }
-
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
-        return RotationHelper.rotateDirection(Shapes.or(
-                Block.box(0.0, 0.0, 1.0, 2.0, 2.0, 15.0),
-                Block.box(14.0, 0.0, 1.0, 16.0, 2.0, 15.0),
-                Block.box(2.0, 0.0, 1.0, 14.0, 0.1, 15.0)), facing);
+        return shapes.get(state.getValue(BlockStateProperties.HORIZONTAL_FACING));
     }
 }

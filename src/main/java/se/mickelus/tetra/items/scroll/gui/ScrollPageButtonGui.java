@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.scroll.gui;
+package se.mickelus.tetra.items.scroll.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.resources.ResourceLocation;

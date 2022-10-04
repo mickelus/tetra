@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.scroll;
+package se.mickelus.tetra.items.scroll;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;

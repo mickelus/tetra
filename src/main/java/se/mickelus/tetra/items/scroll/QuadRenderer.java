@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.scroll;
+package se.mickelus.tetra.items.scroll;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

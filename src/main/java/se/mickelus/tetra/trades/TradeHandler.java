@@ -6,7 +6,7 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
-import se.mickelus.tetra.blocks.scroll.ScrollItem;
+import se.mickelus.tetra.items.scroll.ScrollItem;
 import se.mickelus.tetra.items.forged.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;

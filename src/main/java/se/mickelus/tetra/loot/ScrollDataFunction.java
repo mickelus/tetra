@@ -9,7 +9,7 @@ import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunct
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.registries.RegistryObject;
-import se.mickelus.tetra.blocks.scroll.ScrollData;
+import se.mickelus.tetra.items.scroll.ScrollData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.scroll;
+package se.mickelus.tetra.items.scroll;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
@@ -35,7 +35,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
-import se.mickelus.tetra.blocks.scroll.gui.ScrollScreen;
+import se.mickelus.tetra.items.scroll.gui.ScrollScreen;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.items.InitializableItem;
 import se.mickelus.tetra.TetraItemGroup;

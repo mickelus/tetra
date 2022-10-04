@@ -1,10 +1,9 @@
-package se.mickelus.tetra.blocks.scroll;
+package se.mickelus.tetra.items.scroll;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -26,16 +25,16 @@ public class RolledScrollBlock extends ScrollBlock {
     public static ScrollBlock instance;
 
     private final VoxelShape[] baseShapes = new VoxelShape[]{
-            Block.box(6.0, 0.0, 1.0, 9.0, 3.0, 15.0),
-            Block.box(4.0, 0.0, 1.0, 11.0, 3.0, 15.0),
-            Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-            Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-                    Block.box(8.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
-            Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-                    Block.box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
-            Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-                    Block.box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0),
-                    Block.box(6.0, 6.0, 1.0, 9.0, 9.0, 15.0))
+            box(6.0, 0.0, 1.0, 9.0, 3.0, 15.0),
+            box(4.0, 0.0, 1.0, 11.0, 3.0, 15.0),
+            box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+            Shapes.or(box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+                    box(8.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
+            Shapes.or(box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+                    box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
+            Shapes.or(box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+                    box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0),
+                    box(6.0, 6.0, 1.0, 9.0, 9.0, 15.0))
     };
     private final Map<Direction, VoxelShape[]> shapes;
 

@@ -6,8 +6,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
-import se.mickelus.tetra.blocks.scroll.ScrollData;
-import se.mickelus.tetra.blocks.scroll.ScrollItem;
+import se.mickelus.tetra.items.scroll.ScrollData;
+import se.mickelus.tetra.items.scroll.ScrollItem;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

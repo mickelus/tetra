@@ -1,4 +1,4 @@
-package se.mickelus.tetra.blocks.scroll;
+package se.mickelus.tetra.items.scroll;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
