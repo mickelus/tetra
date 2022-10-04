@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
+import se.mickelus.tetra.compat.apotheosis.AffixReplacementHook;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.craftingeffect.condition.CraftTypeCondition;
@@ -100,6 +101,7 @@ public class TetraMod {
 
         new ItemUpgradeRegistry();
         ItemUpgradeRegistry.instance.registerReplacementHook(TetraEnchantmentHelper::transferReplacementEnchantments);
+        ItemUpgradeRegistry.instance.registerReplacementHook(new AffixReplacementHook());
 
         ModuleRegistry moduleRegistry = new ModuleRegistry();
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_module"), BasicModule::new);
