@@ -216,8 +216,8 @@ public abstract class ItemModuleMajor extends ItemModule {
                 .orElseGet(Stream::empty)
                 .filter(entry -> entry.getValue() >= requiredLevel)
                 .map(Map.Entry::getKey)
-                .map(TetraEnchantmentHelper::getEnchantmentCategory)
-                .filter(Objects::nonNull)
+                .map(TetraEnchantmentHelper::getEnchantmentCategories)
+                .flatMap(Arrays::stream)
                 .toArray(EnchantmentCategory[]::new);
     }
 

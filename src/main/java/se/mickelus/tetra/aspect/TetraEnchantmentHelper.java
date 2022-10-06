@@ -29,26 +29,35 @@ public class TetraEnchantmentHelper {
     private static final Map<ItemAspect, EnchantmentRules> aspectMap = HashBiMap.create();
 
     public static void init() {
-        aspectMap.put(ItemAspect.armor, new EnchantmentRules(EnchantmentCategory.ARMOR, "additions/armor", "exclusions/armor"));
-        aspectMap.put(ItemAspect.armorFeet, new EnchantmentRules(EnchantmentCategory.ARMOR_FEET, "additions/armor_feet", "exclusions/armor_feet"));
-        aspectMap.put(ItemAspect.armorLegs, new EnchantmentRules(EnchantmentCategory.ARMOR_LEGS, "additions/armor_legs", "exclusions/armor_legs"));
-        aspectMap.put(ItemAspect.armorChest, new EnchantmentRules(EnchantmentCategory.ARMOR_CHEST, "additions/armor_chest", "exclusions/armor_chest"));
-        aspectMap.put(ItemAspect.armorHead, new EnchantmentRules(EnchantmentCategory.ARMOR_HEAD, "additions/armor_head", "exclusions/armor_head"));
-        aspectMap.put(ItemAspect.edgedWeapon, new EnchantmentRules(EnchantmentCategory.WEAPON, "additions/edged_weapon", "exclusions/edged_weapon"));
-        aspectMap.put(ItemAspect.bluntWeapon, new EnchantmentRules(EnchantmentCategory.WEAPON, "additions/blunt_weapon", "exclusions/blunt_weapon"));
-        aspectMap.put(ItemAspect.pointyWeapon, new EnchantmentRules(EnchantmentCategory.TRIDENT, "additions/pointy_weapon", "exclusions/pointy_weapon"));
-        aspectMap.put(ItemAspect.throwable, new EnchantmentRules(null, "additions/throwable", "exclusions/throwable"));
-        aspectMap.put(ItemAspect.blockBreaker, new EnchantmentRules(EnchantmentCategory.DIGGER, "additions/block_breaker", "exclusions/block_breaker"));
-        aspectMap.put(ItemAspect.fishingRod, new EnchantmentRules(EnchantmentCategory.FISHING_ROD, "additions/fishing_rod", "exclusions/fishing_rod"));
-        aspectMap.put(ItemAspect.breakable, new EnchantmentRules(EnchantmentCategory.BREAKABLE, "additions/breakable", "exclusions/breakable"));
-        aspectMap.put(ItemAspect.bow, new EnchantmentRules(EnchantmentCategory.BOW, "additions/bow", "exclusions/bow"));
-        aspectMap.put(ItemAspect.wearable, new EnchantmentRules(EnchantmentCategory.WEARABLE, "additions/wearable", "exclusions/wearable"));
-        aspectMap.put(ItemAspect.crossbow, new EnchantmentRules(EnchantmentCategory.CROSSBOW, "additions/crossbow", "exclusions/crossbow"));
-        aspectMap.put(ItemAspect.vanishable, new EnchantmentRules(EnchantmentCategory.VANISHABLE, "additions/vanishable", "exclusions/vanishable"));
+        aspectMap.put(ItemAspect.armor, new EnchantmentRules("additions/armor", "exclusions/armor", EnchantmentCategory.ARMOR));
+        aspectMap.put(ItemAspect.armorFeet, new EnchantmentRules("additions/armor_feet", "exclusions/armor_feet", EnchantmentCategory.ARMOR_FEET));
+        aspectMap.put(ItemAspect.armorLegs, new EnchantmentRules("additions/armor_legs", "exclusions/armor_legs", EnchantmentCategory.ARMOR_LEGS));
+        aspectMap.put(ItemAspect.armorChest, new EnchantmentRules("additions/armor_chest", "exclusions/armor_chest", EnchantmentCategory.ARMOR_CHEST));
+        aspectMap.put(ItemAspect.armorHead, new EnchantmentRules("additions/armor_head", "exclusions/armor_head", EnchantmentCategory.ARMOR_HEAD));
+        aspectMap.put(ItemAspect.edgedWeapon, new EnchantmentRules("additions/edged_weapon", "exclusions/edged_weapon", EnchantmentCategory.WEAPON,
+                fromName("SWORD_OR_AXE")));
+        aspectMap.put(ItemAspect.bluntWeapon, new EnchantmentRules("additions/blunt_weapon", "exclusions/blunt_weapon", EnchantmentCategory.WEAPON));
+        aspectMap.put(ItemAspect.pointyWeapon, new EnchantmentRules("additions/pointy_weapon", "exclusions/pointy_weapon", EnchantmentCategory.TRIDENT));
+        aspectMap.put(ItemAspect.throwable, new EnchantmentRules("additions/throwable", "exclusions/throwable", (EnchantmentCategory) null));
+        aspectMap.put(ItemAspect.blockBreaker, new EnchantmentRules("additions/block_breaker", "exclusions/block_breaker", EnchantmentCategory.DIGGER));
+        aspectMap.put(ItemAspect.fishingRod, new EnchantmentRules("additions/fishing_rod", "exclusions/fishing_rod", EnchantmentCategory.FISHING_ROD));
+        aspectMap.put(ItemAspect.breakable, new EnchantmentRules("additions/breakable", "exclusions/breakable", EnchantmentCategory.BREAKABLE));
+        aspectMap.put(ItemAspect.bow, new EnchantmentRules("additions/bow", "exclusions/bow", EnchantmentCategory.BOW));
+        aspectMap.put(ItemAspect.wearable, new EnchantmentRules("additions/wearable", "exclusions/wearable", EnchantmentCategory.WEARABLE));
+        aspectMap.put(ItemAspect.crossbow, new EnchantmentRules("additions/crossbow", "exclusions/crossbow", EnchantmentCategory.CROSSBOW));
+        aspectMap.put(ItemAspect.vanishable, new EnchantmentRules("additions/vanishable", "exclusions/vanishable", EnchantmentCategory.VANISHABLE));
+    }
+
+    private static EnchantmentCategory fromName(String enchantmentCategoryName) {
+        try {
+            return EnchantmentCategory.valueOf(enchantmentCategoryName);
+        } catch (IllegalArgumentException e) {
+        }
+        return null;
     }
 
     public static void registerMapping(ItemAspect aspect, @Nullable EnchantmentCategory category, String additions, String exclusions) {
-        registerMapping(aspect, new EnchantmentRules(category, additions, exclusions));
+        registerMapping(aspect, new EnchantmentRules(additions, exclusions, category));
     }
 
     public static void registerMapping(ItemAspect aspect, EnchantmentRules rules) {
@@ -64,9 +73,8 @@ public class TetraEnchantmentHelper {
                 .anyMatch(entry -> aspectMap.get(entry.getKey()).isApplicable(enchantment));
     }
 
-    @Nullable
-    public static EnchantmentCategory getEnchantmentCategory(ItemAspect aspect) {
-        return aspectMap.get(aspect).category;
+    public static EnchantmentCategory[] getEnchantmentCategories(ItemAspect aspect) {
+        return aspectMap.get(aspect).categories;
     }
 
     public static ItemStack removeAllEnchantments(ItemStack itemStack) {
@@ -204,12 +212,14 @@ public class TetraEnchantmentHelper {
     }
 
     public static class EnchantmentRules {
-        EnchantmentCategory category;
+        EnchantmentCategory[] categories;
         TagKey<Enchantment> exclusions;
         TagKey<Enchantment> additions;
 
-        public EnchantmentRules(@Nullable EnchantmentCategory category, String additions, String exclusions) {
-            this.category = category;
+        public EnchantmentRules(String additions, String exclusions, EnchantmentCategory... categories) {
+            this.categories = Arrays.stream(categories)
+                    .filter(Objects::nonNull)
+                    .toArray(EnchantmentCategory[]::new);
 
             ITagManager<Enchantment> tags = ForgeRegistries.ENCHANTMENTS.tags();
             this.additions = tags.createTagKey(new ResourceLocation(TetraMod.MOD_ID, additions));
@@ -219,7 +229,7 @@ public class TetraEnchantmentHelper {
 
         public boolean isApplicable(Enchantment enchantment) {
             ITagManager<Enchantment> tags = ForgeRegistries.ENCHANTMENTS.tags();
-            return ((category != null && category.equals(enchantment.category))
+            return ((Arrays.asList(categories).contains(enchantment.category))
                     || tags.getTag(additions).contains(enchantment)) && !tags.getTag(exclusions).contains(enchantment);
         }
     }
