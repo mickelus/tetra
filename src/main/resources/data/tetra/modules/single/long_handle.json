@@ -13,11 +13,11 @@
     ],
     "variants": [
         {
-            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rods/" ],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rods/"],
             "key": "long_handle/",
             "attributes": {
                 "generic.attack_speed": -1.1,
-                "forge:reach_distance": 1,
+                "forge:reach_distance": 0.5,
                 "forge:attack_range": 0.5
             },
             "aspects": {
@@ -27,14 +27,14 @@
             "extract": {
                 "primaryAttributes": {
                     "forge:reach_distance": 0.1,
-                    "forge:attack_range": 0.05
+                    "forge:attack_range": 0.1
                 },
                 "secondaryAttributes": {
                     "generic.attack_speed": -0.25
                 },
                 "tertiaryAttributes": {
                     "forge:reach_distance": 0.2,
-                    "forge:attack_range": 0.1
+                    "forge:attack_range": 0.2
                 },
                 "durability": 0.25,
                 "integrity": 1,
@@ -42,8 +42,12 @@
                 "glyph": {
                     "textureX": 16
                 },
-                "availableTextures": [ "default", "metal", "bone", "bright" ],
-                "models": [ { "location": "tetra:items/module/single/handle/long/" } ]
+                "availableTextures": ["default", "metal", "bone", "bright"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/single/handle/long/"
+                    }
+                ]
             }
         }
     ]
