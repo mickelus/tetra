@@ -90,7 +90,7 @@ public class ToolbeltScreen extends AbstractContainerScreen<ToolbeltContainer> {
     @Override
     protected void slotClicked(Slot slot, int slotIndex, int barIndex, ClickType clickType) {
         // todo: based on how quick swapping is implemented in AbstractContainerMenu.doClick, there has to be a cleaner way
-        if (!(slot instanceof DisabledSlot || minecraft.player.getInventory().getItem(barIndex).getItem() instanceof ModularToolbeltItem)) {
+        if (!(slot instanceof DisabledSlot || minecraft.player.getInventory().getItem(slotIndex).getItem() instanceof ModularToolbeltItem)) {
             super.slotClicked(slot, slotIndex, barIndex, clickType);
         }
     }
