@@ -321,7 +321,6 @@
     "tetra.stats.execute.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
     "tetra.stats.severing": "Severing",
     "tetra.stats.severing.tooltip": "Attacks have a §e%s%%§r chance to reduce the target's max health by §e10%%§r and attack damage by §e5%%§r for §e60§r seconds, this effect stacks up to §e%s§r times",
-    "tetra.stats.severing.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
     "tetra.stats.lunge": "Lunge",
     "tetra.stats.lunge.tooltip": "Hold right-click to prepare for a lunge, release to leap forward. Hitting another entity with the lunge deals §e%s%% (%s)§f attack damage and reduces the ability cooldown by §e30%%§f.\n \n§7Charge time: §e%s§7 seconds\n§7Cooldown: §e%s§7 seconds",
     "tetra.stats.lunge.tooltip_extended": "Charge time and cooldown is based on the item's swing speed. Bonus damage from effects like smite is added to the base damage of the attack.",
