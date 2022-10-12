@@ -13,7 +13,7 @@
     ],
     "variants": [
         {
-            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rods/" ],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/"],
             "key": "light_handle/",
             "attributes": {
                 "generic.attack_speed": -1.1
@@ -24,14 +24,14 @@
                 "breakable": 2
             },
             "effects": {
-                "throwable": [ 1, 0.8 ]
+                "throwable": [1, 0.8]
             },
             "extract": {
                 "secondaryAttributes": {
                     "generic.attack_speed": -0.1
                 },
                 "secondaryEffects": {
-                    "throwable": [ 0, 0.1 ]
+                    "throwable": [0, 0.1]
                 },
                 "durability": 0.1,
                 "integrity": 1,
@@ -39,8 +39,12 @@
                 "glyph": {
                     "textureX": 16
                 },
-                "availableTextures": [ "default", "metal", "bone", "bright" ],
-                "models": [ { "location": "tetra:items/module/single/handle/light/" } ]
+                "availableTextures": ["default", "metal", "bone", "bright"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/single/handle/light/"
+                    }
+                ]
             }
         },
         {
@@ -49,7 +53,7 @@
                 "generic.attack_speed": -1.55
             },
             "effects": {
-                "throwable": [ 1, 0.9 ]
+                "throwable": [1, 0.9]
             },
             "aspects": {
                 "blockBreaker": 1,

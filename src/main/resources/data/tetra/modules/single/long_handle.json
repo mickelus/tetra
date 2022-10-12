@@ -13,7 +13,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rods/"],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/"],
             "key": "long_handle/",
             "attributes": {
                 "generic.attack_speed": -1.1,

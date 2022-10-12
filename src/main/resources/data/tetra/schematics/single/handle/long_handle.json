@@ -27,7 +27,7 @@
     },
     "outcomes": [
         {
-            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rods/" ],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/"],
             "moduleKey": "single/long_handle",
             "moduleVariant": "long_handle/"
         }

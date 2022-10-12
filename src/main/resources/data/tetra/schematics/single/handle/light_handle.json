@@ -13,7 +13,7 @@
             "generic.attack_speed": -1
         },
         "secondaryEffects": {
-            "throwable": [ 0, 1 ]
+            "throwable": [0, 1]
         },
         "durability": 1,
         "integrity": 3,
@@ -21,7 +21,7 @@
     },
     "outcomes": [
         {
-            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rods/" ],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/"],
             "moduleKey": "single/light_handle",
             "moduleVariant": "light_handle/"
         }

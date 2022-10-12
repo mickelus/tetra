@@ -20,7 +20,7 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rods/stick"],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/stick"],
             "moduleKey": "bow/sights",
             "moduleVariant": "sights/"
         },

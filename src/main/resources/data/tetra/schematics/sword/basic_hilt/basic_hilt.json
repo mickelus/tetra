@@ -18,7 +18,7 @@
     },
     "outcomes": [
         {
-            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rods/" ],
+            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/"],
             "moduleKey": "sword/basic_hilt",
             "moduleVariant": "basic_hilt/"
         }
