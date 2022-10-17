@@ -47,8 +47,16 @@ public class GuiItemRolling extends GuiElement {
         }
     }
 
+    @Override
+    public void updateFocusState(int refX, int refY, int mouseX, int mouseY) {
+        super.updateFocusState(refX, refY, mouseX, mouseY);
+        if (items.length > 0) {
+            items[(int) (System.currentTimeMillis() / 1000) % items.length].updateFocusState(refX + this.x, refY + this.y, mouseX, mouseY);
+        }
+    }
+
     public List<Component> getTooltipLines() {
-        if (showTooltip && items.length > 0) {
+        if (showTooltip && hasFocus() && items.length > 0) {
             int offset = (int) (System.currentTimeMillis() / 1000) % items.length;
             return items[offset].getTooltipLines();
         }
