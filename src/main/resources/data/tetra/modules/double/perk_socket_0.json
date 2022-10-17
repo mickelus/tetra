@@ -6,12 +6,17 @@
     "variants": [
         {
             "materials": ["tetra:socket/"],
-            "key": "double_socket/",
+            "key": "double_perk_socket_0/",
+            "models": [
+                {
+                    "location": "tetra:items/module/double/binding/socket/perk_sided_0"
+                }
+            ],
             "extract": {
                 "durability": 1,
                 "integrity": -1,
                 "glyph": {
-                    "textureX": 80,
+                    "textureX": 160,
                     "textureY": 16
                 },
                 "tools": {
@@ -20,10 +25,11 @@
                     "pickaxe_dig": [0, 1],
                     "cut": [0, 1]
                 },
-                "availableTextures": ["pristine", "default"],
+                "availableTextures": ["perk_glow_0"],
                 "models": [
                     {
-                        "location": "tetra:items/module/double/binding/socket/"
+                        "location": "tetra:items/module/double/binding/socket/",
+                        "emission": 4
                     }
                 ]
             }

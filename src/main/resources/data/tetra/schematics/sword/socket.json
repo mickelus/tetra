@@ -11,68 +11,9 @@
     },
     "outcomes": [
         {
-            "material": {
-                "items": [ "tetra:pristine_diamond" ]
-            },
-            "experienceCost": 3,
+            "materials": ["tetra:socket/"],
             "moduleKey": "sword/socket",
-            "moduleVariant": "sword_socket/pristine_diamond"
-        },
-        {
-            "material": {
-                "items": [ "tetra:pristine_emerald" ]
-            },
-            "experienceCost": 3,
-            "moduleKey": "sword/socket",
-            "moduleVariant": "sword_socket/pristine_emerald"
-        },
-        {
-            "material": {
-                "items": [ "tetra:pristine_lapis" ]
-            },
-            "experienceCost": 3,
-            "moduleKey": "sword/socket",
-            "moduleVariant": "sword_socket/pristine_lapis"
-        },
-        {
-            "material": {
-                "tag": "forge:gems/amber"
-            },
-            "experienceCost": 2,
-            "moduleKey": "sword/socket",
-            "moduleVariant": "sword_socket/amber"
-        },
-        {
-            "material": {
-                "tag": "forge:gems/diamond"
-            },
-            "experienceCost": 2,
-            "moduleKey": "sword/socket",
-            "moduleVariant": "sword_socket/diamond"
-        },
-        {
-            "material": {
-                "tag": "forge:gems/emerald"
-            },
-            "experienceCost": 2,
-            "moduleKey": "sword/socket",
-            "moduleVariant": "sword_socket/emerald"
-        },
-        {
-            "material": {
-                "tag": "forge:gems/lapis"
-            },
-            "experienceCost": 2,
-            "moduleKey": "sword/socket",
-            "moduleVariant": "sword_socket/lapis"
-        },
-        {
-            "material": {
-                "tag": "botania:runes/mana"
-            },
-            "experienceCost": 3,
-            "moduleKey": "sword/socket",
-            "moduleVariant": "sword_socket/mana_rune"
+            "moduleVariant": "sword_socket/"
         }
     ]
 }

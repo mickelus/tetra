@@ -1,0 +1,25 @@
+{
+    "replace": true,
+    "slots": ["single/binding"],
+    "materialSlotCount": 1,
+    "displayType": "minor",
+    "rarity": "temporary",
+    "requirement": {
+        "type": "tetra:perk",
+        "perk": "support",
+        "level": {
+            "min": 1
+        }
+    },
+    "glyph": {
+        "textureX": 160,
+        "textureY": 16
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:socket/"],
+            "moduleKey": "single/perk_socket_0",
+            "moduleVariant": "single_perk_socket_0/"
+        }
+    ]
+}

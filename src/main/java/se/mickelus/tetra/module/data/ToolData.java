@@ -1,6 +1,7 @@
 package se.mickelus.tetra.module.data;
 
 import com.google.gson.*;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.ToolAction;
@@ -63,9 +64,13 @@ public class ToolData extends TierData<ToolAction> {
                 .map(data -> {
                     ToolData result = new ToolData();
                     result.levelMap = data.levelMap.entrySet().stream()
-                            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue() * levelMultiplier));
+                            .map(entry -> new Pair<>(entry.getKey(), entry.getValue() * levelMultiplier))
+                            .filter(pair -> pair.getSecond() != 0)
+                            .collect(Collectors.toMap(Pair::getFirst, Pair::getSecond));
                     result.efficiencyMap = data.efficiencyMap.entrySet().stream()
-                            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue() * efficiencyMultiplier));
+                            .map(entry -> new Pair<>(entry.getKey(), entry.getValue() * efficiencyMultiplier))
+                            .filter(pair -> pair.getSecond() != 0)
+                            .collect(Collectors.toMap(Pair::getFirst, Pair::getSecond));
                     return result;
                 })
                 .orElse(null);
