@@ -6,6 +6,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import se.mickelus.mutil.util.CastOptional;
@@ -29,12 +30,26 @@ public class FocusEffect {
                 boolean isDrawing = isDrawing(event.player);
                 int change = isDrawing ? 1 : 2;
                 cache.put(id, duration != null ? duration + change : change);
-                player.setAirSupply(player.getAirSupply() - (isDrawing ? 6 : 2));
 
-                if (player.getAirSupply() <= -20) {
-                    player.setAirSupply(0);
+                if (!player.level.isClientSide) {
+                    int respiration = EnchantmentHelper.getRespiration(player);
+                    int amount = isDrawing ? 6 : 2;
+                    int reduction = 0;
+                    if (respiration > 0) {
+                        for (int i = 0; i < amount - 1; i++) {
+                            // slightly offset from how the vanilla calculations work
+                            if (player.getRandom().nextInt(respiration + 2) > 1) {
+                                reduction++;
+                            }
+                        }
+                    }
+                    player.setAirSupply(player.getAirSupply() - (amount - reduction));
 
-                    player.hurt(DamageSource.DROWN, 2.0F);
+                    if (player.getAirSupply() <= -20) {
+                        player.setAirSupply(0);
+
+                        player.hurt(DamageSource.DROWN, 2.0F);
+                    }
                 }
 
             } else {
