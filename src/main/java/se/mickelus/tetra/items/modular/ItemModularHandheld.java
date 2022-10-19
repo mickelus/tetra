@@ -187,7 +187,7 @@ public class ItemModularHandheld extends ModularItem {
                 int xp = state.getExpDrop(world, world.getRandom(), pos, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, itemStack),
                         EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack));
                 if (xp > 0) {
-                    tickHoningProgression(entity, itemStack, xp);
+                    tickHoningProgression(entity, itemStack, xp * intuitLevel);
                 }
             }
         }
