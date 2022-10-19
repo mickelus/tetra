@@ -27,6 +27,7 @@ public class MaterialVariantData extends VariantData {
 
         result.attributes = AttributeHelper.collapseRound(AttributeHelper.merge(Arrays.asList(
                 attributes,
+                material.attributes,
                 AttributeHelper.multiplyModifiers(extract.primaryAttributes, material.primary),
                 AttributeHelper.multiplyModifiers(extract.secondaryAttributes, material.secondary),
                 AttributeHelper.multiplyModifiers(extract.tertiaryAttributes, material.tertiary)

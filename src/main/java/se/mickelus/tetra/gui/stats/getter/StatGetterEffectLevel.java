@@ -12,10 +12,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class StatGetterEffectLevel implements IStatGetter {
 
-    private final ItemEffect effect;
+    protected final ItemEffect effect;
 
-    private final double multiplier;
-    private final double base;
+    protected final double multiplier;
+    protected final double base;
 
     public StatGetterEffectLevel(ItemEffect effect, double multiplier) {
         this(effect, multiplier, 0);

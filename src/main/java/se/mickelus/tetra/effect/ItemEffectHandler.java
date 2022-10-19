@@ -248,6 +248,11 @@ public class ItemEffectHandler {
                     if (skeweringLevel > 0) {
                         SkeweringEffect.onLivingDamage(event, skeweringLevel, itemStack);
                     }
+
+                    int reachingLevel = getEffectLevel(itemStack, ItemEffect.reaching);
+                    if (reachingLevel > 0) {
+                        ReachingEffect.onLivingDamage(event, reachingLevel);
+                    }
                 });
 
         Optional.ofNullable(event.getEntity())
@@ -364,6 +369,7 @@ public class ItemEffectHandler {
     @SubscribeEvent
     public void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         ExhaustedPotionEffect.onBreakSpeed(event);
+        ReachingEffect.onBreakSpeed(event);
     }
 
     @SubscribeEvent

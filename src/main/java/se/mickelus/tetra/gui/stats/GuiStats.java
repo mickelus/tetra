@@ -285,6 +285,10 @@ public class GuiStats {
     public static final GuiStatBar earthbind = new GuiStatBar(0, 0, barLength, "tetra.stats.earthbind",
             0, 16, false, earthbindGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.earthbind.tooltip", earthbindGetter));
+    public static final IStatGetter reachingGetter = new StatGetterReaching();
+    public static final GuiStatBar reaching = new GuiStatBar(0, 0, barLength, "tetra.stats.reaching",
+            0, 100, false, reachingGetter, LabelGetterBasic.percentageLabel,
+            new TooltipGetterReaching());
     public static final IStatGetter releaseLatchGetter = new StatGetterEffectLevel(ItemEffect.releaseLatch, 1);
     public static final GuiStatBar releaseLatch = new GuiStatBar(0, 0, barLength, "tetra.stats.bow.releaseLatch",
             0, 1, false, releaseLatchGetter, LabelGetterBasic.integerLabel,
