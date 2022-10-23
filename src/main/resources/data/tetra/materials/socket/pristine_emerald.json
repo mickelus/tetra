@@ -19,6 +19,7 @@
         "texture": "emerald"
     },
     "textures": ["pristine", "regular"],
+    "experienceCost": 4,
     "material": {
         "items": ["tetra:pristine_emerald"]
     }

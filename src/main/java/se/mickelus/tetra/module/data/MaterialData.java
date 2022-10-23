@@ -76,6 +76,7 @@ public class MaterialData {
 
     public OutcomeMaterial material;
     public ToolData requiredTools;
+    public float experienceCost;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Non-configurable stuff below
@@ -153,6 +154,10 @@ public class MaterialData {
         to.attributes = AttributeHelper.overwrite(to.attributes, from.attributes);
         to.effects = EffectData.overwrite(to.effects, from.effects);
         to.requiredTools = ToolData.overwrite(to.requiredTools, from.requiredTools);
+
+        if (from.experienceCost != defaultValues.experienceCost) {
+            to.experienceCost = from.experienceCost;
+        }
 
         if (from.material != null) {
             to.material = from.material;
@@ -288,6 +293,9 @@ public class MaterialData {
             }
             if (jsonObject.has("requiredTools")) {
                 data.requiredTools = context.deserialize(jsonObject.get("requiredTools"), ToolData.class);
+            }
+            if (jsonObject.has("experienceCost")) {
+                data.experienceCost = jsonObject.get("experienceCost").getAsFloat();
             }
             if (jsonObject.has("improvements")) {
                 JsonElement improvementsJson = jsonObject.get("improvements");

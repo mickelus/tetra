@@ -22,6 +22,9 @@ public class MaterialOutcomeDefinition extends OutcomeDefinition {
     public int toolOffset = 0;
     public float toolFactor = 1;
 
+    public float experienceOffset = 0;
+    public float experienceFactor = 0;
+
 
     public OutcomeDefinition combine(MaterialData materialData) {
         UniqueOutcomeDefinition result = new UniqueOutcomeDefinition();
@@ -54,6 +57,8 @@ public class MaterialOutcomeDefinition extends OutcomeDefinition {
                 Optional.ofNullable(materialData.requiredTools)
                         .map(materialTools -> ToolData.offsetLevel(materialTools, toolFactor, toolOffset))
                         .orElse(null));
+
+        result.experienceCost = Math.round(materialData.experienceCost * experienceFactor + experienceOffset);
 
         return result;
     }

@@ -11,7 +11,8 @@
         {
             "materials": ["tetra:socket/"],
             "moduleKey": "double/socket",
-            "moduleVariant": "double_socket/"
+            "moduleVariant": "double_socket/",
+            "experienceFactor": 1
         }
     ]
 }

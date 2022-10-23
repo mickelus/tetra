@@ -19,6 +19,7 @@
         "texture": "emerald"
     },
     "textures": ["regular"],
+    "experienceCost": 2,
     "material": {
         "items": ["minecraft:emerald"]
     }

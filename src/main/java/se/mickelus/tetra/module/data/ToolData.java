@@ -7,7 +7,6 @@ import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.util.TierHelper;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Map;
@@ -15,7 +14,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@ParametersAreNonnullByDefault
 public class ToolData extends TierData<ToolAction> {
     public static ToolData overwrite(ToolData a, ToolData b) {
         if (a == null) {

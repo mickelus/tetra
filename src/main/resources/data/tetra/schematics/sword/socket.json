@@ -13,7 +13,8 @@
         {
             "materials": ["tetra:socket/"],
             "moduleKey": "sword/socket",
-            "moduleVariant": "sword_socket/"
+            "moduleVariant": "sword_socket/",
+            "experienceFactor": 1
         }
     ]
 }

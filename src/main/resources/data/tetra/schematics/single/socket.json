@@ -13,7 +13,8 @@
         {
             "materials": ["tetra:socket/"],
             "moduleKey": "single/socket",
-            "moduleVariant": "single_socket/"
+            "moduleVariant": "single_socket/",
+            "experienceFactor": 1
         }
     ]
 }
