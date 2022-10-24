@@ -75,7 +75,6 @@ public class FocusGui extends GuiElement {
     private float getSpread(ItemStack itemStack) {
         return CastOptional.cast(itemStack.getItem(), ModularItem.class)
                 .map(item -> item.getEffectEfficiency(itemStack, ItemEffect.spread))
-                .orElse(-1d)
-                .floatValue();
+                .orElse(-1f);
     }
 }

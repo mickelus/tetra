@@ -855,7 +855,7 @@ public interface IModularItem {
         return getEffectDataCached(itemStack).getLevel(effect);
     }
 
-    default double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+    default float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
         if (isBroken(itemStack)) {
             return 0;
         }

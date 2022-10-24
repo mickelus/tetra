@@ -71,7 +71,7 @@ public class EffectHelper {
         return item.getEffectLevel(itemStack, effect);
     }
 
-    public static double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+    public static float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
         IModularItem item = (IModularItem) itemStack.getItem();
         return item.getEffectEfficiency(itemStack, effect);
     }

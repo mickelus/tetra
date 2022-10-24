@@ -161,7 +161,7 @@ public class ItemModularHandheld extends ModularItem {
             }
         }
 
-        applyBreakEffects(itemStack, world, state, pos, entity);
+        applyBlockBreakEffects(itemStack, world, state, pos, entity);
 
         if (!world.isClientSide && !isBroken(itemStack)) {
             if (getEffectLevel(itemStack, ItemEffect.piercingHarvest) > 0) {
@@ -180,7 +180,17 @@ public class ItemModularHandheld extends ModularItem {
         return true;
     }
 
-    public void applyBreakEffects(ItemStack itemStack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
+    /**
+     * Applies effects that should be applied for every broken block rather than directly broken blocks like Item.mineBlock, e.g. this gets called for
+     * each subsequent block breaks when an earthpiercer is used while Item.mineBlock is only called for the block the player was targetting.
+     *
+     * @param itemStack
+     * @param world
+     * @param state
+     * @param pos
+     * @param entity
+     */
+    public void applyBlockBreakEffects(ItemStack itemStack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
         if (!world.isClientSide) {
             int intuitLevel = getEffectLevel(itemStack, ItemEffect.intuit);
             if (intuitLevel > 0) {

@@ -77,7 +77,7 @@ public class PiercingEffect {
                 if (EffectHelper.breakBlock(world, player, itemStack, pos, offsetState, true)) {
                     EffectHelper.sendEventToPlayer((ServerPlayer) player, 2001, pos, Block.getId(offsetState));
 
-                    item.applyBreakEffects(itemStack, world, offsetState, pos, player);
+                    item.applyBlockBreakEffects(itemStack, world, offsetState, pos, player);
 
                     if (remaining > 0) {
                         enqueueBlockBreak(world, player, item, itemStack, direction, pos.relative(direction), refHardness, refTool, remaining - 1);

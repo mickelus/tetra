@@ -202,7 +202,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
                         EffectHelper.sendEventToPlayer(serverPlayer, 2001, pos, Block.getId(blockState));
                     }
 
-                    item.applyBreakEffects(thrownStack, level, blockState, pos, player);
+                    item.applyBlockBreakEffects(thrownStack, level, blockState, pos, player);
 
                     hitBlocks++;
                     boolean canPierce = getEffectLevel(ItemEffect.piercingHarvest) > 0 && hitBlocks < getPierceLevel();

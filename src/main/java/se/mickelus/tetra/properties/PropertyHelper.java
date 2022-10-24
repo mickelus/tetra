@@ -58,14 +58,14 @@ public class PropertyHelper {
                 .orElse(0);
     }
 
-    public static double getPlayerEffectEfficiency(Player player, ItemEffect effect) {
+    public static float getPlayerEffectEfficiency(Player player, ItemEffect effect) {
         return Stream.concat(player.getInventory().offhand.stream(), player.getInventory().items.stream())
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(PropertyHelper::getReplacement)
                 .filter(itemStack -> itemStack.getItem() instanceof IModularItem)
                 .max(Comparator.comparingInt(itemStack -> ((IModularItem) itemStack.getItem()).getEffectLevel(itemStack, effect)))
                 .map(itemStack -> ((IModularItem) itemStack.getItem()).getEffectEfficiency(itemStack, effect))
-                .orElse(0d);
+                .orElse(0f);
     }
 
     public static int getPlayerToolLevel(Player player, ToolAction tool) {

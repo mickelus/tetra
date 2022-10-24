@@ -102,7 +102,7 @@ public class ItemEffectHandler {
         return EffectHelper.getEffectLevel(itemStack, effect);
     }
 
-    private static double getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
+    private static float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
         return EffectHelper.getEffectEfficiency(itemStack, effect);
     }
 
@@ -251,7 +251,7 @@ public class ItemEffectHandler {
 
                     int reachingLevel = getEffectLevel(itemStack, ItemEffect.reaching);
                     if (reachingLevel > 0) {
-                        ReachingEffect.onLivingDamage(event, reachingLevel);
+                        ReachingEffect.onLivingDamage(event, reachingLevel, getEffectEfficiency(itemStack, ItemEffect.reaching));
                     }
                 });
 
