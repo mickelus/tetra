@@ -13,12 +13,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
@@ -37,10 +39,7 @@ import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.effect.CritEffect;
-import se.mickelus.tetra.effect.EffectHelper;
-import se.mickelus.tetra.effect.ItemEffect;
-import se.mickelus.tetra.effect.ItemEffectHandler;
+import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.util.ToolActionHelper;
@@ -54,12 +53,17 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     public static final String unlocalizedName = "thrown_modular_item";
     public static final String stackKey = "stack";
     public static final String dealtDamageKey = "dealtDamage";
+    public static final String preferredSlotKey = "preferredSlot";
     private static final EntityDataAccessor<Byte> LOYALTY_LEVEL = SynchedEntityData.defineId(ThrownModularItemEntity.class, EntityDataSerializers.BYTE);
     @ObjectHolder(registryName = "entity_type", value = TetraMod.MOD_ID + ":" + unlocalizedName)
     public static EntityType<ThrownModularItemEntity> type;
+    public static int preferUnavailable = -3;
+    public static int preferOffhand = -2;
+    public static int preferToolbelt = -1;
     public int returningTicks;
     private ItemStack thrownStack = new ItemStack(Items.TRIDENT);
     private boolean dealtDamage;
+    private int preferredSlot = -1;
     private IntOpenHashSet hitEntities = new IntOpenHashSet(5);
     private int hitBlocks;
 
@@ -67,11 +71,14 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         super(type, worldIn);
     }
 
-    public ThrownModularItemEntity(Level worldIn, LivingEntity thrower, ItemStack thrownStackIn) {
+    public ThrownModularItemEntity(Level worldIn, Player thrower, ItemStack thrownStackIn) {
         super(type, thrower, worldIn);
         thrownStack = thrownStackIn.copy();
         entityData.set(LOYALTY_LEVEL, (byte) EnchantmentHelper.getLoyalty(thrownStackIn));
 
+        preferredSlot = thrower.getUsedItemHand() == InteractionHand.MAIN_HAND
+                ? thrower.getInventory().selected
+                : ThrownModularItemEntity.preferOffhand;
 
         CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class).ifPresent(item -> {
             double critModifier = CritEffect.rollMultiplier(thrower.getRandom(), item, thrownStack);
@@ -171,8 +178,18 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
                 .orElse(-1);
     }
 
+    private float getEffectEfficiency(ItemEffect effect) {
+        return CastOptional.cast(thrownStack.getItem(), IModularItem.class)
+                .map(item -> item.getEffectEfficiency(thrownStack, effect))
+                .orElse(-1f);
+    }
+
     @Override
     protected ItemStack getPickupItem() {
+        return thrownStack.copy();
+    }
+
+    public ItemStack getThrownStack() {
         return thrownStack.copy();
     }
 
@@ -220,6 +237,9 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
                     }
 
                     return;
+                }
+                if (shooter instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.playNotifySound(SoundEvents.ITEM_BREAK, SoundSource.BLOCKS, 0.5f, 0.5f);
                 }
             }
 
@@ -389,6 +409,32 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         }
     }
 
+    @Override
+    protected boolean tryPickup(Player player) {
+        if (pickup == Pickup.ALLOWED && preferredSlot != -1) {
+            Inventory inventory = player.getInventory();
+            if (preferredSlot == preferOffhand) {
+
+                ItemStack blockingStack = player.getOffhandItem();
+                player.setItemInHand(InteractionHand.OFF_HAND, getPickupItem());
+                if (!blockingStack.isEmpty()) {
+                    player.getInventory().placeItemBackInInventory(blockingStack);
+                }
+                return true;
+            } else {
+                ItemStack blockingStack = inventory.getItem(preferredSlot);
+                boolean success = inventory.add(preferredSlot, getPickupItem());
+                if (success) {
+                    if (!blockingStack.isEmpty()) {
+                        player.getInventory().placeItemBackInInventory(blockingStack);
+                    }
+                    return true;
+                }
+            }
+        }
+        return super.tryPickup(player);
+    }
+
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
@@ -400,6 +446,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         }
 
         dealtDamage = compound.getBoolean(dealtDamageKey);
+        preferredSlot = compound.contains(preferredSlotKey) ? compound.getInt(preferredSlotKey) : -1;
 
         entityData.set(LOYALTY_LEVEL, (byte) EnchantmentHelper.getLoyalty(thrownStack));
 
@@ -417,6 +464,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         super.addAdditionalSaveData(compound);
         compound.put(stackKey, thrownStack.save(new CompoundTag()));
         compound.putBoolean(dealtDamageKey, dealtDamage);
+        compound.putInt(preferredSlotKey, preferredSlot);
     }
 
     public void tickDespawn() {
