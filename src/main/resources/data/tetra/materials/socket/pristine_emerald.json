@@ -18,7 +18,7 @@
         "glyph": "emerald_glyph",
         "texture": "emerald"
     },
-    "textures": ["pristine", "regular"],
+    "textures": ["pristine"],
     "experienceCost": 4,
     "material": {
         "items": ["tetra:pristine_emerald"]

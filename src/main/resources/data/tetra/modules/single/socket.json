@@ -20,7 +20,7 @@
                     "pickaxe_dig": [0, 1],
                     "cut": [0, 1]
                 },
-                "availableTextures": ["pristine", "default"],
+                "availableTextures": ["default", "pristine"],
                 "models": [
                     {
                         "location": "tetra:items/module/single/binding/socket/"

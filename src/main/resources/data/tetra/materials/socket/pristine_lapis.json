@@ -18,7 +18,7 @@
         "glyph": "lapis_glyph",
         "texture": "lapis"
     },
-    "textures": ["regular"],
+    "textures": ["pristine"],
     "experienceCost": 4,
     "material": {
         "items": ["tetra:pristine_lapis"]

@@ -18,7 +18,7 @@
         "glyph": "diamond_glyph",
         "texture": "diamond"
     },
-    "textures": ["regular"],
+    "textures": ["default"],
     "experienceCost": 2,
     "material": {
         "items": ["minecraft:diamond"]

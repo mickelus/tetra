@@ -18,7 +18,7 @@
         "glyph": "lapis_glyph",
         "texture": "lapis"
     },
-    "textures": ["regular"],
+    "textures": ["default"],
     "experienceCost": 2,
     "material": {
         "items": ["minecraft:lapis_lazuli"]

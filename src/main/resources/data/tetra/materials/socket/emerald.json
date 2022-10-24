@@ -18,7 +18,7 @@
         "glyph": "emerald_glyph",
         "texture": "emerald"
     },
-    "textures": ["regular"],
+    "textures": ["default"],
     "experienceCost": 2,
     "material": {
         "items": ["minecraft:emerald"]
