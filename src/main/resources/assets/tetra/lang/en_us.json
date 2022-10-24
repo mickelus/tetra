@@ -440,7 +440,7 @@
     "tetra.stats.earthbind.tooltip": "Hitting an entity has a §e10%%§r chance to lock it in place for §e%s seconds§r. Occurs more often at lower y-levels, up to a §e50%%§r chance at bedrock",
     "tetra.stats.reaching": "Reaching",
     "tetra.stats.reaching.tooltip": "Increases harvest speed and attack damage the further away the target is. Grants a §e+%s%%§r bonus for targets §e%s§r blocks away.",
-    "tetra.stats.reaching.tooltip_extended": "The bonus increases the further away the target is, following a logarithmic scale.\n \nMax bonuses:\n§7Harvest speed: §e+%s%%§7 (§e%s§7 blocks)\n§7Attack damage: §e+%s%%§7 (§e%s§7 blocks)",
+    "tetra.stats.reaching.tooltip_extended": "The bonus increases the further away the target is, following a logarithmic scale. The damage bonus is applied with a factor of §e%sx§7 for ranged attacks.\n \nMax bonuses:\n§7Harvest speed: §e+%s%%§7 (§e%s§7 blocks)\n§7Attack damage: §e+%s%%§7 (§e%s§7 blocks)",
     "tetra.stats.manaRepair": "Mana rep",
     "tetra.stats.manaRepair.tooltip": "This item will use mana to repair itself over time, repairing one point of durability costs §e%s§r mana",
     "tetra.stats.magicCapacity": "Magic capacity",

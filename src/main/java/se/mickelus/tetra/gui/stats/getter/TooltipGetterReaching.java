@@ -11,12 +11,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class TooltipGetterReaching implements ITooltipGetter {
-    private final IStatGetter getter;
+    private final IStatGetter levelGetter;
+    private final IStatGetter efficiencyGetter;
     private final IStatGetter reachGetter;
     private final IStatGetter rangeGetter;
 
     public TooltipGetterReaching() {
-        this.getter = new StatGetterEffectLevel(ItemEffect.reaching, 1);
+        this.levelGetter = new StatGetterEffectLevel(ItemEffect.reaching, 1);
+        this.efficiencyGetter = new StatGetterEffectEfficiency(ItemEffect.reaching, 1);
         reachGetter = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get(), false);
         rangeGetter = new StatGetterAttribute(ForgeMod.ATTACK_RANGE.get(), false);
     }
@@ -25,7 +27,7 @@ public class TooltipGetterReaching implements ITooltipGetter {
     @Override
     public String getTooltipBase(Player player, ItemStack itemStack) {
         return I18n.get("tetra.stats.reaching.tooltip",
-                String.format("%.0f", 100 * ReachingEffect.getOffset((int) getter.getValue(player, itemStack), 3)), 3);
+                String.format("%.0f", 100 * ReachingEffect.getOffset((int) levelGetter.getValue(player, itemStack), 3)), 3);
     }
 
     @Override
@@ -35,10 +37,12 @@ public class TooltipGetterReaching implements ITooltipGetter {
 
     @Override
     public String getTooltipExtension(Player player, ItemStack itemStack) {
-        int level = (int) getter.getValue(player, itemStack);
+        int level = (int) levelGetter.getValue(player, itemStack);
+        double rangedMultiplier = efficiencyGetter.getValue(player, itemStack);
         double reach = reachGetter.getValue(player, itemStack);
         double range = rangeGetter.getValue(player, itemStack);
         return I18n.get("tetra.stats.reaching.tooltip_extended",
+                String.format("%.2f", rangedMultiplier),
                 String.format("%.0f", 100 * ReachingEffect.getOffset(level, reach)), String.format("%.1f", reach),
                 String.format("%.0f", 100 * ReachingEffect.getOffset(level, range)), String.format("%.1f", range));
     }
