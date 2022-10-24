@@ -12,8 +12,10 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -45,6 +47,7 @@ import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
@@ -262,6 +265,35 @@ public class ItemEffectHandler {
         ArmorPenetrationEffect.onLivingDamage(event);
     }
 
+    @SubscribeEvent
+    public void onLivingDeath(LivingDeathEvent event) {
+        ItemStack itemStack;
+        Entity killer;
+        if ("trident".equals(event.getSource().getMsgId())
+                && event.getSource() instanceof IndirectEntityDamageSource damageSource
+                && damageSource.getEntity() instanceof ThrownModularItemEntity modularEntity) {
+            itemStack = modularEntity.getThrownStack();
+            killer = modularEntity.getOwner();
+        } else {
+            itemStack = Optional.ofNullable(event.getSource().getEntity())
+                    .filter(entity -> entity instanceof Player)
+                    .map(entity -> (LivingEntity) entity)
+                    .map(LivingEntity::getMainHandItem)
+                    .filter(stack -> stack.getItem() instanceof IModularItem)
+                    .orElse(null);
+            killer = event.getSource().getEntity();
+        }
+
+        if (itemStack != null) {
+            Level level = event.getEntity().getLevel();
+            if (!level.isClientSide) {
+                int jankLevel = getEffectLevel(itemStack, ItemEffect.janking);
+                if (jankLevel > 0) {
+                    JankEffect.jankItemsDelayed((ServerLevel) level, event.getEntity().blockPosition(), jankLevel, getEffectEfficiency(itemStack, ItemEffect.janking), killer);
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {

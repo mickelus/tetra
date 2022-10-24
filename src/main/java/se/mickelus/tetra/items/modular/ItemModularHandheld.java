@@ -200,6 +200,11 @@ public class ItemModularHandheld extends ModularItem {
                     tickHoningProgression(entity, itemStack, xp * intuitLevel);
                 }
             }
+
+            int jankLevel = getEffectLevel(itemStack, ItemEffect.janking);
+            if (jankLevel > 0) {
+                JankEffect.jankItemsDelayed((ServerLevel) world, pos, jankLevel, getEffectEfficiency(itemStack, ItemEffect.janking), entity);
+            }
         }
     }
 

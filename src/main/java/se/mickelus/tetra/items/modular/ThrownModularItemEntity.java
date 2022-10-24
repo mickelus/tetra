@@ -222,6 +222,13 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
                     return;
                 }
             }
+
+            if (!level.isClientSide && shooter != null) {
+                int jankLevel = getEffectLevel(ItemEffect.janking);
+                if (jankLevel > 0) {
+                    JankEffect.jankItemsDelayed((ServerLevel) level, pos, jankLevel, getEffectEfficiency(ItemEffect.janking), shooter);
+                }
+            }
         }
 
         super.onHit(rayTraceResult);

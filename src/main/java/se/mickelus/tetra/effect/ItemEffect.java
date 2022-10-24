@@ -270,6 +270,7 @@ public class ItemEffect {
     public static final ItemEffect earthbind = get("earthbind");
 
     public static final ItemEffect reaching = get("reaching");
+    public static final ItemEffect janking = get("janking");
 
     /**
      * Throwable: Allows the item to be thrown by holding down right click.

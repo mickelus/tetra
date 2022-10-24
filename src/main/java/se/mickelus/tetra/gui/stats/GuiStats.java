@@ -289,6 +289,12 @@ public class GuiStats {
     public static final GuiStatBar reaching = new GuiStatBar(0, 0, barLength, "tetra.stats.reaching",
             0, 100, false, reachingGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterReaching());
+    public static final IStatGetter jankingGetter = new StatGetterEffectLevel(ItemEffect.janking, 1);
+    public static final GuiStatBar janking = new GuiStatBar(0, 0, barLength, "tetra.stats.janking",
+            0, 16, false, jankingGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterMultiValue("tetra.stats.janking.tooltip",
+                    withStats(jankingGetter, new StatGetterEffectEfficiency(ItemEffect.janking, 100)),
+                    withFormat(StatFormat.noDecimal, StatFormat.noDecimal)));
     public static final IStatGetter releaseLatchGetter = new StatGetterEffectLevel(ItemEffect.releaseLatch, 1);
     public static final GuiStatBar releaseLatch = new GuiStatBar(0, 0, barLength, "tetra.stats.bow.releaseLatch",
             0, 1, false, releaseLatchGetter, LabelGetterBasic.integerLabel,

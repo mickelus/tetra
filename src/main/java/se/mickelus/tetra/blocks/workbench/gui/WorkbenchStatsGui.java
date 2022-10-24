@@ -84,6 +84,7 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.criticalStrike,
             GuiStats.earthbind,
             GuiStats.reaching,
+            GuiStats.janking,
             GuiStats.releaseLatch,
             GuiStats.overbowed,
             GuiStats.multishot,
