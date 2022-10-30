@@ -1,0 +1,50 @@
+[
+    {
+        "modules": ["double/basic_axe"],
+        "moduleVariants": ["double_socket/socket_nether_star"],
+        "visibilityKey": "double_socket/socket_nether_star",
+        "tools": {
+            "axe_dig": 1
+        }
+    },
+    {
+        "modules": ["double/adze"],
+        "moduleVariants": ["double_socket/socket_nether_star"],
+        "visibilityKey": "double_socket/socket_nether_star",
+        "tools": {
+            "shovel_dig": 1
+        }
+    },
+    {
+        "modules": ["double/basic_pickaxe"],
+        "moduleVariants": ["double_socket/socket_nether_star"],
+        "visibilityKey": "double_socket/socket_nether_star",
+        "tools": {
+            "pickaxe_dig": 1
+        }
+    },
+    {
+        "modules": ["double/basic_hammer"],
+        "moduleVariants": ["double_socket/socket_nether_star"],
+        "visibilityKey": "double_socket/socket_nether_star",
+        "tools": {
+            "hammer_dig": 1
+        }
+    },
+    {
+        "modules": ["double/claw"],
+        "moduleVariants": ["double_socket/socket_nether_star"],
+        "visibilityKey": "double_socket/socket_nether_star",
+        "tools": {
+            "pry": 1
+        }
+    },
+    {
+        "modules": ["double/hoe"],
+        "moduleVariants": ["double_socket/socket_nether_star"],
+        "visibilityKey": "double_socket/socket_nether_star",
+        "tools": {
+            "hoe_dig": 1
+        }
+    }
+]

@@ -1,0 +1,18 @@
+[
+    {
+        "modules": ["single/earthpiercer"],
+        "moduleVariants": ["single_socket/socket_nether_star"],
+        "visibilityKey": "single_socket/socket_nether_star",
+        "tools": {
+            "pickaxe_dig": 1
+        }
+    },
+    {
+        "modules": ["single/basic_shovel"],
+        "moduleVariants": ["single_socket/socket_nether_star"],
+        "visibilityKey": "single_socket/socket_nether_star",
+        "tools": {
+            "shovel_dig": 1
+        }
+    }
+]

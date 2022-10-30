@@ -26,7 +26,6 @@ import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class GuiModuleMajor extends GuiModule {
-
     private GuiStringSmall slotString;
 
     private GuiHorizontalLayoutGroup improvementGroup;

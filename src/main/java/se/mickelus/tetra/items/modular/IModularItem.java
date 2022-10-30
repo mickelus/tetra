@@ -945,7 +945,8 @@ public interface IModularItem {
                     .toArray(String[]::new);
 
             return Arrays.stream(synergies)
-                    .filter(synergy -> hasVariantSynergy(synergy, variantKeys) || hasModuleSynergy(itemStack, synergy, modules))
+                    .filter(synergy -> synergy.modules.length == 0 || hasModuleSynergy(itemStack, synergy, modules))
+                    .filter(synergy -> synergy.moduleVariants.length == 0 || hasVariantSynergy(synergy, variantKeys))
                     .filter(synergy -> synergy.improvements.length == 0 || hasImprovementSynergy(synergy, improvements))
                     .toArray(SynergyData[]::new);
         }

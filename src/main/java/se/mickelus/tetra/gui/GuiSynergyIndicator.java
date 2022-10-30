@@ -15,6 +15,7 @@ import se.mickelus.tetra.module.data.SynergyData;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class GuiSynergyIndicator extends GuiElement {
@@ -57,24 +58,16 @@ public class GuiSynergyIndicator extends GuiElement {
                     .collect(Collectors.toSet());
 
             hasActive = hasActive || Arrays.stream(item.getSynergyData(itemStack))
-                    .filter(data -> Arrays.asList(data.modules).contains(moduleKey) || Arrays.asList(data.moduleVariants).contains(moduleVariant))
+                    .filter(data -> shouldShow(data, activeSynergies, moduleKey, moduleVariant))
                     .anyMatch(this::providesStats);
 
             Arrays.stream(item.getAllSynergyData(itemStack))
-                    .filter(data -> Arrays.asList(data.modules).contains(moduleKey))
+                    .filter(data -> shouldShow(data, activeSynergies, moduleKey, moduleVariant))
                     .filter(this::providesStats)
-                    .flatMap(data -> getModuleLines(activeSynergies.contains(data), data).stream())
-                    .map(Component::literal)
-                    .collect(Collectors.toCollection(() -> tooltip));
-
-            Arrays.stream(item.getAllSynergyData(itemStack))
-                    .filter(data -> Arrays.asList(data.moduleVariants).contains(moduleVariant))
-                    .filter(this::providesStats)
-                    .flatMap(data -> getVariantLines(activeSynergies.contains(data), data).stream())
+                    .flatMap(data -> getLines(activeSynergies.contains(data), data).stream())
                     .map(Component::literal)
                     .collect(Collectors.toCollection(() -> tooltip));
         }
-
 
         if (tooltip.size() <= 1) {
             tooltip = Collections.singletonList(Component.translatable("item.tetra.modular.synergy_indicator.empty").withStyle(ChatFormatting.GRAY));
@@ -92,6 +85,29 @@ public class GuiSynergyIndicator extends GuiElement {
                 .ifPresent(module -> update(itemStack, module));
     }
 
+    private boolean shouldShow(SynergyData data, Set<SynergyData> activeSynergies, String moduleKey, String moduleVariant) {
+        if (data.hidden) {
+            return false;
+        }
+        if (data.obscured) {
+            return activeSynergies.contains(data);
+        }
+
+        if (data.visibilityKey != null && !(data.visibilityKey.equals(moduleKey) || data.visibilityKey.equals(moduleVariant))) {
+            return false;
+        }
+
+        return matchesModule(data, moduleKey) || matchesVariant(data, moduleVariant);
+    }
+
+    private boolean matchesModule(SynergyData data, String moduleKey) {
+        return Arrays.asList(data.modules).contains(moduleKey);
+    }
+
+    private boolean matchesVariant(SynergyData data, String moduleVariant) {
+        return Arrays.asList(data.moduleVariants).contains(moduleVariant);
+    }
+
     private boolean providesStats(SynergyData data) {
         return data.attributes != null
                 || data.tools != null
@@ -101,37 +117,30 @@ public class GuiSynergyIndicator extends GuiElement {
                 || data.magicCapacity != 0;
     }
 
-    private List<String> getVariantLines(boolean isActive, SynergyData data) {
-        String header = Arrays.stream(data.moduleVariants)
-                .map(key -> I18n.get("tetra.variant." + key))
-                .collect(Collectors.joining(" + "));
-
+    private List<String> getLines(boolean isActive, SynergyData data) {
+        String header = getHeaderLine(isActive, data);
         if (isActive || alwaysShowStats) {
-            List<String> result = getDataLines(data);
-            result.add(0, ChatFormatting.GREEN + "\u00BB " + ChatFormatting.WHITE + header);
+            List<String> result = getStatLines(data);
+            result.add(0, header);
             return result;
         }
-        return Collections.singletonList(ChatFormatting.BOLD + "  " + ChatFormatting.DARK_GRAY + header);
+        return Collections.singletonList(header);
     }
 
-    private List<String> getModuleLines(boolean isActive, SynergyData data) {
-        String header = Arrays.stream(data.modules)
-                .map(key -> I18n.get("tetra.module." + key + ".name"))
+    private String getHeaderLine(boolean isActive, SynergyData data) {
+        return (isActive
+                ? ChatFormatting.GREEN + "\u00BB " + ChatFormatting.WHITE
+                : ChatFormatting.BOLD + "  " + ChatFormatting.DARK_GRAY)
+                + Stream.concat(
+                        Arrays.stream(data.moduleVariants)
+                                .map(key -> I18n.get("tetra.variant." + key)),
+                        Arrays.stream(data.modules)
+                                .map(key -> I18n.get("tetra.module." + key + ".name"))
+                )
                 .collect(Collectors.joining(" + "));
-
-        if (data.sameVariant) {
-            header += " " + ChatFormatting.DARK_GRAY + I18n.get("item.tetra.modular.synergy_indicator.variant_same");
-        }
-
-        if (isActive || alwaysShowStats) {
-            List<String> result = getDataLines(data);
-            result.add(0, ChatFormatting.GREEN + "\u00BB " + ChatFormatting.WHITE + header);
-            return result;
-        }
-        return Collections.singletonList(ChatFormatting.BOLD + "  " + ChatFormatting.DARK_GRAY + header);
     }
 
-    private List<String> getDataLines(SynergyData data) {
+    private List<String> getStatLines(SynergyData data) {
         List<String> result = new ArrayList<>();
 
         if (data.attributes != null) {

@@ -1,0 +1,23 @@
+{
+    "key": "socket_nether_star",
+    "hidden": true,
+    "category": "socket",
+    "primary": 0,
+    "secondary": 0,
+    "tertiary": 0,
+    "durability": 512,
+    "integrityCost": -1,
+    "integrityGain": 0,
+    "magicCapacity": 0,
+    "toolLevel": 0,
+    "toolEfficiency": 0,
+    "tints": {
+        "glyph": "f4f2ef",
+        "texture": "e2dcd3"
+    },
+    "textures": ["pristine"],
+    "experienceCost": 2,
+    "material": {
+        "items": ["minecraft:nether_star"]
+    }
+}

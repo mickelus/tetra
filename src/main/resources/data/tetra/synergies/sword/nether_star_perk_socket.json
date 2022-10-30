@@ -1,0 +1,50 @@
+[
+    {
+        "modules": ["sword/basic_blade"],
+        "moduleVariants": ["sword_perk_socket_0/socket_nether_star"],
+        "visibilityKey": "sword_perk_socket_0/socket_nether_star",
+        "tools": {
+            "cut": 1
+        }
+    },
+    {
+        "modules": ["sword/heavy_blade"],
+        "moduleVariants": ["sword_perk_socket_0/socket_nether_star"],
+        "visibilityKey": "sword_perk_socket_0/socket_nether_star",
+        "tools": {
+            "cut": 1
+        }
+    },
+    {
+        "modules": ["sword/short_blade"],
+        "moduleVariants": ["sword_perk_socket_0/socket_nether_star"],
+        "visibilityKey": "sword_perk_socket_0/socket_nether_star",
+        "tools": {
+            "cut": 1
+        }
+    },
+    {
+        "modules": ["sword/stonecutter"],
+        "moduleVariants": ["sword_perk_socket_0/socket_nether_star"],
+        "visibilityKey": "sword_perk_socket_0/socket_nether_star",
+        "tools": {
+            "pickaxe_dig": 1
+        }
+    },
+    {
+        "modules": ["sword/machete"],
+        "moduleVariants": ["sword_perk_socket_0/socket_nether_star"],
+        "visibilityKey": "sword_perk_socket_0/socket_nether_star",
+        "tools": {
+            "cut": 1
+        }
+    },
+    {
+        "modules": ["sword/throwing_knife"],
+        "moduleVariants": ["sword_perk_socket_0/socket_nether_star"],
+        "visibilityKey": "sword_perk_socket_0/socket_nether_star",
+        "tools": {
+            "cut": 1
+        }
+    }
+]

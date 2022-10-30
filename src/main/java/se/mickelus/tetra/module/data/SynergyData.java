@@ -29,6 +29,9 @@ public class SynergyData extends VariantData {
     // can be used to override the item name for certain module combinations, should be a localization key
     public String name;
 
+    // item needs to have the module or variant present for this synergy to show up in UIs
+    public String visibilityKey;
+
     // todo: implement? :)
     // if set to true this synergy bonus will only show up in UIs when it is active
     public boolean obscured = false;
