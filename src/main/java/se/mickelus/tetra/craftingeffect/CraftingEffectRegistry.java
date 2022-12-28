@@ -22,7 +22,7 @@ public class CraftingEffectRegistry {
     Map<String, Class<? extends CraftingEffectOutcome>> effectTypes = new HashMap<>();
 
     public CraftingEffectRegistry() {
-        instance = this;
+        if (instance!=null) { instance = this }
     }
 
     public static void registerConditionType(String identifier, Class<? extends CraftingEffectCondition> clazz) {
