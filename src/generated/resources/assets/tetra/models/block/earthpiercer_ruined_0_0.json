@@ -1,0 +1,9 @@
+{
+  "parent": "tetra:block/multi_schematic_base",
+  "textures": {
+    "back": "tetra:blocks/forged_schematic/back",
+    "front": "tetra:blocks/forged_schematic/earthpiercer_ruined_0_0",
+    "particle": "tetra:blocks/forged_schematic/earthpiercer_ruined_0_0",
+    "side": "tetra:blocks/forged_schematic/side"
+  }
+}

@@ -34,7 +34,7 @@ class ItemsForEmeraldsAndScrapTrade implements VillagerTrades.ItemListing {
     @Nullable
     @Override
     public MerchantOffer getOffer(Entity trader, RandomSource rand) {
-        return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCount), new ItemStack(MetalScrapItem.instance, this.scrapCount),
+        return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCount), new ItemStack(MetalScrapItem.instance.get(), this.scrapCount),
                 new ItemStack(this.sellingItem.getItem(), this.sellingItemCount), this.maxUses, this.xpValue, this.priceMultiplier);
     }
 }

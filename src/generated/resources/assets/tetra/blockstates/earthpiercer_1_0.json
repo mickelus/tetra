@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "tetra:block/earthpiercer_1_0"
+    },
+    "facing=north": {
+      "model": "tetra:block/earthpiercer_1_0",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "tetra:block/earthpiercer_1_0",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "tetra:block/earthpiercer_1_0",
+      "y": 180
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "complete=false,facing=east": {
+      "model": "tetra:block/extractor_1_1"
+    },
+    "complete=false,facing=north": {
+      "model": "tetra:block/extractor_1_1",
+      "y": 270
+    },
+    "complete=false,facing=south": {
+      "model": "tetra:block/extractor_1_1",
+      "y": 90
+    },
+    "complete=false,facing=west": {
+      "model": "tetra:block/extractor_1_1",
+      "y": 180
+    },
+    "complete=true,facing=east": {
+      "model": "tetra:block/extractor_1_1"
+    },
+    "complete=true,facing=north": {
+      "model": "tetra:block/extractor_1_1",
+      "y": 270
+    },
+    "complete=true,facing=south": {
+      "model": "tetra:block/extractor_1_1",
+      "y": 90
+    },
+    "complete=true,facing=west": {
+      "model": "tetra:block/extractor_1_1",
+      "y": 180
+    }
+  }
+}

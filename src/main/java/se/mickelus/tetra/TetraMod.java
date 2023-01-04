@@ -1,8 +1,10 @@
 package se.mickelus.tetra;
 
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -26,6 +28,8 @@ import se.mickelus.tetra.craftingeffect.outcome.MaterialReductionOutcome;
 import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
+import se.mickelus.tetra.data.provider.TetraBlockStateProvider;
+import se.mickelus.tetra.data.provider.TetraLootTableProvider;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.LungeEchoPacket;
 import se.mickelus.tetra.effect.TruesweepPacket;
@@ -123,13 +127,14 @@ public class TetraMod {
         packetHandler = new PacketHandler(MOD_ID, "main", "1");
     }
 
-//    @SubscribeEvent
-//    public static void onGatherData(final GatherDataEvent event) {
-//        DataGenerator dataGenerator = event.getGenerator();
-//        if (event.includeServer()) {
-//            dataGenerator.addProvider(new BlockstateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
-//        }
-//    }
+    @SubscribeEvent
+    public static void onGatherData(final GatherDataEvent event) {
+        DataGenerator dataGenerator = event.getGenerator();
+        if (event.includeServer()) {
+            dataGenerator.addProvider(true, new TetraBlockStateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
+            dataGenerator.addProvider(true, new TetraLootTableProvider(dataGenerator));
+        }
+    }
 
     public void setup(FMLCommonSetupEvent event) {
         packetHandler.registerPacket(HonePacket.class, HonePacket::new);

@@ -238,7 +238,6 @@ public class ScrollItem extends BlockItem implements InitializableItem {
         }
     }
 
-
     private boolean openScroll(ItemStack itemStack, boolean isRemote) {
         ScrollData data = ScrollData.read(itemStack);
         if (data.details != null) {

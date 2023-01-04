@@ -27,6 +27,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeTier;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -57,8 +58,10 @@ import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlockEntity;
 import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticleType;
+import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicBlock;
 import se.mickelus.tetra.blocks.rack.RackBlock;
 import se.mickelus.tetra.blocks.rack.RackTile;
+import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.scroll.*;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
@@ -85,10 +88,7 @@ import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.SuspendPotionEffect;
-import se.mickelus.tetra.levelgen.ForgedContainerProcessor;
-import se.mickelus.tetra.levelgen.ForgedCrateProcessor;
-import se.mickelus.tetra.levelgen.ForgedHammerProcessor;
-import se.mickelus.tetra.levelgen.TransferUnitProcessor;
+import se.mickelus.tetra.levelgen.*;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.ReplaceTableModifier;
 import se.mickelus.tetra.loot.ScrollDataFunction;
@@ -172,6 +172,15 @@ public class TetraRegistries {
         CoreExtractorPistonBlock.instance = blocks.register(CoreExtractorPistonBlock.identifier, CoreExtractorPistonBlock::new);
         registerBlockItem(blocks.register(CoreExtractorPipeBlock.identifier, CoreExtractorPipeBlock::new));
 
+        new MultiblockSchematicBlock.Builder("stonecutter", 3, 2, ForgedBlockCommon.propertiesSolid)
+                .build(blocks, items);
+
+        new MultiblockSchematicBlock.Builder("earthpiercer", 2, 2, ForgedBlockCommon.propertiesSolid)
+                .build(blocks, items);
+
+        new MultiblockSchematicBlock.Builder("extractor", 3, 3, ForgedBlockCommon.propertiesSolid)
+                .build(blocks, items);
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ITEMS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,7 +202,7 @@ public class TetraRegistries {
         items.register(BeamItem.unlocalizedName, BeamItem::new);
         items.register(MeshItem.unlocalizedName, MeshItem::new);
         items.register(QuickLatchItem.unlocalizedName, QuickLatchItem::new);
-        items.register(MetalScrapItem.unlocalizedName, MetalScrapItem::new);
+        MetalScrapItem.instance = items.register(MetalScrapItem.unlocalizedName, MetalScrapItem::new);
         items.register(InsulatedPlateItem.unlocalizedName, InsulatedPlateItem::new);
         items.register(PlanarStabilizerItem.unlocalizedName, PlanarStabilizerItem::new);
         ThermalCellItem.instance = items.register(ThermalCellItem.identifier, ThermalCellItem::new);
@@ -316,6 +325,7 @@ public class TetraRegistries {
         ForgedCrateProcessor.type = registerStructureProcessor("crate", () -> ForgedCrateProcessor.codec);
         ForgedContainerProcessor.type = registerStructureProcessor("container", () -> ForgedContainerProcessor.codec);
         TransferUnitProcessor.type = registerStructureProcessor("transfer_unit", () -> TransferUnitProcessor.codec);
+        MultiblockSchematicProcessor.type = registerStructureProcessor("multiblock_schematic", () -> MultiblockSchematicProcessor.codec);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // INGREDIENT SERIALIZERS

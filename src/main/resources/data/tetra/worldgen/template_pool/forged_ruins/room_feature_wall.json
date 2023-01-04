@@ -1,0 +1,69 @@
+{
+    "elements": [
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/hammer",
+                "processors": "tetra:hammer_setup",
+                "projection": "rigid"
+            },
+            "weight": 1
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/container_large",
+                "processors": "tetra:container_setup",
+                "projection": "rigid"
+            },
+            "weight": 1
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/sculk_contained",
+                "processors": "minecraft:empty",
+                "projection": "rigid"
+            },
+            "weight": 1
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/sculk_broken",
+                "processors": "minecraft:empty",
+                "projection": "rigid"
+            },
+            "weight": 1
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/stonecutter_schematic",
+                "processors": "tetra:schematic_setup",
+                "projection": "rigid"
+            },
+            "weight": 1
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/earthpiercer_schematic",
+                "processors": "tetra:schematic_setup",
+                "projection": "rigid"
+            },
+            "weight": 1
+        },
+        {
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "tetra:forged_ruins/extractor_schematic",
+                "processors": "tetra:schematic_setup",
+                "projection": "rigid"
+            },
+            "weight": 1
+        }
+    ],
+    "fallback": "minecraft:empty",
+    "name": "tetra:forged_ruins/room_feature_wall"
+}

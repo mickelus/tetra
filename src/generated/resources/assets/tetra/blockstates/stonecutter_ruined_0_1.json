@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "tetra:block/stonecutter_ruined_0_1"
+    },
+    "facing=north": {
+      "model": "tetra:block/stonecutter_ruined_0_1",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "tetra:block/stonecutter_ruined_0_1",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "tetra:block/stonecutter_ruined_0_1",
+      "y": 180
+    }
+  }
+}

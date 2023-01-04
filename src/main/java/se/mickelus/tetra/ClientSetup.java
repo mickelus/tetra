@@ -25,6 +25,7 @@ import se.mickelus.tetra.blocks.forged.hammer.HammerHeadRenderer;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticle;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticleType;
 import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
+import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicGui;
 import se.mickelus.tetra.blocks.scroll.ScrollRenderer;
 import se.mickelus.tetra.blocks.scroll.ScrollTile;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
@@ -137,6 +138,7 @@ public class ClientSetup {
         registerOverlay(event, "ranged_progresss", new RangedProgressOverlay(mc));
         registerOverlay(event, "crossbow", new CrossbowOverlay(mc));
         registerOverlay(event, "scanner", new ScannerOverlayGui());
+        registerOverlay(event, "multiblock_schematic", new MultiblockSchematicGui(mc));
     }
 
     private static void registerOverlay(RegisterGuiOverlaysEvent event, String id, IGuiOverlay overlay) {

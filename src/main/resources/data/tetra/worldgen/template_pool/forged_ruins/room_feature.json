@@ -22,7 +22,7 @@
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "location": "tetra:forged_ruins/sculk_contained",
-                "processors": "tetra:container_setup",
+                "processors": "minecraft:empty",
                 "projection": "rigid"
             },
             "weight": 1
@@ -31,7 +31,7 @@
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "location": "tetra:forged_ruins/sculk_broken",
-                "processors": "tetra:container_setup",
+                "processors": "minecraft:empty",
                 "projection": "rigid"
             },
             "weight": 1

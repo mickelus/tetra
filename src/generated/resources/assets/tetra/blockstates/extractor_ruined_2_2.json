@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "tetra:block/extractor_ruined_2_2"
+    },
+    "facing=north": {
+      "model": "tetra:block/extractor_ruined_2_2",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "tetra:block/extractor_ruined_2_2",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "tetra:block/extractor_ruined_2_2",
+      "y": 180
+    }
+  }
+}
