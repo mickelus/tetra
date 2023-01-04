@@ -9,6 +9,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -90,5 +91,23 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements Simp
         }
 
         return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+    }
+
+    @Override
+    public BlockState rotate(final BlockState blockState, final Rotation rotation) {
+        switch (rotation) {
+            case COUNTERCLOCKWISE_90:
+            case CLOCKWISE_90:
+                switch ((Direction.Axis) blockState.getValue(axis)) {
+                    case Z:
+                        return blockState.setValue(axis, Direction.Axis.X);
+                    case X:
+                        return blockState.setValue(axis, Direction.Axis.Z);
+                    default:
+                        return blockState;
+                }
+            default:
+                return blockState;
+        }
     }
 }
