@@ -393,6 +393,8 @@ public class TetraRegistries {
                         .filter(item -> item instanceof InitializableItem)
                         .map(item -> (InitializableItem) item)
                         .forEach(InitializableItem::clientInit);
+
+                MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
             } catch (Exception e) {
                 e.printStackTrace();
             }

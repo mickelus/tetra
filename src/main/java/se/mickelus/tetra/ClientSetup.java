@@ -24,7 +24,6 @@ import se.mickelus.tetra.blocks.forged.hammer.HammerHeadBlockEntity;
 import se.mickelus.tetra.blocks.forged.hammer.HammerHeadRenderer;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticle;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticleType;
-import se.mickelus.tetra.blocks.salvage.InteractiveBlockOverlay;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicGui;
 import se.mickelus.tetra.blocks.scroll.ScrollRenderer;
 import se.mickelus.tetra.blocks.scroll.ScrollTile;
@@ -66,7 +65,6 @@ public class ClientSetup {
                 // registered here as there are multiple instances of workbench blocks
                 MenuScreens.register(WorkbenchContainer.containerType.get(), WorkbenchScreen::new);
 
-                MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
                 BotaniaCompat.clientInit();
                 ModularModelLoader.init();
             } catch (Exception e) {
