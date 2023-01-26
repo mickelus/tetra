@@ -111,9 +111,9 @@ public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
 
         if (!itemStack.isEmpty()) {
             ModularHolosphereItem item = (ModularHolosphereItem) itemStack.getItem();
-            horizontalSpread = 2 * item.getEffectLevel(itemStack, ItemEffect.scannerHorizontalSpread);
-            verticalSpread = item.getEffectLevel(itemStack, ItemEffect.scannerVerticalSpread);
-            range = item.getEffectLevel(itemStack, ItemEffect.scannerRange);
+            horizontalSpread = 2 * item.getEffectLevel(itemStack, ItemEffect.sweeperHorizontalSpread);
+            verticalSpread = item.getEffectLevel(itemStack, ItemEffect.sweeperVerticalSpread);
+            range = item.getEffectLevel(itemStack, ItemEffect.sweeperRange);
 
             cooldown = Math.max((float) item.getCooldownBase(itemStack), 1);
 
@@ -126,17 +126,17 @@ public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
     }
 
     private void updateGuiVisibility() {
-        int scannerRange = Stream.of(mc.player.getMainHandItem(), mc.player.getOffhandItem())
+        int sweeperRange = Stream.of(mc.player.getMainHandItem(), mc.player.getOffhandItem())
                 .filter(stack -> stack.getItem() instanceof ModularHolosphereItem)
-                .map(stack -> ((IModularItem) stack.getItem()).getEffectLevel(stack, ItemEffect.scannerRange))
+                .map(stack -> ((IModularItem) stack.getItem()).getEffectLevel(stack, ItemEffect.sweeperRange))
                 .findFirst()
                 .orElse(0);
 
-        if (!scanner.isVisible() && scannerRange > 0) {
+        if (!scanner.isVisible() && sweeperRange > 0) {
             updateStats();
         }
 
-        if (scannerRange > 0) {
+        if (sweeperRange > 0) {
             scanner.show();
         } else {
             scanner.hide();

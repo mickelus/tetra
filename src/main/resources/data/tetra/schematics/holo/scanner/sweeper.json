@@ -1,24 +1,20 @@
 {
     "replace": true,
     "slots": ["holo/scanner"],
+    "repair": false,
     "materialSlotCount": 1,
     "glyph": {
         "textureX": 112,
         "textureY": 48
     },
     "displayType": "improvement",
-    "requirement": {
-        "type": "tetra:improvement",
-        "improvement": "scanner/sweeper"
-    },
     "outcomes": [
         {
             "material": {
-                "items": ["tetra:forged_bolt"],
-                "count": 2
+                "items": ["minecraft:ender_eye"]
             },
             "improvements": {
-                "scanner/sweeper_adjustable": 0
+                "scanner/sweeper": 0
             }
         }
     ]

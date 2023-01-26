@@ -374,18 +374,18 @@ public class ItemEffect {
      * Scanner range: Defines the range of the scanner functionality, the level of the effect decides max distance (in blocks) for scanning. Enables
      * the scanning functionality if level > 0
      */
-    public static final ItemEffect scannerRange = get("scannerRange");
+    public static final ItemEffect sweeperRange = get("sweeperRange");
 
     /**
      * Scanner horizontal spread: Defines the width of the scan, the number of hits per sweep will be four times the level of the effect.
      */
-    public static final ItemEffect scannerHorizontalSpread = get("scannerHorizontalSpread");
+    public static final ItemEffect sweeperHorizontalSpread = get("sweeperHorizontalSpread");
 
     /**
      * Scanner vertical spread: Defines how many vertical raytraces are performed when scanning, each level of the effect adds two (up & down) more
      * vertical raytraces. The additional raytraces start at +-25 degrees and increments at 5 degrees per raytrace.
      */
-    public static final ItemEffect scannerVerticalSpread = get("scannerVerticalSpread");
+    public static final ItemEffect sweeperVerticalSpread = get("sweeperVerticalSpread");
     private final String key;
 
     private ItemEffect(String key) {

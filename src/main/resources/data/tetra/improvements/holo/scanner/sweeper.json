@@ -1,0 +1,19 @@
+[
+    {
+        "key": "scanner/sweeper",
+        "integrity": -1,
+        "attributes": {
+            "tetra:ability_cooldown": 1.3
+        },
+        "effects": {
+            "sweeperRange": 24,
+            "sweeperHorizontalSpread": 20,
+            "sweeperVerticalSpread": 3
+        },
+        "models": [
+            {
+                "location": "tetra:items/module/holo/scanner/sweeper"
+            }
+        ]
+    }
+]

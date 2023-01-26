@@ -1,11 +1,11 @@
 [
     {
-        "improvement": "scanner/adjustable",
+        "improvement": "scanner/sweeper_adjustable",
         "key": "scanner/adjustable_range",
         "steps": 6,
         "properties": {
             "effects": {
-                "scannerRange": 2
+                "sweeperRange": 2
             },
             "attributes": {
                 "tetra:ability_cooldown": 0.05
@@ -13,13 +13,13 @@
         }
     },
     {
-        "improvement": "scanner/adjustable",
+        "improvement": "scanner/sweeper_adjustable",
         "key": "scanner/adjustable_span",
         "steps": 3,
         "properties": {
             "effects": {
-                "scannerHorizontalSpread": 1,
-                "scannerVerticalSpread": -1
+                "sweeperHorizontalSpread": 1,
+                "sweeperVerticalSpread": -1
             }
         }
     }

@@ -1,0 +1,11 @@
+[
+    {
+        "key": "scanner/sweeper_adjustable",
+        "integrity": -1,
+        "models": [
+            {
+                "location": "tetra:items/module/holo/scanner/sweeper_adjustable"
+            }
+        ]
+    }
+]

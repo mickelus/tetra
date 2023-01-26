@@ -346,18 +346,18 @@ public class GuiStats {
     public static final GuiStatBar workable = new GuiStatBar(0, 0, barLength, "tetra.stats.workable",
             0, 100, false, workableGetter, LabelGetterBasic.percentageLabel,
             new TooltipGetterPercentageDecimal("tetra.stats.workable.tooltip", workableGetter));
-    public static final IStatGetter scannerRangeGetter = new StatGetterEffectLevel(ItemEffect.scannerRange, 1);
-    public static final GuiStatBar scannerRange = new GuiStatBar(0, 0, barLength, "tetra.stats.holo.scannerRange",
-            0, 64, false, scannerRangeGetter, LabelGetterBasic.integerLabel,
-            new TooltipGetterInteger("tetra.stats.holo.scannerRange.tooltip", scannerRangeGetter));
-    public static final IStatGetter scannerHorizontalSpreadGetter = new StatGetterEffectLevel(ItemEffect.scannerHorizontalSpread, 4);
-    public static final GuiStatBar scannerHorizontalSpread = new GuiStatBar(0, 0, barLength, "tetra.stats.holo.scannerHorizontalSpread",
-            0, 128, false, scannerHorizontalSpreadGetter, LabelGetterBasic.integerLabel,
-            new TooltipGetterScannerHorizontalRange(scannerHorizontalSpreadGetter));
-    public static final IStatGetter scannerVerticalSpreadGetter = new StatGetterEffectLevel(ItemEffect.scannerVerticalSpread, 10, 40);
-    public static final GuiStatBar scannerVerticalSpread = new GuiStatBar(0, 0, barLength, "tetra.stats.holo.scannerVerticalSpread",
-            0, 180, false, scannerVerticalSpreadGetter, LabelGetterBasic.integerLabel,
-            new TooltipGetterInteger("tetra.stats.holo.scannerVerticalSpread.tooltip", scannerVerticalSpreadGetter));
+    public static final IStatGetter sweeperRangeGetter = new StatGetterEffectLevel(ItemEffect.sweeperRange, 1);
+    public static final GuiStatBar sweeperRange = new GuiStatBar(0, 0, barLength, "tetra.stats.holo.sweeperRange",
+            0, 64, false, sweeperRangeGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.holo.sweeperRange.tooltip", sweeperRangeGetter));
+    public static final IStatGetter sweeperHorizontalSpreadGetter = new StatGetterEffectLevel(ItemEffect.sweeperHorizontalSpread, 4);
+    public static final GuiStatBar sweeperHorizontalSpread = new GuiStatBar(0, 0, barLength, "tetra.stats.holo.sweeperHorizontalSpread",
+            0, 128, false, sweeperHorizontalSpreadGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterScannerHorizontalRange(sweeperHorizontalSpreadGetter));
+    public static final IStatGetter sweeperVerticalSpreadGetter = new StatGetterEffectLevel(ItemEffect.sweeperVerticalSpread, 10, 40);
+    public static final GuiStatBar sweeperVerticalSpread = new GuiStatBar(0, 0, barLength, "tetra.stats.holo.sweeperVerticalSpread",
+            0, 180, false, sweeperVerticalSpreadGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.holo.sweeperVerticalSpread.tooltip", sweeperVerticalSpreadGetter));
     public static final GuiStatBarIntegrity integrity = new GuiStatBarIntegrity(0, 0);
     private static final ITooltipGetter counterweightTooltip = new TooltipGetterInteger("tetra.stats.counterweight.tooltip", counterweightGetter);
     public static final GuiStatBar counterweight = new GuiStatBar(0, 0, barLength, "tetra.stats.counterweight",

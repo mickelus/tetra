@@ -38,8 +38,8 @@ import java.util.stream.Stream;
 public class ModularHolosphereItem extends ModularItem {
     public final static String coreKey = "holo/core";
     public final static String frameKey = "holo/frame";
-    public final static String attachmentAKey = "holo/attachment_0";
-    public final static String attachmentBKey = "holo/attachment_1";
+    public final static String scannerKey = "holo/scanner";
+    public final static String repositoryKey = "holo/repo";
     public static final String identifier = "holo";
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 0, -14, 18, 4, 0, 4, 18);
 
@@ -54,10 +54,10 @@ public class ModularHolosphereItem extends ModularItem {
 
         canHone = false;
 
-        majorModuleKeys = new String[]{coreKey, frameKey, attachmentAKey, attachmentBKey};
+        majorModuleKeys = new String[]{coreKey, frameKey, scannerKey, repositoryKey};
         minorModuleKeys = new String[0];
 
-        requiredModules = new String[]{coreKey, frameKey};
+        requiredModules = new String[]{coreKey, frameKey, scannerKey, repositoryKey};
 
         RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
@@ -85,6 +85,8 @@ public class ModularHolosphereItem extends ModularItem {
 
             IModularItem.putModuleInSlot(itemStack, coreKey, "holo/core", "frame/dim");
             IModularItem.putModuleInSlot(itemStack, frameKey, "holo/frame", "core/ancient");
+            IModularItem.putModuleInSlot(itemStack, scannerKey, "holo/scanner", "scanner/default");
+            IModularItem.putModuleInSlot(itemStack, repositoryKey, "holo/repo", "repo/default");
 
             items.add(itemStack);
         }
