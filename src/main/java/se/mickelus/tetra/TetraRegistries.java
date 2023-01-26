@@ -161,7 +161,8 @@ public class TetraRegistries {
         registerBlockItem(blocks.register(ForgedVentBlock.identifier, ForgedVentBlock::new));
         blocks.register(HammerHeadBlock.identifier, HammerHeadBlock::new);
         registerBlockItem(blocks.register(HammerBaseBlock.identifier, HammerBaseBlock::new));
-        registerBlockItem(blocks.register(ForgedWorkbenchBlock.identifier, ForgedWorkbenchBlock::new));
+        RegistryObject<ForgedWorkbenchBlock> forgedWorkbench = blocks.register(ForgedWorkbenchBlock.identifier, ForgedWorkbenchBlock::new);
+        registerBlockItem(forgedWorkbench);
         ForgedContainerBlock.instance = blocks.register(ForgedContainerBlock.identifier, ForgedContainerBlock::new);
         registerBlockItem(ForgedContainerBlock.instance);
         registerBlockItem(blocks.register(ForgedCrateBlock.identifier, ForgedCrateBlock::new));
@@ -221,7 +222,7 @@ public class TetraRegistries {
         // BLOCK ENTITIES
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         WorkbenchTile.type = blockEntities.register(WorkbenchTile.identifier,
-                () -> BlockEntityType.Builder.of(WorkbenchTile::new, basicWorkbench.get()).build(null));
+                () -> BlockEntityType.Builder.of(WorkbenchTile::new, basicWorkbench.get(), forgedWorkbench.get()).build(null));
         ChthonicExtractorTile.type = blockEntities.register(ChthonicExtractorBlock.identifier,
                 () -> BlockEntityType.Builder.of(ChthonicExtractorTile::new, chthonicExtractor.get()).build(null));
         blockEntities.register(FracturedBedrockBlock.identifier,
