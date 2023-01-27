@@ -1,0 +1,16 @@
+{
+    "replace": true,
+    "slots": ["single/head"],
+    "materialSlotCount": 1,
+    "rarity": "temporary",
+    "displayType": "major",
+    "requirement": {
+        "type": "tetra:locked",
+        "key": "tetra:earthpiercer"
+    },
+    "glyph": {
+        "textureX": 224,
+        "textureY": 32
+    },
+    "outcomes": []
+}

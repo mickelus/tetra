@@ -16,16 +16,30 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.ISchematicProviderBlock;
 
 public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock implements ISchematicProviderBlock {
     public static final BooleanProperty complete = BooleanProperty.create("complete");
+
+    protected final ResourceLocation[] schematics;
 
     public PrimaryMultiblockSchematicBlock(Properties properties, String schematic, RegistryObject<RuinedMultiblockSchematicBlock> ruinedRef,
             ResourceLocation pryTable, int x, int y, int height, int width) {
         super(properties, schematic, ruinedRef, pryTable, x, y, height, width);
         this.registerDefaultState(this.stateDefinition.any().setValue(facingProp, Direction.EAST).setValue(complete, false));
 
+        this.schematics = new ResourceLocation[]{new ResourceLocation(TetraMod.MOD_ID, schematic)};
+    }
+
+    @Override
+    public boolean canUnlockSchematics(Level world, BlockPos pos, BlockPos targetPos) {
+        return world.getBlockState(pos).getValue(complete);
+    }
+
+    @Override
+    public ResourceLocation[] getSchematics(Level world, BlockPos pos, BlockState blockState) {
+        return schematics;
     }
 
     @Override

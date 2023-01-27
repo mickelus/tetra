@@ -1,0 +1,16 @@
+{
+    "replace": true,
+    "slots": ["sword/blade"],
+    "materialSlotCount": 1,
+    "rarity": "temporary",
+    "displayType": "major",
+    "requirement": {
+        "type": "tetra:locked",
+        "key": "tetra:stonecutter"
+    },
+    "glyph": {
+        "textureX": 240,
+        "textureY": 32
+    },
+    "outcomes": []
+}

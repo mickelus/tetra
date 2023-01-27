@@ -1,0 +1,17 @@
+{
+    "replace": true,
+    "slots": ["double/head_right"],
+    "keySuffixes": ["_right"],
+    "materialSlotCount": 1,
+    "rarity": "temporary",
+    "displayType": "major",
+    "requirement": {
+        "type": "tetra:locked",
+        "key": "tetra:extractor"
+    },
+    "glyph": {
+        "textureX": 144,
+        "textureY": 48
+    },
+    "outcomes": []
+}
