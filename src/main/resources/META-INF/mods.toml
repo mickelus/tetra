@@ -1,43 +1,43 @@
-modLoader="javafml"
-loaderVersion="[38,)"
-issueTrackerURL="https://github.com/mickelus/tetra/issues/new?template=bug_report.md"
-license="MIT"
+modLoader = "javafml"
+loaderVersion = "[42,)"
+issueTrackerURL = "https://github.com/mickelus/tetra/issues/new?template=bug_report.md"
+license = "MIT"
 
 [[mods]]
-modId="tetra"
-version="${file.jarVersion}"
-displayName="Tetra"
-authors="Mickelus"
-description="Tetra revolves around modular items and attempts to blend it together with other concepts such as adventure and technology."
-credits="red1854th: korean localization, Jeffku0107: chinese localization, Arvid6: spanish localization, shikhtv: russian translation"
+modId = "tetra"
+version = "${file.jarVersion}"
+displayName = "Tetra"
+authors = "Mickelus"
+description = "Tetra revolves around modular items and attempts to blend it together with other concepts such as adventure and technology."
+credits = "red1854th: korean localization, Jeffku0107: chinese localization, Arvid6: spanish localization, shikhtv: russian translation"
 
 [[dependencies.tetra]] #optional
-    modId="forge"
-    mandatory=true
-    versionRange="[38,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[42,)"
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.tetra]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.18,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19,)"
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.tetra]]
-    modId="mutil"
-    mandatory=true
-    versionRange="[4.2,]"
-    ordering="NONE"
-    side="BOTH"
+modId = "mutil"
+mandatory = true
+versionRange = "[4.2,]"
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.tetra]]
-    modId="curios"
-    mandatory=false
-    versionRange="[1.16.2-4,)"
-    ordering="AFTER"
-    side="BOTH"
+modId = "curios"
+mandatory = false
+versionRange = "[1.19,)"
+ordering = "AFTER"
+side = "BOTH"
 [[dependencies.tetra]]
-    modId="botania"
-    mandatory=false
-    versionRange="[1.18,)"
-    ordering="AFTER"
-    side="BOTH"
+modId = "botania"
+mandatory = false
+versionRange = "[1.19,)"
+ordering = "AFTER"
+side = "BOTH"
