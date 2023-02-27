@@ -4,6 +4,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ToolActionHelper {
-    public static final BiMap<ToolAction, TagKey<Block>> appropriateTools = HashBiMap.create(4);
+    public static final BiMap<ToolAction, TagKey<Block>> appropriateTools = HashBiMap.create(5);
     /**
      * Below are lists of blocks, materials and tags that describe what different tools can harvest and efficiently destroy. Note that these
      * are copies of what the vanilla tool counterparts explicitly state that they can destroy and harvest, some blocks (and required tiers)
@@ -41,12 +42,14 @@ public class ToolActionHelper {
 
     // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
     public static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
+    public static final TagKey<Block> hammerMineable = BlockTags.create(new ResourceLocation("mineable/hammer"));
 
     public static void init() {
         appropriateTools.put(ToolActions.AXE_DIG, BlockTags.MINEABLE_WITH_AXE);
         appropriateTools.put(ToolActions.PICKAXE_DIG, BlockTags.MINEABLE_WITH_PICKAXE);
         appropriateTools.put(ToolActions.SHOVEL_DIG, BlockTags.MINEABLE_WITH_SHOVEL);
         appropriateTools.put(ToolActions.HOE_DIG, BlockTags.MINEABLE_WITH_HOE);
+        appropriateTools.put(TetraToolActions.hammer, hammerMineable);
     }
 
     public static Set<ToolAction> getAppropriateTools(BlockState state) {
