@@ -7,6 +7,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockElement;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.resources.ResourceLocation;
@@ -40,7 +42,9 @@ public class ItemLayerModel implements IUnbakedGeometry<net.minecraftforge.clien
             ItemOverrides overrides, ResourceLocation modelLocation) {
         TextureAtlasSprite particle = spriteGetter.apply(context.hasMaterial("particle")
                 ? context.getMaterial("particle")
-                : textures.get(0));
+                : textures.size() > 0
+                ? textures.get(0)
+                : new Material(TextureAtlas.LOCATION_BLOCKS, MissingTextureAtlasSprite.getLocation()));
 
         Transformation rootTransform = context.getRootTransform();
         if (!rootTransform.isIdentity()) {
