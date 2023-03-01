@@ -21,7 +21,7 @@ public class GuiStatIndicator extends GuiTexture {
     public GuiStatIndicator(int x, int y, String label, int textureIndex, IStatGetter statGetter, ITooltipGetter tooltipGetter) {
         super(x, y, 7, 7, textureIndex * 7, 144, GuiTextures.workbench);
 
-        this.label = I18n.get(label);
+        this.label = label;
         this.statGetter = statGetter;
         this.tooltipGetter = tooltipGetter;
     }
@@ -84,7 +84,7 @@ public class GuiStatIndicator extends GuiTexture {
     }
 
     public String getLabel() {
-        return label;
+        return I18n.get(label);
     }
 
     public String getTooltipBase(Player player, ItemStack itemStack) {
