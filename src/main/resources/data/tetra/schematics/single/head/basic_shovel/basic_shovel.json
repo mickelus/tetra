@@ -9,9 +9,20 @@
         "textureX": 176,
         "textureY": 32
     },
+    "translation": {
+        "primaryAttributes": {
+            "generic.attack_damage": 1
+        },
+        "tools": {
+            "shovel_dig": [3, 3]
+        },
+        "durability": 3,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
     "outcomes": [
         {
-            "materials": [ "tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/" ],
+            "materials": ["tetra:wood/", "tetra:stone/", "tetra:metal/", "tetra:gem/"],
             "moduleKey": "single/basic_shovel",
             "moduleVariant": "basic_shovel/"
         }
