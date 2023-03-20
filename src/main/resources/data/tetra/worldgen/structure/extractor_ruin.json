@@ -3,12 +3,12 @@
     "biomes": "#tetra:has_structure/forged_ruins",
     "size": 7,
     "start_height": {
-        "above_bottom": 1
+        "above_bottom": 2
     },
     "max_distance_from_center": 80,
     "start_pool": "tetra:forged_ruins/extractor_platform",
     "step": "underground_structures",
     "terrain_adaptation": "none",
     "use_expansion_hack": false,
-    "spawn_overrides": { }
+    "spawn_overrides": {}
 }
