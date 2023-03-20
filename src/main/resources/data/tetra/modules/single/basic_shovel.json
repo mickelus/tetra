@@ -12,11 +12,15 @@
     ],
     "variants": [
         {
-            "materials": [ "tetra:metal/", "tetra:stone/", "tetra:wood/", "tetra:gem/" ],
+            "materials": ["tetra:metal/", "tetra:stone/", "tetra:wood/", "tetra:gem/"],
             "key": "basic_shovel/",
             "attributes": {
                 "generic.attack_damage": -1.5,
                 "generic.attack_speed": -1.8
+            },
+            "tools": {
+                "shovel_flatten": 1,
+                "dowse": 1
             },
             "aspects": {
                 "blockBreaker": 2,
@@ -28,9 +32,7 @@
                     "generic.attack_damage": 1
                 },
                 "tools": {
-                    "shovel_dig": [ 1, 1 ],
-                    "shovel_flatten": 1,
-                    "dowse": 1
+                    "shovel_dig": [1, 1]
                 },
                 "durability": 1,
                 "integrity": -1,
@@ -39,8 +41,12 @@
                     "textureX": 176,
                     "textureY": 32
                 },
-                "availableTextures": [ "crude", "metal", "shiny" ],
-                "models": [ { "location": "tetra:items/module/single/head/basic_shovel/" } ]
+                "availableTextures": ["crude", "metal", "shiny"],
+                "models": [
+                    {
+                        "location": "tetra:items/module/single/head/basic_shovel/"
+                    }
+                ]
             }
         }
     ]

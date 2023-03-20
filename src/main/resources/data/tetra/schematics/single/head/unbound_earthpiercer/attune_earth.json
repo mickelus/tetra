@@ -1,0 +1,45 @@
+{
+    "replace": true,
+    "slots": ["single/head"],
+    "rarity": "temporary",
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:earthpiercer"
+            },
+            {
+                "type": "tetra:module",
+                "module": "single/unbound_earthpiercer"
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "unbound_earthpiercer/echo_shard"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "unbound_earthpiercer/earth_attunement"
+                }
+            }
+        ]
+    },
+    "glyph": {
+        "textureX": 160,
+        "textureY": 240
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer_dig": "minecraft:wood"
+            },
+            "experienceCost": 3,
+            "improvements": {
+                "unbound_earthpiercer/earth_attunement": 1
+            }
+        }
+    ]
+}

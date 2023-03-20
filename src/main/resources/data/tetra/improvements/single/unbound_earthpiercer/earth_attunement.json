@@ -1,0 +1,10 @@
+[
+    {
+        "key": "unbound_earthpiercer/earth_attunement",
+        "level": 1,
+        "integrity": -1,
+        "tools": {
+            "shovel_dig": [2, 5]
+        }
+    }
+]

@@ -1,0 +1,37 @@
+{
+    "replace": true,
+    "slots": ["single/head"],
+    "rarity": "temporary",
+    "hone": true,
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:earthpiercer"
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "unbound_earthpiercer/echo_shard"
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "unbound_earthpiercer/bound",
+                "level": 3
+            }
+        ]
+    },
+    "glyph": {
+        "textureX": 144,
+        "textureY": 240
+    },
+    "outcomes": [
+        {
+            "experienceCost": 3,
+            "improvements": {
+                "unbound_earthpiercer/bound": 4
+            }
+        }
+    ]
+}

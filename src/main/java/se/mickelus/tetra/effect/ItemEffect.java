@@ -236,6 +236,8 @@ public class ItemEffect {
      */
     public static final ItemEffect enderReverb = get("enderReverb");
 
+    public static final ItemEffect sculkTaint = get("sculkTaint");
+
     /**
      * Haunted: Using the item has a chance to spawn an invisible vex that holds a copy of the item, the vex will live for 1 second per effect level
      * and the probability for the effect to occur is equal to the effect efficiency.

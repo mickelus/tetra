@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": [ "single/head" ],
+    "slots": ["single/head"],
     "materialSlotCount": 0,
     "hone": true,
     "rarity": "hone",
@@ -13,8 +13,17 @@
         "type": "tetra:and",
         "requirements": [
             {
-                "type": "tetra:module",
-                "module": "single/earthpiercer"
+                "type": "tetra:or",
+                "requirements": [
+                    {
+                        "type": "tetra:module",
+                        "module": "single/earthpiercer"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "single/unbound_earthpiercer"
+                    }
+                ]
             },
             {
                 "type": "tetra:not",

@@ -8,6 +8,30 @@
         }
     },
     {
+        "modules": ["single/unbound_earthpiercer"],
+        "moduleVariants": ["single_perk_socket_0/socket_nether_star"],
+        "visibilityKey": "single_perk_socket_0/socket_nether_star",
+        "tools": {
+            "pickaxe_dig": 1
+        }
+    },
+    {
+        "improvements": ["unbound_earthpiercer/wood_attunement"],
+        "moduleVariants": ["single_perk_socket_0/socket_nether_star"],
+        "visibilityKey": "single_perk_socket_0/socket_nether_star",
+        "tools": {
+            "axe_dig": 1
+        }
+    },
+    {
+        "improvements": ["unbound_earthpiercer/earth_attunement"],
+        "moduleVariants": ["single_perk_socket_0/socket_nether_star"],
+        "visibilityKey": "single_perk_socket_0/socket_nether_star",
+        "tools": {
+            "shovel_dig": 1
+        }
+    },
+    {
         "modules": ["single/basic_shovel"],
         "moduleVariants": ["single_perk_socket_0/socket_nether_star"],
         "visibilityKey": "single_perk_socket_0/socket_nether_star",

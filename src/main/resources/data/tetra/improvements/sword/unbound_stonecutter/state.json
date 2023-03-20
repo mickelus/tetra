@@ -1,0 +1,21 @@
+[
+    {
+        "key": "unbound_stonecutter/inert"
+    },
+    {
+        "key": "unbound_stonecutter/echo_shard",
+        "effects": {
+            "strikingPickaxe": 1,
+            "sweepingStrike": 1
+        },
+        "glyph": {
+            "textureX": 240,
+            "textureY": 32
+        },
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/stonecutter/default"
+            }
+        ]
+    }
+]

@@ -205,6 +205,11 @@ public class ItemModularHandheld extends ModularItem {
             if (jankLevel > 0) {
                 JankEffect.jankItemsDelayed((ServerLevel) world, pos, jankLevel, getEffectEfficiency(itemStack, ItemEffect.janking), entity);
             }
+
+            int skulkTaintLevel = getEffectLevel(itemStack, ItemEffect.sculkTaint);
+            if (skulkTaintLevel > 0) {
+                SculkTaintEffect.perform((ServerLevel) world, pos, skulkTaintLevel, getEffectEfficiency(itemStack, ItemEffect.sculkTaint));
+            }
         }
     }
 
@@ -230,6 +235,11 @@ public class ItemModularHandheld extends ModularItem {
 
                 ItemEffectHandler.applyHitEffects(itemStack, target, attacker);
                 applyPositiveUsageEffects(attacker, itemStack, 1);
+            }
+
+            int skulkTaintLevel = getEffectLevel(itemStack, ItemEffect.sculkTaint);
+            if (skulkTaintLevel > 0) {
+                SculkTaintEffect.perform((ServerLevel) target.getLevel(), target.blockPosition(), skulkTaintLevel, getEffectEfficiency(itemStack, ItemEffect.sculkTaint));
             }
 
             applyNegativeUsageEffects(attacker, itemStack, 1);

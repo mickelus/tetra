@@ -1,0 +1,53 @@
+[
+    {
+        "key": "unbound_earthpiercer/fractured",
+        "level": 1,
+        "integrity": -1,
+        "effects": {
+            "piercing": 1,
+            "sculkTaint": [0, 0.005]
+        },
+        "attributes": {
+            "generic.attack_speed": 0.1
+        },
+        "tools": {
+            "pickaxe_dig": [0, 5],
+            "axe_dig": [0, 5],
+            "shovel_dig": [0, 5]
+        }
+    },
+    {
+        "key": "unbound_earthpiercer/fractured",
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "piercing": 2,
+            "sculkTaint": [0, 0.01]
+        },
+        "attributes": {
+            "generic.attack_speed": 0.2
+        },
+        "tools": {
+            "pickaxe_dig": [0, 10],
+            "axe_dig": [0, 10],
+            "shovel_dig": [0, 10]
+        }
+    },
+    {
+        "key": "unbound_earthpiercer/fractured",
+        "level": 3,
+        "integrity": -2,
+        "effects": {
+            "piercing": 3,
+            "sculkTaint": [0, 0.015]
+        },
+        "attributes": {
+            "generic.attack_speed": 0.3
+        },
+        "tools": {
+            "pickaxe_dig": [0, 15],
+            "axe_dig": [0, 15],
+            "shovel_dig": [0, 15]
+        }
+    }
+]

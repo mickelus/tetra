@@ -273,6 +273,11 @@ public class GuiStats {
     public static final GuiStatBar enderReverb = new GuiStatBar(0, 0, barLength, "tetra.stats.enderReverb",
             0, 100, false, false, true, enderReverbGetter, LabelGetterBasic.percentageLabelDecimalInverted,
             new TooltipGetterPercentageDecimal("tetra.stats.enderReverb.tooltip", enderReverbGetter));
+
+    public static final IStatGetter sculkTaintGetter = new StatGetterEffectEfficiency(ItemEffect.sculkTaint, 100);
+    public static final GuiStatBar sculkTaint = new GuiStatBar(0, 0, barLength, "tetra.stats.sculkTaint",
+            0, 10, false, false, true, sculkTaintGetter, LabelGetterBasic.percentageLabelDecimalInverted,
+            new TooltipGetterPercentageDecimal("tetra.stats.sculkTaint.tooltip", sculkTaintGetter));
     public static final IStatGetter criticalGetter = new StatGetterEffectLevel(ItemEffect.criticalStrike, 1);
     public static final GuiStatBar criticalStrike = new GuiStatBar(0, 0, barLength, "tetra.stats.criticalStrike",
             0, 100, false, criticalGetter, LabelGetterBasic.percentageLabel,

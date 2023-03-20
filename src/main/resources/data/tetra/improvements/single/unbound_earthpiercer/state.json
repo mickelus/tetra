@@ -1,0 +1,22 @@
+[
+    {
+        "key": "unbound_earthpiercer/inert",
+        "group": "state"
+    },
+    {
+        "key": "unbound_earthpiercer/echo_shard",
+        "group": "state",
+        "effects": {
+            "piercingHarvest": 1,
+            "sculkTaint": [12, 0.01]
+        },
+        "tools": {
+            "pickaxe_dig": [0, 5]
+        },
+        "models": [
+            {
+                "location": "tetra:items/module/single/head/unbound_earthpiercer/echo_shard"
+            }
+        ]
+    }
+]

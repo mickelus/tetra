@@ -12,5 +12,32 @@
         "textureX": 224,
         "textureY": 32
     },
-    "outcomes": []
+    "translation": {
+        "primaryAttributes": {
+            "generic.attack_damage": 2
+        },
+        "secondaryAttributes": {
+            "generic.attack_speed": -1
+        },
+        "tools": {
+            "pickaxe_dig": [3, 3]
+        },
+        "tertiaryEffects": {
+            "piercing": 2
+        },
+        "durability": 3,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "materials": ["tetra:metal/"],
+            "moduleKey": "single/unbound_earthpiercer",
+            "moduleVariant": "unbound_earthpiercer/",
+            "toolOffset": 3,
+            "improvements": {
+                "unbound_earthpiercer/inert": 0
+            }
+        }
+    ]
 }
