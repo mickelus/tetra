@@ -72,7 +72,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                         rand.nextGaussian() * 0.3, rand.nextGaussian() * attacker.getBbHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f);
             }
 
-            if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
+            if (target != null && revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
                 newAmp--;
             }
 
@@ -104,7 +104,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
             ComboPoints.reset(attacker);
         }
 
-        if (revengeLevel > 0) {
+        if (target != null && revengeLevel > 0) {
             RevengeTracker.removeEnemy(attacker, target);
         }
 
