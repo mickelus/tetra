@@ -20,7 +20,11 @@
             "holo/core": "holo/core",
             "holo/core_material": "core/dim",
             "holo/frame": "holo/frame",
-            "holo/frame_material": "frame/ancient"
+            "holo/frame_material": "frame/ancient",
+            "holo/scanner": "holo/scanner",
+            "holo/scanner_material": "scanner/default",
+            "holo/repo": "holo/repo",
+            "holo/repo_material": "repo/default"
         }
     }
 }
