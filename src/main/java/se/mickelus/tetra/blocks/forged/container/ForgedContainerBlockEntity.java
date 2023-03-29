@@ -57,7 +57,11 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
     public static int compartmentCount = 3;
     public static int compartmentSize = 54;
     private final int[] lockIntegrity;
-    private final LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(compartmentSize * compartmentCount));
+    private final LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(compartmentSize * compartmentCount) {
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
+    });
     public long openTime = -1;
     private int lidIntegrity = 0;
 
