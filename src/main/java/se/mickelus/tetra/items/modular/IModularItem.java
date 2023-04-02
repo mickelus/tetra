@@ -716,8 +716,7 @@ public interface IModularItem {
         });
 
         if (itemStack.isDamageableItem()) {
-            itemStack.setDamageValue((int) Math.ceil((durabilityFactor * itemStack.getMaxDamage()
-                    - (durabilityFactor * durabilityFactor * module.getDurability(itemStack)))));
+            itemStack.setDamageValue((int) Math.floor((durabilityFactor * itemStack.getMaxDamage())));
         }
 
         updateIdentifier(itemStack);

@@ -1,0 +1,32 @@
+[
+    {
+        "improvement": "unbound_extractor/medial_limiter",
+        "key": "unbound_extractor/medial_limiter",
+        "steps": 8,
+        "properties": {
+            "effects": {
+                "extractorMedialLimit": 1
+            }
+        }
+    },
+    {
+        "improvement": "unbound_extractor/lateral_limiter",
+        "key": "unbound_extractor/lateral_limiter",
+        "steps": 8,
+        "properties": {
+            "effects": {
+                "extractorLateralLimit": 1
+            }
+        }
+    },
+    {
+        "improvement": "unbound_extractor/axial_limiter",
+        "key": "unbound_extractor/axial_limiter",
+        "steps": 8,
+        "properties": {
+            "effects": {
+                "extractorAxialLimit": 1
+            }
+        }
+    }
+]

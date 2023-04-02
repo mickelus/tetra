@@ -1,0 +1,37 @@
+{
+    "replace": true,
+    "type": "tetra:multi_major_module",
+    "slots": ["double/head_right"],
+    "slotSuffixes": ["_right"],
+    "prefixPriority": "lower",
+    "tweakKey": "tetra:double/unbound_extractor",
+    "improvements": [
+        "tetra:double/unbound_extractor/",
+        "tetra:double/shared_head/",
+        "tetra:double/shared/",
+        "tetra:shared/"
+    ],
+    "variants": [
+        {
+            "key": "unbound_extractor/unbound_extractor",
+            "integrity": -2,
+            "attributes": {
+                "generic.attack_speed": -1.9
+            },
+            "durability": 64,
+            "effects": {
+                "unboundExtractor": 12
+            },
+            "glyph": {
+                "textureX": 208,
+                "textureY": 48,
+                "tint": "009295"
+            },
+            "models": [
+                {
+                    "location": "tetra:items/module/double/head/unbound_extractor/unbound_extractor"
+                }
+            ]
+        }
+    ]
+}

@@ -168,10 +168,14 @@ public class ItemModularHandheld extends ModularItem {
                 PiercingEffect.pierceBlocks(this, itemStack, getEffectLevel(itemStack, ItemEffect.piercing), (ServerLevel) world, state, pos, entity);
             }
 
-
             int extractorLevel = getEffectLevel(itemStack, ItemEffect.extractor);
             if (extractorLevel > 0) {
                 ExtractorEffect.breakBlocks(this, itemStack, extractorLevel, (ServerLevel) world, state, pos, entity);
+            }
+
+            int unboundExtractorLevel = getEffectLevel(itemStack, ItemEffect.unboundExtractor);
+            if (unboundExtractorLevel > 0) {
+                UnboundExtractorEffect.breakBlocks(this, itemStack, unboundExtractorLevel, (ServerLevel) world, state, pos, entity);
             }
 
             CritEffect.onBlockBreak(entity);

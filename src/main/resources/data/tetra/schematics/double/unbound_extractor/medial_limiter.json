@@ -1,0 +1,41 @@
+{
+    "replace": true,
+    "slots": ["double/head_right"],
+    "rarity": "temporary",
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:extractor"
+            },
+            {
+                "type": "tetra:module",
+                "module": "double/unbound_extractor_right"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "unbound_extractor/medial_limiter"
+                }
+            }
+        ]
+    },
+    "glyph": {
+        "textureX": 208,
+        "textureY": 240
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer_dig": "minecraft:wood"
+            },
+            "experienceCost": 3,
+            "improvements": {
+                "unbound_extractor/medial_limiter": 0
+            }
+        }
+    ]
+}

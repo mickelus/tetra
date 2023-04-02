@@ -91,6 +91,13 @@ public class ItemEffect {
      */
     public static final ItemEffect extractor = get("extractor");
 
+    public static final ItemEffect unboundExtractor = get("unboundExtractor");
+    public static final ItemEffect extractorMedialLimit = get("extractorMedialLimit");
+    public static final ItemEffect extractorLateralLimit = get("extractorLateralLimit");
+    public static final ItemEffect extractorAxialLimit = get("extractorAxialLimit");
+    public static final ItemEffect extractorAxialAmplify = get("extractorAxialAmplify");
+    public static final ItemEffect extractorPlanarAmplify = get("extractorPlanarAmplify");
+
     /**
      * Unbreaking: Reduces the chance that the item will take durability damage. There is a 100 / ( level + 1 ) % chance
      * that the item will take damage. Uses the same mechanic as the vanilla does for the unbreaking enchantment.

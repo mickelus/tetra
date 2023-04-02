@@ -10,8 +10,17 @@
         "key": "tetra:extractor"
     },
     "glyph": {
-        "textureX": 144,
+        "textureX": 208,
         "textureY": 48
     },
-    "outcomes": []
+    "outcomes": [
+        {
+            "material": {
+                "items": ["minecraft:echo_shard"]
+            },
+            "experienceCost": 3,
+            "moduleKey": "double/unbound_extractor",
+            "moduleVariant": "unbound_extractor/unbound_extractor"
+        }
+    ]
 }

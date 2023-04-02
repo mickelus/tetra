@@ -278,6 +278,21 @@ public class GuiStats {
     public static final GuiStatBar sculkTaint = new GuiStatBar(0, 0, barLength, "tetra.stats.sculkTaint",
             0, 10, false, false, true, sculkTaintGetter, LabelGetterBasic.percentageLabelDecimalInverted,
             new TooltipGetterPercentageDecimal("tetra.stats.sculkTaint.tooltip", sculkTaintGetter));
+
+    public static final IStatGetter medialLimitGetter = new StatGetterEffectLevel(ItemEffect.extractorMedialLimit, 1);
+    public static final GuiStatBar medialLimit = new GuiStatBar(0, 0, barLength, "tetra.stats.medialLimit",
+            0, 16, true, medialLimitGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.medialLimit.tooltip", medialLimitGetter));
+
+    public static final IStatGetter lateralLimitGetter = new StatGetterEffectLevel(ItemEffect.extractorLateralLimit, 1);
+    public static final GuiStatBar lateralLimit = new GuiStatBar(0, 0, barLength, "tetra.stats.lateralLimit",
+            0, 16, true, lateralLimitGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.lateralLimit.tooltip", lateralLimitGetter));
+
+    public static final IStatGetter axialLimitGetter = new StatGetterEffectLevel(ItemEffect.extractorAxialLimit, 1);
+    public static final GuiStatBar axialLimit = new GuiStatBar(0, 0, barLength, "tetra.stats.axialLimit",
+            0, 16, true, axialLimitGetter, LabelGetterBasic.integerLabel,
+            new TooltipGetterInteger("tetra.stats.axialLimit.tooltip", axialLimitGetter));
     public static final IStatGetter criticalGetter = new StatGetterEffectLevel(ItemEffect.criticalStrike, 1);
     public static final GuiStatBar criticalStrike = new GuiStatBar(0, 0, barLength, "tetra.stats.criticalStrike",
             0, 100, false, criticalGetter, LabelGetterBasic.percentageLabel,

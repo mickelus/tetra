@@ -45,11 +45,14 @@ public class GuiStatBarTool extends GuiStatBar {
         addChild(icon);
 
         StatGetterEffectLevel extractorGetter = new StatGetterEffectLevel(ItemEffect.extractor, 4.5);
+        StatGetterEffectLevel unboundExtractorGetter = new StatGetterEffectLevel(ItemEffect.unboundExtractor, 1);
         StatGetterEnchantmentLevel enchantmentGetter = new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1);
         setIndicators(
                 new StrikingStatIndicatorGui(toolAction),
                 new GuiStatIndicator(0, 0, "tetra.stats.tool.extractor", 7, extractorGetter,
                         new TooltipGetterInteger("tetra.stats.tool.extractor.tooltip", extractorGetter)),
+                new GuiStatIndicator(0, 0, "tetra.stats.tool.unboundExtractor", 20, unboundExtractorGetter,
+                        new TooltipGetterInteger("tetra.stats.tool.unboundExtractor.tooltip", unboundExtractorGetter)),
                 new GuiStatIndicator(0, 0, "tetra.stats.tool.efficiency", 17, enchantmentGetter,
                         new TooltipGetterInteger("tetra.stats.tool.efficiency.tooltip", enchantmentGetter)));
     }
