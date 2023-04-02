@@ -305,13 +305,13 @@ public abstract class ItemModule implements IToolProvider {
 
     public int getTweakStep(ItemStack itemStack, TweakData tweak) {
         return Optional.ofNullable(itemStack.getTag())
-                .map(tag -> tag.getInt(slotTagKey + ":" + tweak.key))
+                .map(tag -> tag.getInt(slotTagKey + "_tweak:" + tweak.key))
                 .map(step -> Mth.clamp(step, -tweak.steps, tweak.steps))
                 .orElse(0);
     }
 
     public void setTweakStep(ItemStack itemStack, String tweakKey, int step) {
-        itemStack.getOrCreateTag().putInt(slotTagKey + ":" + tweakKey, step);
+        itemStack.getOrCreateTag().putInt(slotTagKey + "_tweak:" + tweakKey, step);
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack itemStack) {
