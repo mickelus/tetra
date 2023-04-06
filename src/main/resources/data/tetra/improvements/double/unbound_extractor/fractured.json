@@ -1,0 +1,38 @@
+[
+    {
+        "key": "unbound_extractor/fractured",
+        "level": 1,
+        "integrity": -1,
+        "effects": {
+            "unboundExtractor": 8,
+            "sculkTaint": [0, 0.005]
+        },
+        "attributes": {
+            "generic.attack_speed": 0.15
+        }
+    },
+    {
+        "key": "unbound_extractor/fractured",
+        "level": 2,
+        "integrity": -1,
+        "effects": {
+            "unboundExtractor": 16,
+            "sculkTaint": [0, 0.01]
+        },
+        "attributes": {
+            "generic.attack_speed": 0.3
+        }
+    },
+    {
+        "key": "unbound_extractor/fractured",
+        "level": 3,
+        "integrity": -2,
+        "effects": {
+            "unboundExtractor": 24,
+            "sculkTaint": [0, 0.015]
+        },
+        "attributes": {
+            "generic.attack_speed": 0.45
+        }
+    }
+]

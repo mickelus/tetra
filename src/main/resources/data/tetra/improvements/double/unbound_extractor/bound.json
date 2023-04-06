@@ -1,0 +1,82 @@
+[
+    {
+        "key": "unbound_extractor/bound",
+        "level": 1,
+        "effects": {
+            "sculkTaint": [0, -0.001],
+            "unstable": 6
+        }
+    },
+    {
+        "key": "unbound_extractor/bound",
+        "level": 2,
+        "effects": {
+            "sculkTaint": [0, -0.002],
+            "unstable": 12
+        }
+    },
+    {
+        "key": "unbound_extractor/bound",
+        "level": 3,
+        "effects": {
+            "sculkTaint": [0, -0.003],
+            "unstable": 18
+        }
+    },
+    {
+        "key": "unbound_extractor/bound",
+        "level": 4,
+        "effects": {
+            "sculkTaint": [0, -0.004],
+            "unstable": 24
+        }
+    },
+    {
+        "key": "unbound_extractor/bound",
+        "level": 5,
+        "effects": {
+            "sculkTaint": [0, -0.005],
+            "unstable": 30
+        }
+    },
+    {
+        "key": "unbound_extractor/bound",
+        "level": 6,
+        "effects": {
+            "sculkTaint": [0, -0.006],
+            "unstable": 36
+        }
+    },
+    {
+        "key": "unbound_extractor/bound",
+        "level": 7,
+        "effects": {
+            "sculkTaint": [0, -0.007],
+            "unstable": 42
+        }
+    },
+    {
+        "key": "unbound_extractor/bound",
+        "level": 8,
+        "effects": {
+            "sculkTaint": [0, -0.008],
+            "unstable": 48
+        }
+    },
+    {
+        "key": "unbound_extractor/bound",
+        "level": 9,
+        "effects": {
+            "sculkTaint": [0, -0.009],
+            "unstable": 54
+        }
+    },
+    {
+        "key": "unbound_extractor/bound",
+        "level": 10,
+        "effects": {
+            "sculkTaint": [0, -0.01],
+            "unstable": 60
+        }
+    }
+]

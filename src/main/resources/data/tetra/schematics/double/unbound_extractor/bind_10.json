@@ -1,0 +1,33 @@
+{
+    "replace": true,
+    "slots": ["double/head_right"],
+    "rarity": "temporary",
+    "hone": true,
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:extractor"
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "unbound_extractor/bound",
+                "level": 9
+            }
+        ]
+    },
+    "glyph": {
+        "textureX": 144,
+        "textureY": 240
+    },
+    "outcomes": [
+        {
+            "experienceCost": 3,
+            "improvements": {
+                "unbound_extractor/bound": 10
+            }
+        }
+    ]
+}

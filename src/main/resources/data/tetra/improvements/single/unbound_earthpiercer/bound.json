@@ -74,7 +74,7 @@
     {
         "key": "unbound_earthpiercer/bound",
         "level": 10,
-        "magicCapacity": -10,
+        "magicCapacity": -100,
         "effects": {
             "sculkTaint": [0, -0.01]
         }

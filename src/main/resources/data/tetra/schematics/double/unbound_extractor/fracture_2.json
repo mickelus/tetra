@@ -2,8 +2,8 @@
     "replace": true,
     "slots": ["double/head_right"],
     "rarity": "temporary",
+    "hone": true,
     "displayType": "improvement",
-    "materialSlotCount": 1,
     "requirement": {
         "type": "tetra:and",
         "requirements": [
@@ -16,28 +16,23 @@
                 "module": "double/unbound_extractor_right"
             },
             {
-                "type": "tetra:not",
-                "requirement": {
-                    "type": "tetra:improvement",
-                    "improvement": "unbound_extractor/lateral_limiter"
-                }
+                "type": "tetra:improvement",
+                "improvement": "unbound_extractor/fractured",
+                "level": 1
             }
         ]
     },
     "glyph": {
-        "textureX": 224,
+        "textureX": 176,
         "textureY": 240
     },
     "outcomes": [
         {
-            "material": {
-                "items": [
-                    "tetra:forged_bolt"
-                ]
+            "requiredTools": {
+                "hammer_dig": "minecraft:diamond"
             },
-            "experienceCost": 3,
             "improvements": {
-                "unbound_extractor/lateral_limiter": 0
+                "unbound_extractor/fractured": 2
             }
         }
     ]

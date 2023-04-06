@@ -3,6 +3,7 @@
     "slots": ["double/head_right"],
     "rarity": "temporary",
     "displayType": "improvement",
+    "materialSlotCount": 1,
     "requirement": {
         "type": "tetra:and",
         "requirements": [
@@ -29,8 +30,10 @@
     },
     "outcomes": [
         {
-            "requiredTools": {
-                "hammer_dig": "minecraft:wood"
+            "material": {
+                "items": [
+                    "tetra:forged_bolt"
+                ]
             },
             "experienceCost": 3,
             "improvements": {

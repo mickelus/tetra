@@ -1,9 +1,13 @@
 {
     "replace": true,
     "slots": ["double/head_right"],
+    "materialSlotCount": 0,
+    "hone": true,
     "rarity": "temporary",
     "displayType": "improvement",
-    "materialSlotCount": 1,
+    "glyph": {
+        "textureY": 224
+    },
     "requirement": {
         "type": "tetra:and",
         "requirements": [
@@ -16,28 +20,19 @@
                 "module": "double/unbound_extractor_right"
             },
             {
-                "type": "tetra:not",
-                "requirement": {
-                    "type": "tetra:improvement",
-                    "improvement": "unbound_extractor/lateral_limiter"
-                }
+                "type": "tetra:improvement",
+                "improvement": "unbound_extractor/potency",
+                "level": 4
             }
         ]
     },
-    "glyph": {
-        "textureX": 224,
-        "textureY": 240
-    },
     "outcomes": [
         {
-            "material": {
-                "items": [
-                    "tetra:forged_bolt"
-                ]
+            "requiredTools": {
+                "hammer_dig": "minecraft:netherite"
             },
-            "experienceCost": 3,
             "improvements": {
-                "unbound_extractor/lateral_limiter": 0
+                "unbound_extractor/potency": 5
             }
         }
     ]

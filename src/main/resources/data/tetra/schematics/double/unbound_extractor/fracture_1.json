@@ -3,7 +3,6 @@
     "slots": ["double/head_right"],
     "rarity": "temporary",
     "displayType": "improvement",
-    "materialSlotCount": 1,
     "requirement": {
         "type": "tetra:and",
         "requirements": [
@@ -19,25 +18,22 @@
                 "type": "tetra:not",
                 "requirement": {
                     "type": "tetra:improvement",
-                    "improvement": "unbound_extractor/lateral_limiter"
+                    "improvement": "unbound_extractor/fractured"
                 }
             }
         ]
     },
     "glyph": {
-        "textureX": 224,
+        "textureX": 176,
         "textureY": 240
     },
     "outcomes": [
         {
-            "material": {
-                "items": [
-                    "tetra:forged_bolt"
-                ]
+            "requiredTools": {
+                "hammer_dig": "minecraft:iron"
             },
-            "experienceCost": 3,
             "improvements": {
-                "unbound_extractor/lateral_limiter": 0
+                "unbound_extractor/fractured": 1
             }
         }
     ]
