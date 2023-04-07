@@ -71,6 +71,10 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             harmfulCount++;
         }
 
+        if (target.isFreezing()) {
+            harmfulCount++;
+        }
+
         float missingHealth = Mth.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
         double efficiency = item.getEffectEfficiency(itemStack, ItemEffect.execute);
 
@@ -141,6 +145,10 @@ public class ExecuteEffect extends ChargedAbilityEffect {
                 harmfulCount++;
             }
 
+            if (target.isFreezing()) {
+                harmfulCount++;
+            }
+
             float missingHealth = Mth.clamp(1 - target.getHealth() / target.getMaxHealth(), 0, 1);
             double damageMultiplier = missingHealth + harmfulCount;
 
@@ -177,7 +185,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
     private double getRevengeMultiplier(Player player, ItemModularHandheld item, ItemStack itemStack) {
         int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
         if (revengeLevel > 0 && (player.getActiveEffects().stream().anyMatch(effect -> effect.getEffect().getCategory() == MobEffectCategory.HARMFUL)
-                || player.isOnFire())) {
+                || player.isOnFire() || player.isFreezing())) {
             return 1 + revengeLevel / 100d;
         }
 
