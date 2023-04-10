@@ -1,0 +1,35 @@
+{
+    "replace": true,
+    "localizationKey": "double/warforge",
+    "slots": ["double/head_right"],
+    "materialSlotCount": 0,
+    "rarity": "temporary",
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 128,
+        "textureY": 240
+    },
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:warforge/butt"
+            },
+            {
+                "type": "tetra:module",
+                "module": "double/unbound_extractor_right"
+            }
+        ]
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer_dig": "minecraft:diamond"
+            },
+            "improvements": {
+                "double/warforged": 0
+            }
+        }
+    ]
+}

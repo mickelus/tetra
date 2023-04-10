@@ -3,13 +3,18 @@
         "key": "double/warforged",
         "integrity": -2,
         "attributes": {
-            "generic.attack_speed": 0.7
+            "generic.attack_speed": 0.2
         },
         "effects": {
-            "sweeping": 1,
+            "sweeping": 2,
             "truesweep": 1,
-            "extractor": -1
+            "unboundExtractor": -8,
+            "sculkTaint": [0, 0.01]
         },
-        "models": [ { "location": "tetra:items/module/double/head/extractor/warforged" } ]
+        "models": [
+            {
+                "location": "tetra:items/module/double/head/unbound_extractor/warforged"
+            }
+        ]
     }
 ]
