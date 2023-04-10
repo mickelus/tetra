@@ -290,7 +290,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             attacker.causeFoodExhaustion(overextendLevel > 0 ? 6 : 1);
             attacker.getCooldowns().addCooldown(item, getCooldown(item, itemStack));
 
-            attacker.getCommandSenderWorld().playSound(attacker, new BlockPos(attacker.position().add(attacker.getDeltaMovement())), SoundEvents.UI_TOAST_IN,
+            attacker.getLevel().playSound(attacker, new BlockPos(attacker.position().add(attacker.getDeltaMovement())), SoundEvents.UI_TOAST_IN,
                     SoundSource.PLAYERS, 1, 1.3f);
 
         }

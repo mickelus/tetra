@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
+import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicScrollPacket;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.compat.apotheosis.AffixReplacementHook;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
@@ -148,6 +149,7 @@ public class TetraMod {
         packetHandler.registerPacket(AddRevengePacket.class, AddRevengePacket::new);
         packetHandler.registerPacket(RemoveRevengePacket.class, RemoveRevengePacket::new);
         packetHandler.registerPacket(LungeEchoPacket.class, LungeEchoPacket::new);
+        packetHandler.registerPacket(MultiblockSchematicScrollPacket.class, MultiblockSchematicScrollPacket::new);
 
         WorkbenchTile.init(packetHandler);
 

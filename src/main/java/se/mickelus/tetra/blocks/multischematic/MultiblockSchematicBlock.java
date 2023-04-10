@@ -201,6 +201,7 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
         }
 
         public void build(DeferredRegister<Block> blocks, DeferredRegister<Item> items) {
+            MultiblockSchematicScrollHandler.setupSchematic(identifier, width * height);
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
                     int x = i;
@@ -218,7 +219,11 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
                             : blocks.register(id, () -> new MultiblockSchematicBlock(properties, identifier, ruinedRef, pryTable, x, y, height, width));
 
 
-                    items.register(id, () -> new StackedMultiblockSchematicItem(ref.get(), ruinedRef.get()));
+                    items.register(id, () -> {
+                        StackedMultiblockSchematicItem item = new StackedMultiblockSchematicItem(ref.get(), ruinedRef.get());
+                        MultiblockSchematicScrollHandler.addSchematic(identifier, y * width + x, item);
+                        return item;
+                    });
                     items.register(ruinedId, () -> new RuinedMultiblockSchematicItem(ruinedRef.get(), ref.get()));
 
                 }

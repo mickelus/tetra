@@ -396,6 +396,7 @@ public class TetraRegistries {
                         .forEach(InitializableItem::clientInit);
 
                 MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
+//                MinecraftForge.EVENT_BUS.register(MultiblockSchematicScrollHandler.class);
             } catch (Exception e) {
                 e.printStackTrace();
             }
