@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ParametersAreNonnullByDefault
-public class UnboundExtractorEffect {
+public class UnboundExtractionEffect {
     public static void breakBlocks(ItemModularHandheld item, ItemStack itemStack, int effectLevel, ServerLevel world, BlockState state, BlockPos pos, LivingEntity entity) {
         Player player = CastOptional.cast(entity, Player.class).orElse(null);
 
@@ -100,9 +100,9 @@ public class UnboundExtractorEffect {
     }
 
     private static Vec3i getLimiter(ModularItem item, Direction direction, Direction horizontalDirection, ItemStack itemStack) {
-        int lateralLimit = item.getEffectLevel(itemStack, ItemEffect.extractorLateralLimit);
-        int medialLimit = item.getEffectLevel(itemStack, ItemEffect.extractorMedialLimit);
-        int axialLimit = item.getEffectLevel(itemStack, ItemEffect.extractorAxialLimit);
+        int lateralLimit = item.getEffectLevel(itemStack, ItemEffect.extractionLateralLimit);
+        int medialLimit = item.getEffectLevel(itemStack, ItemEffect.extractionMedialLimit);
+        int axialLimit = item.getEffectLevel(itemStack, ItemEffect.extractionAxialLimit);
         Vec3i axialVec, medialVec, lateralVec;
 
         if (direction.getAxis() == Direction.Axis.Y) {

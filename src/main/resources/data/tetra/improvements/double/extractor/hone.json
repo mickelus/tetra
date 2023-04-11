@@ -6,7 +6,7 @@
             "honed": 1
         },
         "effects": {
-            "extractor": 1
+            "extraction": 1
         }
     },
     {
@@ -17,7 +17,7 @@
             "honed": 2
         },
         "effects": {
-            "extractor": 2
+            "extraction": 2
         }
     },
     {
@@ -28,7 +28,7 @@
             "honed": 3
         },
         "effects": {
-            "extractor": 3
+            "extraction": 3
         }
     },
     {
@@ -39,7 +39,7 @@
             "honed": 4
         },
         "effects": {
-            "extractor": 4
+            "extraction": 4
         }
     },
     {
@@ -50,7 +50,7 @@
             "honed": 5
         },
         "effects": {
-            "extractor": 5
+            "extraction": 5
         }
     }
 ]

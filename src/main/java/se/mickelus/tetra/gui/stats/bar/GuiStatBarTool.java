@@ -44,15 +44,15 @@ public class GuiStatBarTool extends GuiStatBar {
         icon = new GuiTool(-3, -3, toolAction);
         addChild(icon);
 
-        StatGetterEffectLevel extractorGetter = new StatGetterEffectLevel(ItemEffect.extractor, 4.5);
-        StatGetterEffectLevel unboundExtractorGetter = new StatGetterEffectLevel(ItemEffect.unboundExtractor, 1);
+        StatGetterEffectLevel extractionGetter = new StatGetterEffectLevel(ItemEffect.extraction, 4.5);
+        StatGetterEffectLevel unboundExtractionGetter = new StatGetterEffectLevel(ItemEffect.unboundExtraction, 1);
         StatGetterEnchantmentLevel enchantmentGetter = new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1);
         setIndicators(
                 new StrikingStatIndicatorGui(toolAction),
-                new GuiStatIndicator(0, 0, "tetra.stats.tool.extractor", 7, extractorGetter,
-                        new TooltipGetterInteger("tetra.stats.tool.extractor.tooltip", extractorGetter)),
-                new GuiStatIndicator(0, 0, "tetra.stats.tool.unboundExtractor", 20, unboundExtractorGetter,
-                        new TooltipGetterInteger("tetra.stats.tool.unboundExtractor.tooltip", unboundExtractorGetter)),
+                new GuiStatIndicator(0, 0, "tetra.stats.tool.extraction", 7, extractionGetter,
+                        new TooltipGetterInteger("tetra.stats.tool.extraction.tooltip", extractionGetter)),
+                new GuiStatIndicator(0, 0, "tetra.stats.tool.unboundExtraction", 20, unboundExtractionGetter,
+                        new TooltipGetterInteger("tetra.stats.tool.unboundExtraction.tooltip", unboundExtractionGetter)),
                 new GuiStatIndicator(0, 0, "tetra.stats.tool.efficiency", 17, enchantmentGetter,
                         new TooltipGetterInteger("tetra.stats.tool.efficiency.tooltip", enchantmentGetter)));
     }

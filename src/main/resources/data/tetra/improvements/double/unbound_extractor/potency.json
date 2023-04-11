@@ -6,7 +6,7 @@
             "honed": 1
         },
         "effects": {
-            "unboundExtractor": 5
+            "unboundExtraction": 5
         }
     },
     {
@@ -17,7 +17,7 @@
             "honed": 2
         },
         "effects": {
-            "unboundExtractor": 10
+            "unboundExtraction": 10
         }
     },
     {
@@ -28,7 +28,7 @@
             "honed": 3
         },
         "effects": {
-            "unboundExtractor": 15
+            "unboundExtraction": 15
         }
     },
     {
@@ -39,7 +39,7 @@
             "honed": 4
         },
         "effects": {
-            "unboundExtractor": 20
+            "unboundExtraction": 20
         }
     },
     {
@@ -50,7 +50,7 @@
             "honed": 5
         },
         "effects": {
-            "unboundExtractor": 25
+            "unboundExtraction": 25
         }
     }
 ]

@@ -4,7 +4,7 @@
         "level": 1,
         "integrity": -1,
         "effects": {
-            "unboundExtractor": 8,
+            "unboundExtraction": 8,
             "sculkTaint": [0, 0.005]
         },
         "attributes": {
@@ -16,7 +16,7 @@
         "level": 2,
         "integrity": -1,
         "effects": {
-            "unboundExtractor": 16,
+            "unboundExtraction": 16,
             "sculkTaint": [0, 0.01]
         },
         "attributes": {
@@ -28,7 +28,7 @@
         "level": 3,
         "integrity": -2,
         "effects": {
-            "unboundExtractor": 24,
+            "unboundExtraction": 24,
             "sculkTaint": [0, 0.015]
         },
         "attributes": {

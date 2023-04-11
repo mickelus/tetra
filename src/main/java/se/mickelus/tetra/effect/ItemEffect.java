@@ -89,14 +89,14 @@ public class ItemEffect {
     /**
      * Extractor: Harvesting a block breaks several adjacent blocks, direction/shape based on the hit face. Breaks 4.5 block per effect level.
      */
-    public static final ItemEffect extractor = get("extractor");
+    public static final ItemEffect extraction = get("extraction");
 
-    public static final ItemEffect unboundExtractor = get("unboundExtractor");
-    public static final ItemEffect extractorMedialLimit = get("extractorMedialLimit");
-    public static final ItemEffect extractorLateralLimit = get("extractorLateralLimit");
-    public static final ItemEffect extractorAxialLimit = get("extractorAxialLimit");
-    public static final ItemEffect extractorAxialAmplify = get("extractorAxialAmplify");
-    public static final ItemEffect extractorPlanarAmplify = get("extractorPlanarAmplify");
+    public static final ItemEffect unboundExtraction = get("unboundExtraction");
+    public static final ItemEffect extractionMedialLimit = get("extractionMedialLimit");
+    public static final ItemEffect extractionLateralLimit = get("extractionLateralLimit");
+    public static final ItemEffect extractionAxialLimit = get("extractionAxialLimit");
+    public static final ItemEffect extractionAxialAmplify = get("extractionAxialAmplify");
+    public static final ItemEffect extractionPlanarAmplify = get("extractionPlanarAmplify");
 
     /**
      * Unbreaking: Reduces the chance that the item will take durability damage. There is a 100 / ( level + 1 ) % chance

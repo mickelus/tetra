@@ -3,21 +3,21 @@
         "key": "unbound_extractor/medial_limiter",
         "integrity": -1,
         "effects": {
-            "extractorMedialLimit": 8
+            "extractionMedialLimit": 8
         }
     },
     {
         "key": "unbound_extractor/lateral_limiter",
         "integrity": -1,
         "effects": {
-            "extractorLateralLimit": 8
+            "extractionLateralLimit": 8
         }
     },
     {
         "key": "unbound_extractor/axial_limiter",
         "integrity": -1,
         "effects": {
-            "extractorAxialLimit": 8
+            "extractionAxialLimit": 8
         }
     }
 ]

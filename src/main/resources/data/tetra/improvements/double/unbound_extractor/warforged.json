@@ -8,7 +8,7 @@
         "effects": {
             "sweeping": 2,
             "truesweep": 1,
-            "unboundExtractor": -8,
+            "unboundExtraction": -8,
             "sculkTaint": [0, 0.01]
         },
         "models": [

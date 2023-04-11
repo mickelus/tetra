@@ -79,5 +79,13 @@
         "effects": {
             "abilityEcho": 1
         }
+    },
+    {
+        "modules": ["double/basic_axe_left", "double/unbound_extractor_right"],
+        "matchSuffixed": true,
+        "improvements": ["double/warforged"],
+        "effects": {
+            "abilityEcho": 1
+        }
     }
 ]
