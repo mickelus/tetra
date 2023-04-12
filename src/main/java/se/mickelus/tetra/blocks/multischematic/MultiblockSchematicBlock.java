@@ -27,6 +27,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
@@ -201,7 +202,9 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
         }
 
         public void build(DeferredRegister<Block> blocks, DeferredRegister<Item> items) {
-            MultiblockSchematicScrollHandler.setupSchematic(identifier, width * height);
+            if (FMLEnvironment.dist.isClient()) {
+                MultiblockSchematicScrollHandler.setupSchematic(identifier, width * height);
+            }
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
                     int x = i;
@@ -221,7 +224,9 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
 
                     items.register(id, () -> {
                         StackedMultiblockSchematicItem item = new StackedMultiblockSchematicItem(ref.get(), ruinedRef.get());
-                        MultiblockSchematicScrollHandler.addSchematic(identifier, y * width + x, item);
+                        if (FMLEnvironment.dist.isClient()) {
+                            MultiblockSchematicScrollHandler.addSchematic(identifier, y * width + x, item);
+                        }
                         return item;
                     });
                     items.register(ruinedId, () -> new RuinedMultiblockSchematicItem(ruinedRef.get(), ref.get()));
