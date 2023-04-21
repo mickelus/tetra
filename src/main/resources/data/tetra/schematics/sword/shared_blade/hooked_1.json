@@ -9,24 +9,15 @@
         "type": "tetra:and",
         "requirements": [
             {
-                "type": "tetra:or",
-                "requirements": [
-                    {
-                        "type": "tetra:module",
-                        "module": "sword/short_blade"
-                    },
-                    {
-                        "type": "tetra:module",
-                        "module": "sword/basic_blade"
-                    }
-                ]
-            },
-            {
                 "type": "tetra:not",
                 "requirement": {
                     "type": "tetra:improvement",
                     "improvement": "blade/hooked"
                 }
+            },
+            {
+                "type": "tetra:accepts_improvement",
+                "improvement": "blade/hooked"
             }
         ]
     },

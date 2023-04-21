@@ -6,11 +6,20 @@
     "materialSlotCount": 0,
     "displayType": "improvement",
     "requirement": {
-        "type": "tetra:not",
-        "requirement": {
-            "type": "tetra:improvement",
-            "improvement": "blade/tempered"
-        }
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "blade/tempered"
+                }
+            },
+            {
+                "type": "tetra:accepts_improvement",
+                "improvement": "blade/tempered"
+            }
+        ]
     },
     "outcomes": [
         {
