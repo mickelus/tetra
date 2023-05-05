@@ -24,6 +24,7 @@ import se.mickelus.tetra.blocks.forged.hammer.HammerHeadBlockEntity;
 import se.mickelus.tetra.blocks.forged.hammer.HammerHeadRenderer;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticle;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticleType;
+import se.mickelus.tetra.blocks.holo.HolosphereEntityRenderer;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicGui;
 import se.mickelus.tetra.blocks.scroll.ScrollRenderer;
 import se.mickelus.tetra.blocks.scroll.ScrollTile;
@@ -83,6 +84,7 @@ public class ClientSetup {
             event.addSprite(ForgedContainerRenderer.material.texture());
             event.addSprite(HammerBaseRenderer.material.texture());
             event.addSprite(ScrollRenderer.material.texture());
+            event.addSprite(HolosphereEntityRenderer.material.texture());
         }
     }
 

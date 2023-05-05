@@ -58,6 +58,8 @@ import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlock;
 import se.mickelus.tetra.blocks.forged.transfer.TransferUnitBlockEntity;
 import se.mickelus.tetra.blocks.geode.*;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticleType;
+import se.mickelus.tetra.blocks.holo.HolosphereBlock;
+import se.mickelus.tetra.blocks.holo.HolosphereBlockEntity;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicBlock;
 import se.mickelus.tetra.blocks.rack.RackBlock;
 import se.mickelus.tetra.blocks.rack.RackTile;
@@ -172,6 +174,7 @@ public class TetraRegistries {
         registerBlockItem(CoreExtractorBaseBlock.instance);
         CoreExtractorPistonBlock.instance = blocks.register(CoreExtractorPistonBlock.identifier, CoreExtractorPistonBlock::new);
         registerBlockItem(blocks.register(CoreExtractorPipeBlock.identifier, CoreExtractorPipeBlock::new));
+        HolosphereBlock.instance = blocks.register(HolosphereBlock.identifier, HolosphereBlock::new);
 
         new MultiblockSchematicBlock.Builder("stonecutter", 3, 2, ForgedBlockCommon.propertiesSolid)
                 .build(blocks, items);
@@ -244,6 +247,9 @@ public class TetraRegistries {
                 () -> BlockEntityType.Builder.of(CoreExtractorPistonBlockEntity::new, CoreExtractorPistonBlock.instance.get()).build(null));
         ForgedContainerBlockEntity.type = blockEntities.register(ForgedContainerBlock.identifier,
                 () -> BlockEntityType.Builder.of(ForgedContainerBlockEntity::new, ForgedContainerBlock.instance.get())
+                        .build(null));
+        HolosphereBlockEntity.type = blockEntities.register(HolosphereBlock.identifier,
+                () -> BlockEntityType.Builder.of(HolosphereBlockEntity::new, HolosphereBlock.instance.get())
                         .build(null));
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

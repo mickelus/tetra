@@ -73,6 +73,14 @@ public class ModularHolosphereItem extends ModularItem {
                 .orElse(ItemStack.EMPTY);
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public static void showGui() {
+        HoloGui gui = HoloGui.getInstance();
+
+        Minecraft.getInstance().setScreen(gui);
+        gui.onShow();
+    }
+
     @Override
     public void commonInit(PacketHandler packetHandler) {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("holo/"));
@@ -121,14 +129,6 @@ public class ModularHolosphereItem extends ModularItem {
         }
 
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    private void showGui() {
-        HoloGui gui = HoloGui.getInstance();
-
-        Minecraft.getInstance().setScreen(gui);
-        gui.onShow();
     }
 
     @Override
