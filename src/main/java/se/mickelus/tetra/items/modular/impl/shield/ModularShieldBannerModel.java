@@ -34,11 +34,10 @@ public class ModularShieldBannerModel extends Model {
                 .texOffs(0, 0)
                 .addBox(-6.0F, -11.0F, -2.005F, 12.0F, 22.0F, 1.0F), PartPose.ZERO);
 
-        for (int i = 0; i < 4; i++) {
-            parts.addOrReplaceChild("tetra:banner/heater" + i, CubeListBuilder.create()
-                    .texOffs(0, 5)
-                    .addBox(-6.0F, -6.0F, -2.005F, 12.0F, 12.0F, 1.0F), PartPose.ZERO);
-        }
+        parts.addOrReplaceChild("tetra:banner/heater", CubeListBuilder.create()
+                .texOffs(0, 5)
+                .addBox(-6.0F, -6.0F, -2.005F, 12.0F, 12.0F, 1.0F), PartPose.ZERO);
+
 
         parts.addOrReplaceChild("tetra:banner/buckler", CubeListBuilder.create()
                         .texOffs(2, 7)
