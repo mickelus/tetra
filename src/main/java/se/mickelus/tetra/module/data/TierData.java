@@ -41,6 +41,9 @@ public class TierData<T> {
     }
 
     public Set<T> getValues() {
-        return levelMap.keySet();
+        return levelMap.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toUnmodifiableSet());
     }
 }
