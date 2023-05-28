@@ -28,7 +28,6 @@ public class MultiblockSchematicScrollHandler {
             scrollDelta = Math.signum(scrollDelta) == Math.signum(event.getScrollDelta())
                     ? scrollDelta + event.getScrollDelta()
                     : event.getScrollDelta();
-            System.out.println("scroll " + scrollDelta);
             if (Math.abs(scrollDelta) > 1) {
                 TetraMod.packetHandler.sendToServer(new MultiblockSchematicScrollPacket(scrollDelta > 0));
                 scrollDelta = 0;
@@ -44,7 +43,6 @@ public class MultiblockSchematicScrollHandler {
                         List<StackedMultiblockSchematicItem> parts = schematics.get(item.schematicBlock.schematic);
                         int index = parts.indexOf(item) + (isIncrease ? 1 : -1);
                         if (index >= 0 && index < parts.size()) {
-                            System.out.println("shift " + parts.get(index) + ", " + isIncrease);
                             player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(parts.get(index)));
                         }
                     });
