@@ -11,6 +11,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicBlock;
+import se.mickelus.tetra.blocks.multischematic.PrimaryMultiblockSchematicBlock;
 import se.mickelus.tetra.blocks.multischematic.RuinedMultiblockSchematicBlock;
 
 import javax.annotation.Nullable;
@@ -60,6 +61,9 @@ public class MultiblockSchematicProcessor extends StructureProcessor {
                         .setValue(RuinedMultiblockSchematicBlock.facingProp, blockInfo.state.getValue(MultiblockSchematicBlock.facingProp));
                 return new StructureTemplate.StructureBlockInfo(blockInfo.pos, newState, blockInfo.nbt);
             }
+        } else if (blockInfo.state.getBlock() instanceof PrimaryMultiblockSchematicBlock) {
+            BlockState newState = blockInfo.state.setValue(PrimaryMultiblockSchematicBlock.complete, false);
+            return new StructureTemplate.StructureBlockInfo(blockInfo.pos, newState, blockInfo.nbt);
         }
 
         return blockInfo;
