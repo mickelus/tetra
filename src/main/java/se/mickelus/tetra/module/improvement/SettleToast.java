@@ -8,10 +8,10 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.TetraSounds;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -62,7 +62,7 @@ public class SettleToast implements Toast {
                 this.hasPlayedSound = true;
 
                 toastGui.getMinecraft().getSoundManager()
-                        .play(SimpleSoundInstance.forUI(SoundEvents.EXPERIENCE_ORB_PICKUP, 2F, 0.7F));
+                        .play(SimpleSoundInstance.forUI(TetraSounds.settle, 1, 1));
             }
 
             if (glyph != null) {

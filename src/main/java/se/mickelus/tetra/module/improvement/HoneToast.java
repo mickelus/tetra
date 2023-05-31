@@ -8,9 +8,9 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.TetraSounds;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
 
@@ -42,7 +42,7 @@ public class HoneToast implements Toast {
             if (!this.hasPlayedSound && delta > 0L) {
                 this.hasPlayedSound = true;
                 toastGui.getMinecraft().getSoundManager()
-                        .play(SimpleSoundInstance.forUI(SoundEvents.PLAYER_LEVELUP, 0.6F, 0.7F));
+                        .play(SimpleSoundInstance.forUI(TetraSounds.honeGain, 1, 1));
             }
 
             // Lighting.turnBackOn();

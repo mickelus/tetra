@@ -3,5 +3,13 @@
         "category": "player",
         "subtitle": "tetra.subtitle.scanner",
         "sounds": [ "tetra:scanner" ]
+    },
+    "hone_gain": {
+        "subtitle": "tetra.subtitle.hone_gain",
+        "sounds": ["tetra:hone_gain"]
+    },
+    "settle": {
+        "subtitle": "tetra.subtitle.settle",
+        "sounds": ["tetra:settle"]
     }
 }
