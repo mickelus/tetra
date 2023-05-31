@@ -13,9 +13,11 @@
     "parent": "tetra:spelunking/hammer_fix",
     "criteria": {
         "module": {
-            "trigger": "minecraft:impossible",
+            "trigger": "tetra:block_use",
             "conditions": {
-                "items": [ { "items": [ "tetra:combustion_chamber" ] } ]
+                "item": {
+                    "items": ["tetra:combustion_chamber"]
+                }
             }
         }
     }
