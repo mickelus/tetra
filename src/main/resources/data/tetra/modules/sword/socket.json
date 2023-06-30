@@ -18,6 +18,7 @@
                     "axe_dig": [0, 1],
                     "shovel_dig": [0, 1],
                     "pickaxe_dig": [0, 1],
+                    "hammer_dig": [0, 1],
                     "cut": [0, 1]
                 },
                 "availableTextures": ["pristine", "default"],
