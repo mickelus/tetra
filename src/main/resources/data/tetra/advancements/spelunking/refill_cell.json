@@ -12,12 +12,12 @@
     },
     "parent": "tetra:spelunking/find_cell",
     "criteria": {
-        "get_geode": {
-            "trigger": "impossible",
+        "refill_cell": {
+            "trigger": "minecraft:inventory_changed",
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:thermal_cell",
+                        "item": ["tetra:thermal_cell"],
                         "durability": 128
                     }
                 ]
