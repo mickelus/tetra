@@ -7,7 +7,7 @@ import net.minecraftforge.client.settings.KeyModifier;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiRect;
-import se.mickelus.mutil.gui.GuiStringOutline;
+import se.mickelus.mutil.gui.GuiString;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -41,22 +41,22 @@ public class GuiKeybinding extends GuiElement {
     public GuiKeybinding(int x, int y, String key, @Nullable String modifier, @Nullable String description) {
         super(x, y, 0, 11);
         if (modifier != null) {
-            GuiKey modifierKey = new GuiKey(0, 0, modifier);
+            GuiKey modifierKey = new GuiKey(0, 0, formatModifier(modifier));
             addChild(modifierKey);
 
-            GuiStringOutline joiner = new GuiStringOutline(modifierKey.getWidth() + 2, 2, "+", GuiColors.muted);
+            GuiString joiner = new GuiString(modifierKey.getWidth() + 2, 2, "+", GuiColors.muted);
             addChild(joiner);
 
             width = modifierKey.getWidth() + 2 + joiner.getWidth() + 2;
         }
 
-        GuiKey guiKey = new GuiKey(width, 0, key);
+        GuiKey guiKey = new GuiKey(width, 0, key.toUpperCase());
         addChild(guiKey);
         width += guiKey.getWidth();
 
         if (description != null) {
             width += 4;
-            GuiStringOutline descriptionElement = new GuiStringOutline(width, 2, description);
+            GuiString descriptionElement = new GuiString(width, 2, description);
             addChild(descriptionElement);
             width += descriptionElement.getWidth();
         }
@@ -65,6 +65,14 @@ public class GuiKeybinding extends GuiElement {
     public GuiKeybinding(int x, int y, String key, @Nullable String modifier, @Nullable String description, GuiAttachment attachment) {
         this(x, y, key, modifier, description);
         setAttachment(attachment);
+    }
+
+    private static String formatModifier(String modifier) {
+        if ("CONTROL".equals(modifier)) {
+            return "ctrl";
+        }
+
+        return modifier.toLowerCase();
     }
 
     private class GuiKey extends GuiElement {
@@ -78,20 +86,15 @@ public class GuiKeybinding extends GuiElement {
 
             setAttachment(attachment);
 
-            // todo 1.16: does this break width for single character elements
-            if (key.length() == 1) {
-                width = Minecraft.getInstance().font.width(key) + 5;
-            } else {
-                width = Minecraft.getInstance().font.width(key);
-            }
+            width = Minecraft.getInstance().font.width(key) + 5;
 
-            addChild(new GuiRect(0, 1, 1, height - 2, GuiColors.muted));
-            addChild(new GuiRect(width - 1, 1, 1, height - 2, GuiColors.muted));
+            addChild(new GuiRect(-1, 0, 1, height, GuiColors.muted));
+            addChild(new GuiRect(width, 0, 1, height, GuiColors.muted));
 
-            addChild(new GuiRect(1, 0, width - 2, 1, GuiColors.muted));
-            addChild(new GuiRect(1, height - 1, width - 2, 1, GuiColors.muted));
+            addChild(new GuiRect(0, -1, width, 1, GuiColors.muted));
+            addChild(new GuiRect(0, height, width, 1, GuiColors.muted));
 
-            addChild(new GuiStringOutline(3, 1, key.toLowerCase()));
+            addChild(new GuiString(3, 2, key));
         }
     }
 }
