@@ -2,6 +2,7 @@ package se.mickelus.tetra.module.data;
 
 import com.mojang.math.Transformation;
 import net.minecraft.resources.ResourceLocation;
+import se.mickelus.tetra.module.Priority;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -15,6 +16,8 @@ public class ModuleModel {
     public int tint = 0xffffffff;
     public int overlayTint = 0xffffffff;
 
+    public Priority renderLayer = Priority.BASE;
+
     public ModuleModel() {
     }
 
@@ -27,6 +30,10 @@ public class ModuleModel {
         this.location = location;
     }
 
+    public Priority getRenderLayer() {
+        return renderLayer;
+    }
+
     public ModuleModel copy() {
         ModuleModel copy = new ModuleModel();
         copy.type = type;
@@ -36,6 +43,7 @@ public class ModuleModel {
         copy.emission = emission;
         copy.tint = tint;
         copy.overlayTint = overlayTint;
+        copy.renderLayer = renderLayer;
         return copy;
     }
 }

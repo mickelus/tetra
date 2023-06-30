@@ -1066,6 +1066,7 @@ public interface IModularItem {
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
                 .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
                 .filter(Objects::nonNull)
+                .sorted(Comparator.comparing(ModuleModel::getRenderLayer))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
     }
 

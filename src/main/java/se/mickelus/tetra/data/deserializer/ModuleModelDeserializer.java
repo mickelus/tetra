@@ -5,6 +5,7 @@ import com.mojang.math.Transformation;
 import net.minecraft.util.Mth;
 import se.mickelus.mutil.data.deserializer.ResourceLocationDeserializer;
 import se.mickelus.tetra.items.modular.ItemColors;
+import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.data.ModuleModel;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -45,6 +46,10 @@ public class ModuleModelDeserializer implements JsonDeserializer<ModuleModel> {
 
         if (jsonObject.has("transform")) {
             data.transform = context.deserialize(jsonObject.getAsJsonObject("transform"), Transformation.class);
+        }
+
+        if (jsonObject.has("renderLayer")) {
+            data.renderLayer = context.deserialize(jsonObject.get("renderLayer"), Priority.class);
         }
 
         return data;

@@ -84,10 +84,10 @@ public class ModularCrossbowItem extends ModularItem {
     public ModularCrossbowItem(@NotNull Item shootableDummy) {
         super(new Properties().stacksTo(1).fireResistant());
 
-        majorModuleKeys = new String[]{staveKey, stockKey};
-        minorModuleKeys = new String[]{attachmentAKey, stringKey, attachmentBKey};
+        majorModuleKeys = new String[] {staveKey, stockKey};
+        minorModuleKeys = new String[] {attachmentAKey, stringKey, attachmentBKey};
 
-        requiredModules = new String[]{stringKey, stockKey, staveKey};
+        requiredModules = new String[] {stringKey, stockKey, staveKey};
 
         this.shootableDummy = new ItemStack(shootableDummy);
 
@@ -520,6 +520,7 @@ public class ModularCrossbowItem extends ModularItem {
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
                 .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
                 .filter(Objects::nonNull)
+                .sorted(Comparator.comparing(ModuleModel::getRenderLayer))
                 .filter(model -> model.type.equals(modelType) || model.type.equals("static"))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 

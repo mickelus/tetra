@@ -74,10 +74,10 @@ public class ModularBowItem extends ModularItem {
     public ModularBowItem() {
         super(new Properties().stacksTo(1).fireResistant());
 
-        majorModuleKeys = new String[]{stringKey, staveKey};
-        minorModuleKeys = new String[]{riserKey};
+        majorModuleKeys = new String[] {stringKey, staveKey};
+        minorModuleKeys = new String[] {riserKey};
 
-        requiredModules = new String[]{stringKey, staveKey};
+        requiredModules = new String[] {stringKey, staveKey};
 
         vanillaBow = new ItemStack(Items.BOW);
 
@@ -445,6 +445,7 @@ public class ModularBowItem extends ModularItem {
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
                 .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
                 .filter(Objects::nonNull)
+                .sorted(Comparator.comparing(ModuleModel::getRenderLayer))
                 .filter(model -> model.type.equals(modelType) || model.type.equals("static"))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 
