@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class TierData<T> {
@@ -41,9 +42,12 @@ public class TierData<T> {
     }
 
     public Set<T> getValues() {
-        return levelMap.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
+        return Stream.concat(
+                        levelMap.entrySet().stream().filter(entry -> entry.getValue() > 0),
+                        efficiencyMap.entrySet().stream().filter(entry -> entry.getValue() > 0)
+                )
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toUnmodifiableSet());
+
     }
 }

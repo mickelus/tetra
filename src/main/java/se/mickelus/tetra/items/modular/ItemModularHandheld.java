@@ -73,7 +73,7 @@ public class ItemModularHandheld extends ModularItem {
     public static final TagKey<Block> nailedTag = BlockTags.create(new ResourceLocation("tetra", "nailed"));
     // if the blocking level exceeds this value the item has an infinite blocking duration
     public static final int blockingDurationLimit = 16;
-    static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[]{
+    static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[] {
             ExecuteEffect.instance,
             LungeEffect.instance,
             SlamEffect.instance,
@@ -846,7 +846,9 @@ public class ItemModularHandheld extends ModularItem {
 
     public Set<ToolAction> getToolActions(ItemStack stack) {
         if (!isBroken(stack)) {
-            return getTools(stack);
+            return getToolLevels(stack).entrySet().stream().filter(entry -> entry.getValue() > 0)
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toUnmodifiableSet());
         }
         return Collections.emptySet();
     }
