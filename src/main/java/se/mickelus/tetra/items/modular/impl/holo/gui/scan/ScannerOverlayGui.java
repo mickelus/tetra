@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
@@ -13,9 +14,11 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ClipBlockStateContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -233,8 +236,7 @@ public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
         Vec3 lookVector = getVectorForRotation(player.getViewXRot(1) + pitchOffset, player.getViewYRot(1) + yawOffset);
         Vec3 endVector = eyePosition.add(lookVector.x * range, lookVector.y * range, lookVector.z * range);
 
-        return world.isBlockInLine(new ClipBlockStateContext(eyePosition, endVector,
-                blockState -> blockState.is(tag)));
+        return isBlockInLine(world, new ClipBlockStateContext(eyePosition, endVector, blockState -> blockState.is(tag)));
     }
 
     private Vec3 getVectorForRotation(float pitch, float yaw) {
@@ -261,5 +263,19 @@ public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
 
             widthRatio = scanner.getWidth() * 1f / width;
         }
+    }
+
+    // based on BlockGetter.isBlockInLine but returning the actual hit instead of the end of the line
+    BlockHitResult isBlockInLine(Level level, ClipBlockStateContext context) {
+        return BlockGetter.traverseBlocks(context.getFrom(), context.getTo(), context, (innerContext, pos) -> {
+            BlockState blockstate = level.getBlockState(pos);
+            Vec3 vec3 = innerContext.getFrom().subtract(innerContext.getTo());
+            return innerContext.isTargetBlock().test(blockstate)
+                    ? new BlockHitResult(innerContext.getTo(), Direction.getNearest(vec3.x, vec3.y, vec3.z), pos, false)
+                    : null;
+        }, (innerContext) -> {
+            Vec3 vec3 = innerContext.getFrom().subtract(innerContext.getTo());
+            return BlockHitResult.miss(innerContext.getTo(), Direction.getNearest(vec3.x, vec3.y, vec3.z), new BlockPos(innerContext.getTo()));
+        });
     }
 }

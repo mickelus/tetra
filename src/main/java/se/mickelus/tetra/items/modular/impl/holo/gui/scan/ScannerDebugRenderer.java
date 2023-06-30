@@ -42,7 +42,7 @@ public class ScannerDebugRenderer {
     }
 
     private void drawDebugBox(BlockPos blockPos, Vec3 eyePos, PoseStack matrixStack, VertexConsumer vertexBuilder, float red, float green, float blue, float alpha) {
-        Vec3 pos = Vec3.atLowerCornerOf(blockPos).subtract(eyePos);
+        Vec3 pos = /*new Vec3(1023, 7, 1159).subtract(eyePos)*/Vec3.atLowerCornerOf(blockPos).subtract(eyePos);
         AABB aabb = new AABB(pos, pos.add(1, 1, 1));
 
         // draw center box
