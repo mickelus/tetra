@@ -5,7 +5,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.MaterialVariantData;
 import se.mickelus.tetra.module.data.ModuleData;
@@ -14,6 +13,7 @@ import se.mickelus.tetra.module.data.VariantData;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -73,8 +73,8 @@ public class ModuleRegistry {
             ArrayList<Pair<ResourceLocation, ModuleData>> result = new ArrayList<>(moduleData.slots.length);
             for (int i = 0; i < moduleData.slots.length; i++) {
                 ModuleData dataCopy = moduleData.shallowCopy();
-                dataCopy.slots = new String[]{moduleData.slots[i]};
-                dataCopy.slotSuffixes = new String[]{moduleData.slotSuffixes[i]};
+                dataCopy.slots = new String[] {moduleData.slots[i]};
+                dataCopy.slotSuffixes = new String[] {moduleData.slotSuffixes[i]};
 
                 ResourceLocation suffixedIdentifier = new ResourceLocation(
                         entry.getKey().getNamespace(),
@@ -112,10 +112,10 @@ public class ModuleRegistry {
     }
 
     private void handleVariantDuplicates(ModuleData data) {
-        // todo: merge variant data instead of discarding duplicates
         data.variants = Arrays.stream(data.variants)
-                .filter(Filter.distinct(variant -> variant.key))
-                .toArray(VariantData[]::new);
+                .collect(Collectors.toMap(variant -> variant.key, Function.identity(), VariantData::merge))
+                .values()
+                .toArray(new VariantData[0]);
     }
 
     private ItemModule setupModule(ResourceLocation identifier, ModuleData data) {
