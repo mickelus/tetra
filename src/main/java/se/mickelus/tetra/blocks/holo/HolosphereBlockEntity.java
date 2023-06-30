@@ -13,24 +13,44 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.RegistryObject;
+import se.mickelus.tetra.ServerScheduler;
+import se.mickelus.tetra.TetraSounds;
+import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class HolosphereBlockEntity extends BlockEntity {
     public static final int maxRange = 8;
     public static RegistryObject<BlockEntityType<HolosphereBlockEntity>> type;
     private List<ScanResult> scanResults;
+    private long scanModeTimestamp = 0;
+
+    private CompoundTag itemTag;
+    private LazyOptional<Boolean> canScan = LazyOptional.of(() -> this.itemTag)
+            .lazyMap(tag -> {
+                ItemStack itemStack = new ItemStack(ModularHolosphereItem.instance);
+                itemStack.setTag(tag);
+                return Optional.ofNullable(ModularHolosphereItem.instance.getEffectData(itemStack))
+                        .map(effects -> effects.getLevel(ItemEffect.percussionScanner) > 0)
+                        .orElse(false);
+            });
 
     public HolosphereBlockEntity(BlockPos pos, BlockState blockState) {
         super(type.get(), pos, blockState);
@@ -46,8 +66,29 @@ public class HolosphereBlockEntity extends BlockEntity {
         return scanResults;
     }
 
+    public boolean canScan() {
+        return canScan.orElse(false);
+    }
+
+    public long getScanModeTimestamp() {
+        return scanModeTimestamp;
+    }
+
+    public boolean inScanMode() {
+        return scanModeTimestamp > 0;
+    }
+
+    public void toggleScanMode(boolean enable) {
+        long diff = Math.abs(Math.abs(scanModeTimestamp) - level.getGameTime());
+        long time = diff < 5 ? level.getGameTime() - diff : level.getGameTime();
+        scanModeTimestamp = enable ? time : -time;
+
+        setChanged();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+    }
+
     private String[] getScannableStructures() {
-        return new String[]{"#tetra:forged_ruins"};
+        return new String[] {"#tetra:forged_ruins"};
     }
 
     private long getTimestamp(long gametime, int x, int y) {
@@ -56,54 +97,69 @@ public class HolosphereBlockEntity extends BlockEntity {
 
     public void use(int hammerLevel, float hammerEfficiency, float angle) {
         ServerLevel serverLevel = (ServerLevel) getLevel();
-        int count = 4 + (int) hammerEfficiency / 3;
+        int count = 4 + (int) hammerEfficiency / 4;
+        double cone = (20 + hammerLevel * 6) * Math.PI / 180;
         int ox = SectionPos.blockToSectionCoord(getBlockPos().getX());
         int oz = SectionPos.blockToSectionCoord(getBlockPos().getZ());
 
         int preResultSize = scanResults.size();
+        AtomicInteger stagger = new AtomicInteger();
 
         ChunkPos.rangeClosed(new ChunkPos(-32, -32), new ChunkPos(32, 32))
-                .filter(pos -> Math.abs(Mth.atan2(pos.x, pos.z) - angle) < Math.PI / 6)
+                .filter(pos -> Math.abs(Mth.atan2(pos.x, pos.z) - angle) < cone)
                 .sorted(Comparator.comparingInt(pos -> pos.x * pos.x + pos.z * pos.z))
                 .map(pos -> new ChunkPos(pos.x + ox, pos.z + oz))
+                .filter(pos -> Math.abs(pos.x - ox) + Math.abs(pos.z - oz) < 20)
                 .filter(pos -> scanResults.stream().noneMatch(result -> result.chunkX == pos.x && result.chunkZ == pos.z))
                 .limit(count)
                 .forEach(pos -> {
-                    long timestamp = this.getTimestamp(serverLevel.getGameTime(), pos.x - ox, pos.z - oz);
-                    int height = getLevel().getChunk(pos.x, pos.z).getHeight(Heightmap.Types.WORLD_SURFACE, pos.x, pos.z);
+//                    boolean wasLoaded = serverLevel.hasChunk(pos.x, pos.z);
+//                    System.out.println("has chunk [" + pos.x + ", " + pos.z + "]: " + wasLoaded);
+//                    serverLevel.getChunkSource().getGenerator().findNearestMapStructure()
+                    long timestamp = this.getTimestamp(serverLevel.getGameTime(), pos.x - ox, pos.z - oz) + stagger.getAndIncrement() * 3L;
+                    int height = serverLevel.getChunk(pos.x, pos.z, ChunkStatus.HEIGHTMAPS).getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.x, pos.z);
+
                     BlockPos centerPos = pos.getMiddleBlockPosition(height);
                     float temperature = level.getBiome(centerPos).value().getTemperature(centerPos);
-                    List<String> structures = Arrays.stream(getScannableStructures())
-                            .filter(id -> ScanHelper.hasStructure(id, serverLevel, pos)).toList();
+                    List<String> structures =
+                            Arrays.stream(getScannableStructures())
+                                    .filter(id -> ScanHelper.hasStructure(id, serverLevel, pos)).toList();
                     scanResults.add(new ScanResult(pos.x, pos.z, height, temperature, structures, timestamp));
+
+
+//                    if (!wasLoaded) {
+//                        System.out.println("[post]  Was not loaded, is now: " + serverLevel.hasChunk(pos.x, pos.z));
+//                        ServerScheduler.schedule(100, () -> System.out.println("[delayed] Was not loaded, is now: " + serverLevel.hasChunk(pos.x, pos.z)));
+//                    }
+
+
+                    ServerScheduler.schedule((int) ((timestamp - serverLevel.getGameTime())), () ->
+                            serverLevel.playSound(null, getBlockPos(), TetraSounds.scanMiss, SoundSource.PLAYERS, 0.01f, 1.0f + (float) Math.random() * 0f));
+                    if (!structures.isEmpty()) {
+                        ServerScheduler.schedule((int) ((timestamp - serverLevel.getGameTime()) + 20), () ->
+                                serverLevel.playSound(null, getBlockPos(), TetraSounds.scanHit, SoundSource.PLAYERS, 0.1f, 1.0f));
+                    }
+
                 });
 
         if (preResultSize != scanResults.size()) {
             setChanged();
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         }
+    }
 
+    public ItemStack getItemStack() {
+        ItemStack itemStack = new ItemStack(ModularHolosphereItem.instance);
+        itemStack.setTag(this.getItemTag());
+        return itemStack;
+    }
 
-//        IntStream.rangeClosed(-maxRange, maxRange)
-//                .boxed()
-//                .flatMap(x -> IntStream.rangeClosed(-maxRange, maxRange).boxed().map(z -> Pair.of(x, z)))
-//                .filter(pos -> )
+    public CompoundTag getItemTag() {
+        return itemTag;
+    }
 
-//        for (int x = -maxRange; x <= maxRange; x++) {
-//            for (int z = -maxRange; z <= maxRange; z++) {
-//                if ()
-//
-//                int height = entity.getLevel().getChunk(x, z).getHeight(Heightmap.Types.WORLD_SURFACE, x, z);
-//                renderMarker(vertexBuilder, matrixStack, entity.getLevel(), dispatcher.camera, material.sprite(), 0, light, 0.5f + x * 0.075f, 0.01f * height, 0.5f + z * 0.075f, 1, 1, 1, 0.9f);
-//                for (int k = height / 10; k > 0; k--) {
-//                    renderMarker(vertexBuilder, matrixStack, entity.getLevel(), dispatcher.camera, material.sprite(), 0, light, 0.5f + x * 0.075f, 0.1f * k, 0.5f + z * 0.075f, 1, 1, 1, k * 0.05f);
-//                }
-//                renderMarker(vertexBuilder, matrixStack, entity.getLevel(), dispatcher.camera, material.sprite(), 0, light, 0.5f + x * 0.075f, 0.5f, 0.5f + z * 0.075f, 1, 1, 1, 0.2f);
-//            }
-//        }
-//
-//        boolean hasStructure = HolosphereBlock.hasStructure("#tetra:forged_ruins", (ServerLevel) world, new ChunkPos(player.getOnPos()));
-
+    public void setItemTag(CompoundTag tag) {
+        this.itemTag = tag;
     }
 
     @Nullable
@@ -126,6 +182,10 @@ public class HolosphereBlockEntity extends BlockEntity {
     public void load(CompoundTag compound) {
         super.load(compound);
 
+        itemTag = compound.getCompound("item");
+
+        scanModeTimestamp = compound.getLong("timestamp");
+
         scanResults = compound.getList("scan", Tag.TAG_COMPOUND).stream()
                 .map(nbt -> ScanResult.codec.decode(NbtOps.INSTANCE, nbt))
                 .map(DataResult::result)
@@ -138,6 +198,10 @@ public class HolosphereBlockEntity extends BlockEntity {
     @Override
     public void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
+
+        compound.put("item", itemTag);
+
+        compound.putLong("timestamp", scanModeTimestamp);
 
         ListTag list = scanResults.stream()
                 .map(scroll -> ScanResult.codec.encodeStart(NbtOps.INSTANCE, scroll))

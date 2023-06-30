@@ -1,0 +1,29 @@
+{
+    "replace": true,
+    "slots": ["holo/scanner"],
+    "repair": false,
+    "materialSlotCount": 1,
+    "glyph": {
+        "textureX": 16,
+        "textureY": 224
+    },
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:not",
+        "requirement": {
+            "type": "tetra:improvement",
+            "improvement": "scanner/percussion_scanner"
+        }
+    },
+    "outcomes": [
+        {
+            "material": {
+                "items": ["minecraft:amethyst_shard"],
+                "count": 4
+            },
+            "improvements": {
+                "scanner/percussion_scanner": 0
+            }
+        }
+    ]
+}

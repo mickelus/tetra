@@ -1,8 +1,15 @@
 {
     "scanner": {
-        "category": "player",
         "subtitle": "tetra.subtitle.scanner",
-        "sounds": [ "tetra:scanner" ]
+        "sounds": ["tetra:scanner"]
+    },
+    "scan_hit": {
+        "subtitle": "tetra.subtitle.scan_hit",
+        "sounds": ["tetra:scan_hit"]
+    },
+    "scan_miss": {
+        "subtitle": "tetra.subtitle.scan_miss",
+        "sounds": ["tetra:scan_miss"]
     },
     "hone_gain": {
         "subtitle": "tetra.subtitle.hone_gain",

@@ -379,6 +379,12 @@ public class GuiStats {
             0, 180, false, sweeperVerticalSpreadGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.holo.sweeperVerticalSpread.tooltip", sweeperVerticalSpreadGetter));
     public static final GuiStatBarIntegrity integrity = new GuiStatBarIntegrity(0, 0);
+
+    public static final IStatGetter percussionScannerGetter = new StatGetterEffectLevel(ItemEffect.percussionScanner, 1);
+    public static final GuiStatBar percussionScanner = new GuiStatBar(0, 0, barLength, "tetra.stats.holo.percussionScanner",
+            0, 1, false, percussionScannerGetter, LabelGetterBasic.noLabel,
+            new TooltipGetterNone("tetra.stats.holo.percussionScanner.tooltip"));
+
     private static final ITooltipGetter counterweightTooltip = new TooltipGetterInteger("tetra.stats.counterweight.tooltip", counterweightGetter);
     public static final GuiStatBar counterweight = new GuiStatBar(0, 0, barLength, "tetra.stats.counterweight",
             0, 12, true, counterweightGetter, LabelGetterBasic.integerLabel, counterweightTooltip);

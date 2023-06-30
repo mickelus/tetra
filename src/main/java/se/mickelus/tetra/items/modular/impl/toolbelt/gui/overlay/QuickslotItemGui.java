@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
+package se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -16,7 +16,7 @@ import se.mickelus.tetra.gui.GuiColors;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class OverlayGuiQuickslot extends GuiElement {
+public class QuickslotItemGui extends GuiElement {
     public static final int height = 20;
 
     private final ItemStack itemStack;
@@ -30,10 +30,10 @@ public class OverlayGuiQuickslot extends GuiElement {
 
     private final GuiItem guiItem;
     private final GuiString label;
-    private final OverlayGuiQuickslotSide hitLeft;
-    private final OverlayGuiQuickslotSide hitRight;
+    private final QuickslotDirectionGui hitLeft;
+    private final QuickslotDirectionGui hitRight;
 
-    public OverlayGuiQuickslot(int x, int y, ItemStack itemStack, int slot) {
+    public QuickslotItemGui(int x, int y, ItemStack itemStack, int slot) {
         super(x, y, 200, height);
 
         this.itemStack = itemStack;
@@ -50,9 +50,9 @@ public class OverlayGuiQuickslot extends GuiElement {
         label.setOpacity(0);
         addChild(label);
 
-        hitLeft = new OverlayGuiQuickslotSide(0, 0, 46, height, false);
+        hitLeft = new QuickslotDirectionGui(0, 0, 46, height, false);
         addChild(hitLeft);
-        hitRight = new OverlayGuiQuickslotSide(46, 0, 151, height, true);
+        hitRight = new QuickslotDirectionGui(46, 0, 151, height, true);
         addChild(hitRight);
 
         isVisible = false;

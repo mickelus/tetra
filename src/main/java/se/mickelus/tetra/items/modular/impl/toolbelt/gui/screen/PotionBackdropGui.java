@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
+package se.mickelus.tetra.items.modular.impl.toolbelt.gui.screen;
 
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
@@ -13,8 +13,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 
 @ParametersAreNonnullByDefault
-public class GuiPotionsBackdrop extends GuiElement {
-    public GuiPotionsBackdrop(int x, int y, int numSlots, Collection<Collection<ItemEffect>> inventoryEffects) {
+public class PotionBackdropGui extends GuiElement {
+    public PotionBackdropGui(int x, int y, int numSlots, Collection<Collection<ItemEffect>> inventoryEffects) {
         super(x, y, numSlots * 17 - 9, 28);
 
         setAttachmentPoint(GuiAttachment.bottomCenter);

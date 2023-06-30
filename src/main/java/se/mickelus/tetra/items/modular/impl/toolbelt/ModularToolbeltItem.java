@@ -30,7 +30,7 @@ import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.JumpHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.TickHandlerBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket;
-import se.mickelus.tetra.items.modular.impl.toolbelt.gui.ToolbeltScreen;
+import se.mickelus.tetra.items.modular.impl.toolbelt.gui.screen.ToolbeltScreen;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.JumpHandlerSuspend;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.ToggleSuspendPacket;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
@@ -66,15 +66,16 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
 
         canHone = false;
 
-        majorModuleKeys = new String[]{slot1Key, slot2Key, slot3Key};
-        minorModuleKeys = new String[]{beltKey};
+        majorModuleKeys = new String[] {slot1Key, slot2Key, slot3Key};
+        minorModuleKeys = new String[] {beltKey};
 
-        requiredModules = new String[]{beltKey};
+        requiredModules = new String[] {beltKey};
     }
 
     @Override
     public void commonInit(PacketHandler packetHandler) {
         packetHandler.registerPacket(EquipToolbeltItemPacket.class, EquipToolbeltItemPacket::new);
+        packetHandler.registerPacket(StoreToolbeltItemPacket.class, StoreToolbeltItemPacket::new);
         packetHandler.registerPacket(OpenToolbeltItemPacket.class, OpenToolbeltItemPacket::new);
         packetHandler.registerPacket(UpdateBoosterPacket.class, UpdateBoosterPacket::new);
         packetHandler.registerPacket(ToggleSuspendPacket.class, ToggleSuspendPacket::new);

@@ -7,6 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
@@ -105,6 +106,8 @@ public class TetraRegistries {
     public static final DeferredRegister<EntityType<?>> entities = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, TetraMod.MOD_ID);
     public static final DeferredRegister<ParticleType<?>> particles = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, TetraMod.MOD_ID);
     public static final DeferredRegister<MobEffect> effects = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, TetraMod.MOD_ID);
+
+    public static final DeferredRegister<SoundEvent> sounds = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, TetraMod.MOD_ID);
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> lootModifiers = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, TetraMod.MOD_ID);
 
     public static final DeferredRegister<LootItemConditionType> lootConditions = DeferredRegister.create(Registry.LOOT_ITEM_REGISTRY, TetraMod.MOD_ID);
@@ -127,6 +130,7 @@ public class TetraRegistries {
         particles.register(bus);
         containers.register(bus);
         effects.register(bus);
+        sounds.register(bus);
         lootConditions.register(bus);
         lootFunctions.register(bus);
         lootModifiers.register(bus);
@@ -309,6 +313,12 @@ public class TetraRegistries {
         effects.register(SmallAbsorbPotionEffect.identifier, SmallAbsorbPotionEffect::new);
         effects.register(SuspendPotionEffect.identifier, SuspendPotionEffect::new);
         effects.register(MiningSpeedPotionEffect.identifier, MiningSpeedPotionEffect::new);
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // SOUNDS
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        sounds.register(TetraSounds.scanHit.getLocation().getPath(), () -> TetraSounds.scanHit);
+        sounds.register(TetraSounds.scanMiss.getLocation().getPath(), () -> TetraSounds.scanMiss);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // LOOT CONDITIONS

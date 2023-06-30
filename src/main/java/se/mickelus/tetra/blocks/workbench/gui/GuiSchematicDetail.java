@@ -3,11 +3,14 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.gui.*;
+import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiMagicUsage;
@@ -97,7 +100,7 @@ public class GuiSchematicDetail extends GuiElement {
         addChild(craftButton);
     }
 
-    public void update(UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, Map<ToolAction, Integer> availableTools,
+    public void update(Level level, BlockPos pos, WorkbenchTile blockEntity, UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, Map<ToolAction, Integer> availableTools,
             Player player) {
         this.schematic = schematic;
 
@@ -113,7 +116,7 @@ public class GuiSchematicDetail extends GuiElement {
         applicableMaterials.setVisible(schematic.getNumMaterialSlots() > 0);
         if (schematic.getNumMaterialSlots() > 0) {
             materialTranslation.update(schematic);
-            applicableMaterials.update(itemStack, slot, schematic, player);
+            applicableMaterials.update(level, pos, blockEntity, itemStack, slot, schematic, player);
         }
 
         glyph.clearChildren();

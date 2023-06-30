@@ -395,6 +395,9 @@ public class ItemEffect {
      * vertical raytraces. The additional raytraces start at +-25 degrees and increments at 5 degrees per raytrace.
      */
     public static final ItemEffect sweeperVerticalSpread = get("sweeperVerticalSpread");
+
+    public static final ItemEffect percussionScanner = get("percussionScanner");
+
     private final String key;
 
     private ItemEffect(String key) {

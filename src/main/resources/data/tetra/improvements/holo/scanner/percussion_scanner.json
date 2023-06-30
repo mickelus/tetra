@@ -1,0 +1,15 @@
+[
+    {
+        "key": "scanner/percussion_scanner",
+        "integrity": -1,
+        "effects": {
+            "percussionScanner": 1
+        },
+        "models": [
+            {
+                "location": "tetra:items/module/holo/scanner/percussion_scanner",
+                "emission": 2
+            }
+        ]
+    }
+]

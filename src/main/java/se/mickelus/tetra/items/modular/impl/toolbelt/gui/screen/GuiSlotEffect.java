@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
+package se.mickelus.tetra.items.modular.impl.toolbelt.gui.screen;
 
 import net.minecraft.network.chat.Component;
 import se.mickelus.mutil.gui.GuiAttachment;

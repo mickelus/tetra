@@ -37,6 +37,7 @@ import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.revenge.AddRevengePacket;
 import se.mickelus.tetra.effect.revenge.RemoveRevengePacket;
+import se.mickelus.tetra.interactions.SecondaryInteractionPacket;
 import se.mickelus.tetra.items.forged.VibrationDebuffer;
 import se.mickelus.tetra.items.modular.ChargedAbilityPacket;
 import se.mickelus.tetra.items.modular.SecondaryAbilityPacket;
@@ -150,6 +151,7 @@ public class TetraMod {
         packetHandler.registerPacket(RemoveRevengePacket.class, RemoveRevengePacket::new);
         packetHandler.registerPacket(LungeEchoPacket.class, LungeEchoPacket::new);
         packetHandler.registerPacket(MultiblockSchematicScrollPacket.class, MultiblockSchematicScrollPacket::new);
+        packetHandler.registerPacket(SecondaryInteractionPacket.class, SecondaryInteractionPacket::new);
 
         WorkbenchTile.init(packetHandler);
 

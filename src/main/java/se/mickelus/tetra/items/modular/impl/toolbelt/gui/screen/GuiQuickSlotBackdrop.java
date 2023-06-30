@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
+package se.mickelus.tetra.items.modular.impl.toolbelt.gui.screen;
 
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;

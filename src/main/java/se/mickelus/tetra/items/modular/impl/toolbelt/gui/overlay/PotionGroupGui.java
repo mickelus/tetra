@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
+package se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.InteractionHand;
@@ -13,14 +13,13 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @ParametersAreNonnullByDefault
-public class OverlayGuiPotionGroup extends GuiElement {
+public class PotionGroupGui extends GuiElement {
     GuiString focusSlot;
     PotionsInventory inventory;
-    private OverlayGuiPotionSlot[] slots = new OverlayGuiPotionSlot[0];
+    private PotionItemGui[] slots = new PotionItemGui[0];
 
-    public OverlayGuiPotionGroup(int x, int y) {
+    public PotionGroupGui(int x, int y) {
         super(x, y, 0, 0);
-        setAttachmentPoint(GuiAttachment.topCenter);
 
         focusSlot = new GuiString(0, -15, "");
         focusSlot.setAttachmentPoint(GuiAttachment.topCenter);
@@ -31,7 +30,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
         clearChildren();
         this.inventory = inventory;
         int numSlots = inventory.getContainerSize();
-        slots = new OverlayGuiPotionSlot[numSlots];
+        slots = new PotionItemGui[numSlots];
 
         focusSlot.setString("");
         addChild(focusSlot);
@@ -51,17 +50,21 @@ public class OverlayGuiPotionGroup extends GuiElement {
             ItemStack itemStack = inventory.getItem(i);
             if (!itemStack.isEmpty()) {
                 if (i > 6) {
-                    slots[i] = new OverlayGuiPotionSlot(22, 22, itemStack, i, true);
+                    slots[i] = new PotionItemGui(22, 22, itemStack, i, true);
                 } else if (i > 4) {
-                    slots[i] = new OverlayGuiPotionSlot((i - 5) * 22 + 11, -11, itemStack, i, true);
+                    slots[i] = new PotionItemGui((i - 5) * 22 + 11, -11, itemStack, i, true);
                 } else if (i > 2) {
-                    slots[i] = new OverlayGuiPotionSlot((i - 3) * 22 + 11, 11, itemStack, i, true);
+                    slots[i] = new PotionItemGui((i - 3) * 22 + 11, 11, itemStack, i, true);
                 } else {
-                    slots[i] = new OverlayGuiPotionSlot(i * 22, 0, itemStack, i, true);
+                    slots[i] = new PotionItemGui(i * 22, 0, itemStack, i, true);
                 }
                 addChild(slots[i]);
             }
         }
+    }
+
+    public void clear() {
+        clearChildren();
     }
 
     @Override
@@ -92,7 +95,7 @@ public class OverlayGuiPotionGroup extends GuiElement {
 
     public int getFocus() {
         for (int i = 0; i < slots.length; i++) {
-            OverlayGuiPotionSlot element = slots[i];
+            PotionItemGui element = slots[i];
             if (element != null && element.hasFocus()) {
                 return element.getSlot();
             }

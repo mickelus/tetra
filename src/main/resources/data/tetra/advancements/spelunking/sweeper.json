@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:holo",
+            "nbt": "{\"id\": \"spelunking/sweeper\", \"holo/frame\": \"holo/frame\", \"holo/frame_material\": \"frame/ancient\", \"holo/scanner\": \"holo/scanner\", \"holo/scanner_material\": \"scanner/default\", \"holo/scanner:scanner/sweeper\": 0}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.sweeper.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.sweeper.description"
+        }
+    },
+    "parent": "tetra:spelunking/ancient_ruins",
+    "criteria": {
+        "sweeper": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "scanner/sweeper"
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
+package se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay;
 
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
@@ -11,14 +11,14 @@ import se.mickelus.tetra.gui.GuiTextures;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class OverlayGuiQuickslotSide extends GuiElement {
+public class QuickslotDirectionGui extends GuiElement {
 
     private final GuiTexture arrow;
 
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
 
-    public OverlayGuiQuickslotSide(int x, int y, int width, int height, boolean right) {
+    public QuickslotDirectionGui(int x, int y, int width, int height, boolean right) {
         super(x, y, width, height);
 
         if (right) {

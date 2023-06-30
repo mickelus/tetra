@@ -32,9 +32,11 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTESR;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
+import se.mickelus.tetra.client.keymap.TetraKeyMappings;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
+import se.mickelus.tetra.interactions.SecondaryInteractionOverlay;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.ThrownModularItemRenderer;
 import se.mickelus.tetra.items.modular.impl.BlockProgressOverlay;
@@ -44,9 +46,8 @@ import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldBannerModel;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldModel;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldRenderer;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltKeyMappings;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltOverlay;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.OverlayBooster;
+import se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay.ToolbeltOverlay;
 
 import static se.mickelus.tetra.TetraMod.MOD_ID;
 
@@ -128,6 +129,7 @@ public class ClientSetup {
         registerOverlay(event, "howling", new HowlingOverlay(mc));
         registerOverlay(event, "ability_overlays", new AbilityOverlays(mc));
         registerOverlay(event, "toolbelt", new ToolbeltOverlay(mc));
+        registerOverlay(event, "secondary_interaction", new SecondaryInteractionOverlay(mc));
         registerOverlay(event, "booster", new OverlayBooster(mc));
         registerOverlay(event, "block_progresss", new BlockProgressOverlay(mc));
         registerOverlay(event, "ranged_progresss", new RangedProgressOverlay(mc));
@@ -143,8 +145,9 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
-        event.register(ToolbeltKeyMappings.accessBinding);
-        event.register(ToolbeltKeyMappings.restockBinding);
-        event.register(ToolbeltKeyMappings.openBinding);
+        event.register(TetraKeyMappings.accessBinding);
+        event.register(TetraKeyMappings.restockBinding);
+        event.register(TetraKeyMappings.openBinding);
+        event.register(TetraKeyMappings.secondaryUseBinding);
     }
 }

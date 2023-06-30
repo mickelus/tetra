@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
+package se.mickelus.tetra.items.modular.impl.toolbelt.gui.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -10,12 +10,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.tetra.client.keymap.TetraKeyMappings;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiKeybinding;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
-import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltKeyMappings;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -60,7 +59,7 @@ public class ToolbeltScreen extends AbstractContainerScreen<ToolbeltContainer> {
         }
 
         if (numPotionSlots > 0) {
-            GuiPotionsBackdrop potionsBackdrop = new GuiPotionsBackdrop(0, 130 - offset, numPotionSlots, container.getPotionInventory().getSlotEffects());
+            PotionBackdropGui potionsBackdrop = new PotionBackdropGui(0, 130 - offset, numPotionSlots, container.getPotionInventory().getSlotEffects());
             defaultGui.addChild(potionsBackdrop);
             offset += potionsBackdrop.getHeight() + 2;
         }
@@ -78,11 +77,11 @@ public class ToolbeltScreen extends AbstractContainerScreen<ToolbeltContainer> {
         GuiHorizontalLayoutGroup keybindGroup = new GuiHorizontalLayoutGroup(0, -5, 11, 8);
         keybindGroup.setAttachment(GuiAttachment.bottomCenter);
         keybindGui.addChild(keybindGroup);
-        keybindGroup.addChild(new GuiKeybinding(0, 0, ToolbeltKeyMappings.accessBinding));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, TetraKeyMappings.accessBinding));
         keybindGroup.addChild(new GuiRect(0, -1, 1, 13, GuiColors.mutedStrong));
-        keybindGroup.addChild(new GuiKeybinding(0, 0, ToolbeltKeyMappings.restockBinding));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, TetraKeyMappings.restockBinding));
         keybindGroup.addChild(new GuiRect(0, -1, 1, 13, GuiColors.mutedStrong));
-        keybindGroup.addChild(new GuiKeybinding(0, 0, ToolbeltKeyMappings.openBinding));
+        keybindGroup.addChild(new GuiKeybinding(0, 0, TetraKeyMappings.openBinding));
 
         instance = this;
     }
@@ -90,8 +89,7 @@ public class ToolbeltScreen extends AbstractContainerScreen<ToolbeltContainer> {
     @Override
     protected void slotClicked(Slot slot, int slotIndex, int barIndex, ClickType clickType) {
         // todo: based on how quick swapping is implemented in AbstractContainerMenu.doClick, there has to be a cleaner way
-        if (!(slot instanceof DisabledSlot || (slotIndex >= 0 && slotIndex < minecraft.player.getInventory().getContainerSize()
-                && minecraft.player.getInventory().getItem(slotIndex).getItem() instanceof ModularToolbeltItem))) {
+        if (!(slot instanceof DisabledSlot)) {
             super.slotClicked(slot, slotIndex, barIndex, clickType);
         }
     }

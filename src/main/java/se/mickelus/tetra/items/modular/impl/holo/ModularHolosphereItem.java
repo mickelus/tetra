@@ -1,7 +1,9 @@
 package se.mickelus.tetra.items.modular.impl.holo;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -11,12 +13,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.holo.HolosphereBlock;
+import se.mickelus.tetra.blocks.holo.HolosphereBlockEntity;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.TetraItemGroup;
@@ -54,12 +60,30 @@ public class ModularHolosphereItem extends ModularItem {
 
         canHone = false;
 
-        majorModuleKeys = new String[]{coreKey, frameKey, scannerKey, repositoryKey};
+        majorModuleKeys = new String[] {coreKey, frameKey, scannerKey, repositoryKey};
         minorModuleKeys = new String[0];
 
-        requiredModules = new String[]{coreKey, frameKey, scannerKey, repositoryKey};
+        requiredModules = new String[] {coreKey, frameKey, scannerKey, repositoryKey};
 
         RemoveSchematic.registerRemoveSchematics(this, identifier);
+    }
+
+    public static ItemStack findHolosphere(Player player, Level level, BlockPos pos) {
+        ItemStack itemStack = findHolosphere(player);
+
+        return itemStack.isEmpty()
+                ? findHolosphere(level, pos)
+                : itemStack;
+    }
+
+    public static ItemStack findHolosphere(Level level, BlockPos pos) {
+        return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
+                .map(offsetPos -> new Pair<>(offsetPos, level.getBlockState(offsetPos)))
+                .filter(pair -> pair.getSecond().getBlock() instanceof HolosphereBlock)
+                .findFirst()
+                .flatMap(pair -> level.getBlockEntity(pair.getFirst(), HolosphereBlockEntity.type.get()))
+                .map(HolosphereBlockEntity::getItemStack)
+                .orElse(ItemStack.EMPTY);
     }
 
     public static ItemStack findHolosphere(Player player) {
@@ -110,7 +134,7 @@ public class ModularHolosphereItem extends ModularItem {
                     .withStyle(ChatFormatting.GRAY));
 
             tooltip.add(Component.literal(" "));
-            tooltip.add(Component.translatable("tetra.holo.scan.snooze"));
+            tooltip.add(Component.translatable("tetra.holo.place"));
         }
 
         tooltip.add(Component.translatable("item.tetra.holo.tooltip2"));
@@ -121,14 +145,18 @@ public class ModularHolosphereItem extends ModularItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (world.isClientSide) {
-            if (player.isCrouching() && ScannerOverlayGui.instance.isAvailable()) {
-                ScannerOverlayGui.instance.toggleSnooze();
-            } else {
-                showGui();
-            }
+            showGui();
         }
 
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        if (context.getPlayer() != null && context.getPlayer().isCrouching()) {
+            return HolosphereBlock.place(new BlockPlaceContext(context));
+        }
+        return super.useOn(context);
     }
 
     @Override

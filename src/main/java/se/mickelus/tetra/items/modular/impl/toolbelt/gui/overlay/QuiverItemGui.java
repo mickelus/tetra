@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
+package se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -15,7 +15,7 @@ import se.mickelus.tetra.gui.GuiTextures;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class OverlayGuiQuiverSlot extends GuiElement {
+public class QuiverItemGui extends GuiElement {
     private final ItemStack itemStack;
 
     private final Minecraft mc;
@@ -26,7 +26,7 @@ public class OverlayGuiQuiverSlot extends GuiElement {
     private GuiString count;
     private GuiString hoverLabel;
 
-    public OverlayGuiQuiverSlot(int x, int y, ItemStack itemStack, int slot) {
+    public QuiverItemGui(int x, int y, ItemStack itemStack, int slot) {
         super(x, y, 23, 23);
 
         setAttachmentPoint(GuiAttachment.bottomRight);

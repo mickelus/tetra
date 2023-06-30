@@ -33,8 +33,8 @@ import java.util.stream.IntStream;
 
 @ParametersAreNonnullByDefault
 public class GuiSlotDetail extends GuiElement {
-    private static final char[] keybindings = new char[]{'a', 's', 'd'};
-    private static final String[] labels = new String[]{
+    private static final char[] keybindings = new char[] {'a', 's', 'd'};
+    private static final String[] labels = new String[] {
             "tetra.workbench.slot_detail.details_tab",
             "tetra.workbench.slot_detail.craft_tab",
             "tetra.workbench.slot_detail.tweak_tab"
@@ -128,7 +128,7 @@ public class GuiSlotDetail extends GuiElement {
 
             ItemStack previewStack = currentSchematic.applyUpgrade(itemStack.copy(), materials, false, selectedSlot, player);
 
-            schematicDetail.update(currentSchematic, itemStack, selectedSlot, materials, availableTools, player);
+            schematicDetail.update(world, pos, tileEntity, currentSchematic, itemStack, selectedSlot, materials, availableTools, player);
             schematicDetail.updateMagicCapacity(currentSchematic, selectedSlot, itemStack, previewStack);
             schematicDetail.updateButton(currentSchematic, player, itemStack, previewStack, materials, selectedSlot, availableTools);
 

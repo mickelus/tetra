@@ -1,7 +1,12 @@
 package se.mickelus.tetra.trades;
 
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,6 +20,8 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class TradeHandler {
+    public static final TagKey<Structure> ruinsTag = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation("tetra:forged_ruins"));
+
     private static void add(VillagerTradesEvent event, int level, VillagerTrades.ItemListing... listings) {
         event.getTrades().get(level).addAll(Arrays.asList(listings));
     }
@@ -77,6 +84,16 @@ public class TradeHandler {
 
         if (VillagerProfession.BUTCHER.equals(profession)) {
             add(event, 4, new ItemsForEmeraldsTrade(ScrollItem.boneExpertise, 16, 1, 1, 20));
+        }
+
+        if (VillagerProfession.CARTOGRAPHER.equals(profession)) {
+            add(event, 2, new TreasureMapForEmeralds(16, ruinsTag, "tetra.filled_map.forged_ruins", MapDecoration.Type.RED_X, 1, 5));
+
+//        1: 2
+//        2: 4
+//        3: 2
+//        4: 17
+//        5: 1
         }
     }
 }

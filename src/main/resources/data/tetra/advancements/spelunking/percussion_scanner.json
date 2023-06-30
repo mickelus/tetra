@@ -1,0 +1,32 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:holo",
+            "nbt": "{\"id\": \"spelunking/percussion_scanner\", \"holo/frame\": \"holo/frame\", \"holo/frame_material\": \"frame/ancient\", \"holo/scanner\": \"holo/scanner\", \"holo/scanner_material\": \"scanner/default\", \"holo/scanner:scanner/percussion_scanner\": 0}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.percussion_scanner.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.percussion_scanner.description"
+        }
+    },
+    "parent": "tetra:spelunking/ancient_ruins",
+    "criteria": {
+        "craft": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "scanner/percussion_scanner"
+            }
+        },
+        "use": {
+            "trigger": "tetra:block_use",
+            "conditions": {
+                "data": {
+                    "percussion_scan": "true"
+                }
+            }
+        }
+    },
+    "requirements": [["craft"], ["use"]]
+}

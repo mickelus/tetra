@@ -1,10 +1,9 @@
-package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
+package se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
@@ -17,15 +16,14 @@ import se.mickelus.tetra.gui.GuiTextures;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class OverlayGuiPotionSlot extends GuiElement {
+public class PotionItemGui extends GuiElement {
     private final ItemStack itemStack;
     private final int slot;
     private final Minecraft mc;
     private final KeyframeAnimation showAnimation;
     GuiTexture backdrop;
-    private Font fontRenderer;
 
-    public OverlayGuiPotionSlot(int x, int y, ItemStack itemStack, int slot, boolean animateUp) {
+    public PotionItemGui(int x, int y, ItemStack itemStack, int slot, boolean animateUp) {
         super(x, y, 23, 23);
 
         setAttachmentPoint(GuiAttachment.middleLeft);
@@ -35,14 +33,6 @@ public class OverlayGuiPotionSlot extends GuiElement {
         this.slot = slot;
 
         mc = Minecraft.getInstance();
-
-        if (itemStack != null) {
-            fontRenderer = null; // itemStack.getItem().getFontRenderer(itemStack);
-        }
-
-        if (fontRenderer == null) {
-            fontRenderer = mc.font;
-        }
 
         backdrop = new GuiTexture(0, 0, 23, 23, 32, 28, GuiTextures.toolbelt);
         addChild(backdrop);
@@ -83,7 +73,7 @@ public class OverlayGuiPotionSlot extends GuiElement {
         // Lighting.turnBackOn();
 
         mc.getItemRenderer().renderAndDecorateItem(itemStack, x, y);
-        mc.getItemRenderer().renderGuiItemDecorations(fontRenderer, itemStack, x, y, "");
+        mc.getItemRenderer().renderGuiItemDecorations(mc.font, itemStack, x, y, "");
         GlStateManager._disableDepthTest();
 
         renderSystemStack.popPose();

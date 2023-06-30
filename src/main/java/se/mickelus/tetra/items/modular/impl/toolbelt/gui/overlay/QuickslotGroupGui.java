@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.toolbelt.gui;
+package se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -15,14 +15,14 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @ParametersAreNonnullByDefault
-public class OverlayGuiQuickslotGroup extends GuiElement {
+public class QuickslotGroupGui extends GuiElement {
 
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
 
-    private OverlayGuiQuickslot[] slots = new OverlayGuiQuickslot[0];
+    private QuickslotItemGui[] slots = new QuickslotItemGui[0];
 
-    public OverlayGuiQuickslotGroup(int x, int y) {
+    public QuickslotGroupGui(int x, int y) {
         super(x, y, 200, 0);
         isVisible = false;
         opacity = 0;
@@ -47,19 +47,23 @@ public class OverlayGuiQuickslotGroup extends GuiElement {
     public void setInventory(QuickslotInventory inventory) {
         clearChildren();
         int numSlots = inventory.getContainerSize();
-        slots = new OverlayGuiQuickslot[numSlots];
+        slots = new QuickslotItemGui[numSlots];
 
-        addChild(new GuiTexture(0, numSlots * -OverlayGuiQuickslot.height / 2 - 9, 22, 7, 0, 28, GuiTextures.toolbelt));
-        addChild(new GuiTexture(0, numSlots * OverlayGuiQuickslot.height / 2 + 2, 22, 7, 0, 35, GuiTextures.toolbelt));
-        addChild(new GuiRect(0, numSlots * -OverlayGuiQuickslot.height / 2 - 2, 22, numSlots * OverlayGuiQuickslot.height + 4, 0xcc000000));
+        addChild(new GuiTexture(0, numSlots * -QuickslotItemGui.height / 2 - 9, 22, 7, 0, 28, GuiTextures.toolbelt));
+        addChild(new GuiTexture(0, numSlots * QuickslotItemGui.height / 2 + 2, 22, 7, 0, 35, GuiTextures.toolbelt));
+        addChild(new GuiRect(0, numSlots * -QuickslotItemGui.height / 2 - 2, 22, numSlots * QuickslotItemGui.height + 4, 0xcc000000));
 
         for (int i = 0; i < numSlots; i++) {
             ItemStack itemStack = inventory.getItem(i);
             if (!itemStack.isEmpty()) {
-                slots[i] = new OverlayGuiQuickslot(-35, numSlots * -OverlayGuiQuickslot.height / 2 + i * OverlayGuiQuickslot.height, itemStack, i);
+                slots[i] = new QuickslotItemGui(-35, numSlots * -QuickslotItemGui.height / 2 + i * QuickslotItemGui.height, itemStack, i);
                 addChild(slots[i]);
             }
         }
+    }
+
+    public void clear() {
+        clearChildren();
     }
 
     @Override
@@ -86,7 +90,7 @@ public class OverlayGuiQuickslotGroup extends GuiElement {
         return Arrays.stream(slots)
                 .filter(Objects::nonNull)
                 .filter(GuiElement::hasFocus)
-                .map(OverlayGuiQuickslot::getSlot)
+                .map(QuickslotItemGui::getSlot)
                 .findFirst()
                 .orElse(-1);
     }
@@ -95,7 +99,7 @@ public class OverlayGuiQuickslotGroup extends GuiElement {
         return Arrays.stream(slots)
                 .filter(Objects::nonNull)
                 .filter(GuiElement::hasFocus)
-                .map(OverlayGuiQuickslot::getHand)
+                .map(QuickslotItemGui::getHand)
                 .findFirst()
                 .orElse(null);
     }

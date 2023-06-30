@@ -1,0 +1,25 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:holo",
+            "nbt": "{\"id\": \"upgrades/place_holosphere\", \"holo/frame\": \"holo/frame\", \"holo/frame_material\": \"frame/ancient\", \"holo/scanner\": \"holo/scanner\", \"holo/scanner_material\": \"scanner/default\"}"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.place_holosphere.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.place_holosphere.description"
+        }
+    },
+    "parent": "tetra:upgrades/root",
+    "criteria": {
+        "use": {
+            "trigger": "tetra:block_use",
+            "conditions": {
+                "data": {
+                    "holosphere_open": "true"
+                }
+            }
+        }
+    }
+}

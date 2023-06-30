@@ -98,6 +98,7 @@ public class WorkbenchStatsGui extends GuiElement {
             GuiStats.sweeperRange,
             GuiStats.sweeperHorizontalSpread,
             GuiStats.sweeperVerticalSpread,
+            GuiStats.percussionScanner,
             GuiStats.intuit,
             GuiStats.workable,
             GuiStats.stability,
