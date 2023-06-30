@@ -8,8 +8,20 @@
     },
     "displayType": "improvement",
     "requirement": {
-        "type": "tetra:improvement",
-        "improvement": "scanner/sweeper"
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:improvement",
+                "improvement": "scanner/sweeper"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "scanner/sweeper_adjustable"
+                }
+            }
+        ]
     },
     "outcomes": [
         {

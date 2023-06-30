@@ -8,6 +8,13 @@
         "textureY": 48
     },
     "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:not",
+        "requirement": {
+            "type": "tetra:improvement",
+            "improvement": "scanner/sweeper"
+        }
+    },
     "outcomes": [
         {
             "material": {
