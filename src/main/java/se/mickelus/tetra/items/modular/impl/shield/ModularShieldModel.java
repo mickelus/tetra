@@ -71,7 +71,7 @@ public class ModularShieldModel extends Model {
         PartDefinition parts = mesh.getRoot();
 
         ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
-        resourceManager.listResources("models/modular/shield/", rl -> rl.getPath().endsWith(".json")).entrySet().stream()
+        resourceManager.listResources("models/modular/shield", rl -> rl.getPath().endsWith(".json")).entrySet().stream()
                 .map(entry -> getModel(entry.getKey(), entry.getValue()))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
