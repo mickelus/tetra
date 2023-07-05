@@ -75,7 +75,8 @@ public class HolosphereBlock extends TetraWaterloggedBlock implements EntityBloc
 
                 level.gameEvent(GameEvent.BLOCK_PLACE, pos, GameEvent.Context.of(player, placedBlockState));
                 SoundType soundtype = placedBlockState.getSoundType(level, pos, context.getPlayer());
-                level.playSound(player, pos, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+                level.playSound(player, pos, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F,
+                        soundtype.getPitch() * 0.8F);
                 if (player == null || !player.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
@@ -120,16 +121,19 @@ public class HolosphereBlock extends TetraWaterloggedBlock implements EntityBloc
                 if (!world.isClientSide() && canSwing) {
                     float angle = (float) RotationHelper.getHorizontalAngle(Vec3.atBottomCenterOf(pos), player.position());
                     entity.use(level, item.getToolEfficiency(itemStack, TetraToolActions.hammer), angle);
-                }
-
-                player.resetAttackStrengthTicker();
                 world.playSound(player, pos, SoundEvents.NETHERITE_BLOCK_HIT, SoundSource.PLAYERS, 0.3f, 1f + 0.5f * (float) Math.random());
 
-                if (!world.isClientSide()) {
                     Map<String, String> data = new HashMap<>();
                     data.put("percussion_scan", "true");
                     BlockUseCriterion.trigger((ServerPlayer) player, blockState, itemStack, data);
                 }
+
+                if (canSwing) {
+                    item.tickProgression(player, itemStack, 2);
+                    item.applyDamage(2, itemStack, player);
+                }
+
+                player.resetAttackStrengthTicker();
 
                 return InteractionResult.sidedSuccess(canSwing);
             }
