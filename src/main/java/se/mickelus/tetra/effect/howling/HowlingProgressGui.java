@@ -28,6 +28,7 @@ public class HowlingProgressGui extends GuiRoot {
         container = new GuiElement(-1, 40, 15, 15)
                 .setAttachment(GuiAttachment.middleCenter)
                 .setOpacity(0);
+        container.setVisible(false);
         addChild(container);
 
         // todo: swap back to InvertColorGui once alpha support is back
