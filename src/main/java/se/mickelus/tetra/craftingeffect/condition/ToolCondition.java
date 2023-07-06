@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.module.data.ToolData;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class ToolCondition implements CraftingEffectCondition {
 
     @Override
     public boolean test(ResourceLocation[] unlocks, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
-            ItemStack[] materials, Map<ToolAction, Integer> tools, Level world, BlockPos pos, BlockState blockState) {
+            ItemStack[] materials, Map<ToolAction, Integer> tools, UpgradeSchematic schematic, Level world, BlockPos pos, BlockState blockState) {
         for (Map.Entry<ToolAction, Float> req : this.tools.levelMap.entrySet()) {
             if (!tools.containsKey(req.getKey()) || tools.get(req.getKey()) < req.getValue()) {
                 return false;

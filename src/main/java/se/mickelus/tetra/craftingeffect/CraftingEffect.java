@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.craftingeffect.outcome.CraftingEffectOutcome;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
@@ -18,21 +19,22 @@ import java.util.stream.Stream;
 @ParametersAreNonnullByDefault
 public class CraftingEffect {
     public boolean replace = false;
-    CraftingEffectCondition[] requirements = new CraftingEffectCondition[0];
+    CraftingEffectCondition requirement = CraftingEffectCondition.any;
     CraftingEffectOutcome[] outcomes = new CraftingEffectOutcome[0];
     CraftingProperties properties = new CraftingProperties();
 
     public static void copyFields(CraftingEffect from, CraftingEffect to) {
-        to.requirements = Stream.concat(Arrays.stream(to.requirements), Arrays.stream(from.requirements)).toArray(CraftingEffectCondition[]::new);
+        if (!from.requirement.equals(CraftingEffectCondition.any)) {
+            to.requirement = from.requirement;
+        }
         to.outcomes = Stream.concat(Arrays.stream(to.outcomes), Arrays.stream(from.outcomes)).toArray(CraftingEffectOutcome[]::new);
 
         to.properties = CraftingProperties.merge(from.properties, to.properties);
     }
 
     public boolean isApplicable(ResourceLocation[] unlocks, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
-            ItemStack[] materials, Map<ToolAction, Integer> tools, Level world, BlockPos pos, BlockState blockState) {
-        return Arrays.stream(requirements)
-                .allMatch(condition -> condition.test(unlocks, upgradedStack, slot, isReplacing, player, materials, tools, world, pos, blockState));
+            ItemStack[] materials, Map<ToolAction, Integer> tools, UpgradeSchematic schematic, Level world, BlockPos pos, BlockState blockState) {
+        return requirement.test(unlocks, upgradedStack, slot, isReplacing, player, materials, tools, schematic, world, pos, blockState);
     }
 
     public boolean applyOutcomes(ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,

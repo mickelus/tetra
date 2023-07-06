@@ -363,7 +363,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
         if (newPreviewMaterialSlot != previewMaterialSlot && targetStack.getItem() instanceof IModularItem) {
             ItemStack[] materials = tileEntity.getMaterials();
             if (newPreviewMaterialSlot != -1 && Arrays.stream(materials).allMatch(ItemStack::isEmpty)) {
-                ItemStack previewStack = buildPreviewStack(currentSchematic, targetStack, selectedSlot, new ItemStack[]{hoveredSlot.getItem()});
+                ItemStack previewStack = buildPreviewStack(currentSchematic, targetStack, selectedSlot, new ItemStack[] { hoveredSlot.getItem() });
                 updateItemDisplay(targetStack, previewStack);
             } else {
                 ItemStack previewStack = ItemStack.EMPTY;
@@ -392,7 +392,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
                         tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), false);
             }
 
-            result = WorkbenchTile.applyCraftingBonusEffects(result, slot, willReplace, viewingPlayer, materials, materials, tools,
+            result = WorkbenchTile.applyCraftingBonusEffects(result, slot, willReplace, viewingPlayer, materials, materials, tools, schematic,
                     tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), false);
 
             IModularItem.updateIdentifier(result);

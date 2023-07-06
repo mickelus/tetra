@@ -1,17 +1,20 @@
 {
     "replace": true,
-    "requirements": [
-        {
-            "type": "tetra:craft_type",
-            "craft": "module"
-        },
-        {
-            "type": "tetra:material",
-            "material": {
-                "items": [ "minecraft:crying_obsidian" ]
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:craft_type",
+                "craft": "module"
+            },
+            {
+                "type": "tetra:material",
+                "material": {
+                    "items": [ "minecraft:crying_obsidian" ]
+                }
             }
-        }
-    ],
+        ]
+    },
     "outcomes": [
         {
             "type": "tetra:remove_improvements",

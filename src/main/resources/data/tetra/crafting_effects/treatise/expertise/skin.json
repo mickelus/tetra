@@ -1,22 +1,25 @@
 {
     "replace": true,
-    "requirements": [
-        {
-            "type": "tetra:locked",
-            "key": "tetra:skin_expertise"
-        },
-        {
-            "type": "tetra:craft_type",
-            "craft": "module"
-        },
-        {
-            "type": "tetra:material",
-            "material": {
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:skin_expertise"
+            },
+            {
+                "type": "tetra:craft_type",
+                "craft": "module"
+            },
+            {
                 "type": "tetra:material",
-                "category": "skin"
+                "material": {
+                    "type": "tetra:material",
+                    "category": "skin"
+                }
             }
-        }
-    ],
+        ]
+    },
     "outcomes": [
         {
             "type": "tetra:apply_improvements",
