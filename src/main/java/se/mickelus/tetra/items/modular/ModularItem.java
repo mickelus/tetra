@@ -18,6 +18,7 @@ import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.compat.botania.ManaRepair;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.TetraItem;
@@ -179,7 +180,9 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     @Override
     public void inventoryTick(ItemStack itemStack, Level world, Entity entity, int itemSlot, boolean isSelected) {
-        ManaRepair.itemInventoryTick(itemStack, world, entity);
+        if (BotaniaCompat.isLoaded) {
+            ManaRepair.itemInventoryTick(itemStack, world, entity);
+        }
     }
 
     @Override
@@ -197,6 +200,9 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
+        if (BotaniaCompat.isLoaded) {
+            amount = ManaRepair.reduceDurabilityDamage(entity.getLevel(), entity, stack, amount);
+        }
         return Math.min(stack.getMaxDamage() - stack.getDamageValue() - 1, amount);
     }
 

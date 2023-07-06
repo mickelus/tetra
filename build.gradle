@@ -22,16 +22,16 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-//if (System.getenv('VERSION') != null) {
-//    tetra_version = System.getenv('VERSION')
-//} else {
-//    def stdout = new ByteArrayOutputStream()
-//    exec {
-//        commandLine 'git', 'describe', '--tags', '--abbrev=0'
-//        standardOutput = stdout
-//    }
-//    tetra_version = stdout.toString().replace("\n", "").replace("\r", "").trim()
-//}
+if (System.getenv('VERSION') != null) {
+    tetra_version = System.getenv('VERSION')
+} else {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags', '--abbrev=0'
+        standardOutput = stdout
+    }
+    tetra_version = stdout.toString().replace("\n", "").replace("\r", "").trim()
+}
 
 version = "${mc_version}-${tetra_version}"
 group = 'se.mickelus.tetra'
@@ -128,9 +128,9 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
 
 //    compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
-
 //    runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 //    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+    implementation fg.deobf("vazkii.botania:Botania:${botania_version}:api")
 
 //    compile fg.deobf("curse.maven:apotheosis:2906078")
 //    compile fg.deobf("curse.maven:apotheosis-placebo:2870411")

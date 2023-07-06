@@ -34,6 +34,7 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.client.keymap.TetraKeyMappings;
 import se.mickelus.tetra.client.model.ModularModelLoader;
+import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
 import se.mickelus.tetra.interactions.SecondaryInteractionOverlay;
@@ -64,6 +65,7 @@ public class ClientSetup {
             // enqueueWork swallows exceptions without logging
             try {
                 MenuScreens.register(WorkbenchContainer.containerType.get(), WorkbenchScreen::new);
+                BotaniaCompat.clientInit();
             } catch (Exception e) {
                 e.printStackTrace();
             }

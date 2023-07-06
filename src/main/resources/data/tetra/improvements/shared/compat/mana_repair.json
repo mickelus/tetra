@@ -3,35 +3,35 @@
         "key": "mana_repair",
         "level": 1,
         "effects": {
-            "manaRepair": [ 1, 0.0025 ]
+            "manaRepair": [ 0, 0.0025 ]
         }
     },
     {
         "key": "mana_repair",
         "level": 2,
         "effects": {
-            "manaRepair": [ 1, 0.005 ]
+            "manaRepair": [ 0, 0.005 ]
         }
     },
     {
         "key": "mana_repair",
         "level": 3,
         "effects": {
-            "manaRepair": [ 1, 0.0075 ]
+            "manaRepair": [ 0, 0.0075 ]
         }
     },
     {
         "key": "mana_repair",
         "level": 4,
         "effects": {
-            "manaRepair": [ 1, 0.01 ]
+            "manaRepair": [ 0, 0.01 ]
         }
     },
     {
         "key": "mana_repair",
         "level": 5,
         "effects": {
-            "manaRepair": [ 1, 0.0125 ]
+            "manaRepair": [ 0, 0.0125 ]
         }
     }
 ]
