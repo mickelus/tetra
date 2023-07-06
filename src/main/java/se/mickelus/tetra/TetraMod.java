@@ -91,6 +91,7 @@ public class TetraMod {
         CraftingEffectRegistry.registerConditionType("tetra:or", OrCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:and", AndCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:not", NotCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:schematic", SchematicCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:craft_type", CraftTypeCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:locked", LockedCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:material", MaterialCondition.class);
