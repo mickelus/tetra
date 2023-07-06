@@ -21,8 +21,9 @@ public class TooltipGetterAttackSpeed implements ITooltipGetter {
     @Override
     public String getTooltipBase(Player player, ItemStack itemStack) {
         double speed = statGetter.getValue(player, itemStack);
-        speed = ItemModularHandheld.getAttackSpeedHarvestModifier(speed);
-        return I18n.get(localizationKey, String.format("%.2f", 1 / speed), String.format("%.2f", speed));
+        return I18n.get(localizationKey,
+                String.format("%.2f", 1 / speed),
+                String.format("%.2f", ItemModularHandheld.getAttackSpeedHarvestModifier(speed)));
     }
 
     @Override
