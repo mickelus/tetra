@@ -21,6 +21,7 @@ import se.mickelus.tetra.compat.apotheosis.AffixReplacementHook;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.craftingeffect.condition.*;
+import se.mickelus.tetra.craftingeffect.outcome.ApplyEnchantmentOutcome;
 import se.mickelus.tetra.craftingeffect.outcome.ApplyImprovementOutcome;
 import se.mickelus.tetra.craftingeffect.outcome.MaterialReductionOutcome;
 import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
@@ -98,6 +99,7 @@ public class TetraMod {
         CraftingEffectRegistry.registerConditionType("tetra:tool", ToolCondition.class);
 
         CraftingEffectRegistry.registerEffectType("tetra:apply_improvements", ApplyImprovementOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:apply_enchantments", ApplyEnchantmentOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:remove_improvements", RemoveImprovementOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:material_reduction", MaterialReductionOutcome.class);
 
