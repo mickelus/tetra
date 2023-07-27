@@ -24,7 +24,7 @@ public class HowlingEffect {
     }
 
     public static void trigger(ItemStack itemStack, LivingEntity player, int effectLevel) {
-        int duration = (int) Math.round(EffectHelper.getEffectEfficiency(itemStack, ItemEffect.howling) * 20);
+        int duration = Math.round(EffectHelper.getEffectEfficiency(itemStack, ItemEffect.howling) * 20);
         int currentAmplifier = Optional.ofNullable(player.getEffect(HowlingPotionEffect.instance))
                 .map(MobEffectInstance::getAmplifier)
                 .orElse(-1);

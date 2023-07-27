@@ -18,7 +18,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "tetra:modular_sword",
+                        "items": [ "tetra:modular_sword" ],
                         "nbt": "{\"sword/blade\": \"sword/stonecutter\"}"
                     }
                 ]

@@ -15,13 +15,7 @@
         "earthpiercer": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [
-                    {
-                        "items": [
-                            "tetra:chthonic_extractor"
-                        ]
-                    }
-                ]
+                "items": [ { "items": [ "tetra:chthonic_extractor" ] } ]
             }
         }
     }

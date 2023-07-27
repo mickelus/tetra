@@ -73,7 +73,7 @@ public class ModuleDevCommand {
         world.addFreshEntity(itemFrame);
     }
 
-    private static CompletableFuture<Suggestions> getModuleSuggestions(final CommandContext context, final SuggestionsBuilder builder) {
+    private static CompletableFuture<Suggestions> getModuleSuggestions(final CommandContext<CommandSourceStack> context, final SuggestionsBuilder builder) {
         return SharedSuggestionProvider.suggest(
                 ItemUpgradeRegistry.instance.getAllModules().stream()
                         .map(ItemModule::getKey)

@@ -15,11 +15,7 @@
         "get_geode": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [
-                    {
-                        "items": [ "tetra:geode" ]
-                    }
-                ]
+                "items": [ { "items": [ "tetra:geode" ] } ]
             }
         }
     }
