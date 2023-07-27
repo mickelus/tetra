@@ -73,7 +73,7 @@ public class StrikingStatIndicatorGui extends GuiStatIndicator {
 
     public String getLabel() {
         return Optional.ofNullable(current)
-                .map(c -> c.label)
+                .map(GuiStatIndicator::getLabel)
                 .orElse("");
     }
 
