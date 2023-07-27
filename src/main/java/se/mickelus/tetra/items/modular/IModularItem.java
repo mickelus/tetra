@@ -371,6 +371,11 @@ public interface IModularItem {
 
     default void setHoningProgress(ItemStack itemStack, int progress) {
         itemStack.getOrCreateTag().putInt(honeProgressKey, progress);
+        if (progress <= 0) {
+            itemStack.getOrCreateTag().putBoolean(honeAvailableKey, true);
+        } else {
+            itemStack.getOrCreateTag().remove(honeAvailableKey);
+        }
     }
 
     default int getHoningLimit(ItemStack itemStack) {
