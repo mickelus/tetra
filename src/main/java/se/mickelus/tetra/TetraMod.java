@@ -163,7 +163,8 @@ public class TetraMod {
     }
 
     @SubscribeEvent
-    public void serverStarting(ServerStartingEvent event) {
-        ModuleDevCommand.register(event.getServer().getCommands().getDispatcher());
+    public void registerCommands(RegisterCommandsEvent event) {
+        ModuleDevCommand.register(event.getDispatcher());
+        TetraCommand.register(event.getDispatcher());
     }
 }
