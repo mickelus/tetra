@@ -27,12 +27,13 @@ public class ModuleData {
     public Priority namePriority = Priority.BASE;
     public Priority prefixPriority = Priority.BASE;
     public ResourceLocation tweakKey;
+    public boolean perk = false;
     public ResourceLocation[] improvements = new ResourceLocation[0];
+    public VariantData[] variants = new VariantData[0];
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Non-configurable stuff below
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public VariantData[] variants = new VariantData[0];
 
     public static void copyFields(ModuleData from, ModuleData to) {
         to.slots = Stream.concat(Arrays.stream(to.slots), Arrays.stream(from.slots))
@@ -61,6 +62,10 @@ public class ModuleData {
 
         if (from.prefixPriority != defaultValues.prefixPriority) {
             to.prefixPriority = from.prefixPriority;
+        }
+
+        if (from.perk != defaultValues.perk) {
+            to.perk = from.perk;
         }
 
         to.improvements = Stream.concat(Arrays.stream(to.improvements), Arrays.stream(from.improvements))

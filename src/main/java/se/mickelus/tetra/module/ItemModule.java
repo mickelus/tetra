@@ -35,6 +35,7 @@ public abstract class ItemModule implements IToolProvider {
     protected Priority renderLayer = Priority.BASE;
     protected Priority namePriority = Priority.BASE;
     protected Priority prefixPriority = Priority.BASE;
+    protected boolean perk = false;
 
     public ItemModule(String slotKey, String moduleKey) {
         this.slotTagKey = slotKey;

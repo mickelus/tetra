@@ -19,6 +19,8 @@ public class BasicModule extends ItemModule {
         namePriority = data.namePriority;
         prefixPriority = data.prefixPriority;
 
+        perk = data.perk;
+
         if (data.tweakKey != null) {
             TweakData[] tweaks = DataManager.instance.tweakData.getData(data.tweakKey);
             if (tweaks != null) {
