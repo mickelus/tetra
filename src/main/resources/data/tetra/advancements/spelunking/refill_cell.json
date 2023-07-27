@@ -15,12 +15,7 @@
         "refill_cell": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
-                "items": [
-                    {
-                        "item": ["tetra:thermal_cell"],
-                        "durability": 128
-                    }
-                ]
+                "items": [ { "items": [ "tetra:thermal_cell" ], "durability": 128 } ]
             }
         }
     }
