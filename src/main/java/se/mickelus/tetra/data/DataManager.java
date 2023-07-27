@@ -7,6 +7,7 @@ import com.mojang.math.Quaternion;
 import com.mojang.math.Transformation;
 import com.mojang.math.Vector3f;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -85,6 +86,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(Vector3f.class, new VectorDeserializer())
             .registerTypeAdapter(Quaternion.class, new QuaternionDeserializer())
             .registerTypeAdapter(Transformation.class, new TransformationDeserializer())
+            .registerTypeAdapter(ItemTransforms.TransformType.class, new TransformTypeDeserializer())
             .create();
     public static DataManager instance;
 
@@ -121,8 +123,8 @@ public class DataManager implements DataDistributor {
         this.actionData = new DataStore<>(gson, TetraMod.MOD_ID, "actions", ConfigActionImpl[].class, this);
         this.destabilizationData = new DataStore<>(gson, TetraMod.MOD_ID, "destabilization", DestabilizationEffect[].class, this);
 
-        dataStores = new DataStore[]{tierData, tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
-                replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData};
+        dataStores = new DataStore[] { tierData, tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
+                replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData };
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

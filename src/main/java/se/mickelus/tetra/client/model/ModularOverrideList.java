@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.model.QuadTransformers;
 import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -27,8 +28,10 @@ import se.mickelus.tetra.module.data.ModuleModel;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -52,7 +55,7 @@ public class ModularOverrideList extends ItemOverrides {
     private final ResourceLocation modelLocation;
 
     public ModularOverrideList(UnresolvedItemModel model, IGeometryBakingContext context, ModelBakery bakery,
-            Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ResourceLocation modelLocation) {
+                               Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ResourceLocation modelLocation) {
         this.model = model;
         this.context = context;
         this.bakery = bakery;
@@ -87,11 +90,30 @@ public class ModularOverrideList extends ItemOverrides {
 
     protected BakedModel getOverrideModel(ItemStack itemStack, @Nullable Level world, @Nullable LivingEntity entity) {
         IModularItem item = (IModularItem) itemStack.getItem();
-
-        List<ModuleModel> models = item.getModels(itemStack, entity);
         String transformVariant = item.getTransformVariant(itemStack, entity);
         ItemTransforms cameraTransforms = model.getCameraTransforms(transformVariant);
-        BakingContextWrapper wrappedContext = new BakingContextWrapper(context, cameraTransforms);
+        BakingContextWrapper contextWrapper = new BakingContextWrapper(context, cameraTransforms);
+
+        List<ModuleModel> models = item.getModels(itemStack, entity);
+
+        Set<ItemTransforms.TransformType> perspectives = models.stream()
+                .filter(model -> model.perspectives != null)
+                .map(model -> model.perspectives)
+                .flatMap(Arrays::stream)
+                .collect(Collectors.toSet());
+        ItemLayerModel model = createLayerModel(filterModels(models, null));
+
+        if (!perspectives.isEmpty()) {
+            var perspectiveModels = perspectives.stream()
+                    .collect(Collectors.toUnmodifiableMap(p -> p, p -> createLayerModel(filterModels(models, p))));
+            var transformsModel = new TetraSeparateTransformsModel(model, perspectiveModels);
+            return transformsModel.bake(contextWrapper, bakery, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
+        }
+
+        return model.bake(contextWrapper, bakery, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
+    }
+
+    protected ItemLayerModel createLayerModel(List<ModuleModel> models) {
         ImmutableList<Material> textures = models.stream()
                 .map(moduleModel -> new Material(TextureAtlas.LOCATION_BLOCKS, moduleModel.location))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
@@ -114,10 +136,13 @@ public class ModularOverrideList extends ItemOverrides {
             }
         }
 
-        var itemLayerModel = new ItemLayerModel(textures, builder.get(), renderTypes);
-        return itemLayerModel.bake(wrappedContext, bakery, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
+        return new ItemLayerModel(textures, builder.get(), renderTypes);
+    }
 
-//        return realBake(models, transformVariant, context, bakery, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
+    protected List<ModuleModel> filterModels(List<ModuleModel> models, @Nullable ItemTransforms.TransformType perspective) {
+        return models.stream()
+                .filter(model -> model.perspectives == null || ArrayUtils.contains(model.perspectives, perspective) != model.invertPerspectives)
+                .toList();
     }
 
     protected CacheKey getCacheKey(ItemStack itemStack, LivingEntity entity, BakedModel original) {

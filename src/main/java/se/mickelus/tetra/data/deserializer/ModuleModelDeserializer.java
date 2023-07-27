@@ -2,6 +2,7 @@ package se.mickelus.tetra.data.deserializer;
 
 import com.google.gson.*;
 import com.mojang.math.Transformation;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.util.Mth;
 import se.mickelus.mutil.data.deserializer.ResourceLocationDeserializer;
 import se.mickelus.tetra.items.modular.ItemColors;
@@ -50,6 +51,14 @@ public class ModuleModelDeserializer implements JsonDeserializer<ModuleModel> {
 
         if (jsonObject.has("renderLayer")) {
             data.renderLayer = context.deserialize(jsonObject.get("renderLayer"), Priority.class);
+        }
+
+        if (jsonObject.has("invertPerspectives")) {
+            data.invertPerspectives = context.deserialize(jsonObject.get("invertPerspectives"), Boolean.class);
+        }
+
+        if (jsonObject.has("perspectives")) {
+            data.perspectives = context.deserialize(jsonObject.get("perspectives"), ItemTransforms.TransformType[].class);
         }
 
         return data;
