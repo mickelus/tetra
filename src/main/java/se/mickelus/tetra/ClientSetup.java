@@ -65,6 +65,7 @@ public class ClientSetup {
             // enqueueWork swallows exceptions without logging
             try {
                 MenuScreens.register(WorkbenchContainer.containerType.get(), WorkbenchScreen::new);
+                ModularModelLoader.init();
                 BotaniaCompat.clientInit();
             } catch (Exception e) {
                 e.printStackTrace();
