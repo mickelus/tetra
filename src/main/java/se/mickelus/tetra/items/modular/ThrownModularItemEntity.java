@@ -67,6 +67,8 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     private IntOpenHashSet hitEntities = new IntOpenHashSet(5);
     private int hitBlocks;
 
+    private int despawnTimer = 0;
+
     public ThrownModularItemEntity(EntityType<? extends ThrownModularItemEntity> type, Level worldIn) {
         super(type, worldIn);
     }
@@ -468,9 +470,12 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     }
 
     public void tickDespawn() {
-        int level = this.entityData.get(LOYALTY_LEVEL);
-        if (this.pickup != Pickup.ALLOWED || level <= 0) {
-            super.tickDespawn();
+        int level = entityData.get(LOYALTY_LEVEL);
+        if (pickup != Pickup.ALLOWED || level <= 0) {
+            despawnTimer++;
+            if (despawnTimer >= 500000) { // 4-5 hours of loaded time
+                discard();
+            }
         }
     }
 
