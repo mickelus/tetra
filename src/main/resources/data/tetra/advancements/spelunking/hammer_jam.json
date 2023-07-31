@@ -15,7 +15,10 @@
         "fuel": {
             "trigger": "tetra:block_use",
             "conditions": {
-                "after": "tetra:hammer_head"
+                "after": "tetra:hammer_head",
+                "data": {
+                    "jammed": "true"
+                }
             }
         }
     }

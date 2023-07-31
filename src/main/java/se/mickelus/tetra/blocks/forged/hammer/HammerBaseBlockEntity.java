@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -270,9 +271,12 @@ public class HammerBaseBlockEntity extends BlockEntity {
         }
 
         if (level.random.nextFloat() < getJamChance()) {
-            TileEntityOptional.from(level, getBlockPos().below(), HammerHeadBlockEntity.class).ifPresent(head -> head.setJammed(true));
-            level.getEntitiesOfClass(ServerPlayer.class, new AABB(getBlockPos()).inflate(10, 5, 10))
-                    .forEach(player -> BlockUseCriterion.trigger(player, getBlockState(), ItemStack.EMPTY));
+            TileEntityOptional.from(level, getBlockPos().below(), HammerHeadBlockEntity.class).ifPresent(head -> {
+                head.setJammed(true);
+
+                level.getEntitiesOfClass(ServerPlayer.class, new AABB(getBlockPos()).inflate(10, 5, 10))
+                        .forEach(player -> BlockUseCriterion.trigger(player, head.getBlockState(), ItemStack.EMPTY, ImmutableMap.<String, String>builder().put("jammed", "true").build()));
+            });
             level.playSound(null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.8f, 0.5f);
         }
     }
