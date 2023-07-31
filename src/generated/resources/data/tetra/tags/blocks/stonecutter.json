@@ -1,0 +1,28 @@
+{
+  "values": [
+    {
+      "id": "tetra:stonecutter_0_0",
+      "required": false
+    },
+    {
+      "id": "tetra:stonecutter_0_1",
+      "required": false
+    },
+    {
+      "id": "tetra:stonecutter_1_0",
+      "required": false
+    },
+    {
+      "id": "tetra:stonecutter_1_1",
+      "required": false
+    },
+    {
+      "id": "tetra:stonecutter_2_0",
+      "required": false
+    },
+    {
+      "id": "tetra:stonecutter_2_1",
+      "required": false
+    }
+  ]
+}

@@ -29,6 +29,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.TetraBlockStateProvider;
 import se.mickelus.tetra.data.provider.TetraLootTableProvider;
+import se.mickelus.tetra.data.provider.TetraTagsProvider;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.LungeEchoPacket;
 import se.mickelus.tetra.effect.TruesweepPacket;
@@ -138,6 +139,7 @@ public class TetraMod {
         DataGenerator dataGenerator = event.getGenerator();
         if (event.includeServer()) {
             dataGenerator.addProvider(true, new TetraBlockStateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
+            dataGenerator.addProvider(true, new TetraTagsProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
             dataGenerator.addProvider(true, new TetraLootTableProvider(dataGenerator));
         }
     }

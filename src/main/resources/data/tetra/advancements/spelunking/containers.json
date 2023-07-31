@@ -16,8 +16,8 @@
             "trigger": "tetra:block_interaction",
             "conditions": {
                 "tool": "pry",
-                "after": {
-                    "block": "minecraft:air"
+                "before": {
+                    "block": "tetra:forged_crate"
                 }
             }
         },
@@ -25,8 +25,8 @@
             "trigger": "tetra:block_interaction",
             "conditions": {
                 "tool": "hammer_dig",
-                "after": {
-                    "block": "minecraft:air"
+                "before": {
+                    "block": "tetra:forged_crate"
                 }
             }
         }

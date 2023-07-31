@@ -1,0 +1,29 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:modular_sword",
+            "nbt": "{\"id\": \"spelunking/schematic_shatter\", \"sword/blade\": \"sword/unbound_stonecutter\", \"sword/unbound_stonecutter_material\": \"unbound_stonecutter/spruce\",\"sword/hilt\": \"sword/basic_hilt\", \"sword/basic_hilt_material\": \"basic_hilt/copper\",\"sword/pommel\": \"sword/decorative_pommel\",\"sword/decorative_pommel_material\": \"decorative_pommel/netherite\", \"sword/hilt:hilt/wrap/twisting_vine\": 0, \"sword/blade:unbound_stonecutter/shattered\": 0}"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.schematic_shatter.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.schematic_shatter.description"
+        }
+    },
+    "parent": "tetra:spelunking/schematic_empower",
+    "criteria": {
+        "shatter": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "before": {
+                    "type": "tetra:modular_item",
+                    "improvements": {
+                        "unbound_stonecutter/fractured": 3
+                    }
+                },
+                "improvement": "unbound_stonecutter/shattered"
+            }
+        }
+    }
+}

@@ -1,22 +1,27 @@
 package se.mickelus.tetra.blocks.multischematic;
 
+import com.google.common.collect.ImmutableMap;
 import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.ISchematicProviderBlock;
 
 public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock implements ISchematicProviderBlock {
@@ -29,7 +34,7 @@ public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock im
         super(properties, schematic, ruinedRef, pryTable, x, y, height, width);
         this.registerDefaultState(this.stateDefinition.any().setValue(facingProp, Direction.EAST).setValue(complete, false));
 
-        this.schematics = new ResourceLocation[]{new ResourceLocation(TetraMod.MOD_ID, schematic)};
+        this.schematics = new ResourceLocation[] { new ResourceLocation(TetraMod.MOD_ID, schematic) };
     }
 
     @Override
@@ -56,6 +61,8 @@ public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock im
         level.setBlock(worldPos, blockState.setValue(complete, isComplete), Block.UPDATE_ALL);
 
         if (isComplete) {
+            level.getEntitiesOfClass(ServerPlayer.class, new AABB(worldPos).inflate(10, 5, 10))
+                    .forEach(player -> BlockUseCriterion.trigger(player, blockState, ItemStack.EMPTY, ImmutableMap.<String, String>builder().put("complete_schematic", "true").put("schematic", schematic).build()));
             spawnCompleteParticle(blockState, (ServerLevel) level, worldPos, placePos);
         }
     }

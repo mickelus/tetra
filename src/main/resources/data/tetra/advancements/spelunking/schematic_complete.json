@@ -1,0 +1,24 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:earthpiercer_0_1"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.schematic_complete.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.schematic_complete.description"
+        }
+    },
+    "parent": "tetra:spelunking/schematic_pry",
+    "criteria": {
+        "module": {
+            "trigger": "tetra:block_use",
+            "conditions": {
+                "data": {
+                    "complete_schematic": "true"
+                }
+            }
+        }
+    }
+}

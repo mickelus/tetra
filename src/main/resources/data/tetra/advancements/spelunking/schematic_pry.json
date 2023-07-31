@@ -1,0 +1,25 @@
+{
+    "display": {
+        "icon": {
+            "item": "tetra:extractor_1_1"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.schematic_pry.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.schematic_pry.description"
+        }
+    },
+    "parent": "tetra:spelunking/ancient_ruins",
+    "criteria": {
+        "module": {
+            "trigger": "tetra:block_interaction",
+            "conditions": {
+                "tool": "pry",
+                "before": {
+                    "tag": "tetra:multiblock_schematic"
+                }
+            }
+        }
+    }
+}

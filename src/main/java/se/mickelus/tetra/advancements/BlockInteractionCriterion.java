@@ -11,30 +11,33 @@ import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.util.JsonOptional;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
 public class BlockInteractionCriterion extends AbstractCriterionTriggerInstance {
     public static final GenericTrigger<BlockInteractionCriterion> trigger = new GenericTrigger<>("tetra:block_interaction", BlockInteractionCriterion::deserialize);
+    private final PropertyMatcher before;
     private final PropertyMatcher after;
     private final ToolAction toolAction;
     private final int toolLevel;
 
-    public BlockInteractionCriterion(EntityPredicate.Composite playerCondition, PropertyMatcher after, ToolAction toolAction, int toolLevel) {
+    public BlockInteractionCriterion(EntityPredicate.Composite playerCondition, PropertyMatcher before, PropertyMatcher after, ToolAction toolAction, int toolLevel) {
         super(trigger.getId(), playerCondition);
+        this.before = before;
         this.after = after;
         this.toolAction = toolAction;
         this.toolLevel = toolLevel;
     }
 
-    public static void trigger(ServerPlayer player, BlockState state, ToolAction usedToolAction, int usedToolLevel) {
-        trigger.fulfillCriterion(player, criterion -> criterion.test(state, usedToolAction, usedToolLevel));
+    public static void trigger(ServerPlayer player, BlockState beforeState, BlockState afterState, ToolAction usedToolAction, int usedToolLevel) {
+        trigger.fulfillCriterion(player, criterion -> criterion.test(beforeState, afterState, usedToolAction, usedToolLevel));
 
 
     }
 
     private static BlockInteractionCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
         return new BlockInteractionCriterion(entityPredicate,
+                JsonOptional.field(json, "before")
+                        .map(PropertyMatcher::deserialize)
+                        .orElse(null),
                 JsonOptional.field(json, "after")
                         .map(PropertyMatcher::deserialize)
                         .orElse(null),
@@ -47,8 +50,12 @@ public class BlockInteractionCriterion extends AbstractCriterionTriggerInstance 
                         .orElse(-1));
     }
 
-    public boolean test(BlockState state, ToolAction usedToolAction, int usedToolLevel) {
-        if (after != null && !after.test(state)) {
+    public boolean test(BlockState beforeState, BlockState afterState, ToolAction usedToolAction, int usedToolLevel) {
+        if (before != null && !before.test(beforeState)) {
+            return false;
+        }
+
+        if (after != null && !after.test(afterState)) {
             return false;
         }
 

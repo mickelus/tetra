@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "tetra:earthpiercer_0_0",
+      "required": false
+    },
+    {
+      "id": "tetra:earthpiercer_0_1",
+      "required": false
+    },
+    {
+      "id": "tetra:earthpiercer_1_0",
+      "required": false
+    },
+    {
+      "id": "tetra:earthpiercer_1_1",
+      "required": false
+    }
+  ]
+}

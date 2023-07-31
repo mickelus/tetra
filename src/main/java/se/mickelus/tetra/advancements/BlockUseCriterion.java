@@ -12,14 +12,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import se.mickelus.mutil.util.JsonOptional;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@ParametersAreNonnullByDefault
+
 public class BlockUseCriterion extends AbstractCriterionTriggerInstance {
     public static final GenericTrigger<BlockUseCriterion> trigger = new GenericTrigger<>("tetra:block_use", BlockUseCriterion::deserialize);
     private final PropertyMatcher before;

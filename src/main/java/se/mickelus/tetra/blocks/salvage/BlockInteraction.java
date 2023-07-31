@@ -144,7 +144,7 @@ public class BlockInteraction {
             if (player instanceof ServerPlayer) {
                 BlockState newState = world.getBlockState(pos);
 
-                BlockInteractionCriterion.trigger((ServerPlayer) player, newState, possibleInteraction.requiredTool,
+                BlockInteractionCriterion.trigger((ServerPlayer) player, blockState, newState, possibleInteraction.requiredTool,
                         possibleInteraction.requiredLevel);
             }
 

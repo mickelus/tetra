@@ -1,0 +1,40 @@
+{
+  "values": [
+    {
+      "id": "tetra:extractor_0_0",
+      "required": false
+    },
+    {
+      "id": "tetra:extractor_0_1",
+      "required": false
+    },
+    {
+      "id": "tetra:extractor_0_2",
+      "required": false
+    },
+    {
+      "id": "tetra:extractor_1_0",
+      "required": false
+    },
+    {
+      "id": "tetra:extractor_1_1",
+      "required": false
+    },
+    {
+      "id": "tetra:extractor_1_2",
+      "required": false
+    },
+    {
+      "id": "tetra:extractor_2_0",
+      "required": false
+    },
+    {
+      "id": "tetra:extractor_2_1",
+      "required": false
+    },
+    {
+      "id": "tetra:extractor_2_2",
+      "required": false
+    }
+  ]
+}

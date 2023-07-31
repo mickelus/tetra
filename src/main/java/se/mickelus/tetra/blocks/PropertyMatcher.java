@@ -6,6 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,6 +25,7 @@ public class PropertyMatcher implements Predicate<BlockState> {
     public static final PropertyMatcher any = new PropertyMatcher();
     private final Map<Property<?>, Predicate<?>> propertyPredicates = Maps.newHashMap();
     private Block block = null;
+    private TagKey<Block> tag = null;
 
     public static PropertyMatcher deserialize(JsonElement json) {
         PropertyMatcher result = new PropertyMatcher();
@@ -39,6 +42,12 @@ public class PropertyMatcher implements Predicate<BlockState> {
                 }
             }
 
+            if (jsonObject.has("tag")) {
+                String tagString = jsonObject.get("tag").getAsString();
+                if (tagString != null) {
+                    result.tag = BlockTags.create(new ResourceLocation(tagString));
+                }
+            }
 
             if (result.block != null && jsonObject.has("state")) {
                 StateDefinition<Block, BlockState> stateContainer = result.block.getStateDefinition();
@@ -78,6 +87,10 @@ public class PropertyMatcher implements Predicate<BlockState> {
     @Override
     public boolean test(BlockState blockState) {
         if (block != null && block != blockState.getBlock()) {
+            return false;
+        }
+
+        if (tag != null && !blockState.getBlockHolder().is(tag)) {
             return false;
         }
 
