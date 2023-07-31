@@ -83,7 +83,7 @@ public class SweepingEffect {
      * @param itemStack the itemstack used for the attack
      * @param attacker  the attacked entity
      */
-    public static void truesweep(ItemStack itemStack, LivingEntity attacker) {
+    public static void truesweep(ItemStack itemStack, LivingEntity attacker, boolean triggerVfx) {
         int sweepingLevel = getSweepingLevel(itemStack);
         float damage = (float) Math.max(attacker.getAttributeValue(Attributes.ATTACK_DAMAGE) * (sweepingLevel * 0.125f), 1);
         float knockback = 0.5f + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
@@ -113,10 +113,12 @@ public class SweepingEffect {
                     causeTruesweepDamage(damageSource, damage, itemStack, attacker, entity);
                 });
 
-        attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
-                SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);
+        if (triggerVfx) {
+            attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
+                    SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);
 
-        CastOptional.cast(attacker, Player.class).ifPresent(Player::sweepAttack);
+            CastOptional.cast(attacker, Player.class).ifPresent(Player::sweepAttack);
+        }
     }
 
     private static void causeTruesweepDamage(DamageSource damageSource, float baseDamage, ItemStack itemStack, LivingEntity attacker, LivingEntity target) {

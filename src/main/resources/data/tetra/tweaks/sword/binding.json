@@ -7,6 +7,10 @@
             "attributes": {
                 "**generic.attack_damage": 0.02
             },
+            "tools": {
+                "pickaxe_dig": [ 0, 0.93 ],
+                "cut": [ 0, 0.93 ]
+            },
             "durabilityMultiplier": 0.952
         }
     }

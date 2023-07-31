@@ -1,0 +1,9 @@
+[
+    {
+        "key": "unbound_stonecutter/adjustable_focus",
+        "integrity": -1,
+        "effects": {
+            "sweepingFocus": [ 0, 1 ]
+        }
+    }
+]

@@ -1,7 +1,6 @@
 package se.mickelus.tetra.module.data;
 
 import com.mojang.math.Transformation;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.resources.ResourceLocation;
 import se.mickelus.tetra.module.Priority;
 
@@ -20,7 +19,7 @@ public class ModuleModel {
     public Priority renderLayer = Priority.BASE;
 
     public boolean invertPerspectives = false;
-    public ItemTransforms.TransformType[] perspectives;
+    public TransformKey[] perspectives;
 
     public ModuleModel() {
     }

@@ -52,12 +52,12 @@ public class GuiStatBar extends GuiStatBase {
     protected ITooltipGetter tooltipGetter;
 
     public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented,
-            IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
+                      IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
         this(x, y, barLength, labelKey, min, max, segmented, false, false, statGetter, labelGetter, tooltipGetter);
     }
 
     public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented, boolean split,
-            boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
+                      boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
         super(x, y, barLength, 12);
 
         this.min = min;
@@ -234,11 +234,12 @@ public class GuiStatBar extends GuiStatBase {
                 .map(Component::literal)
                 .forEach(result::add);
 
-        if (tooltipGetter.hasExtendedTooltip(player, itemStack) || getActiveIndicators().stream().anyMatch(ind -> ind.hasExtendedTooltip(player, itemStack))) {
+        boolean hasExtendedTooltip = tooltipGetter.hasExtendedTooltip(player, itemStack);
+        if (hasExtendedTooltip || getActiveIndicators().stream().anyMatch(ind -> ind.hasExtendedTooltip(player, itemStack))) {
             result.add(Component.literal(" "));
             result.add(Tooltips.expanded);
 
-            if (tooltipGetter.hasExtendedTooltip(player, itemStack)) {
+            if (hasExtendedTooltip) {
                 Arrays.stream(tooltipGetter.getTooltipExtension(player, itemStack).split("\\\\n"))
                         .map(Component::literal)
                         .map(component -> component.withStyle(ChatFormatting.GRAY))
@@ -248,7 +249,7 @@ public class GuiStatBar extends GuiStatBase {
             boolean isFirst = true;
             for (GuiStatIndicator indicator : getActiveIndicators()) {
                 if (indicator.hasExtendedTooltip(player, itemStack)) {
-                    if (!isFirst) {
+                    if (!isFirst || hasExtendedTooltip) {
                         result.add(Component.literal(" "));
                     }
                     result.add(Component.literal(indicator.getTooltipExtension(player, itemStack)).withStyle(ChatFormatting.GRAY));

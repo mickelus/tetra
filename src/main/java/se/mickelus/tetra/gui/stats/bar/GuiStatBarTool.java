@@ -29,8 +29,8 @@ public class GuiStatBarTool extends GuiStatBar {
     }
 
     public GuiStatBarTool(int x, int y, int width, ToolAction toolAction, boolean efficiencyVisibility, boolean includeSpeedModifier) {
-        super(x, y, width, null, 0, efficiencyMax,
-                false, includeSpeedModifier ? new StatGetterToolCompoundEfficiency(new StatGetterToolEfficiency(toolAction),
+        super(x, y, width, null, 0, efficiencyMax, false,
+                includeSpeedModifier ? new StatGetterToolCompoundEfficiency(new StatGetterToolEfficiency(toolAction),
                         new StatGetterAttribute(Attributes.ATTACK_SPEED), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1))
                         : new StatGetterSum(new StatGetterToolEfficiency(toolAction), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1)),
                 LabelGetterBasic.decimalLabel, new TooltipGetterTool(toolAction, includeSpeedModifier));
@@ -44,11 +44,23 @@ public class GuiStatBarTool extends GuiStatBar {
         icon = new GuiTool(-3, -3, toolAction);
         addChild(icon);
 
-        StatGetterEffectLevel extractionGetter = new StatGetterEffectLevel(ItemEffect.extraction, 4.5);
-        StatGetterEffectLevel unboundExtractionGetter = new StatGetterEffectLevel(ItemEffect.unboundExtraction, 1);
-        StatGetterEnchantmentLevel enchantmentGetter = new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1);
+        IStatGetter extractionGetter = new StatGetterEffectLevel(ItemEffect.extraction, 4.5);
+        IStatGetter unboundExtractionGetter = new StatGetterEffectLevel(ItemEffect.unboundExtraction, 1);
+        IStatGetter enchantmentGetter = new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1);
+        IStatGetter actionGetter = new StatGetterStriking(toolAction);
+        IStatGetter sweepingGetter = new StatGetterEffectLevel(ItemEffect.sweepingStrike, 1);
+        IStatGetter truesweepGetter = new StatGetterEffectLevel(ItemEffect.truesweep, 1);
+        IStatGetter planarSweepGetter = new StatGetterEffectLevel(ItemEffect.planarSweep, 1);
+        IStatGetter focusGetter = new StatGetterEffectEfficiency(ItemEffect.sweepingFocus, 1);
+
         setIndicators(
                 new StrikingStatIndicatorGui(toolAction),
+                new GuiStatIndicator(0, 0, "tetra.stats.tool.truesweepingStrike", 4, truesweepGetter,
+                        new TooltipGetterNone("tetra.stats.tool.truesweepingStrike.tooltip")).withShowRequirements(actionGetter, sweepingGetter),
+                new GuiStatIndicator(0, 0, "tetra.stats.tool.planarSweep", 21, planarSweepGetter,
+                        new TooltipGetterNone("tetra.stats.tool.planarSweep.tooltip")).withShowRequirements(actionGetter, sweepingGetter),
+                new GuiStatIndicator(0, 0, "tetra.stats.tool.sweepingFocus", 22, focusGetter,
+                        new TooltipGetterSweepingFocus(focusGetter)).withShowRequirements(actionGetter, sweepingGetter),
                 new GuiStatIndicator(0, 0, "tetra.stats.tool.extraction", 7, extractionGetter,
                         new TooltipGetterInteger("tetra.stats.tool.extraction.tooltip", extractionGetter)),
                 new GuiStatIndicator(0, 0, "tetra.stats.tool.unboundExtraction", 20, unboundExtractionGetter,

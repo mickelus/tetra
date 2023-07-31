@@ -59,6 +59,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static se.mickelus.tetra.effect.EffectHelper.getEffectEfficiency;
+import static se.mickelus.tetra.effect.EffectHelper.getEffectLevel;
+
 @ParametersAreNonnullByDefault
 public class ItemEffectHandler {
 
@@ -99,14 +102,6 @@ public class ItemEffectHandler {
         if (stunLevel > 0) {
             StunEffect.perform(itemStack, stunLevel, attacker, target);
         }
-    }
-
-    private static int getEffectLevel(ItemStack itemStack, ItemEffect effect) {
-        return EffectHelper.getEffectLevel(itemStack, effect);
-    }
-
-    private static float getEffectEfficiency(ItemStack itemStack, ItemEffect effect) {
-        return EffectHelper.getEffectEfficiency(itemStack, effect);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -386,10 +381,10 @@ public class ItemEffectHandler {
 
                         if (breakingPlayer.getAttackStrengthScale(0.5f) > 0.9f) {
                             if (getEffectLevel(itemStack, ItemEffect.truesweep) > 0 && breakingPlayer.isOnGround() && !breakingPlayer.isSprinting()) {
-                                SweepingEffect.truesweep(itemStack, breakingPlayer);
+                                SweepingEffect.truesweep(itemStack, breakingPlayer, true);
                             }
 
-                            int howlingLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.howling);
+                            int howlingLevel = getEffectLevel(itemStack, ItemEffect.howling);
                             if (howlingLevel > 0) {
                                 HowlingEffect.trigger(itemStack, breakingPlayer, howlingLevel);
                             }

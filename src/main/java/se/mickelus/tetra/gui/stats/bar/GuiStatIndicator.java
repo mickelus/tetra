@@ -11,11 +11,13 @@ import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
 
 @ParametersAreNonnullByDefault
 public class GuiStatIndicator extends GuiTexture {
     protected String label;
     protected IStatGetter statGetter;
+    protected IStatGetter[] showRequirements = new IStatGetter[0];
     protected ITooltipGetter tooltipGetter;
 
     public GuiStatIndicator(int x, int y, String label, int textureIndex, IStatGetter statGetter, ITooltipGetter tooltipGetter) {
@@ -24,6 +26,11 @@ public class GuiStatIndicator extends GuiTexture {
         this.label = label;
         this.statGetter = statGetter;
         this.tooltipGetter = tooltipGetter;
+    }
+
+    public GuiStatIndicator withShowRequirements(IStatGetter... statGetters) {
+        this.showRequirements = statGetters;
+        return this;
     }
 
     /**
@@ -40,7 +47,8 @@ public class GuiStatIndicator extends GuiTexture {
         double value;
         double diffValue;
 
-        if (statGetter.shouldShow(player, currentStack, previewStack)) {
+        if (statGetter.shouldShow(player, currentStack, previewStack)
+                && Arrays.stream(showRequirements).allMatch(getter -> getter.shouldShow(player, currentStack, previewStack))) {
             if (!previewStack.isEmpty()) {
                 value = statGetter.getValue(player, currentStack);
                 diffValue = statGetter.getValue(player, previewStack);
@@ -68,7 +76,8 @@ public class GuiStatIndicator extends GuiTexture {
     }
 
     public boolean isActive(Player player, ItemStack itemStack) {
-        return statGetter.shouldShow(player, itemStack, itemStack);
+        return statGetter.shouldShow(player, itemStack, itemStack)
+                && Arrays.stream(showRequirements).allMatch(getter -> getter.shouldShow(player, itemStack, itemStack));
     }
 
     protected int getDiffColor(double baseValue, double value, double diffValue) {

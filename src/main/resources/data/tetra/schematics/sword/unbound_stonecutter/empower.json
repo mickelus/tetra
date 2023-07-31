@@ -1,0 +1,44 @@
+{
+    "replace": true,
+    "slots": [ "sword/blade" ],
+    "materialSlotCount": 1,
+    "rarity": "temporary",
+    "displayType": "major",
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:stonecutter"
+            },
+            {
+                "type": "tetra:module",
+                "module": "sword/unbound_stonecutter"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:aspect",
+                    "aspect": "empowered"
+                }
+            }
+        ]
+    },
+    "glyph": {
+        "textureX": 192,
+        "textureY": 240
+    },
+    "outcomes": [
+        {
+            "material": {
+                "items": [ "minecraft:echo_shard" ]
+            },
+            "requiredTools": {
+                "hammer_dig": "minecraft:wood"
+            },
+            "improvements": {
+                "unbound_stonecutter/echo_shard": 0
+            }
+        }
+    ]
+}

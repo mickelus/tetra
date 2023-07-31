@@ -308,7 +308,10 @@ public class GuiStats {
     public static final IStatGetter reachingGetter = new StatGetterReaching();
     public static final GuiStatBar reaching = new GuiStatBar(0, 0, barLength, "tetra.stats.reaching",
             0, 100, false, reachingGetter, LabelGetterBasic.percentageLabel,
-            new TooltipGetterReaching());
+            new TooltipGetterReaching())
+            .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.tool.reaching_sweeping", 1,
+                    new StatGetterEffectLevel(ItemEffect.sweepingStrike, 1),
+                    new TooltipGetterNone("tetra.stats.tool.reaching_sweeping.tooltip")));
     public static final IStatGetter jankingGetter = new StatGetterEffectLevel(ItemEffect.janking, 1);
     public static final GuiStatBar janking = new GuiStatBar(0, 0, barLength, "tetra.stats.janking",
             0, 16, false, jankingGetter, LabelGetterBasic.integerLabel,

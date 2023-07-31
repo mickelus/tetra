@@ -1,0 +1,9 @@
+[
+    {
+        "key": "unbound_stonecutter/planar_guide",
+        "integrity": -1,
+        "effects": {
+            "planarSweep": 1
+        }
+    }
+]

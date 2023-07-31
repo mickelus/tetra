@@ -69,6 +69,7 @@ import se.mickelus.tetra.blocks.scroll.*;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
+import se.mickelus.tetra.client.particle.SweepingStrikeParticleType;
 import se.mickelus.tetra.crafting.ScrollIngredient;
 import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.*;
@@ -277,6 +278,7 @@ public class TetraRegistries {
         // PARTICLES
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         particles.register(SparkleParticleType.identifier, () -> new SimpleParticleType(false));
+        particles.register(SweepingStrikeParticleType.identifier, SweepingStrikeParticleType::new);
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

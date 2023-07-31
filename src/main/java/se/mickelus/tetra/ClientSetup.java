@@ -34,6 +34,8 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.client.keymap.TetraKeyMappings;
 import se.mickelus.tetra.client.model.ModularModelLoader;
+import se.mickelus.tetra.client.particle.SweepingStrikeParticle;
+import se.mickelus.tetra.client.particle.SweepingStrikeParticleType;
 import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
@@ -95,6 +97,7 @@ public class ClientSetup {
     @SubscribeEvent
     public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
         event.register(SparkleParticleType.instance, SparkleParticle.Provider::new);
+        event.register(SweepingStrikeParticleType.instance, SweepingStrikeParticle.Provider::new);
     }
 
     @SubscribeEvent

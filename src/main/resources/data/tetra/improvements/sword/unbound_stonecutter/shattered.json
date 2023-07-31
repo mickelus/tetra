@@ -1,0 +1,52 @@
+[
+    {
+        "key": "unbound_stonecutter/shattered",
+        "group": "state",
+        "integrity": -1,
+        "aspects": {
+            "empowered": 1
+        },
+        "effects": {
+            "truesweep": 1,
+            "strikingPickaxe": 1,
+            "sweepingStrike": 1,
+            "sculkTaint": [ 12, 0.01 ]
+        },
+        "tools": {
+            "pickaxe_dig": [ 0, 8 ]
+        },
+        "models": [
+            {
+                "location": "tetra:items/module/sword/blade/unbound_stonecutter/shattered_shard"
+            },
+            {
+                "location": "tetra:items/module/sword/blade/unbound_stonecutter/shattered_shard_glow",
+                "emission": 8
+            }
+        ]
+    },
+    {
+        "key": "unbound_stonecutter/shatter_instability",
+        "level": 1,
+        "effects": {
+            "unstable": 10,
+            "sculkTaint": [ 0, 0.01 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/shatter_instability",
+        "level": 2,
+        "effects": {
+            "unstable": 20,
+            "sculkTaint": [ 0, 0.02 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/shatter_instability",
+        "level": 3,
+        "effects": {
+            "unstable": 30,
+            "sculkTaint": [ 0, 0.03 ]
+        }
+    }
+]

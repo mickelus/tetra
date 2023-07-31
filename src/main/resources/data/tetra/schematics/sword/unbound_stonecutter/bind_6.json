@@ -1,0 +1,33 @@
+{
+    "replace": true,
+    "slots": [ "sword/blade" ],
+    "rarity": "temporary",
+    "hone": true,
+    "displayType": "improvement",
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:stonecutter"
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "unbound_stonecutter/bound",
+                "level": 5
+            }
+        ]
+    },
+    "glyph": {
+        "textureX": 144,
+        "textureY": 240
+    },
+    "outcomes": [
+        {
+            "experienceCost": 3,
+            "improvements": {
+                "unbound_stonecutter/bound": 6
+            }
+        }
+    ]
+}

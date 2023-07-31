@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -97,6 +97,7 @@ public class TetraMod {
         CraftingEffectRegistry.registerConditionType("tetra:locked", LockedCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:material", MaterialCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:tool", ToolCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:improvement", ImprovementCondition.class);
 
         CraftingEffectRegistry.registerEffectType("tetra:apply_improvements", ApplyImprovementOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:apply_enchantments", ApplyEnchantmentOutcome.class);

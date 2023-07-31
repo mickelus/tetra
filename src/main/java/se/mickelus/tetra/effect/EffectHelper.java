@@ -2,15 +2,13 @@ package se.mickelus.tetra.effect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundLevelEventPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -20,15 +18,13 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class EffectHelper {
@@ -140,22 +136,18 @@ public class EffectHelper {
     }
 
     /**
-     * Variant on {@link EnchantmentHelper#applyArthropodEnchantments} that allows control over the held itemstack
+     * Variant on {@link EnchantmentHelper#doPostDamageEffects} that allows control over the held itemstack
      *
      * @param itemStack
      * @param target
      * @param attacker
      */
     public static void applyEnchantmentHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
-        EnchantmentHelper.getEnchantments(itemStack).forEach((enchantment, level) -> {
-            enchantment.doPostAttack(attacker, target, level);
-        });
+        EnchantmentHelper.getEnchantments(itemStack).forEach((enchantment, level) -> enchantment.doPostAttack(attacker, target, level));
 
         if (attacker != null) {
             for (ItemStack equipment : attacker.getAllSlots()) {
-                EnchantmentHelper.getEnchantments(equipment).forEach((enchantment, level) -> {
-                    enchantment.doPostAttack(attacker, target, level);
-                });
+                EnchantmentHelper.getEnchantments(equipment).forEach((enchantment, level) -> enchantment.doPostAttack(attacker, target, level));
             }
         }
 
@@ -166,18 +158,56 @@ public class EffectHelper {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static void renderInventoryEffectTooltip(EffectRenderingInventoryScreen<?> gui, PoseStack mStack, int x, int y, Supplier<Component> tooltip) {
-        Minecraft mc = Minecraft.getInstance();
-        Window window = mc.getWindow();
-
-        int width = window.getGuiScaledWidth();
-        int height = window.getGuiScaledHeight();
-        int mouseX = (int) (mc.mouseHandler.xpos() * width / window.getScreenWidth());
-        int mouseY = (int) (mc.mouseHandler.ypos() * height / window.getScreenHeight());
-
-        if (x < mouseX && mouseX < x + 120 && y < mouseY && mouseY < y + 32) {
-            gui.renderTooltip(mStack, tooltip.get(), mouseX, mouseY);
+    /**
+     * Based on {@link Player#getDigSpeed(BlockState, BlockPos)}, modifies the given efficiency based on player state
+     *
+     * @param player
+     * @param itemStack
+     * @param base
+     * @param blockState
+     * @param pos
+     * @return
+     */
+    public static float getModifiedEfficiency(Player player, ItemStack itemStack, float base, @Nullable BlockState blockState, @Nullable BlockPos pos) {
+        float result = base;
+        if (result > 1) {
+            int efficiencyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, itemStack);
+            result += efficiencyLevel * efficiencyLevel + 1;
         }
+
+        if (MobEffectUtil.hasDigSpeed(player)) {
+            result *= 1.0F + (MobEffectUtil.getDigSpeedAmplification(player) + 1) * 0.2F;
+        }
+
+        if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
+            switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
+                case 0:
+                    result *= 0.3F;
+                    break;
+                case 1:
+                    result *= 0.09F;
+                    break;
+                case 2:
+                    result *= 0.0027F;
+                    break;
+                case 3:
+                default:
+                    result *= 8.1E-4F;
+            }
+        }
+
+        if (player.isEyeInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
+            result /= 5.0F;
+        }
+
+        if (!player.isOnGround()) {
+            result /= 5.0F;
+        }
+
+        if (blockState != null) {
+            result = net.minecraftforge.event.ForgeEventFactory.getBreakSpeed(player, blockState, result, pos);
+        }
+
+        return result;
     }
 }

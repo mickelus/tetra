@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["sword/blade"],
+    "slots": [ "sword/blade" ],
     "materialSlotCount": 1,
     "rarity": "temporary",
     "displayType": "major",
@@ -9,8 +9,18 @@
         "key": "tetra:stonecutter"
     },
     "glyph": {
-        "textureX": 240,
-        "textureY": 32
+        "textureX": 224,
+        "textureY": 48
     },
-    "outcomes": []
+    "outcomes": [
+        {
+            "materials": [ "tetra:metal/" ],
+            "moduleKey": "sword/unbound_stonecutter",
+            "moduleVariant": "unbound_stonecutter/",
+            "toolOffset": 3,
+            "improvements": {
+                "unbound_stonecutter/inert": 0
+            }
+        }
+    ]
 }

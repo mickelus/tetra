@@ -1,0 +1,48 @@
+{
+    "replace": true,
+    "slots": [ "sword/blade" ],
+    "rarity": "temporary",
+    "displayType": "improvement",
+    "materialSlotCount": 1,
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:locked",
+                "key": "tetra:stonecutter"
+            },
+            {
+                "type": "tetra:module",
+                "module": "sword/unbound_stonecutter"
+            },
+            {
+                "type": "tetra:aspect",
+                "aspect": "empowered"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "unbound_stonecutter/planar_guide"
+                }
+            }
+        ]
+    },
+    "glyph": {
+        "textureX": 32,
+        "textureY": 224
+    },
+    "outcomes": [
+        {
+            "material": {
+                "items": [ "tetra:planar_stabilizer" ]
+            },
+            "requiredTools": {
+                "hammer_dig": "minecraft:iron"
+            },
+            "improvements": {
+                "unbound_stonecutter/planar_guide": 0
+            }
+        }
+    ]
+}

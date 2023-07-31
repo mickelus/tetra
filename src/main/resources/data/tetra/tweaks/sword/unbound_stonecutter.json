@@ -1,0 +1,12 @@
+[
+    {
+        "improvement": "unbound_stonecutter/adjustable_focus",
+        "key": "unbound_stonecutter/adjustable_focus",
+        "steps": 8,
+        "properties": {
+            "effects": {
+                "sweepingFocus": [ 0, 0.1 ]
+            }
+        }
+    }
+]

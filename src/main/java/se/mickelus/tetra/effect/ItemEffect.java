@@ -82,9 +82,11 @@ public class ItemEffect {
 
     /**
      * Sweeping strike: Cause the striking effect to instantly break several blocks around the hit block.
-     * todo: add more variation and increase max size
      */
     public static final ItemEffect sweepingStrike = get("sweepingStrike");
+
+    public static final ItemEffect sweepingFocus = get("sweepingFocus");
+    public static final ItemEffect planarSweep = get("planarSweep");
 
     /**
      * Extractor: Harvesting a block breaks several adjacent blocks, direction/shape based on the hit face. Breaks 4.5 block per effect level.

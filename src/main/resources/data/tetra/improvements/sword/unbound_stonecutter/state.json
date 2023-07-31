@@ -1,20 +1,25 @@
 [
     {
-        "key": "unbound_stonecutter/inert"
+        "key": "unbound_stonecutter/inert",
+        "group": "state"
     },
     {
         "key": "unbound_stonecutter/echo_shard",
+        "group": "state",
+        "aspects": {
+            "empowered": 1
+        },
         "effects": {
             "strikingPickaxe": 1,
-            "sweepingStrike": 1
+            "sweepingStrike": 1,
+            "sculkTaint": [ 12, 0.01 ]
         },
-        "glyph": {
-            "textureX": 240,
-            "textureY": 32
+        "tools": {
+            "pickaxe_dig": [ 0, 5 ]
         },
         "models": [
             {
-                "location": "tetra:items/module/sword/blade/stonecutter/default"
+                "location": "tetra:items/module/sword/blade/unbound_stonecutter/echo_shard"
             }
         ]
     }

@@ -1,0 +1,47 @@
+{
+    "replace": true,
+    "localizationKey": "double/shared_head/hone_pickaxe_tier_1",
+    "slots": [
+        "sword/blade"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 176
+    },
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:module",
+                "module": "sword/unbound_stonecutter"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "stonecutter_hone/tier"
+                }
+            },
+            {
+                "type": "tetra:aspect",
+                "aspect": "honed",
+                "level": {
+                    "min": 5
+                }
+            }
+        ]
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer_dig": "minecraft:diamond"
+            },
+            "improvements": {
+                "stonecutter_hone/tier": 0
+            }
+        }
+    ]
+}

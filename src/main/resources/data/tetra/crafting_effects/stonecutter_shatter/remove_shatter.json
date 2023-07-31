@@ -1,0 +1,13 @@
+{
+    "replace": true,
+    "requirement": {
+        "type": "tetra:schematic",
+        "schematic": "sword/unbound_stonecutter/shatter"
+    },
+    "outcomes": [
+        {
+            "type": "tetra:remove_improvements",
+            "improvements": [ "unbound_stonecutter/fractured" ]
+        }
+    ]
+}

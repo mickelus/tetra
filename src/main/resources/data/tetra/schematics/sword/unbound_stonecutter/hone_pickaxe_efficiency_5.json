@@ -1,0 +1,29 @@
+{
+    "replace": true,
+    "localizationKey": "double/shared_head/hone_pickaxe_efficiency_5",
+    "slots": [
+        "sword/blade"
+    ],
+    "materialSlotCount": 0,
+    "hone": true,
+    "rarity": "hone",
+    "displayType": "major",
+    "glyph": {
+        "textureX": 176
+    },
+    "requirement": {
+        "type": "tetra:improvement",
+        "improvement": "stonecutter_hone/efficiency",
+        "level": 4
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer_dig": "minecraft:diamond"
+            },
+            "improvements": {
+                "stonecutter_hone/efficiency": 5
+            }
+        }
+    ]
+}

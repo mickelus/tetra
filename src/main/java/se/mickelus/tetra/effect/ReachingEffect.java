@@ -39,7 +39,7 @@ public class ReachingEffect {
     public static float getMultiplier(int level, double squareDistance, float offsetMultiplier) {
         return level > 0
                 ? 1 + getOffset(level, squareDistance) * offsetMultiplier
-                : 0;
+                : 1;
     }
 
     public static float getOffset(int level, double squareDistance) {

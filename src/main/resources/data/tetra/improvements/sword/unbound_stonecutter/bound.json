@@ -1,0 +1,82 @@
+[
+    {
+        "key": "unbound_stonecutter/bound",
+        "level": 1,
+        "magicCapacity": -10,
+        "effects": {
+            "sculkTaint": [ 0, -0.001 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/bound",
+        "level": 2,
+        "magicCapacity": -20,
+        "effects": {
+            "sculkTaint": [ 0, -0.002 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/bound",
+        "level": 3,
+        "magicCapacity": -30,
+        "effects": {
+            "sculkTaint": [ 0, -0.003 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/bound",
+        "level": 4,
+        "magicCapacity": -40,
+        "effects": {
+            "sculkTaint": [ 0, -0.004 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/bound",
+        "level": 5,
+        "magicCapacity": -50,
+        "effects": {
+            "sculkTaint": [ 0, -0.005 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/bound",
+        "level": 6,
+        "magicCapacity": -60,
+        "effects": {
+            "sculkTaint": [ 0, -0.006 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/bound",
+        "level": 7,
+        "magicCapacity": -70,
+        "effects": {
+            "sculkTaint": [ 0, -0.007 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/bound",
+        "level": 8,
+        "magicCapacity": -80,
+        "effects": {
+            "sculkTaint": [ 0, -0.008 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/bound",
+        "level": 9,
+        "magicCapacity": -90,
+        "effects": {
+            "sculkTaint": [ 0, -0.009 ]
+        }
+    },
+    {
+        "key": "unbound_stonecutter/bound",
+        "level": 10,
+        "magicCapacity": -100,
+        "effects": {
+            "sculkTaint": [ 0, -0.01 ]
+        }
+    }
+]

@@ -1,23 +1,26 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["sword/blade"],
+    "slots": [ "sword/blade" ],
+    "tweakKey": "tetra:sword/unbound_stonecutter",
     "improvements": [
         "tetra:sword/unbound_stonecutter/",
+        "tetra:sword/stonecutter/",
         "tetra:sword/shared_blade/",
         "tetra:sword/shared/",
         "tetra:shared/"
     ],
     "variants": [
         {
-            "materials": ["tetra:metal/"],
+            "materials": [ "tetra:metal/" ],
             "key": "unbound_stonecutter/",
+            "integrity": -1,
             "attributes": {
-                "generic.attack_damage": 3,
-                "generic.attack_speed": -2.8
+                "generic.attack_damage": 1,
+                "generic.attack_speed": -2
             },
             "aspects": {
-                "edgedWeapon": 2,
+                "edgedWeapon": 1,
                 "blockBreaker": 2,
                 "breakable": 2
             },
@@ -25,7 +28,7 @@
                 "sweeping": 2
             },
             "tools": {
-                "pickaxe_dig": [0, -5]
+                "pickaxe_dig": [ 0, -5 ]
             },
             "durability": 120,
             "extract": {
@@ -36,15 +39,16 @@
                     "generic.attack_speed": -0.1
                 },
                 "tools": {
-                    "pickaxe_dig": [1, 1]
+                    "pickaxe_dig": [ 1, 1 ]
                 },
                 "durability": 0.6,
                 "integrity": -1,
                 "magicCapacity": 1,
                 "glyph": {
-                    "textureX": 32
+                    "textureX": 224,
+                    "textureY": 48
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
                         "location": "tetra:items/module/sword/blade/unbound_stonecutter/"
