@@ -7,7 +7,7 @@
                 "processors": "tetra:hammer_setup",
                 "projection": "rigid"
             },
-            "weight": 1
+            "weight": 3
         },
         {
             "element": {
@@ -16,7 +16,7 @@
                 "processors": "tetra:container_setup",
                 "projection": "rigid"
             },
-            "weight": 1
+            "weight": 2
         },
         {
             "element": {
@@ -43,7 +43,7 @@
                 "processors": "tetra:schematic_setup",
                 "projection": "rigid"
             },
-            "weight": 1
+            "weight": 2
         },
         {
             "element": {
@@ -52,7 +52,7 @@
                 "processors": "tetra:schematic_setup",
                 "projection": "rigid"
             },
-            "weight": 1
+            "weight": 2
         },
         {
             "element": {
@@ -61,7 +61,7 @@
                 "processors": "tetra:schematic_setup",
                 "projection": "rigid"
             },
-            "weight": 1
+            "weight": 2
         }
     ],
     "fallback": "minecraft:empty",
