@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -13,10 +14,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -63,7 +61,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     protected static final VoxelShape shape = Shapes.or(
             Block.box(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D),
             Block.box(6.0D, 15.0D, 6.0D, 10.0D, 16.0D, 10.0D));
-    static final BlockInteraction[] interactions = new BlockInteraction[]{
+    static final BlockInteraction[] interactions = new BlockInteraction[] {
             new BlockInteraction(TetraToolActions.hammer, 4, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand)),
             new BlockInteraction(TetraToolActions.hammer, 5, Direction.UP, 0, 4, 0, 4,
@@ -112,6 +110,11 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     public static void registerItems(DeferredRegister<Item> registry) {
         registry.register(usedIdentifier, () -> new BlockItem(instance, new Item.Properties().durability(maxDamage)));
         registry.register(identifier, () -> new BlockItem(instance, new Item.Properties().tab(TetraItemGroup.instance).stacksTo(64)));
+    }
+
+    @Override
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> itemList) {
+        itemList.add(new ItemStack(item));
     }
 
     @Override
@@ -180,7 +183,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
 
         // todo: this could be less hacky
         if (ConfigHandler.enableExtractor.get() && tier >= 0 && face == Direction.UP) {
-            return new BlockInteraction[]{interactions[Math.min(tier, interactions.length - 1)]};
+            return new BlockInteraction[] { interactions[Math.min(tier, interactions.length - 1)] };
         }
 
         return new BlockInteraction[0];
