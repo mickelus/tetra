@@ -1,12 +1,12 @@
 {
     "parent": "block/cube",
     "textures": {
-        "particle": "tetra:blocks/forged_platform",
-        "down": "tetra:blocks/forged_platform_bottom",
-        "up": "tetra:blocks/forged_platform_alternate",
-        "north": "tetra:blocks/forged_platform_side",
-        "east": "tetra:blocks/forged_platform_side",
-        "south": "tetra:blocks/forged_platform_side",
-        "west": "tetra:blocks/forged_platform_side"
+        "particle": "tetra:block/forged_platform",
+        "down": "tetra:block/forged_platform_bottom",
+        "up": "tetra:block/forged_platform_alternate",
+        "north": "tetra:block/forged_platform_side",
+        "east": "tetra:block/forged_platform_side",
+        "south": "tetra:block/forged_platform_side",
+        "west": "tetra:block/forged_platform_side"
     }
 }

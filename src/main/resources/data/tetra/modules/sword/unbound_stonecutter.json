@@ -51,7 +51,7 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/sword/blade/unbound_stonecutter/"
+                        "location": "tetra:item/module/sword/blade/unbound_stonecutter/"
                     }
                 ]
             }

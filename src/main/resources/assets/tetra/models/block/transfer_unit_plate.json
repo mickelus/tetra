@@ -1,7 +1,7 @@
 {
     "parent": "block/block",
     "textures": {
-        "plate": "tetra:blocks/transfer_unit_plate"
+        "plate": "tetra:block/transfer_unit_plate"
     },
     "render_type": "cutout",
     "elements": [

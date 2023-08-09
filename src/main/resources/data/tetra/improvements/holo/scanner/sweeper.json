@@ -12,7 +12,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/holo/scanner/sweeper",
+                "location": "tetra:item/module/holo/scanner/sweeper",
                 "renderLayer": "high"
             }
         ]

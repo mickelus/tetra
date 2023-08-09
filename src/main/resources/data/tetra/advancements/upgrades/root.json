@@ -10,7 +10,7 @@
         "description": {
             "translate": "tetra.advancements.upgrades.root.description"
         },
-        "background": "tetra:textures/blocks/forged_platform.png"
+        "background": "tetra:textures/block/forged_platform.png"
     },
     "criteria": {
         "hammer": {

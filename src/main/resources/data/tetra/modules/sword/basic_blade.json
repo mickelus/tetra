@@ -37,7 +37,7 @@
                     "textureX": 0
                 },
                 "availableTextures": [ "metal", "shiny", "grainy", "crude" ],
-                "models": [ { "location": "tetra:items/module/sword/blade/basic/" } ]
+                "models": [ { "location": "tetra:item/module/sword/blade/basic/" } ]
             }
         }
     ]

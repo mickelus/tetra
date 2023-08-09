@@ -47,7 +47,7 @@
                 "availableTextures": [ "log" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/double/head/basic_hammer/"
+                        "location": "tetra:item/module/double/head/basic_hammer/"
                     }
                 ]
             }
@@ -68,7 +68,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/double/head/basic_hammer/stone",
+                    "location": "tetra:item/module/double/head/basic_hammer/stone",
                     "tint": "aaaaaa"
                 }
             ],
@@ -125,7 +125,7 @@
                 "availableTextures": [ "stone" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/double/head/basic_hammer/"
+                        "location": "tetra:item/module/double/head/basic_hammer/"
                     }
                 ]
             }
@@ -164,7 +164,7 @@
                 "availableTextures": [ "metal" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/double/head/basic_hammer/"
+                        "location": "tetra:item/module/double/head/basic_hammer/"
                     }
                 ]
             }
@@ -203,7 +203,7 @@
                 "availableTextures": [ "metal" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/double/head/basic_hammer/"
+                        "location": "tetra:item/module/double/head/basic_hammer/"
                     }
                 ]
             }
@@ -243,7 +243,7 @@
                 "availableTextures": [ "stone" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/double/head/basic_hammer/"
+                        "location": "tetra:item/module/double/head/basic_hammer/"
                     }
                 ]
             }
@@ -264,7 +264,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/double/head/basic_hammer/obsidian"
+                    "location": "tetra:item/module/double/head/basic_hammer/obsidian"
                 }
             ],
             "extract": {
@@ -321,7 +321,7 @@
                 "availableTextures": [ "metal" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/double/head/basic_hammer/"
+                        "location": "tetra:item/module/double/head/basic_hammer/"
                     }
                 ]
             }

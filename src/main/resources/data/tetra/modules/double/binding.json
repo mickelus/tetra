@@ -19,7 +19,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/double/binding/binding/" } ]
+                "models": [ { "location": "tetra:item/module/double/binding/binding/" } ]
             }
         },
         {
@@ -35,7 +35,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/double/binding/binding/bolt",
+                    "location": "tetra:item/module/double/binding/binding/bolt",
                     "tint": "bolt"
                 }
             ]

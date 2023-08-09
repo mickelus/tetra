@@ -13,7 +13,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/double/head/claw/warforged",
+                "location": "tetra:item/module/double/head/claw/warforged",
                 "tint": "inherit"
             }
         ]

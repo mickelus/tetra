@@ -33,7 +33,7 @@
                     "textureX": 160
                 },
                 "availableTextures": [ "crude", "metal", "shiny" ],
-                "models": [ { "location": "tetra:items/module/double/head/butt/" } ]
+                "models": [ { "location": "tetra:item/module/double/head/butt/" } ]
             }
         }
     ]

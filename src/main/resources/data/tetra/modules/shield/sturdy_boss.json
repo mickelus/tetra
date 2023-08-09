@@ -35,7 +35,7 @@
                 "models": [
                     {
                         "type": "tetra:boss/flat",
-                        "location": "tetra:items/module/shield/boss/"
+                        "location": "tetra:item/module/shield/boss/"
                     }
                 ]
             }

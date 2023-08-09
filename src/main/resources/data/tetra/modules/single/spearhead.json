@@ -40,7 +40,7 @@
                     "textureY": 32
                 },
                 "availableTextures": [ "metal", "shiny", "crude" ],
-                "models": [ { "location": "tetra:items/module/single/head/spearhead/" } ]
+                "models": [ { "location": "tetra:item/module/single/head/spearhead/" } ]
             }
         }
     ]

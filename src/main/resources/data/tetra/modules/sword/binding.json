@@ -19,7 +19,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/sword/guard/binding/" } ]
+                "models": [ { "location": "tetra:item/module/sword/guard/binding/" } ]
             }
         },
         {
@@ -35,7 +35,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/sword/guard/binding/bolt",
+                    "location": "tetra:item/module/sword/guard/binding/bolt",
                     "tint": "bolt"
                 }
             ]

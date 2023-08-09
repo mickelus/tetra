@@ -28,7 +28,7 @@
                 "models": [
                     {
                         "type": "tetra:grip/straps",
-                        "location": "tetra:items/module/shield/grip/straps/"
+                        "location": "tetra:item/module/shield/grip/straps/"
                     }
                 ]
             }

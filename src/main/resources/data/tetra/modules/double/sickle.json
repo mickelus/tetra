@@ -49,7 +49,7 @@
                     "textureY": 32
                 },
                 "availableTextures": [ "crude", "metal", "shiny" ],
-                "models": [ { "location": "tetra:items/module/double/head/sickle/" } ]
+                "models": [ { "location": "tetra:item/module/double/head/sickle/" } ]
             }
         }
     ]

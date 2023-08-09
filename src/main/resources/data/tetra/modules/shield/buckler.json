@@ -46,7 +46,7 @@
                 "models": [
                     {
                         "type": "tetra:plate/buckler",
-                        "location": "tetra:items/module/shield/plate/buckler/"
+                        "location": "tetra:item/module/shield/plate/buckler/"
                     }
                 ]
             }

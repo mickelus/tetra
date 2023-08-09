@@ -26,9 +26,9 @@ public class TetraBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
 //        slabBlock(BlockForgedPlatformSlab.instance,
 //                new ResourceLocation(MOD_ID, "block/forged_platform"),
-//                new ResourceLocation(MOD_ID, "blocks/forged_platform_side"),
-//                new ResourceLocation(MOD_ID, "blocks/forged_platform_bottom"),
-//                new ResourceLocation(MOD_ID, "blocks/forged_platform_alternate"));
+//                new ResourceLocation(MOD_ID, "block/forged_platform_side"),
+//                new ResourceLocation(MOD_ID, "block/forged_platform_bottom"),
+//                new ResourceLocation(MOD_ID, "block/forged_platform_alternate"));
 
 //        setupVent();
         setupMultiBlockSchematics();
@@ -96,9 +96,9 @@ public class TetraBlockStateProvider extends BlockStateProvider {
     private void setupMultiBlockSchematics(String identifier, int width, int height, boolean ruinable) {
         for (int h = 0; h < width; h++) {
             for (int v = 0; v < height; v++) {
-                setupMultiBlockSchematic(identifier, "blocks/forged_schematic/", h, v);
+                setupMultiBlockSchematic(identifier, "block/forged_schematic/", h, v);
                 if (ruinable) {
-                    setupMultiBlockSchematic(identifier + "_ruined", "blocks/forged_schematic/", h, v);
+                    setupMultiBlockSchematic(identifier + "_ruined", "block/forged_schematic/", h, v);
                 }
             }
         }

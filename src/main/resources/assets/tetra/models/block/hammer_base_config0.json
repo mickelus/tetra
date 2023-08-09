@@ -1,6 +1,6 @@
 {
     "parent": "tetra:block/hammer_base_config",
     "textures": {
-        "config": "tetra:blocks/hammer_config0"
+        "config": "tetra:block/hammer_config0"
     }
 }

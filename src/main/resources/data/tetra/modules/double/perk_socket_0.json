@@ -10,7 +10,7 @@
             "key": "double_perk_socket_0/",
             "models": [
                 {
-                    "location": "tetra:items/module/double/binding/socket/perk_sided_0"
+                    "location": "tetra:item/module/double/binding/socket/perk_sided_0"
                 }
             ],
             "extract": {
@@ -30,7 +30,7 @@
                 "availableTextures": [ "perk_glow_0" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/double/binding/socket/",
+                        "location": "tetra:item/module/double/binding/socket/",
                         "emission": 4
                     }
                 ]

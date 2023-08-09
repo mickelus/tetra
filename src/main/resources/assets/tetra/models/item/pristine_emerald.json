@@ -2,6 +2,6 @@
     "parent": "minecraft:item/generated",
     "textures": {
         "layer0": "item/emerald",
-        "layer1": "tetra:items/pristine"
+        "layer1": "tetra:item/pristine"
     }
 }

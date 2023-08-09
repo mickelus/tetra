@@ -3,7 +3,7 @@
         "key": "basic_handle/soot",
         "models": [
             {
-                "location": "tetra:items/module/single/handle/improvements/soot"
+                "location": "tetra:item/module/single/handle/improvements/soot"
             }
         ]
     }

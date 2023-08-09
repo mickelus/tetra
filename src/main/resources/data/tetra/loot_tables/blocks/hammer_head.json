@@ -6,7 +6,7 @@
             "conditions": [
                 {
                     "condition": "minecraft:entity_properties",
-                    "predicate": {},
+                    "predicate": { },
                     "entity": "this"
                 }
             ],

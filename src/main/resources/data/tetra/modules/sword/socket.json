@@ -1,11 +1,11 @@
 {
     "replace": true,
-    "slots": ["sword/guard"],
+    "slots": [ "sword/guard" ],
     "type": "tetra:basic_module",
     "renderLayer": "higher",
     "variants": [
         {
-            "materials": ["tetra:socket/"],
+            "materials": [ "tetra:socket/" ],
             "key": "sword_socket/",
             "extract": {
                 "durability": 1,
@@ -15,16 +15,16 @@
                     "textureY": 16
                 },
                 "tools": {
-                    "axe_dig": [0, 1],
-                    "shovel_dig": [0, 1],
-                    "pickaxe_dig": [0, 1],
-                    "hammer_dig": [0, 1],
-                    "cut": [0, 1]
+                    "axe_dig": [ 0, 1 ],
+                    "shovel_dig": [ 0, 1 ],
+                    "pickaxe_dig": [ 0, 1 ],
+                    "hammer_dig": [ 0, 1 ],
+                    "cut": [ 0, 1 ]
                 },
-                "availableTextures": ["pristine", "default"],
+                "availableTextures": [ "pristine", "default" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/sword/guard/socket/"
+                        "location": "tetra:item/module/sword/guard/socket/"
                     }
                 ]
             }

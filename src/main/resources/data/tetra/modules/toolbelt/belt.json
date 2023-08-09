@@ -13,7 +13,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/toolbelt/belt/rope"
+                    "location": "tetra:item/module/toolbelt/belt/rope"
                 }
             ]
         },
@@ -27,7 +27,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/toolbelt/belt/sash"
+                    "location": "tetra:item/module/toolbelt/belt/sash"
                 }
             ]
         },
@@ -41,7 +41,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/toolbelt/belt/leather"
+                    "location": "tetra:item/module/toolbelt/belt/leather"
                 }
             ]
         },
@@ -55,7 +55,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/toolbelt/belt/buckled"
+                    "location": "tetra:item/module/toolbelt/belt/buckled"
                 }
             ]
         },
@@ -69,7 +69,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/toolbelt/belt/inlaid"
+                    "location": "tetra:item/module/toolbelt/belt/inlaid"
                 }
             ]
         }

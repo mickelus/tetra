@@ -10,7 +10,7 @@
             "key": "sword_perk_socket_0/",
             "models": [
                 {
-                    "location": "tetra:items/module/sword/guard/socket/perk_sided_0"
+                    "location": "tetra:item/module/sword/guard/socket/perk_sided_0"
                 }
             ],
             "extract": {
@@ -30,7 +30,7 @@
                 "availableTextures": [ "perk_glow_0" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/sword/guard/socket/",
+                        "location": "tetra:item/module/sword/guard/socket/",
                         "emission": 4
                     }
                 ]

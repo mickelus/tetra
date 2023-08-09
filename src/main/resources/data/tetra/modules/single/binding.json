@@ -19,7 +19,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/single/binding/binding/" } ]
+                "models": [ { "location": "tetra:item/module/single/binding/binding/" } ]
             }
         },
         {
@@ -35,7 +35,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/single/binding/binding/bolt",
+                    "location": "tetra:item/module/single/binding/binding/bolt",
                     "tint": "bolt"
                 }
             ]
@@ -54,7 +54,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/single/binding/binding/prismarine"
+                    "location": "tetra:item/module/single/binding/binding/prismarine"
                 }
             ]
         }

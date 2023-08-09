@@ -11,7 +11,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/double/head/hoe/warforged",
+                "location": "tetra:item/module/double/head/hoe/warforged",
                 "tint": "inherit"
             }
         ]

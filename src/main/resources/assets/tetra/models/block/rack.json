@@ -1,8 +1,8 @@
 {
     "parent": "block/cube",
     "textures": {
-        "texture": "tetra:blocks/oak_rack",
-        "particle": "tetra:blocks/oak_rack"
+        "texture": "tetra:block/oak_rack",
+        "particle": "tetra:block/oak_rack"
     },
     "elements": [
         {

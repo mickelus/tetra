@@ -37,7 +37,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/sword/blade/stonecutter/default"
+                    "location": "tetra:item/module/sword/blade/stonecutter/default"
                 }
             ]
         }

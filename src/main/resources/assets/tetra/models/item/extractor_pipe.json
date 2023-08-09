@@ -1,6 +1,6 @@
 {
     "parent": "tetra:block/extractor_pipe",
     "textures": {
-        "texture": "tetra:blocks/extractor_pipe"
+        "texture": "tetra:block/extractor_pipe"
     }
 }

@@ -13,7 +13,7 @@
         "models": [
             {
                 "type": "tetra:plate/tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "location": "tetra:item/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
                 "tint": "inherit"
             }
         ],
@@ -26,7 +26,7 @@
             "models": [
                 {
                     "type": "tetra:plate/tower",
-                    "location": "tetra:items/module/shield/plate/tower/improvements/"
+                    "location": "tetra:item/module/shield/plate/tower/improvements/"
                 }
             ]
         }

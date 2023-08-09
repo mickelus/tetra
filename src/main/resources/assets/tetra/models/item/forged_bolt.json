@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "tetra:items/forged_bolt"
+        "layer0": "tetra:item/forged_bolt"
     }
 }

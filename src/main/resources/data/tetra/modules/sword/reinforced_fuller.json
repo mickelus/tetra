@@ -22,7 +22,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/sword/fuller/reinforced_fuller/" } ]
+                "models": [ { "location": "tetra:item/module/sword/fuller/reinforced_fuller/" } ]
             }
         }
     ]

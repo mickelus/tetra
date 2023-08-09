@@ -46,7 +46,7 @@
                     "textureY": 32
                 },
                 "availableTextures": [ "crude", "metal", "shiny" ],
-                "models": [ { "location": "tetra:items/module/double/head/claw/" } ]
+                "models": [ { "location": "tetra:item/module/double/head/claw/" } ]
             }
         }
     ]

@@ -13,7 +13,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/double/head/sickle/warforged",
+                "location": "tetra:item/module/double/head/sickle/warforged",
                 "tint": "inherit"
             }
         ]

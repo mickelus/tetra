@@ -1,15 +1,15 @@
 {
     "parent": "block/block",
     "textures": {
-        "particle": "tetra:blocks/hammer_base",
-        "down": "tetra:blocks/hammer_base",
-        "up": "tetra:blocks/hammer_base",
-        "north": "tetra:blocks/hammer_base_socket",
-        "south": "tetra:blocks/hammer_base_socket",
-        "east": "tetra:blocks/hammer_base_side",
-        "west": "tetra:blocks/hammer_base_side",
-        "config_east": "tetra:blocks/hammer_config0",
-        "plate": "tetra:blocks/hammer_base_plate"
+        "particle": "tetra:block/hammer_base",
+        "down": "tetra:block/hammer_base",
+        "up": "tetra:block/hammer_base",
+        "north": "tetra:block/hammer_base_socket",
+        "south": "tetra:block/hammer_base_socket",
+        "east": "tetra:block/hammer_base_side",
+        "west": "tetra:block/hammer_base_side",
+        "config_east": "tetra:block/hammer_config0",
+        "plate": "tetra:block/hammer_base_plate"
     },
     "elements": [
         {

@@ -8,7 +8,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/sword/blade/improvements/hooked",
+                "location": "tetra:item/module/sword/blade/improvements/hooked",
                 "tint": "inherit"
             }
         ]
@@ -25,7 +25,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/sword/blade/improvements/hooked",
+                "location": "tetra:item/module/sword/blade/improvements/hooked",
                 "tint": "inherit"
             }
         ]
@@ -42,7 +42,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/sword/blade/improvements/hooked",
+                "location": "tetra:item/module/sword/blade/improvements/hooked",
                 "tint": "inherit"
             }
         ]

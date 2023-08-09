@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:block/cube_all",
     "textures": {
-        "all": "tetra:blocks/scroll_particle"
+        "all": "tetra:block/scroll_particle"
     }
 }

@@ -45,7 +45,7 @@
                     "textureX": 176
                 },
                 "availableTextures": [ "crude", "metal", "shiny" ],
-                "models": [ { "location": "tetra:items/module/double/head/basic_pickaxe/" } ]
+                "models": [ { "location": "tetra:item/module/double/head/basic_pickaxe/" } ]
             }
         }
     ]

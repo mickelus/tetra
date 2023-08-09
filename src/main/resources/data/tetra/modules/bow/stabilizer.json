@@ -23,7 +23,7 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/bow/riser/stabilizer/",
+                        "location": "tetra:item/module/bow/riser/stabilizer/",
                         "type": "static"
                     }
                 ]
@@ -44,7 +44,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/bow/riser/stabilizer/linear",
+                    "location": "tetra:item/module/bow/riser/stabilizer/linear",
                     "type": "static"
                 }
             ]

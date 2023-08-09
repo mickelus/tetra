@@ -1,46 +1,46 @@
 {
     "replace": true,
-    "slots": ["bow/riser"],
+    "slots": [ "bow/riser" ],
     "type": "tetra:basic_module",
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/" ],
             "key": "sights/",
             "effects": {
                 "zoom": 6,
-                "focus": [0, 0.5]
+                "focus": [ 0, 0.5 ]
             },
             "integrity": -1,
             "durability": 10,
             "extract": {
                 "primaryEffects": {
                     "zoom": 3.4,
-                    "focus": [0, -0.02]
+                    "focus": [ 0, -0.02 ]
                 },
                 "tertiaryEffects": {
                     "zoom": -0.7,
-                    "focus": [0, 0.08]
+                    "focus": [ 0, 0.08 ]
                 },
                 "durability": 0.2,
                 "glyph": {
                     "textureX": 120,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/bow/riser/sight/",
+                        "location": "tetra:item/module/bow/riser/sight/",
                         "type": "static"
                     }
                 ]
             }
         },
         {
-            "materials": ["tetra:rod/stick"],
+            "materials": [ "tetra:rod/stick" ],
             "key": "sights/",
             "effects": {
                 "zoom": 12,
-                "focus": [0, 0.8]
+                "focus": [ 0, 0.8 ]
             },
             "integrity": -1,
             "durability": 10,
@@ -50,10 +50,10 @@
                     "textureX": 120,
                     "textureY": 16
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/bow/riser/sight/",
+                        "location": "tetra:item/module/bow/riser/sight/",
                         "type": "static"
                     }
                 ]
@@ -65,7 +65,7 @@
             "durability": 35,
             "effects": {
                 "zoom": 12,
-                "focus": [0, 0.75],
+                "focus": [ 0, 0.75 ],
                 "focusEcho": 1,
                 "unstable": 30
             },
@@ -76,7 +76,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/bow/riser/sight/default",
+                    "location": "tetra:item/module/bow/riser/sight/default",
                     "tint": "052931",
                     "type": "static"
                 }

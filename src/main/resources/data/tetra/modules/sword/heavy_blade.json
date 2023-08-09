@@ -45,7 +45,7 @@
                     "textureX": 48
                 },
                 "availableTextures": [ "metal", "shiny", "grainy", "crude" ],
-                "models": [ { "location": "tetra:items/module/sword/blade/heavy/" } ]
+                "models": [ { "location": "tetra:item/module/sword/blade/heavy/" } ]
             }
         }
     ]

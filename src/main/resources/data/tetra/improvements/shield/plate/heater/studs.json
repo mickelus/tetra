@@ -8,7 +8,7 @@
         "models": [
             {
                 "type": "tetra:plate/heater",
-                "location": "tetra:items/module/shield/plate/heater/improvements/studs_shadow",
+                "location": "tetra:item/module/shield/plate/heater/improvements/studs_shadow",
                 "tint": "inherit"
             }
         ],
@@ -18,7 +18,7 @@
             "models": [
                 {
                     "type": "tetra:plate/heater",
-                    "location": "tetra:items/module/shield/plate/heater/improvements/"
+                    "location": "tetra:item/module/shield/plate/heater/improvements/"
                 }
             ]
         }

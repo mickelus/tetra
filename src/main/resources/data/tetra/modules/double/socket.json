@@ -1,11 +1,11 @@
 {
     "replace": true,
     "type": "tetra:basic_module",
-    "slots": ["double/binding"],
+    "slots": [ "double/binding" ],
     "renderLayer": "higher",
     "variants": [
         {
-            "materials": ["tetra:socket/"],
+            "materials": [ "tetra:socket/" ],
             "key": "double_socket/",
             "extract": {
                 "durability": 1,
@@ -15,16 +15,16 @@
                     "textureY": 16
                 },
                 "tools": {
-                    "axe_dig": [0, 1],
-                    "shovel_dig": [0, 1],
-                    "pickaxe_dig": [0, 1],
-                    "hammer_dig": [0, 1],
-                    "cut": [0, 1]
+                    "axe_dig": [ 0, 1 ],
+                    "shovel_dig": [ 0, 1 ],
+                    "pickaxe_dig": [ 0, 1 ],
+                    "hammer_dig": [ 0, 1 ],
+                    "cut": [ 0, 1 ]
                 },
-                "availableTextures": ["default", "pristine"],
+                "availableTextures": [ "default", "pristine" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/double/binding/socket/"
+                        "location": "tetra:item/module/double/binding/socket/"
                     }
                 ]
             }

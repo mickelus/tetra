@@ -19,7 +19,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/sword/blade/unbound_stonecutter/echo_shard"
+                "location": "tetra:item/module/sword/blade/unbound_stonecutter/echo_shard"
             }
         ]
     }

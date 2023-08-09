@@ -44,7 +44,7 @@
                     "textureX": 32
                 },
                 "availableTextures": [ "metal", "shiny", "grainy", "crude" ],
-                "models": [ { "location": "tetra:items/module/sword/blade/short/" } ]
+                "models": [ { "location": "tetra:item/module/sword/blade/short/" } ]
             }
         },
         {
@@ -65,7 +65,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/sword/blade/short/grainy",
+                    "location": "tetra:item/module/sword/blade/short/grainy",
                     "tint": "prismarine"
                 }
             ]

@@ -19,7 +19,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/sword/guard/forefinger_ring/" } ]
+                "models": [ { "location": "tetra:item/module/sword/guard/forefinger_ring/" } ]
             }
         },
         {
@@ -37,7 +37,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/sword/guard/forefinger_ring/" } ]
+                "models": [ { "location": "tetra:item/module/sword/guard/forefinger_ring/" } ]
             }
         },
         {
@@ -55,7 +55,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/sword/guard/forefinger_ring/" } ]
+                "models": [ { "location": "tetra:item/module/sword/guard/forefinger_ring/" } ]
             }
         }
     ]

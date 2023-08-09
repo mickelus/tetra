@@ -13,7 +13,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "sash" ],
-                "models": [ { "location": "tetra:items/module/toolbelt/belt/" } ]
+                "models": [ { "location": "tetra:item/module/toolbelt/belt/" } ]
             }
         }
     ]

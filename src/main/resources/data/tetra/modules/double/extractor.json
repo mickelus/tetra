@@ -1,8 +1,8 @@
 {
     "replace": true,
     "type": "tetra:multi_major_module",
-    "slots": ["double/head_right"],
-    "slotSuffixes": ["_right"],
+    "slots": [ "double/head_right" ],
+    "slotSuffixes": [ "_right" ],
     "prefixPriority": "lower",
     "improvements": [
         "tetra:double/extractor/",
@@ -31,7 +31,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/double/head/extractor/extractor"
+                    "location": "tetra:item/module/double/head/extractor/extractor"
                 }
             ]
         }

@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "tetra:items/reverberating_pearl"
+        "layer0": "tetra:item/reverberating_pearl"
     }
 }

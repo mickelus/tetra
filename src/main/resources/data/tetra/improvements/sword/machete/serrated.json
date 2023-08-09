@@ -8,7 +8,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/sword/blade/improvements/serrated",
+                "location": "tetra:item/module/sword/blade/improvements/serrated",
                 "tint": "inherit"
             }
         ]
@@ -22,7 +22,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/sword/blade/improvements/serrated",
+                "location": "tetra:item/module/sword/blade/improvements/serrated",
                 "tint": "inherit"
             }
         ]
@@ -36,7 +36,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/sword/blade/improvements/serrated",
+                "location": "tetra:item/module/sword/blade/improvements/serrated",
                 "tint": "inherit"
             }
         ]

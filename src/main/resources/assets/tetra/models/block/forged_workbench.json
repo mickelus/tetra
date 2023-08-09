@@ -8,9 +8,9 @@
         }
     },
     "textures": {
-        "particle": "tetra:blocks/forged_bench_base",
-        "base": "tetra:blocks/forged_bench_base",
-        "top": "tetra:blocks/forged_bench_top"
+        "particle": "tetra:block/forged_bench_base",
+        "base": "tetra:block/forged_bench_base",
+        "top": "tetra:block/forged_bench_top"
     },
     "elements": [
         {

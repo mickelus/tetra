@@ -10,7 +10,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/double/head/basic_pickaxe/warforged",
+                "location": "tetra:item/module/double/head/basic_pickaxe/warforged",
                 "tint": "inherit"
             }
         ]

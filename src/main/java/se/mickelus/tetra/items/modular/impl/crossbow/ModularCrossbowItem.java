@@ -72,9 +72,9 @@ public class ModularCrossbowItem extends ModularItem {
     @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularCrossbowItem instance;
     public static double multishotDefaultSpread = 10;
-    protected ModuleModel arrowModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "items/module/crossbow/arrow"));
-    protected ModuleModel extractorModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "items/module/crossbow/extractor"));
-    protected ModuleModel fireworkModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "items/module/crossbow/firework"));
+    protected ModuleModel arrowModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/arrow"));
+    protected ModuleModel extractorModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/extractor"));
+    protected ModuleModel fireworkModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/firework"));
     // used to pick projectiles from the player inventory
     protected ItemStack shootableDummy;
     // todo: based on vanilla, uses bool in singleton to keep track of which sound to play. Would break if multiple entities use this simultaneously
@@ -84,10 +84,10 @@ public class ModularCrossbowItem extends ModularItem {
     public ModularCrossbowItem(@NotNull Item shootableDummy) {
         super(new Properties().stacksTo(1).fireResistant());
 
-        majorModuleKeys = new String[] {staveKey, stockKey};
-        minorModuleKeys = new String[] {attachmentAKey, stringKey, attachmentBKey};
+        majorModuleKeys = new String[] { staveKey, stockKey };
+        minorModuleKeys = new String[] { attachmentAKey, stringKey, attachmentBKey };
 
-        requiredModules = new String[] {stringKey, stockKey, staveKey};
+        requiredModules = new String[] { stringKey, stockKey, staveKey };
 
         this.shootableDummy = new ItemStack(shootableDummy);
 

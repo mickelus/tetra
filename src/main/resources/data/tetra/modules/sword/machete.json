@@ -47,7 +47,7 @@
                     "textureX": 48
                 },
                 "availableTextures": [ "metal", "shiny", "grainy", "crude" ],
-                "models": [ { "location": "tetra:items/module/sword/blade/machete/" } ]
+                "models": [ { "location": "tetra:item/module/sword/blade/machete/" } ]
             }
         }
     ]

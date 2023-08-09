@@ -21,7 +21,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/sword/pommel/grip_loop/" } ]
+                "models": [ { "location": "tetra:item/module/sword/pommel/grip_loop/" } ]
             }
         }
     ]

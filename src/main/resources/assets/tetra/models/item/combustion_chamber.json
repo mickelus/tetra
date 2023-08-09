@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "tetra:items/combustion_chamber"
+        "layer0": "tetra:item/combustion_chamber"
     }
 }

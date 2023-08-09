@@ -1,8 +1,8 @@
 {
     "parent": "block/cube",
     "textures": {
-        "particle": "tetra:blocks/forged_crate",
-        "texture": "tetra:blocks/forged_crate"
+        "particle": "tetra:block/forged_crate",
+        "texture": "tetra:block/forged_crate"
     },
     "elements": [
         {

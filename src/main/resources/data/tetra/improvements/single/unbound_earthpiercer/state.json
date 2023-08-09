@@ -8,14 +8,14 @@
         "group": "state",
         "effects": {
             "piercingHarvest": 1,
-            "sculkTaint": [12, 0.01]
+            "sculkTaint": [ 12, 0.01 ]
         },
         "tools": {
-            "pickaxe_dig": [0, 5]
+            "pickaxe_dig": [ 0, 5 ]
         },
         "models": [
             {
-                "location": "tetra:items/module/single/head/unbound_earthpiercer/echo_shard"
+                "location": "tetra:item/module/single/head/unbound_earthpiercer/echo_shard"
             }
         ]
     }

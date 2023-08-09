@@ -29,7 +29,7 @@
             "models": [
                 {
                     "type": "static",
-                    "location": "tetra:items/module/bow/stave/improvements/"
+                    "location": "tetra:item/module/bow/stave/improvements/"
                 }
             ]
         }

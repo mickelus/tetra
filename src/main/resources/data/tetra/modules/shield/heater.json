@@ -53,7 +53,7 @@
                 "models": [
                     {
                         "type": "tetra:plate/heater",
-                        "location": "tetra:items/module/shield/plate/heater/"
+                        "location": "tetra:item/module/shield/plate/heater/"
                     }
                 ]
             }

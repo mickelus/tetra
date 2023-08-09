@@ -44,7 +44,7 @@
                     "textureY": 32
                 },
                 "availableTextures": [ "crude", "metal", "shiny" ],
-                "models": [ { "location": "tetra:items/module/double/head/hoe/" } ]
+                "models": [ { "location": "tetra:item/module/double/head/hoe/" } ]
             }
         }
     ]

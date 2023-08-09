@@ -30,7 +30,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/sword/fuller/howling/" } ]
+                "models": [ { "location": "tetra:item/module/sword/fuller/howling/" } ]
             }
         }
     ]

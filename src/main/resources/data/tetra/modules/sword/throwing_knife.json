@@ -47,7 +47,7 @@
                     "textureY": 48
                 },
                 "availableTextures": [ "metal", "shiny", "grainy", "crude" ],
-                "models": [ { "location": "tetra:items/module/sword/blade/throwing_knife/" } ]
+                "models": [ { "location": "tetra:item/module/sword/blade/throwing_knife/" } ]
             }
         }
     ]

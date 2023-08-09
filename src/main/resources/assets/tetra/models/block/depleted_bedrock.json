@@ -3,7 +3,7 @@
     "textures": {
         "particle": "minecraft:block/bedrock",
         "down": "minecraft:block/bedrock",
-        "up": "tetra:blocks/depleted_bedrock",
+        "up": "tetra:block/depleted_bedrock",
         "north": "minecraft:block/bedrock",
         "east": "minecraft:block/bedrock",
         "south": "minecraft:block/bedrock",

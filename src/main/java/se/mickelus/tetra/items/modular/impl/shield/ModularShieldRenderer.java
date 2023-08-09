@@ -39,8 +39,8 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ModularShieldRenderer extends BlockEntityWithoutLevelRenderer {
-    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, "items/shield"), "main");
-    public static ModelLayerLocation bannerLayer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, "items/shield_banner"), "main");
+    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, "item/shield"), "main");
+    public static ModelLayerLocation bannerLayer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, "item/shield_banner"), "main");
     private final EntityModelSet modelSet;
     public ModularShieldBannerModel bannerModel;
     private ModularShieldModel model;

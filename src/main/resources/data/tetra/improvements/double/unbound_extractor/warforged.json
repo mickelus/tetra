@@ -9,11 +9,11 @@
             "sweeping": 2,
             "truesweep": 1,
             "unboundExtraction": -8,
-            "sculkTaint": [0, 0.01]
+            "sculkTaint": [ 0, 0.01 ]
         },
         "models": [
             {
-                "location": "tetra:items/module/double/head/unbound_extractor/warforged"
+                "location": "tetra:item/module/double/head/unbound_extractor/warforged"
             }
         ]
     }

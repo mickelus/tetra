@@ -10,19 +10,19 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/bow/string/improvements/latch"
+                "location": "tetra:item/module/bow/string/improvements/latch"
             },
             {
                 "type": "draw_0",
-                "location": "tetra:items/module/bow/string/improvements/latch_0"
+                "location": "tetra:item/module/bow/string/improvements/latch_0"
             },
             {
                 "type": "draw_1",
-                "location": "tetra:items/module/bow/string/improvements/latch_1"
+                "location": "tetra:item/module/bow/string/improvements/latch_1"
             },
             {
                 "type": "draw_2",
-                "location": "tetra:items/module/bow/string/improvements/latch_2"
+                "location": "tetra:item/module/bow/string/improvements/latch_2"
             }
         ]
     }

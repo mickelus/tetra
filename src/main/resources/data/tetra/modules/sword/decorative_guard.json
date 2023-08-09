@@ -15,7 +15,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/sword/guard/decorative_guard/" } ]
+                "models": [ { "location": "tetra:item/module/sword/guard/decorative_guard/" } ]
             }
         }
     ]

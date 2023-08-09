@@ -8,7 +8,7 @@
         "models": [
             {
                 "type": "tetra:plate/tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_bevel",
+                "location": "tetra:item/module/shield/plate/tower/improvements/trim_bevel",
                 "tint": "inherit"
             }
         ],
@@ -18,7 +18,7 @@
             "models": [
                 {
                     "type": "tetra:plate/tower",
-                    "location": "tetra:items/module/shield/plate/tower/improvements/"
+                    "location": "tetra:item/module/shield/plate/tower/improvements/"
                 }
             ]
         }
@@ -32,7 +32,7 @@
         "models": [
             {
                 "type": "tetra:plate/tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_shadow",
+                "location": "tetra:item/module/shield/plate/tower/improvements/trim_shadow",
                 "tint": "inherit"
             }
         ],
@@ -42,7 +42,7 @@
             "models": [
                 {
                     "type": "tetra:plate/tower",
-                    "location": "tetra:items/module/shield/plate/tower/improvements/"
+                    "location": "tetra:item/module/shield/plate/tower/improvements/"
                 }
             ]
         }
@@ -55,11 +55,11 @@
         "models": [
             {
                 "type": "tetra:plate/tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_scrap"
+                "location": "tetra:item/module/shield/plate/tower/improvements/trim_scrap"
             },
             {
                 "type": "tetra:plate/tower",
-                "location": "tetra:items/module/shield/plate/tower/improvements/trim_scrap_bevel",
+                "location": "tetra:item/module/shield/plate/tower/improvements/trim_scrap_bevel",
                 "tint": "inherit"
             }
         ]

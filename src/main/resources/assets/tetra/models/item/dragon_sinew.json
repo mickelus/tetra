@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "tetra:items/dragon_sinew"
+        "layer0": "tetra:item/dragon_sinew"
     }
 }

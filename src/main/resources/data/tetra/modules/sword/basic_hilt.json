@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["sword/hilt"],
+    "slots": [ "sword/hilt" ],
     "type": "tetra:basic_major_module",
     "renderLayer": "lower",
     "improvements": [
@@ -11,7 +11,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/" ],
             "key": "basic_hilt/",
             "attributes": {
                 "generic.attack_speed": -0.35
@@ -32,10 +32,10 @@
                 "glyph": {
                     "textureX": 16
                 },
-                "availableTextures": ["bright", "default"],
+                "availableTextures": [ "bright", "default" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/sword/hilt/basic/"
+                        "location": "tetra:item/module/sword/hilt/basic/"
                     }
                 ]
             }

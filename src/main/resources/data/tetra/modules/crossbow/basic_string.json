@@ -24,23 +24,23 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/crossbow/string/basic/"
+                        "location": "tetra:item/module/crossbow/string/basic/"
                     },
                     {
                         "type": "draw_0",
-                        "location": "tetra:items/module/crossbow/string/basic/0_"
+                        "location": "tetra:item/module/crossbow/string/basic/0_"
                     },
                     {
                         "type": "draw_1",
-                        "location": "tetra:items/module/crossbow/string/basic/1_"
+                        "location": "tetra:item/module/crossbow/string/basic/1_"
                     },
                     {
                         "type": "draw_2",
-                        "location": "tetra:items/module/crossbow/string/basic/2_"
+                        "location": "tetra:item/module/crossbow/string/basic/2_"
                     },
                     {
                         "type": "loaded",
-                        "location": "tetra:items/module/crossbow/string/basic/2_"
+                        "location": "tetra:item/module/crossbow/string/basic/2_"
                     }
                 ]
             }

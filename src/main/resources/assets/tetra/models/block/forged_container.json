@@ -1,17 +1,17 @@
 {
     "parent": "block/cube",
     "textures": {
-        "particle": "tetra:blocks/forged_container/forged_container_side",
-        "front": "tetra:blocks/forged_container/forged_container_front",
-        "side": "tetra:blocks/forged_container/forged_container_side",
-        "back": "tetra:blocks/forged_container/forged_container_back",
-        "bottom": "tetra:blocks/forged_container/forged_container_bottom",
-        "top": "tetra:blocks/forged_container/forged_container_top",
-        "lid_front": "tetra:blocks/forged_container/forged_container_lid_front",
-        "lid_side": "tetra:blocks/forged_container/forged_container_lid_side",
-        "lid_back": "tetra:blocks/forged_container/forged_container_lid_back",
-        "lid_bottom": "tetra:blocks/forged_container/forged_container_lid_bottom",
-        "lid_top": "tetra:blocks/forged_container/forged_container_lid_top"
+        "particle": "tetra:block/forged_container/forged_container_side",
+        "front": "tetra:block/forged_container/forged_container_front",
+        "side": "tetra:block/forged_container/forged_container_side",
+        "back": "tetra:block/forged_container/forged_container_back",
+        "bottom": "tetra:block/forged_container/forged_container_bottom",
+        "top": "tetra:block/forged_container/forged_container_top",
+        "lid_front": "tetra:block/forged_container/forged_container_lid_front",
+        "lid_side": "tetra:block/forged_container/forged_container_lid_side",
+        "lid_back": "tetra:block/forged_container/forged_container_lid_back",
+        "lid_bottom": "tetra:block/forged_container/forged_container_lid_bottom",
+        "lid_top": "tetra:block/forged_container/forged_container_lid_top"
     },
     "elements": [
         {

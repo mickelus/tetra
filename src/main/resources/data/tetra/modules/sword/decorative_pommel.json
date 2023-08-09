@@ -16,7 +16,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/sword/pommel/decorative_pommel/" } ]
+                "models": [ { "location": "tetra:item/module/sword/pommel/decorative_pommel/" } ]
             }
         }
     ]

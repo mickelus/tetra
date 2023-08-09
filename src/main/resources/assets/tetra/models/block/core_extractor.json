@@ -1,11 +1,11 @@
 {
     "parent": "block/cube",
     "textures": {
-        "0": "tetra:blocks/extractor_extrude",
-        "1": "tetra:blocks/extractor_top",
-        "2": "tetra:blocks/extractor_side1",
-        "4": "tetra:blocks/extractor_side2",
-        "particle": "tetra:blocks/extractor_extrude"
+        "0": "tetra:block/extractor_extrude",
+        "1": "tetra:block/extractor_top",
+        "2": "tetra:block/extractor_side1",
+        "4": "tetra:block/extractor_side2",
+        "particle": "tetra:block/extractor_extrude"
     },
     "elements": [
         {

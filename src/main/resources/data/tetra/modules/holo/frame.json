@@ -15,7 +15,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/holo/frame/default"
+                    "location": "tetra:item/module/holo/frame/default"
                 }
             ]
         }

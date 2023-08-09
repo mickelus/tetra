@@ -1,8 +1,8 @@
 {
     "parent": "block/cube",
     "textures": {
-        "texture": "tetra:blocks/extractor_piston",
-        "particle": "tetra:blocks/extractor_piston"
+        "texture": "tetra:block/extractor_piston",
+        "particle": "tetra:block/extractor_piston"
     },
     "elements": [
         {

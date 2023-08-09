@@ -10,7 +10,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/double/head/basic_hammer/warforged",
+                "location": "tetra:item/module/double/head/basic_hammer/warforged",
                 "tint": "inherit"
             }
         ]

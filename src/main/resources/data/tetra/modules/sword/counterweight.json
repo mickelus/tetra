@@ -18,7 +18,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "default" ],
-                "models": [ { "location": "tetra:items/module/sword/pommel/counterweight/" } ]
+                "models": [ { "location": "tetra:item/module/sword/pommel/counterweight/" } ]
             }
         }
     ]

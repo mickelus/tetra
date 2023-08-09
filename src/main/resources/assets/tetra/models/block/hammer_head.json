@@ -1,9 +1,9 @@
 {
     "parent": "block/block",
     "textures": {
-        "0": "tetra:blocks/hammer_head_side",
-        "1": "tetra:blocks/hammer_head_face",
-        "particle": "tetra:blocks/hammer_head_side"
+        "0": "tetra:block/hammer_head_side",
+        "1": "tetra:block/hammer_head_face",
+        "particle": "tetra:block/hammer_head_side"
     },
     "elements": [
         {

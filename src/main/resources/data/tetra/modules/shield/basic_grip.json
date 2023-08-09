@@ -11,7 +11,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/" ],
             "key": "basic_grip/",
             "attributes": {
                 "tetra:ability_cooldown": 1
@@ -32,11 +32,11 @@
                     "textureX": 16,
                     "textureY": 48
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
                         "type": "tetra:grip/grip",
-                        "location": "tetra:items/module/shield/grip/basic_grip/"
+                        "location": "tetra:item/module/shield/grip/basic_grip/"
                     }
                 ]
             }

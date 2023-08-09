@@ -1,7 +1,7 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "tetra:items/thermal_cell"
+        "layer0": "tetra:item/thermal_cell"
     },
     "overrides": [
         {

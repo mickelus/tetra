@@ -29,7 +29,7 @@
                     "textureY": 16
                 },
                 "availableTextures": [ "metal", "shiny", "crude" ],
-                "models": [ { "location": "tetra:items/module/sword/guard/wide_guard/" } ]
+                "models": [ { "location": "tetra:item/module/sword/guard/wide_guard/" } ]
             }
         }
     ]

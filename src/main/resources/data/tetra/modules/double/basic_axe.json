@@ -52,7 +52,7 @@
                     "textureX": 144
                 },
                 "availableTextures": [ "crude", "metal", "shiny" ],
-                "models": [ { "location": "tetra:items/module/double/head/basic_axe/" } ]
+                "models": [ { "location": "tetra:item/module/double/head/basic_axe/" } ]
             }
         }
     ]

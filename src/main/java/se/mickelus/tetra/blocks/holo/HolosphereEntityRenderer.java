@@ -31,7 +31,7 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.util.Lherper;
 
 public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereBlockEntity> {
-    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "blocks/holosphere_hud"));
+    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "block/holosphere_hud"));
     private final BlockEntityRenderDispatcher dispatcher;
     private final Font font;
 

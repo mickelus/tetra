@@ -7,7 +7,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/double/head/butt/warforged",
+                "location": "tetra:item/module/double/head/butt/warforged",
                 "tint": "inherit"
             }
         ]

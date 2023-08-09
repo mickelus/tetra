@@ -14,8 +14,8 @@
     },
     "ambientocclusion": false,
     "textures": {
-        "texture": "tetra:blocks/chthonic_extractor",
-        "particle": "tetra:blocks/chthonic_extractor"
+        "texture": "tetra:block/chthonic_extractor",
+        "particle": "tetra:block/chthonic_extractor"
     },
     "elements": [
         {

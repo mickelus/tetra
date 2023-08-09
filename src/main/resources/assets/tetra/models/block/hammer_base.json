@@ -1,12 +1,12 @@
 {
     "parent": "block/cube",
     "textures": {
-        "particle": "tetra:blocks/forged_hammer/hammer_base",
-        "down": "tetra:blocks/forged_hammer/hammer_base",
-        "up": "tetra:blocks/forged_hammer/hammer_base",
-        "north": "tetra:blocks/forged_hammer/hammer_base_socket",
-        "south": "tetra:blocks/forged_hammer/hammer_base_socket",
-        "east": "tetra:blocks/forged_hammer/hammer_base_side",
-        "west": "tetra:blocks/forged_hammer/hammer_base_side"
+        "particle": "tetra:block/forged_hammer/hammer_base",
+        "down": "tetra:block/forged_hammer/hammer_base",
+        "up": "tetra:block/forged_hammer/hammer_base",
+        "north": "tetra:block/forged_hammer/hammer_base_socket",
+        "south": "tetra:block/forged_hammer/hammer_base_socket",
+        "east": "tetra:block/forged_hammer/hammer_base_side",
+        "west": "tetra:block/forged_hammer/hammer_base_side"
     }
 }

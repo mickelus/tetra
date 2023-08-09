@@ -1,10 +1,10 @@
 {
     "parent": "block/cube",
     "textures": {
-        "face1": "tetra:blocks/forged_vent1",
-        "face2": "tetra:blocks/forged_vent2",
-        "particle": "tetra:blocks/forged_vent1",
-        "edge": "tetra:blocks/forged_platform_bottom"
+        "face1": "tetra:block/forged_vent1",
+        "face2": "tetra:block/forged_vent2",
+        "particle": "tetra:block/forged_vent1",
+        "edge": "tetra:block/forged_platform_bottom"
     },
     "elements": [
         {

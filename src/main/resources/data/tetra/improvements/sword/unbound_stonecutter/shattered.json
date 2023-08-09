@@ -17,10 +17,10 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/sword/blade/unbound_stonecutter/shattered_shard"
+                "location": "tetra:item/module/sword/blade/unbound_stonecutter/shattered_shard"
             },
             {
-                "location": "tetra:items/module/sword/blade/unbound_stonecutter/shattered_shard_glow",
+                "location": "tetra:item/module/sword/blade/unbound_stonecutter/shattered_shard_glow",
                 "emission": 8
             }
         ]

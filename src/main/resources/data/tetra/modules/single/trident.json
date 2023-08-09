@@ -31,7 +31,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/single/head/trident/default"
+                    "location": "tetra:item/module/single/head/trident/default"
                 }
             ]
         }

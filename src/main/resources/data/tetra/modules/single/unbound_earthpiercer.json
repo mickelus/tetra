@@ -1,7 +1,7 @@
 {
     "replace": true,
     "type": "tetra:basic_major_module",
-    "slots": ["single/head"],
+    "slots": [ "single/head" ],
     "improvements": [
         "tetra:single/unbound_earthpiercer/",
         "tetra:single/shared_head/",
@@ -10,7 +10,7 @@
     ],
     "variants": [
         {
-            "materials": ["tetra:metal/"],
+            "materials": [ "tetra:metal/" ],
             "key": "unbound_earthpiercer/",
             "attributes": {
                 "generic.attack_damage": 2,
@@ -21,9 +21,9 @@
                 "breakable": 2
             },
             "tools": {
-                "axe_dig": [0, -2],
-                "shovel_dig": [0, -2],
-                "pickaxe_dig": [0, -4]
+                "axe_dig": [ 0, -2 ],
+                "shovel_dig": [ 0, -2 ],
+                "pickaxe_dig": [ 0, -4 ]
             },
             "durability": 120,
             "extract": {
@@ -37,9 +37,9 @@
                     "piercing": 0.8
                 },
                 "tools": {
-                    "axe_dig": [0, 0.5],
-                    "shovel_dig": [0, 0.5],
-                    "pickaxe_dig": [1, 1]
+                    "axe_dig": [ 0, 0.5 ],
+                    "shovel_dig": [ 0, 0.5 ],
+                    "pickaxe_dig": [ 1, 1 ]
                 },
                 "durability": 0.6,
                 "integrity": -1,
@@ -48,10 +48,10 @@
                     "textureX": 224,
                     "textureY": 32
                 },
-                "availableTextures": ["default"],
+                "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/single/head/unbound_earthpiercer/"
+                        "location": "tetra:item/module/single/head/unbound_earthpiercer/"
                     }
                 ]
             }

@@ -10,7 +10,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/double/head/adze/warforged",
+                "location": "tetra:item/module/double/head/adze/warforged",
                 "tint": "inherit"
             }
         ]

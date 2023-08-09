@@ -46,7 +46,7 @@
                 "models": [
                     {
                         "type": "tetra:plate/tower",
-                        "location": "tetra:items/module/shield/plate/tower/"
+                        "location": "tetra:item/module/shield/plate/tower/"
                     }
                 ]
             }

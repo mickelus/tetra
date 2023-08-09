@@ -12,7 +12,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/double/head/extractor/warforged"
+                "location": "tetra:item/module/double/head/extractor/warforged"
             }
         ]
     }

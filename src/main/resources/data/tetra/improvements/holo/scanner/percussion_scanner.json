@@ -7,7 +7,7 @@
         },
         "models": [
             {
-                "location": "tetra:items/module/holo/scanner/percussion_scanner",
+                "location": "tetra:item/module/holo/scanner/percussion_scanner",
                 "emission": 2
             }
         ]

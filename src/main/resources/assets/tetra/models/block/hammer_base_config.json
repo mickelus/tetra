@@ -1,7 +1,7 @@
 {
     "parent": "block/block",
     "textures": {
-        "config": "tetra:blocks/hammer_config0"
+        "config": "tetra:block/hammer_config0"
     },
     "elements": [
         {

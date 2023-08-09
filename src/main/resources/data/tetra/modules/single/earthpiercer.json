@@ -25,7 +25,7 @@
                 "breakable": 2
             },
             "tools": {
-                "pickaxe_dig": ["minecraft:iron", 5]
+                "pickaxe_dig": [ "minecraft:iron", 5 ]
             },
             "effects": {
                 "piercing": 2,
@@ -37,7 +37,7 @@
             },
             "models": [
                 {
-                    "location": "tetra:items/module/single/head/earthpiercer/default"
+                    "location": "tetra:item/module/single/head/earthpiercer/default"
                 }
             ]
         }

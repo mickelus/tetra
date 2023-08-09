@@ -10,7 +10,7 @@
             "key": "single_perk_socket_0/",
             "models": [
                 {
-                    "location": "tetra:items/module/single/binding/socket/perk_sided_0"
+                    "location": "tetra:item/module/single/binding/socket/perk_sided_0"
                 }
             ],
             "extract": {
@@ -30,7 +30,7 @@
                 "availableTextures": [ "perk_glow_0" ],
                 "models": [
                     {
-                        "location": "tetra:items/module/single/binding/socket/",
+                        "location": "tetra:item/module/single/binding/socket/",
                         "emission": 4
                     }
                 ]
