@@ -26,9 +26,11 @@ public class RevengeGui extends GuiElement {
         setAttachment(GuiAttachment.middleCenter);
 
         indicatorLeft = new GuiTexture(-3, 0, 5, 3, 9, 4, GuiTextures.hud);
+        indicatorLeft.setOpacity(0);
         addChild(indicatorLeft);
 
-        GuiTexture indicatorRight = new GuiTexture(3, 0, 5, 3, 15, 4, GuiTextures.hud);
+        GuiTexture indicatorRight = new GuiTexture(2, 0, 5, 3, 15, 4, GuiTextures.hud);
+        indicatorRight.setOpacity(0);
         indicatorRight.setAttachment(GuiAttachment.topRight);
         addChild(indicatorRight);
 
@@ -42,7 +44,7 @@ public class RevengeGui extends GuiElement {
                 .applyTo(new Applier.Opacity(1), new Applier.TranslateX(0));
 
         hideAnimationRight = new KeyframeAnimation(60, indicatorRight)
-                .applyTo(new Applier.Opacity(0), new Applier.TranslateX(3));
+                .applyTo(new Applier.Opacity(0), new Applier.TranslateX(2));
     }
 
     public void update(Player player, HitResult mouseover) {
@@ -50,18 +52,18 @@ public class RevengeGui extends GuiElement {
                 && RevengeTracker.canRevenge(player)
                 && RevengeTracker.canRevenge(player, ((EntityHitResult) mouseover).getEntity())) {
             if (!showAnimationLeft.isActive() && indicatorLeft.getOpacity() < 1) {
+                hideAnimationLeft.stop();
+                hideAnimationRight.stop();
                 showAnimationLeft.start();
                 showAnimationRight.start();
             }
-            hideAnimationLeft.stop();
-            hideAnimationRight.stop();
         } else {
             if (!hideAnimationLeft.isActive() && indicatorLeft.getOpacity() > 0) {
+                showAnimationLeft.stop();
+                showAnimationRight.stop();
                 hideAnimationLeft.start();
                 hideAnimationRight.start();
             }
-            showAnimationLeft.stop();
-            showAnimationRight.stop();
         }
     }
 }

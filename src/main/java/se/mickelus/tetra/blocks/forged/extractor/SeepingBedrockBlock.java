@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
@@ -32,7 +31,7 @@ public class SeepingBedrockBlock extends TetraBlock {
     public static SeepingBedrockBlock instance;
 
     public SeepingBedrockBlock() {
-        super(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable());
+        super(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).noLootTable());
 
         registerDefaultState(defaultBlockState().setValue(activeProp, 1));
     }

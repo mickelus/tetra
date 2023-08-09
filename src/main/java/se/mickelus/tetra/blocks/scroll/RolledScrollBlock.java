@@ -25,7 +25,7 @@ public class RolledScrollBlock extends ScrollBlock {
     @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static ScrollBlock instance;
 
-    private final VoxelShape[] baseShapes = new VoxelShape[]{
+    private final VoxelShape[] baseShapes = new VoxelShape[] {
             Block.box(6.0, 0.0, 1.0, 9.0, 3.0, 15.0),
             Block.box(4.0, 0.0, 1.0, 11.0, 3.0, 15.0),
             Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
@@ -40,7 +40,7 @@ public class RolledScrollBlock extends ScrollBlock {
     private final Map<Direction, VoxelShape[]> shapes;
 
     public RolledScrollBlock() {
-        super(identifier, Arrangement.rolled);
+        super(Arrangement.rolled);
 
         shapes = new EnumMap<>(Direction.class);
         for (int i = 0; i < 4; i++) {

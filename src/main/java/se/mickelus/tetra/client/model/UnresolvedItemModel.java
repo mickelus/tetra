@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.RenderTypeGroup;
 import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
@@ -38,21 +39,21 @@ public final class UnresolvedItemModel implements IUnbakedGeometry<UnresolvedIte
             ItemTransforms variant = transformVariants.get(transformVariant);
 
             return new ItemTransforms(
-                    variant.hasTransform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND) ?
+                    variant.hasTransform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND) ?
                             variant.thirdPersonLeftHand : cameraTransforms.thirdPersonLeftHand,
-                    variant.hasTransform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND) ?
+                    variant.hasTransform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND) ?
                             variant.thirdPersonRightHand : cameraTransforms.thirdPersonRightHand,
-                    variant.hasTransform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND) ?
+                    variant.hasTransform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND) ?
                             variant.firstPersonLeftHand : cameraTransforms.firstPersonLeftHand,
-                    variant.hasTransform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) ?
+                    variant.hasTransform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) ?
                             variant.firstPersonRightHand : cameraTransforms.firstPersonRightHand,
-                    variant.hasTransform(ItemTransforms.TransformType.HEAD) ?
+                    variant.hasTransform(ItemDisplayContext.HEAD) ?
                             variant.head : cameraTransforms.head,
-                    variant.hasTransform(ItemTransforms.TransformType.GUI) ?
+                    variant.hasTransform(ItemDisplayContext.GUI) ?
                             variant.gui : cameraTransforms.gui,
-                    variant.hasTransform(ItemTransforms.TransformType.GROUND) ?
+                    variant.hasTransform(ItemDisplayContext.GROUND) ?
                             variant.ground : cameraTransforms.ground,
-                    variant.hasTransform(ItemTransforms.TransformType.FIXED) ?
+                    variant.hasTransform(ItemDisplayContext.FIXED) ?
                             variant.fixed : cameraTransforms.fixed,
                     variant.moddedTransforms
             );
@@ -66,16 +67,8 @@ public final class UnresolvedItemModel implements IUnbakedGeometry<UnresolvedIte
     }
 
     @Override
-    public Collection<Material> getMaterials(IGeometryBakingContext owner, Function<ResourceLocation, UnbakedModel> modelGetter,
-            Set<Pair<String, String>> missingTextureErrors) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter,
-            ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation) {
-
-        overrideList = new ModularOverrideList(this, context, bakery, spriteGetter, modelTransform, modelLocation);
+    public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
+        overrideList = new ModularOverrideList(this, context, baker, spriteGetter, modelState, modelLocation);
         return new Baked(overrideList);
     }
 

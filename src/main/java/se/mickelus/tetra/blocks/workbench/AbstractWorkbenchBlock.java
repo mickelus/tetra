@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.blocks.ICraftingEffectProviderBlock;
@@ -57,7 +57,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
             TileEntityOptional.from(world, pos, WorkbenchTile.class)
-                    .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
+                    .map(te -> te.getCapability(ForgeCapabilities.ITEM_HANDLER))
                     .orElse(LazyOptional.empty())
                     .ifPresent(cap -> {
                         for (int i = 0; i < cap.getSlots(); i++) {

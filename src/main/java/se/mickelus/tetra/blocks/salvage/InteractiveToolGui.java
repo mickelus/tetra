@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.salvage;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.gui.GuiElement;
@@ -72,12 +72,12 @@ public class InteractiveToolGui extends GuiElement {
     }
 
     @Override
-    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(GuiGraphics graphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (player.getInventory().selected != currentSlot) {
             updateTint();
             currentSlot = player.getInventory().selected;
         }
 
-        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+        super.draw(graphics, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }

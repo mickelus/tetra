@@ -40,7 +40,7 @@ public class PuncturedPotionEffect extends MobEffect {
             EquipmentSlot slot = EquipmentSlot.values()[2 + rand.nextInt(4)];
             ItemStack itemStack = entity.getItemBySlot(slot);
             if (!itemStack.isEmpty()) {
-                ((ServerLevel) entity.level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, itemStack),
+                ((ServerLevel) entity.level()).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, itemStack),
                         entity.getX() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),
                         entity.getY() + entity.getBbHeight() * (0.2 + rand.nextGaussian() * 0.4),
                         entity.getZ() + entity.getBbWidth() * (0.3 + rand.nextGaussian() * 0.4),

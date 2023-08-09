@@ -200,7 +200,7 @@ public class EffectHelper {
             result /= 5.0F;
         }
 
-        if (!player.isOnGround()) {
+        if (!player.onGround()) {
             result /= 5.0F;
         }
 

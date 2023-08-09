@@ -13,8 +13,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ObjectHolder;
@@ -32,7 +30,7 @@ public class GeodeBlock extends TetraBlock {
     public static GeodeBlock instance;
 
     public GeodeBlock() {
-        super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.DEEPSLATE)
+        super(BlockBehaviour.Properties.of()
                 .requiresCorrectToolForDrops()
                 .strength(3.0F, 6.0F)
                 .sound(SoundType.DEEPSLATE));

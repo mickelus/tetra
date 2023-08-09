@@ -22,7 +22,7 @@ public class ImprovementCraftCriterion extends AbstractCriterionTriggerInstance 
     private final ToolAction toolAction;
     private final MinMaxBounds.Ints toolLevel;
 
-    public ImprovementCraftCriterion(EntityPredicate.Composite playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolAction toolAction, MinMaxBounds.Ints toolLevel) {
+    public ImprovementCraftCriterion(ContextAwarePredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolAction toolAction, MinMaxBounds.Ints toolLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -40,7 +40,7 @@ public class ImprovementCraftCriterion extends AbstractCriterionTriggerInstance 
                 criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, toolAction, toolLevel));
     }
 
-    private static ImprovementCraftCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
+    private static ImprovementCraftCriterion deserialize(JsonObject json, ContextAwarePredicate entityPredicate, DeserializationContext conditionsParser) {
         return new ImprovementCraftCriterion(entityPredicate,
                 JsonOptional.field(json, "before")
                         .map(ItemPredicate::fromJson)

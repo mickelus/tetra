@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui.stats.bar;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import se.mickelus.mutil.gui.GuiAlignment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.tetra.gui.GuiColors;
@@ -78,16 +78,16 @@ public class GuiBar extends GuiElement {
     }
 
     @Override
-    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        drawRect(matrixStack, refX + x, refY + y + 6, refX + x + width, refY + y + 6 + height, color, 0.14f * opacity);
+    public void draw(GuiGraphics graphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        drawRect(graphics, refX + x, refY + y + 6, refX + x + width, refY + y + 6 + height, color, 0.14f * opacity);
 
         if (alignment == GuiAlignment.right) {
-            drawRect(matrixStack, refX + x + width - barLength, refY + y + 6, refX + x + width, refY + y + 6 + height, color, opacity);
-            drawRect(matrixStack, refX + x + width - barLength - diffLength, refY + y + 6, refX + x + width - barLength, refY + y + 6 + height,
+            drawRect(graphics, refX + x + width - barLength, refY + y + 6, refX + x + width, refY + y + 6 + height, color, opacity);
+            drawRect(graphics, refX + x + width - barLength - diffLength, refY + y + 6, refX + x + width - barLength, refY + y + 6 + height,
                     diffColor, 1);
         } else {
-            drawRect(matrixStack, refX + x, refY + y + 6, refX + x + barLength, refY + y + 6 + height, color, opacity);
-            drawRect(matrixStack, refX + x + barLength, refY + y + 6, refX + x + barLength + diffLength, refY + y + 6 + height,
+            drawRect(graphics, refX + x, refY + y + 6, refX + x + barLength, refY + y + 6 + height, color, opacity);
+            drawRect(graphics, refX + x + barLength, refY + y + 6, refX + x + barLength + diffLength, refY + y + 6 + height,
                     diffColor, 1);
         }
     }

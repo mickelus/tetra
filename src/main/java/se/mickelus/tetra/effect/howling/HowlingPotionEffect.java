@@ -30,7 +30,7 @@ public class HowlingPotionEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
-        if (entity.level.isClientSide) {
+        if (entity.level().isClientSide) {
             double offset = Math.PI * 4 / (amplifier + 1);
             for (int i = 0; i < (amplifier + 1) / 2; i++) {
                 double time = System.currentTimeMillis() / 1000d * Math.PI + offset * i;

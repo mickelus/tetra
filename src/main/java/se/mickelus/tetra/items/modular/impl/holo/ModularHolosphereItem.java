@@ -4,13 +4,11 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -25,8 +23,6 @@ import se.mickelus.tetra.blocks.holo.HolosphereBlock;
 import se.mickelus.tetra.blocks.holo.HolosphereBlockEntity;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
-import se.mickelus.tetra.items.TetraItemGroup;
-import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
@@ -55,15 +51,15 @@ public class ModularHolosphereItem extends ModularItem {
     public ModularHolosphereItem() {
         super(new Properties()
                 .stacksTo(1)
-                .tab(TetraItemGroup.instance)
+
                 .fireResistant());
 
         canHone = false;
 
-        majorModuleKeys = new String[] {coreKey, frameKey, scannerKey, repositoryKey};
+        majorModuleKeys = new String[] { coreKey, frameKey, scannerKey, repositoryKey };
         minorModuleKeys = new String[0];
 
-        requiredModules = new String[] {coreKey, frameKey, scannerKey, repositoryKey};
+        requiredModules = new String[] { coreKey, frameKey, scannerKey, repositoryKey };
 
         RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
@@ -110,19 +106,19 @@ public class ModularHolosphereItem extends ModularItem {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("holo/"));
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowedIn(group)) {
-            ItemStack itemStack = new ItemStack(this);
-
-            IModularItem.putModuleInSlot(itemStack, coreKey, "holo/core", "frame/dim");
-            IModularItem.putModuleInSlot(itemStack, frameKey, "holo/frame", "core/ancient");
-            IModularItem.putModuleInSlot(itemStack, scannerKey, "holo/scanner", "scanner/default");
-            IModularItem.putModuleInSlot(itemStack, repositoryKey, "holo/repo", "repo/default");
-
-            items.add(itemStack);
-        }
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+//        if (allowedIn(group)) {
+//            ItemStack itemStack = new ItemStack(this);
+//
+//            IModularItem.putModuleInSlot(itemStack, coreKey, "holo/core", "frame/dim");
+//            IModularItem.putModuleInSlot(itemStack, frameKey, "holo/frame", "core/ancient");
+//            IModularItem.putModuleInSlot(itemStack, scannerKey, "holo/scanner", "scanner/default");
+//            IModularItem.putModuleInSlot(itemStack, repositoryKey, "holo/repo", "repo/default");
+//
+//            items.add(itemStack);
+//        }
+//    }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {

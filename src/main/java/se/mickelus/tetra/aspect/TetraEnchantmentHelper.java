@@ -3,7 +3,6 @@ package se.mickelus.tetra.aspect;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -106,7 +105,7 @@ public class TetraEnchantmentHelper {
 
     public static void mapEnchantment(ItemStack itemStack, String slot, Enchantment enchantment) {
         CompoundTag map = itemStack.getOrCreateTagElement("EnchantmentMapping");
-        map.putString(Registry.ENCHANTMENT.getKey(enchantment).toString(), slot);
+        map.putString(ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString(), slot);
     }
 
     public static void mapEnchantments(ItemStack itemStack) {
@@ -131,7 +130,7 @@ public class TetraEnchantmentHelper {
 
         ItemModuleMajor[] modules = ((IModularItem) itemStack.getItem()).getMajorModules(itemStack);
         unmapped.forEach(pair -> {
-            Enchantment enchantment = Registry.ENCHANTMENT.getOptional(new ResourceLocation(pair.getKey())).orElse(null);
+            Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(pair.getKey()));
             if (enchantment != null) {
                 Arrays.stream(modules)
                         .filter(Objects::nonNull)
@@ -154,7 +153,7 @@ public class TetraEnchantmentHelper {
 
     @Nullable
     public static Pair<Enchantment, Integer> getEnchantment(CompoundTag nbt) {
-        return Registry.ENCHANTMENT.getOptional(new ResourceLocation(nbt.getString("id")))
+        return Optional.ofNullable(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(nbt.getString("id"))))
                 .map(enchantment -> Pair.of(enchantment, nbt.getInt("lvl")))
                 .orElse(null);
     }
@@ -164,7 +163,7 @@ public class TetraEnchantmentHelper {
     }
 
     public static void removeEnchantment(ItemStack itemStack, Enchantment enchantment) {
-        Optional.ofNullable(Registry.ENCHANTMENT.getKey(enchantment))
+        Optional.ofNullable(ForgeRegistries.ENCHANTMENTS.getKey(enchantment))
                 .ifPresent(enchantmentKey -> removeEnchantment(itemStack, enchantmentKey.toString()));
     }
 

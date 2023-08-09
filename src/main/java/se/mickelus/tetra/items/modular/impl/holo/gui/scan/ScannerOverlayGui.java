@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.scan;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
@@ -250,7 +250,7 @@ public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+    public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
         if (isVisible()) {
             Window window = mc.getWindow();
             width = window.getGuiScaledWidth();
@@ -259,7 +259,7 @@ public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
             int mouseX = (int) (mc.mouseHandler.xpos() * width / window.getScreenWidth());
             int mouseY = (int) (mc.mouseHandler.ypos() * height / window.getScreenHeight());
 
-            this.drawChildren(poseStack, 0, 0, width, height, mouseX, mouseY, 1.0F);
+            this.drawChildren(guiGraphics, 0, 0, width, height, mouseX, mouseY, 1.0F);
 
             widthRatio = scanner.getWidth() * 1f / width;
         }
@@ -275,7 +275,7 @@ public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
                     : null;
         }, (innerContext) -> {
             Vec3 vec3 = innerContext.getFrom().subtract(innerContext.getTo());
-            return BlockHitResult.miss(innerContext.getTo(), Direction.getNearest(vec3.x, vec3.y, vec3.z), new BlockPos(innerContext.getTo()));
+            return BlockHitResult.miss(innerContext.getTo(), Direction.getNearest(vec3.x, vec3.y, vec3.z), BlockPos.containing(innerContext.getTo()));
         });
     }
 }

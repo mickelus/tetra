@@ -40,10 +40,10 @@ public class SweepingEffect {
         float damage = (float) Math.max(attacker.getAttributeValue(Attributes.ATTACK_DAMAGE) * (sweepingLevel * 0.125f), 1);
         float knockback = trueSweep ? (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) + 1) * 0.5f : 0.5f;
         double range = 1 + EffectHelper.getEffectEfficiency(itemStack, ItemEffect.sweeping);
-        double reach = attacker.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
+        double reach = attacker.getAttributeValue(ForgeMod.ENTITY_REACH.get());
 
         // range values set up to mimic vanilla behaviour
-        attacker.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(range, 0.25d, range)).stream()
+        attacker.level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(range, 0.25d, range)).stream()
                 .filter(entity -> entity != attacker)
                 .filter(entity -> entity != target)
                 .filter(entity -> !attacker.isAlliedTo(entity))
@@ -54,7 +54,8 @@ public class SweepingEffect {
                             -Mth.cos(attacker.getYRot() * (float) Math.PI / 180F));
 
                     DamageSource damageSource = attacker instanceof Player
-                            ? DamageSource.playerAttack((Player) attacker) : DamageSource.indirectMobAttack(attacker, entity);
+                            ? attacker.damageSources().playerAttack((Player) attacker)
+                            : attacker.damageSources().mobAttack(attacker);
 
                     if (trueSweep) {
                         ItemEffectHandler.applyHitEffects(itemStack, entity, attacker);
@@ -67,7 +68,7 @@ public class SweepingEffect {
 
                 });
 
-        attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
+        attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                 SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);
 
         CastOptional.cast(attacker, Player.class).ifPresent(Player::sweepAttack);
@@ -96,7 +97,7 @@ public class SweepingEffect {
         AABB aoe = new AABB(target, target);
 
         // range values set up to mimic vanilla behaviour
-        attacker.level.getEntitiesOfClass(LivingEntity.class, aoe.inflate(range, 1d, range)).stream()
+        attacker.level().getEntitiesOfClass(LivingEntity.class, aoe.inflate(range, 1d, range)).stream()
                 .filter(entity -> entity != attacker)
                 .filter(entity -> !attacker.isAlliedTo(entity))
                 .forEach(entity -> {
@@ -109,12 +110,13 @@ public class SweepingEffect {
 
 
                     DamageSource damageSource = attacker instanceof Player
-                            ? DamageSource.playerAttack((Player) attacker) : DamageSource.indirectMobAttack(attacker, entity);
+                            ? attacker.damageSources().playerAttack((Player) attacker)
+                            : attacker.damageSources().mobAttack(attacker);
                     causeTruesweepDamage(damageSource, damage, itemStack, attacker, entity);
                 });
 
         if (triggerVfx) {
-            attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
+            attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                     SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);
 
             CastOptional.cast(attacker, Player.class).ifPresent(Player::sweepAttack);

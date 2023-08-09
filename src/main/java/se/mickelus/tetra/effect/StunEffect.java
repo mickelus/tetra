@@ -14,7 +14,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class StunEffect {
     public static void perform(ItemStack itemStack, int effectLevel, LivingEntity attacker, LivingEntity target) {
-        if (!attacker.level.isClientSide && attacker.getRandom().nextFloat() < effectLevel / 100f) {
+        if (!attacker.level().isClientSide && attacker.getRandom().nextFloat() < effectLevel / 100f) {
             int duration = (int) (EffectHelper.getEffectEfficiency(itemStack, ItemEffect.stun) * 20);
 
             target.addEffect(new MobEffectInstance(StunPotionEffect.instance, duration, 0, false, false));

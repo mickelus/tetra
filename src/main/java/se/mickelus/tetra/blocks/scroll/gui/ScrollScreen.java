@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.scroll.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -57,21 +57,21 @@ public class ScrollScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
-        renderBackground(matrixStack, 0);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
+    public void render(GuiGraphics graphics, final int mouseX, final int mouseY, final float partialTicks) {
+        renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, partialTicks);
 
         gui.updateFocusState((width - gui.getWidth()) / 2, (height - gui.getHeight()) / 2, mouseX, mouseY);
-        gui.draw(matrixStack, (width - gui.getWidth()) / 2, (height - gui.getHeight()) / 2,
+        gui.draw(graphics, (width - gui.getWidth()) / 2, (height - gui.getHeight()) / 2,
                 width, height, mouseX, mouseY, 1);
 
-        renderHoveredToolTip(matrixStack, mouseX, mouseY);
+        renderHoveredToolTip(graphics, mouseX, mouseY);
     }
 
-    protected void renderHoveredToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    protected void renderHoveredToolTip(GuiGraphics graphics, int mouseX, int mouseY) {
         List<Component> tooltipLines = gui.getTooltipLines();
         if (tooltipLines != null) {
-            renderTooltip(matrixStack, tooltipLines, Optional.empty(), mouseX, mouseY);
+            graphics.renderTooltip(font, tooltipLines, Optional.empty(), mouseX, mouseY);
         }
     }
 

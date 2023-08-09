@@ -35,7 +35,7 @@ public class ReapEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vec3 hitVec, int chargedTicks) {
-        if (!attacker.level.isClientSide) {
+        if (!attacker.level().isClientSide) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
             double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
             int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
@@ -78,7 +78,7 @@ public class ReapEffect extends ChargedAbilityEffect {
 
             applyBuff(attacker, kills.get(), hits.get(), hand, item, itemStack, chargedTicks, comboPoints, revengeKills.get());
 
-            attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
+            attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                     SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);
 
             item.tickProgression(attacker, itemStack, 1 + kills.get());
@@ -113,7 +113,7 @@ public class ReapEffect extends ChargedAbilityEffect {
             double damageMultiplier, int revengeLevel, boolean overextend, int overextendLevel, double momentumEfficiency,
             AtomicInteger kills, AtomicInteger revengeKills, AtomicInteger hits) {
         Collection<LivingEntity> momentumTargets = new LinkedList<>();
-        player.level.getEntitiesOfClass(LivingEntity.class, aoe).stream()
+        player.level().getEntitiesOfClass(LivingEntity.class, aoe).stream()
                 .filter(entity -> entity != player)
                 .filter(entity -> !player.isAlliedTo(entity))
                 .forEach(entity -> {

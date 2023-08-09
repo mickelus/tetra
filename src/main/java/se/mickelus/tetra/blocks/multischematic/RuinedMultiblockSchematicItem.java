@@ -1,9 +1,7 @@
 package se.mickelus.tetra.blocks.multischematic;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -25,10 +23,5 @@ public class RuinedMultiblockSchematicItem extends BaseMultiblockSchematicItem {
         tooltip.add(Component.literal(" "));
 
         tooltip.addAll(getTooltip());
-    }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab p_40569_, NonNullList<ItemStack> p_40570_) {
-
     }
 }

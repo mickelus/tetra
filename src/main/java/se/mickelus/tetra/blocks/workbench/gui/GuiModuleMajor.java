@@ -1,9 +1,9 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.core.Registry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.ForgeRegistries;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.mutil.gui.animation.Applier;
 import se.mickelus.mutil.gui.animation.KeyframeAnimation;
@@ -198,7 +198,7 @@ public class GuiModuleMajor extends GuiModule {
                 color = GuiColors.normal;
             }
 
-            String enchantmentKey = "enchantment:" + Registry.ENCHANTMENT.getKey(enchantment).toString();
+            String enchantmentKey = "enchantment:" + ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString();
             improvementGroup.addChild(new GuiModuleEnchantment(0, 0, enchantment, previewLevel, color,
                     () -> hoverHandler.accept(slotKey, enchantmentKey),
                     () -> {

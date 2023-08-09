@@ -25,7 +25,7 @@ public class TruesweepPacket extends AbstractPacket {
         ItemStack itemStack = player.getMainHandItem();
         if (player.getAttackStrengthScale(0.5f) > 0.9f && EffectHelper.getEffectLevel(itemStack, ItemEffect.truesweep) > 0) {
             boolean hasSweepingStrike = EffectHelper.getEffectLevel(itemStack, ItemEffect.sweepingStrike) > 0;
-            if (player.isOnGround() && !player.isSprinting()) {
+            if (player.onGround() && !player.isSprinting()) {
                 SweepingEffect.truesweep(itemStack, player, !hasSweepingStrike);
             }
 

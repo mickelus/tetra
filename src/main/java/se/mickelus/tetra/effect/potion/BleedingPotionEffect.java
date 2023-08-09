@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
+import se.mickelus.tetra.TetraDamageTypes;
 import se.mickelus.tetra.effect.gui.EffectUnRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -25,7 +26,9 @@ public class BleedingPotionEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
-        entity.hurt(DamageSource.GENERIC, amplifier);
+        // todo 1.20: test this!
+        DamageSource source = entity.level().damageSources().source(TetraDamageTypes.bleeding);
+        entity.hurt(source, amplifier);
     }
 
     @Override

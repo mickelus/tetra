@@ -33,10 +33,10 @@ public class TransferUnitProcessor extends StructureProcessor {
     @Override
     public StructureTemplate.StructureBlockInfo process(LevelReader world, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo $,
             StructureTemplate.StructureBlockInfo blockInfo, StructurePlaceSettings placementSettings, @Nullable StructureTemplate template) {
-        if (blockInfo.state.getBlock() instanceof TransferUnitBlock) {
-            RandomSource random = placementSettings.getRandom(blockInfo.pos);
+        if (blockInfo.state().getBlock() instanceof TransferUnitBlock) {
+            RandomSource random = placementSettings.getRandom(blockInfo.pos());
 
-            CompoundTag newCompound = blockInfo.nbt.copy();
+            CompoundTag newCompound = blockInfo.nbt().copy();
 
             int cellState = 0;
 
@@ -56,12 +56,12 @@ public class TransferUnitProcessor extends StructureProcessor {
 
             // randomize configuration & plate
             EnumTransferConfig[] configs = EnumTransferConfig.values();
-            BlockState newState = blockInfo.state
+            BlockState newState = blockInfo.state()
                     .setValue(TransferUnitBlock.cellProp, cellState)
                     .setValue(TransferUnitBlock.configProp, configs[random.nextInt(configs.length)])
                     .setValue(TransferUnitBlock.plateProp, random.nextBoolean());
 
-            return new StructureTemplate.StructureBlockInfo(blockInfo.pos, newState, newCompound);
+            return new StructureTemplate.StructureBlockInfo(blockInfo.pos(), newState, newCompound);
         }
         return blockInfo;
     }

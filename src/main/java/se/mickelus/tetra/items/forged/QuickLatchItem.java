@@ -19,7 +19,6 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.items.TetraItem;
-import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -32,7 +31,7 @@ public class QuickLatchItem extends TetraItem {
     public static QuickLatchItem instance;
 
     public QuickLatchItem() {
-        super(new Properties().tab(TetraItemGroup.instance));
+        super(new Properties());
     }
 
     @OnlyIn(Dist.CLIENT)

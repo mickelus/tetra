@@ -88,7 +88,7 @@ public class HolosphereBlockEntity extends BlockEntity {
     }
 
     private String[] getScannableStructures() {
-        return new String[] {"#tetra:forged_ruins"};
+        return new String[] { "#tetra:forged_ruins" };
     }
 
     private long getTimestamp(long gametime, int x, int y) {
@@ -117,7 +117,7 @@ public class HolosphereBlockEntity extends BlockEntity {
 //                    System.out.println("has chunk [" + pos.x + ", " + pos.z + "]: " + wasLoaded);
 //                    serverLevel.getChunkSource().getGenerator().findNearestMapStructure()
                     long timestamp = this.getTimestamp(serverLevel.getGameTime(), pos.x - ox, pos.z - oz) + stagger.getAndIncrement() * 3L;
-                    int height = serverLevel.getChunk(pos.x, pos.z, ChunkStatus.HEIGHTMAPS).getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.x, pos.z);
+                    int height = serverLevel.getChunk(pos.x, pos.z, ChunkStatus.SURFACE).getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.x, pos.z);
 
                     BlockPos centerPos = pos.getMiddleBlockPosition(height);
                     float temperature = level.getBiome(centerPos).value().getTemperature(centerPos);

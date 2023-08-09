@@ -16,13 +16,13 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class EnderReverbEffect {
     public static void perform(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        if (!entity.level.isClientSide) {
+        if (!entity.level().isClientSide) {
             double effectProbability = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.enderReverb);
             if (effectProbability > 0
                     && !CastOptional.cast(entity, Player.class).map(Player::isCreative).orElse(false)
                     && entity.getRandom().nextDouble() < effectProbability * multiplier) {
                 AABB aabb = new AABB(entity.blockPosition()).inflate(24);
-                List<LivingEntity> nearbyTargets = entity.level.getEntitiesOfClass(LivingEntity.class, aabb,
+                List<LivingEntity> nearbyTargets = entity.level().getEntitiesOfClass(LivingEntity.class, aabb,
                         target -> target instanceof EnderMan || target instanceof Endermite
                                 || target instanceof Shulker || target instanceof EnderDragon);
                 if (nearbyTargets.size() > 0) {

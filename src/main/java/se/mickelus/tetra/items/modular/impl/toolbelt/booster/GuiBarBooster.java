@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.animation.VisibilityFilter;
 
@@ -25,14 +25,14 @@ public class GuiBarBooster extends GuiElement {
     }
 
     @Override
-    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(GuiGraphics graphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         opacity = filter.apply(visibleIndicators) * opacity;
         if (opacity > 0) {
-            matrixStack.translate(opacity * -10, 0, 0);
+            graphics.pose().translate(opacity * -10, 0, 0);
 
 
             for (int i = 0; i < visibleIndicators; i++) {
-                drawRect(matrixStack,
+                drawRect(graphics,
                         refX + x + 2 * i,
                         refY + y,
                         refX + x + 2 * i + 1,
@@ -41,7 +41,7 @@ public class GuiBarBooster extends GuiElement {
             }
 
             for (int i = visibleIndicators; i < indicatorCount; i++) {
-                drawRect(matrixStack,
+                drawRect(graphics,
                         refX + x + 2 * i,
                         refY + y,
                         refX + x + 2 * i + 1,
@@ -49,20 +49,20 @@ public class GuiBarBooster extends GuiElement {
                         0x000000, opacity * 0.3f);
             }
 
-            drawRect(matrixStack,
+            drawRect(graphics,
                     refX + x - 2,
                     refY + y + 3,
                     refX + x - 1,
                     refY + y + 5,
                     0xffffff, opacity * 0.3f);
 
-            drawRect(matrixStack,
+            drawRect(graphics,
                     refX + x - 2,
                     refY + y + 5,
                     refX + x + 10,
                     refY + y + 6,
                     0xffffff, opacity * 0.3f);
-            matrixStack.translate(opacity * 10, 0, 0);
+            graphics.pose().translate(opacity * 10, 0, 0);
         }
     }
 }

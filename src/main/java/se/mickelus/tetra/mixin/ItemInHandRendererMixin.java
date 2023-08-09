@@ -1,7 +1,7 @@
 package se.mickelus.tetra.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -22,7 +22,8 @@ import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 @OnlyIn(Dist.CLIENT)
 @Mixin(ItemInHandRenderer.class)
 public abstract class ItemInHandRendererMixin {
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/renderer/block/model/ItemTransforms$TransformType;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", ordinal = 1), method = "renderArmWithItem")
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", ordinal = 1),
+            method = "renderArmWithItem")
     private void renderArmWithItem(AbstractClientPlayer player, float partialTicks, float interpolatedPitch, InteractionHand hand, float swingProgress,
             ItemStack itemStack, float equipProgress, PoseStack poseStack, MultiBufferSource buffer, int light, CallbackInfo ci) {
         if (ModularCrossbowItem.instance.equals(itemStack.getItem())) {
@@ -48,9 +49,9 @@ public abstract class ItemInHandRendererMixin {
         if (player.isUsingItem() && player.getUseItemRemainingTicks() > 0 && player.getUsedItemHand() == hand) {
             this.applyItemArmTransform(poseStack, arm, p_109378_);
             poseStack.translate(i * -0.4785682F, -0.094387F, 0.05731531F);
-            poseStack.mulPose(Vector3f.XP.rotationDegrees(-11.935F));
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(i * 65.3F));
-            poseStack.mulPose(Vector3f.ZP.rotationDegrees(i * -9.785F));
+            poseStack.mulPose(Axis.XP.rotationDegrees(-11.935F));
+            poseStack.mulPose(Axis.YP.rotationDegrees(i * 65.3F));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(i * -9.785F));
             float f9 = itemStack.getUseDuration() - (player.getUseItemRemainingTicks() - partialTicks + 1.0F);
             float f13 = f9 / ((ModularCrossbowItem) itemStack.getItem()).getReloadDuration(itemStack);
             if (f13 > 1.0F) {
@@ -66,10 +67,10 @@ public abstract class ItemInHandRendererMixin {
 
             poseStack.translate(0, 0, f13 * 0.04);
             poseStack.scale(1.0F, 1.0F, 1.0F + f13 * 0.2F);
-            poseStack.mulPose(Vector3f.YN.rotationDegrees((float) i * 45.0F));
+            poseStack.mulPose(Axis.YN.rotationDegrees((float) i * 45.0F));
         } else if (isCharged && p_109376_ < 0.001F && isMainhand) {
             poseStack.translate(i * -0.641864F, 0.0D, 0.0D);
-            poseStack.mulPose(Vector3f.YP.rotationDegrees((float) i * 10.0F));
+            poseStack.mulPose(Axis.YP.rotationDegrees((float) i * 10.0F));
         }
     }
 }

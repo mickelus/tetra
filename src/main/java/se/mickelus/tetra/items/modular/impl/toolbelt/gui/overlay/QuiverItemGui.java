@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.mutil.gui.animation.Applier;
@@ -88,23 +89,23 @@ public class QuiverItemGui extends GuiElement {
     }
 
     @Override
-    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+    public void draw(GuiGraphics graphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(graphics, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (this.opacity == 1) {
-            drawItemStack(itemStack, x + refX + 3, y + refY + 3);
+            drawItemStack(graphics, itemStack, x + refX + 3, y + refY + 3);
         }
     }
 
-    private void drawItemStack(ItemStack itemStack, int x, int y) {
+    private void drawItemStack(GuiGraphics graphics, ItemStack itemStack, int x, int y) {
         PoseStack renderSystemStack = RenderSystem.getModelViewStack();
         renderSystemStack.pushPose();
         RenderSystem.enableDepthTest();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         // Lighting.turnBackOn();
 
-        mc.getItemRenderer().renderAndDecorateItem(itemStack, x, y);
-        mc.getItemRenderer().renderGuiItemDecorations(fontRenderer, itemStack, x, y, "");
+        graphics.renderItem(itemStack, x, y);
+        graphics.renderItemDecorations(fontRenderer, itemStack, x, y, "");
         //  Lighting.turnOff();
         RenderSystem.disableDepthTest();
         renderSystemStack.popPose();

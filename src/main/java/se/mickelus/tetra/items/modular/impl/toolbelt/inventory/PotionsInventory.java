@@ -34,11 +34,11 @@ public class PotionsInventory extends ToolbeltInventory {
             return false;
         }
 
+        // todo 1.20: changes, verify
         // attempt to merge the itemstack with itemstacks in the inventory
         for (int i = 0; i < getContainerSize(); i++) {
             ItemStack storedStack = getItem(i);
-            if (ItemStack.isSame(storedStack, itemStack)
-                    && ItemStack.tagMatches(storedStack, itemStack)
+            if (ItemStack.isSameItemSameTags(storedStack, itemStack)
                     && storedStack.getCount() < 64) {
 
                 int moveCount = Math.min(itemStack.getCount(), 64 - storedStack.getCount());

@@ -26,14 +26,14 @@ public class SecondaryInteractionHandler {
 
     public static SecondaryInteraction findRelevantAction(Player player, BlockPos pos, Entity target) {
         return interactions.values().stream()
-                .filter(interaction -> interaction.canPerform(player, player.getLevel(), pos, target))
+                .filter(interaction -> interaction.canPerform(player, player.level(), pos, target))
                 .findFirst()
                 .orElse(null);
     }
 
     public static void dispatchInteraction(SecondaryInteraction interaction, Player player, BlockPos pos, Entity target) {
         if (interaction.getPerformSide().runClient()) {
-            interaction.perform(player, player.getLevel(), pos, target);
+            interaction.perform(player, player.level(), pos, target);
         }
 
         if (interaction.getPerformSide().runServer()) {

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.data.provider;
 
 import net.minecraft.core.Direction;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,8 +18,8 @@ import static se.mickelus.tetra.TetraMod.MOD_ID;
 
 @ParametersAreNonnullByDefault
 public class TetraBlockStateProvider extends BlockStateProvider {
-    public TetraBlockStateProvider(DataGenerator gen, String modid, ExistingFileHelper exFileHelper) {
-        super(gen, modid, exFileHelper);
+    public TetraBlockStateProvider(PackOutput packOutput, String modid, ExistingFileHelper exFileHelper) {
+        super(packOutput, modid, exFileHelper);
     }
 
     @Override

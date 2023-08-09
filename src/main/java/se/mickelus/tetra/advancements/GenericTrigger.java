@@ -1,10 +1,7 @@
 package se.mickelus.tetra.advancements;
 
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
-import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -29,7 +26,7 @@ public class GenericTrigger<T extends AbstractCriterionTriggerInstance> extends 
     }
 
     @Override
-    protected T createInstance(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
+    protected T createInstance(JsonObject json, ContextAwarePredicate entityPredicate, DeserializationContext conditionsParser) {
         return deserializer.apply(json, entityPredicate, conditionsParser);
     }
 
@@ -44,6 +41,6 @@ public class GenericTrigger<T extends AbstractCriterionTriggerInstance> extends 
     }
 
     public interface TriggerDeserializer<T> {
-        T apply(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser);
+        T apply(JsonObject json, ContextAwarePredicate entityPredicate, DeserializationContext conditionsParser);
     }
 }

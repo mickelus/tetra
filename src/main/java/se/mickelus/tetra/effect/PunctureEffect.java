@@ -28,7 +28,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
-        if (!attacker.level.isClientSide) {
+        if (!attacker.level().isClientSide) {
             int armorBefore = target.getArmorValue();
             int comboPoints = ComboPoints.get(attacker);
             boolean isSatiated = !attacker.getFoodData().needsFood();

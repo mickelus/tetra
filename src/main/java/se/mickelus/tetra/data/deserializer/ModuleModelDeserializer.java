@@ -58,7 +58,7 @@ public class ModuleModelDeserializer implements JsonDeserializer<ModuleModel> {
         }
 
         if (jsonObject.has("perspectives")) {
-            data.perspectives = context.deserialize(jsonObject.get("perspectives"), TransformKey[].class);
+            data.contexts = context.deserialize(jsonObject.get("perspectives"), TransformKey[].class);
         }
 
         return data;

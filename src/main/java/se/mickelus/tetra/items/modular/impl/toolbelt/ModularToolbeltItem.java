@@ -2,7 +2,6 @@ package se.mickelus.tetra.items.modular.impl.toolbelt;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -12,7 +11,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -24,7 +22,6 @@ import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.JumpHandlerBooster;
@@ -61,15 +58,15 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     public ModularToolbeltItem() {
         super(new Properties()
                 .stacksTo(1)
-                .tab(TetraItemGroup.instance)
+
                 .fireResistant());
 
         canHone = false;
 
-        majorModuleKeys = new String[] {slot1Key, slot2Key, slot3Key};
-        minorModuleKeys = new String[] {beltKey};
+        majorModuleKeys = new String[] { slot1Key, slot2Key, slot3Key };
+        minorModuleKeys = new String[] { beltKey };
 
-        requiredModules = new String[] {beltKey};
+        requiredModules = new String[] { beltKey };
     }
 
     @Override
@@ -94,13 +91,13 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
         MenuScreens.register(ToolbeltContainer.type.get(), ToolbeltScreen::new);
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowedIn(group)) {
-            items.add(createStack("belt/rope"));
-            items.add(createStack("belt/inlaid"));
-        }
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+//        if (allowedIn(group)) {
+//            items.add(createStack("belt/rope"));
+//            items.add(createStack("belt/inlaid"));
+//        }
+//    }
 
     private ItemStack createStack(String beltMaterial) {
         ItemStack itemStack = new ItemStack(this);

@@ -44,7 +44,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
     private static void groundSlamEntity(Player attacker, LivingEntity target, ItemModularHandheld item, ItemStack itemStack, Vec3 origin,
             double damageMultiplier, int slowDuration, double momentumEfficiency, int revengeLevel) {
-        ServerScheduler.schedule(target.blockPosition().distManhattan(new BlockPos(origin)) - 3, () -> {
+        ServerScheduler.schedule(target.blockPosition().distManhattan(BlockPos.containing(origin)) - 3, () -> {
             float knockback = momentumEfficiency > 0 ? 0.1f : 0.5f;
 
             AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, knockback, knockback);
@@ -75,7 +75,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             if (result == AbilityUseResult.crit) {
                 RandomSource rand = target.getRandom();
-                CastOptional.cast(target.level, ServerLevel.class).ifPresent(world ->
+                CastOptional.cast(target.level(), ServerLevel.class).ifPresent(world ->
                         world.sendParticles(ParticleTypes.CRIT,
                                 target.getX(), target.getY(), target.getZ(), 10,
                                 rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.5, rand.nextGaussian() * 0.3, 0.1f));
@@ -170,11 +170,11 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             double exhilarationEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration);
             if (exhilarationEfficiency > 0) {
-                knockbackExhilaration(attacker, attacker.position(), target, target.level.getGameTime() + 200, exhilarationEfficiency);
+                knockbackExhilaration(attacker, attacker.position(), target, target.level().getGameTime() + 200, exhilarationEfficiency);
             }
 
             RandomSource rand = target.getRandom();
-            CastOptional.cast(target.level, ServerLevel.class).ifPresent(world ->
+            CastOptional.cast(target.level(), ServerLevel.class).ifPresent(world ->
                     world.sendParticles(ParticleTypes.CRIT,
                             hitVec.x, hitVec.y, hitVec.z, 10,
                             rand.nextGaussian() * 0.3, rand.nextGaussian() * target.getBbHeight() * 0.8, rand.nextGaussian() * 0.3, 0.1f));
@@ -189,13 +189,13 @@ public class SlamEffect extends ChargedAbilityEffect {
 
     private void knockbackExhilaration(Player attacker, Vec3 origin, LivingEntity target, long timeLimit, double multiplier) {
         ServerScheduler.schedule(20, () -> {
-            if (target.isOnGround()) {
+            if (target.onGround()) {
                 double distance = Math.min(20, origin.distanceTo(target.position()));
                 int amplifier = (int) (distance * multiplier) - 1;
                 if (amplifier >= 0) {
                     attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, 200, amplifier, false, true));
                 }
-            } else if (target.level.getGameTime() < timeLimit) {
+            } else if (target.level().getGameTime() < timeLimit) {
                 knockbackExhilaration(attacker, origin, target, timeLimit, multiplier);
             }
         });
@@ -203,7 +203,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, BlockPos targetPos, Vec3 hitVec, int chargedTicks) {
-        if (!attacker.level.isClientSide) {
+        if (!attacker.level().isClientSide) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
             int slowDuration = isDefensive(item, itemStack, hand) ? (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20) : 0;
             double momentumEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum);
@@ -215,7 +215,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             Vec3 direction = hitVec.subtract(attacker.position()).multiply(1, 0, 1).normalize();
             double yaw = Mth.atan2(direction.x, direction.z);
             AABB boundingBox = new AABB(hitVec, hitVec).inflate(range + 1, 4, range + 1).move(direction.scale(range / 2));
-            List<LivingEntity> targets = attacker.level.getEntitiesOfClass(LivingEntity.class, boundingBox).stream()
+            List<LivingEntity> targets = attacker.level().getEntitiesOfClass(LivingEntity.class, boundingBox).stream()
                     .filter(Entity::isAlive)
                     .filter(Entity::isAttackable)
                     .filter(entity -> !attacker.equals(entity))
@@ -226,7 +226,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             targets.forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration, momentumEfficiency, revengeLevel));
 
-            spawnGroundParticles(attacker.level, hitVec, direction, yaw, range);
+            spawnGroundParticles(attacker.level(), hitVec, direction, yaw, range);
 
             attacker.causeFoodExhaustion(overextendLevel > 0 ? 6 : 1);
 
@@ -248,7 +248,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             double range, double damageMultiplier, int slowDuration, double momentumEfficiency, int revengeLevel) {
         EchoHelper.echo(attacker, 60, () -> {
             AABB boundingBox = new AABB(hitVec, hitVec).inflate(range + 1, 4, range + 1).move(direction.scale(range / 2));
-            List<LivingEntity> targets = attacker.level.getEntitiesOfClass(LivingEntity.class, boundingBox).stream()
+            List<LivingEntity> targets = attacker.level().getEntitiesOfClass(LivingEntity.class, boundingBox).stream()
                     .filter(Entity::isAlive)
                     .filter(Entity::isAttackable)
                     .filter(entity -> inRange(hitVec, entity, yaw, range))
@@ -256,12 +256,12 @@ public class SlamEffect extends ChargedAbilityEffect {
 
             targets.forEach(entity -> groundSlamEntity(attacker, entity, item, itemStack, hitVec, damageMultiplier, slowDuration, momentumEfficiency, revengeLevel));
 
-            spawnGroundParticles(attacker.level, hitVec, direction, yaw, range);
+            spawnGroundParticles(attacker.level(), hitVec, direction, yaw, range);
         });
     }
 
     private void echoTarget(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
-        if (!attacker.level.isClientSide) {
+        if (!attacker.level().isClientSide) {
             EchoHelper.echo(attacker, 60, () -> {
                 directSlam(attacker, hand, item, itemStack, target, hitVec, chargedTicks);
 
@@ -316,15 +316,15 @@ public class SlamEffect extends ChargedAbilityEffect {
     private void spawnGroundParticles(Level world, Vec3 origin, Vec3 direction, double yaw, double range) {
         RandomSource rand = world.getRandom();
 
-        BlockState originState = world.getBlockState(new BlockPos(origin));
+        BlockState originState = world.getBlockState(BlockPos.containing(origin));
         ((ServerLevel) world).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, originState),
                 origin.x(), origin.y(), origin.z(),
                 8, 0, rand.nextGaussian() * 0.1, 0, 0.1);
-        world.playSound(null, new BlockPos(origin), originState.getSoundType().getBreakSound(), SoundSource.PLAYERS, 1.5f, 0.5f);
+        world.playSound(null, BlockPos.containing(origin), originState.getSoundType().getBreakSound(), SoundSource.PLAYERS, 1.5f, 0.5f);
 
         int bound = (int) Math.ceil(range / 2);
 
-        BlockPos center = new BlockPos(origin.add(direction.scale(range / 2)));
+        BlockPos center = BlockPos.containing(origin.add(direction.scale(range / 2)));
         origin = origin.add(direction.scale(-1));
         BlockPos.MutableBlockPos targetPos = new BlockPos.MutableBlockPos(0, 0, 0);
         for (int x = -bound; x <= bound; x++) {
@@ -343,7 +343,7 @@ public class SlamEffect extends ChargedAbilityEffect {
                                 double yOffset = targetState.getShape(world, targetPos).bounds().maxY;
                                 BlockPos particlePos = targetPos.immutable();
 
-                                ServerScheduler.schedule(particlePos.distManhattan(new BlockPos(origin)) - 3, () -> {
+                                ServerScheduler.schedule(particlePos.distManhattan(BlockPos.containing(origin)) - 3, () -> {
                                     ((ServerLevel) world).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, targetState),
                                             particlePos.getX() + 0.5, particlePos.getY() + yOffset, particlePos.getZ() + 0.5,
                                             3, 0, rand.nextGaussian() * 0.1, 0, 0.1);

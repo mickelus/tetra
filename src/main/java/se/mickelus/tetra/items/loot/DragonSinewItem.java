@@ -18,7 +18,6 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraItem;
-import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -33,7 +32,7 @@ public class DragonSinewItem extends TetraItem {
     private static final ResourceLocation sinewLootTable = new ResourceLocation(TetraMod.MOD_ID, "entities/ender_dragon_extended");
 
     public DragonSinewItem() {
-        super(new Properties().tab(TetraItemGroup.instance));
+        super(new Properties());
 
         MinecraftForge.EVENT_BUS.register(new LootTableHandler());
     }
@@ -60,9 +59,9 @@ public class DragonSinewItem extends TetraItem {
     @Override
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
         entity.setDeltaMovement(entity.getDeltaMovement().scale(0.8f));
-        if (entity.level.isClientSide && entity.getAge() % 20 == 0) {
-            entity.level.addParticle(ParticleTypes.DRAGON_BREATH, entity.getRandomX(.2d), entity.getRandomY() + 0.2, entity.getRandomZ(0.2),
-                    entity.level.getRandom().nextFloat() * 0.02f - 0.01f, -0.01f - entity.level.getRandom().nextFloat() * 0.01f, entity.level.getRandom().nextFloat() * 0.02f - 0.01f);
+        if (entity.level().isClientSide && entity.getAge() % 20 == 0) {
+            entity.level().addParticle(ParticleTypes.DRAGON_BREATH, entity.getRandomX(.2d), entity.getRandomY() + 0.2, entity.getRandomZ(0.2),
+                    entity.level().getRandom().nextFloat() * 0.02f - 0.01f, -0.01f - entity.level().getRandom().nextFloat() * 0.01f, entity.level().getRandom().nextFloat() * 0.02f - 0.01f);
         }
         return false;
     }

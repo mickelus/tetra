@@ -4,7 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -14,7 +13,10 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -22,8 +24,8 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -42,7 +44,6 @@ import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.properties.IToolProvider;
 
 import javax.annotation.Nullable;
@@ -79,7 +80,8 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     public static Item usedItem;
 
     public ChthonicExtractorBlock() {
-        super(Block.Properties.of(ForgedBlockCommon.forgedMaterialNotSolid, MaterialColor.COLOR_GRAY)
+        super(Block.Properties.of()
+                .mapColor(MapColor.COLOR_GRAY)
                 .sound(SoundType.NETHERITE_BLOCK)
                 .strength(2.5F, 2400.0F));
     }
@@ -109,12 +111,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
 
     public static void registerItems(DeferredRegister<Item> registry) {
         registry.register(usedIdentifier, () -> new BlockItem(instance, new Item.Properties().durability(maxDamage)));
-        registry.register(identifier, () -> new BlockItem(instance, new Item.Properties().tab(TetraItemGroup.instance).stacksTo(64)));
-    }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> itemList) {
-        itemList.add(new ItemStack(item));
+        registry.register(identifier, () -> new BlockItem(instance, new Item.Properties().stacksTo(64)));
     }
 
     @Override
@@ -152,14 +149,14 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
         super.playerWillDestroy(world, pos, state, player);
     }
 
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-        BlockEntity tile = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-        if (tile instanceof ChthonicExtractorTile) {
-            builder = builder.withDynamicDrop(new ResourceLocation("tetra:cthtonic_drop"),
-                    (context, stackConsumer) -> stackConsumer.accept(getItemStack((ChthonicExtractorTile) tile)));
+    @Override
+    public List<ItemStack> getDrops(BlockState blockState, LootParams.Builder lootParams) {
+        if (lootParams.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof ChthonicExtractorTile tile) {
+            lootParams = lootParams.withDynamicDrop(new ResourceLocation("tetra:cthtonic_drop"),
+                    consumer -> consumer.accept(getItemStack(tile)));
         }
 
-        return super.getDrops(state, builder);
+        return super.getDrops(blockState, lootParams);
     }
 
     private ItemStack getItemStack(ChthonicExtractorTile tile) {

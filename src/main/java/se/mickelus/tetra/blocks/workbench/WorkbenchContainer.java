@@ -11,7 +11,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -33,7 +33,7 @@ public class WorkbenchContainer extends AbstractContainerMenu {
         this.workbench = workbench;
 
         // material inventory
-        workbench.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+        workbench.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             addSlot(new SlotItemHandler(handler, 0, 152, 58));
 
             materialSlots = new ToggleableSlot[3];
@@ -65,7 +65,7 @@ public class WorkbenchContainer extends AbstractContainerMenu {
     }
 
     private int getSlots() {
-        return workbench.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        return workbench.getCapability(ForgeCapabilities.ITEM_HANDLER)
                 .map(IItemHandler::getSlots)
                 .orElse(0);
     }

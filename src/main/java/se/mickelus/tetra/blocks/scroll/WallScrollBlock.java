@@ -28,7 +28,7 @@ public class WallScrollBlock extends ScrollBlock {
             Block.box(1.0, 1.0, 0.0, 15.0, 14.0, 0.1));
 
     public WallScrollBlock() {
-        super(identifier, Arrangement.wall);
+        super(Arrangement.wall);
 
         shapes = new EnumMap<>(Direction.class);
         for (int i = 0; i < 4; i++) {

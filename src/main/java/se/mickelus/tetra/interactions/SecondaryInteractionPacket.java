@@ -41,12 +41,12 @@ public class SecondaryInteractionPacket extends BlockPosPacket {
     public void handle(Player player) {
         Entity target = Optional.of(targetId)
                 .filter(id -> id != -1)
-                .map(id -> player.level.getEntity(id))
+                .map(id -> player.level().getEntity(id))
                 .orElse(null);
 
         SecondaryInteraction interaction = SecondaryInteractionHandler.getInteraction(key);
         if (interaction != null) {
-            interaction.perform(player, player.getLevel(), pos, target);
+            interaction.perform(player, player.level(), pos, target);
         }
     }
 }

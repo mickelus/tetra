@@ -2,6 +2,7 @@ package se.mickelus.tetra.module.data;
 
 import com.mojang.math.Transformation;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import se.mickelus.tetra.module.Priority;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -19,7 +20,7 @@ public class ModuleModel {
     public Priority renderLayer = Priority.BASE;
 
     public boolean invertPerspectives = false;
-    public TransformKey[] perspectives;
+    public ItemDisplayContext[] contexts;
 
     public ModuleModel() {
     }
@@ -48,7 +49,7 @@ public class ModuleModel {
         copy.overlayTint = overlayTint;
         copy.renderLayer = renderLayer;
         copy.invertPerspectives = invertPerspectives;
-        copy.perspectives = perspectives;
+        copy.contexts = contexts;
         return copy;
     }
 }

@@ -60,7 +60,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     public static final DirectionProperty facingProp = HorizontalDirectionalBlock.FACING;
 
     public static final String qualityImprovementKey = "quality";
-    public static final BlockInteraction[] interactions = new BlockInteraction[]{
+    public static final BlockInteraction[] interactions = new BlockInteraction[] {
             new TileBlockInteraction<>(TetraToolActions.pry, 1, Direction.EAST, 5, 11, 10, 12,
                     HammerBaseBlockEntity.class, tile -> tile.getEffect(true) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, true)),
@@ -205,21 +205,21 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
 
                 world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.6f);
 
-                if (!player.level.isClientSide) {
+                if (!player.level().isClientSide) {
                     BlockUseCriterion.trigger((ServerPlayer) player, world.getBlockState(pos), ItemStack.EMPTY, getAdvancementData(world, pos));
                 }
 
-                return InteractionResult.sidedSuccess(player.level.isClientSide);
+                return InteractionResult.sidedSuccess(player.level().isClientSide);
             } else if (heldStack.getItem() instanceof ThermalCellItem) {
                 te.putCellInSlot(heldStack, slotIndex);
                 player.setItemInHand(hand, ItemStack.EMPTY);
                 world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.5f);
 
-                if (!player.level.isClientSide) {
+                if (!player.level().isClientSide) {
                     BlockUseCriterion.trigger((ServerPlayer) player, world.getBlockState(pos), heldStack, getAdvancementData(world, pos));
                 }
 
-                return InteractionResult.sidedSuccess(player.level.isClientSide);
+                return InteractionResult.sidedSuccess(player.level().isClientSide);
             }
         } else {
             boolean isA = Rotation.CLOCKWISE_90.rotate(blockFacing).equals(facing);
@@ -227,7 +227,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
             if (te.getEffect(isA) == null) {
                 boolean success = te.setModule(isA, heldStack.getItem());
                 if (success) {
-                    if (!player.level.isClientSide) {
+                    if (!player.level().isClientSide) {
                         BlockUseCriterion.trigger((ServerPlayer) player, world.getBlockState(pos), heldStack, getAdvancementData(world, pos));
                     }
 
@@ -238,7 +238,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
                         InteractiveBlockOverlay.markDirty();
                     }
 
-                    return InteractionResult.sidedSuccess(player.level.isClientSide);
+                    return InteractionResult.sidedSuccess(player.level().isClientSide);
                 }
             }
         }

@@ -28,7 +28,7 @@ public class PryChargedEffect extends ChargedAbilityEffect {
     @Override
     public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
 
-        if (!target.level.isClientSide) {
+        if (!target.level().isClientSide) {
             int amplifier = item.getEffectLevel(itemStack, ItemEffect.pry);
             amplifier += (int) (getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge));
 

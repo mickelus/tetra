@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -16,7 +15,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -37,7 +35,6 @@ import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.blocks.scroll.gui.ScrollScreen;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.items.InitializableItem;
-import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -68,7 +65,7 @@ public class ScrollItem extends BlockItem implements InitializableItem {
     public static ItemStack howlingBlade;
 
     public ScrollItem(Block block) {
-        super(block, new Properties().tab(TetraItemGroup.instance).stacksTo(1));
+        super(block, new Properties().stacksTo(1));
 
         MinecraftForge.EVENT_BUS.register(new ScrollDrops());
     }
@@ -101,44 +98,44 @@ public class ScrollItem extends BlockItem implements InitializableItem {
                 (itemStack, world, livingEntity, i) -> ScrollData.readMaterialFast(itemStack));
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowedIn(group)) {
-            items.add(gemExpertise);
-            items.add(metalExpertise);
-            items.add(woodExpertise);
-            items.add(stoneExpertise);
-            items.add(fibreExpertise);
-            items.add(skinExpertise);
-            items.add(boneExpertise);
-            items.add(fabricExpertise);
-            items.add(scaleExpertise);
-            items.add(hammerEfficiency);
-            items.add(axeEfficiency);
-            items.add(cutEfficiency);
-
-            items.add(sturdyGuard);
-            items.add(throwingKnife);
-            items.add(howlingBlade);
-
-            items.add(setupSchematic("warforge/adze", "warforge", false, 2, 0x8559b3, 6, 7, 11, 7));
-            items.add(setupSchematic("warforge/axe", "warforge", false, 2, 0xb35973, 5, 10, 8, 9));
-            items.add(setupSchematic("warforge/hammer", "warforge", false, 2, 0x3d4299, 9, 8, 11, 10));
-            items.add(setupSchematic("warforge/pickaxe", "warforge", false, 2, 0x508cb3, 6, 11, 8, 7));
-            items.add(setupSchematic("warforge/claw", "warforge", false, 2, 0x1d262f, 8, 10, 5, 11));
-            items.add(setupSchematic("warforge/hoe", "warforge", false, 2, 0x93b350, 10, 7, 9, 5));
-            items.add(setupSchematic("warforge/sickle", "warforge", false, 2, 0xd99e4c, 5, 9, 6, 10));
-            items.add(setupSchematic("warforge/butt", "warforge", false, 2, 0xb33636, 11, 5, 8, 9));
-
-            items.add(setupSchematic("hone/gild_1", null, true, 2, 0xc9ae69, 15, 14, 15, 15));
-            items.add(setupSchematic("hone/gild_5", null,
-                    new String[]{"hone/gild_1", "hone/gild_2", "hone/gild_3", "hone/gild_4", "hone/gild_5"},
-                    true, 2, 0xf2b313, 12, 12, 12, 12));
-        }
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+//        if (allowedIn(group)) {
+//            items.add(gemExpertise);
+//            items.add(metalExpertise);
+//            items.add(woodExpertise);
+//            items.add(stoneExpertise);
+//            items.add(fibreExpertise);
+//            items.add(skinExpertise);
+//            items.add(boneExpertise);
+//            items.add(fabricExpertise);
+//            items.add(scaleExpertise);
+//            items.add(hammerEfficiency);
+//            items.add(axeEfficiency);
+//            items.add(cutEfficiency);
+//
+//            items.add(sturdyGuard);
+//            items.add(throwingKnife);
+//            items.add(howlingBlade);
+//
+//            items.add(setupSchematic("warforge/adze", "warforge", false, 2, 0x8559b3, 6, 7, 11, 7));
+//            items.add(setupSchematic("warforge/axe", "warforge", false, 2, 0xb35973, 5, 10, 8, 9));
+//            items.add(setupSchematic("warforge/hammer", "warforge", false, 2, 0x3d4299, 9, 8, 11, 10));
+//            items.add(setupSchematic("warforge/pickaxe", "warforge", false, 2, 0x508cb3, 6, 11, 8, 7));
+//            items.add(setupSchematic("warforge/claw", "warforge", false, 2, 0x1d262f, 8, 10, 5, 11));
+//            items.add(setupSchematic("warforge/hoe", "warforge", false, 2, 0x93b350, 10, 7, 9, 5));
+//            items.add(setupSchematic("warforge/sickle", "warforge", false, 2, 0xd99e4c, 5, 9, 6, 10));
+//            items.add(setupSchematic("warforge/butt", "warforge", false, 2, 0xb33636, 11, 5, 8, 9));
+//
+//            items.add(setupSchematic("hone/gild_1", null, true, 2, 0xc9ae69, 15, 14, 15, 15));
+//            items.add(setupSchematic("hone/gild_5", null,
+//                    new String[] { "hone/gild_1", "hone/gild_2", "hone/gild_3", "hone/gild_4", "hone/gild_5" },
+//                    true, 2, 0xf2b313, 12, 12, 12, 12));
+//        }
+//    }
 
     private ItemStack setupSchematic(String key, String details, boolean isIntricate, int material, int tint, Integer... glyphs) {
-        return setupSchematic(key, details, new String[]{key}, isIntricate, material, tint, glyphs);
+        return setupSchematic(key, details, new String[] { key }, isIntricate, material, tint, glyphs);
     }
 
     private ItemStack setupSchematic(String key, String details, String[] schematics, boolean isIntricate, int material, int tint, Integer... glyphs) {

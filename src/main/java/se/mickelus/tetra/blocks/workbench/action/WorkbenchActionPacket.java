@@ -45,7 +45,7 @@ public class WorkbenchActionPacket extends BlockPosPacket {
 
     @Override
     public void handle(Player player) {
-        WorkbenchTile workbench = (WorkbenchTile) player.level.getBlockEntity(pos);
+        WorkbenchTile workbench = (WorkbenchTile) player.level().getBlockEntity(pos);
         if (workbench != null) {
             workbench.performAction(player, actionKey);
         }

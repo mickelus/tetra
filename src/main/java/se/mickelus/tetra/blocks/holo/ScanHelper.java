@@ -5,6 +5,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.SectionPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class ScanHelper {
     public static boolean hasStructure(String id, ServerLevel level, ChunkPos chunkPos) {
-        Registry<Structure> registry = level.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
+        Registry<Structure> registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
         var holders = getHolders(getKey(id), registry).get();
 
         return !hasStructure(holders, level, level.structureManager(), false, chunkPos).isEmpty();
@@ -58,9 +59,9 @@ public class ScanHelper {
 
     private static Either<ResourceKey<Structure>, TagKey<Structure>> getKey(String identifier) {
         if (identifier.startsWith("#")) {
-            return Either.right(TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(identifier.substring(1))));
+            return Either.right(TagKey.create(Registries.STRUCTURE, new ResourceLocation(identifier.substring(1))));
         }
-        return Either.left(ResourceKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(identifier)));
+        return Either.left(ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(identifier)));
     }
 
     private static Optional<? extends HolderSet.ListBacked<Structure>> getHolders(Either<ResourceKey<Structure>, TagKey<Structure>> key, Registry<Structure> registry) {

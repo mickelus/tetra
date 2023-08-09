@@ -208,8 +208,7 @@ public class ToolbeltInventory implements Container {
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getContainerSize(); i++) {
             ItemStack storedStack = getItem(i);
-            if (ItemStack.isSame(itemStack, storedStack)
-                    && ItemStack.tagMatches(itemStack, storedStack)
+            if (ItemStack.isSameItemSameTags(itemStack, storedStack)
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());

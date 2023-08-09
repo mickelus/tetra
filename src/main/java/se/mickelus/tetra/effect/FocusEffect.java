@@ -2,7 +2,7 @@ package se.mickelus.tetra.effect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -22,7 +22,7 @@ public class FocusEffect {
             .build();
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.player.level.getGameTime() % 2 == 0) {
+        if (event.player.level().getGameTime() % 2 == 0) {
             if (hasApplicableItem(event.player) && event.player.isCrouching()) {
                 Player player = event.player;
                 int id = getIdentifier(player);
@@ -31,7 +31,7 @@ public class FocusEffect {
                 int change = isDrawing ? 1 : 2;
                 cache.put(id, duration != null ? duration + change : change);
 
-                if (!player.level.isClientSide) {
+                if (!player.level().isClientSide) {
                     int respiration = EnchantmentHelper.getRespiration(player);
                     int amount = isDrawing ? 6 : 2;
                     int reduction = 0;
@@ -48,7 +48,8 @@ public class FocusEffect {
                     if (player.getAirSupply() <= -20) {
                         player.setAirSupply(0);
 
-                        player.hurt(DamageSource.DROWN, 2.0F);
+                        // todo 1.20: custom damage type for this
+                        player.hurt(player.level().damageSources().drown(), 2.0F);
                     }
                 }
 
@@ -60,7 +61,7 @@ public class FocusEffect {
 
     public static void onLivingDamage(LivingDamageEvent event) {
         if (event.getAmount() > 0
-                && event.getSource() != DamageSource.DROWN
+                && !event.getSource().is(DamageTypes.DROWN)
                 && event.getEntity() instanceof Player player) {
             cache.invalidate(getIdentifier(player));
         }
@@ -104,6 +105,6 @@ public class FocusEffect {
     }
 
     private static int getIdentifier(Player entity) {
-        return entity.level.isClientSide ? -entity.getId() : entity.getId();
+        return entity.level().isClientSide ? -entity.getId() : entity.getId();
     }
 }

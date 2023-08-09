@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.salvage;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -59,7 +60,8 @@ public class InteractiveBlockOverlay {
                     isDirty = false;
                 }
 
-                gui.draw(event.getPoseStack(), event.getCamera().getPosition(), rayTrace, shape);
+                GuiGraphics graphics = new GuiGraphics(mc, mc.renderBuffers().bufferSource());
+                gui.draw(graphics, event.getCamera().getPosition(), rayTrace, shape);
             }
         }
     }

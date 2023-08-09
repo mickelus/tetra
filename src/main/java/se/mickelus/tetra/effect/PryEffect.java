@@ -34,7 +34,7 @@ public class PryEffect {
     }
 
     public static void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, int effectLevel, LivingEntity target) {
-        if (!attacker.level.isClientSide) {
+        if (!attacker.level().isClientSide) {
             int comboPoints = ComboPoints.get(attacker);
             boolean isSatiated = !attacker.getFoodData().needsFood();
 

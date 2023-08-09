@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -32,13 +31,11 @@ public class ToolActionHelper {
      */
 
     // FIXME add 1.18 materials
-    public static final Set<Material> hoeBonusMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT);
-    public static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD, Material.NETHER_WOOD, Material.PLANT, Material.REPLACEABLE_PLANT, Material.BAMBOO, Material.VEGETABLE);
-    public static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.METAL, Material.HEAVY_METAL, Material.STONE);
+//    public static final Set<Material> hoeBonusMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT);
+//    public static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD, Material.NETHER_WOOD, Material.PLANT, Material.REPLACEABLE_PLANT, Material.BAMBOO, Material.VEGETABLE);
+//    public static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.METAL, Material.HEAVY_METAL, Material.STONE);
 
-    // copy of hardcoded values in SwordItem, materials & tag that it explicitly state it can efficiently DESTROY
-    public static final Set<Material> cuttingDestroyMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT, Material.VEGETABLE, Material.WEB, Material.BAMBOO);
-    public static final Set<TagKey<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.LEAVES);
+    public static final Set<TagKey<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.SWORD_EFFICIENT);
 
     // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
     public static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
@@ -78,20 +75,21 @@ public class ToolActionHelper {
 
         if (TetraToolActions.cut.equals(action)
                 && (cuttingHarvestBlocks.contains(state.getBlock())
-                || cuttingDestroyMaterials.contains(state.getMaterial())
+//                || cuttingDestroyMaterials.contains(state.getMaterial())
                 || cuttingDestroyTags.stream().anyMatch(state::is))) {
             return true;
         }
 
-        if (ToolActions.HOE_DIG.equals(action) && hoeBonusMaterials.contains(state.getMaterial())) {
-            return true;
-        }
-
-        if (ToolActions.AXE_DIG.equals(action) && axeMaterials.contains(state.getMaterial())) {
-            return true;
-        }
-
-        return ToolActions.PICKAXE_DIG.equals(action) && pickaxeMaterials.contains(state.getMaterial());
+//        if (ToolActions.HOE_DIG.equals(action) && hoeBonusMaterials.contains(state.getMaterial())) {
+//            return true;
+//        }
+//
+//        if (ToolActions.AXE_DIG.equals(action) && axeMaterials.contains(state.getMaterial())) {
+//            return true;
+//        }
+//
+//        return ToolActions.PICKAXE_DIG.equals(action) && pickaxeMaterials.contains(state.getMaterial());
+        return false;
     }
 
     public static boolean playerCanDestroyBlock(Player player, BlockState state, BlockPos pos, ItemStack toolStack) {
@@ -99,7 +97,7 @@ public class ToolActionHelper {
     }
 
     public static boolean playerCanDestroyBlock(Player player, BlockState state, BlockPos pos, ItemStack toolStack, @Nullable ToolAction useAction) {
-        if (state.getDestroySpeed(player.level, pos) < 0) {
+        if (state.getDestroySpeed(player.level(), pos) < 0) {
             return false;
         }
         if (useAction == null ? !isEffectiveOn(toolStack, state) : !isEffectiveOn(useAction, state)) {

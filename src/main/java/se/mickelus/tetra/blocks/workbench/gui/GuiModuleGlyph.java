@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -32,15 +32,15 @@ public class GuiModuleGlyph extends GuiTexture {
     }
 
     @Override
-    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(GuiGraphics graphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (shift) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5, 0.5, 0);
-            drawTexture(matrixStack, textureLocation, refX + x, refY + y, width - 1, height - 1, textureX, textureY,
+            graphics.pose().pushPose();
+            graphics.pose().translate(0.5, 0.5, 0);
+            drawTexture(graphics, textureLocation, refX + x, refY + y, width - 1, height - 1, textureX, textureY,
                     color, getOpacity() * opacity);
-            matrixStack.popPose();
+            graphics.pose().popPose();
         } else {
-            drawTexture(matrixStack, textureLocation, refX + x, refY + y, width - 1, height - 1, textureX, textureY,
+            drawTexture(graphics, textureLocation, refX + x, refY + y, width - 1, height - 1, textureX, textureY,
                     color, getOpacity() * opacity);
         }
     }

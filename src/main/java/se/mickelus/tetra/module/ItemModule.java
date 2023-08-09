@@ -9,7 +9,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
 import org.apache.commons.lang3.StringUtils;
 import se.mickelus.mutil.util.CastOptional;
@@ -348,13 +347,6 @@ public abstract class ItemModule implements IToolProvider {
                 .map(modifiers -> modifiers.get(Attributes.ATTACK_SPEED))
                 .map(AttributeHelper::getMultiplyAmount)
                 .orElse(1d);
-    }
-
-    public double getRangeModifier(ItemStack itemStack) {
-        return Optional.ofNullable(getAttributeModifiers(itemStack))
-                .map(modifiers -> modifiers.get(ForgeMod.REACH_DISTANCE.get()))
-                .map(AttributeHelper::getAdditionAmount)
-                .orElse(0d);
     }
 
     public ModuleModel[] getModels(ItemStack itemStack) {

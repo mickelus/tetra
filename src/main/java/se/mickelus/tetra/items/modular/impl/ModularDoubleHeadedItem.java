@@ -6,7 +6,6 @@ import com.google.common.collect.Multimaps;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,7 +13,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -33,7 +31,6 @@ import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.Priority;
@@ -67,14 +64,14 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     public static ModularDoubleHeadedItem instance;
 
     public ModularDoubleHeadedItem() {
-        super(new Item.Properties().stacksTo(1).tab(TetraItemGroup.instance).fireResistant());
+        super(new Item.Properties().stacksTo(1).fireResistant());
 
         entityHitDamage = 2;
 
-        majorModuleKeys = new String[]{headLeftKey, headRightKey, handleKey};
-        minorModuleKeys = new String[]{bindingKey};
+        majorModuleKeys = new String[] { headLeftKey, headRightKey, handleKey };
+        minorModuleKeys = new String[] { bindingKey };
 
-        requiredModules = new String[]{handleKey, headLeftKey, headRightKey};
+        requiredModules = new String[] { handleKey, headLeftKey, headRightKey };
 
         updateConfig(ConfigHandler.honedoubleBase.get(), ConfigHandler.honedoubleIntegrityMultiplier.get());
 
@@ -93,17 +90,17 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("double/"));
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowedIn(group)) {
-            items.add(setupHammerStack("oak", "stick"));
-            items.add(setupHammerStack("stone", "stick"));
-            items.add(setupHammerStack("iron", "spruce"));
-            items.add(setupHammerStack("blackstone", "spruce"));
-            items.add(setupHammerStack("obsidian", "iron"));
-            items.add(setupHammerStack("netherite", "forged_beam"));
-        }
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+//        if (allowedIn(group)) {
+//            items.add(setupHammerStack("oak", "stick"));
+//            items.add(setupHammerStack("stone", "stick"));
+//            items.add(setupHammerStack("iron", "spruce"));
+//            items.add(setupHammerStack("blackstone", "spruce"));
+//            items.add(setupHammerStack("obsidian", "iron"));
+//            items.add(setupHammerStack("netherite", "forged_beam"));
+//        }
+//    }
 
     private ItemStack setupHammerStack(String headMaterial, String handleMaterial) {
         ItemStack itemStack = new ItemStack(this);

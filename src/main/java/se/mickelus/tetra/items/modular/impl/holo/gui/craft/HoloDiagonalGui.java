@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.animation.AnimationChain;
@@ -59,16 +59,16 @@ public class HoloDiagonalGui extends GuiElement {
     }
 
     @Override
-    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+    public void draw(GuiGraphics graphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(graphics, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (upRight) {
             for (int i = 0; i < width; i++) {
-                drawRect(matrixStack, refX + x + width - i - 1, refY + y + i, refX + x + width - i, refY + y + i + 1, GuiColors.normal, getOpacity() * opacity);
+                drawRect(graphics, refX + x + width - i - 1, refY + y + i, refX + x + width - i, refY + y + i + 1, GuiColors.normal, getOpacity() * opacity);
             }
         } else {
             for (int i = 0; i < width; i++) {
-                drawRect(matrixStack, refX + x + i, refY + y + i, refX + x + i + 1, refY + y + i + 1, GuiColors.normal, getOpacity() * opacity);
+                drawRect(graphics, refX + x + i, refY + y + i, refX + x + i + 1, refY + y + i + 1, GuiColors.normal, getOpacity() * opacity);
             }
         }
     }

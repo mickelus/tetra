@@ -2,8 +2,6 @@ package se.mickelus.tetra;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.*;
@@ -24,7 +22,6 @@ import se.mickelus.tetra.blocks.forged.hammer.HammerHeadBlockEntity;
 import se.mickelus.tetra.blocks.forged.hammer.HammerHeadRenderer;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticle;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticleType;
-import se.mickelus.tetra.blocks.holo.HolosphereEntityRenderer;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicGui;
 import se.mickelus.tetra.blocks.scroll.ScrollRenderer;
 import se.mickelus.tetra.blocks.scroll.ScrollTile;
@@ -36,7 +33,6 @@ import se.mickelus.tetra.client.keymap.TetraKeyMappings;
 import se.mickelus.tetra.client.model.ModularModelLoader;
 import se.mickelus.tetra.client.particle.SweepingStrikeParticle;
 import se.mickelus.tetra.client.particle.SweepingStrikeParticleType;
-import se.mickelus.tetra.compat.botania.BotaniaCompat;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
 import se.mickelus.tetra.interactions.SecondaryInteractionOverlay;
@@ -52,8 +48,6 @@ import se.mickelus.tetra.items.modular.impl.shield.ModularShieldRenderer;
 import se.mickelus.tetra.items.modular.impl.toolbelt.booster.OverlayBooster;
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay.ToolbeltOverlay;
 
-import static se.mickelus.tetra.TetraMod.MOD_ID;
-
 public class ClientSetup {
     public static void init() {
         FMLJavaModLoadingContext.get().getModEventBus().register(ClientSetup.class);
@@ -68,36 +62,36 @@ public class ClientSetup {
             try {
                 MenuScreens.register(WorkbenchContainer.containerType.get(), WorkbenchScreen::new);
                 ModularModelLoader.init();
-                BotaniaCompat.clientInit();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
 
-    @SubscribeEvent
-    public static void provideTextures(final TextureStitchEvent.Pre event) {
-        // todo: Move this to ModularItemModel.getTextures?
-        if (TextureAtlas.LOCATION_BLOCKS.equals(event.getAtlas().location())) {
-            Minecraft.getInstance().getResourceManager().listResources("textures/items/module", rl -> rl.getPath().endsWith(".png"))
-                    .keySet()
-                    .stream()
-                    .filter(rl -> MOD_ID.equals(rl.getNamespace()))
-                    // 9 is the length of "textures/" & 4 is the length of ".png"
-                    .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
-                    .forEach(event::addSprite);
-
-            event.addSprite(ForgedContainerRenderer.material.texture());
-            event.addSprite(HammerBaseRenderer.material.texture());
-            event.addSprite(ScrollRenderer.material.texture());
-            event.addSprite(HolosphereEntityRenderer.material.texture());
-        }
-    }
+    // 1.20 todo: no need to register textures?
+//    @SubscribeEvent
+//    public static void provideTextures(final TextureStitchEvent.Pre event) {
+//        // todo: Move this to ModularItemModel.getTextures?
+//        if (TextureAtlas.LOCATION_BLOCKS.equals(event.getAtlas().location())) {
+//            Minecraft.getInstance().getResourceManager().listResources("textures/items/module", rl -> rl.getPath().endsWith(".png"))
+//                    .keySet()
+//                    .stream()
+//                    .filter(rl -> MOD_ID.equals(rl.getNamespace()))
+//                    // 9 is the length of "textures/" & 4 is the length of ".png"
+//                    .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
+//                    .forEach(event::addSprite);
+//
+//            event.addSprite(ForgedContainerRenderer.material.texture());
+//            event.addSprite(HammerBaseRenderer.material.texture());
+//            event.addSprite(ScrollRenderer.material.texture());
+//            event.addSprite(HolosphereEntityRenderer.material.texture());
+//        }
+//    }
 
     @SubscribeEvent
     public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
-        event.register(SparkleParticleType.instance, SparkleParticle.Provider::new);
-        event.register(SweepingStrikeParticleType.instance, SweepingStrikeParticle.Provider::new);
+        event.registerSpriteSet(SparkleParticleType.instance, SparkleParticle.Provider::new);
+        event.registerSpriteSet(SweepingStrikeParticleType.instance, SweepingStrikeParticle.Provider::new);
     }
 
     @SubscribeEvent

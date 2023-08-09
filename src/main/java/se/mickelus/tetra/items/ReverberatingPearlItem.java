@@ -20,7 +20,7 @@ public class ReverberatingPearlItem extends TetraItem {
 //    public static ReverberatingPearlItem instance;
 
     public ReverberatingPearlItem() {
-        super(new Properties().tab(TetraItemGroup.instance));
+        super(new Properties());
     }
 
     @OnlyIn(Dist.CLIENT)

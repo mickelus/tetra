@@ -2,10 +2,8 @@ package se.mickelus.tetra.client.particle;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
@@ -15,6 +13,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
@@ -40,7 +40,7 @@ public class SweepingStrikeParticle extends TextureSheetParticle {
         }
     };
 
-    private static final Vector3f ROTATION_VECTOR = Util.make(new Vector3f(0.5F, 0.5F, 0.5F), Vector3f::normalize);
+    private static final Vector3f ROTATION_VECTOR = new Vector3f(0.5F, 0.5F, 0.5F).normalize();
     private static final Vector3f TRANSFORM_VECTOR = new Vector3f(-1.0F, -1.0F, 0.0F);
     private final boolean reverse;
     private final SpriteSet sprites;
@@ -75,20 +75,21 @@ public class SweepingStrikeParticle extends TextureSheetParticle {
 
     @Override
     public void render(VertexConsumer consumer, Camera camera, float partialTicks) {
-        this.renderRotatedParticle(consumer, camera, partialTicks, (p_234005_) -> {
-            p_234005_.mul(Vector3f.YP.rotation(-yaw));
-            p_234005_.mul(Vector3f.XP.rotation(pitch + Mth.PI / 3f));
+        this.renderRotatedParticle(consumer, camera, partialTicks, quaternion -> {
+            quaternion.mul(Axis.YP.rotation(-yaw));
+            quaternion.mul(Axis.XP.rotation(pitch + Mth.PI / 3f));
         });
     }
 
-    private void renderRotatedParticle(VertexConsumer consumer, Camera camera, float partialTicks, Consumer<Quaternion> transformApplier) {
+    private void renderRotatedParticle(VertexConsumer consumer, Camera camera, float partialTicks, Consumer<Quaternionf> transformApplier) {
         Vec3 vec3 = camera.getPosition();
         float x = (float) (this.x - vec3.x());
         float y = (float) (this.y - vec3.y());
         float z = (float) (this.z - vec3.z());
-        Quaternion quaternion = new Quaternion(ROTATION_VECTOR, 0.0F, true);
+        Quaternionf quaternion = new Quaternionf().setAngleAxis(0.0F, ROTATION_VECTOR.x(), ROTATION_VECTOR.y(), ROTATION_VECTOR.z());
+        ;
         transformApplier.accept(quaternion);
-        TRANSFORM_VECTOR.transform(quaternion);
+        quaternion.transform(TRANSFORM_VECTOR);
         Vector3f[] avector3f = new Vector3f[] {
                 new Vector3f(-1.0F, -1.0F, 0.0F),
                 new Vector3f(-1.0F, 1.0F, 0.0F),
@@ -99,7 +100,7 @@ public class SweepingStrikeParticle extends TextureSheetParticle {
 
         for (int i = 0; i < 4; ++i) {
             Vector3f vector3f = avector3f[i];
-            vector3f.transform(quaternion);
+            quaternion.transform(vector3f);
             vector3f.mul(size);
             vector3f.add(x, y, z);
         }

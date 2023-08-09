@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
@@ -124,21 +124,21 @@ public class HoloGui extends Screen {
     }
 
     @Override
-    public void render(PoseStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
-        renderBackground(matrixStack, 0);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, partialTicks);
 
         defaultGui.updateFocusState((width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2, mouseX, mouseY);
-        defaultGui.draw(matrixStack, (width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2,
+        defaultGui.draw(graphics, (width - defaultGui.getWidth()) / 2, (height - defaultGui.getHeight()) / 2,
                 width, height, mouseX, mouseY, 1);
 
-        renderHoveredToolTip(matrixStack, mouseX, mouseY);
+        renderHoveredToolTip(graphics, mouseX, mouseY);
     }
 
-    protected void renderHoveredToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    protected void renderHoveredToolTip(GuiGraphics graphics, int mouseX, int mouseY) {
         List<Component> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
-            renderTooltip(matrixStack, tooltipLines, Optional.empty(), mouseX, mouseY);
+            graphics.renderTooltip(font, tooltipLines, Optional.empty(), mouseX, mouseY);
         }
     }
 
@@ -195,7 +195,7 @@ public class HoloGui extends Screen {
                     gui.onShow();
                     break;
                 case 't':
-                    getMinecraft().player.commandUnsigned("reload");
+                    getMinecraft().player.connection.sendUnsignedCommand("reload");
                     spinner.setVisible(true);
                     break;
             }

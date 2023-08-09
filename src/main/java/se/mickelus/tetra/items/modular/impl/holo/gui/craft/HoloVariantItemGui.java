@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
@@ -79,11 +79,11 @@ public class HoloVariantItemGui extends GuiClickable {
     }
 
     @Override
-    protected void drawChildren(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.drawChildren(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+    protected void drawChildren(GuiGraphics guiGraphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.drawChildren(guiGraphics, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (Screen.hasShiftDown()) {
-            material.draw(matrixStack, refX + material.getX(), refY + material.getY(), screenWidth, screenHeight, mouseX, mouseY, opacity);
+            material.draw(guiGraphics, refX + material.getX(), refY + material.getY(), screenWidth, screenHeight, mouseX, mouseY, opacity);
         }
     }
 }

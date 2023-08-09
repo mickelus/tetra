@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Mth;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
@@ -79,7 +79,7 @@ public class GuiRangedProgress extends GuiRoot {
     }
 
     @Override
-    public void draw() {
+    public void draw(GuiGraphics graphics) {
         if (isVisible() && (progress > 0 || hideAnimation.isActive())) {
             Window window = mc.getWindow();
             int width = window.getGuiScaledWidth();
@@ -88,7 +88,7 @@ public class GuiRangedProgress extends GuiRoot {
             int mouseX = (int) (mc.mouseHandler.xpos() * window.getGuiScaledWidth() / window.getScreenWidth());
             int mouseY = (int) (mc.mouseHandler.ypos() * window.getGuiScaledHeight() / window.getScreenHeight());
 
-            this.drawChildren(new PoseStack(), width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
+            this.drawChildren(graphics, width / 2, height / 2, 0, 0, mouseX, mouseY, 1.0F);
         }
     }
 }

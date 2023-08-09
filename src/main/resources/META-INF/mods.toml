@@ -1,43 +1,34 @@
-modLoader = "javafml"
-loaderVersion = "[42,)"
-issueTrackerURL = "https://github.com/mickelus/tetra/issues/new?template=bug_report.md"
-license = "MIT"
-
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
 [[mods]]
-modId = "tetra"
-version = "${file.jarVersion}"
-displayName = "Tetra"
-authors = "Mickelus"
-description = "Tetra revolves around modular items and attempts to blend it together with other concepts such as adventure and technology."
-credits = "red1854th: korean localization, Jeffku0107: chinese localization, Arvid6: spanish localization, shikhtv: russian translation"
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="${mod_authors}"
+description='''${mod_description}'''
 
-[[dependencies.tetra]] #optional
-modId = "forge"
-mandatory = true
-versionRange = "[42,)"
-ordering = "NONE"
-side = "BOTH"
-[[dependencies.tetra]]
-modId = "minecraft"
-mandatory = true
-versionRange = "[1.19,)"
-ordering = "NONE"
-side = "BOTH"
-[[dependencies.tetra]]
-modId = "mutil"
-mandatory = true
-versionRange = "[4.2,]"
-ordering = "NONE"
-side = "BOTH"
-[[dependencies.tetra]]
-modId = "curios"
-mandatory = false
-versionRange = "[1.19,)"
-ordering = "AFTER"
-side = "BOTH"
-[[dependencies.tetra]]
-modId = "botania"
-mandatory = false
-versionRange = "[1.19,)"
-ordering = "AFTER"
-side = "BOTH"
+[[dependencies.${mod_id}]]
+    modId="forge"
+    mandatory=true
+    versionRange="${forge_version_range}"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="mutil"
+    mandatory=true
+    versionRange="${mutil_version_range}"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+modId="curios"
+mandatory=true
+versionRange="${curios_version_range}"
+ordering="NONE"
+side="BOTH"

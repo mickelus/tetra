@@ -14,15 +14,16 @@ import java.util.Map;
 public class MaterialReductionOutcome implements CraftingEffectOutcome {
     float probability;
 
+    // todo 1.20: check that this still works
     @Override
     public boolean apply(ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
             Map<ToolAction, Integer> tools, Level world, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials) {
         if (consumeResources
                 && !preMaterials[0].isEmpty()
-                && (ItemStack.isSame(preMaterials[0], postMaterials[0]) || postMaterials[0].isEmpty())
+                && (ItemStack.isSameItem(preMaterials[0], postMaterials[0]) || postMaterials[0].isEmpty())
                 && preMaterials[0].getCount() > postMaterials[0].getCount() + 1) {
             if (world.getRandom().nextFloat() < probability) {
-                if (ItemStack.isSame(preMaterials[0], postMaterials[0])) {
+                if (ItemStack.isSameItem(preMaterials[0], postMaterials[0])) {
                     postMaterials[0].setCount(postMaterials[0].getCount() + 1);
                 } else {
                     ItemStack clone = preMaterials[0].copy();

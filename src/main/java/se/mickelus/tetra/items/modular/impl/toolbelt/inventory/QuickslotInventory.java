@@ -82,7 +82,7 @@ public class QuickslotInventory extends ToolbeltInventory {
 
     private int getShadowIndex(ItemStack itemStack) {
         for (int i = 0; i < getContainerSize(); i++) {
-            if (itemStack.sameItem(getShadowOfSlot(i)) && getItem(i).isEmpty()) {
+            if (itemStack.is(getShadowOfSlot(i).getItem()) && getItem(i).isEmpty()) {
                 return i;
             }
         }
@@ -98,7 +98,7 @@ public class QuickslotInventory extends ToolbeltInventory {
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getContainerSize(); i++) {
             ItemStack storedStack = getItem(i);
-            if (storedStack.sameItem(itemStack)
+            if (storedStack.is(itemStack.getItem())
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());

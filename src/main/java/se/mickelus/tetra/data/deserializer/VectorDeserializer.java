@@ -1,7 +1,7 @@
 package se.mickelus.tetra.data.deserializer;
 
 import com.google.gson.*;
-import com.mojang.math.Vector3f;
+import org.joml.Vector3f;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;

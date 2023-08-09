@@ -430,7 +430,7 @@ public interface IModularItem {
             int reducedAmount = getReducedDamage(amount, itemStack, responsibleEntity);
             itemStack.hurtAndBreak(reducedAmount, responsibleEntity, breaker -> breaker.broadcastBreakEvent(breaker.getUsedItemHand()));
 
-            if (isBroken(damage + reducedAmount, maxDamage) && !responsibleEntity.level.isClientSide) {
+            if (isBroken(damage + reducedAmount, maxDamage) && !responsibleEntity.level().isClientSide) {
                 responsibleEntity.broadcastBreakEvent(responsibleEntity.getUsedItemHand());
                 responsibleEntity.playSound(SoundEvents.SHIELD_BREAK, 1, 1);
             }
@@ -444,7 +444,7 @@ public interface IModularItem {
 
             if (level > 0) {
                 for (int i = 0; i < amount; i++) {
-                    if (DigDurabilityEnchantment.shouldIgnoreDurabilityDrop(itemStack, level, responsibleEntity.level.random)) {
+                    if (DigDurabilityEnchantment.shouldIgnoreDurabilityDrop(itemStack, level, responsibleEntity.level().random)) {
                         reduction++;
                     }
                 }

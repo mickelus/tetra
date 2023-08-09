@@ -26,10 +26,10 @@ public class JumpHandlerBooster {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onKeyInput(InputEvent.Key event) {
         if (mc.isWindowActive()) {
-            if (jumpKey.isDown() && mc.player.isOnGround() && mc.player.isCrouching()) {
+            if (jumpKey.isDown() && mc.player.onGround() && mc.player.isCrouching()) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(true, true);
                 TetraMod.packetHandler.sendToServer(packet);
-            } else if (jumpKey.isDown() && !wasJumpKeyDown && !mc.player.isOnGround()) {
+            } else if (jumpKey.isDown() && !wasJumpKeyDown && !mc.player.onGround()) {
                 UpdateBoosterPacket packet = new UpdateBoosterPacket(true);
                 TetraMod.packetHandler.sendToServer(packet);
             } else if (!jumpKey.isDown() && wasJumpKeyDown) {

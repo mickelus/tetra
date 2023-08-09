@@ -32,7 +32,7 @@ public class SuspendPotionEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         entity.fallDistance = 0;
-        if (entity.isOnGround()) {
+        if (entity.onGround()) {
             entity.removeEffect(this);
         } else {
             Vec3 motion = entity.getDeltaMovement();

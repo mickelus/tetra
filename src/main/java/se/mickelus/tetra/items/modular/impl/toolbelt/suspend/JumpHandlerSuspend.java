@@ -27,7 +27,7 @@ public class JumpHandlerSuspend {
         if (mc.isWindowActive()) {
             Player player = mc.player;
             if (jumpKey.isDown() && !wasJumpKeyDown
-                    && !player.isOnGround() && !player.isCreative() && !player.isSpectator()) {
+                    && !player.onGround() && !player.isCreative() && !player.isSpectator()) {
                 boolean isSuspended = player.hasEffect(SuspendPotionEffect.instance);
                 if (!isSuspended || player.isShiftKeyDown()) {
                     SuspendEffect.toggleSuspend(player, !isSuspended);

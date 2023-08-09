@@ -7,6 +7,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -20,7 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -97,14 +97,14 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
 
     @Override
     protected void onHit(HitResult rayTraceResult) {
-        if (!level.isClientSide
+        if (!level().isClientSide
                 && rayTraceResult.getType() == HitResult.Type.BLOCK
                 && getDeltaMovement().lengthSqr() > 0.95) {
             ServerPlayer shooter = CastOptional.cast(getOwner(), ServerPlayer.class).orElse(null);
             BlockPos pos = ((BlockHitResult) rayTraceResult).getBlockPos();
 
-            if (shooter != null && breakBlock(level, pos, shooter)) {
-                breakAround(level, pos, ((BlockHitResult) rayTraceResult).getDirection(), shooter);
+            if (shooter != null && breakBlock(level(), pos, shooter)) {
+                breakAround(level(), pos, ((BlockHitResult) rayTraceResult).getDirection(), shooter);
                 setDeltaMovement(getDeltaMovement().scale(0.95f));
                 hitAdditional();
                 return;
@@ -121,7 +121,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     private void hitAdditional() {
         Vec3 position = position();
         Vec3 target = position.add(getDeltaMovement());
-        HitResult rayTraceResult = level.clip(
+        HitResult rayTraceResult = level().clip(
                 new ClipContext(position, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 
         if (rayTraceResult.getType() == HitResult.Type.BLOCK
@@ -161,7 +161,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
         if (blockState.getDestroySpeed(world, pos) != -1
                 && isAlive()
                 && !shooter.blockActionRestricted(world, pos, gameType)
-                && FracturedBedrockTile.breakMaterials.contains(blockState.getMaterial())
+                && blockState.is(FracturedBedrockTile.extractorBreakable)
                 && blockState.getBlock().onDestroyedByPlayer(blockState, world, pos, shooter, true, world.getFluidState(pos))
                 && ForgeHooks.onBlockBreakEvent(world, gameType, shooter, pos) != -1) {
 
@@ -190,28 +190,28 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
 
     private void destroyExtractor() {
         discard();
-        level.explode(getOwner(), getX(), getY(), getZ(), 4, Explosion.BlockInteraction.BREAK);
+        level().explode(getOwner(), getX(), getY(), getZ(), 4, true, Level.ExplosionInteraction.TNT);
     }
 
     @Override
     public void tick() {
         super.tick();
 
-        if (!level.isClientSide) {
-            if (isOnGround() && heat > 0) {
+        if (!level().isClientSide) {
+            if (onGround() && heat > 0) {
                 int cooldown = isInWater() ? 10 : 1;
                 if (tickCount % 10 == 0) {
                     Vec3 pos = position().add(getLookAngle().scale(-Math.random()));
-                    ((ServerLevel) level).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, cooldown, 0,
+                    ((ServerLevel) level()).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, cooldown, 0,
                             0.01, 0, 0.01D);
 
-                    ((ServerLevel) level).sendParticles(ParticleTypes.FLAME, pos.x, pos.y + 0.1, pos.z, 1, 0,
+                    ((ServerLevel) level()).sendParticles(ParticleTypes.FLAME, pos.x, pos.y + 0.1, pos.z, 1, 0,
                             0.01, 0, 0.01D);
                 }
 
                 if (cooldown > 1 && !extinguishing) {
-                    level.playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 0.2f, 0.9f);
-                    ((ServerLevel) level).sendParticles(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, getX(), getY(), getZ(), 12, 0,
+                    level().playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 0.2f, 0.9f);
+                    ((ServerLevel) level()).sendParticles(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, getX(), getY(), getZ(), 12, 0,
                             0.01, 0, 0.01D);
 
                     extinguishing = true;
@@ -221,7 +221,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
             } else {
                 if (tickCount % 40 == 0) {
                     Vec3 pos = position().add(getLookAngle().scale(-Math.random()));
-                    ((ServerLevel) level).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, 1, 0,
+                    ((ServerLevel) level()).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, 1, 0,
                             0.01, 0, 0.01D);
                 }
             }
@@ -229,7 +229,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     }
 
     @Override
-    public boolean isOnGround() {
+    public boolean onGround() {
         return inGroundTime > 0;
     }
 
@@ -284,8 +284,8 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     // pretty much the same as a regular pickup but attempts to place it in the offhand first
     @Override
     public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
-        if (!level.isClientSide
-                && isOnGround()
+        if (!level().isClientSide
+                && onGround()
                 && isAlive()
                 && pickup == AbstractArrow.Pickup.ALLOWED) {
 
@@ -327,8 +327,9 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
         }
     }
 
+
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

@@ -13,7 +13,6 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.items.TetraItem;
-import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -26,7 +25,7 @@ public class StonecutterItem extends TetraItem {
     public static StonecutterItem instance;
 
     public StonecutterItem() {
-        super(new Properties().tab(TetraItemGroup.instance));
+        super(new Properties());
     }
 
     @OnlyIn(Dist.CLIENT)

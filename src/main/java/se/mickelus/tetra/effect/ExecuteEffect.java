@@ -1,6 +1,5 @@
 package se.mickelus.tetra.effect;
 
-import com.mojang.math.Vector3f;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -16,6 +15,7 @@ import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.potion.SeveredPotionEffect;
 import se.mickelus.tetra.effect.potion.SmallStrengthPotionEffect;
@@ -36,7 +36,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
     @Override
     public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
-        if (!target.level.isClientSide) {
+        if (!target.level().isClientSide) {
             AbilityUseResult result;
             if (isDefensive(item, itemStack, hand)) {
                 result = defensiveExecute(attacker, item, itemStack, target);
@@ -197,7 +197,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             target.getCommandSenderWorld().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 1, 0.8f);
 
             RandomSource rand = target.getRandom();
-            CastOptional.cast(target.level, ServerLevel.class).ifPresent(world ->
+            CastOptional.cast(target.level(), ServerLevel.class).ifPresent(world ->
                     world.sendParticles(new DustParticleOptions(new Vector3f(0.6f, 0, 0), 0.8f),
                             hitVec.x, hitVec.y, hitVec.z, 10,
                             rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, rand.nextGaussian() * 0.3, 0.1f));

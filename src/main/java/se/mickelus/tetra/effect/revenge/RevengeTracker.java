@@ -32,7 +32,7 @@ public class RevengeTracker {
             .build();
 
     private static int getIdentifier(Entity entity) {
-        return entity.level.isClientSide ? -entity.getId() : entity.getId();
+        return entity.level().isClientSide ? -entity.getId() : entity.getId();
     }
 
     public static boolean canRevenge(LivingEntity entity) {

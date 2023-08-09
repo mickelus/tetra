@@ -52,10 +52,10 @@ public class LungeEffect extends ChargedAbilityEffect {
     public static void onPlayerTick(Player player) {
         LungeData data = activeCache.getIfPresent(getIdentifier(player));
         if (data != null && !player.isPassenger()) {
-            if (!player.isOnGround()) {
+            if (!player.onGround()) {
                 AABB axisalignedbb = player.getBoundingBox().inflate(0.2, 0, 0.2).move(player.getDeltaMovement());
 
-                player.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb).stream()
+                player.level().getEntitiesOfClass(LivingEntity.class, axisalignedbb).stream()
                         .filter(Entity::isAlive)
                         .filter(Entity::isPickable)
                         .filter(Entity::isAttackable)
@@ -94,7 +94,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             RevengeTracker.removeEnemy(player, target);
         }
 
-        if (!player.level.isClientSide) {
+        if (!player.level().isClientSide) {
             double bonusDamage = 0;
 
             if (momentumLevel > 0) {
@@ -130,11 +130,11 @@ public class LungeEffect extends ChargedAbilityEffect {
     }
 
     private static void spawnMomentumParticles(LivingEntity target, double bonus) {
-        BlockPos pos = new BlockPos(target.getX(), target.getY() - 0.2, target.getZ());
-        BlockState blockState = target.level.getBlockState(pos);
+        BlockPos pos = BlockPos.containing(target.getX(), target.getY() - 0.2, target.getZ());
+        BlockState blockState = target.level().getBlockState(pos);
 
         if (!blockState.isAir()) {
-            ((ServerLevel) target.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState), target.getX(), target.getY(),
+            ((ServerLevel) target.level()).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState), target.getX(), target.getY(),
                     target.getZ(), (int) (bonus * 8) + 20, 0.0D, 0.0D, 0.0D, 0.15);
         }
     }
@@ -195,12 +195,12 @@ public class LungeEffect extends ChargedAbilityEffect {
 
         entity.hurtMarked = true;
 
-        entity.getCommandSenderWorld().playSound(entity, new BlockPos(entity.position().add(entity.getDeltaMovement())), SoundEvents.UI_TOAST_IN,
+        entity.getCommandSenderWorld().playSound(entity, BlockPos.containing(entity.position().add(entity.getDeltaMovement())), SoundEvents.UI_TOAST_IN,
                 SoundSource.PLAYERS, 1, 1.3f);
 
-        if (!entity.level.isClientSide) {
+        if (!entity.level().isClientSide) {
             RandomSource rand = entity.getRandom();
-            ((ServerLevel) entity.level).sendParticles(ParticleTypes.WITCH,
+            ((ServerLevel) entity.level()).sendParticles(ParticleTypes.WITCH,
                     entity.getX() + (rand.nextGaussian() - 0.5) * 0.5,
                     entity.getY(),
                     entity.getZ() + (rand.nextGaussian() - 0.5) * 0.5,
@@ -211,7 +211,7 @@ public class LungeEffect extends ChargedAbilityEffect {
     }
 
     private static int getIdentifier(Player entity) {
-        return entity.level.isClientSide ? -entity.getId() : entity.getId();
+        return entity.level().isClientSide ? -entity.getId() : entity.getId();
     }
 
     @Override
@@ -226,7 +226,7 @@ public class LungeEffect extends ChargedAbilityEffect {
     @Override
     public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack,
             @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vec3 hitVec, int chargedTicks) {
-        if (attacker.isOnGround()) {
+        if (attacker.onGround()) {
             float damageMultiplierOffset = 0;
             float strength = 1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
             Vec3 lookVector = attacker.getLookAngle();
@@ -290,7 +290,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             attacker.causeFoodExhaustion(overextendLevel > 0 ? 6 : 1);
             attacker.getCooldowns().addCooldown(item, getCooldown(item, itemStack));
 
-            attacker.getLevel().playSound(attacker, new BlockPos(attacker.position().add(attacker.getDeltaMovement())), SoundEvents.UI_TOAST_IN,
+            attacker.level().playSound(attacker, BlockPos.containing(attacker.position().add(attacker.getDeltaMovement())), SoundEvents.UI_TOAST_IN,
                     SoundSource.PLAYERS, 1, 1.3f);
 
         }

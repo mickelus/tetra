@@ -46,7 +46,7 @@ public class MultiblockSchematicProcessor extends StructureProcessor {
     @Override
     public StructureTemplate.StructureBlockInfo process(LevelReader world, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo $,
             StructureTemplate.StructureBlockInfo blockInfo, StructurePlaceSettings placementSettings, @Nullable StructureTemplate template) {
-        if (blockInfo.state.getBlock() instanceof MultiblockSchematicBlock block) {
+        if (blockInfo.state().getBlock() instanceof MultiblockSchematicBlock block) {
             Random random = new Random(Mth.getSeed(pos));
             int size = block.height * block.width;
             boolean isRuined = IntStream.range(0, size)
@@ -58,12 +58,12 @@ public class MultiblockSchematicProcessor extends StructureProcessor {
 
             if (isRuined) {
                 BlockState newState = block.ruinedRef.get().defaultBlockState()
-                        .setValue(RuinedMultiblockSchematicBlock.facingProp, blockInfo.state.getValue(MultiblockSchematicBlock.facingProp));
-                return new StructureTemplate.StructureBlockInfo(blockInfo.pos, newState, blockInfo.nbt);
+                        .setValue(RuinedMultiblockSchematicBlock.facingProp, blockInfo.state().getValue(MultiblockSchematicBlock.facingProp));
+                return new StructureTemplate.StructureBlockInfo(blockInfo.pos(), newState, blockInfo.nbt());
             }
-        } else if (blockInfo.state.getBlock() instanceof PrimaryMultiblockSchematicBlock) {
-            BlockState newState = blockInfo.state.setValue(PrimaryMultiblockSchematicBlock.complete, false);
-            return new StructureTemplate.StructureBlockInfo(blockInfo.pos, newState, blockInfo.nbt);
+        } else if (blockInfo.state().getBlock() instanceof PrimaryMultiblockSchematicBlock) {
+            BlockState newState = blockInfo.state().setValue(PrimaryMultiblockSchematicBlock.complete, false);
+            return new StructureTemplate.StructureBlockInfo(blockInfo.pos(), newState, blockInfo.nbt());
         }
 
         return blockInfo;

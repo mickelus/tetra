@@ -11,7 +11,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraftforge.registries.RegistryObject;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlockEntity;
 import se.mickelus.tetra.blocks.forged.hammer.HammerEffect;
@@ -33,9 +32,9 @@ public class ForgedHammerProcessor extends StructureProcessor {
     @Override
     public StructureTemplate.StructureBlockInfo process(LevelReader world, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo $,
             StructureTemplate.StructureBlockInfo blockInfo, StructurePlaceSettings placementSettings, @Nullable StructureTemplate template) {
-        if (blockInfo.state.getBlock() instanceof HammerBaseBlock) {
-            RandomSource random = placementSettings.getRandom(blockInfo.pos);
-            CompoundTag newCompound = blockInfo.nbt.copy();
+        if (blockInfo.state().getBlock() instanceof HammerBaseBlock) {
+            RandomSource random = placementSettings.getRandom(blockInfo.pos());
+            CompoundTag newCompound = blockInfo.nbt().copy();
 
             // randomize cells
             ItemStack cell1 = random.nextBoolean() ? new ItemStack(ThermalCellItem.instance.get()) : null;
@@ -67,7 +66,7 @@ public class ForgedHammerProcessor extends StructureProcessor {
             }
 
 
-            return new StructureTemplate.StructureBlockInfo(blockInfo.pos, blockInfo.state, newCompound);
+            return new StructureTemplate.StructureBlockInfo(blockInfo.pos(), blockInfo.state(), newCompound);
         }
         return blockInfo;
     }

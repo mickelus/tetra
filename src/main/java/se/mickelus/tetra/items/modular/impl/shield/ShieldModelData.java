@@ -1,7 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.shield;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.math.Vector3f;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.Util;
@@ -9,6 +8,8 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.model.geom.builders.UVPair;
+import net.minecraft.util.ExtraCodecs;
+import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ public class ShieldModelData {
             Util.fixedSize(list, 2).map(l -> new UVPair(l.get(0), l.get(1))), (pair) -> ImmutableList.of(pair.u(), pair.v()));
 
     private static final Codec<Part> partCodec = RecordCodecBuilder.create(instance -> instance.group(
-            Vector3f.CODEC.optionalFieldOf("origin", Vector3f.ZERO).forGetter(i -> i.origin),
-            Vector3f.CODEC.optionalFieldOf("dimensions", Vector3f.ZERO).forGetter(i -> i.dimensions),
-            Vector3f.CODEC.optionalFieldOf("rotation", Vector3f.ZERO).forGetter(i -> i.rotation),
+            ExtraCodecs.VECTOR3F.optionalFieldOf("origin", new Vector3f()).forGetter(i -> i.origin),
+            ExtraCodecs.VECTOR3F.optionalFieldOf("dimensions", new Vector3f()).forGetter(i -> i.dimensions),
+            ExtraCodecs.VECTOR3F.optionalFieldOf("rotation", new Vector3f()).forGetter(i -> i.rotation),
             uvCodec.optionalFieldOf("uv", new UVPair(0, 0)).forGetter(i -> i.uv)
     ).apply(instance, Part::new));
 

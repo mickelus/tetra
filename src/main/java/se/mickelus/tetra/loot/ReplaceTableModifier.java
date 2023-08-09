@@ -7,6 +7,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
@@ -31,19 +32,19 @@ public class ReplaceTableModifier extends LootModifier {
         this.table = table;
     }
 
+    // todo 1.20: test that bartering still works
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        LootContext newContext = new LootContext.Builder(context.getLevel())
-                .withRandom(context.getRandom())
+        LootParams newParams = new LootParams.Builder(context.getLevel())
                 .withLuck(context.getLuck())
                 .create(LootContextParamSets.EMPTY);
-        newContext.setQueriedLootTableId(table);
+        context.setQueriedLootTableId(table);
 
         return context.getLevel()
                 .getServer()
-                .getLootTables()
-                .get(table)
-                .getRandomItems(newContext);
+                .getLootData()
+                .getLootTable(table)
+                .getRandomItems(newParams);
     }
 
     @Override

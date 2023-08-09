@@ -1,9 +1,8 @@
 package se.mickelus.tetra.effect.gui;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.minecraftforge.event.TickEvent;
@@ -50,14 +49,13 @@ public class AbilityOverlays extends GuiRoot implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+    public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
         if (isVisible()) {
             Window window = mc.getWindow();
             int width = window.getGuiScaledWidth();
             int height = window.getGuiScaledHeight();
 
-            this.drawChildren(poseStack, Math.round(width / 2f), Math.round(height / 2f), 0, 0, 0, 0, 1.0F);
-            RenderSystem.setShaderColor(1, 1, 1, 1);
+            this.drawChildren(guiGraphics, Math.round(width / 2f), Math.round(height / 2f), 0, 0, 0, 0, 1f);
         }
     }
 }

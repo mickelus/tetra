@@ -6,7 +6,6 @@ import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.NbtPredicate;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
@@ -26,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -59,7 +58,7 @@ public class OutcomeMaterial {
     @OnlyIn(Dist.CLIENT)
     public Component[] getDisplayNames() {
         if (getPredicate() == null) {
-            return new Component[]{Component.literal("Unknown material")};
+            return new Component[] { Component.literal("Unknown material") };
         } else if (itemStacks != null) {
             return itemStacks.stream().map(ItemStack::getHoverName).toArray(Component[]::new);
         } else if (tagLocation != null) {
@@ -70,7 +69,7 @@ public class OutcomeMaterial {
                     .toArray(Component[]::new);
         }
 
-        return new Component[]{Component.literal("Unknown material")};
+        return new Component[] { Component.literal("Unknown material") };
     }
 
     public ItemStack[] getApplicableItemStacks() {
@@ -124,9 +123,8 @@ public class OutcomeMaterial {
                         material.itemStacks = StreamSupport.stream(GsonHelper.getAsJsonArray(jsonObject, "items", emptyArray).spliterator(), false)
                                 .map(jsonElement -> GsonHelper.convertToString(jsonElement, "item"))
                                 .map(ResourceLocation::new)
-                                .map(Registry.ITEM::getOptional)
-                                .filter(Optional::isPresent)
-                                .map(Optional::get)
+                                .map(ForgeRegistries.ITEMS::getValue)
+                                .filter(Objects::nonNull)
                                 .map(item -> new ItemStack(item, material.count))
                                 .collect(Collectors.toList());
                     } catch (JsonSyntaxException e) {

@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -157,23 +157,23 @@ public class BlockInteraction {
                 player.getCooldowns().addCooldown(heldStack.getItem(), cooldown);
             }
 
-            if (player.level.isClientSide) {
+            if (player.level().isClientSide) {
                 InteractiveBlockOverlay.markDirty();
             }
 
-            return InteractionResult.sidedSuccess(player.level.isClientSide);
+            return InteractionResult.sidedSuccess(player.level().isClientSide);
         }
         return InteractionResult.PASS;
     }
 
     public static BlockInteraction getInteractionAtPoint(Player player, BlockState blockState, BlockPos pos, Direction hitFace,
             double hitX, double hitY, double hitZ) {
-        AABB boundingBox = blockState.getShape(player.level, pos).bounds();
+        AABB boundingBox = blockState.getShape(player.level(), pos).bounds();
         double hitU = getHitU(hitFace, boundingBox, hitX, hitY, hitZ);
         double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 
         return CastOptional.cast(blockState.getBlock(), IInteractiveBlock.class)
-                .map(block -> block.getPotentialInteractions(player.level, pos, blockState, hitFace, PropertyHelper.getPlayerTools(player)))
+                .map(block -> block.getPotentialInteractions(player.level(), pos, blockState, hitFace, PropertyHelper.getPlayerTools(player)))
                 .map(Arrays::stream).orElseGet(Stream::empty)
                 .filter(interaction -> interaction.isWithinBounds(hitU * 16, hitV * 16))
                 .findFirst()
@@ -238,9 +238,9 @@ public class BlockInteraction {
 
     public static List<ItemStack> getLoot(ResourceLocation lootTable, Player player, InteractionHand hand, ServerLevel world,
             BlockState blockState) {
-        LootTable table = world.getServer().getLootTables().get(lootTable);
+        LootTable table = world.getServer().getLootData().getLootTable(lootTable);
 
-        LootContext context = new LootContext.Builder(world)
+        LootParams context = new LootParams.Builder(world)
                 .withLuck(player.getLuck())
                 .withParameter(LootContextParams.THIS_ENTITY, player)
                 .withParameter(LootContextParams.BLOCK_STATE, blockState)
@@ -252,9 +252,9 @@ public class BlockInteraction {
     }
 
     public static List<ItemStack> getLoot(ResourceLocation lootTable, ServerLevel world, BlockPos pos, BlockState blockState) {
-        LootTable table = world.getServer().getLootTables().get(lootTable);
+        LootTable table = world.getServer().getLootData().getLootTable(lootTable);
 
-        LootContext context = new LootContext.Builder(world)
+        LootParams context = new LootParams.Builder(world)
                 .withParameter(LootContextParams.BLOCK_STATE, blockState)
                 .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
                 .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))

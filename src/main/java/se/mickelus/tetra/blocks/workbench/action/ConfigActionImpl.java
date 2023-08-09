@@ -11,7 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -60,9 +60,9 @@ public class ConfigActionImpl extends ConfigAction {
 
     @Override
     public void perform(Player player, ItemStack targetStack, WorkbenchTile workbench) {
-        if (player != null && !player.level.isClientSide) {
-            ServerLevel world = (ServerLevel) player.level;
-            LootTable table = world.getServer().getLootTables().get(lootTable);
+        if (player != null && !player.level().isClientSide) {
+            ServerLevel world = (ServerLevel) player.level();
+            LootTable table = world.getServer().getLootData().getLootTable(lootTable);
             ItemStack toolStack = requiredTools.getLevelMap().entrySet().stream()
                     .min(Map.Entry.comparingByValue())
                     .map(entry -> {
@@ -76,7 +76,7 @@ public class ConfigActionImpl extends ConfigAction {
                     })
                     .orElse(ItemStack.EMPTY);
 
-            LootContext context = new LootContext.Builder(world)
+            LootParams context = new LootParams.Builder(world)
                     .withLuck(player.getLuck())
                     .withParameter(LootContextParams.TOOL, toolStack)
                     .withParameter(LootContextParams.THIS_ENTITY, player)
@@ -105,9 +105,9 @@ public class ConfigActionImpl extends ConfigAction {
             workbench.setChanged();
         } else if (!workbench.getLevel().isClientSide) {
             ServerLevel world = (ServerLevel) workbench.getLevel();
-            LootTable table = world.getServer().getLootTables().get(lootTable);
+            LootTable table = world.getServer().getLootData().getLootTable(lootTable);
 
-            LootContext context = new LootContext.Builder(world)
+            LootParams context = new LootParams.Builder(world)
                     .withParameter(LootContextParams.ORIGIN, Vec3.upFromBottomCenterOf(workbench.getBlockPos(), 1.1f))
                     .create(lootParameters);
 

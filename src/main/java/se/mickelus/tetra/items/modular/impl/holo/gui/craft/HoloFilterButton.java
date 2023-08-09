@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.StringUtils;
@@ -125,11 +125,11 @@ public class HoloFilterButton extends GuiElement {
     }
 
     @Override
-    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+    public void draw(GuiGraphics graphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(graphics, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         if (inputFocused && System.currentTimeMillis() % 800 < 400) {
-            drawRect(matrixStack, refX + x + 12 + label.getWidth(), refY + y + 7, refX + x + 17 + label.getWidth(), refY + y + 8, GuiColors.normal, 1f);
+            drawRect(graphics, refX + x + 12 + label.getWidth(), refY + y + 7, refX + x + 17 + label.getWidth(), refY + y + 8, GuiColors.normal, 1f);
         }
     }
 }

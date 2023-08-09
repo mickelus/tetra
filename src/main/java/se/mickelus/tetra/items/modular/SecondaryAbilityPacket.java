@@ -43,7 +43,7 @@ public class SecondaryAbilityPacket extends AbstractPacket {
     public void handle(Player player) {
         LivingEntity target = Optional.of(targetId)
                 .filter(id -> id != -1)
-                .map(id -> player.level.getEntity(id))
+                .map(id -> player.level().getEntity(id))
                 .filter(entity -> entity instanceof LivingEntity)
                 .map(entity -> (LivingEntity) entity)
                 .orElse(null);

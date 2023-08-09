@@ -62,7 +62,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     public static final EnumProperty<EnumTransferConfig> configProp = EnumProperty.create("config", EnumTransferConfig.class);
     public static final EnumProperty<EnumTransferState> transferProp = EnumProperty.create("transfer", EnumTransferState.class);
     private static final ResourceLocation plateLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/plate_break");
-    public static final BlockInteraction[] interactions = new BlockInteraction[]{
+    public static final BlockInteraction[] interactions = new BlockInteraction[] {
             new BlockInteraction(TetraToolActions.pry, 1, Direction.SOUTH, 3, 11, 4, 6,
                     new PropertyMatcher().where(plateProp, equalTo(true)),
                     TransferUnitBlock::removePlate),
@@ -204,7 +204,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
 
                 world.sendBlockUpdated(pos, state, state, 3);
 
-                if (!player.level.isClientSide) {
+                if (!player.level().isClientSide) {
                     BlockUseCriterion.trigger((ServerPlayer) player, state, ItemStack.EMPTY);
                 }
 
@@ -215,7 +215,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
                 world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.5f);
                 world.sendBlockUpdated(pos, state, state, 3);
 
-                if (!player.level.isClientSide) {
+                if (!player.level().isClientSide) {
                     BlockUseCriterion.trigger((ServerPlayer) player, state, ItemStack.EMPTY);
                 }
 
@@ -228,7 +228,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
             attachPlate(world, pos, state, player);
             heldStack.shrink(1);
 
-            if (!player.level.isClientSide) {
+            if (!player.level().isClientSide) {
                 BlockUseCriterion.trigger((ServerPlayer) player, state, ItemStack.EMPTY);
             }
 

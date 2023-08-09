@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -141,8 +141,8 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
 
     private void populateInventory(ServerLevel serverWorld, @Nullable ServerPlayer player) {
         handler.ifPresent(handler -> {
-            LootTable lootTable = serverWorld.getServer().getLootTables().get(containerLootTable);
-            LootContext.Builder builder = new LootContext.Builder(serverWorld)
+            LootTable lootTable = serverWorld.getServer().getLootData().getLootTable(containerLootTable);
+            LootParams.Builder builder = new LootParams.Builder(serverWorld)
                     .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition));
 
             if (player != null) {
@@ -151,7 +151,7 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
                         .withLuck(player.getLuck());
             }
 
-            lootTable.fill(new ItemHandlerWrapper(handler), builder.create(LootContextParamSets.CHEST));
+            lootTable.fill(new ItemHandlerWrapper(handler), builder.create(LootContextParamSets.CHEST), getBlockState().getSeed(getBlockPos()));
         });
     }
 

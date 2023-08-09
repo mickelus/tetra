@@ -3,9 +3,9 @@ package se.mickelus.tetra;
 import com.mojang.serialization.Codec;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
@@ -14,10 +14,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -33,6 +30,7 @@ import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -74,7 +72,6 @@ import se.mickelus.tetra.crafting.ScrollIngredient;
 import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.items.InitializableItem;
-import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.loot.DragonSinewItem;
@@ -111,15 +108,17 @@ public class TetraRegistries {
     public static final DeferredRegister<SoundEvent> sounds = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, TetraMod.MOD_ID);
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> lootModifiers = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, TetraMod.MOD_ID);
 
-    public static final DeferredRegister<LootItemConditionType> lootConditions = DeferredRegister.create(Registry.LOOT_ITEM_REGISTRY, TetraMod.MOD_ID);
-    public static final DeferredRegister<LootItemFunctionType> lootFunctions = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, TetraMod.MOD_ID);
-    public static final DeferredRegister<StructureProcessorType<?>> structureProcessors = DeferredRegister.create(Registry.STRUCTURE_PROCESSOR_REGISTRY, TetraMod.MOD_ID);
+    public static final DeferredRegister<LootItemConditionType> lootConditions = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE, TetraMod.MOD_ID);
+    public static final DeferredRegister<LootItemFunctionType> lootFunctions = DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE, TetraMod.MOD_ID);
+    public static final DeferredRegister<StructureProcessorType<?>> structureProcessors = DeferredRegister.create(Registries.STRUCTURE_PROCESSOR, TetraMod.MOD_ID);
+    public static final DeferredRegister<CreativeModeTab> creativeTabs = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TetraMod.MOD_ID);
 
     public static final TagKey<Block> forgeHammerBreakTag = BlockTags.create(new ResourceLocation("tetra:needs_forge_hammer_tool"));
     public static final Tier forgeHammerTier = TierSortingRegistry.registerTier(new ForgeTier(Tiers.NETHERITE.getLevel() + 1, 0, 0, 0, 0,
             forgeHammerBreakTag, () -> Ingredient.EMPTY), new ResourceLocation("tetra:maxed_forge_hammer"), List.of(Tiers.NETHERITE), List.of());
 
     private static Item.Properties itemProperties;
+    private static RegistryObject<CreativeModeTab> defaultCreativeTabs;
 
     public static void init(IEventBus bus) {
         bus.register(TetraRegistries.class);
@@ -136,9 +135,14 @@ public class TetraRegistries {
         lootFunctions.register(bus);
         lootModifiers.register(bus);
         structureProcessors.register(bus);
+        creativeTabs.register(bus);
 
-        new TetraItemGroup();
-        itemProperties = new Item.Properties().tab(TetraItemGroup.instance);
+        itemProperties = new Item.Properties();
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // CREATIVE TABS
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        defaultCreativeTabs = TetraRegistries.creativeTabs.register("default", () -> CreativeModeTab.builder().icon(() -> new ItemStack(GeodeItem.instance)).build());
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // BLOCKS
@@ -394,6 +398,13 @@ public class TetraRegistries {
                 .filter(item -> item instanceof InitializableItem)
                 .map(item -> (InitializableItem) item)
                 .forEach(item -> item.commonInit(TetraMod.packetHandler));
+    }
+
+    @SubscribeEvent
+    public void buildContents(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == defaultCreativeTabs.getKey()) {
+
+        }
     }
 
     @SubscribeEvent

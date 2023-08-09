@@ -1,6 +1,8 @@
 package se.mickelus.tetra;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -17,7 +19,6 @@ import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicScrollPacket;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
-import se.mickelus.tetra.compat.apotheosis.AffixReplacementHook;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.craftingeffect.condition.*;
@@ -55,6 +56,7 @@ import se.mickelus.tetra.util.TierHelper;
 import se.mickelus.tetra.util.ToolActionHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.concurrent.CompletableFuture;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)
@@ -112,7 +114,6 @@ public class TetraMod {
 
         new ItemUpgradeRegistry();
         ItemUpgradeRegistry.instance.registerReplacementHook(TetraEnchantmentHelper::transferReplacementEnchantments);
-        ItemUpgradeRegistry.instance.registerReplacementHook(new AffixReplacementHook());
 
         ModuleRegistry moduleRegistry = new ModuleRegistry();
         moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_module"), BasicModule::new);
@@ -138,9 +139,13 @@ public class TetraMod {
     public static void onGatherData(final GatherDataEvent event) {
         DataGenerator dataGenerator = event.getGenerator();
         if (event.includeServer()) {
-            dataGenerator.addProvider(true, new TetraBlockStateProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
-            dataGenerator.addProvider(true, new TetraTagsProvider(dataGenerator, MOD_ID, event.getExistingFileHelper()));
-            dataGenerator.addProvider(true, new TetraLootTableProvider(dataGenerator));
+            DataGenerator gen = event.getGenerator();
+            PackOutput packOutput = gen.getPackOutput();
+            CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+
+            dataGenerator.addProvider(true, new TetraBlockStateProvider(packOutput, MOD_ID, event.getExistingFileHelper()));
+            dataGenerator.addProvider(true, new TetraTagsProvider(packOutput, lookupProvider, MOD_ID, event.getExistingFileHelper()));
+            dataGenerator.addProvider(true, new TetraLootTableProvider(packOutput));
         }
     }
 
@@ -167,7 +172,7 @@ public class TetraMod {
 
     @SubscribeEvent
     public void registerCommands(RegisterCommandsEvent event) {
-        ModuleDevCommand.register(event.getDispatcher());
-        TetraCommand.register(event.getDispatcher());
+        ModuleDevCommand.register(event.getDispatcher(), event.getBuildContext());
+        TetraCommand.register(event.getDispatcher(), event.getBuildContext());
     }
 }

@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
@@ -122,33 +122,33 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
     }
 
     @Override
-    public void render(PoseStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
-        this.renderBackground(matrixStack, 0);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        renderTooltip(matrixStack, mouseX, mouseY);
+    public void render(GuiGraphics graphics, final int mouseX, final int mouseY, final float partialTicks) {
+        this.renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, partialTicks);
+        renderTooltip(graphics, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         defaultGui.updateFocusState(this.leftPos, this.topPos, mouseX, mouseY);
-        defaultGui.draw(matrixStack, this.leftPos, this.topPos, width, height, mouseX, mouseY, 1);
+        defaultGui.draw(graphics, this.leftPos, this.topPos, width, height, mouseX, mouseY, 1);
     }
 
     // override this to stop titles from rendering
     @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+    protected void renderLabels(GuiGraphics graphics, int x, int y) {
     }
 
     @Override
-    protected void renderTooltip(PoseStack matrixStack, int mouseX, int mouseY) {
-        super.renderTooltip(matrixStack, mouseX, mouseY);
+    protected void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
+        super.renderTooltip(graphics, mouseX, mouseY);
 
         List<Component> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
             // Math.max magic to stop tooltip from rendering outside screen
-            renderTooltip(matrixStack, tooltipLines, Optional.empty(), mouseX, Math.max(mouseY, 14));
+            graphics.renderTooltip(font, tooltipLines, Optional.empty(), mouseX, Math.max(mouseY, 14));
         }
 
         updateMaterialHoverPreview();

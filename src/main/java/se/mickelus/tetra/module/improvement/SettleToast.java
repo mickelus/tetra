@@ -1,10 +1,8 @@
 package se.mickelus.tetra.module.improvement;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.resources.ResourceLocation;
@@ -48,35 +46,25 @@ public class SettleToast implements Toast {
     }
 
     @Override
-    public Visibility render(PoseStack matrixStack, ToastComponent toastGui, long delta) {
-
-
+    public Visibility render(GuiGraphics graphics, ToastComponent toastGui, long delta) {
         if (itemStack != null) {
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, texture);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-            toastGui.blit(matrixStack, 0, 0, 0, 0, 160, 32);
-
-            if (!this.hasPlayedSound && delta > 0L) {
-                this.hasPlayedSound = true;
-
-                toastGui.getMinecraft().getSoundManager()
-                        .play(SimpleSoundInstance.forUI(TetraSounds.settle, 1, 1));
-            }
+            graphics.blit(texture, 0, 0, 0, 0, 160, 32);
 
             if (glyph != null) {
-                toastGui.blit(matrixStack, 20, 14, 160, 0, 15, 15);
-                glyph.draw(new PoseStack(), 19, 14, 260, 43, -1, -1, 1);
+                graphics.blit(texture, 20, 14, 160, 0, 15, 15);
+                glyph.draw(graphics, 19, 14, 260, 43, -1, -1, 1);
             }
 
-            toastGui.getMinecraft().font.draw(matrixStack, I18n.get(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchematicRarity.hone.tint);
-            toastGui.getMinecraft().font.draw(matrixStack, toastGui.getMinecraft().font.plainSubstrByWidth(moduleName, 118), 37, 18, GuiColors.muted);
+            graphics.drawString(toastGui.getMinecraft().font, I18n.get(TetraMod.MOD_ID + ".settled.toast"), 30, 7, SchematicRarity.hone.tint);
+            graphics.drawString(toastGui.getMinecraft().font, toastGui.getMinecraft().font.plainSubstrByWidth(moduleName, 118), 37, 18, GuiColors.muted);
 
+            graphics.renderItem(itemStack, 8, 8);
+            graphics.renderItemDecorations(toastGui.getMinecraft().font, itemStack, 8, 8);
 
-            // todo 1.18: still lit correctly?
-//            Lighting.turnBackOn();
-            toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(itemStack, 8, 8);
+            if (!this.hasPlayedSound && delta > 0L) {
+                toastGui.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(TetraSounds.settle, 1, 1));
+                this.hasPlayedSound = true;
+            }
 
             return delta > 5000 ? Visibility.HIDE : Visibility.SHOW;
         }

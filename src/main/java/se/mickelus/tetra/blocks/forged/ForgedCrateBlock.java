@@ -52,7 +52,7 @@ public class ForgedCrateBlock extends FallingBlock implements InitializableBlock
     public static final IntegerProperty propIntegrity = IntegerProperty.create("integrity", 0, 3);
     public static final ResourceLocation interactionLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/crate_content");
     public static final String identifier = "forged_crate";
-    static final BlockInteraction[] interactions = new BlockInteraction[]{
+    static final BlockInteraction[] interactions = new BlockInteraction[] {
             new BlockInteraction(TetraToolActions.pry, 1, Direction.EAST, 6, 8, 6, 8,
                     BlockStatePredicate.ANY,
                     ForgedCrateBlock::attemptBreakPry),
@@ -75,7 +75,7 @@ public class ForgedCrateBlock extends FallingBlock implements InitializableBlock
     }
 
     public ForgedCrateBlock() {
-        super(Properties.of(ForgedBlockCommon.forgedMaterial)
+        super(Properties.of()
                 .sound(SoundType.METAL)
                 .strength(5));
 

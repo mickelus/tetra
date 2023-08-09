@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
@@ -27,7 +27,7 @@ public class TetraBlock extends Block implements InitializableBlock {
     public static void dropBlockInventory(Block thisBlock, Level world, BlockPos pos, BlockState newState) {
         if (!thisBlock.equals(newState.getBlock())) {
             TileEntityOptional.from(world, pos, BlockEntity.class)
-                    .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
+                    .map(te -> te.getCapability(ForgeCapabilities.ITEM_HANDLER))
                     .orElse(LazyOptional.empty())
                     .ifPresent(cap -> {
                         for (int i = 0; i < cap.getSlots(); i++) {

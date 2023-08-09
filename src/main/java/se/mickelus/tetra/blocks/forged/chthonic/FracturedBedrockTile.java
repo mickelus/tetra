@@ -1,6 +1,5 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
-import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -12,6 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.*;
@@ -28,8 +29,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -38,7 +38,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,17 +48,17 @@ import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-import java.util.Set;
 
 @ParametersAreNonnullByDefault
 public class FracturedBedrockTile extends BlockEntity {
-    public static final Set<Material> breakMaterials = Sets.newHashSet(Material.STONE, Material.CLAY, Material.DIRT);
+
+    public static final TagKey<Block> extractorBreakable = BlockTags.create(new ResourceLocation("tetra", "extractor_breakable"));
     private static final Logger logger = LogManager.getLogger();
 
     private static final String activityKey = "actv";
     private static final String stepKey = "step";
     private static final String luckKey = "luck";
-    private static final ResourceLocation[] lootTables = new ResourceLocation[]{
+    private static final ResourceLocation[] lootTables = new ResourceLocation[] {
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier1"),
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier2"),
             new ResourceLocation(TetraMod.MOD_ID, "extractor/tier3"),
@@ -81,11 +80,10 @@ public class FracturedBedrockTile extends BlockEntity {
     public static boolean breakBlock(Level world, BlockPos pos, BlockState blockState) {
         if (world instanceof ServerLevel serverLevel
                 && !blockState.isAir()
-                && breakMaterials.contains(blockState.getMaterial())
+                && blockState.is(extractorBreakable)
                 && blockState.getDestroySpeed(world, pos) > -1) {
             BlockEntity tile = blockState.getBlock() instanceof EntityBlock ? world.getBlockEntity(pos) : null;
-            LootContext.Builder lootBuilder = new LootContext.Builder(serverLevel)
-                    .withRandom(world.random)
+            LootParams.Builder lootBuilder = new LootParams.Builder(serverLevel)
                     .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
                     .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
                     .withOptionalParameter(LootContextParams.BLOCK_ENTITY, tile)
@@ -194,7 +192,7 @@ public class FracturedBedrockTile extends BlockEntity {
     }
 
     private boolean canReplace(BlockState blockState) {
-        return blockState.getMaterial().isReplaceable();
+        return blockState.is(BlockTags.REPLACEABLE);
     }
 
     // todo 1.18: changed significantly, verify functionality
@@ -211,7 +209,7 @@ public class FracturedBedrockTile extends BlockEntity {
             return level.clipWithInteractionOverride(origin, target, blockPos, voxelshape, blockState);
         }, ctx -> {
             Vec3 vec3 = ctx.getFrom().subtract(ctx.getTo());
-            return BlockHitResult.miss(ctx.getTo(), Direction.getNearest(vec3.x, vec3.y, vec3.z), new BlockPos(ctx.getTo()));
+            return BlockHitResult.miss(ctx.getTo(), Direction.getNearest(vec3.x, vec3.y, vec3.z), BlockPos.containing(ctx.getTo()));
         });
     }
 
@@ -236,8 +234,8 @@ public class FracturedBedrockTile extends BlockEntity {
 
     private void spawnOre(BlockPos pos) {
         ServerLevel serverWorld = (ServerLevel) level;
-        LootTable table = serverWorld.getServer().getLootTables().get(lootTables[getTier()]);
-        LootContext context = new LootContext.Builder(serverWorld).withLuck(luck).create(LootContextParamSets.EMPTY);
+        LootTable table = serverWorld.getServer().getLootData().getLootTable(lootTables[getTier()]);
+        LootParams context = new LootParams.Builder(serverWorld).withLuck(luck).create(LootContextParamSets.EMPTY);
 
         table.getRandomItems(context).stream()
                 .filter(itemStack -> !itemStack.isEmpty())
@@ -289,8 +287,8 @@ public class FracturedBedrockTile extends BlockEntity {
             }
 
             entity.moveTo(spawnPos);
+            // todo 1.20: removed event check, still respect mod rules?
             CastOptional.cast(entity, Mob.class)
-                    .filter(e -> ForgeHooks.canEntitySpawn(e, serverWorld, spawnPos.x, spawnPos.y, spawnPos.z, null, MobSpawnType.SPAWNER) != -1)
                     .filter(e -> e.checkSpawnRules(serverWorld, MobSpawnType.SPAWNER))
                     .filter(e -> e.checkSpawnObstruction(serverWorld))
                     .ifPresent(e -> {

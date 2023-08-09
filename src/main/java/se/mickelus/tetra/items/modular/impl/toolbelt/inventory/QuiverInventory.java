@@ -23,6 +23,8 @@ public class QuiverInventory extends ToolbeltInventory {
         readFromNBT(stack.getOrCreateTag());
     }
 
+    // todo 1.20: verify that this works
+
     /**
      * Returns the number of unique items in this inventory.
      *
@@ -33,7 +35,7 @@ public class QuiverInventory extends ToolbeltInventory {
         for (ItemStack itemStack : inventoryContents) {
             boolean found = false;
             for (ItemStack aggregatedStack : aggregatedStacks) {
-                if (ItemStack.isSame(itemStack, aggregatedStack) && ItemStack.tagMatches(itemStack, aggregatedStack)) {
+                if (ItemStack.isSameItemSameTags(itemStack, aggregatedStack)) {
                     found = true;
                     aggregatedStack.grow(itemStack.getCount());
                     break;
@@ -49,7 +51,7 @@ public class QuiverInventory extends ToolbeltInventory {
 
     public int getFirstIndexForStack(ItemStack itemStack) {
         for (int i = 0; i < inventoryContents.size(); i++) {
-            if (ItemStack.isSame(itemStack, inventoryContents.get(i)) && ItemStack.tagMatches(inventoryContents.get(i), itemStack)) {
+            if (ItemStack.isSameItemSameTags(itemStack, inventoryContents.get(i))) {
                 return i;
             }
         }

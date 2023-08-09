@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
@@ -27,7 +26,7 @@ public class FracturedBedrockBlock extends TetraBlock implements EntityBlock {
     public static FracturedBedrockBlock instance;
 
     public FracturedBedrockBlock() {
-        super(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable());
+        super(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).noLootTable());
     }
 
     public static boolean canPierce(Level world, BlockPos pos) {

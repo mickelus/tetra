@@ -96,15 +96,15 @@ public class UtilBooster {
             player.push(0, boostBase + 0.8 * -player.getDeltaMovement().y, 0);
         }
 
-        if (player.level instanceof ServerLevel) {
-            ((ServerLevel) player.level).sendParticles(ParticleTypes.SMOKE,
+        if (player.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.SMOKE,
                     player.getX() - 0.2 + Math.random() * 0.4,
                     player.getY() + Math.random() * 0.2,
                     player.getZ() - 0.2 + Math.random() * 0.4,
                     8, 0, -0.3, 0, 0.1D);
 
             if (Math.random() > 0.3) {
-                ((ServerLevel) player.level).sendParticles(ParticleTypes.FLAME,
+                serverLevel.sendParticles(ParticleTypes.FLAME,
                         player.getX() - 0.2 + Math.random() * 0.4,
                         player.getY() + Math.random() * 0.2,
                         player.getZ() - 0.2 + Math.random() * 0.4,
@@ -131,7 +131,7 @@ public class UtilBooster {
 
                     player.moveRelative(0.05f, new Vec3(player.xxa, player.yya, player.zza));
 
-                    if (player.level.isClientSide) {
+                    if (player.level().isClientSide) {
                         Vec3 direction = getAbsoluteMotion(-player.xxa, -player.zza, player.getYRot());
                         for (int i = 0; i < 8; i++) {
                             player.getCommandSenderWorld().addParticle(ParticleTypes.SMOKE,
@@ -176,11 +176,11 @@ public class UtilBooster {
 
         player.move(MoverType.SELF, new Vec3(0, 0.4, 0));
 
-        if (player.level instanceof ServerLevel) {
-            ((ServerLevel) player.level).sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(),
+        if (player.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(),
                     player.getY() + player.getBbHeight() * 0.4, player.getZ(), 10, 0,
                     -0.1, 0, 0.1D);
-            ((ServerLevel) player.level).sendParticles(ParticleTypes.FLAME, player.getX(),
+            serverLevel.sendParticles(ParticleTypes.FLAME, player.getX(),
                     player.getY() + player.getBbHeight() * 0.4, player.getZ(), 3, 0,
                     -0.1, 0, 0.1D);
         }

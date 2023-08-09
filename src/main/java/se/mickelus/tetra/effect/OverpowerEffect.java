@@ -51,7 +51,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         double exhaustDuration = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
-        if (!attacker.level.isClientSide && !isDefensive) {
+        if (!attacker.level().isClientSide && !isDefensive) {
             int currentAmp = Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
                     .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
@@ -191,7 +191,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         try {
             DelayData data = delayCache.get(attacker.getId(), DelayData::new);
-            data.timestamp = attacker.level.getGameTime() + delay;
+            data.timestamp = attacker.level().getGameTime() + delay;
             data.amplifier += amplifier;
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -199,7 +199,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         ServerScheduler.schedule(delay + 1, () -> {
             DelayData data = delayCache.getIfPresent(attacker.getId());
-            if (attacker.isAlive() && attacker.level != null && data != null && attacker.level.getGameTime() > data.timestamp) {
+            if (attacker.isAlive() && attacker.level() != null && data != null && attacker.level().getGameTime() > data.timestamp) {
                 int currentAmp = Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
                         .map(MobEffectInstance::getAmplifier)
                         .orElse(-1);

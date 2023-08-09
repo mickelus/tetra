@@ -62,11 +62,11 @@ public class SweepingStrikeEffect {
                 .map(Pair::getRight)
                 .findFirst()
                 .ifPresent(tool -> {
-                    double lookDistance = Optional.ofNullable(player.getAttribute(ForgeMod.REACH_DISTANCE.get()))
+                    double lookDistance = Optional.ofNullable(player.getAttribute(ForgeMod.BLOCK_REACH.get()))
                             .map(AttributeInstance::getValue)
                             .orElse(4.5d);
-                    BlockPos origin = new BlockPos(player.getEyePosition().add(player.getViewVector(0).scale(lookDistance)));
-                    causeEffect(player.getLevel(), player, itemStack, origin, tool);
+                    BlockPos origin = BlockPos.containing(player.getEyePosition().add(player.getViewVector(0).scale(lookDistance)));
+                    causeEffect(player.level(), player, itemStack, origin, tool);
                 });
     }
 
@@ -96,11 +96,11 @@ public class SweepingStrikeEffect {
     }
 
     private static void causeVfx(Player player, boolean isAlternate, int duration, float distance) {
-        if (player.getLevel() instanceof ServerLevel) {
+        if (player.level() instanceof ServerLevel) {
             Vec3 viewVec = player.getViewVector(0).scale(distance);
             float ox = -Mth.sin(player.getYRot() * Mth.PI / 180F) * 0.5f;
             float oz = Mth.cos(player.getYRot() * Mth.PI / 180F) * 0.5f;
-            ((ServerLevel) player.getLevel()).sendParticles(new SweepingStrikeParticleOption(duration, isAlternate, player.getXRot(), player.getYRot()),
+            ((ServerLevel) player.level()).sendParticles(new SweepingStrikeParticleOption(duration, isAlternate, player.getXRot(), player.getYRot()),
                     player.getX() + viewVec.x + ox, player.getY(0.6) + viewVec.y, player.getZ() + viewVec.z + oz,
                     0, 0, 0, 0, 0);
         }

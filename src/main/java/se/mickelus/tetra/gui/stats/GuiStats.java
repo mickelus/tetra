@@ -86,12 +86,12 @@ public class GuiStats {
             -16, 16, false, true, true,
             abilityCooldownGetter, LabelGetterBasic.decimalLabelInverted,
             new TooltipGetterDecimal("tetra.stats.ability_speed_normalized.tooltip", abilityCooldownGetter));
-    public static final IStatGetter reachGetter = new StatGetterAttribute(ForgeMod.REACH_DISTANCE.get(), true);
+    public static final IStatGetter reachGetter = new StatGetterAttribute(ForgeMod.BLOCK_REACH.get(), true);
     public static final GuiStatBar reach = new GuiStatBar(0, 0, barLength, "tetra.stats.reach",
             -10, 10, false, true, false, reachGetter, LabelGetterBasic.singleDecimalLabel,
             new TooltipGetterDecimalSingle("tetra.stats.reach.tooltip", reachGetter));
 
-    public static final IStatGetter attackRangeGetter = new StatGetterAttribute(ForgeMod.ATTACK_RANGE.get(), true);
+    public static final IStatGetter attackRangeGetter = new StatGetterAttribute(ForgeMod.ENTITY_REACH.get(), true);
     public static final GuiStatBar attackRange = new GuiStatBar(0, 0, barLength, "tetra.stats.attack_range",
             -10, 10, false, true, false, attackRangeGetter, LabelGetterBasic.singleDecimalLabel,
             new TooltipGetterDecimalSingle("tetra.stats.attack_range.tooltip", attackRangeGetter));

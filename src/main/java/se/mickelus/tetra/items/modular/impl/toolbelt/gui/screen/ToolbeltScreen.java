@@ -1,6 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui.screen;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -95,36 +95,36 @@ public class ToolbeltScreen extends AbstractContainerScreen<ToolbeltContainer> {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack, 0);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        renderTooltip(matrixStack, mouseX, mouseY);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, partialTicks);
+        renderTooltip(graphics, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
         keybindGui.setWidth(width);
         keybindGui.updateFocusState(0, height - keybindGui.getHeight(), mouseX, mouseY);
-        keybindGui.draw(matrixStack, 0, height - keybindGui.getHeight(), width, height, mouseX, mouseY, 1);
+        keybindGui.draw(graphics, 0, height - keybindGui.getHeight(), width, height, mouseX, mouseY, 1);
 
         defaultGui.updateFocusState(x, y, mouseX, mouseY);
-        defaultGui.draw(matrixStack, x, y, width, height, mouseX, mouseY, 1);
+        defaultGui.draw(graphics, x, y, width, height, mouseX, mouseY, 1);
     }
 
     @Override
-    protected void renderTooltip(PoseStack matrixStack, int mouseX, int mouseY) {
-        super.renderTooltip(matrixStack, mouseX, mouseY);
+    protected void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
+        super.renderTooltip(graphics, mouseX, mouseY);
         List<Component> tooltipLines = defaultGui.getTooltipLines();
         if (tooltipLines != null) {
-            renderTooltip(matrixStack, tooltipLines, Optional.empty(), mouseX, mouseY);
+            graphics.renderTooltip(font, tooltipLines, Optional.empty(), mouseX, mouseY);
         }
     }
 
     @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+    protected void renderLabels(GuiGraphics graphics, int x, int y) {
     }
 
     @Override

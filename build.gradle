@@ -1,235 +1,129 @@
-import groovy.json.JsonException
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-
-buildscript {
-    repositories {
-        mavenLocal()
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = "https://plugins.gradle.org/m2/" }
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        maven { url 'https://maven.blamejared.com' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: "0.7-SNAPSHOT"
-    }
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.neoforged.gradle' version '[6.0.18,6.2)'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
-
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
 
 if (System.getenv('VERSION') != null) {
-    tetra_version = System.getenv('VERSION')
-} else {
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'describe', '--tags', '--abbrev=0'
-        standardOutput = stdout
-    }
-    tetra_version = stdout.toString().replace("\n", "").replace("\r", "").trim()
+    mod_version = System.getenv('VERSION')
 }
 
-version = "${mc_version}-${tetra_version}"
-group = 'se.mickelus.tetra'
-archivesBaseName = "tetra"
+version = "${minecraft_version}-${mod_version}"
+group = mod_group_id
 
-repositories {
-    mavenLocal()
-    maven { url = "https://maven.theillusivec4.top/" }
-    maven { url = 'https://maven.blamejared.com/' }
-    maven {
-        url "https://cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
+base {
+    archivesName = mod_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    mappings channel: 'official', version: mc_version
+    mappings channel: mapping_channel, version: mapping_version
+    copyIdeResources = true
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
-        client {
+        configureEach {
             workingDirectory project.file('run')
-
-            arg "-mixin.config=tetra.mixins.json"
-
-            property 'forge.logging.markers', '' //'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                tetra {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
+        }
+
+        client {
+            property 'forge.enabledGameTestNamespaces', mod_id
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
         }
 
         server {
-            workingDirectory project.file('run')
+            property 'forge.enabledGameTestNamespaces', mod_id
+            args '--nogui'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+        }
 
-            arg "-mixin.config=tetra.mixins.json"
-
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                tetra {
-                    source sourceSets.main
-                }
-            }
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', mod_id
         }
 
         data {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            args '--mod', 'tetra', '--all', '--output', file('src/generated/resources/'), '--existing', sourceSets.main.resources.srcDirs[0]
-
-            mods {
-                tetra {
-                    source sourceSets.main
-                }
-            }
+            workingDirectory project.file('run-data')
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
         }
     }
 }
 
-mixin {
-    add sourceSets.main, "tetra.refmap.json"
-}
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-sourceSets.main.resources {
-    srcDir 'src/generated/resources'
-    exclude '.cache', 'temp'
-}
-
-dependencies {
-    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-
-//    implementation files("mgui-1.18-3.3.0-deobf.jar")
-    implementation fg.deobf("se.mickelus.mutil:mutil:${mutil_version}")
-    /*
-    if (findProject(':mgui') != null) {
-        implementation project(':mgui')
-    } else {
-        implementation fg.deobf("curse.maven:mgui-351914:3456505")
-    }*/
-
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
-
-//    compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
-//    runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
-//    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
-    implementation fg.deobf("vazkii.botania:Botania:${botania_version}:api")
-
-//    compile fg.deobf("curse.maven:apotheosis:2906078")
-//    compile fg.deobf("curse.maven:apotheosis-placebo:2870411")
-//
-//    compile fg.deobf("curse.maven:cyclic:2934819")
-//
-//    compile fg.deobf("curse.maven:naturesaura:2920340")
-//    compile fg.deobf("curse.maven:naturesaura-patchouli:2925865")
-//
-//    compile fg.deobf("curse.maven:ensorcellation:2935190")
-//    compile fg.deobf("curse.maven:ensorcellation-cofh_core:2935185")
-//
-//    compile fg.deobf("curse.maven:enchantable:2931023")
-//
-//    compile fg.deobf("curse.maven:bluepower:2934396")
-//
-//    compile fg.deobf("curse.maven:ma_enchants:2931675")
-//
-//    compile fg.deobf("curse.maven:cursed:2913022")
-//    compile fg.deobf("curse.maven:cursed-bookshelf:2935828")
-
-//    compile fg.deobf("curse.maven:quark-243121:3578106")
-//    compile fg.deobf("curse.maven:quarkoddities-301051:3575623")
-//    compile fg.deobf("curse.maven:autoreglib-250363:3575622")
-
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-}
-
-jar {
-    manifest {
-        attributes([
-                "Specification-Title"     : "tetra",
-                "Specification-Vendor"    : "mickelus",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : "${tetra_version}",
-                "Implementation-Vendor"   : "tetra",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "tetra.mixins.json"
-        ])
+repositories {
+    mavenLocal()
+    maven {
+        url = "https://maven.theillusivec4.top/"
     }
 }
 
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xmaxerrs" << "4000"
+dependencies {
+    minecraft "net.neoforged:forge:${minecraft_version}-${forge_version}"
+    implementation fg.deobf("se.mickelus.mutil:mutil:${mutil_version}")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
 }
 
-jar.finalizedBy('reobfJar')
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
+            forge_version       : forge_version, forge_version_range: forge_version_range,
+            mutil_version       : mutil_version, mutil_version_range: mutil_version_range,
+            curios_version      : curios_version, curios_version_range: curios_version_range,
+            loader_version_range: loader_version_range,
+            mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+            mod_authors         : mod_authors, mod_description: mod_description,
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : mod_authors,
+                'Specification-Version'   : '1', // We are version 1 of ourselves
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_authors,
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+
+    finalizedBy 'reobfJar'
+}
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            groupId project.group
-            artifactId project.archivesBaseName
-            version project.version
+        register('mavenJava', MavenPublication) {
             artifact jar
-
-            pom.withXml {
-
-                // Go through all the dependencies.
-                asNode().dependencies.dependency.each { dep ->
-
-                    println 'Surpressing artifact ' + dep.artifactId.last().value().last() + ' from maven dependencies.'
-                    assert dep.parent().remove(dep)
-                }
-            }
         }
     }
     repositories {
         maven {
-            url = uri("file://${System.getenv("local_maven")}")
+            url "file://${project.projectDir}/mcmodsrepo"
         }
     }
 }
 
-processResources {
-    doLast {
-        if (project.hasProperty("minify")) {
-            def jsonMinifyStart = System.currentTimeMillis()
-            def jsonMinified = 0
-            def jsonBytesSaved = 0
-
-            fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
-
-                File file = it
-                jsonMinified++
-                def oldLength = file.length()
-                try {
-                    file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-                } catch (JsonException e) {
-                    throw new JsonException("Failed to parse json in " + file.path)
-                }
-                file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-                jsonBytesSaved += oldLength - file.length()
-            }
-
-            println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
-        } else {
-            println('Skipping json minification')
-        }
-    }
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }

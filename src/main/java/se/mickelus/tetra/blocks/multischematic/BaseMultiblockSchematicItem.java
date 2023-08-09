@@ -8,7 +8,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import se.mickelus.tetra.Tooltips;
-import se.mickelus.tetra.items.TetraItemGroup;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class BaseMultiblockSchematicItem extends BlockItem {
     MultiblockSchematicBlock schematicBlock;
 
     public BaseMultiblockSchematicItem(Block placedBlock, MultiblockSchematicBlock tooltipBlock) {
-        super(placedBlock, new Properties().tab(TetraItemGroup.instance));
+        super(placedBlock, new Properties());
         this.schematicBlock = tooltipBlock;
     }
 

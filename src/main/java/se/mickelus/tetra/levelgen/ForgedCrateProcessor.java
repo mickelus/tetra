@@ -29,14 +29,14 @@ public class ForgedCrateProcessor extends StructureProcessor {
     @Override
     public StructureTemplate.StructureBlockInfo process(LevelReader world, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo $,
             StructureTemplate.StructureBlockInfo blockInfo, StructurePlaceSettings placementSettings, @Nullable StructureTemplate template) {
-        if (blockInfo.state.getBlock() instanceof ForgedCrateBlock) {
-            RandomSource random = placementSettings.getRandom(blockInfo.pos);
+        if (blockInfo.state().getBlock() instanceof ForgedCrateBlock) {
+            RandomSource random = placementSettings.getRandom(blockInfo.pos());
 
-            BlockState blockState = blockInfo.state
+            BlockState blockState = blockInfo.state()
                     .setValue(ForgedCrateBlock.propIntegrity, random.nextInt(4))
                     .setValue(ForgedCrateBlock.propFacing, Direction.Plane.HORIZONTAL.getRandomDirection(random));
 
-            return new StructureTemplate.StructureBlockInfo(blockInfo.pos, blockState, blockInfo.nbt);
+            return new StructureTemplate.StructureBlockInfo(blockInfo.pos(), blockState, blockInfo.nbt());
         }
 
         return blockInfo;

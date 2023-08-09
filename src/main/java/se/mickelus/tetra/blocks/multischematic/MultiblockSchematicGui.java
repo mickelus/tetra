@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.multischematic;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class MultiblockSchematicGui extends GuiRoot implements IGuiOverlay {
-
     private final GuiVerticalLayoutGroup element;
     private int selected = -1;
 
@@ -65,7 +64,7 @@ public class MultiblockSchematicGui extends GuiRoot implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
-        this.draw(poseStack);
+    public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+        this.draw(graphics);
     }
 }

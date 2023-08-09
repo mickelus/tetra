@@ -6,13 +6,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.CombatRules;
-import net.minecraft.world.damagesource.EntityDamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -90,11 +89,11 @@ public class ItemEffectHandler {
         if (earthbindLevel > 0 && attacker.getRandom().nextFloat() < Math.max(0.1, 0.5 * (1 - target.getY() / 128))) {
             target.addEffect(new MobEffectInstance(EarthboundPotionEffect.instance, earthbindLevel * 20, 0, false, true));
 
-            if (target.level instanceof ServerLevel) {
-                BlockState blockState = target.level.getBlockState(new BlockPos(target.getX(), target.getY() - 1, target.getZ()));
-                ((ServerLevel) target.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState),
+            if (target.level() instanceof ServerLevel serverLevel) {
+                BlockState blockState = serverLevel.getBlockState(BlockPos.containing(target.getX(), target.getY() - 1, target.getZ()));
+                serverLevel.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState),
                         target.getX(), target.getY() + 0.1, target.getZ(),
-                        16, 0, target.level.random.nextGaussian() * 0.2, 0, 0.1);
+                        16, 0, serverLevel.random.nextGaussian() * 0.2, 0, 0.1);
             }
         }
 
@@ -128,7 +127,7 @@ public class ItemEffectHandler {
 
     @SubscribeEvent
     public void onLivingAttack(LivingAttackEvent event) {
-        if (!event.getSource().isBypassArmor() && event.getEntity().isBlocking()) {
+        if (!event.getSource().is(DamageTypeTags.BYPASSES_ARMOR) && event.getEntity().isBlocking()) {
             Optional.ofNullable(event.getEntity())
                     .map(LivingEntity::getUseItem)
                     .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
@@ -139,11 +138,9 @@ public class ItemEffectHandler {
                             item.applyUsageEffects(blocker, itemStack, Mth.ceil(event.getAmount() / 2f));
                         }
 
-                        if (event.getSource().getDirectEntity() instanceof LivingEntity) {
-                            LivingEntity attacker = (LivingEntity) event.getSource().getDirectEntity();
-
+                        if (event.getSource().getDirectEntity() instanceof LivingEntity attacker) {
                             if (item.getEffectLevel(itemStack, ItemEffect.blockingReflect) > attacker.getRandom().nextFloat() * 100) {
-                                attacker.hurt(new EntityDamageSource("thorns", blocker).setThorns(),
+                                attacker.hurt(event.getEntity().damageSources().thorns(event.getEntity()),
                                         (float) (item.getAbilityBaseDamage(itemStack) * item.getEffectEfficiency(itemStack, ItemEffect.blockingReflect)));
                                 applyHitEffects(itemStack, attacker, blocker);
                                 EffectHelper.applyEnchantmentHitEffects(itemStack, attacker, blocker);
@@ -156,7 +153,7 @@ public class ItemEffectHandler {
                     });
         }
 
-        if ("arrow".equals(event.getSource().msgId)) {
+        if ("arrow".equals(event.getSource().getMsgId())) {
             CastOptional.cast(event.getSource().getEntity(), LivingEntity.class)
                     .map(shooter -> Stream.of(shooter.getMainHandItem(), shooter.getOffhandItem()))
                     .orElseGet(Stream::empty)
@@ -210,7 +207,7 @@ public class ItemEffectHandler {
                     }
                 });
 
-        if (!event.getSource().isBypassArmor()) {
+        if (!event.getSource().is(DamageTypeTags.BYPASSES_ARMOR)) {
             Optional.ofNullable(event.getEntity())
                     .map(entity -> Stream.of(entity.getMainHandItem(), entity.getOffhandItem()))
                     .orElseGet(Stream::empty)
@@ -265,8 +262,7 @@ public class ItemEffectHandler {
         ItemStack itemStack;
         Entity killer;
         if ("trident".equals(event.getSource().getMsgId())
-                && event.getSource() instanceof IndirectEntityDamageSource damageSource
-                && damageSource.getEntity() instanceof ThrownModularItemEntity modularEntity) {
+                && event.getSource().getDirectEntity() instanceof ThrownModularItemEntity modularEntity) {
             itemStack = modularEntity.getThrownStack();
             killer = modularEntity.getOwner();
         } else {
@@ -280,7 +276,7 @@ public class ItemEffectHandler {
         }
 
         if (itemStack != null) {
-            Level level = event.getEntity().getLevel();
+            Level level = event.getEntity().level();
             if (!level.isClientSide) {
                 int jankLevel = getEffectLevel(itemStack, ItemEffect.janking);
                 if (jankLevel > 0) {
@@ -380,7 +376,7 @@ public class ItemEffectHandler {
 
 
                         if (breakingPlayer.getAttackStrengthScale(0.5f) > 0.9f) {
-                            if (getEffectLevel(itemStack, ItemEffect.truesweep) > 0 && breakingPlayer.isOnGround() && !breakingPlayer.isSprinting()) {
+                            if (getEffectLevel(itemStack, ItemEffect.truesweep) > 0 && breakingPlayer.onGround() && !breakingPlayer.isSprinting()) {
                                 SweepingEffect.truesweep(itemStack, breakingPlayer, true);
                             }
 

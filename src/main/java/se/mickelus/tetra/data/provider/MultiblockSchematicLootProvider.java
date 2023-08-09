@@ -1,16 +1,18 @@
 package se.mickelus.tetra.data.provider;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -19,20 +21,22 @@ import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicBlock;
 import se.mickelus.tetra.items.forged.MetalScrapItem;
 
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.Set;
 
-public class MultiblockSchematicLootProvider extends BlockLoot {
-    public static List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getLootTables() {
+public class MultiblockSchematicLootProvider extends BlockLootSubProvider {
+    protected MultiblockSchematicLootProvider(Set<Item> pExplosionResistant, FeatureFlagSet pEnabledFeatures) {
+        super(pExplosionResistant, pEnabledFeatures);
+    }
+
+    public static List<LootTableProvider.SubProviderEntry> getLootTables() {
         return ImmutableList.of(
-                Pair.of(() -> getMultiBlockSchematics("stonecutter", 3, 2, true), LootContextParamSets.BLOCK),
-                Pair.of(() -> getMultiBlockSchematics("earthpiercer", 2, 2, true), LootContextParamSets.BLOCK),
-                Pair.of(() -> getMultiBlockSchematics("extractor", 3, 3, true), LootContextParamSets.BLOCK)
+                new LootTableProvider.SubProviderEntry(() -> getMultiBlockSchematics("stonecutter", 3, 2, true), LootContextParamSets.BLOCK),
+                new LootTableProvider.SubProviderEntry(() -> getMultiBlockSchematics("earthpiercer", 2, 2, true), LootContextParamSets.BLOCK),
+                new LootTableProvider.SubProviderEntry(() -> getMultiBlockSchematics("extractor", 3, 3, true), LootContextParamSets.BLOCK)
         );
     }
 
-    private static Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> getMultiBlockSchematics(String identifier, int width, int height, boolean ruinable) {
+    private static LootTableSubProvider getMultiBlockSchematics(String identifier, int width, int height, boolean ruinable) {
         return consumer -> {
             for (int h = 0; h < width; h++) {
                 for (int v = 0; v < height; v++) {
@@ -69,5 +73,9 @@ public class MultiblockSchematicLootProvider extends BlockLoot {
                 LootItem.lootTableItem(MetalScrapItem.instance.get())
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4)))
                         .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)));
+    }
+
+    @Override
+    protected void generate() {
     }
 }

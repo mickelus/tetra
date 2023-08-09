@@ -1,6 +1,5 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
@@ -15,6 +14,6 @@ public class DepletedBedrockBlock extends TetraBlock {
     public static DepletedBedrockBlock instance;
 
     public DepletedBedrockBlock() {
-        super(Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable());
+        super(Properties.of().strength(-1.0F, 3600000.0F).noLootTable());
     }
 }

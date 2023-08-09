@@ -11,7 +11,6 @@ import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.items.TetraItem;
-import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -24,7 +23,7 @@ public class InsulatedPlateItem extends TetraItem {
     public static InsulatedPlateItem instance;
 
     public InsulatedPlateItem() {
-        super(new Properties().tab(TetraItemGroup.instance));
+        super(new Properties());
     }
 
     @OnlyIn(Dist.CLIENT)

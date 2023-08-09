@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui.stats.bar;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
@@ -82,9 +82,9 @@ public class StrikingStatIndicatorGui extends GuiStatIndicator {
     }
 
     @Override
-    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(GuiGraphics graphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (current != null) {
-            current.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+            current.draw(graphics, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
         }
     }
 }

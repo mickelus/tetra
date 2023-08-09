@@ -3,14 +3,13 @@ package se.mickelus.tetra.data;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.mojang.math.Quaternion;
 import com.mojang.math.Transformation;
-import com.mojang.math.Vector3f;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -20,6 +19,8 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import se.mickelus.mutil.data.DataDistributor;
 import se.mickelus.mutil.data.DataStore;
 import se.mickelus.mutil.data.deserializer.BlockDeserializer;
@@ -83,8 +84,9 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
             .registerTypeAdapter(Vector3f.class, new VectorDeserializer())
-            .registerTypeAdapter(Quaternion.class, new QuaternionDeserializer())
+            .registerTypeAdapter(Quaternionf.class, new QuaternionDeserializer())
             .registerTypeAdapter(Transformation.class, new TransformationDeserializer())
+            .registerTypeAdapter(ItemDisplayContext.class, new ItemDisplayContextDeserializer())
             .create();
     public static DataManager instance;
 
@@ -121,8 +123,8 @@ public class DataManager implements DataDistributor {
         this.actionData = new DataStore<>(gson, TetraMod.MOD_ID, "actions", ConfigActionImpl[].class, this);
         this.destabilizationData = new DataStore<>(gson, TetraMod.MOD_ID, "destabilization", DestabilizationEffect[].class, this);
 
-        dataStores = new DataStore[] {tierData, tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
-                replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData};
+        dataStores = new DataStore[] { tierData, tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
+                replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData };
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

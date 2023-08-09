@@ -1,7 +1,7 @@
 package se.mickelus.tetra.util;
 
-import com.mojang.math.Vector3f;
 import net.minecraft.util.FastColor;
+import org.joml.Vector3f;
 
 import java.util.Arrays;
 
@@ -33,7 +33,7 @@ public class Lherper {
     }
 
     private static Vector3f lerpColors(float factor, Vector3f fromColor, Vector3f toColor) {
-        Vector3f result = fromColor.copy();
+        Vector3f result = new Vector3f(fromColor);
         result.lerp(toColor, factor);
         return result;
     }

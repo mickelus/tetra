@@ -8,7 +8,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraItem;
-import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -22,7 +21,7 @@ public class GeodeItem extends TetraItem {
     public static GeodeItem instance;
 
     public GeodeItem() {
-        super(new Properties().tab(TetraItemGroup.instance));
+        super(new Properties());
     }
 
     @Override

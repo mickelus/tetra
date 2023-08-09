@@ -2,10 +2,7 @@ package se.mickelus.tetra.blocks.holo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -24,6 +21,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.gui.GuiColors;
@@ -62,8 +63,8 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
 
         double angle = RotationHelper.getHorizontalAngle(Minecraft.getInstance().getCameraEntity().getEyePosition(partialTicks),
                 Vec3.atCenterOf(entity.getBlockPos()));
-        Quaternion rotation = new Quaternion(0.0F, 0.0F, 0.0F, 1.0F);
-        rotation.mul(Vector3f.YP.rotationDegrees((float) (angle / Math.PI * 180)));
+        Quaternionf rotation = new Quaternionf(0.0F, 0.0F, 0.0F, 1.0F);
+        rotation.mul(Axis.YP.rotationDegrees((float) (angle / Math.PI * 180)));
 
         VertexConsumer vertexBuilder = material.buffer(buffer, RenderType::entityTranslucent);
 
@@ -81,7 +82,7 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
                 });
     }
 
-    public void renderBackdrop(VertexConsumer consumer, PoseStack poseStack, Quaternion rotation, int light, float time, long openTimestamp) {
+    public void renderBackdrop(VertexConsumer consumer, PoseStack poseStack, Quaternionf rotation, int light, float time, long openTimestamp) {
         float animFast = openTimestamp > 0
                 ? Lherper.easeOut(Mth.clampedMap(time - openTimestamp, 0, 5, 0, 1))
                 : Lherper.easeOut(Lherper.easeOut(Mth.clampedMap(time + openTimestamp - 2, 0, 5, 1, 0)));
@@ -106,8 +107,8 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
 
         if (animSlow2 > 0) {
             float offset = (20f + animSlow2 * 1) / 16;
-            Quaternion up = Vector3f.YN.rotationDegrees(45);
-            up.mul(Vector3f.XN.rotationDegrees(90));
+            Quaternionf up = Axis.YN.rotationDegrees(45);
+            up.mul(Axis.XN.rotationDegrees(90));
 
             drawQuad(consumer, poseStack, up, material.sprite(), light, 3, 3, 2, 3,
                     offset + 0.5f, (4.5f + animSlow2 * 1.5f) / 16, 0.5f, 0xffffff, animSlow2, 0, 1);
@@ -120,7 +121,7 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
         }
     }
 
-    public void renderMarker(VertexConsumer consumer, PoseStack poseStack, TextureAtlasSprite sprite, Quaternion rotation, float time, long openTimestamp, int light, float x, float y, float z,
+    public void renderMarker(VertexConsumer consumer, PoseStack poseStack, TextureAtlasSprite sprite, Quaternionf rotation, float time, long openTimestamp, int light, float x, float y, float z,
             HolosphereBlockEntity.ScanResult scan) {
         float anim = calculateMarkerAnimation(time, openTimestamp, scan.timestamp());
 
@@ -168,12 +169,12 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
                 : Lherper.easeOut(Lherper.easeOut(Mth.clampedMap((time + openTimestamp - 20), 0, 5, 1, 0)));
     }
 
-    private void drawQuad(VertexConsumer consumer, PoseStack poseStack, Quaternion rotation, TextureAtlasSprite sprite, int light, float width, float height,
+    private void drawQuad(VertexConsumer consumer, PoseStack poseStack, Quaternionf rotation, TextureAtlasSprite sprite, int light, float width, float height,
             int u, int v, float x, float y, float z, int color, float a) {
         drawQuad(consumer, poseStack, rotation, sprite, light, width, height, u, v, x, y, z, color, a, 0, 1);
     }
 
-    private void drawQuad(VertexConsumer consumer, PoseStack poseStack, Quaternion rotation, TextureAtlasSprite sprite, int light, float width, float height,
+    private void drawQuad(VertexConsumer consumer, PoseStack poseStack, Quaternionf rotation, TextureAtlasSprite sprite, int light, float width, float height,
             int u, int v, float x, float y, float z, int color, float a, float zIndex, float scale) {
 
         float voxelSize = 1 / 16f * scale;
@@ -196,7 +197,7 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
 
         for (int i = 0; i < 4; ++i) {
             Vector3f vector3f = matrix[i];
-            vector3f.transform(rotation);
+            rotation.transform(vector3f);
             vector3f.mul(voxelSize);
 //            vector3f.add(x - (float) cameraPos.x(), y - (float) cameraPos.y(), z - (float) cameraPos.z());
             vector3f.add(x, y, z);
@@ -220,13 +221,13 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
         matrixStack.scale(-0.0125f, -0.0125f, 0.0125f);
         Matrix4f matrix4f = matrixStack.last().pose();
         float x = -font.width(label) / 2f;
-        font.drawInBatch(label, x + 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
-        font.drawInBatch(label, x - 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
-        font.drawInBatch(label, x, -1, 0, false, matrix4f, buffer, false, 0, packedLight, false);
-        font.drawInBatch(label, x, 1, 0, false, matrix4f, buffer, false, 0, packedLight, false);
+        font.drawInBatch(label, x + 1, 0, 0, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight, false);
+        font.drawInBatch(label, x - 1, 0, 0, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight, false);
+        font.drawInBatch(label, x, -1, 0, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight, false);
+        font.drawInBatch(label, x, 1, 0, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight, false);
 
         matrixStack.translate(0, 0, -0.0125f);
-        font.drawInBatch(label, x, 0, -1, false, matrix4f, buffer, false, 0, packedLight, false);
+        font.drawInBatch(label, x, 0, -1, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight, false);
     }
 
 //    for (int i = -5; i <= 5; i++) {

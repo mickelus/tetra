@@ -73,7 +73,7 @@ public class ToolbeltContainer extends AbstractContainerMenu {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 Slot slot;
-                if (itemStackToolbelt.sameItem(playerInventory.getItem(i * 9 + j + 9))) {
+                if (itemStackToolbelt.is(playerInventory.getItem(i * 9 + j + 9).getItem())) {
                     slot = new DisabledSlot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 142);
                 } else {
                     slot = new Slot(playerInventory, i * 9 + j + 9, j * 17 + 12, i * 17 + 142);
@@ -84,7 +84,7 @@ public class ToolbeltContainer extends AbstractContainerMenu {
 
         for (int i = 0; i < 9; i++) {
             Slot slot;
-            if (itemStackToolbelt.sameItemStackIgnoreDurability(playerInventory.getItem(i))) {
+            if (itemStackToolbelt.is(playerInventory.getItem(i).getItem())) {
                 slot = new DisabledSlot(playerInventory, i, i * 17 + 12, 197);
             } else {
                 slot = new Slot(playerInventory, i, i * 17 + 12, 197);
@@ -121,7 +121,7 @@ public class ToolbeltContainer extends AbstractContainerMenu {
             Slot slot = this.slots.get(i);
             if (slot.mayPlace(incomingStack)) {
                 ItemStack slotStack = slot.getItem();
-                if (ItemStack.isSame(slotStack, incomingStack) && ItemStack.tagMatches(slotStack, incomingStack)) {
+                if (ItemStack.isSameItemSameTags(slotStack, incomingStack)) {
                     if (slotStack.getCount() + incomingStack.getCount() < slot.getMaxStackSize(slotStack)) {
                         slotStack.grow(incomingStack.getCount());
                         incomingStack.setCount(0);
@@ -169,7 +169,7 @@ public class ToolbeltContainer extends AbstractContainerMenu {
         if (slot != null && slot.hasItem()) {
             ItemStack itemStack = slot.getItem();
 
-            if (itemStack.sameItem(itemStackToolbelt)) {
+            if (itemStack.is(itemStackToolbelt.getItem())) {
                 return ItemStack.EMPTY;
             }
 

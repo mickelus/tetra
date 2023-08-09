@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.forged.hammer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -109,8 +109,8 @@ public class HammerBaseRenderer implements BlockEntityRenderer<HammerBaseBlockEn
             matrixStack.pushPose();
             matrixStack.translate(0.5F, 0.5F, 0.5F);
             // todo: why does the model render upside down by default?
-            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180));
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(tile.getFacing().toYRot()));
+            matrixStack.mulPose(Axis.ZP.rotationDegrees(180));
+            matrixStack.mulPose(Axis.YP.rotationDegrees(tile.getFacing().toYRot()));
             matrixStack.translate(-0.5F, -0.5F, -0.5F);
 
             VertexConsumer vertexBuilder = material.buffer(buffer, RenderType::entityCutout);

@@ -5,10 +5,10 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
@@ -51,7 +51,7 @@ public record SweepingStrikeParticleOption(int duration, boolean reverse, float 
 
     @Override
     public String writeToString() {
-        return String.format(Locale.ROOT, "%s %d %b %.2f %.2f", Registry.PARTICLE_TYPE.getKey(getType()), duration, reverse, pitch, yaw);
+        return String.format(Locale.ROOT, "%s %d %b %.2f %.2f", ForgeRegistries.PARTICLE_TYPES.getKey(getType()), duration, reverse, pitch, yaw);
     }
 
     @Override

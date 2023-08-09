@@ -21,19 +21,19 @@ import java.util.stream.Stream;
 @ParametersAreNonnullByDefault
 public class HauntedEffect {
     public static void perform(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        if (!entity.level.isClientSide) {
+        if (!entity.level().isClientSide) {
             double effectProbability = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.haunted);
             if (effectProbability > 0) {
                 if (entity.getRandom().nextDouble() < effectProbability * multiplier) {
                     int effectLevel = EffectHelper.getEffectLevel(itemStack, ItemEffect.haunted);
 
-                    Vex vex = EntityType.VEX.create(entity.level);
+                    Vex vex = EntityType.VEX.create(entity.level());
                     vex.setLimitedLife(effectLevel * 20);
                     vex.moveTo(entity.getX(), entity.getY() + 1, entity.getZ(), entity.getYRot(), 0.0F);
                     vex.setItemInHand(InteractionHand.MAIN_HAND, itemStack.copy());
                     vex.setDropChance(EquipmentSlot.MAINHAND, 0);
                     vex.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 2000 + effectLevel * 20));
-                    entity.level.addFreshEntity(vex);
+                    entity.level().addFreshEntity(vex);
 
                     // todo: use temporary modules for this instead once implemented
                     CastOptional.cast(itemStack.getItem(), IModularItem.class)
@@ -51,7 +51,7 @@ public class HauntedEffect {
                                 }
                             });
 
-                    entity.level.playSound(null, entity.blockPosition(), SoundEvents.WITCH_AMBIENT, SoundSource.PLAYERS, 2f, 2);
+                    entity.level().playSound(null, entity.blockPosition(), SoundEvents.WITCH_AMBIENT, SoundSource.PLAYERS, 2f, 2);
                 }
             }
         }

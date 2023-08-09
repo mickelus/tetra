@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -86,9 +87,9 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
             double critModifier = CritEffect.rollMultiplier(thrower.getRandom(), item, thrownStack);
             setPierceLevel((byte) Math.round(getEffectLevel(ItemEffect.piercing) * critModifier));
 
-            if (critModifier != 1d && level instanceof ServerLevel) {
+            if (critModifier != 1d && level() instanceof ServerLevel serverLevel) {
                 Vec3 pos = thrower.getEyePosition(0).add(thrower.getLookAngle());
-                ((ServerLevel) level).sendParticles(ParticleTypes.ENCHANTED_HIT,
+                serverLevel.sendParticles(ParticleTypes.ENCHANTED_HIT,
                         pos.x(), pos.y(), pos.z(), 15, 0.2D, 0.2D, 0.2D, 0.0D);
             }
         });
@@ -130,7 +131,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         if ((dealtDamage || isNoPhysics()) && shooter != null) {
             int loyaltyLevel = entityData.get(LOYALTY_LEVEL);
             if (loyaltyLevel > 0 && !shouldReturnToThrower()) {
-                if (!level.isClientSide && pickup == AbstractArrow.Pickup.ALLOWED) {
+                if (!level().isClientSide && pickup == AbstractArrow.Pickup.ALLOWED) {
                     spawnAtLocation(getPickupItem(), 0.1f);
                 }
 
@@ -139,7 +140,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
                 setNoPhysics(true);
                 Vec3 Vector3d = new Vec3(shooter.getX() - getX(), shooter.getEyeY() - getY(), shooter.getZ() - getZ());
                 setPosRaw(getX(), getY() + Vector3d.y * 0.015 * (double) loyaltyLevel, getZ());
-                if (level.isClientSide) {
+                if (level().isClientSide) {
                     yOld = getY();
                 }
 
@@ -170,7 +171,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         return dealtDamage;
     }
 
-    public boolean isOnGround() {
+    public boolean onGround() {
         return inGroundTime > 0;
     }
 
@@ -209,19 +210,19 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         if (rayTraceResult.getType() == HitResult.Type.BLOCK && !dealtDamage) {
             BlockPos pos = ((BlockHitResult) rayTraceResult).getBlockPos();
             Entity shooter = getOwner();
-            BlockState blockState = level.getBlockState(pos);
+            BlockState blockState = level().getBlockState(pos);
 
             ItemModularHandheld item = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class).orElse(null);
             if (ToolActionHelper.isEffectiveOn(thrownStack, blockState) && shooter instanceof Player player && item != null) {
                 double destroySpeed = item.getDestroySpeed(thrownStack, blockState);
 
                 if (destroySpeed > 1
-                        && destroySpeed * item.getEffectEfficiency(thrownStack, ItemEffect.throwable) > blockState.getDestroySpeed(level, pos)) {
+                        && destroySpeed * item.getEffectEfficiency(thrownStack, ItemEffect.throwable) > blockState.getDestroySpeed(level(), pos)) {
                     if (shooter instanceof ServerPlayer serverPlayer) {
                         EffectHelper.sendEventToPlayer(serverPlayer, 2001, pos, Block.getId(blockState));
                     }
 
-                    item.applyBlockBreakEffects(thrownStack, level, blockState, pos, player);
+                    item.applyBlockBreakEffects(thrownStack, level(), blockState, pos, player);
 
                     hitBlocks++;
                     boolean canPierce = getEffectLevel(ItemEffect.piercingHarvest) > 0 && hitBlocks < getPierceLevel();
@@ -245,10 +246,10 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
                 }
             }
 
-            if (!level.isClientSide && shooter != null) {
+            if (!level().isClientSide && shooter != null) {
                 int jankLevel = getEffectLevel(ItemEffect.janking);
                 if (jankLevel > 0) {
-                    JankEffect.jankItemsDelayed((ServerLevel) level, pos, jankLevel, getEffectEfficiency(ItemEffect.janking), shooter);
+                    JankEffect.jankItemsDelayed((ServerLevel) level(), pos, jankLevel, getEffectEfficiency(ItemEffect.janking), shooter);
                 }
             }
         }
@@ -263,7 +264,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     private void hitAdditional() {
         Vec3 position = position();
         Vec3 target = position.add(getDeltaMovement());
-        HitResult rayTraceResult = level.clip(new ClipContext(position, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+        HitResult rayTraceResult = level().clip(new ClipContext(position, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 
         if (rayTraceResult.getType() == HitResult.Type.BLOCK
                 && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
@@ -278,7 +279,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         ItemStack currentItem = shooter.getMainHandItem();
 
         shooter.setItemInHand(InteractionHand.MAIN_HAND, thrownStack);
-        EffectHelper.breakBlock(level, shooter, thrownStack, pos, blockState, true);
+        EffectHelper.breakBlock(level(), shooter, thrownStack, pos, blockState, true);
         shooter.setItemInHand(InteractionHand.MAIN_HAND, currentItem);
     }
 
@@ -291,7 +292,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         Entity shooter = getOwner();
         Player playerShooter = CastOptional.cast(shooter, Player.class).orElse(null);
 
-        DamageSource damagesource = DamageSource.trident(this, (shooter == null ? this : shooter));
+        DamageSource damagesource = level().damageSources().trident(this, (shooter == null ? this : shooter));
         SoundEvent soundevent = SoundEvents.TRIDENT_HIT;
 
         int pierceLevel = getEffectLevel(ItemEffect.piercing);
@@ -342,22 +343,22 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
 
                 doPostHurtEffects(targetLivingEntity);
 
-                if (critModifier != 1d && !level.isClientSide) {
+                if (critModifier != 1d && !level().isClientSide) {
                     Vec3 hitVec = raytrace.getLocation();
-                    ((ServerLevel) level).sendParticles(ParticleTypes.ENCHANTED_HIT,
+                    ((ServerLevel) level()).sendParticles(ParticleTypes.ENCHANTED_HIT,
                             hitVec.x(), hitVec.y(), hitVec.z(), 15, 0.2D, 0.2D, 0.2D, 0.0D);
                 }
             }
         }
 
         float f1 = 1.0F;
-        if (!level.isClientSide && level.isThundering() && EnchantmentHelper.hasChanneling(thrownStack)) {
+        if (!level().isClientSide && level().isThundering() && EnchantmentHelper.hasChanneling(thrownStack)) {
             BlockPos blockpos = target.blockPosition();
-            if (level.canSeeSky(blockpos)) {
-                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level);
+            if (level().canSeeSky(blockpos)) {
+                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level());
                 lightning.moveTo(Vec3.atBottomCenterOf(blockpos));
                 lightning.setCause(shooter instanceof ServerPlayer ? (ServerPlayer) shooter : null);
-                this.level.addFreshEntity(lightning);
+                this.level().addFreshEntity(lightning);
                 soundevent = SoundEvents.TRIDENT_THUNDER;
                 f1 = 5.0F;
             }
@@ -371,10 +372,10 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
 
         if (dealtDamage) {
             setDeltaMovement(getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
-        } else if (ricochetLevel > 0 && !level.isClientSide) {
+        } else if (ricochetLevel > 0 && !level().isClientSide) {
             Vec3 hitPos = raytrace.getLocation();
             setPosRaw(hitPos.x(), hitPos.y(), hitPos.z());
-            setDeltaMovement(level.getEntities(shooter, new AABB(target.blockPosition()).inflate(8d), entity ->
+            setDeltaMovement(level().getEntities(shooter, new AABB(target.blockPosition()).inflate(8d), entity ->
                             !hitEntities.contains(entity.getId())
                                     && entity instanceof LivingEntity
                                     && !entity.isInvulnerableTo(damagesource)
@@ -489,7 +490,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

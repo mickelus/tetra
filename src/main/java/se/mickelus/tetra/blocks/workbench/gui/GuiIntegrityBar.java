@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -91,27 +91,27 @@ public class GuiIntegrityBar extends GuiElement {
     }
 
     @Override
-    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
-        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+    public void draw(GuiGraphics graphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+        super.draw(graphics, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
 
         for (int i = 0; i < integrityCost; i++) {
             if (i < integrityGain) {
-                drawSegment(matrixStack, refX + x + i * (segmentWidth + 1), refY + y + segmentOffset, costColor,
+                drawSegment(graphics, refX + x + i * (segmentWidth + 1), refY + y + segmentOffset, costColor,
                         opacity * getOpacity());
             } else {
-                drawSegment(matrixStack, refX + x + i * (segmentWidth + 1), refY + y + segmentOffset, overuseColor,
+                drawSegment(graphics, refX + x + i * (segmentWidth + 1), refY + y + segmentOffset, overuseColor,
                         opacity * getOpacity());
             }
         }
 
         for (int i = integrityCost; i < integrityGain; i++) {
-            drawSegment(matrixStack, refX + x + i * (segmentWidth + 1), refY + y + segmentOffset, gainColor,
+            drawSegment(graphics, refX + x + i * (segmentWidth + 1), refY + y + segmentOffset, gainColor,
                     opacity * getOpacity());
         }
     }
 
-    private void drawSegment(PoseStack matrixStack, int x, int y, int color, float opacity) {
-        drawRect(matrixStack, x, y, x + segmentWidth, y + segmentHeight, color, opacity);
+    private void drawSegment(GuiGraphics graphics, int x, int y, int color, float opacity) {
+        drawRect(graphics, x, y, x + segmentWidth, y + segmentHeight, color, opacity);
     }
 
 }

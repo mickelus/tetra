@@ -48,7 +48,7 @@ public class PiercingEffect {
                 }
 
                 Vec3 entityPosition = entity.getEyePosition(0);
-                double lookDistance = Optional.ofNullable(entity.getAttribute(ForgeMod.REACH_DISTANCE.get()))
+                double lookDistance = Optional.ofNullable(entity.getAttribute(ForgeMod.BLOCK_REACH.get()))
                         .map(AttributeInstance::getValue)
                         .orElse(5d);
 

@@ -1,7 +1,6 @@
 package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -69,7 +68,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     @Override
     public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
-        return new ItemStack[]{Items.ENCHANTED_BOOK.getDefaultInstance()};
+        return new ItemStack[] { Items.ENCHANTED_BOOK.getDefaultInstance() };
     }
 
     @Override
@@ -166,7 +165,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
                         if (consumeMaterials && player instanceof ServerPlayer) {
                             ImprovementCraftCriterion.trigger((ServerPlayer) player, itemStack, upgradedStack, getKey(), slot,
-                                    "enchantment:" + Registry.ENCHANTMENT.getKey(entry.getKey()).toString(), level, null, -1);
+                                    "enchantment:" + ForgeRegistries.ENCHANTMENTS.getKey(entry.getKey()).toString(), level, null, -1);
                         }
                     });
 
@@ -220,7 +219,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
         if (module != null) {
             ToolData emptyTools = new ToolData();
-            return Registry.ENCHANTMENT.stream()
+            return ForgeRegistries.ENCHANTMENTS.getValues().stream()
                     .filter(enchantment -> module.acceptsEnchantment(targetStack, enchantment, false))
                     .flatMap(enchantment -> IntStream.range(enchantment.getMinLevel(), enchantment.getMaxLevel() + 1)
                             .mapToObj(level -> {

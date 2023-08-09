@@ -22,8 +22,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -48,7 +46,7 @@ public class HolosphereBlock extends TetraWaterloggedBlock implements EntityBloc
     public static RegistryObject<HolosphereBlock> instance;
 
     public HolosphereBlock() {
-        super(BlockBehaviour.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL)
+        super(BlockBehaviour.Properties.of()
                 .strength(0, 20.0F)
                 .sound(SoundType.DEEPSLATE));
     }

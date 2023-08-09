@@ -13,7 +13,6 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.ItemStack;
@@ -30,10 +29,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModuleDevCommand {
     private static final Logger logger = LogManager.getLogger();
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        CommandBuildContext context = new CommandBuildContext(RegistryAccess.BUILTIN.get());
-        context.missingTagAccessPolicy(CommandBuildContext.MissingTagAccessPolicy.RETURN_EMPTY);
-
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
         dispatcher.register(Commands.literal("tmdev")
                 .requires(source -> source.hasPermission(2))
                 .then(Commands.argument("item", ItemArgument.item(context))
@@ -43,7 +39,7 @@ public class ModuleDevCommand {
     }
 
     private static int run(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        BlockPos pos = new BlockPos(context.getSource().getPosition());
+        BlockPos pos = BlockPos.containing(context.getSource().getPosition());
         Level world = context.getSource().getLevel();
 
         ItemStack baseStack = ItemArgument.getItem(context, "item").createItemStack(1, false);

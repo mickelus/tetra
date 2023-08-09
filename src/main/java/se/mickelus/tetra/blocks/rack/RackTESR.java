@@ -1,21 +1,21 @@
 package se.mickelus.tetra.blocks.rack;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
@@ -34,7 +34,7 @@ public class RackTESR implements BlockEntityRenderer<RackTile> {
 
     @Override
     public void render(RackTile tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+        tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             Direction direction = tile.getBlockState().getValue(RackBlock.facingProp);
             Direction itemDirection = direction.getCounterClockWise();
 
@@ -62,26 +62,26 @@ public class RackTESR implements BlockEntityRenderer<RackTile> {
 
             BakedModel model = itemRenderer.getModel(itemStack, tile.getLevel(), null, combinedLight);
 
-            matrixStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+            matrixStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
+            matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F));
 
             if (itemStack.getItem() instanceof ModularShieldItem) {
                 matrixStack.translate(-0.25, 0, 0.16);
                 matrixStack.scale(2, 2, 2);
             } else if (itemStack.getItem() instanceof ModularBladedItem || itemStack.getItem() instanceof SwordItem) {
                 matrixStack.translate(0, -0.2, 0);
-                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(135.0F));
+                matrixStack.mulPose(Axis.ZP.rotationDegrees(135.0F));
             } else if (itemStack.getItem() instanceof ModularCrossbowItem || itemStack.getItem() instanceof CrossbowItem) {
                 matrixStack.translate(0, -0.2, 0);
-                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(225.0F));
+                matrixStack.mulPose(Axis.ZP.rotationDegrees(225.0F));
             } else if (model.isGui3d()) {
-                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(-45.0F));
+                matrixStack.mulPose(Axis.ZP.rotationDegrees(-45.0F));
             } else {
-                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(-45.0F));
+                matrixStack.mulPose(Axis.ZP.rotationDegrees(-45.0F));
             }
 
-            Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemTransforms.TransformType.FIXED, combinedLight, combinedOverlay,
-                    matrixStack, buffer, renderId);
+            Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemDisplayContext.FIXED, combinedLight, combinedOverlay,
+                    matrixStack, buffer, tile.getLevel(), renderId);
 
         }
     }

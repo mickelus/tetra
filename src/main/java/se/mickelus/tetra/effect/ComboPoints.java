@@ -21,7 +21,7 @@ public class ComboPoints {
             .build();
 
     private static int getIdentifier(Entity entity) {
-        return entity.level.isClientSide ? -entity.getId() : entity.getId();
+        return entity.level().isClientSide ? -entity.getId() : entity.getId();
     }
 
     public static void increment(Entity entity) {

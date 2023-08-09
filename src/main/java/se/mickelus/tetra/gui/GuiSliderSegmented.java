@@ -1,6 +1,6 @@
 package se.mickelus.tetra.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiClickable;
 import se.mickelus.mutil.gui.GuiElement;
@@ -117,7 +117,7 @@ public class GuiSliderSegmented extends GuiClickable {
     }
 
     @Override
-    public void draw(PoseStack matrixStack, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
+    public void draw(GuiGraphics graphics, int refX, int refY, int screenWidth, int screenHeight, int mouseX, int mouseY, float opacity) {
         if (isDragging) {
             int newSegment = calculateSegment(refX, mouseX);
             if (newSegment != value) {
@@ -130,6 +130,6 @@ public class GuiSliderSegmented extends GuiClickable {
             hoverIndicator.setX(calculateSegment(refX, mouseX) * width / (valueSteps - 1));
         }
 
-        super.draw(matrixStack, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
+        super.draw(graphics, refX, refY, screenWidth, screenHeight, mouseX, mouseY, opacity);
     }
 }

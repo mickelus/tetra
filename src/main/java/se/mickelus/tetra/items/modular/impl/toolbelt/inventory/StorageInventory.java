@@ -46,7 +46,7 @@ public class StorageInventory extends ToolbeltInventory {
         for (int i = 0; i < getContainerSize(); i++) {
             ItemStack storedStack = getItem(i);
             if (effects.get(i).contains(ItemEffect.quickAccess)
-                    && storedStack.sameItem(itemStack)
+                    && storedStack.is(itemStack.getItem())
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());

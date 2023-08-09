@@ -48,7 +48,7 @@ public class ProjectileMotionPacket extends AbstractPacket {
     public void handle(Player player) {
         Optional.of(entityId)
                 .filter(id -> id != -1)
-                .map(id -> player.level.getEntity(id))
+                .map(id -> player.level().getEntity(id))
                 .ifPresent(entity -> entity.setDeltaMovement(motionX, motionY, motionZ));
     }
 }

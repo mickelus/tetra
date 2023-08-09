@@ -18,7 +18,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -228,7 +227,7 @@ public class ItemModularHandheld extends ModularItem {
 
             if (attackStrength > 0.9) {
                 int sweepingLevel = SweepingEffect.getSweepingLevel(itemStack);
-                if (sweepingLevel > 0 && attacker.isOnGround() && !EffectHelper.getSprinting(attacker)) {
+                if (sweepingLevel > 0 && attacker.onGround() && !EffectHelper.getSprinting(attacker)) {
                     SweepingEffect.sweepAttack(itemStack, target, attacker, sweepingLevel);
                 }
 
@@ -243,7 +242,7 @@ public class ItemModularHandheld extends ModularItem {
 
             int skulkTaintLevel = getEffectLevel(itemStack, ItemEffect.sculkTaint);
             if (skulkTaintLevel > 0) {
-                SculkTaintEffect.perform((ServerLevel) target.getLevel(), target.blockPosition(), skulkTaintLevel, getEffectEfficiency(itemStack, ItemEffect.sculkTaint));
+                SculkTaintEffect.perform((ServerLevel) target.level(), target.blockPosition(), skulkTaintLevel, getEffectEfficiency(itemStack, ItemEffect.sculkTaint));
             }
 
             applyNegativeUsageEffects(attacker, itemStack, 1);
@@ -350,13 +349,13 @@ public class ItemModularHandheld extends ModularItem {
 
                     tickProgression(player, itemStack, 2);
                     applyDamage(2, itemStack, player);
-                    return InteractionResult.sidedSuccess(player.level.isClientSide);
+                    return InteractionResult.sidedSuccess(player.level().isClientSide);
                 }
 
                 int pryLevel = getEffectLevel(itemStack, ItemEffect.pry);
                 if (pryLevel > 0) {
                     PryEffect.perform(player, hand, this, itemStack, pryLevel, target);
-                    return InteractionResult.sidedSuccess(player.level.isClientSide);
+                    return InteractionResult.sidedSuccess(player.level().isClientSide);
                 }
 
                 if (InteractionHand.OFF_HAND.equals(hand)) {
@@ -366,7 +365,7 @@ public class ItemModularHandheld extends ModularItem {
 
                         tickProgression(player, itemStack, 2);
                         applyDamage(2, itemStack, player);
-                        return InteractionResult.sidedSuccess(player.level.isClientSide);
+                        return InteractionResult.sidedSuccess(player.level().isClientSide);
                     }
                 }
             }
@@ -408,7 +407,7 @@ public class ItemModularHandheld extends ModularItem {
 
         double damage = (1 + getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier * damageMultiplier + damageBonus;
 
-        boolean success = target.hurt(DamageSource.playerAttack(player), (float) damage);
+        boolean success = target.hurt(player.damageSources().playerAttack(player), (float) damage);
         if (success) {
             // applies enchantment effects on both parties
             EnchantmentHelper.doPostHurtEffects(target, player);
@@ -469,7 +468,7 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     public void throwItem(Player player, ItemStack stack, int riptideLevel, float cooldownBase) {
-        Level world = player.level;
+        Level world = player.level();
         if (!world.isClientSide) {
             applyDamage(1, stack, player);
             applyUsageEffects(player, stack, 1);
@@ -512,7 +511,7 @@ public class ItemModularHandheld extends ModularItem {
         z = z * velocityMultiplier;
         player.push(x, y, z);
         player.startAutoSpinAttack(20);
-        if (player.isOnGround()) {
+        if (player.onGround()) {
             player.move(MoverType.SELF, new Vec3(0, 1.1999999, 0));
         }
 
@@ -524,7 +523,7 @@ public class ItemModularHandheld extends ModularItem {
         } else {
             soundEvent = SoundEvents.TRIDENT_RIPTIDE_1;
         }
-        player.level.playSound(null, player, soundEvent, SoundSource.PLAYERS, 1.0F, 1.0F);
+        player.level().playSound(null, player, soundEvent, SoundSource.PLAYERS, 1.0F, 1.0F);
 
         player.awardStat(Stats.ITEM_USED.get(this));
 
@@ -895,7 +894,7 @@ public class ItemModularHandheld extends ModularItem {
             Set<ToolAction> appropriateTools = ToolActionHelper.getAppropriateTools(blockState);
 
             if (!appropriateTools.isEmpty()) {
-                speed *= appropriateTools.stream()
+                speed *= (float) appropriateTools.stream()
                         .mapToDouble(tool -> getToolEfficiency(itemStack, tool))
                         .max()
                         .orElse(0f);

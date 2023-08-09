@@ -22,7 +22,7 @@ public class OpenScrollBlock extends ScrollBlock {
     public static ScrollBlock instance;
 
     public OpenScrollBlock() {
-        super(identifier, Arrangement.open);
+        super(Arrangement.open);
     }
 
 

@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.multischematic;
 
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,6 +31,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraToolActions;
@@ -50,7 +51,7 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
     public final RegistryObject<RuinedMultiblockSchematicBlock> ruinedRef;
     protected String schematic;
     protected ResourceLocation pryTable;
-    protected BlockInteraction[] pryAction = new BlockInteraction[]{
+    protected BlockInteraction[] pryAction = new BlockInteraction[] {
             new BlockInteraction(TetraToolActions.pry, 1, Direction.EAST, 6, 10, 7, 10,
                     BlockStatePredicate.ANY,
                     this::pryBlock)

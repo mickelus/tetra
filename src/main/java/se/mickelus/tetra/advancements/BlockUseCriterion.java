@@ -2,10 +2,7 @@ package se.mickelus.tetra.advancements;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
-import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,7 +23,7 @@ public class BlockUseCriterion extends AbstractCriterionTriggerInstance {
     private final ItemPredicate item;
     private final Map<String, String> data;
 
-    public BlockUseCriterion(EntityPredicate.Composite playerCondition, PropertyMatcher before, PropertyMatcher after, ItemPredicate item, Map<String, String> data) {
+    public BlockUseCriterion(ContextAwarePredicate playerCondition, PropertyMatcher before, PropertyMatcher after, ItemPredicate item, Map<String, String> data) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -42,7 +39,7 @@ public class BlockUseCriterion extends AbstractCriterionTriggerInstance {
         trigger(player, state, usedItem, Collections.emptyMap());
     }
 
-    private static BlockUseCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
+    private static BlockUseCriterion deserialize(JsonObject json, ContextAwarePredicate entityPredicate, DeserializationContext conditionsParser) {
         return new BlockUseCriterion(entityPredicate,
                 JsonOptional.field(json, "before")
                         .map(PropertyMatcher::deserialize)

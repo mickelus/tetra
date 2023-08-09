@@ -2,7 +2,6 @@ package se.mickelus.tetra.blocks.rack;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -27,17 +26,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
+import org.joml.Vector3f;
 import se.mickelus.mutil.util.ItemHandlerWrapper;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
@@ -66,7 +64,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
 
 
     public RackBlock() {
-        super(Block.Properties.of(Material.WOOD, MaterialColor.WOOD)
+        super(Block.Properties.of()
                 .strength(1.0F)
                 .sound(SoundType.WOOD));
     }
@@ -99,7 +97,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
     @Override
     public InteractionResult use(BlockState blockState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         Direction facing = blockState.getValue(facingProp);
-        AABB boundingBox = blockState.getShape(player.level, pos).bounds();
+        AABB boundingBox = blockState.getShape(player.level(), pos).bounds();
         if (facing == hit.getDirection()) {
             Vec3 hitVec = hit.getLocation();
             int slot = getHitX(facing, boundingBox,
@@ -130,7 +128,9 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.relative(state.getValue(facingProp).getOpposite())).getMaterial().isSolid();
+        Direction facing = state.getValue(facingProp);
+        BlockPos offsetPos = pos.relative(facing.getOpposite());
+        return worldIn.getBlockState(offsetPos).isFaceSturdy(worldIn, offsetPos, facing);
     }
 
     @Override
@@ -178,7 +178,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
     @Override
     public Collection<ToolAction> getTools(Level world, BlockPos pos, BlockState blockState) {
         return Optional.ofNullable(world.getBlockEntity(pos))
-                .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
+                .map(te -> te.getCapability(ForgeCapabilities.ITEM_HANDLER))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new)
                 .map(PropertyHelper::getInventoryTools)
@@ -188,7 +188,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
     @Override
     public int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolAction) {
         return Optional.ofNullable(world.getBlockEntity(pos))
-                .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
+                .map(te -> te.getCapability(ForgeCapabilities.ITEM_HANDLER))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new)
                 .map(inv -> PropertyHelper.getInventoryToolLevel(inv, toolAction))
@@ -201,7 +201,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
 
 
         Optional<Container> optional = Optional.ofNullable(world.getBlockEntity(pos))
-                .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
+                .map(te -> te.getCapability(ForgeCapabilities.ITEM_HANDLER))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new);
 
@@ -226,7 +226,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
     public ItemStack onActionConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
             ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
         Optional<ItemHandlerWrapper> optional = Optional.ofNullable(world.getBlockEntity(pos))
-                .map(te -> te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
+                .map(te -> te.getCapability(ForgeCapabilities.ITEM_HANDLER))
                 .orElse(LazyOptional.empty())
                 .map(ItemHandlerWrapper::new);
 

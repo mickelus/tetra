@@ -1,17 +1,14 @@
 package se.mickelus.tetra.items.cell;
 
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.tetra.items.TetraItem;
-import se.mickelus.tetra.items.TetraItemGroup;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -30,7 +27,7 @@ public class ThermalCellItem extends TetraItem {
         super(new Properties()
                 .stacksTo(1)
                 .durability(maxCharge)
-                .tab(TetraItemGroup.instance));
+        );
     }
 
     public static int getCharge(ItemStack itemStack) {
@@ -84,17 +81,6 @@ public class ThermalCellItem extends TetraItem {
         tooltip.add(Component.literal(" "));
         tooltip.add(Component.literal(" "));
         tooltip.add(locationTooltip);
-    }
-
-    @Override
-    public void fillItemCategory(final CreativeModeTab itemGroup, final NonNullList<ItemStack> itemList) {
-        if (allowedIn(itemGroup)) {
-            itemList.add(new ItemStack(this));
-
-            ItemStack emptyStack = new ItemStack(this);
-            emptyStack.setDamageValue(maxCharge);
-            itemList.add(emptyStack);
-        }
     }
 
     // todo: change these for metered upgrade

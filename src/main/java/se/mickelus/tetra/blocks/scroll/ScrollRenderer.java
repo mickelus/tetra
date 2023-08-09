@@ -2,9 +2,7 @@ package se.mickelus.tetra.blocks.scroll;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -26,6 +24,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.rack.RackBlock;
@@ -127,7 +127,7 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
         matrixStack.pushPose();
         matrixStack.translate(0.5, 0, 0.5);
         matrixStack.mulPose(direction.getRotation());
-        matrixStack.mulPose(Vector3f.XN.rotationDegrees(90));
+        matrixStack.mulPose(Axis.XN.rotationDegrees(90));
         matrixStack.translate(-0.5, 0, -0.5);
 
 
@@ -150,14 +150,14 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
             matrixStack.translate(0.5, 0, 0.5);
             if (arrangement == ScrollBlock.Arrangement.wall) {
                 matrixStack.mulPose(direction.getOpposite().getRotation());
-                matrixStack.mulPose(Vector3f.XN.rotationDegrees(90));
+                matrixStack.mulPose(Axis.XN.rotationDegrees(90));
                 matrixStack.translate(0, 0.55, 0.4);
                 drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
             } else if (arrangement == ScrollBlock.Arrangement.open) {
                 double angle = RotationHelper.getHorizontalAngle(Minecraft.getInstance().getCameraEntity().getEyePosition(partialTicks),
                         Vec3.atCenterOf(tile.getBlockPos()));
-                Quaternion rotation = new Quaternion(0.0F, 0.0F, 0.0F, 1.0F);
-                rotation.mul(Vector3f.YP.rotationDegrees((float) (angle / Math.PI * 180 + 180)));
+                Quaternionf rotation = new Quaternionf(0.0F, 0.0F, 0.0F, 1.0F);
+                rotation.mul(Axis.YP.rotationDegrees((float) (angle / Math.PI * 180 + 180)));
                 matrixStack.mulPose(rotation);
                 matrixStack.translate(0, 0.4f, 0.4);
                 drawLabel(scrolls[0], matrixStack, buffer, combinedLight);
@@ -168,7 +168,7 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
 
     private void renderRolled(ScrollData[] scrolls, PoseStack matrixStack, int combinedLight, int combinedOverlay, VertexConsumer vertexBuilder) {
         matrixStack.translate(0.5, 0, 0.5);
-        matrixStack.mulPose(Vector3f.YN.rotationDegrees(90));
+        matrixStack.mulPose(Axis.YN.rotationDegrees(90));
         matrixStack.translate(-0.5, 0, -0.5);
         int offset = Math.min(scrolls.length, 3) - 1;
         if (offset > 0) {
@@ -216,7 +216,7 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
         float blue = FastColor.ARGB32.blue(color) / 255f;
 
         matrixStack.translate(0.5, 0, 0.5);
-        matrixStack.mulPose(Vector3f.YN.rotationDegrees(90));
+        matrixStack.mulPose(Axis.YN.rotationDegrees(90));
         matrixStack.translate(-0.5, 0, -0.5);
 
         openModel[mat].render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
@@ -224,7 +224,7 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
         for (int i = 0; i < openGlyphs.length; i++) {
             if (i == 2) {
                 matrixStack.translate(0.5, 0, 0.5);
-                matrixStack.mulPose(Vector3f.YN.rotationDegrees(180));
+                matrixStack.mulPose(Axis.YN.rotationDegrees(180));
                 matrixStack.translate(-0.5, 0, -0.5);
             }
 
@@ -278,12 +278,12 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
         Matrix4f matrix4f = matrixStack.last().pose();
         Font fontrenderer = context.getFont();
         float x = -fontrenderer.width(label) / 2f;
-        fontrenderer.drawInBatch(label, x + 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
-        fontrenderer.drawInBatch(label, x - 1, 0, 0, false, matrix4f, buffer, false, 0, packedLight, false);
-        fontrenderer.drawInBatch(label, x, -1, 0, false, matrix4f, buffer, false, 0, packedLight, false);
-        fontrenderer.drawInBatch(label, x, 1, 0, false, matrix4f, buffer, false, 0, packedLight, false);
+        fontrenderer.drawInBatch(label, x + 1, 0, 0, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight, false);
+        fontrenderer.drawInBatch(label, x - 1, 0, 0, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight, false);
+        fontrenderer.drawInBatch(label, x, -1, 0, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight, false);
+        fontrenderer.drawInBatch(label, x, 1, 0, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight, false);
 
         matrixStack.translate(0, 0, -0.0125f);
-        fontrenderer.drawInBatch(label, x, 0, -1, false, matrix4f, buffer, false, 0, packedLight, false);
+        fontrenderer.drawInBatch(label, x, 0, -1, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight, false);
     }
 }

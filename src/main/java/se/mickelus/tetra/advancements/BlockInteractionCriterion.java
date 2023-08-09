@@ -3,6 +3,7 @@ package se.mickelus.tetra.advancements;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,7 +20,7 @@ public class BlockInteractionCriterion extends AbstractCriterionTriggerInstance 
     private final ToolAction toolAction;
     private final int toolLevel;
 
-    public BlockInteractionCriterion(EntityPredicate.Composite playerCondition, PropertyMatcher before, PropertyMatcher after, ToolAction toolAction, int toolLevel) {
+    public BlockInteractionCriterion(ContextAwarePredicate playerCondition, PropertyMatcher before, PropertyMatcher after, ToolAction toolAction, int toolLevel) {
         super(trigger.getId(), playerCondition);
         this.before = before;
         this.after = after;
@@ -33,7 +34,7 @@ public class BlockInteractionCriterion extends AbstractCriterionTriggerInstance 
 
     }
 
-    private static BlockInteractionCriterion deserialize(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
+    private static BlockInteractionCriterion deserialize(JsonObject json, ContextAwarePredicate entityPredicate, DeserializationContext conditionsParser) {
         return new BlockInteractionCriterion(entityPredicate,
                 JsonOptional.field(json, "before")
                         .map(PropertyMatcher::deserialize)

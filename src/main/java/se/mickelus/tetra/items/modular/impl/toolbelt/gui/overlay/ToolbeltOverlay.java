@@ -1,8 +1,8 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -88,17 +88,17 @@ public class ToolbeltOverlay extends GuiRoot implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+    public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
         if (!TetraKeyMappings.accessBinding.isDown() && isActive) {
             hideView();
         }
 
-        this.draw(poseStack);
+        this.draw(graphics);
     }
 
     @Override
-    public void draw(PoseStack poseStack) {
-        super.draw(poseStack);
+    public void draw(GuiGraphics graphics) {
+        super.draw(graphics);
         if (isVisible()) {
             Window window = mc.getWindow();
             int mouseX = (int) (mc.mouseHandler.xpos() * this.width / window.getScreenWidth());
@@ -181,7 +181,7 @@ public class ToolbeltOverlay extends GuiRoot implements IGuiOverlay {
         boolean storeItemSuccess = ToolbeltHelper.storeItemInToolbelt(mc.player);
         StoreToolbeltItemPacket packet = new StoreToolbeltItemPacket();
         TetraMod.packetHandler.sendToServer(packet);
-        
+
         if (!storeItemSuccess) {
             mc.player.displayClientMessage(Component.translatable("tetra.toolbelt.full"), true);
         }

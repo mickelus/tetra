@@ -7,29 +7,17 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.level.material.PushReaction;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ForgedBlockCommon {
-
-    public static final Material forgedMaterial = new Material(MaterialColor.METAL, false, true, true, true, false, false, PushReaction.BLOCK);
-    public static final Material forgedMaterialNotSolid = new Material(MaterialColor.METAL, false, false, true, false, false, false, PushReaction.BLOCK);
-
-    // todo 1.18: create tag for harvesting forged blocks
-    public static final Block.Properties propertiesSolid = Block.Properties.of(forgedMaterial, MaterialColor.COLOR_GRAY)
-//            .harvestTool(TetraToolActions.hammer)
-//            .harvestLevel(5)
+    public static final Block.Properties propertiesSolid = Block.Properties.of()
             .requiresCorrectToolForDrops()
             .sound(SoundType.NETHERITE_BLOCK)
             .strength(12F, 2400.0F);
 
-    public static final Block.Properties propertiesNotSolid = Block.Properties.of(forgedMaterialNotSolid, MaterialColor.COLOR_GRAY)
-//            .harvestTool(TetraToolActions.hammer)
-//            .harvestLevel(5)
+    public static final Block.Properties propertiesNotSolid = Block.Properties.of()
             .requiresCorrectToolForDrops()
             .noOcclusion()
             .sound(SoundType.NETHERITE_BLOCK)

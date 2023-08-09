@@ -74,10 +74,10 @@ public class ModularBowItem extends ModularItem {
     public ModularBowItem() {
         super(new Properties().stacksTo(1).fireResistant());
 
-        majorModuleKeys = new String[] {stringKey, staveKey};
-        minorModuleKeys = new String[] {riserKey};
+        majorModuleKeys = new String[] { stringKey, staveKey };
+        minorModuleKeys = new String[] { riserKey };
 
-        requiredModules = new String[] {stringKey, staveKey};
+        requiredModules = new String[] { stringKey, staveKey };
 
         vanillaBow = new ItemStack(Items.BOW);
 
@@ -169,10 +169,11 @@ public class ModularBowItem extends ModularItem {
         return super.finishUsingItem(itemStack, world, entity);
     }
 
+    // todo 1.20: test that this works!
     @Override
-    public void onUsingTick(ItemStack itemStack, LivingEntity player, int count) {
-        if (getEffectLevel(itemStack, ItemEffect.releaseLatch) > 0 && getProgress(itemStack, player) >= 1) {
-            player.releaseUsingItem();
+    public void onUseTick(Level level, LivingEntity entity, ItemStack itemStack, int count) {
+        if (getEffectLevel(itemStack, ItemEffect.releaseLatch) > 0 && getProgress(itemStack, entity) >= 1) {
+            entity.releaseUsingItem();
         }
     }
 
@@ -267,7 +268,7 @@ public class ModularBowItem extends ModularItem {
                                 Vec3 projPos = projectile.position();
                                 for (int j = 0; j < 4; j++) {
                                     Vec3 pos = projPos.add(projDir.scale(2 + j * 2));
-                                    ((ServerLevel) entity.level).sendParticles(ParticleTypes.END_ROD,
+                                    ((ServerLevel) entity.level()).sendParticles(ParticleTypes.END_ROD,
                                             pos.x(), pos.y(), pos.z(), 1,
                                             0, 0, 0, 0.01);
                                 }
