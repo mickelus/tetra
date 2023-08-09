@@ -28,6 +28,6 @@
             "weight": 1
         }
     ],
-    "fallback": "tetra:forged_ruins/up_cap",
+    "fallback": "tetra:forged_ruins/vertical_cap",
     "name": "tetra:forged_ruins/up"
 }
