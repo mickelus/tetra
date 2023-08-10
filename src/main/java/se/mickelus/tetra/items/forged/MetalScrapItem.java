@@ -17,7 +17,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class MetalScrapItem extends TetraItem {
-    public static final String unlocalizedName = "metal_scrap";
+    public static final String identifier = "metal_scrap";
     public static RegistryObject<MetalScrapItem> instance;
 
     public MetalScrapItem() {

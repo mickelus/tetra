@@ -20,8 +20,8 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class StonecutterItem extends TetraItem {
-    public static final String unlocalizedName = "stonecutter";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static final String identifier = "stonecutter";
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static StonecutterItem instance;
 
     public StonecutterItem() {

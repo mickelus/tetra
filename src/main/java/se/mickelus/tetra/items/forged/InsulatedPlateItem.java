@@ -18,8 +18,8 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class InsulatedPlateItem extends TetraItem {
-    public static final String unlocalizedName = "vent_plate";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static final String identifier = "vent_plate";
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static InsulatedPlateItem instance;
 
     public InsulatedPlateItem() {

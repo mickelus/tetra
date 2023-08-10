@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.mojang.datafixers.util.Pair;
@@ -90,20 +91,19 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("double/"));
     }
 
-//    @Override
-//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-//        if (allowedIn(group)) {
-//            items.add(setupHammerStack("oak", "stick"));
-//            items.add(setupHammerStack("stone", "stick"));
-//            items.add(setupHammerStack("iron", "spruce"));
-//            items.add(setupHammerStack("blackstone", "spruce"));
-//            items.add(setupHammerStack("obsidian", "iron"));
-//            items.add(setupHammerStack("netherite", "forged_beam"));
-//        }
-//    }
+    public static Collection<ItemStack> getCreativeTabItemStacks() {
+        return Lists.newArrayList(
+                setupHammerStack("oak", "stick"),
+                setupHammerStack("stone", "stick"),
+                setupHammerStack("iron", "spruce"),
+                setupHammerStack("blackstone", "spruce"),
+                setupHammerStack("obsidian", "iron"),
+                setupHammerStack("netherite", "forged_beam")
+        );
+    }
 
-    private ItemStack setupHammerStack(String headMaterial, String handleMaterial) {
-        ItemStack itemStack = new ItemStack(this);
+    public static ItemStack setupHammerStack(String headMaterial, String handleMaterial) {
+        ItemStack itemStack = new ItemStack(instance);
 
         IModularItem.putModuleInSlot(itemStack, headLeftKey, "double/basic_hammer_left", "double/basic_hammer_left_material", "basic_hammer/" + headMaterial);
         IModularItem.putModuleInSlot(itemStack, headRightKey, "double/basic_hammer_right", "double/basic_hammer_right_material", "basic_hammer/" + headMaterial);

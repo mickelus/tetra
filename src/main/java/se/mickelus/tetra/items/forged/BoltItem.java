@@ -17,8 +17,8 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class BoltItem extends TetraItem {
-    public static final String unlocalizedName = "forged_bolt";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static final String identifier = "forged_bolt";
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static BoltItem instance;
 
     public BoltItem() {

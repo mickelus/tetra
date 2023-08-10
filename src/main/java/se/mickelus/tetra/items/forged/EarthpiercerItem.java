@@ -20,8 +20,8 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class EarthpiercerItem extends TetraItem {
-    public static final String unlocalizedName = "earthpiercer";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static final String identifier = "earthpiercer";
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static EarthpiercerItem instance;
 
     public EarthpiercerItem() {

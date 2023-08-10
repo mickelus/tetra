@@ -18,8 +18,8 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class PlanarStabilizerItem extends TetraItem {
-    public static final String unlocalizedName = "planar_stabilizer";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static final String identifier = "planar_stabilizer";
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static PlanarStabilizerItem instance;
 
     public PlanarStabilizerItem() {

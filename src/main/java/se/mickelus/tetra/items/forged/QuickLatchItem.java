@@ -26,8 +26,8 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class QuickLatchItem extends TetraItem {
-    public static final String unlocalizedName = "quick_latch";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static final String identifier = "quick_latch";
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static QuickLatchItem instance;
 
     public QuickLatchItem() {

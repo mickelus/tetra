@@ -34,6 +34,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -109,9 +110,9 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
                 .orElseGet(() -> FracturedBedrockBlock.canPierce(world, pos.below()) ? 0 : -1);
     }
 
-    public static void registerItems(DeferredRegister<Item> registry) {
+    public static RegistryObject<BlockItem> registerItems(DeferredRegister<Item> registry) {
         registry.register(usedIdentifier, () -> new BlockItem(instance, new Item.Properties().durability(maxDamage)));
-        registry.register(identifier, () -> new BlockItem(instance, new Item.Properties().stacksTo(64)));
+        return registry.register(identifier, () -> new BlockItem(instance, new Item.Properties().stacksTo(64)));
     }
 
     @Override

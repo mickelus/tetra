@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.scroll;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -98,41 +99,37 @@ public class ScrollItem extends BlockItem implements InitializableItem {
                 (itemStack, world, livingEntity, i) -> ScrollData.readMaterialFast(itemStack));
     }
 
-//    @Override
-//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-//        if (allowedIn(group)) {
-//            items.add(gemExpertise);
-//            items.add(metalExpertise);
-//            items.add(woodExpertise);
-//            items.add(stoneExpertise);
-//            items.add(fibreExpertise);
-//            items.add(skinExpertise);
-//            items.add(boneExpertise);
-//            items.add(fabricExpertise);
-//            items.add(scaleExpertise);
-//            items.add(hammerEfficiency);
-//            items.add(axeEfficiency);
-//            items.add(cutEfficiency);
-//
-//            items.add(sturdyGuard);
-//            items.add(throwingKnife);
-//            items.add(howlingBlade);
-//
-//            items.add(setupSchematic("warforge/adze", "warforge", false, 2, 0x8559b3, 6, 7, 11, 7));
-//            items.add(setupSchematic("warforge/axe", "warforge", false, 2, 0xb35973, 5, 10, 8, 9));
-//            items.add(setupSchematic("warforge/hammer", "warforge", false, 2, 0x3d4299, 9, 8, 11, 10));
-//            items.add(setupSchematic("warforge/pickaxe", "warforge", false, 2, 0x508cb3, 6, 11, 8, 7));
-//            items.add(setupSchematic("warforge/claw", "warforge", false, 2, 0x1d262f, 8, 10, 5, 11));
-//            items.add(setupSchematic("warforge/hoe", "warforge", false, 2, 0x93b350, 10, 7, 9, 5));
-//            items.add(setupSchematic("warforge/sickle", "warforge", false, 2, 0xd99e4c, 5, 9, 6, 10));
-//            items.add(setupSchematic("warforge/butt", "warforge", false, 2, 0xb33636, 11, 5, 8, 9));
-//
-//            items.add(setupSchematic("hone/gild_1", null, true, 2, 0xc9ae69, 15, 14, 15, 15));
-//            items.add(setupSchematic("hone/gild_5", null,
-//                    new String[] { "hone/gild_1", "hone/gild_2", "hone/gild_3", "hone/gild_4", "hone/gild_5" },
-//                    true, 2, 0xf2b313, 12, 12, 12, 12));
-//        }
-//    }
+    public Collection<ItemStack> getCreativeTabItems() {
+        return Lists.newArrayList(
+                sturdyGuard,
+                throwingKnife,
+                howlingBlade,
+                gemExpertise,
+                metalExpertise,
+                woodExpertise,
+                stoneExpertise,
+                fibreExpertise,
+                skinExpertise,
+                boneExpertise,
+                fabricExpertise,
+                scaleExpertise,
+                hammerEfficiency,
+                axeEfficiency,
+                cutEfficiency,
+                setupSchematic("hone/gild_1", null, true, 2, 0xc9ae69, 15, 14, 15, 15),
+                setupSchematic("hone/gild_5", null,
+                        new String[] { "hone/gild_1", "hone/gild_2", "hone/gild_3", "hone/gild_4", "hone/gild_5" },
+                        true, 2, 0xf2b313, 12, 12, 12, 12),
+                setupSchematic("warforge/adze", "warforge", false, 2, 0x8559b3, 6, 7, 11, 7),
+                setupSchematic("warforge/axe", "warforge", false, 2, 0xb35973, 5, 10, 8, 9),
+                setupSchematic("warforge/hammer", "warforge", false, 2, 0x3d4299, 9, 8, 11, 10),
+                setupSchematic("warforge/pickaxe", "warforge", false, 2, 0x508cb3, 6, 11, 8, 7),
+                setupSchematic("warforge/claw", "warforge", false, 2, 0x1d262f, 8, 10, 5, 11),
+                setupSchematic("warforge/hoe", "warforge", false, 2, 0x93b350, 10, 7, 9, 5),
+                setupSchematic("warforge/sickle", "warforge", false, 2, 0xd99e4c, 5, 9, 6, 10),
+                setupSchematic("warforge/butt", "warforge", false, 2, 0xb33636, 11, 5, 8, 9)
+        );
+    }
 
     private ItemStack setupSchematic(String key, String details, boolean isIntricate, int material, int tint, Integer... glyphs) {
         return setupSchematic(key, details, new String[] { key }, isIntricate, material, tint, glyphs);

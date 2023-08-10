@@ -6,6 +6,7 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
@@ -119,6 +120,34 @@ public class TetraRegistries {
 
     private static Item.Properties itemProperties;
     private static RegistryObject<CreativeModeTab> defaultCreativeTabs;
+    private static RegistryObject<BasicWorkbenchBlock> basicWorkbench;
+    private static RegistryObject<SeepingBedrockBlock> seepingBedrock;
+    private static RegistryObject<RackBlock> rack;
+    private static RegistryObject<BlockItem> chthonicExtractorItem;
+    private static RegistryObject<FracturedBedrockBlock> fracturedBedrock;
+    private static RegistryObject<ForgedWallBlock> forgedWall;
+    private static RegistryObject<ForgedPillarBlock> forgedPillar;
+    private static RegistryObject<ForgedPlatformBlock> forgedPlatform;
+    private static RegistryObject<ForgedPlatformSlabBlock> forgedPlatformSlab;
+    private static RegistryObject<ForgedVentBlock> forgedVent;
+    private static RegistryObject<HammerBaseBlock> forgeHammer;
+    private static RegistryObject<ForgedWorkbenchBlock> forgedWorkbench;
+    private static RegistryObject<ForgedCrateBlock> forgedCrate;
+    private static RegistryObject<TransferUnitBlock> transferUnit;
+    private static RegistryObject<BoltItem> bolt;
+    private static RegistryObject<DragonSinewItem> dragonSinew;
+    private static RegistryObject<StonecutterItem> stonecutter;
+    private static RegistryObject<EarthpiercerItem> earthpiercer;
+    private static RegistryObject<ModularHolosphereItem> modularHolosphere;
+    private static RegistryObject<PlanarStabilizerItem> planarStabilizer;
+    private static RegistryObject<InsulatedPlateItem> insulatedPlate;
+    private static RegistryObject<QuickLatchItem> quickLatch;
+    private static RegistryObject<MeshItem> mesh;
+    private static RegistryObject<BeamItem> beam;
+    private static RegistryObject<PristineDiamondItem> pristineDiamond;
+    private static RegistryObject<PristineEmeraldItem> pristineEmerald;
+    private static RegistryObject<PristineLapisItem> pristineLapis;
+    private static RegistryObject<GeodeItem> geode;
 
     public static void init(IEventBus bus) {
         bus.register(TetraRegistries.class);
@@ -142,49 +171,65 @@ public class TetraRegistries {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // CREATIVE TABS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        defaultCreativeTabs = TetraRegistries.creativeTabs.register("default", () -> CreativeModeTab.builder().icon(() -> new ItemStack(GeodeItem.instance)).build());
+        defaultCreativeTabs = TetraRegistries.creativeTabs.register("default", () -> CreativeModeTab.builder()
+                .icon(() -> new ItemStack(GeodeItem.instance))
+                .title(Component.translatable("itemGroup.tetra"))
+                .build());
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // BLOCKS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        RegistryObject<BasicWorkbenchBlock> basicWorkbench = blocks.register(BasicWorkbenchBlock.identifier, BasicWorkbenchBlock::new);
-        registerBlockItem(basicWorkbench);
-        blocks.register(GeodeBlock.identifier, GeodeBlock::new);
-        RegistryObject<SeepingBedrockBlock> seepingBedrock = blocks.register(SeepingBedrockBlock.identifier, SeepingBedrockBlock::new);
-        registerBlockItem(seepingBedrock);
 
-        RegistryObject<RackBlock> rack = blocks.register(RackBlock.identifier, RackBlock::new);
+        // crafting
+        basicWorkbench = blocks.register(BasicWorkbenchBlock.identifier, BasicWorkbenchBlock::new);
+        registerBlockItem(basicWorkbench);
+        HolosphereBlock.instance = blocks.register(HolosphereBlock.identifier, HolosphereBlock::new);
+        rack = blocks.register(RackBlock.identifier, RackBlock::new);
         registerBlockItem(rack);
 
-        RegistryObject<ChthonicExtractorBlock> chthonicExtractor = blocks.register(ChthonicExtractorBlock.identifier, ChthonicExtractorBlock::new);
-        ChthonicExtractorBlock.registerItems(items);
-        RegistryObject<FracturedBedrockBlock> fracturedBedrock = blocks.register(FracturedBedrockBlock.identifier, FracturedBedrockBlock::new);
-        blocks.register(DepletedBedrockBlock.identifier, DepletedBedrockBlock::new);
-
+        // scrolls
         RegistryObject<RolledScrollBlock> rolledScroll = blocks.register(RolledScrollBlock.identifier, RolledScrollBlock::new);
         RegistryObject<WallScrollBlock> wallScroll = blocks.register(WallScrollBlock.identifier, WallScrollBlock::new);
         RegistryObject<OpenScrollBlock> openScroll = blocks.register(OpenScrollBlock.identifier, OpenScrollBlock::new);
 
-        registerBlockItem(blocks.register(ForgedWallBlock.identifier, ForgedWallBlock::new));
-        registerBlockItem(blocks.register(ForgedPillarBlock.identifier, ForgedPillarBlock::new));
-        registerBlockItem(blocks.register(ForgedPlatformBlock.identifier, ForgedPlatformBlock::new));
-        registerBlockItem(blocks.register(ForgedPlatformSlabBlock.identifier, ForgedPlatformSlabBlock::new));
-        registerBlockItem(blocks.register(ForgedVentBlock.identifier, ForgedVentBlock::new));
+        // base ruins
+        forgedWall = blocks.register(ForgedWallBlock.identifier, ForgedWallBlock::new);
+        registerBlockItem(forgedWall);
+        forgedPillar = blocks.register(ForgedPillarBlock.identifier, ForgedPillarBlock::new);
+        registerBlockItem(forgedPillar);
+        forgedPlatform = blocks.register(ForgedPlatformBlock.identifier, ForgedPlatformBlock::new);
+        registerBlockItem(forgedPlatform);
+        forgedPlatformSlab = blocks.register(ForgedPlatformSlabBlock.identifier, ForgedPlatformSlabBlock::new);
+        registerBlockItem(forgedPlatformSlab);
+        forgedVent = blocks.register(ForgedVentBlock.identifier, ForgedVentBlock::new);
+        registerBlockItem(forgedVent);
         blocks.register(HammerHeadBlock.identifier, HammerHeadBlock::new);
-        registerBlockItem(blocks.register(HammerBaseBlock.identifier, HammerBaseBlock::new));
-        RegistryObject<ForgedWorkbenchBlock> forgedWorkbench = blocks.register(ForgedWorkbenchBlock.identifier, ForgedWorkbenchBlock::new);
+        forgeHammer = blocks.register(HammerBaseBlock.identifier, HammerBaseBlock::new);
+        registerBlockItem(forgeHammer);
+        forgedWorkbench = blocks.register(ForgedWorkbenchBlock.identifier, ForgedWorkbenchBlock::new);
         registerBlockItem(forgedWorkbench);
         ForgedContainerBlock.instance = blocks.register(ForgedContainerBlock.identifier, ForgedContainerBlock::new);
         registerBlockItem(ForgedContainerBlock.instance);
-        registerBlockItem(blocks.register(ForgedCrateBlock.identifier, ForgedCrateBlock::new));
-        RegistryObject<TransferUnitBlock> transferUnit = blocks.register(TransferUnitBlock.identifier, TransferUnitBlock::new);
+        forgedCrate = blocks.register(ForgedCrateBlock.identifier, ForgedCrateBlock::new);
+        registerBlockItem(forgedCrate);
+        transferUnit = blocks.register(TransferUnitBlock.identifier, TransferUnitBlock::new);
         registerBlockItem(transferUnit);
+
+        // chthonic extractor
+        RegistryObject<ChthonicExtractorBlock> chthonicExtractor = blocks.register(ChthonicExtractorBlock.identifier, ChthonicExtractorBlock::new);
+        chthonicExtractorItem = ChthonicExtractorBlock.registerItems(items);
+        fracturedBedrock = blocks.register(FracturedBedrockBlock.identifier, FracturedBedrockBlock::new);
+        blocks.register(DepletedBedrockBlock.identifier, DepletedBedrockBlock::new);
+
+        // thermal extractor
         CoreExtractorBaseBlock.instance = blocks.register(CoreExtractorBaseBlock.identifier, CoreExtractorBaseBlock::new);
         registerBlockItem(CoreExtractorBaseBlock.instance);
         CoreExtractorPistonBlock.instance = blocks.register(CoreExtractorPistonBlock.identifier, CoreExtractorPistonBlock::new);
         registerBlockItem(blocks.register(CoreExtractorPipeBlock.identifier, CoreExtractorPipeBlock::new));
-        HolosphereBlock.instance = blocks.register(HolosphereBlock.identifier, HolosphereBlock::new);
+        seepingBedrock = blocks.register(SeepingBedrockBlock.identifier, SeepingBedrockBlock::new);
+        registerBlockItem(seepingBedrock);
 
+        // multiblock schematics
         new MultiblockSchematicBlock.Builder("stonecutter", 3, 2, ForgedBlockCommon.propertiesSolid)
                 .build(blocks, items);
 
@@ -194,9 +239,14 @@ public class TetraRegistries {
         new MultiblockSchematicBlock.Builder("extractor", 3, 3, ForgedBlockCommon.propertiesSolid)
                 .build(blocks, items);
 
+        // misc
+        blocks.register(GeodeBlock.identifier, GeodeBlock::new);
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ITEMS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // modular items
         items.register(ModularBladedItem.identifier, ModularBladedItem::new);
         items.register(ModularDoubleHeadedItem.identifier, ModularDoubleHeadedItem::new);
         items.register(ModularBowItem.identifier, ModularBowItem::new);
@@ -205,30 +255,30 @@ public class TetraRegistries {
         items.register(ModularSingleHeadedItem.identifier, ModularSingleHeadedItem::new);
         items.register(ModularShieldItem.identifier, ModularShieldItem::new);
         ModularToolbeltItem.instance = items.register(ModularToolbeltItem.identifier, ModularToolbeltItem::new);
-        items.register(GeodeItem.identifier, GeodeItem::new);
-        items.register(PristineLapisItem.identifier, PristineLapisItem::new);
-        items.register(PristineEmeraldItem.unlocalizedName, PristineEmeraldItem::new);
-        items.register(PristineDiamondItem.unlocalizedName, PristineDiamondItem::new);
+        modularHolosphere = items.register(ModularHolosphereItem.identifier, ModularHolosphereItem::new);
 
+        // random loot
+        geode = items.register(GeodeItem.identifier, GeodeItem::new);
+        pristineLapis = items.register(PristineLapisItem.identifier, PristineLapisItem::new);
+        pristineEmerald = items.register(PristineEmeraldItem.identifier, PristineEmeraldItem::new);
+        pristineDiamond = items.register(PristineDiamondItem.identifier, PristineDiamondItem::new);
+        dragonSinew = items.register(DragonSinewItem.identifier, DragonSinewItem::new);
 
-        items.register(BoltItem.unlocalizedName, BoltItem::new);
-        items.register(BeamItem.unlocalizedName, BeamItem::new);
-        items.register(MeshItem.unlocalizedName, MeshItem::new);
-        items.register(QuickLatchItem.unlocalizedName, QuickLatchItem::new);
-        MetalScrapItem.instance = items.register(MetalScrapItem.unlocalizedName, MetalScrapItem::new);
-        items.register(InsulatedPlateItem.unlocalizedName, InsulatedPlateItem::new);
-        items.register(PlanarStabilizerItem.unlocalizedName, PlanarStabilizerItem::new);
+        // ruins loot
+        bolt = items.register(BoltItem.identifier, BoltItem::new);
+        beam = items.register(BeamItem.identifier, BeamItem::new);
+        mesh = items.register(MeshItem.identifier, MeshItem::new);
+        quickLatch = items.register(QuickLatchItem.identifier, QuickLatchItem::new);
+        MetalScrapItem.instance = items.register(MetalScrapItem.identifier, MetalScrapItem::new);
+        insulatedPlate = items.register(InsulatedPlateItem.identifier, InsulatedPlateItem::new);
+        planarStabilizer = items.register(PlanarStabilizerItem.identifier, PlanarStabilizerItem::new);
         ThermalCellItem.instance = items.register(ThermalCellItem.identifier, ThermalCellItem::new);
         CombustionChamberItem.instance = items.register(CombustionChamberItem.identifier, CombustionChamberItem::new);
         LubricantDispenserItem.instance = items.register(LubricantDispenserItem.identifier, LubricantDispenserItem::new);
-        items.register(ModularHolosphereItem.identifier, ModularHolosphereItem::new);
-        items.register(EarthpiercerItem.unlocalizedName, EarthpiercerItem::new);
-        items.register(StonecutterItem.unlocalizedName, StonecutterItem::new);
-        items.register(DragonSinewItem.identifier, DragonSinewItem::new);
-//        ReverberatingPearlItem.instance = items.register(ReverberatingPearlItem.identifier, ReverberatingPearlItem::new);
+        earthpiercer = items.register(EarthpiercerItem.identifier, EarthpiercerItem::new);
+        stonecutter = items.register(StonecutterItem.identifier, StonecutterItem::new);
 
         items.register(ScrollItem.identifier, () -> new ScrollItem(rolledScroll.get()));
-
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // BLOCK ENTITIES
@@ -401,9 +451,47 @@ public class TetraRegistries {
     }
 
     @SubscribeEvent
-    public void buildContents(BuildCreativeModeTabContentsEvent event) {
+    public static void buildContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == defaultCreativeTabs.getKey()) {
+            event.accept(basicWorkbench);
+            event.accept(ModularHolosphereItem.getCreativeItemStack());
+            event.accept(rack);
+            event.acceptAll(ModularDoubleHeadedItem.getCreativeTabItemStacks());
+            event.acceptAll(ModularBladedItem.getCreativeTabItemStacks());
 
+            event.accept(geode);
+            event.accept(pristineLapis);
+            event.accept(pristineEmerald);
+            event.accept(pristineDiamond);
+            event.accept(dragonSinew);
+
+            event.acceptAll(ScrollItem.instance.getCreativeTabItems());
+
+            event.accept(bolt);
+            event.accept(beam);
+            event.accept(mesh);
+            event.accept(quickLatch);
+            event.accept(MetalScrapItem.instance);
+            event.accept(insulatedPlate);
+            event.accept(planarStabilizer);
+            event.accept(CombustionChamberItem.instance);
+            event.accept(LubricantDispenserItem.instance);
+            event.accept(ThermalCellItem.instance);
+            event.accept(earthpiercer);
+            event.accept(stonecutter);
+            event.accept(chthonicExtractorItem);
+            event.accept(forgedWall);
+            event.accept(forgedPillar);
+            event.accept(forgedPlatform);
+            event.accept(forgedPlatformSlab);
+            event.accept(forgedVent);
+            event.accept(forgeHammer);
+            event.accept(forgedWorkbench);
+            event.accept(ForgedContainerBlock.instance);
+            event.accept(forgedCrate);
+            event.accept(transferUnit);
+            event.accept(CoreExtractorBaseBlock.instance);
+            event.accept(seepingBedrock);
         }
     }
 

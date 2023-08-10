@@ -17,9 +17,9 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class PristineDiamondItem extends TetraItem {
-    public static final String unlocalizedName = "pristine_diamond";
+    public static final String identifier = "pristine_diamond";
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static PristineDiamondItem instance;
 
     public PristineDiamondItem() {

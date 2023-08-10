@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl;
 
+import com.google.common.collect.Lists;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -10,6 +11,7 @@ import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
@@ -17,6 +19,7 @@ import se.mickelus.tetra.module.schematic.RepairSchematic;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collection;
 
 @ParametersAreNonnullByDefault
 public class ModularBladedItem extends ItemModularHandheld {
@@ -37,15 +40,32 @@ public class ModularBladedItem extends ItemModularHandheld {
 
         blockDestroyDamage = 2;
 
-        majorModuleKeys = new String[]{bladeKey, hiltKey};
-        minorModuleKeys = new String[]{fullerKey, guardKey, pommelKey};
+        majorModuleKeys = new String[] { bladeKey, hiltKey };
+        minorModuleKeys = new String[] { fullerKey, guardKey, pommelKey };
 
-        requiredModules = new String[]{bladeKey, hiltKey};
+        requiredModules = new String[] { bladeKey, hiltKey };
 
         updateConfig(ConfigHandler.honeSwordBase.get(), ConfigHandler.honeSwordIntegrityMultiplier.get());
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
         RemoveSchematic.registerRemoveSchematics(this, identifier);
+    }
+
+    public static Collection<ItemStack> getCreativeTabItemStacks() {
+        return Lists.newArrayList(
+                createItemStack("short_blade", "iron", "stick")
+        );
+    }
+
+    public static ItemStack createItemStack(String blade, String bladeMaterial, String hiltMaterial) {
+        ItemStack itemStack = new ItemStack(instance);
+
+        IModularItem.putModuleInSlot(itemStack, bladeKey, "sword/" + blade, "sword/" + blade + "_material", blade + "/" + bladeMaterial);
+        IModularItem.putModuleInSlot(itemStack, hiltKey, "sword/basic_hilt", "sword/basic_hilt_material", "basic_hilt/" + hiltMaterial);
+
+        IModularItem.updateIdentifier(itemStack);
+
+        return itemStack;
     }
 
     @Override

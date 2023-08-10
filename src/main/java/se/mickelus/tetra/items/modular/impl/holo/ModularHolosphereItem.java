@@ -23,6 +23,7 @@ import se.mickelus.tetra.blocks.holo.HolosphereBlock;
 import se.mickelus.tetra.blocks.holo.HolosphereBlockEntity;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
@@ -106,19 +107,14 @@ public class ModularHolosphereItem extends ModularItem {
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("holo/"));
     }
 
-//    @Override
-//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-//        if (allowedIn(group)) {
-//            ItemStack itemStack = new ItemStack(this);
-//
-//            IModularItem.putModuleInSlot(itemStack, coreKey, "holo/core", "frame/dim");
-//            IModularItem.putModuleInSlot(itemStack, frameKey, "holo/frame", "core/ancient");
-//            IModularItem.putModuleInSlot(itemStack, scannerKey, "holo/scanner", "scanner/default");
-//            IModularItem.putModuleInSlot(itemStack, repositoryKey, "holo/repo", "repo/default");
-//
-//            items.add(itemStack);
-//        }
-//    }
+    public static ItemStack getCreativeItemStack() {
+        ItemStack itemStack = new ItemStack(instance);
+        IModularItem.putModuleInSlot(itemStack, coreKey, "holo/core", "frame/dim");
+        IModularItem.putModuleInSlot(itemStack, frameKey, "holo/frame", "core/ancient");
+        IModularItem.putModuleInSlot(itemStack, scannerKey, "holo/scanner", "scanner/default");
+        IModularItem.putModuleInSlot(itemStack, repositoryKey, "holo/repo", "repo/default");
+        return itemStack;
+    }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {

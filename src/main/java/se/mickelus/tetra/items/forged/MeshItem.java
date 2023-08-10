@@ -17,8 +17,8 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class MeshItem extends TetraItem {
-    public static final String unlocalizedName = "forged_mesh";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + unlocalizedName)
+    public static final String identifier = "forged_mesh";
+    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static MeshItem instance;
 
     public MeshItem() {
