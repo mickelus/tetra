@@ -14,7 +14,7 @@ import java.util.Map;
 public class MaterialReductionOutcome implements CraftingEffectOutcome {
     float probability;
 
-    // todo 1.20: check that this still works
+    // todo 1.20 verify: material treatises occasionally returns mats when crafting modules
     @Override
     public boolean apply(ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
             Map<ToolAction, Integer> tools, Level world, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials) {

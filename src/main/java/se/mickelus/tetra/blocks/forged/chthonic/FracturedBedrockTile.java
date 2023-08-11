@@ -287,7 +287,7 @@ public class FracturedBedrockTile extends BlockEntity {
             }
 
             entity.moveTo(spawnPos);
-            // todo 1.20: removed event check, still respect mod rules?
+            // todo 1.20 verify: hammering an extractor into bedrock spawns mobs (good frequency, correct types, respecting mods)
             CastOptional.cast(entity, Mob.class)
                     .filter(e -> e.checkSpawnRules(serverWorld, MobSpawnType.SPAWNER))
                     .filter(e -> e.checkSpawnObstruction(serverWorld))
