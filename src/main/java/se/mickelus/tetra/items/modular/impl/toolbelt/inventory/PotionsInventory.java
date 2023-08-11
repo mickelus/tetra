@@ -34,7 +34,7 @@ public class PotionsInventory extends ToolbeltInventory {
             return false;
         }
 
-        // todo 1.20: changes, verify
+        // todo 1.20 verify: toolbelt potion inventories work properly
         // attempt to merge the itemstack with itemstacks in the inventory
         for (int i = 0; i < getContainerSize(); i++) {
             ItemStack storedStack = getItem(i);

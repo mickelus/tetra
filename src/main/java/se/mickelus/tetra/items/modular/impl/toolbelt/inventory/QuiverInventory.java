@@ -23,7 +23,9 @@ public class QuiverInventory extends ToolbeltInventory {
         readFromNBT(stack.getOrCreateTag());
     }
 
-    // todo 1.20: verify that this works
+    // todo 1.20 verify: toolbelt quiver inventories aggregate stacks in quick access
+    // todo 1.20 verify: arrows stacks properly in regular quiver inventory view
+    // todo 1.20 verify: drawing from the quiver works (manually by default, automatically with clear offhand and quick latch upgrade)
 
     /**
      * Returns the number of unique items in this inventory.

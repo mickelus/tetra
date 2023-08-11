@@ -169,7 +169,7 @@ public class ModularBowItem extends ModularItem {
         return super.finishUsingItem(itemStack, world, entity);
     }
 
-    // todo 1.20: test that this works!
+    // todo 1.20 verify: quick latches release bows when fully drawn
     @Override
     public void onUseTick(Level level, LivingEntity entity, ItemStack itemStack, int count) {
         if (getEffectLevel(itemStack, ItemEffect.releaseLatch) > 0 && getProgress(itemStack, entity) >= 1) {
