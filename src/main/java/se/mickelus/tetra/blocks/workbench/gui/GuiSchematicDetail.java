@@ -31,6 +31,7 @@ public class GuiSchematicDetail extends GuiElement {
     private static final int MAX_NUM_SLOTS = 2;
     private final GuiElement glyph;
     private final GuiString title;
+    private final GuiSources sources;
     private final GuiTextSmall description;
     private final CraftButtonGui craftButton;
     private final GuiString[] slotNames;
@@ -55,7 +56,10 @@ public class GuiSchematicDetail extends GuiElement {
         title = new GuiString(19, 6, 100, "");
         addChild(title);
 
-        description = new GuiTextSmall(5, 17, 105, "");
+        sources = new GuiSources(19, 15, 100);
+        addChild(sources);
+
+        description = new GuiTextSmall(5, 20, 105, "");
         addChild(description);
 
         materialTranslation = new HoloMaterialTranslation(110, 4);
@@ -106,6 +110,8 @@ public class GuiSchematicDetail extends GuiElement {
 
         title.setString(schematic.getName());
         title.setColor(schematic.getRarity().tint);
+
+        sources.update(schematic);
 
         String descriptionString = schematic.getDescription(itemStack);
         description.setString(ChatFormatting.GRAY + descriptionString

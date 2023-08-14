@@ -83,13 +83,18 @@ public class SchematicDefinition {
      */
     public String[] applicableMaterials;
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // GENERATED FIELDS
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * An array of all potential outcomes of this schematic.
      */
     public OutcomeDefinition[] outcomes = new OutcomeDefinition[0];
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // GENERATED FIELDS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * An array of the names of the mods or packs that have added or modified this schematic
+     */
+    public String[] sources = new String[0];
     /**
      * The id for the schematic, should be unique. This is automatically set based on the schematic definition's location within the resource
      * directory structure.
@@ -161,5 +166,9 @@ public class SchematicDefinition {
 
         to.outcomes = Stream.concat(Arrays.stream(to.outcomes), Arrays.stream(from.outcomes))
                 .toArray(OutcomeDefinition[]::new);
+
+        to.sources = Stream.concat(Arrays.stream(to.sources), Arrays.stream(from.sources))
+                .distinct()
+                .toArray(String[]::new);
     }
 }

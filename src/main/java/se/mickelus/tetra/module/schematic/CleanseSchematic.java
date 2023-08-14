@@ -45,6 +45,11 @@ public class CleanseSchematic implements UpgradeSchematic {
     }
 
     @Override
+    public String[] getSources() {
+        return new String[] { "tetra" };
+    }
+
+    @Override
     public String getDescription(ItemStack itemStack) {
         return I18n.get(localizationPrefix + key + descriptionSuffix);
     }
@@ -61,7 +66,7 @@ public class CleanseSchematic implements UpgradeSchematic {
 
     @Override
     public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
-        return new ItemStack[]{Items.LAPIS_LAZULI.getDefaultInstance()};
+        return new ItemStack[] { Items.LAPIS_LAZULI.getDefaultInstance() };
     }
 
     @Override

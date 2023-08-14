@@ -17,6 +17,8 @@ public interface UpgradeSchematic {
 
     String getName();
 
+    String[] getSources();
+
     String getDescription(@Nullable ItemStack itemStack);
 
     /**

@@ -24,5 +24,7 @@ public class GuiColors {
     public static final int temporarySchematic = 0xffdfaa;
     public static final int destabilized = 0xee5599;
 
+    public static final int source = 0x5555FF;
+
     public static final int separator = normal;
 }

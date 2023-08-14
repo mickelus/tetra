@@ -54,6 +54,11 @@ public class RepairSchematic extends BaseSchematic {
     }
 
     @Override
+    public String[] getSources() {
+        return new String[] { "tetra" };
+    }
+
+    @Override
     public String getDescription(@Nullable ItemStack itemStack) {
         return Optional.ofNullable(itemStack)
                 .flatMap(stack -> CastOptional.cast(itemStack.getItem(), IModularItem.class))

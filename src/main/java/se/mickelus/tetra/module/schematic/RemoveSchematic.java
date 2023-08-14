@@ -61,6 +61,11 @@ public class RemoveSchematic extends BaseSchematic {
     }
 
     @Override
+    public String[] getSources() {
+        return new String[] { "tetra" };
+    }
+
+    @Override
     public String getDescription(ItemStack itemStack) {
         return I18n.get(localizationPrefix + key + descriptionSuffix);
     }
