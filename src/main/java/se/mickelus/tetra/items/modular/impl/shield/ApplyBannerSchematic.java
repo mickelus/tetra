@@ -49,6 +49,11 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
     }
 
     @Override
+    public String[] getSources() {
+        return new String[] { "tetra" };
+    }
+
+    @Override
     public String getDescription(ItemStack itemStack) {
         return I18n.get(localizationPrefix + key + descriptionSuffix);
     }
@@ -65,7 +70,7 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
 
     @Override
     public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
-        return new ItemStack[]{Items.WHITE_BANNER.getDefaultInstance()};
+        return new ItemStack[] { Items.WHITE_BANNER.getDefaultInstance() };
     }
 
     @Override

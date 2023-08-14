@@ -6,6 +6,8 @@ import se.mickelus.mutil.data.MergingDataStore;
 import se.mickelus.tetra.module.schematic.SchematicDefinition;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class SchematicStore extends MergingDataStore<SchematicDefinition, SchematicDefinition[]> {
@@ -21,7 +23,11 @@ public class SchematicStore extends MergingDataStore<SchematicDefinition, Schema
 
             for (int i = 1; i < collection.length; i++) {
                 if (collection[i].replace) {
+                    String[] sources = Stream.concat(Arrays.stream(collection[i].sources), Arrays.stream(result.sources))
+                            .distinct()
+                            .toArray(String[]::new);
                     result = collection[i];
+                    result.sources = sources;
                 } else {
                     SchematicDefinition.copyFields(collection[i], result);
                 }

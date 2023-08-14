@@ -87,6 +87,11 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
+    public String[] getSources() {
+        return definition.sources;
+    }
+
+    @Override
     public String getDescription(ItemStack itemStack) {
         if (definition.localizationKey != null) {
             return I18n.get(localizationPrefix + definition.localizationKey + descriptionSuffix);
