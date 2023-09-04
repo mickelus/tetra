@@ -21,7 +21,7 @@
             "durability": 64,
             "effects": {
                 "unboundExtraction": 12,
-                "sculkTaint": [ 12, 0.01 ]
+                "sculkTaint": [ 12, 0.005 ]
             },
             "glyph": {
                 "textureX": 208,

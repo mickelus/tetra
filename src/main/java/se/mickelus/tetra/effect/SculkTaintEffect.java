@@ -6,12 +6,15 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.SculkSpreader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ServerScheduler;
 
 public class SculkTaintEffect {
+    private static final Logger logger = LogManager.getLogger();
 
     public static void perform(ServerLevel level, BlockPos target, int effectLevel, float effectEfficiency) {
-        if (level.getRandom().nextDouble() * 100 < effectEfficiency) {
+        if (level.getRandom().nextDouble() < effectEfficiency) {
             startSpread(level, target, effectLevel);
         }
     }
@@ -27,10 +30,10 @@ public class SculkTaintEffect {
     public static void tickSpread(SculkSpreader spreader, LevelAccessor level, BlockPos origin, int bailoutCounter) {
         spreader.updateCursors(level, origin, level.getRandom(), true);
 
-        if (bailoutCounter > 0 && spreader.getCursors().size() > 0) {
+        if (bailoutCounter > 0 && !spreader.getCursors().isEmpty()) {
             ServerScheduler.schedule(level.getRandom().nextInt(3), () -> tickSpread(spreader, level, origin, bailoutCounter - 1));
-        } else {
-            System.out.println("Bailed on spreader, bailout: " + bailoutCounter + ", cursors: " + spreader.getCursors().size());
+        } else if (!spreader.getCursors().isEmpty()) {
+            logger.debug("Bailed on spreader, bailout: {}", bailoutCounter);
         }
     }
 }
