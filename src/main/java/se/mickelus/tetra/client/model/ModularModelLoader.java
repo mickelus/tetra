@@ -5,8 +5,6 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraftforge.client.model.geometry.IGeometryLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @ParametersAreNonnullByDefault
-public class ModularModelLoader implements IGeometryLoader<UnresolvedItemModel>, ResourceManagerReloadListener {
+public class ModularModelLoader implements IGeometryLoader<UnresolvedItemModel> {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -26,7 +24,6 @@ public class ModularModelLoader implements IGeometryLoader<UnresolvedItemModel>,
     private static List<UnresolvedItemModel> models = new LinkedList<>();
 
     public ModularModelLoader() {
-//        ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(this);
         models.forEach(UnresolvedItemModel::clearCache);
     }
 
@@ -49,12 +46,6 @@ public class ModularModelLoader implements IGeometryLoader<UnresolvedItemModel>,
     public static void clearCaches() {
         logger.info("Clearing model cache for {} items, let's get bakin'", models.size());
         models.forEach(UnresolvedItemModel::clearCache);
-        shuffle();
-    }
-
-    @Override
-    public void onResourceManagerReload(ResourceManager resourceManager) {
-        logger.info("Reloading item models, old: {}, new: {}", models.size(), newModels.size());
         shuffle();
     }
 
