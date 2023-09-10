@@ -68,26 +68,6 @@ public class ClientSetup {
         });
     }
 
-    // 1.20 todo: no need to register textures?
-//    @SubscribeEvent
-//    public static void provideTextures(final TextureStitchEvent.Pre event) {
-//        // todo: Move this to ModularItemModel.getTextures?
-//        if (TextureAtlas.LOCATION_BLOCKS.equals(event.getAtlas().location())) {
-//            Minecraft.getInstance().getResourceManager().listResources("textures/items/module", rl -> rl.getPath().endsWith(".png"))
-//                    .keySet()
-//                    .stream()
-//                    .filter(rl -> MOD_ID.equals(rl.getNamespace()))
-//                    // 9 is the length of "textures/" & 4 is the length of ".png"
-//                    .map(rl -> new ResourceLocation(rl.getNamespace(), rl.getPath().substring(9, rl.getPath().length() - 4)))
-//                    .forEach(event::addSprite);
-//
-//            event.addSprite(ForgedContainerRenderer.material.texture());
-//            event.addSprite(HammerBaseRenderer.material.texture());
-//            event.addSprite(ScrollRenderer.material.texture());
-//            event.addSprite(HolosphereEntityRenderer.material.texture());
-//        }
-//    }
-
     @SubscribeEvent
     public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(SparkleParticleType.instance, SparkleParticle.Provider::new);

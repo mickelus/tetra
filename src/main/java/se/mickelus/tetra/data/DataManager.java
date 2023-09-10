@@ -31,6 +31,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.workbench.action.ConfigActionImpl;
+import se.mickelus.tetra.blocks.workbench.unlocks.UnlockData;
 import se.mickelus.tetra.craftingeffect.CraftingEffect;
 import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.craftingeffect.outcome.CraftingEffectOutcome;
@@ -103,6 +104,7 @@ public class DataManager implements DataDistributor {
     public final DataStore<CraftingEffect> craftingEffectData;
     public final DataStore<ConfigActionImpl[]> actionData;
     public final DataStore<DestabilizationEffect[]> destabilizationData;
+    public final DataStore<UnlockData> unlockData;
     private final Logger logger = LogManager.getLogger();
     private final DataStore[] dataStores;
 
@@ -122,9 +124,10 @@ public class DataManager implements DataDistributor {
         this.craftingEffectData = new CraftingEffectStore(gson, TetraMod.MOD_ID, "crafting_effects", this);
         this.actionData = new DataStore<>(gson, TetraMod.MOD_ID, "actions", ConfigActionImpl[].class, this);
         this.destabilizationData = new DataStore<>(gson, TetraMod.MOD_ID, "destabilization", DestabilizationEffect[].class, this);
+        this.unlockData = new DataStore<>(gson, TetraMod.MOD_ID, "unlocks", UnlockData.class, this);
 
         dataStores = new DataStore[] { tierData, tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
-                replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData };
+                replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData, unlockData };
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

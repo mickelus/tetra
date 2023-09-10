@@ -26,6 +26,7 @@ import se.mickelus.tetra.blocks.IToolProviderBlock;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
+import se.mickelus.tetra.data.DataManager;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -143,21 +144,30 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
     }
 
     public ResourceLocation[] getSchematics(Level world, BlockPos pos, BlockState blockState) {
-        return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
-                .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
-                .filter(pair -> pair.getSecond().getBlock() instanceof ISchematicProviderBlock)
-                .filter(pair -> ((ISchematicProviderBlock) pair.getSecond().getBlock()).canUnlockSchematics(world, pair.getFirst(), pos))
-                .map(pair -> ((ISchematicProviderBlock) pair.getSecond().getBlock()).getSchematics(world, pair.getFirst(), blockState))
+        return Stream.concat(
+                        DataManager.instance.unlockData.getData().values().stream()
+                                .filter(unlock -> unlock.block != null && unlock.schematics != null && unlock.schematics.length > 0)
+                                .filter(unlock -> BlockPos.betweenClosedStream(unlock.bounds.move(pos)).anyMatch(offsetPos -> unlock.block.test(world.getBlockState(offsetPos))))
+                                .map(unlock -> unlock.schematics),
+                        BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
+                                .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
+                                .filter(pair -> pair.getSecond().getBlock() instanceof ISchematicProviderBlock)
+                                .filter(pair -> ((ISchematicProviderBlock) pair.getSecond().getBlock()).canUnlockSchematics(world, pair.getFirst(), pos))
+                                .map(pair -> ((ISchematicProviderBlock) pair.getSecond().getBlock()).getSchematics(world, pair.getFirst(), blockState)))
                 .flatMap(Stream::of)
                 .toArray(ResourceLocation[]::new);
     }
 
     public ResourceLocation[] getCraftingEffects(Level world, BlockPos pos, BlockState blockState) {
-        return BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
-                .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
-                .filter(pair -> pair.getSecond().getBlock() instanceof ICraftingEffectProviderBlock)
-                .filter(pair -> ((ICraftingEffectProviderBlock) pair.getSecond().getBlock()).canUnlockCraftingEffects(world, pair.getFirst(), pos))
-                .map(pair -> ((ICraftingEffectProviderBlock) pair.getSecond().getBlock()).getCraftingEffects(world, pair.getFirst(), blockState))
+        return Stream.concat(
+                        DataManager.instance.unlockData.getData().values().stream()
+                                .filter(unlock -> unlock.block != null && unlock.effects != null && unlock.effects.length > 0)
+                                .filter(unlock -> BlockPos.betweenClosedStream(unlock.bounds.move(pos)).anyMatch(offsetPos -> unlock.block.test(world.getBlockState(offsetPos))))
+                                .map(unlock -> unlock.effects), BlockPos.betweenClosedStream(pos.offset(-2, 0, -2), pos.offset(2, 4, 2))
+                                .map(offsetPos -> new Pair<>(offsetPos, world.getBlockState(offsetPos)))
+                                .filter(pair -> pair.getSecond().getBlock() instanceof ICraftingEffectProviderBlock)
+                                .filter(pair -> ((ICraftingEffectProviderBlock) pair.getSecond().getBlock()).canUnlockCraftingEffects(world, pair.getFirst(), pos))
+                                .map(pair -> ((ICraftingEffectProviderBlock) pair.getSecond().getBlock()).getCraftingEffects(world, pair.getFirst(), blockState)))
                 .flatMap(Stream::of)
                 .toArray(ResourceLocation[]::new);
     }
