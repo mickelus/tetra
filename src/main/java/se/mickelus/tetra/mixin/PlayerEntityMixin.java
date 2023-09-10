@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 @Mixin(Player.class)
-public abstract class MixinPlayerEntity {
+public abstract class PlayerEntityMixin {
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;stopUsingItem()V", ordinal = 0), method = "disableShield")
     private void disableShield(boolean isGuaranteed, CallbackInfo callback) {
         ItemStack itemStack = getInstance().getUseItem();

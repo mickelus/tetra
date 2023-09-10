@@ -15,7 +15,7 @@ import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 
 @OnlyIn(Dist.CLIENT)
 @Mixin(PlayerRenderer.class)
-public abstract class MixinPlayerRenderer {
+public abstract class PlayerRendererMixin {
     @Inject(at = @At("HEAD"), method = "getArmPose", cancellable = true)
     private static void getArmPose(AbstractClientPlayer player, InteractionHand hand, CallbackInfoReturnable<HumanoidModel.ArmPose> callback) {
         ItemStack itemStack = player.getItemInHand(hand);

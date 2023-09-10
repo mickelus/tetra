@@ -15,7 +15,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @Mixin(ItemStack.class)
-public class MixinItemStack {
+public class ItemStackMixin {
     @Inject(at = @At("RETURN"), method = "enchant(Lnet/minecraft/world/item/enchantment/Enchantment;I)V")
     private void addEnchantment(Enchantment enchantment, int level, CallbackInfo callback) {
         if (getItem() instanceof IModularItem) {

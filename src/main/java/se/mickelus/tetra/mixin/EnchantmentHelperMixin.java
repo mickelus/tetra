@@ -15,7 +15,7 @@ import java.util.Map;
 
 @ParametersAreNonnullByDefault
 @Mixin(EnchantmentHelper.class)
-public class MixinEnchantmentHelper {
+public class EnchantmentHelperMixin {
     @Inject(at = @At("RETURN"), method = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;setEnchantments(Ljava/util/Map;Lnet/minecraft/world/item/ItemStack;)V")
     private static void setEnchantments(Map<Enchantment, Integer> enchantments, ItemStack itemStack, CallbackInfo ci) {
         if (itemStack.getItem() instanceof IModularItem item) {

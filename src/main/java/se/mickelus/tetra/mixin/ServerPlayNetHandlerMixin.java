@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.SuspendPotionEffect;
 
 @Mixin(ServerGamePacketListenerImpl.class)
-public abstract class MixinServerPlayNetHandler {
+public abstract class ServerPlayNetHandlerMixin {
 
     @Inject(at = @At("TAIL"), method = "handleMovePlayer")
     private void processPlayer(ServerboundMovePlayerPacket packet, CallbackInfo callback) {

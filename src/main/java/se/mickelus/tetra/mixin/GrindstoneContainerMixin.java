@@ -10,7 +10,7 @@ import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 @Mixin(GrindstoneMenu.class)
-public class MixinGrindstoneContainer {
+public class GrindstoneContainerMixin {
 
     @Inject(at = @At("HEAD"), method = "removeNonCurses", cancellable = true)
     private void removeEnchantments(ItemStack itemStack, int damage, int count, CallbackInfoReturnable<ItemStack> callback) {
