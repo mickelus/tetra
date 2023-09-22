@@ -7,6 +7,8 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -19,6 +21,7 @@ import java.util.Map;
 
 @ParametersAreNonnullByDefault
 public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefinition> {
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public ReplacementDefinition deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context) throws
@@ -29,15 +32,13 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
         try {
             replacement.predicate = ItemPredicate.fromJson(GsonHelper.getAsJsonObject(jsonObject, "predicate"));
         } catch (JsonSyntaxException e) {
-            // todo: debug log here
-//                System.out.println(String.format("Skipping modular replacement definition due to faulty predicate: %s", JSONUtils.getJsonObject(jsonObject, "predicate").toString()));
-            return replacement;
+            throw new JsonSyntaxException("Failed to parse replacement data due to faulty predicate", e);
         }
 
         ResourceLocation resourcelocation = new ResourceLocation(GsonHelper.getAsString(jsonObject, "item"));
         Item item = ForgeRegistries.ITEMS.getValue(resourcelocation);
         if (item == null) {
-            throw new JsonSyntaxException("Failed to parse replacement data from " + jsonObject.getAsString());
+            throw new JsonSyntaxException("Failed to parse replacement data, missing (or faulty) item in " + jsonObject.getAsString());
         }
         replacement.itemStack = new ItemStack(item);
 
