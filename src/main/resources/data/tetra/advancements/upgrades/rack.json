@@ -15,7 +15,12 @@
         "rack": {
             "trigger": "minecraft:placed_block",
             "conditions": {
-                "block": "tetra:rack"
+                "location": [
+                    {
+                        "block": "tetra:rack",
+                        "condition": "minecraft:block_state_property"
+                    }
+                ]
             }
         }
     }
