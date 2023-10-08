@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["single/binding"],
+    "slots": [ "single/binding" ],
     "materialSlotCount": 1,
     "displayType": "minor",
     "rarity": "temporary",
@@ -17,9 +17,10 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:socket/"],
+            "materials": [ "tetra:socket/" ],
             "moduleKey": "single/perk_socket_0",
-            "moduleVariant": "single_perk_socket_0/"
+            "moduleVariant": "single_perk_socket_0/",
+            "experienceFactor": 1
         }
     ]
 }

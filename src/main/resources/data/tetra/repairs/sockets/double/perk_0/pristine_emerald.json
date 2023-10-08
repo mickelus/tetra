@@ -1,0 +1,8 @@
+{
+    "material": {
+        "items": [ "minecraft:emerald" ]
+    },
+    "experienceCost": 8,
+    "moduleKey": "double/perk_socket_0",
+    "moduleVariant": "double_perk_socket_0/socket_pristine_emerald"
+}

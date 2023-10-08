@@ -1,0 +1,8 @@
+{
+    "material": {
+        "items": [ "minecraft:emerald" ]
+    },
+    "experienceCost": 8,
+    "moduleKey": "sword/socket",
+    "moduleVariant": "sword_socket/socket_pristine_emerald"
+}

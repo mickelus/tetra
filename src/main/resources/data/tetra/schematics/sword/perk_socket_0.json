@@ -1,6 +1,6 @@
 {
     "replace": true,
-    "slots": ["sword/guard"],
+    "slots": [ "sword/guard" ],
     "materialSlotCount": 1,
     "displayType": "minor",
     "rarity": "temporary",
@@ -17,9 +17,10 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:socket/"],
+            "materials": [ "tetra:socket/" ],
             "moduleKey": "sword/perk_socket_0",
-            "moduleVariant": "sword_perk_socket_0/"
+            "moduleVariant": "sword_perk_socket_0/",
+            "experienceFactor": 1
         }
     ]
 }

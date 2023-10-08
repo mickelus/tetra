@@ -1,0 +1,8 @@
+{
+    "material": {
+        "items": [ "minecraft:diamond" ]
+    },
+    "experienceCost": 8,
+    "moduleKey": "double/socket",
+    "moduleVariant": "double_socket/socket_pristine_diamond"
+}
