@@ -3,10 +3,13 @@ package se.mickelus.tetra.module.data;
 import com.google.common.collect.Multimap;
 import com.google.gson.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.TierSortingRegistry;
 import se.mickelus.tetra.data.deserializer.AttributesDeserializer;
+import se.mickelus.tetra.data.deserializer.ItemTagKeyDeserializer;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.TierHelper;
@@ -77,6 +80,8 @@ public class MaterialData {
     public OutcomeMaterial material;
     public ToolData requiredTools;
     public float experienceCost;
+
+    public Set<TagKey<Item>> tags;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Non-configurable stuff below
@@ -176,6 +181,12 @@ public class MaterialData {
             } else {
                 to.improvements = from.improvements;
             }
+        }
+
+        if (from.tags != null && to.tags != null) {
+            to.tags = Stream.concat(from.tags.stream(), to.tags.stream()).collect(Collectors.toSet());
+        } else if (from.tags != null) {
+            to.tags = from.tags;
         }
     }
 
@@ -303,6 +314,9 @@ public class MaterialData {
                     data.improvements = improvementsJson.getAsJsonObject().entrySet().stream()
                             .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getAsInt()));
                 }
+            }
+            if (jsonObject.has("tags")) {
+                data.tags = context.deserialize(jsonObject.get("tags"), ItemTagKeyDeserializer.typeToken.getRawType());
             }
 
             return data;

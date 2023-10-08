@@ -26,6 +26,7 @@
                 "breakable": 2
             },
             "durability": -20,
+            "tags": [ "forge:swords" ],
             "extract": {
                 "primaryAttributes": {
                     "generic.attack_damage": 1

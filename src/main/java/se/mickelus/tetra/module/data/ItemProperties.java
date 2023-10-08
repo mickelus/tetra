@@ -1,6 +1,12 @@
 package se.mickelus.tetra.module.data;
 
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class ItemProperties {
@@ -33,6 +39,8 @@ public class ItemProperties {
      */
     public float integrityMultiplier = 1;
 
+    public Set<TagKey<Item>> tags;
+
     public static ItemProperties merge(ItemProperties a, ItemProperties b) {
         if (a == null) {
             return b;
@@ -57,6 +65,14 @@ public class ItemProperties {
             result.integrity += b.integrity;
         }
         result.integrityUsage += a.integrityUsage + b.integrityUsage;
+
+        if (a.tags == null) {
+            result.tags = b.tags;
+        } else if (b.tags == null) {
+            result.tags = a.tags;
+        } else {
+            result.tags = Stream.concat(a.tags.stream(), b.tags.stream()).collect(Collectors.toSet());
+        }
 
         return result;
     }

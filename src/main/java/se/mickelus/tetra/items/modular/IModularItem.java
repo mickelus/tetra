@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -849,6 +850,10 @@ public interface IModularItem {
             e.printStackTrace();
             return getProperties(itemStack);
         }
+    }
+
+    default Set<TagKey<Item>> getTags(ItemStack itemStack) {
+        return getPropertiesCached(itemStack).tags;
     }
 
     default int getEffectLevel(ItemStack itemStack, ItemEffect effect) {

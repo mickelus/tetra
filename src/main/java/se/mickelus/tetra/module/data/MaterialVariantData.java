@@ -7,6 +7,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
@@ -75,6 +76,14 @@ public class MaterialVariantData extends VariantData {
                         Arrays.stream(models),
                         Arrays.stream(extract.models).map(model -> MaterialData.kneadModel(model, material, availableTextures)))
                 .toArray(ModuleModel[]::new);
+
+        if (tags == null) {
+            result.tags = material.tags;
+        } else if (material.tags == null) {
+            result.tags = tags;
+        } else {
+            result.tags = Stream.concat(tags.stream(), material.tags.stream()).collect(Collectors.toSet());
+        }
 
         return result;
     }

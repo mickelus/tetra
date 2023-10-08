@@ -72,6 +72,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
             .registerTypeAdapter(Block.class, new BlockDeserializer())
             .registerTypeAdapter(AttributesDeserializer.typeToken.getRawType(), new AttributesDeserializer())
+            .registerTypeAdapter(ItemTagKeyDeserializer.typeToken.getRawType(), new ItemTagKeyDeserializer())
             .registerTypeAdapter(VariantData.class, new VariantData.Deserializer())
             .registerTypeAdapter(ImprovementData.class, new ImprovementData.Deserializer())
             .registerTypeAdapter(OutcomeDefinition.class, new OutcomeDefinition.Deserializer())
