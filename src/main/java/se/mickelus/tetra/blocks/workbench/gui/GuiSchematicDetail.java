@@ -56,7 +56,7 @@ public class GuiSchematicDetail extends GuiElement {
         title = new GuiString(19, 6, 100, "");
         addChild(title);
 
-        sources = new GuiSources(19, 15, 100);
+        sources = new GuiSources(19, 15, 81);
         addChild(sources);
 
         description = new GuiTextSmall(5, 20, 105, "");
