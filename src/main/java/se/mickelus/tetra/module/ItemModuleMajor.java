@@ -74,6 +74,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
                 if (entity instanceof ServerPlayer) {
                     TetraMod.packetHandler.sendTo(new SettlePacket(itemStack, getSlot()), (ServerPlayer) entity);
+                    IModularItem.updateIdentifier(tag);
                 }
             }
         }
