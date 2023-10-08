@@ -228,7 +228,7 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public float getDestabilizationChance(int instability, int capacity, float probabilityMultiplier) {
-        return Math.max(probabilityMultiplier * instability / capacity, 0);
+        return capacity > 0 ? Math.max(probabilityMultiplier * instability / capacity, 0) : 0;
     }
 
     public int getDurability(ItemStack itemStack) {
@@ -253,28 +253,33 @@ public abstract class ItemModule implements IToolProvider {
 
     public Collection<ToolAction> getRepairRequiredTools(ItemStack itemStack, ItemStack materialStack) {
         return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
-                .map(definition -> definition.requiredTools.getValues())
+                .map(definition -> definition.requiredTools)
+                .map(TierData::getValues)
                 .orElseGet(Collections::emptySet);
     }
 
     public Map<ToolAction, Integer> getRepairRequiredToolLevels(ItemStack itemStack, ItemStack materialStack) {
         return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
-                .map(definition -> definition.requiredTools.getLevelMap())
+                .map(definition -> definition.requiredTools)
+                .map(TierData::getLevelMap)
                 .orElseGet(Collections::emptyMap);
     }
 
     public int getRepairRequiredToolLevel(ItemStack itemStack, ItemStack materialStack, ToolAction tool) {
         return Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
-                .map(definition -> definition.requiredTools.getLevel(tool))
+                .map(definition -> definition.requiredTools)
+                .map(requiredTools -> requiredTools.getLevel(tool))
                 .orElse(0);
     }
 
-    public int getRepairExperienceCost(ItemStack itemStack) {
-        return Optional.of(getDestabilizationChance(itemStack, 1))
+    public int getRepairExperienceCost(ItemStack itemStack, ItemStack materialStack) {
+        float result = Optional.ofNullable(getRepairDefinition(itemStack, materialStack))
+                .map(definition -> definition.experienceCost)
+                .orElse(0)
+                + Optional.of(getDestabilizationChance(itemStack, 1))
                 .map(capacity -> capacity * repairLevelFactor)
-                .map(Mth::ceil)
-                .map(capacity -> Math.max(0, capacity))
-                .orElse(0);
+                .orElse(0f);
+        return Math.max(0, Mth.ceil(result));
     }
 
     public boolean isTweakable(ItemStack itemStack) {

@@ -622,9 +622,9 @@ public interface IModularItem {
                 .orElse(0);
     }
 
-    default int getRepairRequiredExperience(ItemStack itemStack) {
+    default int getRepairRequiredExperience(ItemStack itemStack, ItemStack materialStack) {
         return getRepairModule(itemStack)
-                .map(module -> module.getRepairExperienceCost(itemStack))
+                .map(module -> module.getRepairExperienceCost(itemStack, materialStack))
                 .orElse(0);
     }
 
