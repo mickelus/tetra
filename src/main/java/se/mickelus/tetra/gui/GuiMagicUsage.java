@@ -64,7 +64,7 @@ public class GuiMagicUsage extends GuiElement {
     private static int getExperienceCost(ItemStack itemStack, String slot) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
-                .map(module -> module.getRepairExperienceCost(itemStack))
+                .map(module -> module.getRepairExperienceCost(itemStack, ItemStack.EMPTY))
                 .orElse(0);
     }
 

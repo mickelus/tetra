@@ -176,7 +176,7 @@ public class RepairSchematic extends BaseSchematic {
     @Override
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
         return CastOptional.cast(targetStack.getItem(), IModularItem.class)
-                .map(item -> item.getRepairRequiredExperience(targetStack))
+                .map(item -> item.getRepairRequiredExperience(targetStack, materials[0]))
                 .orElse(0);
     }
 

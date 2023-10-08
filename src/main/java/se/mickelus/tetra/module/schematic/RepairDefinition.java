@@ -10,6 +10,7 @@ public class RepairDefinition {
     public ToolData requiredTools;
     public String moduleKey;
     public String moduleVariant;
+    public int experienceCost;
 
     /**
      * If set to true, all previous (lower load order) repair definitions for the same module variant will be removed
@@ -22,6 +23,7 @@ public class RepairDefinition {
 
         material = outcomeDefinition.material;
         requiredTools = outcomeDefinition.requiredTools;
+        experienceCost = outcomeDefinition.experienceCost;
     }
 
     public static boolean validateOutcome(OutcomeDefinition outcome) {
