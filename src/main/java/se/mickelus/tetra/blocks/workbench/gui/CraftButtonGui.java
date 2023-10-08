@@ -74,7 +74,9 @@ public class CraftButtonGui extends GuiClickable {
                 boolean willRepair = CastOptional.cast(itemStack.getItem(), IModularItem.class)
                         .map(item -> item.getRepairSlot(itemStack))
                         .map(repairSlot -> repairSlot.equals(slot))
-                        .orElse(false);
+                        .orElse(false)
+                        && itemStack.isDamageableItem()
+                        && itemStack.getDamageValue() * 1d / itemStack.getMaxDamage() > 0;
 
                 if (willRepair) {
                     tooltip.add(Component.translatable("tetra.workbench.schematic_detail.repair_tooltip"));
