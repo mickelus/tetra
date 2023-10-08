@@ -1042,7 +1042,7 @@
     "tetra.improvement.blade/tempered.prefix": "Tempered",
     "tetra.improvement.blade/tempered.description": "Attacks partially ignore armor",
     "tetra/schematic/sword/shared_blade/serrated_1.name": "Serrate",
-    "tetra/schematic/sword/shared_blade/serrated_1.description": "Serrates the blade, providing a saw-tooth edged blade. Has a 30%% chance to cause the target to bleed for 4 damage over 2 seconds. Not effective against undead.",
+    "tetra/schematic/sword/shared_blade/serrated_1.description": "Serrates the blade, providing a saw-tooth edged blade. Has a 30%% chance to cause the target to bleed for 4 damage over 2 seconds.\n \n§lNot effective against undead.",
     "tetra/schematic/sword/shared_blade/serrated_2.name": "Hone: Serrated II",
     "tetra/schematic/sword/shared_blade/serrated_2.description": "Hone the serrated improvement, increases the damage dealt.",
     "tetra/schematic/sword/shared_blade/serrated_3.name": "Hone: Serrated III",
