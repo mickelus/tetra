@@ -458,6 +458,7 @@ public class TetraRegistries {
             event.accept(rack);
             event.acceptAll(ModularDoubleHeadedItem.getCreativeTabItemStacks());
             event.acceptAll(ModularBladedItem.getCreativeTabItemStacks());
+            event.acceptAll(ModularToolbeltItem.getCreativeTabItemStacks());
 
             event.accept(geode);
             event.accept(pristineLapis);

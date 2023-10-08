@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.Component;
@@ -91,16 +92,15 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
         MenuScreens.register(ToolbeltContainer.type.get(), ToolbeltScreen::new);
     }
 
-//    @Override
-//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-//        if (allowedIn(group)) {
-//            items.add(createStack("belt/rope"));
-//            items.add(createStack("belt/inlaid"));
-//        }
-//    }
+    public static Collection<ItemStack> getCreativeTabItemStacks() {
+        return Lists.newArrayList(
+                createStack("belt/rope"),
+                createStack("belt/inlaid")
+        );
+    }
 
-    private ItemStack createStack(String beltMaterial) {
-        ItemStack itemStack = new ItemStack(this);
+    private static ItemStack createStack(String beltMaterial) {
+        ItemStack itemStack = new ItemStack(instance.get());
         IModularItem.putModuleInSlot(itemStack, beltKey, "toolbelt/belt", "toolbelt/belt_material", beltMaterial);
         IModularItem.putModuleInSlot(itemStack, slot1Key, "toolbelt/strap_slot1", "toolbelt/strap_slot1_material", "strap1/leather");
         IModularItem.updateIdentifier(itemStack);
