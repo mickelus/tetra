@@ -27,8 +27,8 @@ description='''${mod_description}'''
     ordering="NONE"
     side="BOTH"
 [[dependencies.${mod_id}]]
-modId="curios"
-mandatory=true
-versionRange="${curios_version_range}"
-ordering="NONE"
-side="BOTH"
+    modId="curios"
+    mandatory=false
+    versionRange="${curios_version_range}"
+    ordering="NONE"
+    side="BOTH"
