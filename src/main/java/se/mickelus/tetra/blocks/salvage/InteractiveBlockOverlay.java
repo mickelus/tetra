@@ -60,7 +60,7 @@ public class InteractiveBlockOverlay {
                     isDirty = false;
                 }
 
-                GuiGraphics graphics = new GuiGraphics(mc, mc.renderBuffers().bufferSource());
+                GuiGraphics graphics = new GuiGraphics(mc, event.getPoseStack(), mc.renderBuffers().bufferSource());
                 gui.draw(graphics, event.getCamera().getPosition(), rayTrace, shape);
             }
         }
