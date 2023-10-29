@@ -4,7 +4,7 @@
         "level": 1,
         "integrity": -1,
         "effects": {
-            "armorPenetration": 2
+            "armorPenetration": 20
         },
         "models": [
             {
@@ -21,7 +21,7 @@
             "honed": 1
         },
         "effects": {
-            "armorPenetration": 3
+            "armorPenetration": 30
         },
         "models": [
             {
@@ -38,7 +38,7 @@
             "honed": 2
         },
         "effects": {
-            "armorPenetration": 5
+            "armorPenetration": 45
         },
         "models": [
             {
