@@ -68,7 +68,7 @@ public class HoloSortButton extends GuiElement {
 
     @Override
     public boolean onMouseClick(int x, int y, int button) {
-        if (hasFocus()) {
+        if (super.hasFocus()) {
             togglePopover(!popover.isVisible());
             return true;
         }
@@ -88,6 +88,11 @@ public class HoloSortButton extends GuiElement {
         icon.setColor(visible ? GuiColors.hover : GuiColors.normal);
         label.setColor(visible ? GuiColors.hover : GuiColors.normal);
         popover.setVisible(visible);
+    }
+
+    @Override
+    public boolean hasFocus() {
+        return super.hasFocus() || isBlockingFocus();
     }
 
     public boolean isBlockingFocus() {

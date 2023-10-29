@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
 import se.mickelus.mutil.gui.GuiElement;
@@ -12,6 +13,7 @@ import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
@@ -42,9 +44,6 @@ public class HoloSchematicGui extends GuiElement {
         list = new HoloVariantListGui(0, 14, width, this::onVariantHover, this::onVariantBlur, this::onVariantSelect);
         listGroup.addChild(list);
 
-        detail = new HoloVariantDetailGui(0, 68, width, onVariantOpen);
-        addChild(detail);
-
         GuiHorizontalLayoutGroup buttons = new GuiHorizontalLayoutGroup(0, 0, 11, 6);
         listGroup.addChild(buttons);
 
@@ -59,6 +58,9 @@ public class HoloSchematicGui extends GuiElement {
 
         filterButton = new HoloFilterButton(0, 0, this::onFilterChange);
         buttons.addChild(filterButton);
+
+        detail = new HoloVariantDetailGui(0, 68, width, onVariantOpen);
+        addChild(detail);
 
         showListAnimation = new KeyframeAnimation(60, listGroup)
                 .applyTo(new Applier.Opacity(1), new Applier.TranslateY(0))
@@ -111,6 +113,13 @@ public class HoloSchematicGui extends GuiElement {
             return true;
         }
         return super.onKeyPress(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public List<Component> getTooltipLines() {
+        return !sortbutton.isBlockingFocus()
+                ? super.getTooltipLines()
+                : null;
     }
 
     private void onVariantHover(OutcomePreview outcome) {

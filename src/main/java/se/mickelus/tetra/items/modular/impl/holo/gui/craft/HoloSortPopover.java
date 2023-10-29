@@ -7,13 +7,14 @@ import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.mutil.gui.impl.GuiVerticalLayoutGroup;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiKeybinding;
+import se.mickelus.tetra.gui.ZOffsetGui;
 import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
-public class HoloSortPopover extends GuiElement {
+public class HoloSortPopover extends ZOffsetGui {
     private final KeyframeAnimation showAnimation;
     private final KeyframeAnimation hideAnimation;
     private final Consumer<IStatSorter> onSelect;
@@ -21,16 +22,16 @@ public class HoloSortPopover extends GuiElement {
     private final GuiElement backdrop;
 
     public HoloSortPopover(int x, int y, Consumer<IStatSorter> onSelect) {
-        super(x, y - 3, 40, 9);
+        super(x, y - 3, 200);
 
-        backdrop = new GuiRect(0, 0, width, 0, 0).setOpacity(0.9f);
+        backdrop = new GuiRect(0, 0, 0, 0, 0).setOpacity(0.9f);
         addChild(backdrop);
         addChild(new GuiRect(1, 1, 6, 1, GuiColors.normal));
         addChild(new GuiRect(-1, 1, 6, 1, GuiColors.normal).setAttachment(GuiAttachment.topRight));
         addChild(new GuiRect(-1, -1, 6, 1, GuiColors.normal).setAttachment(GuiAttachment.bottomRight));
         addChild(new GuiRect(1, -1, 6, 1, GuiColors.normal).setAttachment(GuiAttachment.bottomLeft));
 
-        items = new GuiVerticalLayoutGroup(6, 6, 40, 3);
+        items = new GuiVerticalLayoutGroup(6, 6, 0, 3);
         addChild(items);
 
         this.onSelect = onSelect;
@@ -61,6 +62,9 @@ public class HoloSortPopover extends GuiElement {
         }
         items.forceLayout();
 
+        int constMaxWidth = maxWidth;
+        items.getChildren().forEach(child -> child.setWidth(constMaxWidth));
+
         setHeight(items.getHeight() + 12);
         setWidth(maxWidth + 12);
         backdrop.setHeight(getHeight());
@@ -78,6 +82,8 @@ public class HoloSortPopover extends GuiElement {
             showAnimation.start();
         }
         hideAnimation.stop();
+
+        items.getChildren(Item.class).forEach(Item::resetKeybind);
     }
 
     @Override
@@ -118,7 +124,7 @@ public class HoloSortPopover extends GuiElement {
 
             this.index = index;
 
-            if (index < 10) {
+            if (index < 9) {
                 GuiKeybinding inner = new GuiKeybinding(1, 1, (index + 1) + "");
                 keybinding = new GuiElement(-10, -2, inner.getWidth() + 2, inner.getHeight() + 2);
                 keybinding.addChild(new GuiRect(0, 0, keybinding.getWidth(), keybinding.getHeight(), 0).setOpacity(0.9f));
@@ -132,6 +138,14 @@ public class HoloSortPopover extends GuiElement {
                         .withDelay(index * 60);
                 hideKeybind = new KeyframeAnimation(100, keybinding)
                         .applyTo(new Applier.TranslateX(-10), new Applier.Opacity(0));
+            }
+        }
+
+        public void resetKeybind() {
+            if (keybinding != null) {
+                showKeybind.stop();
+                hideKeybind.stop();
+                keybinding.setOpacity(0);
             }
         }
 
@@ -166,7 +180,7 @@ public class HoloSortPopover extends GuiElement {
 
         @Override
         public boolean onKeyRelease(int keyCode, int scanCode, int modifiers) {
-            if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT) {
+            if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
                 if (keybinding != null) {
                     if (showKeybind.isActive()) {
                         showKeybind.stop();
@@ -177,18 +191,12 @@ public class HoloSortPopover extends GuiElement {
                     }
                 }
             }
-
-            return false;
-        }
-
-        @Override
-        public boolean onCharType(char character, int modifiers) {
-            if (Character.getNumericValue(character) == index + 1) {
+            if (Character.getNumericValue(keyCode) == index + 1) {
                 onClickHandler.run();
                 return true;
             }
 
-            return super.onCharType(character, modifiers);
+            return false;
         }
     }
 }

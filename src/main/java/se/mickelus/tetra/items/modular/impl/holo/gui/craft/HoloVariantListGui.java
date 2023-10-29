@@ -106,7 +106,7 @@ public class HoloVariantListGui extends GuiElement {
     }
 
     private boolean filter(OutcomePreview preview) {
-        if (filter.length() == 0) {
+        if (filter.isEmpty()) {
             return true;
         }
 
