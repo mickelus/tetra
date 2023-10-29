@@ -524,6 +524,7 @@
     "tetra.variant_category.wood.label": "Wood",
     "tetra.variant_category.bone.label": "Bone",
     "tetra.variant_category.socket.label": "Socket",
+    "tetra.variant_category.rod.label": "Rod (Misc)",
     "tetra.material.obsidian": "Obsidian",
     "tetra.material.obsidian.prefix": "Obsidian",
     "tetra.material.flint": "Flint",
