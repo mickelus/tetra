@@ -1,9 +1,0 @@
-{
-    "origin": [ 0, 0, 1 ],
-    "children": [
-        {
-            "offset": [ 0, 0, 0 ],
-            "features": [ "tetra:rota2n" ]
-        }
-    ]
-}
