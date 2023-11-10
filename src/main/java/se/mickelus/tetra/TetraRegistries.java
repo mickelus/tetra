@@ -492,6 +492,7 @@ public class TetraRegistries {
             event.accept(forgedCrate);
             event.accept(transferUnit);
             event.accept(CoreExtractorBaseBlock.instance);
+            event.accept(CoreExtractorPipeBlock.instance);
             event.accept(seepingBedrock);
         }
     }
