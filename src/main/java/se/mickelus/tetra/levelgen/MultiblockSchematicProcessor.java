@@ -13,15 +13,11 @@ import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicBlock;
 import se.mickelus.tetra.blocks.multischematic.PrimaryMultiblockSchematicBlock;
 import se.mickelus.tetra.blocks.multischematic.RuinedMultiblockSchematicBlock;
+import se.mickelus.tetra.util.StreamHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @ParametersAreNonnullByDefault
@@ -33,15 +29,6 @@ public class MultiblockSchematicProcessor extends StructureProcessor {
     public MultiblockSchematicProcessor() {
     }
 
-    public static Collector<Integer, ?, List<Integer>> toShuffledList(Random random) {
-        return Collectors.collectingAndThen(
-                Collectors.toCollection(ArrayList::new),
-                list -> {
-                    Collections.shuffle(list, random);
-                    return list;
-                });
-    }
-
     @Nullable
     @Override
     public StructureTemplate.StructureBlockInfo process(LevelReader world, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo $,
@@ -51,7 +38,7 @@ public class MultiblockSchematicProcessor extends StructureProcessor {
             int size = block.height * block.width;
             boolean isRuined = IntStream.range(0, size)
                     .boxed()
-                    .collect(toShuffledList(random))
+                    .collect(StreamHelper.toShuffledList(random))
                     .stream()
                     .limit((int) (size * 0.6))
                     .anyMatch(index -> index == block.y * block.width + block.x);

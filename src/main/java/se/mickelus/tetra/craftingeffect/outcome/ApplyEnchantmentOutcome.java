@@ -1,6 +1,7 @@
 package se.mickelus.tetra.craftingeffect.outcome;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -11,6 +12,7 @@ import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
@@ -25,8 +27,8 @@ public class ApplyEnchantmentOutcome implements CraftingEffectOutcome {
     StackMode stacking = StackMode.max;
 
     @Override
-    public boolean apply(ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
-                         Map<ToolAction, Integer> tools, Level world, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials) {
+    public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
+            Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials) {
         if (upgradedStack.getItem() instanceof IModularItem item && item.getModuleFromSlot(upgradedStack, slot) instanceof ItemModuleMajor module) {
             AtomicBoolean success = new AtomicBoolean(false);
             Map<Enchantment, Integer> currentEnchantments = EnchantmentHelper.getEnchantments(upgradedStack);

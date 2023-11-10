@@ -37,11 +37,11 @@ public class CraftingEffect {
         return requirement.test(unlocks, upgradedStack, slot, isReplacing, player, materials, tools, schematic, world, pos, blockState);
     }
 
-    public boolean applyOutcomes(ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
-            ItemStack[] postMaterials, Map<ToolAction, Integer> tools, Level world, BlockPos pos, BlockState blockState, boolean consumeResources) {
+    public boolean applyOutcomes(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
+            ItemStack[] postMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources) {
         boolean success = false;
         for (CraftingEffectOutcome outcome : outcomes) {
-            if (outcome.apply(upgradedStack, slot, isReplacing, player, preMaterials, tools, world, pos, blockState, consumeResources, postMaterials)) {
+            if (outcome.apply(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, schematic, pos, blockState, consumeResources, postMaterials)) {
                 success = true;
             }
         }

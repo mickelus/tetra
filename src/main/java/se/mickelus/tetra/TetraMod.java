@@ -22,10 +22,7 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.craftingeffect.condition.*;
-import se.mickelus.tetra.craftingeffect.outcome.ApplyEnchantmentOutcome;
-import se.mickelus.tetra.craftingeffect.outcome.ApplyImprovementOutcome;
-import se.mickelus.tetra.craftingeffect.outcome.MaterialReductionOutcome;
-import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
+import se.mickelus.tetra.craftingeffect.outcome.*;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
 import se.mickelus.tetra.data.provider.TetraBlockStateProvider;
@@ -101,9 +98,12 @@ public class TetraMod {
         CraftingEffectRegistry.registerConditionType("tetra:material", MaterialCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:tool", ToolCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:improvement", ImprovementCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:module", ModuleCondition.class);
 
         CraftingEffectRegistry.registerEffectType("tetra:apply_improvements", ApplyImprovementOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:apply_enchantments", ApplyEnchantmentOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:apply_nbt", ApplyNbtOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:apply_list", ApplyListOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:remove_improvements", RemoveImprovementOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:material_reduction", MaterialReductionOutcome.class);
 

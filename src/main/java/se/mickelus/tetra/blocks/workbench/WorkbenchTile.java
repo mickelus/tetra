@@ -125,8 +125,8 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
                 .map(block -> block.getCraftingEffects(world, pos, blockState))
                 .orElse(new ResourceLocation[0]);
         Arrays.stream(CraftingEffectRegistry.getEffects(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, schematic, world, pos, blockState))
-                .forEach(craftingEffect -> craftingEffect.applyOutcomes(result, slot, isReplacing, player, preMaterials, postMaterials, tools, world,
-                        pos, blockState, consumeResources));
+                .forEach(craftingEffect -> craftingEffect.applyOutcomes(unlockedEffects, result, slot, isReplacing, player, preMaterials, postMaterials, tools, world,
+                        schematic, pos, blockState, consumeResources));
 
         return result;
     }
