@@ -2323,7 +2323,7 @@
     "tetra.advancements.upgrades.rack.description": "Place a rack near a workbench for easy access to your tools",
     "tetra.improvement.destabilized/haunted.name": "§5Destabilized: Haunted",
     "tetra.improvement.destabilized/haunted.description": "This module has been haunted and will sometimes turn against the item's wielder! Will disappear over time.",
-    "tetra.block.holosphere": "Holosphere",
+    "block.tetra.holosphere": "Holosphere",
     "tetra.slot.holo/frame": "Frame",
     "tetra.slot.holo/core": "Core",
     "tetra.slot.holo/scanner": "",
