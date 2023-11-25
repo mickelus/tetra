@@ -26,7 +26,7 @@ side = "BOTH"
 [[dependencies.tetra]]
 modId = "mutil"
 mandatory = true
-versionRange = "[4.2,]"
+versionRange = "[5.1,]"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.tetra]]
