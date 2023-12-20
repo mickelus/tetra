@@ -2,6 +2,7 @@ package se.mickelus.tetra.module.data;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Set;
@@ -41,6 +42,8 @@ public class ItemProperties {
 
     public Set<TagKey<Item>> tags;
 
+    public Rarity rarity;
+
     public static ItemProperties merge(ItemProperties a, ItemProperties b) {
         if (a == null) {
             return b;
@@ -72,6 +75,14 @@ public class ItemProperties {
             result.tags = a.tags;
         } else {
             result.tags = Stream.concat(a.tags.stream(), b.tags.stream()).collect(Collectors.toSet());
+        }
+
+        if (a.rarity == null) {
+            result.rarity = b.rarity;
+        } else if (b.rarity == null) {
+            result.rarity = a.rarity;
+        } else {
+            result.rarity = a.rarity.ordinal() > b.rarity.ordinal() ? a.rarity : b.rarity;
         }
 
         return result;

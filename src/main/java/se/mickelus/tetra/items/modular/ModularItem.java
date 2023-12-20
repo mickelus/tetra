@@ -11,12 +11,14 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.event.ModularItemDamageEvent;
@@ -175,6 +177,12 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
         tooltip.addAll(getTooltip(stack, world, flag));
+    }
+
+    @Override
+    @NotNull
+    public Rarity getRarity(@NotNull ItemStack itemStack) {
+        return Optional.ofNullable(getPropertiesCached(itemStack)).map(props -> props.rarity).orElse(super.getRarity(itemStack));
     }
 
     @Override
