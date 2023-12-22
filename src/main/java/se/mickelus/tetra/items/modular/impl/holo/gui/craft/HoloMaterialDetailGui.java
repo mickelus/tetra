@@ -10,6 +10,7 @@ import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiTextures;
+import se.mickelus.tetra.gui.ZOffsetGui;
 import se.mickelus.tetra.gui.stats.getter.LabelGetterBasic;
 import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.module.data.TierData;
@@ -78,9 +79,12 @@ public class HoloMaterialDetailGui extends GuiElement {
         icon.setAttachment(GuiAttachment.topCenter);
         content.addChild(icon);
 
-        label = new GuiStringOutline(0, 50, "");
+        var labelOffset = new ZOffsetGui(0, 50, 200); // GuiGraphics.renderItem offsets by 150
+        labelOffset.setAttachment(GuiAttachment.topCenter);
+        label = new GuiStringOutline(0, 0, "");
         label.setAttachment(GuiAttachment.topCenter);
-        content.addChild(label);
+        labelOffset.addChild(label);
+        content.addChild(labelOffset);
 
         modifiers = new GuiElement(0, 0, 0, 0);
         modifiers.setAttachment(GuiAttachment.topCenter);
