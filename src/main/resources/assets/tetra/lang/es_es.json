@@ -422,8 +422,6 @@
     "tetra.stats.intuit.tooltip": "La experiencia obtenida al matar entidades y al destruir bloques mejora el progreso de refinamiento en una tasa de §e%sx§r",
     "tetra.stats.earthbind": "Enlace terrestre",
     "tetra.stats.earthbind.tooltip": "Golpear una entidad tiene la probabilidad del §e10%%§r de bloquearla en el lugar durante §e%s segundos§r. Ocurre con más frecuencia en los niveles más bajos del eje y, hasta un §e50%%§r de probabilidad en piedra base (bedrock)",
-    "tetra.stats.manaRepair": "Rep. de maná",
-    "tetra.stats.manaRepair.tooltip": "Este objeto usará maná para repararse a sí mismo a lo largo del tiempo, reparando un punto de durabilidad cuesta §e%s§r de maná",
     "tetra.stats.magicCapacity": "Capac. mágica",
     "tetra.stats.magicCapacity.tooltip": "La cantidad de magia que puede contener el módulo, esta capacidad es utilizada por ciertas mejoras como los encantamientos.\n \n§7Capacidad mágica: §e%s",
     "tetra.stats.stability": "Estabilidad",

@@ -46,10 +46,14 @@ public class ModularModelLoader implements IGeometryLoader<UnresolvedItemModel>,
         }
     }
 
-    public static void clearCaches() {
+    public synchronized static void clearCaches() {
         logger.info("Clearing model cache for {} items, let's get bakin'", models.size());
         models.forEach(UnresolvedItemModel::clearCache);
         shuffle();
+    }
+
+    private synchronized static void addModel(UnresolvedItemModel model) {
+        newModels.add(model);
     }
 
     @Override
@@ -68,12 +72,12 @@ public class ModularModelLoader implements IGeometryLoader<UnresolvedItemModel>,
                     }.getType());
 
             UnresolvedItemModel model = new UnresolvedItemModel(cameraTransforms, transformVariants);
-            newModels.add(model);
+            addModel(model);
             return model;
         }
 
         UnresolvedItemModel model = new UnresolvedItemModel(cameraTransforms);
-        newModels.add(model);
+        addModel(model);
         return model;
     }
 }

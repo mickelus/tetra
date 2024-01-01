@@ -24,5 +24,6 @@
     },
     "requiredTools": {
         "hammer_dig": "minecraft:stone"
-    }
+    },
+    "features": [ "gilded" ]
 }

@@ -78,6 +78,7 @@ import se.mickelus.tetra.items.TetraItemGroup;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
 import se.mickelus.tetra.items.forged.*;
 import se.mickelus.tetra.items.loot.DragonSinewItem;
+import se.mickelus.tetra.items.modular.EffectItemPredicate;
 import se.mickelus.tetra.items.modular.ItemPredicateModular;
 import se.mickelus.tetra.items.modular.MaterialItemPredicate;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
@@ -377,6 +378,7 @@ public class TetraRegistries {
                 // ITEM PREDICATES
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 ItemPredicate.register(new ResourceLocation("tetra:modular_item"), ItemPredicateModular::new);
+                ItemPredicate.register(new ResourceLocation("tetra:item_effect"), EffectItemPredicate::new);
                 ItemPredicate.register(new ResourceLocation("tetra:material"), MaterialItemPredicate::new);
                 ItemPredicate.register(new ResourceLocation("tetra:loose"), LooseItemPredicate::new);
             } catch (Exception e) {

@@ -12,10 +12,15 @@ import java.lang.reflect.Type;
 public class ModuleRequirement implements CraftingRequirement {
     String moduleKey;
     String moduleVariant;
+    String materialPattern;
 
-    public ModuleRequirement(String moduleKey, String moduleVariant) {
+    public ModuleRequirement(String moduleKey, String moduleVariant, String moduleMaterial) {
         this.moduleKey = moduleKey;
         this.moduleVariant = moduleVariant;
+
+        if (moduleMaterial != null) {
+            this.materialPattern = "\\/" + moduleMaterial + "(?:_|$)";
+        }
     }
 
     @Override
@@ -24,10 +29,13 @@ public class ModuleRequirement implements CraftingRequirement {
             if (moduleKey != null && !moduleKey.equals(context.targetModule.getKey())) {
                 return false;
             }
-            if (moduleVariant != null && !moduleVariant.equals(context.targetModule.getVariantData(context.targetStack).key)) {
+            String currentVariant = context.targetModule.getVariantData(context.targetStack).key;
+            if (moduleVariant != null && !moduleVariant.equals(currentVariant)) {
                 return false;
             }
-            return true;
+            if (materialPattern != null && !currentVariant.matches(materialPattern)) {
+                return true;
+            }
         }
         return false;
     }
@@ -40,6 +48,9 @@ public class ModuleRequirement implements CraftingRequirement {
                             .map(JsonElement::getAsString)
                             .orElse(null),
                     JsonOptional.field(json.getAsJsonObject(), "variant")
+                            .map(JsonElement::getAsString)
+                            .orElse(null),
+                    JsonOptional.field(json.getAsJsonObject(), "material")
                             .map(JsonElement::getAsString)
                             .orElse(null));
         }

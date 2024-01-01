@@ -99,6 +99,9 @@ public class TetraMod {
         CraftingEffectRegistry.registerConditionType("tetra:material", MaterialCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:tool", ToolCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:improvement", ImprovementCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:module", ModuleCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:aspect", AspectCondition.class);
+        CraftingEffectRegistry.registerConditionType("tetra:slot", SlotCondition.class);
 
         CraftingEffectRegistry.registerEffectType("tetra:apply_improvements", ApplyImprovementOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:apply_enchantments", ApplyEnchantmentOutcome.class);

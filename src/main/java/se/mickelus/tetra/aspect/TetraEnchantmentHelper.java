@@ -51,7 +51,7 @@ public class TetraEnchantmentHelper {
     private static EnchantmentCategory fromName(String enchantmentCategoryName) {
         try {
             return EnchantmentCategory.valueOf(enchantmentCategoryName);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException ignored) {
         }
         return null;
     }
