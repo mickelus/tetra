@@ -31,6 +31,10 @@ public class IntegerPredicate implements Predicate<Integer> {
     public static class Deserializer implements JsonDeserializer<IntegerPredicate> {
         @Override
         public IntegerPredicate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return deserialize(json);
+        }
+
+        public static IntegerPredicate deserialize(JsonElement json) throws JsonParseException {
             if (json.isJsonObject()) {
                 JsonObject jsonObject = json.getAsJsonObject();
 

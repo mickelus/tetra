@@ -25,6 +25,7 @@ public class GuiModuleDetails extends GuiElement {
     private final GuiSettleProgress settleBar;
 
     private final GuiSynergyIndicator synergyIndicator;
+    private final AspectIconGui aspectIcon;
 
     private final GuiElement repairGroup;
     private final GuiStringSmall repairTitle;
@@ -50,7 +51,10 @@ public class GuiModuleDetails extends GuiElement {
         synergyIndicator = new GuiSynergyIndicator(130, 8);
         addChild(synergyIndicator);
 
-        repairGroup = new GuiElement(150, 5, 60, 16);
+        aspectIcon = new AspectIconGui(145, 8);
+        addChild(aspectIcon);
+
+        repairGroup = new GuiElement(160, 5, 60, 16);
         addChild(repairGroup);
 
         repairTitle = new GuiStringSmall(0, 7, I18n.get("item.tetra.modular.repair_material.label"));
@@ -80,11 +84,11 @@ public class GuiModuleDetails extends GuiElement {
 
             GlyphData glyphData = module.getVariantData(itemStack).glyph;
 
-            if (module instanceof ItemModuleMajor) {
+            if (module instanceof ItemModuleMajor majorModule) {
                 glyph.addChild(new GuiTexture(0, 0, 15, 15, 52, 0, GuiTextures.workbench));
                 glyph.addChild(new GuiModuleGlyph(-1, 0, 16, 16, glyphData).setShift(false));
 
-                settleBar.update(itemStack, (ItemModuleMajor) module);
+                settleBar.update(itemStack, majorModule);
             } else {
                 glyph.addChild(new GuiTexture(3, 2, 11, 11, 68, 0, GuiTextures.workbench));
                 glyph.addChild(new GuiModuleGlyph(5, 4, 8, 8, glyphData).setShift(false));
@@ -93,6 +97,8 @@ public class GuiModuleDetails extends GuiElement {
             magicBar.update(itemStack, ItemStack.EMPTY, module.getSlot());
 
             synergyIndicator.update(itemStack, module);
+
+            aspectIcon.update(itemStack, module);
 
             ItemStack[] repairItemStacks = RepairRegistry.instance.getDefinitions(module.getVariantData(itemStack).key).stream()
                     .map(definition -> definition.material.getApplicableItemStacks())
@@ -107,6 +113,7 @@ public class GuiModuleDetails extends GuiElement {
         }
 
         synergyIndicator.setVisible(module != null);
+        aspectIcon.setVisible(module != null);
         title.setVisible(module != null);
         description.setVisible(module != null);
         settleBar.setVisible(module instanceof ItemModuleMajor);

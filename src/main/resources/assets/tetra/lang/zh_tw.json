@@ -218,8 +218,6 @@
     "tetra.stats.intuit.tooltip": "殺死生物或者破壞方塊時獲得的經驗值以\u00a7e%sx\u00a7r的比例增加打磨值",
     "tetra.stats.earthbind": "地縛",
     "tetra.stats.earthbind.tooltip": "擊中實體有\u00a7e10%%\u00a7r機率將它鎖在原地\u00a7e%s秒\u00a7r.Y軸越低越常發生,在基岩最高\u00a7e50%%\u00a7r機率",
-    "tetra.stats.manaRepair": "魔力修復",
-    "tetra.stats.manaRepair.tooltip": "此物品會隨著時間使用魔力修復自身,修復一點耐久花費\u00a7e%s\u00a7r魔力",
     "tetra.stats.magicCapacity": "魔力容量",
     "tetra.stats.magicCapacity.tooltip": "部件能保存的魔力,此容量可利用附魔等方式強化.\n \n\u00a77魔力容量: \u00a7e%s",
     "tetra.stats.stability": "穩定性",

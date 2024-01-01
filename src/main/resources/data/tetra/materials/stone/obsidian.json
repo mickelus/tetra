@@ -30,5 +30,6 @@
     },
     "requiredTools": {
         "hammer_dig": "minecraft:diamond"
-    }
+    },
+    "features": [ "crying" ]
 }

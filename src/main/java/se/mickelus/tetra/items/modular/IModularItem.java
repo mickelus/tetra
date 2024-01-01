@@ -23,6 +23,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.forgespi.Environment;
 import org.apache.commons.lang3.ArrayUtils;
@@ -34,10 +35,7 @@ import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
-import se.mickelus.tetra.effect.EnderReverbEffect;
-import se.mickelus.tetra.effect.FierySelfEffect;
-import se.mickelus.tetra.effect.HauntedEffect;
-import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -409,8 +407,11 @@ public interface IModularItem {
      * @param multiplier A multiplier representing the effort and effect yielded from the use
      */
     default void applyUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        applyPositiveUsageEffects(entity, itemStack, multiplier);
-        applyNegativeUsageEffects(entity, itemStack, multiplier);
+        ApplyUsageEffectsEvent event = new ApplyUsageEffectsEvent(entity, itemStack, multiplier);
+        MinecraftForge.EVENT_BUS.post(event);
+
+        applyPositiveUsageEffects(entity, itemStack, event.getPositiveMultiplier());
+        applyNegativeUsageEffects(entity, itemStack, event.getNegativeMultiplier());
     }
 
     default void applyPositiveUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {

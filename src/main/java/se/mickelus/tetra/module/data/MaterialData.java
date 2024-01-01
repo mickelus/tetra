@@ -83,13 +83,16 @@ public class MaterialData {
 
     public Set<TagKey<Item>> tags;
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Non-configurable stuff below
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public String[] features = new String[0];
+
     /**
      * Innate improvements for the material that should be applied if available, e.g. arrested for diamond
      */
     public Map<String, Integer> improvements = new HashMap<>();
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Non-configurable stuff below
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void copyFields(MaterialData from, MaterialData to) {
         if (from.key != null) {
@@ -188,6 +191,10 @@ public class MaterialData {
         } else if (from.tags != null) {
             to.tags = from.tags;
         }
+
+        to.features = Stream.concat(Arrays.stream(to.features), Arrays.stream(from.features))
+                .distinct()
+                .toArray(String[]::new);
     }
 
     public static ModuleModel kneadModel(ModuleModel model, MaterialData material, List<String> availableTextures) {
@@ -317,6 +324,10 @@ public class MaterialData {
             }
             if (jsonObject.has("tags")) {
                 data.tags = context.deserialize(jsonObject.get("tags"), ItemTagKeyDeserializer.typeToken.getRawType());
+            }
+
+            if (jsonObject.has("features")) {
+                data.features = context.deserialize(jsonObject.get("features"), String[].class);
             }
 
             return data;

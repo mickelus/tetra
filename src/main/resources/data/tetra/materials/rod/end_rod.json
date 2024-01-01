@@ -12,6 +12,9 @@
     "effects": {
         "enderReverb": [ 4, 0.3 ]
     },
+    "aspects": {
+        "reverberating": 1
+    },
     "tints": {
         "glyph": "end_rod_glyph",
         "texture": "end_rod"

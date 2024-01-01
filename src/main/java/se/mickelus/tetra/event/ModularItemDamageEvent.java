@@ -13,7 +13,7 @@ public class ModularItemDamageEvent extends Event {
     public ModularItemDamageEvent(LivingEntity usingEntity, ItemStack itemStack, int amount) {
         this.usingEntity = usingEntity;
         this.itemStack = itemStack;
-        this.originalAmount = originalAmount;
+        this.originalAmount = amount;
         this.amount = amount;
     }
 

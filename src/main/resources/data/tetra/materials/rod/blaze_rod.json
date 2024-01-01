@@ -12,6 +12,9 @@
     "effects": {
         "fierySelf": [ 3, 0.1 ]
     },
+    "aspects": {
+        "blazing": 1
+    },
     "tints": {
         "glyph": "blaze_rod_glyph",
         "texture": "blaze_rod"

@@ -1,0 +1,9 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/hexadecimal.schema.json",
+    "title": "Hexadecimal",
+    "description": "A hexadecimal sting value containing 6 or 8 characters, in the pattern of AARRGGBB. The alpha values can be omitted",
+    "type": "string",
+    "pattern": "^[0-9A-Fa-f]{6}(?:[0-9A-Fa-f]{2})?$",
+    "examples": [ "ffaabb", "eeb18f0a" ]
+}

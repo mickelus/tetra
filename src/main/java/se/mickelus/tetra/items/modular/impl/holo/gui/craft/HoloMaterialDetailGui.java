@@ -16,10 +16,7 @@ import se.mickelus.tetra.module.data.MaterialData;
 import se.mickelus.tetra.module.data.TierData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
@@ -156,6 +153,13 @@ public class HoloMaterialDetailGui extends GuiElement {
             Stream.concat(currentImprovements.stream(), previewImprovements.stream())
                     .distinct()
                     .map(improvement -> new HoloMaterialImprovementGui(0, 0, improvement, currentImprovements.contains(improvement), previewImprovements.contains(improvement)))
+                    .forEach(modifiers::addChild);
+
+            Collection<String> currentFeatures = Arrays.asList(current.features);
+            Collection<String> previewFeatures = Arrays.asList(preview.features);
+            Stream.concat(currentFeatures.stream(), previewFeatures.stream())
+                    .distinct()
+                    .map(feature -> new HoloMaterialFeatureGui(0, 0, feature, currentFeatures.contains(feature), previewFeatures.contains(feature)))
                     .forEach(modifiers::addChild);
 
             for (int i = 0; i < modifiers.getNumChildren(); i++) {

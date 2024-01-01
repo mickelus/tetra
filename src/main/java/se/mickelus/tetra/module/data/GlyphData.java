@@ -25,7 +25,7 @@ public class GlyphData {
     public int textureY = 0;
 
     /**
-     * The resourcelocation for the glyph texture. This is optional and most glyphs are available in the defailt
+     * The resourcelocation for the glyph texture. This is optional and most glyphs are available in the default
      * texture.
      * <p>
      * Json format: "domain:path"

@@ -30,6 +30,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -101,6 +102,9 @@ public class ItemEffectHandler {
         if (stunLevel > 0) {
             StunEffect.perform(itemStack, stunLevel, attacker, target);
         }
+
+        ApplyHitTargetEffectsEvent event = new ApplyHitTargetEffectsEvent(attacker, target, itemStack);
+        MinecraftForge.EVENT_BUS.post(event);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

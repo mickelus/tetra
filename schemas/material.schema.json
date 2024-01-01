@@ -1,0 +1,129 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/material.schema.json",
+    "title": "Material",
+    "description": "Definition of material data in tetra",
+    "type": "object",
+    "properties": {
+        "replace": {
+            "description": "Marks if this should replace or merge with existing entries (if any) for this schematic definition. The default behaviour for upgrade schematics added by other mods and datapacks is to merge values set by those into the existing entry (if any). By setting replace to true it's possible to completely replace schematics registered by tetra, which can be useful when one wants to remove something.",
+            "type": "boolean"
+        },
+        "key": {
+            "type": "string"
+        },
+        "category": {
+            "type": "string"
+        },
+        "hidden": {
+            "type": "boolean"
+        },
+        "hiddenOutcomes": {
+            "type": "boolean"
+        },
+        "attributes": {
+            "type": "object",
+            "properties": {
+                "[a-z.]+": { "type": "number" }
+            }
+        },
+        "primary": {
+            "type": "number"
+        },
+        "secondary": {
+            "type": "number"
+        },
+        "tertiary": {
+            "type": "number"
+        },
+        "durability": {
+            "type": "number"
+        },
+        "integrityGain": {
+            "type": "number"
+        },
+        "integrityCost": {
+            "type": "number"
+        },
+        "magicCapacity": {
+            "type": "integer"
+        },
+        "effects": {
+            "type": "object",
+            "properties": {
+                "[a-z.]+": {
+                    "$ref": "tiered_value.schema.json"
+                }
+            }
+        },
+        "aspects": {
+            "type": "object",
+            "properties": {
+                "[a-z.]+": { "type": "integer" }
+            }
+        },
+        "toolLevel": {
+            "$ref": "tier.schema.json"
+        },
+        "toolEfficiency": {
+            "type": "number"
+        },
+        "tints": {
+            "type": "object",
+            "properties": {
+                "glyph": {
+                    "$ref": "hexadecimal.schema.json"
+                },
+                "tint": {
+                    "$ref": "hexadecimal.schema.json"
+                }
+            }
+        },
+        "textures": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "textureOverrides": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "tintOverrides": {
+            "type": "boolean",
+            "default": false
+        },
+        "material": {
+            "type": "object"
+        },
+        "requiredTools": {
+            "type": "object",
+            "properties": {
+                "[a-z.]+": { "$ref": "tiered_value.schema.json" }
+            }
+        },
+        "experienceCost": {
+            "type": "number"
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "improvements": {
+            "type": "object",
+            "properties": {
+                "[a-z.]+": { "type": "integer" }
+            }
+        },
+        "features": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/tiered_value.schema.json",
+    "title": "Resource location",
+    "description": "A minecraft resource location, typically expressed on the format 'namespace:resource'. Defaults to the minecraft namespace if the namespace is omitted",
+    "type": "string",
+    "pattern": "^[a-z0-9_./-]+(?:$|:[a-z0-9_./-]+)*$",
+    "examples": [ "iron", "minecraft:stone", "tetra:maxed_forge_hammer" ]
+}
