@@ -30,7 +30,7 @@ public class HoloFilterButton extends GuiElement {
 
         this.onChange = onChange;
 
-        icon = new GuiTexture(0, 0, 9, 9, 206, 0, GuiTextures.workbench);
+        icon = new GuiTexture(-3, -3, 16, 16, 32, 0, GuiTextures.holo);
         icon.setColor(GuiColors.muted);
         addChild(icon);
 
@@ -42,12 +42,8 @@ public class HoloFilterButton extends GuiElement {
 
     @Override
     public boolean onMouseClick(int x, int y, int button) {
-        if (hasFocus()) {
-            setInputFocused(true);
-            return true;
-        }
-
-        return false;
+        setInputFocused(hasFocus());
+        return hasFocus();
     }
 
     @Override
@@ -63,7 +59,7 @@ public class HoloFilterButton extends GuiElement {
 
         if (inputFocused) {
             icon.setColor(GuiColors.hover);
-        } else if (filter.length() > 0) {
+        } else if (!filter.isEmpty()) {
             icon.setColor(GuiColors.normal);
         } else {
             icon.setColor(GuiColors.muted);
@@ -77,7 +73,7 @@ public class HoloFilterButton extends GuiElement {
                 if (Screen.hasControlDown()) {
                     updateFilter("");
                 }
-                if (filter.length() > 0) {
+                if (!filter.isEmpty()) {
                     updateFilter(StringUtils.chop(filter));
                 }
                 return true;
