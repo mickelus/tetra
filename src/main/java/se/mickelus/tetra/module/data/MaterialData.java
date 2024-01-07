@@ -288,6 +288,9 @@ public class MaterialData {
             if (jsonObject.has("effects")) {
                 data.effects = context.deserialize(jsonObject.get("effects"), EffectData.class);
             }
+            if (jsonObject.has("aspects")) {
+                data.aspects = context.deserialize(jsonObject.get("aspects"), AspectData.class);
+            }
             if (jsonObject.has("toolLevel")) {
                 data.toolLevel = getLevel(jsonObject.get("toolLevel"));
             }
