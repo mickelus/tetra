@@ -33,7 +33,7 @@ public class RemoveSchematic extends BaseSchematic {
     private final String slot;
     private final String identifier;
 
-    private final GlyphData glyph = new GlyphData(GuiTextures.workbench, 52, 32);
+    private final GlyphData glyph = new GlyphData(GuiTextures.glyphs, 80, 224);
 
     public RemoveSchematic(IModularItem item, String slot, String identifier) {
         this.item = item;

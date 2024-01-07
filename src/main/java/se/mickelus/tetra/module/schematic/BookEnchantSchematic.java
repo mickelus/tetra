@@ -36,7 +36,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
     private static final String descriptionSuffix = ".description";
     private static final String slotSuffix = ".slot1";
 
-    private final GlyphData glyph = new GlyphData(GuiTextures.workbench, 80, 32);
+    private final GlyphData glyph = new GlyphData(GuiTextures.glyphs, 96, 224);
 
     public BookEnchantSchematic() {
     }
