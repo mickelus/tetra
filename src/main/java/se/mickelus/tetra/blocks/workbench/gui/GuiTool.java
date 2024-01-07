@@ -7,9 +7,12 @@ import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiStringOutline;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.client.ToolActionIconStore;
 import se.mickelus.tetra.gui.GuiTextures;
+import se.mickelus.tetra.module.data.GlyphData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 public class GuiTool extends GuiElement {
@@ -17,11 +20,14 @@ public class GuiTool extends GuiElement {
     private final GuiString levelIndicator;
     protected ToolAction toolAction;
 
+    private GlyphData fallback = new GlyphData(GuiTextures.toolActions, 240, 0);
+
     public GuiTool(int x, int y, ToolAction toolAction) {
         super(x, y, width, 16);
         this.toolAction = toolAction;
 
-        addChild(new GuiTexture(0, 0, 16, 16, getOffset(toolAction) * 16, 52, GuiTextures.workbench));
+        GlyphData glyph = Optional.ofNullable(ToolActionIconStore.instance.getIcon(toolAction)).orElse(fallback);
+        addChild(new GuiTexture(0, 0, 16, 16, glyph.textureX, glyph.textureY, glyph.textureLocation));
 
         levelIndicator = new GuiStringOutline(10, 8, "");
         addChild(levelIndicator);
