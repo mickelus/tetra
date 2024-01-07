@@ -33,7 +33,7 @@ public class HoloMaterialsButtonGui extends GuiClickable {
         backdrop.setAttachment(GuiAttachment.middleCenter);
         addChild(backdrop);
 
-        icon = new GuiTexture(0, 0, 38, 38, 0, 180, GuiTextures.workbench);
+        icon = new GuiTexture(0, 0, 38, 38, 0, 180, GuiTextures.holo);
         icon.setAttachment(GuiAttachment.middleCenter);
         addChild(icon);
 

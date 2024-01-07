@@ -32,7 +32,7 @@ public class HoloImprovementButton extends GuiClickable {
 
         for (int i = 0; i < 3; i++) {
             int texX = i * -5 + 8;
-            GuiTexture texture = new GuiTexture(texX, 0, 15, 15, 222, 16, GuiTextures.workbench);
+            GuiTexture texture = new GuiTexture(texX, 0, 16, 16, 0, 16, GuiTextures.holo);
             texture.setAttachment(GuiAttachment.middleLeft);
             addChild(texture);
 
@@ -46,7 +46,7 @@ public class HoloImprovementButton extends GuiClickable {
 
         for (int i = 0; i < 3; i++) {
             int texX = i * 5 - 8;
-            GuiTexture texture = new GuiTexture(texX, 0, 15, 15, 237, 16, GuiTextures.workbench);
+            GuiTexture texture = new GuiTexture(texX, 0, 16, 16, 16, 16, GuiTextures.holo);
             texture.setAttachment(GuiAttachment.middleRight);
             addChild(texture);
 
@@ -58,8 +58,8 @@ public class HoloImprovementButton extends GuiClickable {
                     .withDelay(i * 40));
         }
 
-        addChild(new GuiTexture(-26, 1, 11, 11, 193, 31, GuiTextures.workbench).setAttachment(GuiAttachment.middleLeft));
-        addChild(new GuiTexture(26, 1, 11, 11, 193, 31, GuiTextures.workbench).setAttachment(GuiAttachment.middleRight));
+        addChild(new GuiTexture(-26, 1, 11, 11, 17, 0, GuiTextures.holo).setAttachment(GuiAttachment.middleLeft));
+        addChild(new GuiTexture(26, 1, 11, 11, 17, 0, GuiTextures.holo).setAttachment(GuiAttachment.middleRight));
 
         addChild(label);
 

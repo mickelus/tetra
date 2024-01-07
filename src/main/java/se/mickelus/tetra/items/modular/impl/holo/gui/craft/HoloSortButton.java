@@ -31,7 +31,7 @@ public class HoloSortButton extends GuiElement {
 
         this.onSelect = onSelect;
 
-        icon = new GuiTexture(0, 1, 9, 9, 233, 0, GuiTextures.workbench);
+        icon = new GuiTexture(-3, -3, 16, 16, 48, 0, GuiTextures.holo);
         addChild(icon);
 
         label = new GuiString(11, 0, width - 11, "");

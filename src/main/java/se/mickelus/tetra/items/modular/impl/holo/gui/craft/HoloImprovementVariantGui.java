@@ -43,10 +43,10 @@ public class HoloImprovementVariantGui extends GuiClickable {
         truncatedName = truncatedName.trim().toLowerCase();
 
         if (isConnected) {
-            addChild(new GuiTexture(-2, 0, 11, 11, 193, 31, GuiTextures.workbench).setAttachmentAnchor(GuiAttachment.topRight));
+            addChild(new GuiTexture(-2, 0, 11, 11, 17, 0, GuiTextures.holo).setAttachmentAnchor(GuiAttachment.topRight));
         }
 
-        backdrop = new GuiTexture(0, 0, 17, 11, 176, 31, GuiTextures.workbench);
+        backdrop = new GuiTexture(0, 0, 17, 11, 0, 0, GuiTextures.holo);
         addChild(backdrop);
 
         label = new GuiStringOutline(9, 1, truncatedName);
