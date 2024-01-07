@@ -1,6 +1,7 @@
 package se.mickelus.tetra.gui.stats.bar;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiTexture;
@@ -21,7 +22,11 @@ public class GuiStatIndicator extends GuiTexture {
     protected ITooltipGetter tooltipGetter;
 
     public GuiStatIndicator(int x, int y, String label, int textureIndex, IStatGetter statGetter, ITooltipGetter tooltipGetter) {
-        super(x, y, 7, 7, textureIndex * 7, 144, GuiTextures.workbench);
+        this(x, y, label, textureIndex * 8, 160, GuiTextures.glyphs, statGetter, tooltipGetter);
+    }
+
+    public GuiStatIndicator(int x, int y, String label, int textureX, int textureY, ResourceLocation textureLocation, IStatGetter statGetter, ITooltipGetter tooltipGetter) {
+        super(x, y, 8, 8, textureX, textureY, textureLocation);
 
         this.label = label;
         this.statGetter = statGetter;
