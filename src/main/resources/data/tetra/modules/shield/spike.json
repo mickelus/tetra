@@ -27,7 +27,7 @@
                 "integrity": -1,
                 "glyph": {
                     "textureX": 104,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "spike" ],
                 "models": [

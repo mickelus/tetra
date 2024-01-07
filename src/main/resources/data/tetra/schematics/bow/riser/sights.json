@@ -1,11 +1,11 @@
 {
     "replace": true,
-    "slots": ["bow/riser"],
+    "slots": [ "bow/riser" ],
     "materialSlotCount": 1,
     "displayType": "minor",
     "glyph": {
         "textureX": 120,
-        "textureY": 16
+        "textureY": 112
     },
     "translation": {
         "primaryEffects": {
@@ -20,13 +20,13 @@
     },
     "outcomes": [
         {
-            "materials": ["tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/stick"],
+            "materials": [ "tetra:wood/", "tetra:metal/", "tetra:bone/", "tetra:rod/stick" ],
             "moduleKey": "bow/sights",
             "moduleVariant": "sights/"
         },
         {
             "material": {
-                "items": ["minecraft:echo_shard"]
+                "items": [ "minecraft:echo_shard" ]
             },
             "requiredTools": {
                 "hammer_dig": "minecraft:diamond"

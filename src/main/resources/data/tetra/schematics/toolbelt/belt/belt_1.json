@@ -9,7 +9,7 @@
         "module": "toolbelt/belt_wool"
     },
     "glyph": {
-        "textureY": 16
+        "textureY": 112
     },
     "displayType": "minor",
     "outcomes": [

@@ -29,7 +29,7 @@
                 "integrity": -0.5,
                 "glyph": {
                     "textureX": 96,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "sturdy_boss" ],
                 "models": [

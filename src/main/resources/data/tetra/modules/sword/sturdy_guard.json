@@ -25,7 +25,7 @@
                 "integrity": -0.2,
                 "glyph": {
                     "textureX": 144,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "metal", "shiny", "crude" ],
                 "models": [ { "location": "tetra:item/module/sword/guard/sturdy_guard/" } ]

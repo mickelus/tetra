@@ -15,7 +15,7 @@
                 "durability": 0.12,
                 "glyph": {
                     "textureX": 32,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [ { "location": "tetra:item/module/sword/pommel/counterweight/" } ]

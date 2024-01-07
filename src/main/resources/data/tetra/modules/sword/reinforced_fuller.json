@@ -19,7 +19,7 @@
                 "integrity": 0.5,
                 "glyph": {
                     "textureX": 72,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [ { "location": "tetra:item/module/sword/fuller/reinforced_fuller/" } ]

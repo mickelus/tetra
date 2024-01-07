@@ -18,7 +18,7 @@
                 "durability": 0.08,
                 "glyph": {
                     "textureX": 56,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [ { "location": "tetra:item/module/sword/pommel/grip_loop/" } ]

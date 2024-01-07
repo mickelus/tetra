@@ -1,15 +1,15 @@
 {
     "replace": true,
-    "slots": ["double/binding"],
+    "slots": [ "double/binding" ],
     "materialSlotCount": 1,
     "displayType": "minor",
     "glyph": {
         "textureX": 80,
-        "textureY": 16
+        "textureY": 112
     },
     "outcomes": [
         {
-            "materials": ["tetra:socket/"],
+            "materials": [ "tetra:socket/" ],
             "moduleKey": "double/socket",
             "moduleVariant": "double_socket/",
             "experienceFactor": 1

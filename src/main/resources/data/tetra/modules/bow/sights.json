@@ -24,7 +24,7 @@
                 "durability": 0.2,
                 "glyph": {
                     "textureX": 120,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [
@@ -48,7 +48,7 @@
                 "durability": 0.2,
                 "glyph": {
                     "textureX": 120,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [
@@ -71,7 +71,7 @@
             },
             "glyph": {
                 "textureX": 120,
-                "textureY": 16,
+                "textureY": 112,
                 "tint": "28dce8"
             },
             "models": [

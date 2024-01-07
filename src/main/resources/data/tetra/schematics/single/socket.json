@@ -7,11 +7,11 @@
     "displayType": "minor",
     "glyph": {
         "textureX": 80,
-        "textureY": 16
+        "textureY": 112
     },
     "outcomes": [
         {
-            "materials": ["tetra:socket/"],
+            "materials": [ "tetra:socket/" ],
             "moduleKey": "single/socket",
             "moduleVariant": "single_socket/",
             "experienceFactor": 1

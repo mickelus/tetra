@@ -12,7 +12,7 @@
                 "durability": 0.01,
                 "glyph": {
                     "textureX": 152,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [ { "location": "tetra:item/module/sword/guard/decorative_guard/" } ]

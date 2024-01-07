@@ -27,7 +27,7 @@
                 "durability": 0.25,
                 "glyph": {
                     "textureX": 72,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [ { "location": "tetra:item/module/sword/fuller/howling/" } ]

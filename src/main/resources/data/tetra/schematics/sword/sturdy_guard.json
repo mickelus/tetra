@@ -6,7 +6,7 @@
     "displayType": "minor",
     "glyph": {
         "textureX": 144,
-        "textureY": 16
+        "textureY": 112
     },
     "requirement": {
         "type": "tetra:locked",

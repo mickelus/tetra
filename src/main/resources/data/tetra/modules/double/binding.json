@@ -16,7 +16,7 @@
                 "integrity": 0.7,
                 "glyph": {
                     "textureX": 88,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [ { "location": "tetra:item/module/double/binding/binding/" } ]
@@ -31,7 +31,7 @@
             "glyph": {
                 "tint": "bolt_glyph",
                 "textureX": 80,
-                "textureY": 16
+                "textureY": 112
             },
             "models": [
                 {

@@ -19,7 +19,7 @@
                 "integrity": 1,
                 "glyph": {
                     "textureX": 24,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [

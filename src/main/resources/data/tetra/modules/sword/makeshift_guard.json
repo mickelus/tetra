@@ -13,8 +13,8 @@
             "extract": {
                 "durability": 0.06,
                 "glyph": {
-                    "textureX": 7,
-                    "textureY": 16
+                    "textureX": 8,
+                    "textureY": 112
                 },
                 "availableTextures": [ "shiny", "default" ],
                 "models": [ { "location": "tetra:item/module/sword/guard/makeshift_guard/" } ]

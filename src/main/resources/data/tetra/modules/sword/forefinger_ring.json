@@ -16,7 +16,7 @@
                 "durability": 0.12,
                 "glyph": {
                     "textureX": 48,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [ { "location": "tetra:item/module/sword/guard/forefinger_ring/" } ]
@@ -34,7 +34,7 @@
                 "durability": 0.12,
                 "glyph": {
                     "textureX": 48,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [ { "location": "tetra:item/module/sword/guard/forefinger_ring/" } ]
@@ -52,7 +52,7 @@
                 "durability": 0.12,
                 "glyph": {
                     "textureX": 48,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [ { "location": "tetra:item/module/sword/guard/forefinger_ring/" } ]

@@ -18,7 +18,7 @@
                 "integrity": -1,
                 "glyph": {
                     "textureX": 160,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "tools": {
                     "axe_dig": [ 0, 1 ],

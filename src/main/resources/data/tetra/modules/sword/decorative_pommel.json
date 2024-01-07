@@ -12,8 +12,8 @@
             "extract": {
                 "durability": 0.04,
                 "glyph": {
-                    "textureX": 14,
-                    "textureY": 16
+                    "textureX": 16,
+                    "textureY": 112
                 },
                 "availableTextures": [ "default" ],
                 "models": [ { "location": "tetra:item/module/sword/pommel/decorative_pommel/" } ]

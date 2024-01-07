@@ -10,7 +10,7 @@
             "extract": {
                 "glyph": {
                     "textureX": 0,
-                    "textureY": 16
+                    "textureY": 112
                 },
                 "availableTextures": [ "sash" ],
                 "models": [ { "location": "tetra:item/module/toolbelt/belt/" } ]

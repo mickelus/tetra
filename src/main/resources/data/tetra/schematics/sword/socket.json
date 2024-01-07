@@ -7,11 +7,11 @@
     "displayType": "minor",
     "glyph": {
         "textureX": 80,
-        "textureY": 16
+        "textureY": 112
     },
     "outcomes": [
         {
-            "materials": ["tetra:socket/"],
+            "materials": [ "tetra:socket/" ],
             "moduleKey": "sword/socket",
             "moduleVariant": "sword_socket/",
             "experienceFactor": 1
