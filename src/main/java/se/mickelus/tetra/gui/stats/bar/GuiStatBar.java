@@ -52,12 +52,12 @@ public class GuiStatBar extends GuiStatBase {
     protected ITooltipGetter tooltipGetter;
 
     public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented,
-                      IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
+            IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
         this(x, y, barLength, labelKey, min, max, segmented, false, false, statGetter, labelGetter, tooltipGetter);
     }
 
     public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented, boolean split,
-                      boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
+            boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
         super(x, y, barLength, 12);
 
         this.min = min;
@@ -78,7 +78,7 @@ public class GuiStatBar extends GuiStatBase {
             }
         }
 
-        indicatorGroup = new GuiHorizontalLayoutGroup(0, -1, 7, 1);
+        indicatorGroup = new GuiHorizontalLayoutGroup(0, -2, 7, 1);
 
         addChild(labelString);
         addChild(valueString);

@@ -216,6 +216,18 @@
                 },
                 {
                     "type": "minecraft:item",
+                    "name": "tetra:pristine_amethyst",
+                    "weight": 8,
+                    "conditions": [
+                        {
+                            "condition": "tetra:random_chance_with_fortune",
+                            "chance": 0.1,
+                            "fortuneMultiplier": 0.15
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
                     "name": "minecraft:diamond",
                     "weight": 4,
                     "conditions": [

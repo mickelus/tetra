@@ -1,0 +1,24 @@
+{
+    "pools": [
+        {
+            "name": "shatter_amethyst",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:amethyst_shard",
+                    "functions": [
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

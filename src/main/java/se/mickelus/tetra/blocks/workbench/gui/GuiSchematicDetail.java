@@ -10,13 +10,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.gui.*;
+import se.mickelus.mutil.gui.animation.AnimationChain;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.gui.GuiColors;
-import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiMagicUsage;
 import se.mickelus.tetra.gui.GuiTextures;
-import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialApplicable;
-import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialTranslation;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -28,26 +29,27 @@ import java.util.Map;
 @ParametersAreNonnullByDefault
 public class GuiSchematicDetail extends GuiElement {
 
-    private static final int MAX_NUM_SLOTS = 2;
+
     private final GuiElement glyph;
     private final GuiString title;
     private final GuiSources sources;
     private final GuiTextSmall description;
     private final CraftButtonGui craftButton;
-    private final GuiString[] slotNames;
-    private final GuiString[] slotQuantities;
-    private final GuiItemRolling[] slotPlaceholders;
-    private final GuiTexture[] slotBorders;
+    private final SchemaSlotGui[] slots;
+    private final GuiElement emptySlotsIndicator;
+    private final GuiElement hasSlotsIndicator;
     private final GuiMagicUsage magicCapacity;
     private final ToolRequirementListGui toolRequirementList;
     private final GuiExperience experienceIndicator;
-    private final HoloMaterialTranslation materialTranslation;
-    private final HoloMaterialApplicable applicableMaterials;
+    private final AnimationChain flash;
     private UpgradeSchematic schematic;
     private List<Component> descriptionTooltip;
 
     public GuiSchematicDetail(int x, int y, Runnable backListener, Runnable craftListener) {
         super(x, y, 224, 67);
+
+        addChild(new GuiTexture(-4, -4, 239, 69, 0, 187, GuiTextures.workbench));
+
         addChild(new GuiButton(-4, height - 2, 40, 8, "< " + I18n.get("tetra.workbench.schematic_detail.back"), backListener));
 
         glyph = new GuiElement(3, 3, 16, 16);
@@ -59,49 +61,42 @@ public class GuiSchematicDetail extends GuiElement {
         sources = new GuiSources(19, 15, 81);
         addChild(sources);
 
-        description = new GuiTextSmall(5, 20, 105, "");
+        description = new GuiTextSmall(5, 22, 125, "");
         addChild(description);
 
-        materialTranslation = new HoloMaterialTranslation(110, 4);
-        addChild(materialTranslation);
-        applicableMaterials = new HoloMaterialApplicable(111, 13);
-        addChild(applicableMaterials);
-
-        slotNames = new GuiString[MAX_NUM_SLOTS];
-        slotQuantities = new GuiString[MAX_NUM_SLOTS];
-        slotPlaceholders = new GuiItemRolling[MAX_NUM_SLOTS];
-        slotBorders = new GuiTexture[MAX_NUM_SLOTS];
-        for (int i = 0; i < MAX_NUM_SLOTS; i++) {
-            slotNames[i] = new GuiString(140, 9 + i * 17, "");
-            slotNames[i].setVisible(false);
-            addChild(slotNames[i]);
-
-            slotQuantities[i] = new GuiStringSmall(139, 18 + i * 18, "");
-            slotQuantities[i].setVisible(false);
-            addChild(slotQuantities[i]);
-
-            slotPlaceholders[i] = new GuiItemRolling(121, 5 + i * 18);
-            slotPlaceholders[i].setVisible(false);
-            slotPlaceholders[i].setCountVisibility(GuiItem.CountMode.never);
-            addChild(slotPlaceholders[i]);
-
-            slotBorders[i] = new GuiTexture(121, 5 + i * 18, 16, 16, 52, 16, GuiTextures.workbench);
-            slotBorders[i].setOpacity(0.8f);
-            slotBorders[i].setVisible(false);
-            addChild(slotBorders[i]);
+        slots = new SchemaSlotGui[WorkbenchTile.maxMaterialSlots];
+        for (int i = 0; i < WorkbenchTile.maxMaterialSlots; i++) {
+            slots[i] = new SchemaSlotGui(125, 5, 82, i);
+            addChild(slots[i]);
         }
 
-        magicCapacity = new GuiMagicUsage(121, 28, 80);
+        emptySlotsIndicator = new GuiTexture(146, 6, 64, 16, 48, 32, GuiTextures.workbench);
+        addChild(emptySlotsIndicator);
+
+        hasSlotsIndicator = new GuiElement(0, 0, 0, 0);
+        hasSlotsIndicator.addChild(new GuiTexture(132, 3, 4, 22, 240, 192, GuiTextures.workbench));
+        hasSlotsIndicator.addChild(new GuiTexture(220, 3, 5, 22, 244, 192, GuiTextures.workbench));
+        addChild(hasSlotsIndicator);
+
+        magicCapacity = new GuiMagicUsage(138, 30, 80);
         addChild(magicCapacity);
 
-        toolRequirementList = new ToolRequirementListGui(80, 39);
-        addChild(toolRequirementList);
-
-        experienceIndicator = new GuiExperience(192, 42, "tetra.workbench.schematic_detail.experience");
+        experienceIndicator = new GuiExperience(205, 41, "tetra.workbench.schematic_detail.experience");
         addChild(experienceIndicator);
 
-        craftButton = new CraftButtonGui(140, 40, craftListener);
+        craftButton = new CraftButtonGui(155, 41, craftListener);
         addChild(craftButton);
+
+        toolRequirementList = new ToolRequirementListGui(143, 40);
+        addChild(toolRequirementList);
+
+        GuiTexture flashOverlay = new GuiTexture(-4, -4, 239, 69, 0, 187, GuiTextures.workbench);
+        flashOverlay.setOpacity(0);
+        flashOverlay.setColor(0);
+        addChild(flashOverlay);
+        flash = new AnimationChain(
+                new KeyframeAnimation(60, flashOverlay).applyTo(new Applier.Opacity(0.3f)),
+                new KeyframeAnimation(120, flashOverlay).applyTo(new Applier.Opacity(0)));
     }
 
     public void update(Level level, BlockPos pos, WorkbenchTile blockEntity, UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, Map<ToolAction, Integer> availableTools,
@@ -117,13 +112,6 @@ public class GuiSchematicDetail extends GuiElement {
         description.setString(ChatFormatting.GRAY + descriptionString
                 .replace(ChatFormatting.RESET.toString(), ChatFormatting.RESET.toString() + ChatFormatting.GRAY));
         descriptionTooltip = ImmutableList.of(Component.literal(descriptionString));
-
-        materialTranslation.setVisible(schematic.getNumMaterialSlots() > 0);
-        applicableMaterials.setVisible(schematic.getNumMaterialSlots() > 0);
-        if (schematic.getNumMaterialSlots() > 0) {
-            materialTranslation.update(schematic);
-            applicableMaterials.update(level, pos, blockEntity, itemStack, slot, schematic, player);
-        }
 
         glyph.clearChildren();
         GlyphData glyphData = schematic.getGlyph();
@@ -154,35 +142,15 @@ public class GuiSchematicDetail extends GuiElement {
             glyph.addChild(new GuiTexture(7, 7, 7, 7, 68, 16, GuiTextures.workbench).setColor(GuiColors.muted));
         }
 
-        for (int i = 0; i < schematic.getNumMaterialSlots(); i++) {
-            slotNames[i].setString(schematic.getSlotName(itemStack, i));
-            slotNames[i].setVisible(true);
 
-            slotPlaceholders[i].setVisible(i < materials.length && materials[i].isEmpty());
-            slotPlaceholders[i].setItems(schematic.getSlotPlaceholders(itemStack, i));
-
-            slotBorders[i].setVisible(true);
-
-            if (schematic.acceptsMaterial(itemStack, slot, i, materials[i])) {
-                int requiredCount = schematic.getRequiredQuantity(itemStack, i, materials[i]);
-                if (!materials[i].isEmpty() && requiredCount > 1) {
-                    slotQuantities[i].setString("/" + requiredCount);
-                    slotQuantities[i].setColor(materials[i].getCount() < requiredCount ? GuiColors.negative : GuiColors.normal);
-                }
-                slotQuantities[i].setVisible(!materials[i].isEmpty() && requiredCount > 1);
-            } else {
-                slotQuantities[i].setVisible(false);
-            }
+        int numMaterialSlots = schematic.getNumMaterialSlots();
+        for (int i = 0; i < WorkbenchTile.maxMaterialSlots; i++) {
+            slots[i].update(schematic, player, level, pos, blockEntity, itemStack, slot, materials);
+            slots[i].setX(136 + WorkbenchContainer.getSlotOffsetY(i, numMaterialSlots));
         }
-
-        for (int i = schematic.getNumMaterialSlots(); i < MAX_NUM_SLOTS; i++) {
-            slotNames[i].setVisible(false);
-            slotQuantities[i].setVisible(false);
-            slotPlaceholders[i].setVisible(false);
-            slotBorders[i].setVisible(false);
-        }
-
         toolRequirementList.update(schematic, itemStack, slot, materials, availableTools);
+        emptySlotsIndicator.setVisible(numMaterialSlots == 0);
+        hasSlotsIndicator.setVisible(numMaterialSlots != 0);
 
         int xpCost = schematic.getExperienceCost(itemStack, materials, slot);
         experienceIndicator.setVisible(xpCost > 0);
@@ -193,6 +161,8 @@ public class GuiSchematicDetail extends GuiElement {
                 experienceIndicator.update(xpCost, true);
             }
         }
+
+        flash();
     }
 
     public void updateMagicCapacity(UpgradeSchematic schematic, String slot, ItemStack itemStack, ItemStack previewStack) {
@@ -221,5 +191,10 @@ public class GuiSchematicDetail extends GuiElement {
         }
 
         return super.getTooltipLines();
+    }
+
+    public void flash() {
+        this.flash.stop();
+        this.flash.start();
     }
 }

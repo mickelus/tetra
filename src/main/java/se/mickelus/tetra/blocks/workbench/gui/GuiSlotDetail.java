@@ -9,7 +9,6 @@ import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.gui.GuiButton;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiRect;
-import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.mutil.gui.animation.AnimationChain;
 import se.mickelus.mutil.gui.animation.Applier;
 import se.mickelus.mutil.gui.animation.KeyframeAnimation;
@@ -33,7 +32,7 @@ import java.util.stream.IntStream;
 
 @ParametersAreNonnullByDefault
 public class GuiSlotDetail extends GuiElement {
-    private static final char[] keybindings = new char[] {'a', 's', 'd'};
+    private static final char[] keybindings = new char[] { 'a', 's', 'd' };
     private static final String[] labels = new String[] {
             "tetra.workbench.slot_detail.details_tab",
             "tetra.workbench.slot_detail.craft_tab",
@@ -55,17 +54,6 @@ public class GuiSlotDetail extends GuiElement {
 
         this.selectSchematicHandler = selectSchematicHandler;
 
-        addChild(new GuiTexture(0, 0, width, height, 0, 68, GuiTextures.workbench));
-
-        addChild(new GuiRect(1, 6, 2, 49, 0));
-
-        tabGroup = new VerticalTabGroupGui(1, 6, this::changeTab, GuiTextures.workbench, 128, 32,
-                IntStream.range(0, 3)
-                        .mapToObj(i -> I18n.get(labels[i]))
-                        .toArray(String[]::new));
-        tabGroup.setHasContent(1, true);
-        addChild(tabGroup);
-
         moduleDetails = new GuiModuleDetails(0, 0);
         addChild(moduleDetails);
 
@@ -80,9 +68,16 @@ public class GuiSlotDetail extends GuiElement {
         schematicDetail.setVisible(false);
         schematicGroup.addChild(schematicDetail);
 
-
         tweakControls = new GuiTweakControls(0, 0, previewTweak, applyTweak);
         addChild(tweakControls);
+
+        addChild(new GuiRect(1, 6, 2, 49, 0));
+        tabGroup = new VerticalTabGroupGui(1, 6, this::changeTab, GuiTextures.workbench, 128, 32,
+                IntStream.range(0, 3)
+                        .mapToObj(i -> I18n.get(labels[i]))
+                        .toArray(String[]::new));
+        tabGroup.setHasContent(1, true);
+        addChild(tabGroup);
 
         GuiRect slotTransitionElement = new GuiRect(3, 3, 218, 56, 0);
         slotTransitionElement.setOpacity(0);
@@ -103,8 +98,22 @@ public class GuiSlotDetail extends GuiElement {
 
         updateTabVisibility();
 
-        slotTransition.stop();
-        slotTransition.start();
+        if (moduleDetails.isVisible()) {
+            moduleDetails.flash();
+        }
+
+        if (schematicGroup.isVisible()) {
+            if (schematicDetail.isVisible()) {
+                schematicDetail.flash();
+            }
+            if (schematicList.isVisible()) {
+                schematicList.flash();
+            }
+        }
+
+        if (tweakControls.isVisible()) {
+            tweakControls.flash();
+        }
     }
 
     private void updateTabVisibility() {

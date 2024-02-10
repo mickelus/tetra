@@ -23,9 +23,9 @@
                 "generic.attack_speed": -1.1
             },
             "aspects": {
-                "blockBreaker": 2,
+                "block_breaker": 2,
                 "breakable": 2,
-                "bluntWeapon": 1
+                "blunt_weapon": 1
             },
             "extract": {
                 "primaryAttributes": {
@@ -59,9 +59,9 @@
                 "generic.attack_speed": -1.1
             },
             "aspects": {
-                "blockBreaker": 2,
+                "block_breaker": 2,
                 "breakable": 2,
-                "bluntWeapon": 1
+                "blunt_weapon": 1
             },
             "tools": {
                 "hammer_dig": "minecraft:wood"
@@ -98,9 +98,9 @@
                 "generic.attack_speed": -1.1
             },
             "aspects": {
-                "blockBreaker": 2,
+                "block_breaker": 2,
                 "breakable": 2,
-                "bluntWeapon": 1
+                "blunt_weapon": 1
             },
             "tools": {
                 "hammer_dig": "minecraft:wood"
@@ -137,9 +137,9 @@
                 "generic.attack_speed": -1.1
             },
             "aspects": {
-                "blockBreaker": 2,
+                "block_breaker": 2,
                 "breakable": 2,
-                "bluntWeapon": 1
+                "blunt_weapon": 1
             },
             "tools": {
                 "hammer_dig": "minecraft:gold"
@@ -176,9 +176,9 @@
                 "generic.attack_speed": -1.1
             },
             "aspects": {
-                "blockBreaker": 2,
+                "block_breaker": 2,
                 "breakable": 2,
-                "bluntWeapon": 1
+                "blunt_weapon": 1
             },
             "tools": {
                 "hammer_dig": "minecraft:gold"
@@ -215,9 +215,9 @@
                 "generic.attack_speed": -1.1
             },
             "aspects": {
-                "blockBreaker": 2,
+                "block_breaker": 2,
                 "breakable": 2,
-                "bluntWeapon": 1
+                "blunt_weapon": 1
             },
             "tools": {
                 "hammer_dig": "minecraft:stone"
@@ -255,9 +255,9 @@
                 "generic.attack_speed": -1.1
             },
             "aspects": {
-                "blockBreaker": 2,
+                "block_breaker": 2,
                 "breakable": 2,
-                "bluntWeapon": 1
+                "blunt_weapon": 1
             },
             "tools": {
                 "hammer_dig": "minecraft:iron"
@@ -293,9 +293,9 @@
                 "generic.attack_speed": -1.1
             },
             "aspects": {
-                "blockBreaker": 2,
+                "block_breaker": 2,
                 "breakable": 2,
-                "bluntWeapon": 1
+                "blunt_weapon": 1
             },
             "tools": {
                 "hammer_dig": "minecraft:diamond"

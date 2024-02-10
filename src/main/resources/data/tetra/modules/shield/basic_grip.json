@@ -17,7 +17,7 @@
                 "tetra:ability_cooldown": 1
             },
             "aspects": {
-                "bluntWeapon": 1,
+                "blunt_weapon": 1,
                 "breakable": 2
             },
             "durability": 49,

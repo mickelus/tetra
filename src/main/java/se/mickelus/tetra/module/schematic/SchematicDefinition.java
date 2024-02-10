@@ -167,7 +167,7 @@ public class SchematicDefinition {
         to.outcomes = Stream.concat(Arrays.stream(to.outcomes), Arrays.stream(from.outcomes))
                 .toArray(OutcomeDefinition[]::new);
 
-        to.sources = Stream.concat(Arrays.stream(to.sources), Arrays.stream(from.sources))
+        to.sources = Stream.concat(Arrays.stream(from.sources), Arrays.stream(to.sources))
                 .distinct()
                 .toArray(String[]::new);
     }

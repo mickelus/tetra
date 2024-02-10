@@ -6,7 +6,7 @@
             "crushing": 4
         },
         "aspects": {
-            "bluntWeapon": 1
+            "blunt_weapon": 1
         },
         "models": [
             {

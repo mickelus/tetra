@@ -67,7 +67,7 @@ public class GuiModuleMajor extends GuiModule {
         addChild(backdrop);
 
         if (tweakable) {
-            tweakingIndicator = new GuiTextureOffset(1, 0, 15, 15, 96, 32, GuiTextures.workbench);
+            tweakingIndicator = new GuiTextureOffset(1, 0, 15, 15, 176, 32, GuiTextures.workbench);
             tweakingIndicator.setAttachment(attachmentPoint);
             addChild(tweakingIndicator);
         }

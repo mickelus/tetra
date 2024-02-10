@@ -32,7 +32,7 @@ public class GuiExperience extends GuiElement {
         indicator = new GuiTexture(0, 0, 16, 16, 0, 0, GuiTextures.workbench);
         addChild(indicator);
 
-        levelString = new GuiStringOutline(8, 2, "");
+        levelString = new GuiStringOutline(10, 4, "");
         addChild(levelString);
 
         this.unlocalizedTooltip = unlocalizedTooltip;

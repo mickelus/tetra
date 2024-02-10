@@ -1,0 +1,39 @@
+[
+    {
+        "materials": [ "tetra:skin/", "tetra:fibre/", "tetra:fabric/", "tetra:wood/" ],
+        "key": "laminated_stave/outer_layer/",
+        "level": 0,
+        "durability": 3,
+        "group": "outer_layer",
+        "attributes": {
+            "tetra:draw_speed": -0.1,
+            "**tetra:draw_strength": 0.05
+        },
+        "extract": {
+            "primaryAttributes": {
+                "tetra:draw_speed": -0.01
+            },
+            "durability": 0.1,
+            "integrity": -0.3,
+            "magicCapacity": 0.5,
+            "availableTextures": [ "default" ],
+            "models": [
+                {
+                    "location": "tetra:item/module/bow/stave/laminated/outer_layer/"
+                },
+                {
+                    "type": "draw_0",
+                    "location": "tetra:item/module/bow/stave/laminated/outer_layer/"
+                },
+                {
+                    "type": "draw_1",
+                    "location": "tetra:item/module/bow/stave/laminated/outer_layer/1_"
+                },
+                {
+                    "type": "draw_2",
+                    "location": "tetra:item/module/bow/stave/laminated/outer_layer/1_"
+                }
+            ]
+        }
+    }
+]

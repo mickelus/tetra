@@ -71,6 +71,10 @@ public class SweepingStrikeEffect {
     }
 
     public static void causeEffect(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos origin, ToolAction tool) {
+        if (world.isClientSide) {
+            return;
+        }
+
         boolean alternate = isAlternate(breakingPlayer);
         var targets = breakBlocksAround(world, breakingPlayer, toolStack, origin, tool, alternate);
 
@@ -82,13 +86,18 @@ public class SweepingStrikeEffect {
                 .mapToInt(Pair::getLeft)
                 .max()
                 .orElse(0);
+        int duration = maxDelay - minDelay;
+        duration = targets.size() > 10 ? duration : duration * 2;
+        duration = Math.max(4, duration);
+
         double distance = breakingPlayer.getEyePosition().subtract(Vec3.atCenterOf(origin)).length();
-        causeVfx(breakingPlayer, alternate, Math.max(4, maxDelay - minDelay + 2), (float) distance - 0.5f);
+
+        causeVfx(breakingPlayer, alternate, duration, (float) distance - 0.5f);
 
         if (toolStack.getItem() instanceof ItemModularHandheld item) {
             int amount = Math.max(1, targets.size() / 4);
 
-            if (targets.size() > 0) {
+            if (!targets.isEmpty()) {
                 item.applyUsageEffects(breakingPlayer, toolStack, amount);
             }
             item.applyDamage(amount, toolStack, breakingPlayer);
@@ -121,7 +130,8 @@ public class SweepingStrikeEffect {
             return Collections.emptyList();
         }
 
-        int playerDistance = Mth.ceil(breakingPlayer.getEyePosition().distanceTo(Vec3.atCenterOf(originPos)));
+        Vec3 playerPosition = breakingPlayer.getEyePosition();
+        int playerDistance = Mth.ceil(playerPosition.distanceTo(Vec3.atCenterOf(originPos)));
         Direction facing = breakingPlayer.getDirection();
 
         double efficiency = CastOptional.cast(toolStack.getItem(), ItemModularHandheld.class)
@@ -168,7 +178,6 @@ public class SweepingStrikeEffect {
 //                .map(originPos::offset)
 //                .toList(), positions.size());
 
-        // trigger different sweep animations depending on sweep width
         List<Pair<Integer, BlockPos>> targets = new ArrayList<>();
         for (BlockPos pos : positions) {
             BlockPos worldPos = Optional.of(pos)
@@ -182,15 +191,11 @@ public class SweepingStrikeEffect {
 
             // make sure that only blocks which require the same tool are broken
             if (ToolActionHelper.isEffectiveOn(tool, blockState) && blockHardness >= 0) {
-
                 // check that the tool level is high enough and break the block
                 if (ToolActionHelper.playerCanDestroyBlock(breakingPlayer, blockState, worldPos, toolStack, tool)) {
-
-                    // adds a fixed amount to make blocks like grass still "consume" some efficiency
-                    efficiency -= (blockHardness + 0.5 + (Math.abs(pos.getX()) + Math.abs(pos.getZ())) * 0.05)
-                            / reachingLevel > 0
-                            ? ReachingEffect.getMultiplier(reachingLevel, pos.getX() * pos.getX() + pos.getY() * pos.getY() + pos.getZ() * pos.getZ(), reachingEfficiency)
-                            : 1;
+                    var reachingFactor = getReachingFactor(playerPosition, worldPos, reachingLevel, reachingEfficiency);
+                    // min 0.5 drain to make blocks like grass still "consume" some efficiency
+                    efficiency -= Math.max(0.5, blockHardness / reachingFactor + (Math.abs(pos.getX()) + Math.abs(pos.getZ())) * 0.05);
 
                     if (efficiency >= 0) {
                         targets.add(Pair.of(alternate ? -pos.getX() : pos.getX(), worldPos));
@@ -215,11 +220,18 @@ public class SweepingStrikeEffect {
         targets.forEach(pair -> {
             BlockPos pos = pair.getRight();
             int delay = pair.getLeft() - minDelay;
+            delay = targets.size() > 10 ? delay : delay * 2;
             BlockState blockState = world.getBlockState(pos);
             enqueueBlockBreak(world, breakingPlayer, toolStack, pos, blockState, delay, jankLevel, skulkTaintLevel);
         });
 
         return targets;
+    }
+
+    private static double getReachingFactor(Vec3 playerPos, BlockPos blockPos, int reachingLevel, float reachingEfficiency) {
+        return reachingLevel > 0
+                ? ReachingEffect.getMultiplier(reachingLevel, blockPos.distToCenterSqr(playerPos), reachingEfficiency)
+                : 1;
     }
 
     /**
@@ -255,19 +267,25 @@ public class SweepingStrikeEffect {
     }
 
     private static void enqueueBlockBreak(Level world, Player player, ItemStack itemStack, BlockPos pos, BlockState blockState, int delay, int jankLevel, int skulkTaintLevel) {
-        ServerScheduler.schedule(delay, () -> {
-            if (EffectHelper.breakBlock(world, player, itemStack, pos, blockState, true)) {
-                EffectHelper.sendEventToPlayer((ServerPlayer) player, 2001, pos, Block.getId(blockState));
+        if (delay > 0) {
+            ServerScheduler.schedule(delay, () -> breakBlock(world, player, itemStack, pos, blockState, jankLevel, skulkTaintLevel));
+        } else {
+            breakBlock(world, player, itemStack, pos, blockState, jankLevel, skulkTaintLevel);
+        }
+    }
 
-                if (jankLevel > 0) {
-                    JankEffect.jankItemsDelayed((ServerLevel) world, pos, jankLevel, EffectHelper.getEffectEfficiency(itemStack, ItemEffect.janking), player);
-                }
+    private static void breakBlock(Level world, Player player, ItemStack itemStack, BlockPos pos, BlockState blockState, int jankLevel, int skulkTaintLevel) {
+        if (EffectHelper.breakBlock(world, player, itemStack, pos, blockState, true)) {
+            EffectHelper.sendEventToPlayer((ServerPlayer) player, 2001, pos, Block.getId(blockState));
 
-                if (skulkTaintLevel > 0) {
-                    SculkTaintEffect.perform((ServerLevel) world, pos, skulkTaintLevel, EffectHelper.getEffectEfficiency(itemStack, ItemEffect.sculkTaint));
-                }
+            if (jankLevel > 0) {
+                JankEffect.jankItemsDelayed((ServerLevel) world, pos, jankLevel, EffectHelper.getEffectEfficiency(itemStack, ItemEffect.janking), player);
             }
-        });
+
+            if (skulkTaintLevel > 0) {
+                SculkTaintEffect.perform((ServerLevel) world, pos, skulkTaintLevel, EffectHelper.getEffectEfficiency(itemStack, ItemEffect.sculkTaint));
+            }
+        }
     }
 
     private static void debugPlacement(Level world, BlockPos origin, List<BlockPos> positions, int count) {

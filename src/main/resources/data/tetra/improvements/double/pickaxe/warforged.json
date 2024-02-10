@@ -6,7 +6,7 @@
             "skewering": [ 5, 3 ]
         },
         "aspects": {
-            "edgedWeapon": 2
+            "edged_weapon": 2
         },
         "models": [
             {

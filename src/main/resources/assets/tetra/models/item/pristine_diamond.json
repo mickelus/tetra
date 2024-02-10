@@ -1,7 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "minecraft:item/diamond",
-        "layer1": "tetra:item/pristine"
+        "layer0": "tetra:item/pristine_diamond"
     }
 }

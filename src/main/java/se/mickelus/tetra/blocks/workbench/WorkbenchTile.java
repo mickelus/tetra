@@ -56,6 +56,7 @@ import java.util.Map;
 public class WorkbenchTile extends BlockEntity implements MenuProvider {
     public static final String identifier = "workbench";
     public static final int inventorySlots = 4;
+    public static final int maxMaterialSlots = inventorySlots - 1;
     private static final String inventoryKey = "inv";
     private static final String currentSlotKey = "current_slot";
     private static final String schematicKey = "schematic";

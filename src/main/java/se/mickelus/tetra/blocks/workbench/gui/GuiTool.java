@@ -18,6 +18,8 @@ import java.util.Optional;
 public class GuiTool extends GuiElement {
     public static final int width = 16;
     private final GuiString levelIndicator;
+
+    protected GuiElement iconContainer;
     protected ToolAction toolAction;
 
     private GlyphData fallback = new GlyphData(GuiTextures.toolActions, 240, 0);
@@ -26,8 +28,10 @@ public class GuiTool extends GuiElement {
         super(x, y, width, 16);
         this.toolAction = toolAction;
 
-        GlyphData glyph = Optional.ofNullable(ToolActionIconStore.instance.getIcon(toolAction)).orElse(fallback);
-        addChild(new GuiTexture(0, 0, 16, 16, glyph.textureX, glyph.textureY, glyph.textureLocation));
+        iconContainer = new GuiElement(0, 0, 16, 16);
+        addChild(iconContainer);
+
+        updateIcon();
 
         levelIndicator = new GuiStringOutline(10, 8, "");
         addChild(levelIndicator);
@@ -37,6 +41,14 @@ public class GuiTool extends GuiElement {
         levelIndicator.setVisible(level >= 0);
         levelIndicator.setString(level + "");
         levelIndicator.setColor(color);
+
+        updateIcon();
+    }
+
+    protected void updateIcon() {
+        iconContainer.clearChildren();
+        GlyphData glyph = Optional.ofNullable(ToolActionIconStore.instance.getIcon(toolAction)).orElse(fallback);
+        iconContainer.addChild(new GuiTexture(0, 0, 16, 16, glyph.textureX, glyph.textureY, glyph.textureLocation));
     }
 
     public ToolAction getToolAction() {

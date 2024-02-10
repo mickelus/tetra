@@ -6,6 +6,6 @@
     "requiredTools": {
         "hammer_dig": "minecraft:diamond"
     },
-    "moduleKey": "blade/stonecutter",
+    "moduleKey": "sword/stonecutter",
     "moduleVariant": "stonecutter/stonecutter"
 }

@@ -17,7 +17,7 @@
                 "generic.attack_damage": -1
             },
             "aspects": {
-                "edgedWeapon": 2,
+                "edged_weapon": 2,
                 "throwable": 2,
                 "breakable": 2
             },

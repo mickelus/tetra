@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "items": [ "minecraft:cobblestone" ]
+        "tag": "forge:cobblestone/normal"
     },
     "requiredTools": {
         "hammer_dig": "minecraft:wood"

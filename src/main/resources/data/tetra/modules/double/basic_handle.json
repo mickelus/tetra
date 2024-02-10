@@ -19,7 +19,7 @@
                 "generic.attack_speed": -0.35
             },
             "aspects": {
-                "blockBreaker": 1,
+                "block_breaker": 1,
                 "breakable": 2
             },
             "durability": 7,

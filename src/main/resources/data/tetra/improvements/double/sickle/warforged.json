@@ -9,7 +9,7 @@
             "sweeping": [ 3, 2 ]
         },
         "aspects": {
-            "edgedWeapon": 1
+            "edged_weapon": 1
         },
         "models": [
             {

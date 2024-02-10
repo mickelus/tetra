@@ -77,7 +77,11 @@ public abstract class ItemModule implements IToolProvider {
         tag.putString(this.variantTagKey, variantKey);
     }
 
-    public ItemStack[] removeModule(ItemStack targetStack) {
+    public final ItemStack[] removeModule(ItemStack targetStack) {
+        return this.removeModule(targetStack, false);
+    }
+
+    public ItemStack[] removeModule(ItemStack targetStack, boolean upgrade) {
         CompoundTag tag = targetStack.getOrCreateTag();
 
         tag.remove(slotTagKey);

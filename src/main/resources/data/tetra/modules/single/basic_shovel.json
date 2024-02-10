@@ -23,7 +23,7 @@
                 "dowse": 1
             },
             "aspects": {
-                "blockBreaker": 2,
+                "block_breaker": 2,
                 "breakable": 2
             },
             "durability": -20,

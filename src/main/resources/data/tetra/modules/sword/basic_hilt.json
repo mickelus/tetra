@@ -17,7 +17,7 @@
                 "generic.attack_speed": -0.35
             },
             "aspects": {
-                "edgedWeapon": 2,
+                "edged_weapon": 2,
                 "breakable": 2
             },
             "durability": 8,

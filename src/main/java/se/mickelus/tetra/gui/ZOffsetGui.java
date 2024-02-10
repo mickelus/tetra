@@ -4,9 +4,9 @@ import net.minecraft.client.gui.GuiGraphics;
 import se.mickelus.mutil.gui.GuiElement;
 
 public class ZOffsetGui extends GuiElement {
-    protected int z;
+    protected double z;
 
-    public ZOffsetGui(int x, int y, int z) {
+    public ZOffsetGui(int x, int y, double z) {
         super(x, y, 0, 0);
         this.z = z;
     }

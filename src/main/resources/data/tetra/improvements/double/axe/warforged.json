@@ -6,7 +6,7 @@
             "severing": [ 15, 4 ]
         },
         "aspects": {
-            "edgedWeapon": 1
+            "edged_weapon": 1
         },
         "models": [
             {

@@ -30,7 +30,7 @@ public class RepairSchematic extends BaseSchematic {
     private final IModularItem item;
     private final String identifier;
 
-    private final GlyphData glyph = new GlyphData(GuiTextures.workbench, 0, 52);
+    private final GlyphData glyph = new GlyphData(GuiTextures.toolActions, 0, 0);
 
     public RepairSchematic(IModularItem item, String identifier) {
         this.item = item;

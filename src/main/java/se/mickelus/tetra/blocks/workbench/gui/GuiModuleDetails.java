@@ -4,12 +4,16 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.*;
+import se.mickelus.mutil.gui.animation.AnimationChain;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.tetra.gui.*;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.RepairRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 
@@ -17,6 +21,7 @@ import java.util.Arrays;
 public class GuiModuleDetails extends GuiElement {
 
     private final GuiElement glyph;
+    private final GuiElement wrapper;
     private final GuiString title;
     private final GuiTextSmall description;
     private final GuiString emptyLabel;
@@ -27,56 +32,55 @@ public class GuiModuleDetails extends GuiElement {
     private final GuiSynergyIndicator synergyIndicator;
     private final AspectIconGui aspectIcon;
 
-    private final GuiElement repairGroup;
-    private final GuiStringSmall repairTitle;
-    private final GuiItemRolling repairMaterial;
-    private final GuiStringSmall noRepairLabel;
+    private final RepairInfoGui repairInfo;
+
+    private final AnimationChain flash;
 
     public GuiModuleDetails(int x, int y) {
         super(x, y, 224, 67);
 
+        addChild(new GuiTexture(-4, -4, 239, 69, 0, 118, GuiTextures.workbench));
+
+        wrapper = new GuiElement(x, y, width, height);
+        addChild(wrapper);
+
         glyph = new GuiElement(3, 3, 16, 16);
-        addChild(glyph);
+        wrapper.addChild(glyph);
 
-        title = new GuiString(20, 7, 105, "");
-        addChild(title);
+        title = new GuiString(20, 7, 106, "");
+        wrapper.addChild(title);
 
-        description = new GuiTextSmall(5, 19, 105, "");
-        addChild(description);
+        description = new GuiTextSmall(5, 19, 121, "");
+        wrapper.addChild(description);
 
-        emptyLabel = new GuiString(0, -3, ChatFormatting.DARK_GRAY + I18n.get("tetra.workbench.module_detail.empty"));
+        emptyLabel = new GuiString(-44, -3, ChatFormatting.DARK_GRAY + I18n.get("tetra.workbench.module_detail.empty"));
         emptyLabel.setAttachment(GuiAttachment.middleCenter);
-        addChild(emptyLabel);
+        wrapper.addChild(emptyLabel);
 
-        synergyIndicator = new GuiSynergyIndicator(130, 8);
-        addChild(synergyIndicator);
+        synergyIndicator = new GuiSynergyIndicator(137, 10);
+        wrapper.addChild(synergyIndicator);
 
-        aspectIcon = new AspectIconGui(145, 8);
-        addChild(aspectIcon);
+        aspectIcon = new AspectIconGui(156, 11);
+        wrapper.addChild(aspectIcon);
 
-        repairGroup = new GuiElement(160, 5, 60, 16);
-        addChild(repairGroup);
+        repairInfo = new RepairInfoGui(173, 7);
+        wrapper.addChild(repairInfo);
 
-        repairTitle = new GuiStringSmall(0, 7, I18n.get("item.tetra.modular.repair_material.label"));
-        repairGroup.addChild(repairTitle);
+        magicBar = new GuiMagicUsage(138, 33, 80);
+        wrapper.addChild(magicBar);
 
-        noRepairLabel = new GuiStringSmall(0, 7, ChatFormatting.GRAY + I18n.get("item.tetra.modular.repair_material.empty"));
-        noRepairLabel.setAttachment(GuiAttachment.topCenter);
-        noRepairLabel.setVisible(false);
-        repairGroup.addChild(noRepairLabel);
+        settleBar = new GuiSettleProgress(138, 49, 80);
+        wrapper.addChild(settleBar);
 
-        repairMaterial = new GuiItemRolling(-2, 0);
-        repairMaterial.setAttachment(GuiAttachment.topRight);
-        repairGroup.addChild(repairMaterial);
-
-        magicBar = new GuiMagicUsage(130, 30, 80);
-        addChild(magicBar);
-
-        settleBar = new GuiSettleProgress(130, 45, 80);
-        addChild(settleBar);
+        GuiTexture flashOverlay = new GuiTexture(-4, -4, 239, 69, 0, 118, GuiTextures.workbench);
+        flashOverlay.setColor(0);
+        addChild(flashOverlay);
+        flash = new AnimationChain(
+                new KeyframeAnimation(40, flashOverlay).applyTo(new Applier.Opacity(0.3f)),
+                new KeyframeAnimation(80, flashOverlay).applyTo(new Applier.Opacity(0)));
     }
 
-    public void update(ItemModule module, ItemStack itemStack) {
+    public void update(@Nullable ItemModule module, ItemStack itemStack) {
         glyph.clearChildren();
         if (module != null) {
             title.setString(module.getName(itemStack));
@@ -104,12 +108,8 @@ public class GuiModuleDetails extends GuiElement {
                     .map(definition -> definition.material.getApplicableItemStacks())
                     .flatMap(Arrays::stream)
                     .toArray(ItemStack[]::new);
-            repairMaterial.setItems(repairItemStacks);
 
-            boolean canRepair = repairItemStacks.length > 0;
-            repairTitle.setVisible(canRepair);
-            repairMaterial.setVisible(canRepair);
-            noRepairLabel.setVisible(!canRepair);
+            repairInfo.update(repairItemStacks);
         }
 
         synergyIndicator.setVisible(module != null);
@@ -119,6 +119,13 @@ public class GuiModuleDetails extends GuiElement {
         settleBar.setVisible(module instanceof ItemModuleMajor);
         magicBar.setVisible(module instanceof ItemModuleMajor);
         emptyLabel.setVisible(module == null);
-        repairGroup.setVisible(module != null);
+        repairInfo.setVisible(module != null);
+
+        flash();
+    }
+
+    public void flash() {
+        this.flash.stop();
+        this.flash.start();
     }
 }

@@ -21,7 +21,7 @@
                 "generic.attack_speed": -1.25
             },
             "aspects": {
-                "pointyWeapon": 2,
+                "pointy_weapon": 2,
                 "throwable": 2,
                 "breakable": 2
             },

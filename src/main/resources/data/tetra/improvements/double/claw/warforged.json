@@ -9,7 +9,7 @@
             "armorPenetration": 35
         },
         "aspects": {
-            "edgedWeapon": 2
+            "edged_weapon": 2
         },
         "models": [
             {

@@ -1,0 +1,52 @@
+{
+    "replace": true,
+    "slots": [
+        "bow/stave"
+    ],
+    "materialSlotCount": 2,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 240,
+        "textureY": 48
+    },
+    "requirement": {
+        "type": "tetra:feature_flag",
+        "feature": "laminatedStave"
+    },
+    "translation": {
+        "primaryAttributes": {
+            "tetra:draw_speed": -3,
+            "tetra:draw_strength": 4
+        },
+        "tertiaryAttributes": {
+            "tetra:draw_speed": 1,
+            "tetra:draw_strength": 2
+        },
+        "durability": 4,
+        "integrity": -3,
+        "magicCapacity": 3
+    },
+    "outcomes": [
+        {
+            "materials": [ "tetra:wood/" ],
+            "countFactor": 2,
+            "toolOffset": 1,
+            "moduleKey": "bow/laminated_stave",
+            "moduleVariant": "laminated_stave/"
+        },
+        {
+            "materials": [ "tetra:metal/" ],
+            "countFactor": 3,
+            "toolOffset": 3,
+            "moduleKey": "bow/laminated_stave",
+            "moduleVariant": "laminated_stave/"
+        },
+        {
+            "materials": [ "tetra:skin/", "tetra:fibre/", "tetra:fabric/", "tetra:wood/" ],
+            "materialSlot": 1,
+            "improvements": {
+                "laminated_stave/outer_layer/": 0
+            }
+        }
+    ]
+}

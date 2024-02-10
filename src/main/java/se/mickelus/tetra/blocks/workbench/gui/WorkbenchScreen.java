@@ -67,7 +67,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
         this.container = container;
 
         defaultGui = new GuiElement(0, 0, imageWidth, imageHeight);
-        defaultGui.addChild(new GuiTextureOffset(134, 40, 51, 51, GuiTextures.workbench));
+        defaultGui.addChild(new GuiTextureOffset(136, 42, 48, 48, GuiTextures.workbench));
         defaultGui.addChild(new GuiTexture(72, 153, 179, 106, GuiTextures.playerInventory));
 
         moduleList = new GuiModuleList(164, 49, this::selectSlot, this::updateSlotHoverPreview);
@@ -93,7 +93,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
         actionList.setAttachmentPoint(GuiAttachment.middleCenter);
         defaultGui.addChild(actionList);
 
-        slotDetail = new GuiSlotDetail(46, 102,
+        slotDetail = new GuiSlotDetail(48, 102,
                 schematic -> tileEntity.setCurrentSchematic(schematic, selectedSlot),
                 () -> selectSlot(null),
                 this::craftUpgrade,
@@ -174,6 +174,15 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
     public boolean charTyped(char typecChar, int keyCode) {
         slotDetail.keyTyped(typecChar);
         return false;
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double distance) {
+        if (defaultGui.onMouseScroll(mouseX, mouseY, distance)) {
+            return true;
+        }
+
+        return super.mouseScrolled(mouseX, mouseY, distance);
     }
 
     private void selectSlot(String slotKey) {

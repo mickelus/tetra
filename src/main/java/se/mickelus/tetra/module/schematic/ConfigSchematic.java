@@ -260,8 +260,7 @@ public class ConfigSchematic extends BaseSchematic {
         if (definition.materialSlotCount > 0) {
             for (int i = 0; i < materials.length; i++) {
                 final int index = i;
-                Optional<OutcomeDefinition> outcomeOptional = getOutcomeFromMaterial(materials[index], index);
-                outcomeOptional.ifPresent(outcome -> {
+                getOutcomeFromMaterial(materials[index], index).ifPresent(outcome -> {
                     applyOutcome(outcome, upgradedStack, consumeMaterials, slot, player);
 
                     if (consumeMaterials) {

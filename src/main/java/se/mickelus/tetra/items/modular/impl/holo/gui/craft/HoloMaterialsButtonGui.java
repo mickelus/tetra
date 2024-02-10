@@ -29,7 +29,7 @@ public class HoloMaterialsButtonGui extends GuiClickable {
         hoverAnimations = new ArrayList<>();
         blurAnimations = new ArrayList<>();
 
-        backdrop = new GuiTexture(0, 0, 52, 52, GuiTextures.workbench);
+        backdrop = new GuiTexture(0, 0, 48, 48, GuiTextures.workbench);
         backdrop.setAttachment(GuiAttachment.middleCenter);
         addChild(backdrop);
 

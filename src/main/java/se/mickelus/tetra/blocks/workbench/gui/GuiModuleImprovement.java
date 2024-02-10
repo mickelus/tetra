@@ -3,15 +3,15 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import se.mickelus.mutil.gui.GuiElement;
-import se.mickelus.mutil.gui.GuiRect;
+import se.mickelus.mutil.gui.GuiTexture;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@ParametersAreNonnullByDefault
 public class GuiModuleImprovement extends GuiElement {
 
     private final List<Component> tooltipLines;
@@ -19,10 +19,15 @@ public class GuiModuleImprovement extends GuiElement {
     private final Runnable hoverHandler;
     private final Runnable blurHandler;
 
-    public GuiModuleImprovement(int x, int y, String improvement, int level, int color, Runnable hoverHandler, Runnable blurHandler) {
-        super(x, y, 4, 4);
+    private int color;
+    private GuiTexture texture;
 
-        addChild(new GuiRect(0, 1, width, 1, color));
+    public GuiModuleImprovement(int x, int y, String improvement, int level, int color, Runnable hoverHandler, Runnable blurHandler) {
+        super(x, y, 5, 4);
+
+        this.color = color;
+        texture = new GuiTexture(0, 0, 5, 4, 68, 23, GuiTextures.workbench).setColor(color);
+        addChild(texture);
 
         tooltipLines = new ArrayList<>();
 
@@ -52,11 +57,15 @@ public class GuiModuleImprovement extends GuiElement {
     protected void onFocus() {
         super.onFocus();
         hoverHandler.run();
+
+        texture.setColor(GuiColors.hover);
     }
 
     @Override
     protected void onBlur() {
         super.onBlur();
         blurHandler.run();
+
+        texture.setColor(color);
     }
 }

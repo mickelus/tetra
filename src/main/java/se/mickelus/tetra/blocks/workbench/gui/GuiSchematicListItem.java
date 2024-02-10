@@ -62,6 +62,9 @@ public class GuiSchematicListItem extends GuiClickable {
         if (schematic.getType() == SchematicType.improvement) {
             addChild(new GuiTexture(7, 7, 7, 7, 68, 16, GuiTextures.workbench).setColor(GuiColors.muted));
         }
+
+        // uncomment to highlight full size of list item
+//        addChild(new GuiRect(0, 0, width - 1, 13, GuiColors.hover));
     }
 
     @Override

@@ -4,8 +4,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.enchantment.Enchantment;
 import se.mickelus.mutil.gui.GuiElement;
-import se.mickelus.mutil.gui.GuiRect;
+import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
+import se.mickelus.tetra.gui.GuiColors;
+import se.mickelus.tetra.gui.GuiTextures;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +20,15 @@ public class GuiModuleEnchantment extends GuiElement {
     private Runnable hoverHandler;
     private Runnable blurHandler;
 
+    private int color;
+    private GuiTexture texture;
+
     public GuiModuleEnchantment(int x, int y, Enchantment enchantment, int level, int color, Runnable hoverHandler, Runnable blurHandler) {
         super(x, y, 5, 4);
 
-        addChild(new GuiRect(0, 1, width, 1, color));
+        this.color = color;
+        texture = new GuiTexture(0, 0, 5, 4, 68, 27, GuiTextures.workbench).setColor(color);
+        addChild(texture);
 
         tooltipLines = new ArrayList<>();
 
@@ -51,11 +58,13 @@ public class GuiModuleEnchantment extends GuiElement {
     protected void onFocus() {
         super.onFocus();
         hoverHandler.run();
+        texture.setColor(GuiColors.hover);
     }
 
     @Override
     protected void onBlur() {
         super.onBlur();
         blurHandler.run();
+        texture.setColor(color);
     }
 }

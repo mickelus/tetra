@@ -36,7 +36,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.FeatureFlag;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.Tooltips;
@@ -88,7 +88,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     }
 
     private static boolean hit(Level world, BlockPos pos, @Nullable Player playerEntity, InteractionHand hand) {
-        if (ConfigHandler.enableExtractor.get()) {
+        if (FeatureFlag.isEnabled(FeatureFlag.bedrockExtraction)) {
             int amount = Optional.ofNullable(playerEntity)
                     .map(player -> player.getItemInHand(hand))
                     .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
@@ -180,7 +180,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
         int tier = getTier(world, pos);
 
         // todo: this could be less hacky
-        if (ConfigHandler.enableExtractor.get() && tier >= 0 && face == Direction.UP) {
+        if (FeatureFlag.isEnabled(FeatureFlag.bedrockExtraction) && tier >= 0 && face == Direction.UP) {
             return new BlockInteraction[] { interactions[Math.min(tier, interactions.length - 1)] };
         }
 

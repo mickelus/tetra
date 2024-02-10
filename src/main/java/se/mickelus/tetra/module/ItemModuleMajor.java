@@ -296,10 +296,10 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     @Override
-    public ItemStack[] removeModule(ItemStack targetStack) {
-        ItemStack[] salvage = super.removeModule(targetStack);
+    public ItemStack[] removeModule(ItemStack targetStack, boolean upgrade) {
+        ItemStack[] salvage = super.removeModule(targetStack, upgrade);
 
-        if (targetStack.hasTag()) {
+        if (!upgrade && targetStack.hasTag()) {
             CompoundTag tag = targetStack.getTag();
             Arrays.stream(improvements)
                     .map(improvement -> slotTagKey + ":" + improvement.key)

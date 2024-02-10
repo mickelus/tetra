@@ -211,7 +211,6 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
                     int x = i;
                     int y = j;
 
-
                     String ruinedId = String.format(ruinedFormat, identifier, x, y);
                     ResourceLocation brokenPryTable = new ResourceLocation("tetra", pryTablePrefix + ruinedId);
                     RegistryObject<RuinedMultiblockSchematicBlock> ruinedRef = blocks.register(ruinedId, () -> new RuinedMultiblockSchematicBlock(ruinedProperties, brokenPryTable));

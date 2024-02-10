@@ -34,8 +34,9 @@ public class ModuleRequirement implements CraftingRequirement {
                 return false;
             }
             if (materialPattern != null && !currentVariant.matches(materialPattern)) {
-                return true;
+                return false;
             }
+            return true;
         }
         return false;
     }

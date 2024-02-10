@@ -5,6 +5,11 @@ import net.minecraft.client.resources.language.I18n;
 import se.mickelus.mutil.gui.GuiButton;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiText;
+import se.mickelus.mutil.gui.GuiTexture;
+import se.mickelus.mutil.gui.animation.AnimationChain;
+import se.mickelus.mutil.gui.animation.Applier;
+import se.mickelus.mutil.gui.animation.KeyframeAnimation;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -18,11 +23,14 @@ public class GuiSchematicList extends GuiElement {
     private final GuiButton buttonBack;
     private final GuiButton buttonForward;
     private final GuiText emptyStateText;
+    private final AnimationChain flash;
     private int page = 0;
     private UpgradeSchematic[] schematics;
 
     public GuiSchematicList(int x, int y, Consumer<UpgradeSchematic> schematicSelectionConsumer) {
         super(x, y, 224, 67);
+
+        addChild(new GuiTexture(-4, -4, 239, 70, 0, 48, GuiTextures.workbench));
 
         listGroup = new GuiElement(3, 3, width - 6, height - 6);
         addChild(listGroup);
@@ -36,6 +44,14 @@ public class GuiSchematicList extends GuiElement {
         addChild(emptyStateText);
 
         this.schematicSelectionConsumer = schematicSelectionConsumer;
+
+        GuiTexture flashOverlay = new GuiTexture(-4, -4, 239, 70, 0, 48, GuiTextures.workbench);
+        flashOverlay.setOpacity(0);
+        flashOverlay.setColor(0);
+        addChild(flashOverlay);
+        flash = new AnimationChain(
+                new KeyframeAnimation(40, flashOverlay).applyTo(new Applier.Opacity(0.3f)),
+                new KeyframeAnimation(80, flashOverlay).applyTo(new Applier.Opacity(0)));
     }
 
     public void setSchematics(UpgradeSchematic[] schematics) {
@@ -77,5 +93,10 @@ public class GuiSchematicList extends GuiElement {
 
     private int getNumPages() {
         return (int) Math.ceil(1f * schematics.length / pageLength);
+    }
+
+    public void flash() {
+        this.flash.stop();
+        this.flash.start();
     }
 }

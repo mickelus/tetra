@@ -148,6 +148,8 @@ public class TetraRegistries {
     private static RegistryObject<PristineDiamondItem> pristineDiamond;
     private static RegistryObject<PristineEmeraldItem> pristineEmerald;
     private static RegistryObject<PristineLapisItem> pristineLapis;
+    private static RegistryObject<PristineAmethystItem> pristineAmethyst;
+    private static RegistryObject<PristineQuartzItem> pristineQuartz;
     private static RegistryObject<GeodeItem> geode;
 
     public static void init(IEventBus bus) {
@@ -263,6 +265,8 @@ public class TetraRegistries {
         pristineLapis = items.register(PristineLapisItem.identifier, PristineLapisItem::new);
         pristineEmerald = items.register(PristineEmeraldItem.identifier, PristineEmeraldItem::new);
         pristineDiamond = items.register(PristineDiamondItem.identifier, PristineDiamondItem::new);
+        pristineAmethyst = items.register(PristineAmethystItem.identifier, PristineAmethystItem::new);
+        pristineQuartz = items.register(PristineQuartzItem.identifier, PristineQuartzItem::new);
         dragonSinew = items.register(DragonSinewItem.identifier, DragonSinewItem::new);
 
         // ruins loot
@@ -466,6 +470,8 @@ public class TetraRegistries {
             event.accept(pristineLapis);
             event.accept(pristineEmerald);
             event.accept(pristineDiamond);
+            event.accept(pristineAmethyst);
+//            event.accept(pristineQuartz);
             event.accept(dragonSinew);
 
             event.acceptAll(ScrollItem.instance.getCreativeTabItems());

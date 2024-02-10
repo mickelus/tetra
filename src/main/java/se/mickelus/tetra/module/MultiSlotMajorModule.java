@@ -3,7 +3,6 @@ package se.mickelus.tetra.module;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.util.Filter;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
@@ -76,7 +75,7 @@ public class MultiSlotMajorModule extends ItemModuleMajor {
     public ModuleModel[] getModels(ItemStack itemStack) {
         return Arrays.stream(super.getModels(itemStack))
                 .map(ModuleModel::copy)
-                .peek(model -> model.location = new ResourceLocation(TetraMod.MOD_ID, model.location.getPath() + slotSuffix))
+                .peek(model -> model.location = new ResourceLocation(model.location.getNamespace(), model.location.getPath() + slotSuffix))
                 .toArray(ModuleModel[]::new);
     }
 }

@@ -108,7 +108,7 @@ public class GuiModule extends GuiClickable {
         addChild(backdrop);
 
         if (tweakable) {
-            tweakingIndicator = new GuiTextureOffset(1, -1, 11, 11, 112, 32, GuiTextures.workbench);
+            tweakingIndicator = new GuiTextureOffset(1, -1, 11, 11, 192, 32, GuiTextures.workbench);
             if (GuiAttachment.topLeft.equals(attachmentPoint)) {
                 tweakingIndicator.setX(-1);
             }

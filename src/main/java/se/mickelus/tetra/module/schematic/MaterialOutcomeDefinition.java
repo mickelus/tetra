@@ -35,6 +35,8 @@ public class MaterialOutcomeDefinition extends OutcomeDefinition {
 
         result.moduleKey = moduleKey;
 
+        result.materialSlot = materialSlot;
+
         if (moduleVariant != null) {
             result.moduleVariant = moduleVariant + materialData.key;
 

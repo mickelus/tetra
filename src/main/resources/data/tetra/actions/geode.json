@@ -38,5 +38,15 @@
             "hammer_dig": "minecraft:gold"
         },
         "lootTable": "tetra:actions/shatter_lapis"
+    },
+    {
+        "key": "shatter_amethyst_action",
+        "requirement": {
+            "items": [ "tetra:pristine_amethyst" ]
+        },
+        "requiredTools": {
+            "hammer_dig": "minecraft:gold"
+        },
+        "lootTable": "tetra:actions/shatter_amethyst"
     }
 ]

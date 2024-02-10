@@ -20,6 +20,7 @@ import se.mickelus.mutil.gui.ToggleableSlot;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 public class WorkbenchContainer extends AbstractContainerMenu {
@@ -38,7 +39,7 @@ public class WorkbenchContainer extends AbstractContainerMenu {
 
             materialSlots = new ToggleableSlot[3];
             for (int i = 0; i < materialSlots.length; i++) {
-                materialSlots[i] = new ToggleableSlot(handler, i + 1, 167, 107 + 18 * i);
+                materialSlots[i] = new ToggleableSlot(handler, i + 1, 167 + 28 * i, 108);
                 addSlot(materialSlots[i]);
             }
         });
@@ -115,16 +116,22 @@ public class WorkbenchContainer extends AbstractContainerMenu {
     }
 
     public void updateSlots() {
-        UpgradeSchematic currentSchematic = workbench.getCurrentSchematic();
-        int numMaterialSlots = 0;
-
-        if (currentSchematic != null) {
-            numMaterialSlots = currentSchematic.getNumMaterialSlots();
-        }
+        int numMaterialSlots = Optional.ofNullable(workbench.getCurrentSchematic())
+                .map(UpgradeSchematic::getNumMaterialSlots)
+                .orElse(0);
 
         for (int i = 0; i < materialSlots.length; i++) {
             materialSlots[i].toggle(i < numMaterialSlots);
+            materialSlots[i].x = 194 + getSlotOffsetY(i, numMaterialSlots);
         }
+    }
+
+    public static int getSlotOffsetY(int index, int numMaterialSlots) {
+        if (numMaterialSlots == 2) {
+            return 11 + 32 * index;
+        }
+
+        return 28 * index;
     }
 
     public WorkbenchTile getTileEntity() {
