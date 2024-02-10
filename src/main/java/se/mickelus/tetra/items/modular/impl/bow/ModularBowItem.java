@@ -39,6 +39,8 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.FocusEffect;
 import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.event.ModularLooseProjectilesEvent;
+import se.mickelus.tetra.event.ModularProjectileSpawnEvent;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
@@ -52,6 +54,7 @@ import se.mickelus.tetra.properties.TetraAttributes;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
@@ -201,85 +204,45 @@ public class ModularBowItem extends ModularItem {
                 double strength = getAttributeValue(itemStack, TetraAttributes.drawStrength.get());
                 float velocityBonus = getEffectLevel(itemStack, ItemEffect.velocity) / 100f;
                 int suspendLevel = getEffectLevel(itemStack, ItemEffect.suspend);
-                float projectileVelocity = getArrowVelocity(drawProgress, strength, velocityBonus, suspendLevel > 0);
+                ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
+                        .orElse((ArrowItem) Items.ARROW);
+                boolean infiniteAmmo = player.getAbilities().instabuild || ammoItem.isInfinite(ammoStack, itemStack, player);
+
+                ModularLooseProjectilesEvent looseProjectilesEvent = new ModularLooseProjectilesEvent(itemStack, ammoStack, player, world, drawProgress,
+                        getAttributeValue(itemStack, TetraAttributes.drawStrength.get()),
+                        suspendLevel > 0,
+                        getArrowVelocity(drawProgress, strength, getEffectLevel(itemStack, ItemEffect.velocity) / 100f, suspendLevel > 0),
+                        getEffectEfficiency(itemStack, ItemEffect.multishot),
+                        Math.max(0, 100 - getEffectEfficiency(itemStack, ItemEffect.spread) - FocusEffect.getSpreadReduction(player, itemStack)),
+                        player.getAbilities().instabuild || ammoItem.isInfinite(ammoStack, itemStack, player),
+                        Mth.clamp(getEffectLevel(itemStack, ItemEffect.multishot), 1, infiniteAmmo ? 64 : ammoStack.getCount()),
+                        player.getXRot(),
+                        player.getYRot());
+                MinecraftForge.EVENT_BUS.post(looseProjectilesEvent);
+
+                ammoStack = looseProjectilesEvent.getAmmoStack();
+                ImmutableList<Function<AbstractArrow, AbstractArrow>> projectileRemappers = looseProjectilesEvent.getProjectileRemappers();
+
+                strength = looseProjectilesEvent.getStrength();
+                boolean hasSuspend = looseProjectilesEvent.isHasSuspend();
+                float projectileVelocity = looseProjectilesEvent.getProjectileVelocity();
+                double multishotSpread = looseProjectilesEvent.getMultishotSpread();
+                float accuracy = looseProjectilesEvent.getAccuracy();
+                infiniteAmmo = looseProjectilesEvent.isInfiniteAmmo();
+                int count = looseProjectilesEvent.getCount();
+                double basePitch = looseProjectilesEvent.getBasePitch();
+                double baseYaw = looseProjectilesEvent.getBaseYaw();
 
                 if (projectileVelocity > 0.1f) {
-                    ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
-                            .orElse((ArrowItem) Items.ARROW);
-
-                    boolean infiniteAmmo = player.getAbilities().instabuild || ammoItem.isInfinite(ammoStack, itemStack, player);
-                    int count = Mth.clamp(getEffectLevel(itemStack, ItemEffect.multishot), 1, infiniteAmmo ? 64 : ammoStack.getCount());
-
                     if (!world.isClientSide) {
-                        double multishotSpread = getEffectEfficiency(itemStack, ItemEffect.multishot);
-                        float accuracy = (float) Math.max(0, 100
-                                - getEffectEfficiency(itemStack, ItemEffect.spread)
-                                - FocusEffect.getSpreadReduction(player, itemStack));
-
-                        int powerLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, itemStack);
-                        int punchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, itemStack);
-                        int flameLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, itemStack);
-                        int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, itemStack);
+                        int powerLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.POWER_ARROWS, itemStack);
+                        int punchLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PUNCH_ARROWS, itemStack);
+                        int flameLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.FLAMING_ARROWS, itemStack);
+                        int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing) + EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PIERCING, itemStack);
 
                         for (int i = 0; i < count; i++) {
-                            double yaw = player.getYRot() - multishotSpread * (count - 1) / 2f + multishotSpread * i;
-                            AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player);
-                            projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 3.0F, accuracy);
-
-                            if (drawProgress >= 20) {
-                                projectile.setCritArrow(true);
-                            }
-
-                            // the damage modifier is based on fully drawn damage, vanilla bows deal 3 times base damage + 0-4 crit damage
-                            projectile.setBaseDamage(projectile.getBaseDamage() - 2 + strength / 3);
-
-                            if (powerLevel > 0) {
-                                projectile.setBaseDamage(projectile.getBaseDamage() + powerLevel * 0.5D + 0.5D);
-                            }
-
-                            // velocity multiplies arrow damage for vanilla projectiles, need to reduce damage if velocity > 1
-                            if (projectileVelocity > 1) {
-                                projectile.setBaseDamage(projectile.getBaseDamage() / projectileVelocity);
-                            }
-
-                            if (punchLevel > 0) {
-                                projectile.setKnockback(punchLevel);
-                            }
-
-                            if (flameLevel > 0) {
-                                projectile.setSecondsOnFire(100);
-                            }
-
-                            if (piercingLevel > 0) {
-                                projectile.setPierceLevel((byte) piercingLevel);
-                            }
-
-                            if (suspendLevel > 0 && drawProgress >= 20) {
-                                projectile.setNoGravity(true);
-                            }
-
-                            if (infiniteAmmo || player.getAbilities().instabuild
-                                    && (ammoStack.getItem() == Items.SPECTRAL_ARROW || ammoStack.getItem() == Items.TIPPED_ARROW)) {
-                                projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-                            }
-
-                            if (suspendLevel > 0 && drawProgress >= 20) {
-                                Vec3 projDir = projectile.getDeltaMovement().normalize();
-                                Vec3 projPos = projectile.position();
-                                for (int j = 0; j < 4; j++) {
-                                    Vec3 pos = projPos.add(projDir.scale(2 + j * 2));
-                                    ((ServerLevel) entity.level()).sendParticles(ParticleTypes.END_ROD,
-                                            pos.x(), pos.y(), pos.z(), 1,
-                                            0, 0, 0, 0.01);
-                                }
-                            }
-
-                            world.addFreshEntity(projectile);
-
-                            // vanilla velocity sync breaks when velocity is >3.9 on any axis
-                            if (projectileVelocity * 3 > 4) {
-                                TetraMod.packetHandler.sendToAllPlayersNear(new ProjectileMotionPacket(projectile), projectile.blockPosition(), 512, world.dimension());
-                            }
+                            double yaw = baseYaw - multishotSpread * (count - 1) / 2f + multishotSpread * i;
+                            fireProjectile(itemStack, world, (ArrowItem) ammoStack.getItem(), ammoStack, projectileRemappers, player, (float) basePitch, (float) yaw, projectileVelocity, accuracy, drawProgress, strength, powerLevel, punchLevel, flameLevel, piercingLevel, hasSuspend, infiniteAmmo);
                         }
 
 
@@ -295,7 +258,7 @@ public class ModularBowItem extends ModularItem {
                     float pitchBase = projectileVelocity;
                     if (velocityBonus > 0) {
                         pitchBase -= pitchBase * velocityBonus;
-                    } else if (suspendLevel > 0) {
+                    } else if (hasSuspend) {
                         pitchBase = pitchBase / 2;
                     }
                     world.playSound(null, player.getX(), player.getY(), player.getZ(),
@@ -315,6 +278,74 @@ public class ModularBowItem extends ModularItem {
                     player.awardStat(Stats.ITEM_USED.get(this));
                 }
             }
+        }
+    }
+
+    public static void fireProjectile(ItemStack itemStack, Level world, ArrowItem ammoItem, ItemStack ammoStack,
+            ImmutableList<Function<AbstractArrow, AbstractArrow>> projectileRemappers, Player player,
+            float basePitch, float yaw, float projectileVelocity, float accuracy, int drawProgress, double strength, int powerLevel, int punchLevel,
+            int flameLevel, int piercingLevel, boolean hasSuspend, boolean infiniteAmmo) {
+        AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player);
+        for (Function<AbstractArrow, AbstractArrow> remapper : projectileRemappers) {
+            projectile = remapper.apply(projectile);
+        }
+        projectile.shootFromRotation(player, basePitch, yaw, 0.0F, projectileVelocity * 3.0F, accuracy);
+
+        if (drawProgress >= 20) {
+            projectile.setCritArrow(true);
+        }
+
+        // the damage modifier is based on fully drawn damage, vanilla bows deal 3 times base damage + 0-4 crit damage
+        projectile.setBaseDamage(projectile.getBaseDamage() - 2 + strength / 3);
+
+        if (powerLevel > 0) {
+            projectile.setBaseDamage(projectile.getBaseDamage() + powerLevel * 0.5D + 0.5D);
+        }
+
+        // velocity multiplies arrow damage for vanilla projectiles, need to reduce damage if velocity > 1
+        if (projectileVelocity > 1) {
+            projectile.setBaseDamage(projectile.getBaseDamage() / projectileVelocity);
+        }
+
+        if (punchLevel > 0) {
+            projectile.setKnockback(punchLevel);
+        }
+
+        if (flameLevel > 0) {
+            projectile.setSecondsOnFire(100);
+        }
+
+        if (piercingLevel > 0) {
+            projectile.setPierceLevel((byte) piercingLevel);
+        }
+
+        if (hasSuspend && drawProgress >= 20) {
+            projectile.setNoGravity(true);
+        }
+
+        if (infiniteAmmo || player.getAbilities().instabuild
+                && (ammoStack.getItem() == Items.SPECTRAL_ARROW || ammoStack.getItem() == Items.TIPPED_ARROW)) {
+            projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
+        }
+
+        if (hasSuspend && drawProgress >= 20) {
+            Vec3 projDir = projectile.getDeltaMovement().normalize();
+            Vec3 projPos = projectile.position();
+            for (int j = 0; j < 4; j++) {
+                Vec3 pos = projPos.add(projDir.scale(2 + j * 2));
+                ((ServerLevel) world).sendParticles(ParticleTypes.END_ROD,
+                        pos.x(), pos.y(), pos.z(), 1,
+                        0, 0, 0, 0.01);
+            }
+        }
+
+        world.addFreshEntity(projectile);
+        ModularProjectileSpawnEvent event = new ModularProjectileSpawnEvent(itemStack, ammoStack, player, projectile, world, drawProgress);
+        MinecraftForge.EVENT_BUS.post(event);
+
+        // vanilla velocity sync breaks when velocity is >3.9 on any axis
+        if (projectileVelocity * 3 > 4) {
+            TetraMod.packetHandler.sendToAllPlayersNear(new ProjectileMotionPacket(projectile), projectile.blockPosition(), 512, world.dimension());
         }
     }
 
