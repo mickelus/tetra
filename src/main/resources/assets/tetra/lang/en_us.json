@@ -682,6 +682,8 @@
     "tetra.shatter_emerald_action.label": "Shatter",
     "item.tetra.pristine_lapis": "Pristine Lapis Lazuli",
     "tetra.shatter_lapis_action.label": "Shatter",
+    "item.tetra.pristine_amethyst": "Pristine Amethyst",
+    "tetra.shatter_amethyst_action.label": "Shatter",
     "item.tetra.pristine_gem.description": "Yields increased bonuses when used for item improvements. Can be shattered at a workbench, which may yield several regular-quality pieces\n \n§8Drops are affected by the fortune enchantment",
     "item.tetra.dragon_sinew": "Dragon Sinew",
     "item.tetra.dragon_sinew.description": "Commonly found suspended in the air where an ender dragon has perished",
