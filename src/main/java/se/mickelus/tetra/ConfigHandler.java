@@ -15,6 +15,8 @@ import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collections;
+import java.util.List;
 
 @ParametersAreNonnullByDefault
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -26,8 +28,8 @@ public class ConfigHandler {
     public static ForgeConfigSpec.BooleanValue development;
     public static ForgeConfigSpec.BooleanValue toolbeltCurioOnly;
 
-    public static ForgeConfigSpec.BooleanValue generateFeatures;
-    public static ForgeConfigSpec.IntValue maxFeatureDepth;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> experimentalFeatures;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> disabledFeatures;
 
     public static ForgeConfigSpec.BooleanValue moduleProgression;
     public static ForgeConfigSpec.IntValue settleLimitBase;
@@ -60,8 +62,6 @@ public class ConfigHandler {
     public static ForgeConfigSpec.BooleanValue enableShield;
 
     public static ForgeConfigSpec.BooleanValue enableGlint;
-
-    public static ForgeConfigSpec.BooleanValue enableStonecutter;
 
     public static ForgeConfigSpec.BooleanValue enableExtractor;
 
@@ -97,25 +97,15 @@ public class ConfigHandler {
                 .comment("If enabled and Curios is installed, Toolbelts will only work in the Curio belt slot")
                 .define("toolbelt_curio_only", false);
 
+        experimentalFeatures = builder.comment("Features that are considered experimental can be listed here to enable them")
+                .defineListAllowEmpty("experimental_features", Collections.emptyList(), o -> FeatureFlag.matchesAnyKey(o));
+
+        disabledFeatures = builder.comment("Features can be listed here to disable them")
+                .defineListAllowEmpty("disabled_features", Collections.emptyList(), o -> FeatureFlag.matchesAnyKey(o));
+
         magicCapacityMultiplier = builder
                 .comment("Multiplier for magic capacity gains, increasing this may be useful when having a large set enchantments added by other mods")
                 .defineInRange("magic_cap_multiplier", 1, 0, Double.MAX_VALUE);
-
-        builder.pop();
-
-        // worldgen config
-        builder
-                .comment("World generation settings")
-                .push("worldgen");
-
-        generateFeatures = builder
-                .comment("Generates features in the world, further configuration available in \"tetra/data/structures/\"")
-                .worldRestart()
-                .define("features", true);
-
-        maxFeatureDepth = builder
-                .comment("Used to limit how deep the feature generator will recurse into feature children, helps to avoid recursive loops and cascading worldgen in 3d-party generation features")
-                .defineInRange("feature_depth", 8, 0, 64);
 
         builder.pop();
 
@@ -193,11 +183,6 @@ public class ConfigHandler {
         builder
                 .comment("Toggles & config for experimental features")
                 .push("experimental");
-
-        enableStonecutter = builder
-                .comment("Enable the stonecutter module for swords, the stonecutter has to be removed from loot tables if this is disabled")
-                .worldRestart()
-                .define("stonecutter", true);
 
         enableExtractor = builder
                 .comment("Enable the extractor bedrock functionality")

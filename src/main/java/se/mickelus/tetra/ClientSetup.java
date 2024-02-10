@@ -55,6 +55,7 @@ public class ClientSetup {
         FMLJavaModLoadingContext.get().getModEventBus().register(ClientSetup.class);
         MinecraftForge.EVENT_BUS.register(ClientSetup.class);
 
+        // todo: seems to cause issues during datagen
         ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(new ToolActionIconStore());
     }
 

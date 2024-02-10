@@ -127,6 +127,8 @@ public class TetraMod {
         CraftingRequirementDeserializer.registerSupplier("tetra:and", AndRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:or", OrRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:not", NotRequirement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:never", NeverRequirement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:feature_flag", FeatureFlagRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:locked", LockedRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:improvement", HasImprovementRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:accepts_improvement", AcceptsImprovementRequirement.class);
