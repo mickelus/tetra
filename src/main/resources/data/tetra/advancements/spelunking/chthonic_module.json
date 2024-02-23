@@ -16,7 +16,7 @@
         "sword": {
             "trigger": "tetra:craft_module",
             "conditions": {
-                "module": "extractor/extractor"
+                "module": "double/extractor"
             }
         }
     }
