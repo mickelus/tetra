@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
@@ -90,10 +91,10 @@ public class HoloGui extends Screen {
         }
     }
 
-    public void openSchematic(IModularItem item, String slot, UpgradeSchematic schematic, Runnable closeCallback) {
+    public void openSchematic(IModularItem item, ItemStack itemStack, String slot, UpgradeSchematic schematic, Runnable closeCallback) {
         changePage(HoloPage.craft);
 
-        ((HoloCraftRootGui) pages[0]).updateState(item, slot, schematic);
+        ((HoloCraftRootGui) pages[0]).updateState(item, itemStack, slot, schematic);
         this.closeCallback = closeCallback;
     }
 

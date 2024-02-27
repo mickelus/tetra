@@ -67,10 +67,10 @@ public class GuiModuleList extends GuiElement {
     }
 
     private void updateMajorModules(IModularItem item, ItemStack itemStack, ItemStack previewStack) {
-        String[] majorModuleNames = item.getMajorModuleNames();
-        String[] majorModuleKeys = item.getMajorModuleKeys();
+        String[] majorModuleNames = item.getMajorModuleNames(itemStack);
+        String[] majorModuleKeys = item.getMajorModuleKeys(itemStack);
         ItemModuleMajor[] majorModules = item.getMajorModules(itemStack);
-        GuiModuleOffsets offsets = item.getMajorGuiOffsets();
+        GuiModuleOffsets offsets = item.getMajorGuiOffsets(itemStack);
 
         majorModuleElements = new GuiModuleMajor[majorModules.length];
 
@@ -95,10 +95,10 @@ public class GuiModuleList extends GuiElement {
     }
 
     private void updateMinorModules(IModularItem item, ItemStack itemStack, ItemStack previewStack) {
-        String[] minorModuleNames = item.getMinorModuleNames();
-        String[] minorModuleKeys = item.getMinorModuleKeys();
+        String[] minorModuleNames = item.getMinorModuleNames(itemStack);
+        String[] minorModuleKeys = item.getMinorModuleKeys(itemStack);
         ItemModule[] minorModules = item.getMinorModules(itemStack);
-        GuiModuleOffsets offsets = item.getMinorGuiOffsets();
+        GuiModuleOffsets offsets = item.getMinorGuiOffsets(itemStack);
 
         minorModuleElements = new GuiModule[minorModules.length];
 

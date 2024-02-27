@@ -37,7 +37,6 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ToolData;
-import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 
@@ -78,7 +77,6 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
-        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {
@@ -196,13 +194,13 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public GuiModuleOffsets getMajorGuiOffsets() {
+    public GuiModuleOffsets getMajorGuiOffsets(ItemStack itemStack) {
         return majorOffsets;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public GuiModuleOffsets getMinorGuiOffsets() {
+    public GuiModuleOffsets getMinorGuiOffsets(ItemStack itemStack) {
         return minorOffsets;
     }
 

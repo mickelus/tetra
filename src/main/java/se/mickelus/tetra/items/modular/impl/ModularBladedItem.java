@@ -14,7 +14,6 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchematicRegistry;
-import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 
 import javax.annotation.Nullable;
@@ -48,7 +47,6 @@ public class ModularBladedItem extends ItemModularHandheld {
         updateConfig(ConfigHandler.honeSwordBase.get(), ConfigHandler.honeSwordIntegrityMultiplier.get());
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
-        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     public static Collection<ItemStack> getCreativeTabItemStacks() {

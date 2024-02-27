@@ -34,6 +34,7 @@ public class HoloMaterialApplicable extends GuiElement {
     private final GuiTexture icon;
     private List<Component> tooltip;
     private IModularItem item;
+    private ItemStack itemStack;
     private String slot;
     private UpgradeSchematic schematic;
 
@@ -56,6 +57,7 @@ public class HoloMaterialApplicable extends GuiElement {
 
     public void update(Level level, BlockPos pos, WorkbenchTile blockEntity, ItemStack itemStack, String slot, UpgradeSchematic schematic, Player playerEntity) {
         this.item = null;
+        this.itemStack = null;
         this.slot = null;
         this.schematic = null;
 
@@ -80,7 +82,7 @@ public class HoloMaterialApplicable extends GuiElement {
             tooltip.add(Component.translatable("tetra.holo.craft.applicable_materials"));
             tooltip.add(Component.literal(materialsString).withStyle(ChatFormatting.GRAY));
             tooltip.add(Component.literal(""));
-            
+
             ItemStack holosphereStack = ModularHolosphereItem.findHolosphere(playerEntity, level, pos);
 
             if ((schematic.getType() != SchematicType.major && schematic.getType() != SchematicType.minor)
@@ -93,6 +95,7 @@ public class HoloMaterialApplicable extends GuiElement {
             } else {
                 tooltip.add(Component.translatable("tetra.holo.craft.holosphere_shortcut"));
                 this.item = (IModularItem) itemStack.getItem();
+                this.itemStack = itemStack;
                 this.slot = slot;
                 this.schematic = schematic;
             }
@@ -109,7 +112,7 @@ public class HoloMaterialApplicable extends GuiElement {
             HoloGui gui = HoloGui.getInstance();
 
             Minecraft.getInstance().setScreen(gui);
-            gui.openSchematic(item, slot, schematic, () -> ClientScheduler.schedule(0, () -> Minecraft.getInstance().setScreen(currentScreen)));
+            gui.openSchematic(item, itemStack, slot, schematic, () -> ClientScheduler.schedule(0, () -> Minecraft.getInstance().setScreen(currentScreen)));
             return true;
         }
 

@@ -10,6 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.items.modular.impl.dynamic.DynamicModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -58,6 +59,10 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
                     String[] temp = improvement.getKey().split(":");
                     ItemModuleMajor.addImprovement(replacement.itemStack, temp[0], temp[1], improvement.getValue().getAsInt());
                 }
+            }
+
+            if (jsonObject.has("archetype")) {
+                replacement.itemStack.getOrCreateTag().putString(DynamicModularItem.typeKey, jsonObject.get("archetype").getAsString());
             }
         }
 

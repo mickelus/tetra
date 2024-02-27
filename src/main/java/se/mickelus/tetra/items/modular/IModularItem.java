@@ -232,21 +232,21 @@ public interface IModularItem {
 
     void clearCaches();
 
-    String[] getMajorModuleKeys();
+    String[] getMajorModuleKeys(ItemStack itemStack);
 
-    String[] getMinorModuleKeys();
+    String[] getMinorModuleKeys(ItemStack itemStack);
 
-    String[] getRequiredModules();
+    String[] getRequiredModules(ItemStack itemStack);
 
-    default boolean isModuleRequired(String moduleSlot) {
-        return ArrayUtils.contains(getRequiredModules(), moduleSlot);
+    default boolean isModuleRequired(ItemStack itemStack, String moduleSlot) {
+        return ArrayUtils.contains(getRequiredModules(itemStack), moduleSlot);
     }
 
     default Collection<ItemModule> getAllModules(ItemStack stack) {
         CompoundTag stackTag = stack.getTag();
 
         if (stackTag != null) {
-            return Stream.concat(Arrays.stream(getMajorModuleKeys()), Arrays.stream(getMinorModuleKeys()))
+            return Stream.concat(Arrays.stream(getMajorModuleKeys(stack)), Arrays.stream(getMinorModuleKeys(stack)))
                     .map(stackTag::getString)
                     .map(ItemUpgradeRegistry.instance::getModule)
                     .filter(Objects::nonNull)
@@ -257,7 +257,7 @@ public interface IModularItem {
     }
 
     default ItemModuleMajor[] getMajorModules(ItemStack itemStack) {
-        String[] majorModuleKeys = getMajorModuleKeys();
+        String[] majorModuleKeys = getMajorModuleKeys(itemStack);
         ItemModuleMajor[] modules = new ItemModuleMajor[majorModuleKeys.length];
         CompoundTag tag = itemStack.getTag();
 
@@ -274,7 +274,7 @@ public interface IModularItem {
     }
 
     default ItemModule[] getMinorModules(ItemStack itemStack) {
-        String[] minorModuleKeys = getMinorModuleKeys();
+        String[] minorModuleKeys = getMinorModuleKeys(itemStack);
         ItemModule[] modules = new ItemModule[minorModuleKeys.length];
         CompoundTag tag = itemStack.getTag();
 
@@ -288,22 +288,22 @@ public interface IModularItem {
         return modules;
     }
 
-    default int getNumMajorModules() {
-        return getMajorModuleKeys().length;
+    default int getNumMajorModules(ItemStack itemStack) {
+        return getMajorModuleKeys(itemStack).length;
     }
 
-    default String[] getMajorModuleNames() {
-        return Arrays.stream(getMajorModuleKeys())
+    default String[] getMajorModuleNames(ItemStack itemStack) {
+        return Arrays.stream(getMajorModuleKeys(itemStack))
                 .map(key -> I18n.get("tetra.slot." + key))
                 .toArray(String[]::new);
     }
 
-    default int getNumMinorModules() {
-        return getMinorModuleKeys().length;
+    default int getNumMinorModules(ItemStack itemStack) {
+        return getMinorModuleKeys(itemStack).length;
     }
 
-    default String[] getMinorModuleNames() {
-        return Arrays.stream(getMinorModuleKeys())
+    default String[] getMinorModuleNames(ItemStack itemStack) {
+        return Arrays.stream(getMinorModuleKeys(itemStack))
                 .map(key -> I18n.get("tetra.slot." + key))
                 .toArray(String[]::new);
     }
@@ -333,7 +333,7 @@ public interface IModularItem {
     }
 
     default void tickHoningProgression(LivingEntity entity, ItemStack itemStack, int multiplier) {
-        if (!ConfigHandler.moduleProgression.get() || !canGainHoneProgress()) {
+        if (!ConfigHandler.moduleProgression.get() || !canGainHoneProgress(itemStack)) {
             return;
         }
 
@@ -379,15 +379,15 @@ public interface IModularItem {
 
     default int getHoningLimit(ItemStack itemStack) {
         float workableFactor = (100f - getEffectLevel(itemStack, ItemEffect.workable)) / 100;
-        return (int) Math.max((getHoneBase() + getHoneIntegrityMultiplier() * getIntegrityCost(itemStack)) * workableFactor, 1);
+        return (int) Math.max((getHoneBase(itemStack) + getHoneIntegrityMultiplier(itemStack) * getIntegrityCost(itemStack)) * workableFactor, 1);
     }
 
-    int getHoneBase();
+    int getHoneBase(ItemStack itemStack);
 
-    int getHoneIntegrityMultiplier();
+    int getHoneIntegrityMultiplier(ItemStack itemStack);
 
     default int getHoningIntegrityPenalty(ItemStack itemStack) {
-        return getHoneIntegrityMultiplier() * getIntegrityCost(itemStack);
+        return getHoneIntegrityMultiplier(itemStack) * getIntegrityCost(itemStack);
     }
 
     default int getHonedCount(ItemStack itemStack) {
@@ -396,7 +396,7 @@ public interface IModularItem {
                 .orElse(0);
     }
 
-    boolean canGainHoneProgress();
+    boolean canGainHoneProgress(ItemStack itemStack);
 
     /**
      * Applies usage effects and ticks progression based on the given multiplier, should typically be called when the item is used
@@ -501,7 +501,7 @@ public interface IModularItem {
                     .forEach(tooltip::add);
 
             // honing tooltip
-            if (ConfigHandler.moduleProgression.get() && canGainHoneProgress()) {
+            if (ConfigHandler.moduleProgression.get() && canGainHoneProgress(itemStack)) {
                 if (isHoneable(itemStack)) {
                     tooltip.add(Component.literal(" > ").withStyle(ChatFormatting.AQUA)
                             .append(Component.translatable("tetra.hone.available").setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY))));
@@ -1087,12 +1087,12 @@ public interface IModularItem {
     }
 
     @OnlyIn(Dist.CLIENT)
-    default GuiModuleOffsets getMajorGuiOffsets() {
-        return defaultMajorOffsets[getNumMajorModules()];
+    default GuiModuleOffsets getMajorGuiOffsets(ItemStack itemStack) {
+        return defaultMajorOffsets[getNumMajorModules(itemStack)];
     }
 
     @OnlyIn(Dist.CLIENT)
-    default GuiModuleOffsets getMinorGuiOffsets() {
-        return defaultMinorOffsets[getNumMinorModules()];
+    default GuiModuleOffsets getMinorGuiOffsets(ItemStack itemStack) {
+        return defaultMinorOffsets[getNumMinorModules(itemStack)];
     }
 }

@@ -83,32 +83,32 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     }
 
     @Override
-    public String[] getMajorModuleKeys() {
+    public String[] getMajorModuleKeys(ItemStack itemStack) {
         return majorModuleKeys;
     }
 
     @Override
-    public String[] getMinorModuleKeys() {
+    public String[] getMinorModuleKeys(ItemStack itemStack) {
         return minorModuleKeys;
     }
 
     @Override
-    public String[] getRequiredModules() {
+    public String[] getRequiredModules(ItemStack itemStack) {
         return requiredModules;
     }
 
     @Override
-    public int getHoneBase() {
+    public int getHoneBase(ItemStack itemStack) {
         return honeBase;
     }
 
     @Override
-    public int getHoneIntegrityMultiplier() {
+    public int getHoneIntegrityMultiplier(ItemStack itemStack) {
         return honeIntegrityMultiplier;
     }
 
     @Override
-    public boolean canGainHoneProgress() {
+    public boolean canGainHoneProgress(ItemStack itemStack) {
         return canHone;
     }
 

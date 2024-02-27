@@ -25,7 +25,6 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
-import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
@@ -52,16 +51,15 @@ public class ModularShieldItem extends ItemModularHandheld {
                 .stacksTo(1)
                 .fireResistant());
 
-        majorModuleKeys = new String[]{plateKey, gripKey};
-        minorModuleKeys = new String[]{bossKey};
+        majorModuleKeys = new String[] { plateKey, gripKey };
+        minorModuleKeys = new String[] { bossKey };
 
-        requiredModules = new String[]{plateKey, gripKey};
+        requiredModules = new String[] { plateKey, gripKey };
 
         updateConfig(ConfigHandler.honeShieldBase.get(), ConfigHandler.honeShieldIntegrityMultiplier.get());
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
         SchematicRegistry.instance.registerSchematic(new ApplyBannerSchematic());
-        RemoveSchematic.registerRemoveSchematics(this, identifier);
 
         ItemUpgradeRegistry.instance.registerReplacementHook(this::copyBanner);
 

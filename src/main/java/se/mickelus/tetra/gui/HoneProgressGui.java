@@ -50,7 +50,7 @@ public class HoneProgressGui extends GuiElement {
         boolean shouldShow = !isPlaceholder
                 && itemStack.getItem() instanceof IModularItem
                 && ConfigHandler.moduleProgression.get()
-                && ((IModularItem) itemStack.getItem()).canGainHoneProgress();
+                && ((IModularItem) itemStack.getItem()).canGainHoneProgress(itemStack);
 
         setVisible(shouldShow);
         if (shouldShow) {
@@ -63,7 +63,7 @@ public class HoneProgressGui extends GuiElement {
             String factorString = String.format("%.0f%%", (100f * factor));
 
             String tooltipBase = I18n.get("item.tetra.modular.hone_progress.description",
-                    progress, limit, factorString, item.getHoneBase(), item.getHoningIntegrityPenalty(itemStack));
+                    progress, limit, factorString, item.getHoneBase(itemStack), item.getHoningIntegrityPenalty(itemStack));
 
             if (workableFactor < 0) {
                 tooltipBase += I18n.get("item.tetra.modular.hone_progress.description_workable", String.format("%.0f%%", workableFactor));

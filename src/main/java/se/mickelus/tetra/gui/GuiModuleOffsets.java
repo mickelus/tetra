@@ -1,5 +1,7 @@
 package se.mickelus.tetra.gui;
 
+import se.mickelus.tetra.items.modular.impl.dynamic.ArchetypeSlotDefinition;
+
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -15,6 +17,17 @@ public class GuiModuleOffsets {
         for (int i = 0; i < offsets.length / 2; i++) {
             offsetX[i] = offsets[i * 2];
             offsetY[i] = offsets[i * 2 + 1];
+            alignment[i] = offsetX[i] > 0;
+        }
+    }
+
+    public GuiModuleOffsets(ArchetypeSlotDefinition[] slots) {
+        offsetX = new int[slots.length];
+        offsetY = new int[slots.length];
+        alignment = new boolean[slots.length];
+        for (int i = 0; i < slots.length; i++) {
+            offsetX[i] = slots[i].x();
+            offsetY[i] = slots[i].y();
             alignment[i] = offsetX[i] > 0;
         }
     }

@@ -86,6 +86,7 @@ import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.crossbow.ShootableDummyItem;
+import se.mickelus.tetra.items.modular.impl.dynamic.DynamicModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
@@ -259,6 +260,7 @@ public class TetraRegistries {
         items.register(ModularShieldItem.identifier, ModularShieldItem::new);
         ModularToolbeltItem.instance = items.register(ModularToolbeltItem.identifier, ModularToolbeltItem::new);
         modularHolosphere = items.register(ModularHolosphereItem.identifier, ModularHolosphereItem::new);
+        items.register(DynamicModularItem.identifier, DynamicModularItem::new);
 
         // random loot
         geode = items.register(GeodeItem.identifier, GeodeItem::new);

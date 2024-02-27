@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.animation.Applier;
@@ -15,6 +16,7 @@ import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
@@ -27,7 +29,7 @@ public class HoloItemsGui extends GuiElement {
     private final KeyframeAnimation openAnimation;
     private final KeyframeAnimation backAnimation;
 
-    public HoloItemsGui(int x, int y, int width, int height, Consumer<IModularItem> onItemSelect, Consumer<String> onSlotSelect, Runnable onMaterialsClick) {
+    public HoloItemsGui(int x, int y, int width, int height, BiConsumer<IModularItem, ItemStack> onItemSelect, Consumer<String> onSlotSelect, Runnable onMaterialsClick) {
         super(x, y, width, height);
 
 
@@ -35,32 +37,32 @@ public class HoloItemsGui extends GuiElement {
         addChild(separators);
 
         addChild(new HoloItemGui(-39, 0, ModularBladedItem.instance, 0,
-                () -> onItemSelect.accept(ModularBladedItem.instance), onSlotSelect)
+                () -> onItemSelect.accept(ModularBladedItem.instance, ModularBladedItem.instance.getDefaultStack()), onSlotSelect)
                 .setAttachment(GuiAttachment.topCenter));
 
         addChild(new HoloItemGui(1, -40, ModularToolbeltItem.instance.get(), 4,
-                () -> onItemSelect.accept(ModularToolbeltItem.instance.get()), onSlotSelect)
+                () -> onItemSelect.accept(ModularToolbeltItem.instance.get(), ModularToolbeltItem.instance.get().getDefaultStack()), onSlotSelect)
                 .setAttachment(GuiAttachment.topCenter));
 
         addChild(new HoloItemGui(41, 0, ModularDoubleHeadedItem.instance, 1,
-                () -> onItemSelect.accept(ModularDoubleHeadedItem.instance), onSlotSelect)
+                () -> onItemSelect.accept(ModularDoubleHeadedItem.instance, ModularDoubleHeadedItem.instance.getDefaultStack()), onSlotSelect)
                 .setAttachment(GuiAttachment.topCenter));
 
         if (ConfigHandler.enableSingle.get()) {
             addChild(new HoloItemGui(81, -40, ModularSingleHeadedItem.instance, 2,
-                    () -> onItemSelect.accept(ModularSingleHeadedItem.instance), onSlotSelect)
+                    () -> onItemSelect.accept(ModularSingleHeadedItem.instance, ModularSingleHeadedItem.instance.getDefaultStack()), onSlotSelect)
                     .setAttachment(GuiAttachment.topCenter));
         }
 
         if (ConfigHandler.enableCrossbow.get()) {
             addChild(new HoloItemGui(-79, 40, ModularCrossbowItem.instance, 7,
-                    () -> onItemSelect.accept(ModularCrossbowItem.instance), onSlotSelect)
+                    () -> onItemSelect.accept(ModularCrossbowItem.instance, ModularCrossbowItem.instance.getDefaultStack()), onSlotSelect)
                     .setAttachment(GuiAttachment.topCenter));
         }
 
         if (ConfigHandler.enableBow.get()) {
             addChild(new HoloItemGui(-79, -40, ModularBowItem.instance, 5,
-                    () -> onItemSelect.accept(ModularBowItem.instance), onSlotSelect)
+                    () -> onItemSelect.accept(ModularBowItem.instance, ModularBowItem.instance.getDefaultStack()), onSlotSelect)
                     .setAttachment(GuiAttachment.topCenter));
         }
 
@@ -71,7 +73,7 @@ public class HoloItemsGui extends GuiElement {
 
         if (ConfigHandler.enableShield.get()) {
             addChild(new HoloItemGui(81, 40, ModularShieldItem.instance, 3,
-                    () -> onItemSelect.accept(ModularShieldItem.instance), onSlotSelect)
+                    () -> onItemSelect.accept(ModularShieldItem.instance, ModularShieldItem.instance.getDefaultStack()), onSlotSelect)
                     .setAttachment(GuiAttachment.topCenter));
         }
 //

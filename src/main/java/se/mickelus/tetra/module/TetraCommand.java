@@ -85,7 +85,7 @@ public class TetraCommand {
         ServerPlayer player = context.getSource().getPlayerOrException();
         ItemStack itemStack = player.getMainHandItem();
         if (itemStack.getItem() instanceof IModularItem item) {
-            if (item.canGainHoneProgress()) {
+            if (item.canGainHoneProgress(itemStack)) {
                 item.setHoningProgress(itemStack, (int) Math.ceil((100 - progress) / 100f * item.getHoningLimit(itemStack)));
                 context.getSource().sendSuccess(() -> Component.literal("Honing progression set to §e" + progress + "%§r for ").append(itemStack.getDisplayName()), true);
                 return 1;
@@ -281,7 +281,7 @@ public class TetraCommand {
         if (player != null) {
             ItemStack itemStack = player.getMainHandItem();
             if (itemStack.getItem() instanceof IModularItem item) {
-                return SharedSuggestionProvider.suggest(Arrays.stream(item.getMajorModuleKeys()).map(key -> "\"" + key + "\""), builder);
+                return SharedSuggestionProvider.suggest(Arrays.stream(item.getMajorModuleKeys(itemStack)).map(key -> "\"" + key + "\""), builder);
             }
         }
         return SharedSuggestionProvider.suggest(Collections.emptyList(), builder);
@@ -292,7 +292,7 @@ public class TetraCommand {
         if (player != null) {
             ItemStack itemStack = player.getMainHandItem();
             if (itemStack.getItem() instanceof IModularItem item) {
-                List<String> suggestions = Stream.concat(Arrays.stream(item.getMajorModuleKeys()), Arrays.stream(item.getMinorModuleKeys()))
+                List<String> suggestions = Stream.concat(Arrays.stream(item.getMajorModuleKeys(itemStack)), Arrays.stream(item.getMinorModuleKeys(itemStack)))
                         .map(slot -> "\"" + slot + "\"")
                         .toList();
                 return SharedSuggestionProvider.suggest(suggestions, builder);

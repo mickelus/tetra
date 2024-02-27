@@ -46,7 +46,6 @@ import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;
-import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
@@ -87,7 +86,6 @@ public class ModularBowItem extends ModularItem {
         updateConfig(ConfigHandler.honeBowBase.get(), ConfigHandler.honeBowIntegrityMultiplier.get());
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
-        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     /**
@@ -493,13 +491,13 @@ public class ModularBowItem extends ModularItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public GuiModuleOffsets getMajorGuiOffsets() {
+    public GuiModuleOffsets getMajorGuiOffsets(ItemStack itemStack) {
         return majorOffsets;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public GuiModuleOffsets getMinorGuiOffsets() {
+    public GuiModuleOffsets getMinorGuiOffsets(ItemStack itemStack) {
         return minorOffsets;
     }
 }

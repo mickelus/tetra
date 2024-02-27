@@ -28,7 +28,6 @@ import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
-import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.properties.TetraAttributes;
 
 import javax.annotation.Nullable;
@@ -61,8 +60,6 @@ public class ModularHolosphereItem extends ModularItem {
         minorModuleKeys = new String[0];
 
         requiredModules = new String[] { coreKey, frameKey, scannerKey, repositoryKey };
-
-        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     public static ItemStack findHolosphere(Player player, Level level, BlockPos pos) {
@@ -152,7 +149,7 @@ public class ModularHolosphereItem extends ModularItem {
     }
 
     @Override
-    public GuiModuleOffsets getMajorGuiOffsets() {
+    public GuiModuleOffsets getMajorGuiOffsets(ItemStack itemStack) {
         return majorOffsets;
     }
 

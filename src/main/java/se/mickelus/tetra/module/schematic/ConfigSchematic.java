@@ -159,7 +159,7 @@ public class ConfigSchematic extends BaseSchematic {
     public boolean isRelevant(ItemStack itemStack) {
         if (moduleSlot != null) {
             return CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                    .map(item -> Stream.concat(Arrays.stream(item.getMajorModuleKeys()), Arrays.stream(item.getMinorModuleKeys())))
+                    .map(item -> Stream.concat(Arrays.stream(item.getMajorModuleKeys(itemStack)), Arrays.stream(item.getMinorModuleKeys(itemStack))))
                     .orElseGet(Stream::empty)
                     .anyMatch(moduleSlot::equals);
         }

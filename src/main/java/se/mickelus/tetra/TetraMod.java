@@ -46,6 +46,7 @@ import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.module.schematic.BookEnchantSchematic;
 import se.mickelus.tetra.module.schematic.CleanseSchematic;
+import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.requirement.*;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.trades.TradeHandler;
@@ -172,6 +173,7 @@ public class TetraMod {
 
         DestabilizationEffect.init();
         SchematicRegistry.instance.registerSchematic(new CleanseSchematic());
+        SchematicRegistry.instance.registerSchematic(new RemoveSchematic());
     }
 
     @SubscribeEvent

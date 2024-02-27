@@ -5,6 +5,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
@@ -12,14 +13,11 @@ import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.GlyphData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
-import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class RemoveSchematic extends BaseSchematic {
@@ -27,27 +25,11 @@ public class RemoveSchematic extends BaseSchematic {
     private static final String nameSuffix = ".name";
     private static final String descriptionSuffix = ".description";
 
-    private final String key = "remove";
-
-    private final IModularItem item;
-    private final String slot;
-    private final String identifier;
+    private final String identifier = "remove";
 
     private final GlyphData glyph = new GlyphData(GuiTextures.glyphs, 80, 224);
 
-    public RemoveSchematic(IModularItem item, String slot, String identifier) {
-        this.item = item;
-        this.slot = slot;
-        this.identifier = key + "/" + identifier + "/" + slot;
-    }
-
-    public static void registerRemoveSchematics(IModularItem item, String identifier) {
-        Stream.concat(Arrays.stream(item.getMajorModuleKeys()), Arrays.stream(item.getMinorModuleKeys()))
-                .filter(slot -> !item.isModuleRequired(slot))
-                .forEach(slot -> {
-                    RemoveSchematic schematic = new RemoveSchematic(item, slot, identifier);
-                    SchematicRegistry.instance.registerSchematic(schematic);
-                });
+    public RemoveSchematic() {
     }
 
     @Override
@@ -57,7 +39,7 @@ public class RemoveSchematic extends BaseSchematic {
 
     @Override
     public String getName() {
-        return I18n.get(localizationPrefix + key + nameSuffix);
+        return I18n.get(localizationPrefix + identifier + nameSuffix);
     }
 
     @Override
@@ -67,7 +49,7 @@ public class RemoveSchematic extends BaseSchematic {
 
     @Override
     public String getDescription(ItemStack itemStack) {
-        return I18n.get(localizationPrefix + key + descriptionSuffix);
+        return I18n.get(localizationPrefix + identifier + descriptionSuffix);
     }
 
     @Override
@@ -92,12 +74,14 @@ public class RemoveSchematic extends BaseSchematic {
 
     @Override
     public boolean isRelevant(ItemStack itemStack) {
-        return item.getClass().isInstance(itemStack.getItem());
+        return itemStack.getItem() instanceof IModularItem;
     }
 
     @Override
     public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
-        return this.slot.equals(slot) && item.getModuleFromSlot(targetStack, this.slot) != null;
+        return CastOptional.cast(targetStack.getItem(), IModularItem.class)
+                .map(item -> !item.isModuleRequired(targetStack, slot) && item.getModuleFromSlot(targetStack, slot) != null)
+                .orElse(false);
     }
 
     @Override

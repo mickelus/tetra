@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.mutil.gui.animation.Applier;
 import se.mickelus.mutil.gui.animation.GuiAnimation;
@@ -31,6 +32,10 @@ public class HoloItemGui extends GuiClickable {
     private boolean isSelected = false;
 
     public HoloItemGui(int x, int y, IModularItem item, int textureIndex, Runnable onSelect, Consumer<String> onSlotSelect) {
+        this(x, y, item, item.getDefaultStack(), textureIndex, onSelect, onSlotSelect);
+    }
+
+    public HoloItemGui(int x, int y, IModularItem item, ItemStack itemStack, int textureIndex, Runnable onSelect, Consumer<String> onSlotSelect) {
         super(x, y, 64, 64, onSelect);
 
         selectAnimations = new ArrayList<>();
@@ -64,7 +69,7 @@ public class HoloItemGui extends GuiClickable {
         addChild(labelGroup);
 
         slotGroup = new GuiElement(37, 15, 0, 0);
-        setupSlots(item, onSlotSelect);
+        setupSlots(item, itemStack, onSlotSelect);
         slotGroup.setVisible(false);
         addChild(slotGroup);
 
@@ -216,14 +221,14 @@ public class HoloItemGui extends GuiClickable {
         blurAnimations.forEach(GuiAnimation::start);
     }
 
-    private void setupSlots(IModularItem item, Consumer<String> onSlotSelect) {
-        String[] majorModuleNames = item.getMajorModuleNames();
-        String[] majorModuleKeys = item.getMajorModuleKeys();
-        GuiModuleOffsets majorOffsets = item.getMajorGuiOffsets();
+    private void setupSlots(IModularItem item, ItemStack itemStack, Consumer<String> onSlotSelect) {
+        String[] majorModuleNames = item.getMajorModuleNames(itemStack);
+        String[] majorModuleKeys = item.getMajorModuleKeys(itemStack);
+        GuiModuleOffsets majorOffsets = item.getMajorGuiOffsets(itemStack);
 
-        String[] minorModuleNames = item.getMinorModuleNames();
-        String[] minorModuleKeys = item.getMinorModuleKeys();
-        GuiModuleOffsets minorOffsets = item.getMinorGuiOffsets();
+        String[] minorModuleNames = item.getMinorModuleNames(itemStack);
+        String[] minorModuleKeys = item.getMinorModuleKeys(itemStack);
+        GuiModuleOffsets minorOffsets = item.getMinorGuiOffsets(itemStack);
 
         for (int i = 0; i < majorModuleNames.length; i++) {
             final int x = majorOffsets.getX(i);

@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.gui.HoloRootBaseGui;
 import se.mickelus.tetra.module.SchematicRegistry;
@@ -23,6 +24,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
     private final HoloMaterialListGui materialsView;
     private int depth = 0;
     private IModularItem item;
+    private ItemStack itemStack;
     private String slot;
     private UpgradeSchematic schematic;
     private OutcomePreview openVariant;
@@ -67,11 +69,11 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
     private void onBreadcrumbClick(int depth) {
         switch (depth) {
             case 0:
-                onItemSelect(null);
+                onItemSelect(null, null);
                 break;
             case 1:
                 if (!showingMaterials) {
-                    onItemSelect(item);
+                    onItemSelect(item, itemStack);
                 }
                 break;
             case 2:
@@ -101,8 +103,9 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         updateBreadcrumb();
     }
 
-    private void onItemSelect(IModularItem item) {
+    private void onItemSelect(IModularItem item, ItemStack itemStack) {
         this.item = item;
+        this.itemStack = itemStack;
 
         itemsView.changeItem(item);
         itemsView.setVisible(true);
@@ -177,8 +180,9 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         updateBreadcrumb();
     }
 
-    public void updateState(IModularItem item, @Nullable String slot, @Nullable UpgradeSchematic schematic) {
+    public void updateState(IModularItem item, ItemStack itemStack, @Nullable String slot, @Nullable UpgradeSchematic schematic) {
         this.item = item;
+        this.itemStack = itemStack;
         if (slot == null && schematic == null) {
             itemsView.changeItem(item);
         }
@@ -220,19 +224,19 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
 
     private String getSlotName() {
         if (item != null) {
-            String[] majorKeys = item.getMajorModuleKeys();
+            String[] majorKeys = item.getMajorModuleKeys(itemStack);
 
             for (int i = 0; i < majorKeys.length; i++) {
                 if (majorKeys[i].equals(slot)) {
-                    return item.getMajorModuleNames()[i];
+                    return item.getMajorModuleNames(itemStack)[i];
                 }
             }
 
-            String[] minorKeys = item.getMinorModuleKeys();
+            String[] minorKeys = item.getMinorModuleKeys(itemStack);
 
             for (int i = 0; i < minorKeys.length; i++) {
                 if (minorKeys[i].equals(slot)) {
-                    return item.getMinorModuleNames()[i];
+                    return item.getMinorModuleNames(itemStack)[i];
                 }
             }
         }

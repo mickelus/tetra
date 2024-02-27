@@ -31,7 +31,6 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.booster.UpdateBoosterPacket
 import se.mickelus.tetra.items.modular.impl.toolbelt.gui.screen.ToolbeltScreen;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.JumpHandlerSuspend;
 import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.ToggleSuspendPacket;
-import se.mickelus.tetra.module.schematic.RemoveSchematic;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -78,8 +77,6 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
         packetHandler.registerPacket(UpdateBoosterPacket.class, UpdateBoosterPacket::new);
         packetHandler.registerPacket(ToggleSuspendPacket.class, ToggleSuspendPacket::new);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
-
-        RemoveSchematic.registerRemoveSchematics(this, identifierKey);
 
         DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("toolbelt/"));
     }
@@ -169,13 +166,13 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public GuiModuleOffsets getMajorGuiOffsets() {
+    public GuiModuleOffsets getMajorGuiOffsets(ItemStack itemStack) {
         return majorOffsets;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public GuiModuleOffsets getMinorGuiOffsets() {
+    public GuiModuleOffsets getMinorGuiOffsets(ItemStack itemStack) {
         return minorOffsets;
     }
 }

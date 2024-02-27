@@ -12,7 +12,6 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.SchematicRegistry;
-import se.mickelus.tetra.module.schematic.RemoveSchematic;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 
 import javax.annotation.Nullable;
@@ -39,16 +38,15 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
 
         entityHitDamage = 1;
 
-        majorModuleKeys = new String[]{headKey, handleKey};
-        minorModuleKeys = new String[]{bindingKey};
+        majorModuleKeys = new String[] { headKey, handleKey };
+        minorModuleKeys = new String[] { bindingKey };
 
-        requiredModules = new String[]{handleKey, headKey};
+        requiredModules = new String[] { handleKey, headKey };
 
         updateConfig(ConfigHandler.honeSingleBase.get(), ConfigHandler.honeSingleIntegrityMultiplier.get());
 
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
-        RemoveSchematic.registerRemoveSchematics(this, identifier);
     }
 
     @Override
@@ -82,13 +80,13 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public GuiModuleOffsets getMajorGuiOffsets() {
+    public GuiModuleOffsets getMajorGuiOffsets(ItemStack itemStack) {
         return majorOffsets;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public GuiModuleOffsets getMinorGuiOffsets() {
+    public GuiModuleOffsets getMinorGuiOffsets(ItemStack itemStack) {
         return minorOffsets;
     }
 }
