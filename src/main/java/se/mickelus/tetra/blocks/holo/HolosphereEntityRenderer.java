@@ -68,7 +68,6 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
 
         VertexConsumer vertexBuilder = material.buffer(buffer, RenderType::entityTranslucent);
 
-
         renderBackdrop(vertexBuilder, matrixStack, rotation, light, level.getGameTime() + partialTicks, timestamp);
 
         entity.getScanResults().stream()
@@ -177,7 +176,9 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
     private void drawQuad(VertexConsumer consumer, PoseStack poseStack, Quaternionf rotation, TextureAtlasSprite sprite, int light, float width, float height,
             int u, int v, float x, float y, float z, int color, float a, float zIndex, float scale) {
 
-        float voxelSize = 1 / 16f * scale;
+        float spriteWidth = sprite.contents().width();
+        float spriteHeight = sprite.contents().height();
+        float voxelSize = 1 / Math.max(spriteWidth, spriteHeight) * scale;
 
         float r = FastColor.ARGB32.red(color) / 255f;
         float g = FastColor.ARGB32.green(color) / 255f;
@@ -203,13 +204,13 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
             vector3f.add(x, y, z);
         }
 
-        consumer.vertex(matrix4f, matrix[0].x(), matrix[0].y(), matrix[0].z()).color(r, g, b, a).uv(sprite.getU(u), sprite.getV(v + height))
+        consumer.vertex(matrix4f, matrix[0].x(), matrix[0].y(), matrix[0].z()).color(r, g, b, a).uv(u / spriteWidth, (v + height) / spriteHeight)
                 .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-        consumer.vertex(matrix4f, matrix[1].x(), matrix[1].y(), matrix[1].z()).color(r, g, b, a).uv(sprite.getU(u), sprite.getV(v))
+        consumer.vertex(matrix4f, matrix[1].x(), matrix[1].y(), matrix[1].z()).color(r, g, b, a).uv(u / spriteWidth, v / spriteHeight)
                 .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-        consumer.vertex(matrix4f, matrix[2].x(), matrix[2].y(), matrix[2].z()).color(r, g, b, a).uv(sprite.getU(u + width), sprite.getV(v))
+        consumer.vertex(matrix4f, matrix[2].x(), matrix[2].y(), matrix[2].z()).color(r, g, b, a).uv((u + width) / spriteWidth, v / spriteHeight)
                 .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-        consumer.vertex(matrix4f, matrix[3].x(), matrix[3].y(), matrix[3].z()).color(r, g, b, a).uv(sprite.getU(u + width), sprite.getV(v + height))
+        consumer.vertex(matrix4f, matrix[3].x(), matrix[3].y(), matrix[3].z()).color(r, g, b, a).uv((u + width) / spriteWidth, (v + height) / spriteHeight)
                 .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
     }
 
