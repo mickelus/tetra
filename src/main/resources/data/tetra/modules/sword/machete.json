@@ -26,7 +26,7 @@
                 "sweepingStrike": 1
             },
             "tools": {
-                "cut": [ 1, 2 ]
+                "cut": [ 1, 0.2 ]
             },
             "durability": -20,
             "extract": {
@@ -37,7 +37,7 @@
                     "generic.attack_speed": -0.1
                 },
                 "tools": {
-                    "cut": [ 0, 1.2 ]
+                    "cut": [ 0, 0.4 ]
                 },
                 "durability": 0.9,
                 "integrity": -1,
