@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.ForgeEventFactory;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 
 import javax.annotation.Nullable;
@@ -24,16 +25,7 @@ import java.util.stream.Stream;
 
 public class ToolActionHelper {
     public static final BiMap<ToolAction, TagKey<Block>> appropriateTools = HashBiMap.create(5);
-    /**
-     * Below are lists of blocks, materials and tags that describe what different tools can harvest and efficiently destroy. Note that these
-     * are copies of what the vanilla tool counterparts explicitly state that they can destroy and harvest, some blocks (and required tiers)
-     * are not listed here as that's part of that block's implementation.
-     */
-
-    // FIXME add 1.18 materials
-//    public static final Set<Material> hoeBonusMaterials = Sets.newHashSet(Material.PLANT, Material.REPLACEABLE_PLANT);
-//    public static final Set<Material> axeMaterials = Sets.newHashSet(Material.WOOD, Material.NETHER_WOOD, Material.PLANT, Material.REPLACEABLE_PLANT, Material.BAMBOO, Material.VEGETABLE);
-//    public static final Set<Material> pickaxeMaterials = Sets.newHashSet(Material.METAL, Material.HEAVY_METAL, Material.STONE);
+    public static final TagKey<Block> hoeExtraTag = BlockTags.create(new ResourceLocation(TetraMod.MOD_ID, "hoe_extra_mineable"));
 
     public static final Set<TagKey<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.SWORD_EFFICIENT);
 
@@ -80,9 +72,9 @@ public class ToolActionHelper {
             return true;
         }
 
-//        if (ToolActions.HOE_DIG.equals(action) && hoeBonusMaterials.contains(state.getMaterial())) {
-//            return true;
-//        }
+        if (ToolActions.HOE_DIG.equals(action) && state.is(hoeExtraTag)) {
+            return true;
+        }
 //
 //        if (ToolActions.AXE_DIG.equals(action) && axeMaterials.contains(state.getMaterial())) {
 //            return true;
