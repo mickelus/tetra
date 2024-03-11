@@ -21,7 +21,7 @@
             "key": "sickle/",
             "attributes": {
                 "generic.attack_damage": -2,
-                "generic.attack_speed": -1.2
+                "generic.attack_speed": -1.5
             },
             "aspects": {
                 "block_breaker": 2,
@@ -31,7 +31,11 @@
             "effects": {
                 "strikingHoe": 1,
                 "sweepingStrike": 1,
-                "sweeping": 1
+                "sweeping": 1,
+                "planarSweep": 1
+            },
+            "tools": {
+                "hoe_dig": [ 0, 1 ]
             },
             "durability": -10,
             "extract": {
@@ -39,7 +43,7 @@
                     "generic.attack_damage": 1
                 },
                 "tools": {
-                    "hoe_dig": [ 0.74, 0.8333 ]
+                    "hoe_dig": [ 0.74, 0.4 ]
                 },
                 "durability": 0.5,
                 "integrity": -1,

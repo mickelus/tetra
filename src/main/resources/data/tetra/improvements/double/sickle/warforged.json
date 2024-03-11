@@ -3,7 +3,8 @@
         "key": "double/warforged",
         "integrity": -2,
         "attributes": {
-            "generic.attack_damage": 3
+            "generic.attack_damage": 3,
+            "generic.attack_speed": 0.5
         },
         "effects": {
             "sweeping": [ 3, 2 ]
