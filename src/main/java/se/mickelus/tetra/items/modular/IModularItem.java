@@ -530,6 +530,14 @@ public interface IModularItem {
         return getImprovementName(key, level);
     }
 
+//    default RepairInstance[] getRepairInstances(ItemStack itemStack) {
+//        List<RepairInstance> instances = getAllModules(itemStack).stream()
+//                .map(itemModule -> new RepairInstance(itemModule.getRepairDefinitions(itemStack), itemModule))
+//                .toList();
+//
+//        fire event here
+//    }
+
     /**
      * Returns an optional with the module that will be repaired in next repair attempt, the optional is empty if
      * there are no repairable modules in this item.
