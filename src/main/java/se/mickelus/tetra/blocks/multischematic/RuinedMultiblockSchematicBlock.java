@@ -31,7 +31,7 @@ public class RuinedMultiblockSchematicBlock extends HorizontalDirectionalBlock i
 
     protected ResourceLocation pryTable;
 
-    protected BlockInteraction[] pryAction = new BlockInteraction[]{
+    protected BlockInteraction[] pryAction = new BlockInteraction[] {
             new BlockInteraction(TetraToolActions.pry, 1, Direction.EAST, 6, 10, 7, 10,
                     BlockStatePredicate.ANY,
                     this::pryBlock)
@@ -73,7 +73,7 @@ public class RuinedMultiblockSchematicBlock extends HorizontalDirectionalBlock i
     }
 
     protected boolean pryBlock(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction facing) {
-        boolean didBreak = EffectHelper.breakBlock(world, player, player.getItemInHand(hand), pos, blockState, false);
+        boolean didBreak = EffectHelper.breakBlock(world, player, player.getItemInHand(hand), pos, blockState, false, false);
         if (didBreak && world instanceof ServerLevel) {
             BlockInteraction.getLoot(pryTable, player, hand, (ServerLevel) world, blockState)
                     .forEach(lootStack -> popResource(world, pos, lootStack));

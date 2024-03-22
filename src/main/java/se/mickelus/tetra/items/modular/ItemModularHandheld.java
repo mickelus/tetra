@@ -560,7 +560,7 @@ public class ItemModularHandheld extends ModularItem {
 
         BlockState blockState = world.getBlockState(pos);
         if (canDenail(blockState)) {
-            boolean success = EffectHelper.breakBlock(world, player, player.getItemInHand(hand), pos, blockState, true);
+            boolean success = EffectHelper.breakBlock(world, player, player.getItemInHand(hand), pos, blockState, true, false);
             if (success) {
                 player.resetAttackStrengthTicker();
                 return true;

@@ -44,7 +44,7 @@ public class CritEffect {
                 && itemStack.getItem().getDestroySpeed(itemStack, blockState) > 2 * blockState.getDestroySpeed(world, pos)) {
 
             if (ToolActionHelper.playerCanDestroyBlock(breakingPlayer, blockState, pos, itemStack)) {
-                EffectHelper.breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
+                EffectHelper.breakBlock(world, breakingPlayer, itemStack, pos, blockState, true, false);
                 itemStack.getItem().mineBlock(itemStack, world, blockState, pos, breakingPlayer);
 
                 critBlockCache.put(breakingPlayer.getUUID(), pos);

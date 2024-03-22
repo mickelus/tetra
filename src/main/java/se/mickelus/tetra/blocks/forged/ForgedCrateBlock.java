@@ -117,7 +117,7 @@ public class ForgedCrateBlock extends FallingBlock implements InitializableBlock
 
             world.setBlockAndUpdate(pos, blockState.setValue(propIntegrity, integrity - progress));
         } else {
-            boolean didBreak = EffectHelper.breakBlock(world, player, itemStack, pos, blockState, false);
+            boolean didBreak = EffectHelper.breakBlock(world, player, itemStack, pos, blockState, false, false);
             if (didBreak && world instanceof ServerLevel) {
                 BlockInteraction.getLoot(interactionLootTable, player, hand, (ServerLevel) world, blockState)
                         .forEach(lootStack -> popResource(world, pos, lootStack));

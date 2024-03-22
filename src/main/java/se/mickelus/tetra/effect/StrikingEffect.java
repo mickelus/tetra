@@ -52,7 +52,7 @@ public class StrikingEffect {
                     SweepingStrikeEffect.causeEffect(world, breakingPlayer, itemStack, pos, tool);
                 } else {
                     if (ToolActionHelper.playerCanDestroyBlock(breakingPlayer, blockState, pos, itemStack)) {
-                        EffectHelper.breakBlock(world, breakingPlayer, itemStack, pos, blockState, true);
+                        EffectHelper.breakBlock(world, breakingPlayer, itemStack, pos, blockState, true, false);
 
                         item.applyUsageEffects(breakingPlayer, itemStack, 1);
                         item.applyDamage(item.getBlockDestroyDamage(), itemStack, breakingPlayer);

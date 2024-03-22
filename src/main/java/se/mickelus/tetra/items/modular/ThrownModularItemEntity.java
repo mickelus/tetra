@@ -279,7 +279,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         ItemStack currentItem = shooter.getMainHandItem();
 
         shooter.setItemInHand(InteractionHand.MAIN_HAND, thrownStack);
-        EffectHelper.breakBlock(level(), shooter, thrownStack, pos, blockState, true);
+        EffectHelper.breakBlock(level(), shooter, thrownStack, pos, blockState, true, false);
         shooter.setItemInHand(InteractionHand.MAIN_HAND, currentItem);
     }
 

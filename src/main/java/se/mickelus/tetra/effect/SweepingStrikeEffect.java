@@ -14,6 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -165,6 +167,8 @@ public class SweepingStrikeEffect {
                 : 0
                 : breakingPlayer.getXRot() / -180f * Mth.PI;
 
+        boolean tryReplant = EffectHelper.tryReplant(toolStack, tool);
+
         // generates a box "centered" based on the distance between the hit point and the player
 //        List<BlockPos> positions = List.of((strikeCounter / 2) % 2 == 0 ? StrikingEffect.sweep1 : StrikingEffect.sweep2);
         List<BlockPos> positions = BlockPos.betweenClosedStream(-16, -vertical, -playerDistance - 1, 16, vertical, 32)
@@ -190,7 +194,7 @@ public class SweepingStrikeEffect {
             float blockHardness = blockState.getDestroySpeed(world, worldPos);
 
             // make sure that only blocks which require the same tool are broken
-            if (ToolActionHelper.isEffectiveOn(tool, blockState) && blockHardness >= 0) {
+            if (ToolActionHelper.isEffectiveOn(tool, blockState) && blockHardness >= 0 && (!tryReplant || isFullyGrown(blockState))) {
                 // check that the tool level is high enough and break the block
                 if (ToolActionHelper.playerCanDestroyBlock(breakingPlayer, blockState, worldPos, toolStack, tool)) {
                     var reachingFactor = getReachingFactor(playerPosition, worldPos, reachingLevel, reachingEfficiency);
@@ -203,8 +207,8 @@ public class SweepingStrikeEffect {
                 } else {
                     break;
                 }
-            } else if (blockState.canOcclude()) {
-                efficiency -= Math.abs(blockHardness);
+            } else if (!blockState.isAir() && !blockState.liquid()) {
+                efficiency -= Math.max(Math.abs(blockHardness), 0.5);
             }
 
             if (efficiency <= 0) {
@@ -222,7 +226,7 @@ public class SweepingStrikeEffect {
             int delay = pair.getLeft() - minDelay;
             delay = targets.size() > 10 ? delay : delay * 2;
             BlockState blockState = world.getBlockState(pos);
-            enqueueBlockBreak(world, breakingPlayer, toolStack, pos, blockState, delay, jankLevel, skulkTaintLevel);
+            enqueueBlockBreak(world, breakingPlayer, toolStack, pos, blockState, delay, tryReplant, jankLevel, skulkTaintLevel);
         });
 
         return targets;
@@ -266,17 +270,17 @@ public class SweepingStrikeEffect {
         return getStrikeCounter(player.getUUID()) % 2 == 0;
     }
 
-    private static void enqueueBlockBreak(Level world, Player player, ItemStack itemStack, BlockPos pos, BlockState blockState, int delay, int jankLevel, int skulkTaintLevel) {
+    private static void enqueueBlockBreak(Level world, Player player, ItemStack itemStack, BlockPos pos, BlockState blockState, int delay, boolean tryReplant, int jankLevel, int skulkTaintLevel) {
         if (delay > 0) {
-            ServerScheduler.schedule(delay, () -> breakBlock(world, player, itemStack, pos, blockState, jankLevel, skulkTaintLevel));
+            ServerScheduler.schedule(delay, () -> breakBlock(world, player, itemStack, pos, blockState, tryReplant, jankLevel, skulkTaintLevel));
         } else {
-            breakBlock(world, player, itemStack, pos, blockState, jankLevel, skulkTaintLevel);
+            breakBlock(world, player, itemStack, pos, blockState, tryReplant, jankLevel, skulkTaintLevel);
         }
     }
 
-    private static void breakBlock(Level world, Player player, ItemStack itemStack, BlockPos pos, BlockState blockState, int jankLevel, int skulkTaintLevel) {
-        if (EffectHelper.breakBlock(world, player, itemStack, pos, blockState, true)) {
-            EffectHelper.sendEventToPlayer((ServerPlayer) player, 2001, pos, Block.getId(blockState));
+    private static void breakBlock(Level world, Player player, ItemStack itemStack, BlockPos pos, BlockState blockState, boolean tryReplant, int jankLevel, int skulkTaintLevel) {
+        if (EffectHelper.breakBlock(world, player, itemStack, pos, blockState, true, tryReplant)) {
+            EffectHelper.sendEventToPlayer((ServerPlayer) player, LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(blockState));
 
             if (jankLevel > 0) {
                 JankEffect.jankItemsDelayed((ServerLevel) world, pos, jankLevel, EffectHelper.getEffectEfficiency(itemStack, ItemEffect.janking), player);
@@ -286,6 +290,10 @@ public class SweepingStrikeEffect {
                 SculkTaintEffect.perform((ServerLevel) world, pos, skulkTaintLevel, EffectHelper.getEffectEfficiency(itemStack, ItemEffect.sculkTaint));
             }
         }
+    }
+
+    private static boolean isFullyGrown(BlockState blockState) {
+        return blockState.getBlock() instanceof CropBlock crop && crop.isMaxAge(blockState);
     }
 
     private static void debugPlacement(Level world, BlockPos origin, List<BlockPos> positions, int count) {

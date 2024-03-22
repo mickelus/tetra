@@ -134,7 +134,7 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
     }
 
     protected boolean pryBlock(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction facing) {
-        boolean didBreak = EffectHelper.breakBlock(world, player, player.getItemInHand(hand), pos, blockState, false);
+        boolean didBreak = EffectHelper.breakBlock(world, player, player.getItemInHand(hand), pos, blockState, false, false);
         if (didBreak && world instanceof ServerLevel) {
             BlockInteraction.getLoot(pryTable, player, hand, (ServerLevel) world, blockState)
                     .forEach(lootStack -> popResource(world, pos, lootStack));

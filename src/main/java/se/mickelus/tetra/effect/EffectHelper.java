@@ -11,13 +11,20 @@ import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 import javax.annotation.Nullable;
@@ -83,10 +90,11 @@ public class EffectHelper {
      * @param pos            the position which to break blocks around
      * @param blockState     the state of the block that is to broken
      * @param harvest        true if the player is ment to harvest the block, false if it should just magically disappear
+     * @param tryReplant     attempts to replant crop blocks when true
      * @return True if the player was allowed to break the block, otherwise false
      */
     public static boolean breakBlock(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos pos, BlockState blockState,
-            boolean harvest) {
+            boolean harvest, boolean tryReplant) {
         if (!world.isClientSide) {
             ServerLevel serverWorld = (ServerLevel) world;
             ServerPlayer serverPlayer = (ServerPlayer) breakingPlayer;
@@ -105,12 +113,18 @@ public class EffectHelper {
                 if (canRemove) {
                     blockState.getBlock().destroy(world, pos, blockState);
 
-                    if (harvest) {
+                    if (tryReplant) {
+                        breakAndReplant(serverWorld, pos, blockState, breakingPlayer, toolStack, harvest);
+                    } else if (harvest) {
                         blockState.getBlock().playerDestroy(world, breakingPlayer, pos, blockState, tileEntity, toolStack);
+                    }
 
-                        if (exp > 0) {
-                            blockState.getBlock().popExperience(serverWorld, pos, exp);
-                        }
+                    if (harvest && exp > 0) {
+                        blockState.getBlock().popExperience(serverWorld, pos, exp);
+                    }
+
+                    if (harvest) {
+                        blockState.spawnAfterBreak(serverWorld, pos, toolStack, false);
                     }
                 }
                 return canRemove;
@@ -121,6 +135,30 @@ public class EffectHelper {
             return blockState.getBlock().onDestroyedByPlayer(blockState, world, pos, breakingPlayer, harvest,
                     world.getFluidState(pos));
         }
+    }
+
+    public static boolean tryReplant(ItemStack itemStack, ToolAction toolAction) {
+        return toolAction == ToolActions.HOE_DIG && EnchantmentHelper.hasSilkTouch(itemStack);
+    }
+
+    private static boolean breakAndReplant(ServerLevel serverLevel, BlockPos pos, BlockState blockState, Player entity, ItemStack itemStack, boolean doDrops) {
+        BlockState newBlock = blockState.getBlock() instanceof CropBlock crop ? crop.defaultBlockState() : Blocks.AIR.defaultBlockState();
+
+        MutableBoolean foundSeed = new MutableBoolean(false);
+        Item seedItem = blockState.getBlock().asItem();
+        Block.getDrops(blockState, serverLevel, pos, serverLevel.getBlockEntity(pos), entity, itemStack).forEach(droppedStack -> {
+            if (droppedStack.getItem() == seedItem && !foundSeed.getValue()) {
+                droppedStack.shrink(1);
+                foundSeed.setValue(true);
+            }
+
+            if (doDrops && !droppedStack.isEmpty())
+                Block.popResource(serverLevel, pos, droppedStack);
+        });
+
+        serverLevel.setBlockAndUpdate(pos, newBlock);
+
+        return foundSeed.getValue();
     }
 
     /**

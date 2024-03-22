@@ -168,7 +168,7 @@ public class UnboundExtractionEffect {
                 && blockHardness != -1
                 && blockHardness <= refHardness
                 && ToolActionHelper.isEffectiveOn(refTool, offsetState)) {
-            if (EffectHelper.breakBlock(world, player, itemStack, pos, offsetState, true)) {
+            if (EffectHelper.breakBlock(world, player, itemStack, pos, offsetState, true, false)) {
                 EffectHelper.sendEventToPlayer((ServerPlayer) player, 2001, pos, Block.getId(offsetState));
 
                 item.applyBlockBreakEffects(itemStack, world, offsetState, pos, player);
