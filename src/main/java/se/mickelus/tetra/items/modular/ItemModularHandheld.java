@@ -67,6 +67,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static se.mickelus.tetra.effect.EffectHelper.getEffectLevel;
+
 @ParametersAreNonnullByDefault
 public class ItemModularHandheld extends ModularItem {
     public static final TagKey<Block> nailedTag = BlockTags.create(new ResourceLocation("tetra", "nailed"));
@@ -336,6 +338,26 @@ public class ItemModularHandheld extends ModularItem {
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
         }
 
+        if (InteractionHand.OFF_HAND.equals(hand)) {
+            int jabLevel = getEffectLevel(itemStack, ItemEffect.jab);
+            if (jabLevel > 0) {
+                if (!world.isClientSide) {
+                    if (getEffectLevel(itemStack, ItemEffect.truesweep) > 0 && player.onGround() && !player.isSprinting()) {
+                        SweepingEffect.truesweep(itemStack, player, true);
+                    }
+
+                    int howlingLevel = getEffectLevel(itemStack, ItemEffect.howling);
+                    if (howlingLevel > 0) {
+                        HowlingEffect.trigger(itemStack, player, howlingLevel);
+                    }
+                }
+
+                player.getCooldowns().addCooldown(this, (int) Math.round(getCooldownBase(itemStack) * 20));
+
+                return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
+            }
+        }
+
         return new InteractionResultHolder<>(InteractionResult.PASS, itemStack);
     }
 
@@ -362,6 +384,17 @@ public class ItemModularHandheld extends ModularItem {
                     int jabLevel = getEffectLevel(itemStack, ItemEffect.jab);
                     if (jabLevel > 0) {
                         jabEntity(itemStack, jabLevel, player, target);
+
+                        if (!player.level().isClientSide) {
+                            if (getEffectLevel(itemStack, ItemEffect.truesweep) > 0 && player.onGround() && !player.isSprinting()) {
+                                SweepingEffect.truesweep(itemStack, player, true);
+                            }
+
+                            int howlingLevel = getEffectLevel(itemStack, ItemEffect.howling);
+                            if (howlingLevel > 0) {
+                                HowlingEffect.trigger(itemStack, player, howlingLevel);
+                            }
+                        }
 
                         tickProgression(player, itemStack, 2);
                         applyDamage(2, itemStack, player);
