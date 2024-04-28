@@ -1,0 +1,18 @@
+[
+    {
+        "key": "quality",
+        "level": 1,
+        "durabilityMultiplier": 1.05,
+        "attributes": {
+            "**tetra:ability_damage": 0.05
+        }
+    },
+    {
+        "key": "quality",
+        "level": 2,
+        "durabilityMultiplier": 1.1,
+        "attributes": {
+            "**tetra:ability_damage": 0.1
+        }
+    }
+]

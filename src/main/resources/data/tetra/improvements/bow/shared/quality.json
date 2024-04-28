@@ -1,0 +1,16 @@
+[
+    {
+        "key": "quality",
+        "level": 1,
+        "attributes": {
+            "**tetra:draw_strength": 0.05
+        }
+    },
+    {
+        "key": "quality",
+        "level": 2,
+        "attributes": {
+            "**tetra:draw_strength": 0.1
+        }
+    }
+]
