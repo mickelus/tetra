@@ -3,6 +3,7 @@
     "values": [
         "#minecraft:is_mountain",
         "#minecraft:is_taiga",
-        "#forge:is_cold/overworld"
+        "#forge:is_cold/overworld",
+        "#forge:is_mountain"
     ]
 }
