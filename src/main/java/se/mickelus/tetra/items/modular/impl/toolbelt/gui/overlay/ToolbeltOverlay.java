@@ -80,7 +80,7 @@ public class ToolbeltOverlay extends GuiRoot implements IGuiOverlay {
     public void onKeyInput(InputEvent.Key event) {
         if (TetraKeyMappings.restockBinding.isDown()) {
             storeToolbeltItem();
-        } else if (TetraKeyMappings.openBinding.consumeClick()) {
+        } else if (TetraKeyMappings.openBinding.isDown() && TetraKeyMappings.openBinding.consumeClick()) {
             openToolbelt();
         } else if (TetraKeyMappings.accessBinding.isDown() && mc.isWindowActive() && !isActive) {
             showView();
