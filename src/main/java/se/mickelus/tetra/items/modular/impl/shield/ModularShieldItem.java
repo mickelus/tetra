@@ -90,7 +90,9 @@ public class ModularShieldItem extends ItemModularHandheld {
         super.clientInit();
 
         ItemProperties.register(this, new ResourceLocation("blocking"),
-                (itemStack, world, entity, i) -> entity != null && entity.isUsingItem() && entity.getUseItem() == itemStack ? 1.0F : 0.0F);
+                (itemStack, world, entity, i) -> isBlocking(itemStack, entity) ? 1.0F : 0.0F);
+        ItemProperties.register(this, new ResourceLocation("throwing"),
+                (itemStack, world, entity, i) -> isThrowing(itemStack, entity) ? 1.0F : 0.0F);
     }
 
     private ItemStack copyBanner(ItemStack original, ItemStack replacement) {

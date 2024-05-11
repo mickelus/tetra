@@ -47,6 +47,12 @@
                 "blocking": 1
             },
             "model": "tetra:item/modular_shield_blocking"
+        },
+        {
+            "predicate": {
+                "throwing": 1
+            },
+            "model": "tetra:item/modular_shield_throwing"
         }
     ]
 }
