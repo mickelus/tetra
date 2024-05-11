@@ -18,6 +18,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -83,11 +85,12 @@ public class TetraCommand {
 
     private static int runHone(CommandContext<CommandSourceStack> context, int progress) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
-        ItemStack itemStack = player.getMainHandItem();
+        ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             if (item.canGainHoneProgress(itemStack)) {
                 item.setHoningProgress(itemStack, (int) Math.ceil((100 - progress) / 100f * item.getHoningLimit(itemStack)));
                 context.getSource().sendSuccess(() -> Component.literal("Honing progression set to §e" + progress + "%§r for ").append(itemStack.getDisplayName()), true);
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
                 return 1;
             } else {
                 context.getSource().sendFailure(Component.literal("Item cannot be honed"));
@@ -100,7 +103,7 @@ public class TetraCommand {
 
     private static int runRemoveModule(CommandContext<CommandSourceStack> context, String slot) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
-        ItemStack itemStack = player.getMainHandItem();
+        ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             ItemModule module = item.getModuleFromSlot(itemStack, slot);
             if (module != null) {
@@ -110,6 +113,7 @@ public class TetraCommand {
                 IModularItem.updateIdentifier(itemStack);
                 context.getSource().sendSuccess(() -> Component.literal("Removed module " + moduleIdentifiers + " from slot '" + slot + "' in item ")
                         .append(itemStack.getDisplayName()), true);
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
                 return 1;
             } else {
                 context.getSource().sendFailure(Component.literal("The provided slot is already empty"));
@@ -122,7 +126,7 @@ public class TetraCommand {
 
     private static int runAddModule(CommandContext<CommandSourceStack> context, String slot, String moduleKey, String variantKey) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
-        ItemStack itemStack = player.getMainHandItem();
+        ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             ItemModule module = ItemUpgradeRegistry.instance.getModule(moduleKey);
             if (module != null) {
@@ -137,6 +141,7 @@ public class TetraCommand {
 
                 context.getSource().sendSuccess(() -> Component.literal("Added module " + moduleKey + " in slot '" + slot + "' in item ")
                         .append(itemStack.getDisplayName()), true);
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
                 return 1;
             }
         } else {
@@ -148,7 +153,7 @@ public class TetraCommand {
 
     private static int runClearImprovements(CommandContext<CommandSourceStack> context, String slot) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
-        ItemStack itemStack = player.getMainHandItem();
+        ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             if (item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
                 ImprovementData[] improvements = module.getImprovements(itemStack);
@@ -156,6 +161,7 @@ public class TetraCommand {
                 IModularItem.updateIdentifier(itemStack);
                 context.getSource().sendSuccess(() -> Component.literal("Cleared " + improvements.length + " improvements from slot '" + slot + "' in item ")
                         .append(itemStack.getDisplayName()), true);
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
             } else {
                 context.getSource().sendFailure(Component.literal("The provided slot is empty (or not a major module slot)"));
             }
@@ -168,13 +174,14 @@ public class TetraCommand {
 
     private static int runRemoveImprovement(CommandContext<CommandSourceStack> context, String slot, String improvementKey) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
-        ItemStack itemStack = player.getMainHandItem();
+        ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             if (item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
                 module.removeImprovement(itemStack, improvementKey);
                 IModularItem.updateIdentifier(itemStack);
                 context.getSource().sendSuccess(() -> Component.literal("Removed improvement '" + improvementKey + "' from slot '" + slot + "' in item ")
                         .append(itemStack.getDisplayName()), true);
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
             } else {
                 context.getSource().sendFailure(Component.literal("The provided slot is empty (or not a major module slot)"));
             }
@@ -187,7 +194,7 @@ public class TetraCommand {
 
     private static int runAddImprovement(CommandContext<CommandSourceStack> context, String slot, String improvementKey, int level) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
-        ItemStack itemStack = player.getMainHandItem();
+        ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             if (item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
                 module.removeCollidingImprovements(itemStack, improvementKey, level);
@@ -195,6 +202,7 @@ public class TetraCommand {
                 IModularItem.updateIdentifier(itemStack);
                 context.getSource().sendSuccess(() -> Component.literal("Added improvement '" + improvementKey + "' at level " + level + " from slot '" + slot + "' in item ")
                         .append(itemStack.getDisplayName()), true);
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
             } else {
                 context.getSource().sendFailure(Component.literal("The provided slot is empty (or not a major module slot)"));
             }
@@ -207,7 +215,7 @@ public class TetraCommand {
 
     private static int runClearEnchantments(CommandContext<CommandSourceStack> context, String slot) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
-        ItemStack itemStack = player.getMainHandItem();
+        ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             if (item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
                 Map<Enchantment, Integer> enchantments = module.getEnchantments(itemStack);
@@ -215,6 +223,7 @@ public class TetraCommand {
                 IModularItem.updateIdentifier(itemStack);
                 context.getSource().sendSuccess(() -> Component.literal("Cleared " + enchantments.size() + " enchantments from slot '" + slot + "' in item ")
                         .append(itemStack.getDisplayName()), true);
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
             } else {
                 context.getSource().sendFailure(Component.literal("The provided slot is empty (or not a major module slot)"));
             }
@@ -227,7 +236,7 @@ public class TetraCommand {
 
     private static int runRemoveEnchantment(CommandContext<CommandSourceStack> context, String slot, Holder<Enchantment> enchantment) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
-        ItemStack itemStack = player.getMainHandItem();
+        ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             if (item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
                 String enchantmentId = ForgeRegistries.ENCHANTMENTS.getKey(enchantment.get()).toString();
@@ -235,6 +244,7 @@ public class TetraCommand {
                 IModularItem.updateIdentifier(itemStack);
                 context.getSource().sendSuccess(() -> Component.literal("Removed enchantment '" + enchantmentId + "' from item ")
                         .append(itemStack.getDisplayName()), true);
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
             } else {
                 context.getSource().sendFailure(Component.literal("The provided slot is empty (or not a major module slot)"));
             }
@@ -247,7 +257,7 @@ public class TetraCommand {
 
     private static int runAddEnchantment(CommandContext<CommandSourceStack> context, String slot, Holder<Enchantment> enchantmentHolder, int level) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
-        ItemStack itemStack = player.getMainHandItem();
+        ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             if (item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
                 Enchantment enchantment = enchantmentHolder.get();
@@ -266,6 +276,7 @@ public class TetraCommand {
                     context.getSource().sendSuccess(() -> Component.literal("Added enchantment '" + enchantmentId + "' at level " + level + " for slot '" + slot + "' in item ")
                             .append(itemStack.getDisplayName()), true);
                 }
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
             } else {
                 context.getSource().sendFailure(Component.literal("The provided slot is empty (or not a major module slot)"));
             }
@@ -279,7 +290,7 @@ public class TetraCommand {
     private static CompletableFuture<Suggestions> getMajorSlotSuggestions(final CommandContext<CommandSourceStack> context, final SuggestionsBuilder builder) {
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
-            ItemStack itemStack = player.getMainHandItem();
+            ItemStack itemStack = getItemStackOrReplacement(player);
             if (itemStack.getItem() instanceof IModularItem item) {
                 return SharedSuggestionProvider.suggest(Arrays.stream(item.getMajorModuleKeys(itemStack)).map(key -> "\"" + key + "\""), builder);
             }
@@ -290,7 +301,7 @@ public class TetraCommand {
     private static CompletableFuture<Suggestions> getAllSlotSuggestions(final CommandContext<CommandSourceStack> context, final SuggestionsBuilder builder) {
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
-            ItemStack itemStack = player.getMainHandItem();
+            ItemStack itemStack = getItemStackOrReplacement(player);
             if (itemStack.getItem() instanceof IModularItem item) {
                 List<String> suggestions = Stream.concat(Arrays.stream(item.getMajorModuleKeys(itemStack)), Arrays.stream(item.getMinorModuleKeys(itemStack)))
                         .map(slot -> "\"" + slot + "\"")
@@ -322,7 +333,7 @@ public class TetraCommand {
         String slot = getString(context, "slot");
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
-            ItemStack itemStack = player.getMainHandItem();
+            ItemStack itemStack = getItemStackOrReplacement(player);
             if (itemStack.getItem() instanceof IModularItem item
                     && item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
                 List<String> suggestions = Arrays.stream(module.improvements).map(improvement -> improvement.key)
@@ -338,7 +349,7 @@ public class TetraCommand {
         String slot = getString(context, "slot");
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
-            ItemStack itemStack = player.getMainHandItem();
+            ItemStack itemStack = getItemStackOrReplacement(player);
             if (itemStack.getItem() instanceof IModularItem item
                     && item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
                 List<String> suggestions = Arrays.stream(module.getImprovements(itemStack))
@@ -356,7 +367,7 @@ public class TetraCommand {
         String improvementKey = getString(context, "improvement");
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
-            ItemStack itemStack = player.getMainHandItem();
+            ItemStack itemStack = getItemStackOrReplacement(player);
             if (itemStack.getItem() instanceof IModularItem item
                     && item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
                 List<String> suggestions = Arrays.stream(module.improvements)
@@ -375,7 +386,7 @@ public class TetraCommand {
         String slot = getString(context, "slot");
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
-            ItemStack itemStack = player.getMainHandItem();
+            ItemStack itemStack = getItemStackOrReplacement(player);
             if (itemStack.getItem() instanceof IModularItem item
                     && item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
                 List<String> suggestions = module.getEnchantments(itemStack).keySet().stream()
@@ -395,5 +406,16 @@ public class TetraCommand {
                 .mapToObj(String::valueOf)
                 .toList();
         return SharedSuggestionProvider.suggest(suggestions, builder);
+    }
+
+    private static ItemStack getItemStackOrReplacement(Player player) {
+        ItemStack itemStack = player.getMainHandItem();
+        if (!(itemStack.getItem() instanceof IModularItem)) {
+            ItemStack replacement = ItemUpgradeRegistry.instance.getReplacement(itemStack);
+            if (!replacement.isEmpty()) {
+                return replacement;
+            }
+        }
+        return itemStack;
     }
 }
