@@ -332,7 +332,7 @@ public interface IModularItem {
         }
     }
 
-    default void tickHoningProgression(LivingEntity entity, ItemStack itemStack, int multiplier) {
+    default void tickHoningProgression(@Nullable LivingEntity entity, ItemStack itemStack, int multiplier) {
         if (!ConfigHandler.moduleProgression.get() || !canGainHoneProgress(itemStack)) {
             return;
         }
@@ -353,8 +353,8 @@ public interface IModularItem {
             if (honingProgress <= 0 && !isHoneable(itemStack)) {
                 tag.putBoolean(honeAvailableKey, true);
 
-                if (entity instanceof ServerPlayer) {
-                    TetraMod.packetHandler.sendTo(new HonePacket(itemStack), (ServerPlayer) entity);
+                if (entity instanceof ServerPlayer serverPlayer) {
+                    TetraMod.packetHandler.sendTo(new HonePacket(itemStack), serverPlayer);
                 }
             }
         }
@@ -424,7 +424,7 @@ public interface IModularItem {
         EnderReverbEffect.perform(entity, itemStack, multiplier);
     }
 
-    default void applyDamage(int amount, ItemStack itemStack, LivingEntity responsibleEntity) {
+    default void applyDamage(int amount, ItemStack itemStack, @Nullable LivingEntity responsibleEntity) {
         int damage = itemStack.getDamageValue();
         int maxDamage = itemStack.getMaxDamage();
 

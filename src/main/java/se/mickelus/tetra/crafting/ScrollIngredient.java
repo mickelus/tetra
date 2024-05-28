@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import se.mickelus.tetra.blocks.scroll.ScrollData;
 import se.mickelus.tetra.blocks.scroll.ScrollItem;
@@ -50,6 +51,7 @@ public class ScrollIngredient extends Ingredient {
     @Override
     public JsonElement toJson() {
         JsonObject json = new JsonObject();
+        json.addProperty("type", CraftingHelper.getID(getSerializer()).toString());
         data.write(json);
 
         return json;

@@ -43,8 +43,7 @@ public class ToolActionIconStore implements ResourceManagerReloadListener {
     }
 
     private Map<ToolAction, GlyphData> prepareIcons() {
-        ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
-        return resourceManager.listResources(directory, rl -> rl.getPath().endsWith(jsonExtension)).entrySet().stream()
+        return Minecraft.getInstance().getResourceManager().listResources(directory, rl -> rl.getPath().endsWith(jsonExtension)).entrySet().stream()
                 .filter(entry -> TetraMod.MOD_ID.equals(entry.getKey().getNamespace()))
                 .collect(
                         HashMap::new,

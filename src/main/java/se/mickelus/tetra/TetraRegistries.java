@@ -70,6 +70,7 @@ import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.particle.SweepingStrikeParticleType;
 import se.mickelus.tetra.crafting.ScrollIngredient;
+import se.mickelus.tetra.crafting.ToolActionIngredient;
 import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.*;
 import se.mickelus.tetra.items.InitializableItem;
@@ -411,6 +412,7 @@ public class TetraRegistries {
         // INGREDIENT SERIALIZERS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         CraftingHelper.register(new ResourceLocation(TetraMod.MOD_ID, "scroll"), ScrollIngredient.Serializer.instance);
+        CraftingHelper.register(new ResourceLocation(TetraMod.MOD_ID, "tool_action"), ToolActionIngredient.Serializer.instance);
     }
 
     public static <B extends Block> RegistryObject<Item> registerBlockItem(RegistryObject<B> block) {

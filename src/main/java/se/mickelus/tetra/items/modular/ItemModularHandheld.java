@@ -67,8 +67,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static se.mickelus.tetra.effect.EffectHelper.getEffectLevel;
-
 @ParametersAreNonnullByDefault
 public class ItemModularHandheld extends ModularItem {
     public static final TagKey<Block> nailedTag = BlockTags.create(new ResourceLocation("tetra", "nailed"));
@@ -980,5 +978,22 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         return super.onCraftConsume(providerStack, targetStack, player, tool, toolLevel, consumeResources);
+    }
+
+    @Override
+    public boolean hasCraftingRemainingItem(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
+        ItemStack result = itemStack.copy();
+        if (isDamageable(result)) {
+            int amount = damageItem(result, 1, null, stack -> {
+            });
+            result.setDamageValue(result.getDamageValue() + amount);
+            tickHoningProgression(null, result, 1);
+        }
+        return result;
     }
 }
