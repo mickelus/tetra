@@ -2,8 +2,8 @@ package se.mickelus.tetra.gui.stats;
 
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.StatFormat;
+import se.mickelus.tetra.gui.stats.getter.StatGetterAdd;
 import se.mickelus.tetra.gui.stats.getter.StatGetterMultiply;
-import se.mickelus.tetra.gui.stats.getter.StatGetterSum;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -12,11 +12,11 @@ public class StatsHelper {
     public static final int barLength = 59;
 
     public static IStatGetter sum(IStatGetter... statGetters) {
-        return new StatGetterSum(statGetters);
+        return new StatGetterAdd(statGetters);
     }
 
     public static IStatGetter sum(double offset, IStatGetter... statGetters) {
-        return new StatGetterSum(offset, statGetters);
+        return new StatGetterAdd(offset, statGetters);
     }
 
     public static IStatGetter multiply(IStatGetter... statGetters) {

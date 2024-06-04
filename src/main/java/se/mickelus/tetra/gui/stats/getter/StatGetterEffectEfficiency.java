@@ -17,14 +17,18 @@ public class StatGetterEffectEfficiency implements IStatGetter {
     protected final double multiplier;
     protected final double base;
 
-    public StatGetterEffectEfficiency(ItemEffect effect, double multiplier) {
-        this(effect, multiplier, 0);
-    }
-
     public StatGetterEffectEfficiency(ItemEffect effect, double multiplier, double base) {
         this.effect = effect;
         this.multiplier = multiplier;
         this.base = base;
+    }
+
+    public StatGetterEffectEfficiency(ItemEffect effect, double multiplier) {
+        this(effect, multiplier, 0);
+    }
+
+    public StatGetterEffectEfficiency(ItemEffect effect) {
+        this(effect, 1, 0);
     }
 
     @Override

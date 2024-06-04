@@ -20,15 +20,19 @@ public class StatGetterEnchantmentLevel implements IStatGetter {
     private final double multiplier;
     private final double base;
 
-    public StatGetterEnchantmentLevel(Enchantment enchantment, double multiplier) {
-        this(enchantment, multiplier, 0);
-    }
-
     public StatGetterEnchantmentLevel(Enchantment enchantment, double multiplier, double base) {
         this.enchantment = enchantment;
         this.enchantmentKey = ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString();
         this.multiplier = multiplier;
         this.base = base;
+    }
+
+    public StatGetterEnchantmentLevel(Enchantment enchantment, double multiplier) {
+        this(enchantment, multiplier, 0);
+    }
+
+    public StatGetterEnchantmentLevel(Enchantment enchantment) {
+        this(enchantment, 1, 0);
     }
 
     @Override

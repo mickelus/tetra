@@ -32,7 +32,7 @@ public class GuiStatBarTool extends GuiStatBar {
         super(x, y, width, null, 0, efficiencyMax, false,
                 includeSpeedModifier ? new StatGetterToolCompoundEfficiency(new StatGetterToolEfficiency(toolAction),
                         new StatGetterAttribute(Attributes.ATTACK_SPEED), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1))
-                        : new StatGetterSum(new StatGetterToolEfficiency(toolAction), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1)),
+                        : new StatGetterAdd(new StatGetterToolEfficiency(toolAction), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1)),
                 LabelGetterBasic.decimalLabel, new TooltipGetterTool(toolAction, includeSpeedModifier));
 
         this.efficiencyVisibility = efficiencyVisibility;

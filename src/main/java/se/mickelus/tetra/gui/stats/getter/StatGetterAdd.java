@@ -7,15 +7,15 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 
 @ParametersAreNonnullByDefault
-public class StatGetterSum implements IStatGetter {
+public class StatGetterAdd implements IStatGetter {
     private final IStatGetter[] statGetters;
     private double offset = 0;
 
-    public StatGetterSum(IStatGetter... statGetters) {
+    public StatGetterAdd(IStatGetter... statGetters) {
         this.statGetters = statGetters;
     }
 
-    public StatGetterSum(double offset, IStatGetter... statGetters) {
+    public StatGetterAdd(double offset, IStatGetter... statGetters) {
         this(statGetters);
         this.offset = offset;
     }
