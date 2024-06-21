@@ -25,6 +25,7 @@ import se.mickelus.tetra.craftingeffect.condition.*;
 import se.mickelus.tetra.craftingeffect.outcome.*;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
+import se.mickelus.tetra.data.provider.StatBarProvider;
 import se.mickelus.tetra.data.provider.TetraBlockStateProvider;
 import se.mickelus.tetra.data.provider.TetraLootTableProvider;
 import se.mickelus.tetra.data.provider.TetraTagsProvider;
@@ -143,14 +144,17 @@ public class TetraMod {
     @SubscribeEvent
     public static void onGatherData(final GatherDataEvent event) {
         DataGenerator dataGenerator = event.getGenerator();
-        if (event.includeServer()) {
-            DataGenerator gen = event.getGenerator();
-            PackOutput packOutput = gen.getPackOutput();
-            CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        DataGenerator gen = event.getGenerator();
+        PackOutput packOutput = gen.getPackOutput();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
+        if (event.includeServer()) {
             dataGenerator.addProvider(true, new TetraBlockStateProvider(packOutput, MOD_ID, event.getExistingFileHelper()));
             dataGenerator.addProvider(true, new TetraTagsProvider(packOutput, lookupProvider, MOD_ID, event.getExistingFileHelper()));
             dataGenerator.addProvider(true, new TetraLootTableProvider(packOutput));
+        }
+        if (event.includeClient()) {
+            dataGenerator.addProvider(true, new StatBarProvider(packOutput));
         }
     }
 

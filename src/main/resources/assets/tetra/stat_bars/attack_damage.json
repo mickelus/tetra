@@ -1,0 +1,127 @@
+{
+    "type": "tetra:default",
+    "key": "tetra.stats.attack_damage",
+    "contexts": [ "tetra:workbench" ],
+    "min": 0,
+    "max": 40,
+    "stat": {
+        "type": "tetra:sum",
+        "stats": [
+            {
+                "type": "tetra:attribute",
+                "attribute": "generic.attack_damage"
+            },
+            {
+                "type": "tetra:sum",
+                "stats": [
+                    {
+                        "type": "tetra:multiply",
+                        "stats": [
+                            {
+                                "type": "tetra:enchantment",
+                                "enchantment": "minecraft:sharpness"
+                            }
+                        ],
+                        "factor": 0.5
+                    }
+                ],
+                "offset": 0.5
+            }
+        ]
+    },
+    "label": {
+        "type": "tetra:basic",
+        "format": "double_decimal",
+        "diff_format": "double_decimal"
+    },
+    "tooltip": {
+        "type": "tetra:default",
+        "key": "tetra.stats.attack_damage.tooltip",
+        "stats": [
+            {
+                "type": "tetra:sum",
+                "stats": [
+                    {
+                        "type": "tetra:attribute",
+                        "attribute": "generic.attack_damage"
+                    },
+                    {
+                        "type": "tetra:sum",
+                        "stats": [
+                            {
+                                "type": "tetra:multiply",
+                                "stats": [
+                                    {
+                                        "type": "tetra:enchantment",
+                                        "enchantment": "minecraft:sharpness"
+                                    }
+                                ],
+                                "factor": 0.5
+                            }
+                        ],
+                        "offset": 0.5
+                    }
+                ],
+                "attribute": "generic.attack_damage"
+            }
+        ],
+        "formatters": [
+            {
+                "type": "tetra:basic",
+                "format": "double_decimal"
+            }
+        ]
+    },
+    "indicators": [
+        {
+            "key": "tetra.stats.sharpness",
+            "texture": "tetra:textures/gui/glyphs.png",
+            "textureX": 136,
+            "textureY": 160,
+            "stat": {
+                "type": "tetra:sum",
+                "stats": [
+                    {
+                        "type": "tetra:multiply",
+                        "stats": [
+                            {
+                                "type": "tetra:enchantment",
+                                "enchantment": "minecraft:sharpness"
+                            }
+                        ],
+                        "factor": 0.5
+                    }
+                ],
+                "offset": 0.5
+            },
+            "tooltip": {
+                "type": "tetra:default",
+                "key": "tetra.stats.sharpness.tooltip",
+                "stats": [
+                    {
+                        "type": "tetra:sum",
+                        "stats": [
+                            {
+                                "type": "tetra:multiply",
+                                "stats": [
+                                    {
+                                        "type": "tetra:enchantment",
+                                        "enchantment": "minecraft:sharpness"
+                                    }
+                                ],
+                                "factor": 0.5
+                            }
+                        ],
+                        "offset": 0.5
+                    }
+                ],
+                "formatters": [
+                    {
+                        "type": "tetra:basic",
+                        "format": "single_decimal"
+                    }
+                ]
+            }
+        }
+    ]
+}

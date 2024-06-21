@@ -1,0 +1,31 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/indicator.schema.json",
+    "title": "Indicator",
+    "description": "An indicator representation",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "key": {
+            "type": "string"
+        },
+        "texture": {
+            "$ref": "resource_location.schema.json"
+        },
+        "textureX": {
+            "type": "integer"
+        },
+        "textureY": {
+            "type": "integer"
+        },
+        "stat": {
+            "$ref": "stat_getter.schema.json"
+        },
+        "tooltip": {
+            "$ref": "tooltip.schema.json"
+        }
+    },
+    "required": [ "type", "key", "texture", "textureX", "textureY", "stat", "tooltip" ]
+}

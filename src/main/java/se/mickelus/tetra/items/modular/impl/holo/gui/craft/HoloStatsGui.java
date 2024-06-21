@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
+import com.google.common.collect.Streams;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolActions;
@@ -22,9 +23,8 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class HoloStatsGui extends GuiElement {
 
-    private static final List<GuiStatBase> bars = new ArrayList<>(Arrays.asList(
+    private static final List<GuiStatBase> staticBars = new ArrayList<>(Arrays.asList(
             GuiStats.integrity,
-            GuiStats.attackDamageNormalized,
             GuiStats.drawStrength,
             GuiStats.abilityDamage,
             GuiStats.attackSpeedNormalized,
@@ -110,6 +110,7 @@ public class HoloStatsGui extends GuiElement {
             new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.pry, true, false),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.HOE_DIG, true, false)
     ));
+    private static List<GuiStatBase> bars = new ArrayList<>();
 
     private final GuiElement barGroup;
 
@@ -121,7 +122,11 @@ public class HoloStatsGui extends GuiElement {
     }
 
     public static void addBar(GuiStatBase statBar) {
-        bars.add(statBar);
+        staticBars.add(statBar);
+    }
+
+    public static void setDataBars(GuiStatBase... statBars) {
+        bars = Arrays.asList(statBars);
     }
 
     public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, Player player) {
@@ -129,7 +134,7 @@ public class HoloStatsGui extends GuiElement {
         setVisible(shouldShow);
         if (shouldShow) {
             barGroup.clearChildren();
-            bars.stream()
+            Streams.concat(staticBars.stream(), bars.stream())
                     .filter(bar -> bar.shouldShow(player, itemStack, previewStack, slot, improvement))
                     .forEach(bar -> {
                         bar.update(player, itemStack, previewStack, slot, improvement);

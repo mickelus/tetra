@@ -23,21 +23,7 @@ import static se.mickelus.tetra.gui.stats.StatsHelper.*;
 @ParametersAreNonnullByDefault
 public class GuiStats {
     public static final IStatGetter sharpnessGetter = new StatGetterEnchantmentLevel(Enchantments.SHARPNESS, 0.5, 0.5);
-    public static final IStatGetter attackDamageGetter = sum(new StatGetterAttribute(Attributes.ATTACK_DAMAGE), sharpnessGetter);
-    public static final GuiStatBar attackDamage = new GuiStatBar(0, 0, barLength, "tetra.stats.attack_damage",
-            0, 40, false, attackDamageGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.attack_damage.tooltip", attackDamageGetter))
-            .setIndicators(
-                    new GuiStatIndicator(0, 0, "tetra.stats.sharpness", 17, sharpnessGetter,
-                            new TooltipGetterDecimalSingle("tetra.stats.sharpness.tooltip", sharpnessGetter)));
-
     public static final IStatGetter attackDamageNormalizedGetter = sum(new StatGetterAttribute(Attributes.ATTACK_DAMAGE, true), sharpnessGetter);
-    public static final GuiStatBar attackDamageNormalized = new GuiStatBar(0, 0, barLength, "tetra.stats.attack_damage_normalized",
-            0, 20, false, attackDamageNormalizedGetter, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.attack_damage_normalized.tooltip", attackDamageNormalizedGetter))
-            .setIndicators(
-                    new GuiStatIndicator(0, 0, "tetra.stats.sharpness", 17, sharpnessGetter,
-                            new TooltipGetterDecimalSingle("tetra.stats.sharpness.tooltip", sharpnessGetter)));
 
     public static final IStatGetter counterweightGetter = new StatGetterEffectLevel(ItemEffect.counterweight, 1);
     public static final IStatGetter attackSpeedGetter = new StatGetterAttribute(Attributes.ATTACK_SPEED);

@@ -1,0 +1,13 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/label_getter.schema.json",
+    "title": "LabelGetter",
+    "description": "A label getter representation",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        }
+    },
+    "required": [ "type" ]
+}

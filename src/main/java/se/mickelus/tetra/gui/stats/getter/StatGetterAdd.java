@@ -5,6 +5,7 @@ import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 public class StatGetterAdd implements IStatGetter {
@@ -22,22 +23,28 @@ public class StatGetterAdd implements IStatGetter {
 
     @Override
     public double getValue(Player player, ItemStack itemStack) {
-        return Arrays.stream(statGetters)
-                .mapToDouble(getter -> getter.getValue(player, itemStack))
-                .sum() + offset;
+        return Optional.of(Arrays.stream(statGetters)
+                        .mapToDouble(getter -> getter.getValue(player, itemStack))
+                        .sum())
+                .map(value -> value != 0 ? value + offset : value)
+                .get();
     }
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot) {
-        return Arrays.stream(statGetters)
-                .mapToDouble(getter -> getter.getValue(player, itemStack, slot))
-                .sum() + offset;
+        return Optional.of(Arrays.stream(statGetters)
+                        .mapToDouble(getter -> getter.getValue(player, itemStack, slot))
+                        .sum())
+                .map(value -> value != 0 ? value + offset : value)
+                .get();
     }
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
-        return Arrays.stream(statGetters)
-                .mapToDouble(getter -> getter.getValue(player, itemStack, slot, improvement))
-                .sum() + offset;
+        return Optional.of(Arrays.stream(statGetters)
+                        .mapToDouble(getter -> getter.getValue(player, itemStack, slot, improvement))
+                        .sum())
+                .map(value -> value != 0 ? value + offset : value)
+                .get();
     }
 }

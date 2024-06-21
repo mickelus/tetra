@@ -1,0 +1,121 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/stat_getter.schema.json",
+    "title": "Stat getter",
+    "description": "A stat getter representation, used by statbars and holosphere sorting",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        }
+    },
+    "required": [ "type" ],
+    "oneOf": [
+        {
+            "properties": {
+                "type": {
+                    "const": "tetra:sum"
+                },
+                "stats": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#"
+                    }
+                },
+                "offset": {
+                    "type": "number"
+                }
+            },
+            "required": [ "stats" ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "const": "tetra:multiply"
+                },
+                "stats": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#"
+                    }
+                },
+                "factor": {
+                    "type": "number"
+                }
+            },
+            "required": [ "stats" ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "const": "tetra:and"
+                },
+                "stats": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#"
+                    }
+                }
+            },
+            "required": [ "stats" ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "const": "tetra:or"
+                },
+                "stats": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#"
+                    }
+                }
+            },
+            "required": [ "stats" ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "const": "tetra:attribute"
+                },
+                "attribute": {
+                    "type": "string"
+                }
+            },
+            "required": [ "attribute" ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "const": "tetra:effect_level"
+                },
+                "effect": {
+                    "type": "string"
+                }
+            },
+            "required": [ "effect" ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "const": "tetra:effect_efficiency"
+                },
+                "effect": {
+                    "type": "string"
+                }
+            },
+            "required": [ "effect" ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "const": "tetra:enchantment"
+                },
+                "enchantment": {
+                    "type": "string"
+                }
+            },
+            "required": [ "enchantment" ]
+        }
+    ]
+}

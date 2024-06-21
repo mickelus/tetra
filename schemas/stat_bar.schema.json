@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/stat_bar.schema.json",
+    "title": "Stat Bar",
+    "description": "A stat bar representation, to be shown in the workbench or holosphere UIs",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "contexts": {
+            "type": "array",
+            "description": "something soemthing",
+            "items": {
+                "type": "string",
+                "examples": [ "tetra:workbench", "tetra:holosphere" ]
+            }
+        },
+        "stat": {
+            "$ref": "stat_getter.schema.json"
+        }
+    },
+    "required": [ "contexts", "stat" ]
+}

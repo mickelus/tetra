@@ -14,26 +14,34 @@ import javax.annotation.Nullable;
 public class StatGetterDeserializers {
     public static IStatGetter andGetter(JsonElement json) {
         AndData data = StatBarStore.gson.fromJson(json, AndData.class);
-        return new StatGetterAnd(data.getters);
+        return new StatGetterAnd(data.stats);
     }
 
-    record AndData(IStatGetter[] getters) {
+    record AndData(IStatGetter[] stats) {
     }
 
-    public static IStatGetter addGetter(JsonElement json) {
-        AddData data = StatBarStore.gson.fromJson(json, AddData.class);
-        return new StatGetterAdd(data.fixed != null ? data.fixed : 0, data.getters);
+    public static IStatGetter orGetter(JsonElement json) {
+        OrData data = StatBarStore.gson.fromJson(json, OrData.class);
+        return new StatGetterAnd(data.stats);
     }
 
-    record AddData(IStatGetter[] getters, Double fixed) {
+    record OrData(IStatGetter[] stats) {
+    }
+
+    public static IStatGetter sumGetter(JsonElement json) {
+        SumData data = StatBarStore.gson.fromJson(json, SumData.class);
+        return new StatGetterAdd(data.offset != null ? data.offset : 0, data.stats);
+    }
+
+    record SumData(IStatGetter[] stats, Double offset) {
     }
 
     public static IStatGetter multiplyGetter(JsonElement json) {
         MultiplyData data = StatBarStore.gson.fromJson(json, MultiplyData.class);
-        return new StatGetterMultiply(data.fixed != null ? data.fixed : 1, data.getters);
+        return new StatGetterMultiply(data.factor != null ? data.factor : 1, data.stats);
     }
 
-    record MultiplyData(IStatGetter[] getters, Double fixed) {
+    record MultiplyData(IStatGetter[] stats, Double factor) {
     }
 
     public static IStatGetter attributeGetter(JsonElement json) {

@@ -51,6 +51,8 @@ public class GuiStatBar extends GuiStatBase {
     protected ILabelGetter labelGetter;
     protected ITooltipGetter tooltipGetter;
 
+    protected String[] contexts = new String[0];
+
     public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented,
             IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
         this(x, y, barLength, labelKey, min, max, segmented, false, false, statGetter, labelGetter, tooltipGetter);
@@ -94,6 +96,11 @@ public class GuiStatBar extends GuiStatBase {
 
     public GuiStatBar setIndicators(GuiStatIndicator... indicators) {
         this.indicators = indicators;
+        return this;
+    }
+
+    public GuiStatBar setContexts(String... contexts) {
+        this.contexts = contexts;
         return this;
     }
 
@@ -259,5 +266,10 @@ public class GuiStatBar extends GuiStatBase {
         }
 
         return result;
+    }
+
+    @Override
+    public String[] getContexts() {
+        return contexts;
     }
 }
