@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
+import com.google.common.collect.Streams;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -8,6 +9,7 @@ import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
+import se.mickelus.tetra.gui.stats.data.StatSorterStore;
 import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 import se.mickelus.tetra.gui.stats.sorting.StatSorters;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
@@ -15,6 +17,7 @@ import se.mickelus.tetra.module.schematic.OutcomePreview;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -48,8 +51,9 @@ public class HoloSortButton extends GuiElement {
         if (previews.length > 0) {
             Player player = Minecraft.getInstance().player;
 
-            popover.update(StatSorters.sorters.stream()
-                    .filter(sorter -> Arrays.stream(previews).anyMatch(preview -> sorter.getWeight(player, preview.itemStack) > 0))
+            popover.update(Streams.concat(StatSorters.staticSorters.stream(), StatSorters.derivedSorters.stream(), Arrays.stream(StatSorterStore.instance.getSorters()))
+                    .filter(sorter -> Arrays.stream(previews).anyMatch(preview -> sorter.shouldShow(player, preview.itemStack)))
+                    .sorted(Comparator.comparing(IStatSorter::getPriority).reversed().thenComparing(IStatSorter::getName))
                     .toArray(IStatSorter[]::new));
         }
 

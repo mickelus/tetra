@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import se.mickelus.mutil.util.JsonOptional;
+import se.mickelus.tetra.gui.stats.getter.IStatFormat;
 import se.mickelus.tetra.gui.stats.getter.StatFormat;
 
 import java.util.Map;
@@ -26,7 +27,7 @@ public class StatFormatDeserializers {
             .put("percentage_decimal", "%+.01f%%")
             .build();
 
-    public static StatFormat basicStatformat(JsonElement json) {
+    public static IStatFormat basicStatformat(JsonElement json) {
         if (!json.isJsonObject()) {
             throw new JsonParseException("Expected object, got " + json.getClass().getSimpleName());
         }
@@ -39,7 +40,7 @@ public class StatFormatDeserializers {
         return new StatFormat(format);
     }
 
-    public static StatFormat abbreviateStatformat(JsonElement json) {
+    public static IStatFormat abbreviateStatformat(JsonElement json) {
         return StatFormat.abbreviate;
     }
 }

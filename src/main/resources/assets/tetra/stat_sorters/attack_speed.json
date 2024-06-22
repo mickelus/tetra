@@ -1,0 +1,14 @@
+{
+    "type": "tetra:default",
+    "key": "tetra.stats.speed_normalized",
+    "stat": {
+        "type": "tetra:attribute",
+        "attribute": "generic.attack_speed",
+        "ignoreBase": true,
+        "ignoreBonuses": true
+    },
+    "format": {
+        "type": "tetra:basic",
+        "format": "single_decimal"
+    }
+}

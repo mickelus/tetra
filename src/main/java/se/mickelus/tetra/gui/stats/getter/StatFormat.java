@@ -4,7 +4,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.text.DecimalFormat;
 
 @ParametersAreNonnullByDefault
-public class StatFormat {
+public class StatFormat implements IStatFormat {
 
     public static final StatFormat noDecimal = new StatFormat("%.0f");
     public static final StatFormat oneDecimal = new StatFormat("%.01f");

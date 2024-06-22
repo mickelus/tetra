@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.stats;
 
+import se.mickelus.tetra.gui.stats.getter.IStatFormat;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
-import se.mickelus.tetra.gui.stats.getter.StatFormat;
 import se.mickelus.tetra.gui.stats.getter.StatGetterAdd;
 import se.mickelus.tetra.gui.stats.getter.StatGetterMultiply;
 
@@ -31,7 +31,7 @@ public class StatsHelper {
         return statGetters;
     }
 
-    public static StatFormat[] withFormat(StatFormat... statGetters) {
+    public static IStatFormat[] withFormat(IStatFormat... statGetters) {
         return statGetters;
     }
 }

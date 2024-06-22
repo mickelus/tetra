@@ -3,8 +3,8 @@ package se.mickelus.tetra.gui.stats.sorting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import se.mickelus.tetra.gui.stats.getter.IStatFormat;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
-import se.mickelus.tetra.gui.stats.getter.StatFormat;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -15,11 +15,11 @@ import java.util.function.Function;
 public class BasicStatSorter implements IStatSorter {
     private final IStatGetter getter;
     private final String name;
-    private final StatFormat statFormat;
+    private final IStatFormat statFormat;
     private String suffix;
     private boolean inverted;
 
-    public BasicStatSorter(IStatGetter getter, String name, StatFormat statFormat) {
+    public BasicStatSorter(IStatGetter getter, String name, IStatFormat statFormat) {
         this.getter = getter;
         this.name = name;
         this.statFormat = statFormat;
@@ -59,7 +59,7 @@ public class BasicStatSorter implements IStatSorter {
     }
 
     @Override
-    public int getWeight(Player player, ItemStack itemStack) {
-        return getter.shouldShow(player, itemStack, itemStack) ? 1 : 0;
+    public boolean shouldShow(Player player, ItemStack itemStack) {
+        return getter.shouldShow(player, itemStack, itemStack);
     }
 }

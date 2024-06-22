@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 
 public class StatGetterDeserializers {
     public static IStatGetter andGetter(JsonElement json) {
-        AndData data = StatBarStore.gson.fromJson(json, AndData.class);
+        AndData data = StatRegistry.gson.fromJson(json, AndData.class);
         return new StatGetterAnd(data.stats);
     }
 
@@ -21,7 +21,7 @@ public class StatGetterDeserializers {
     }
 
     public static IStatGetter orGetter(JsonElement json) {
-        OrData data = StatBarStore.gson.fromJson(json, OrData.class);
+        OrData data = StatRegistry.gson.fromJson(json, OrData.class);
         return new StatGetterAnd(data.stats);
     }
 
@@ -29,7 +29,7 @@ public class StatGetterDeserializers {
     }
 
     public static IStatGetter sumGetter(JsonElement json) {
-        SumData data = StatBarStore.gson.fromJson(json, SumData.class);
+        SumData data = StatRegistry.gson.fromJson(json, SumData.class);
         return new StatGetterAdd(data.offset != null ? data.offset : 0, data.stats);
     }
 
@@ -37,7 +37,7 @@ public class StatGetterDeserializers {
     }
 
     public static IStatGetter multiplyGetter(JsonElement json) {
-        MultiplyData data = StatBarStore.gson.fromJson(json, MultiplyData.class);
+        MultiplyData data = StatRegistry.gson.fromJson(json, MultiplyData.class);
         return new StatGetterMultiply(data.factor != null ? data.factor : 1, data.stats);
     }
 
@@ -45,7 +45,7 @@ public class StatGetterDeserializers {
     }
 
     public static IStatGetter attributeGetter(JsonElement json) {
-        AttributeData data = StatBarStore.gson.fromJson(json, AttributeData.class);
+        AttributeData data = StatRegistry.gson.fromJson(json, AttributeData.class);
         Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(data.attribute));
         if (attribute == null) {
             throw new JsonParseException("Failed to parse attribute stat getter, unknown attribute: " + data.attribute);
@@ -61,7 +61,7 @@ public class StatGetterDeserializers {
     }
 
     public static IStatGetter effectEfficiencyGetter(JsonElement json) {
-        EffectEfficiencyData data = StatBarStore.gson.fromJson(json, EffectEfficiencyData.class);
+        EffectEfficiencyData data = StatRegistry.gson.fromJson(json, EffectEfficiencyData.class);
         return new StatGetterEffectEfficiency(ItemEffect.get(data.effect));
     }
 
@@ -69,7 +69,7 @@ public class StatGetterDeserializers {
     }
 
     public static IStatGetter effectLevelGetter(JsonElement json) {
-        EffectLevelData data = StatBarStore.gson.fromJson(json, EffectLevelData.class);
+        EffectLevelData data = StatRegistry.gson.fromJson(json, EffectLevelData.class);
         return new StatGetterEffectLevel(ItemEffect.get(data.effect));
     }
 
@@ -77,7 +77,7 @@ public class StatGetterDeserializers {
     }
 
     public static IStatGetter enchantmentGetter(JsonElement json) {
-        EnchantmentData data = StatBarStore.gson.fromJson(json, EnchantmentData.class);
+        EnchantmentData data = StatRegistry.gson.fromJson(json, EnchantmentData.class);
         Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(data.enchantment));
         if (enchantment == null) {
             throw new JsonParseException("Failed to parse enchantment stat getter, unknown enchantment: " + data.enchantment);

@@ -38,6 +38,8 @@ import se.mickelus.tetra.client.particle.SweepingStrikeParticleType;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
 import se.mickelus.tetra.gui.stats.data.StatBarStore;
+import se.mickelus.tetra.gui.stats.data.StatRegistry;
+import se.mickelus.tetra.gui.stats.data.StatSorterStore;
 import se.mickelus.tetra.interactions.SecondaryInteractionOverlay;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.ThrownModularItemRenderer;
@@ -56,7 +58,9 @@ public class ClientSetup {
         FMLJavaModLoadingContext.get().getModEventBus().register(ClientSetup.class);
         MinecraftForge.EVENT_BUS.register(ClientSetup.class);
 
+        StatRegistry.init();
         new StatBarStore();
+        new StatSorterStore();
 
         // todo: seems to cause issues during datagen
         ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(new ToolActionIconStore());

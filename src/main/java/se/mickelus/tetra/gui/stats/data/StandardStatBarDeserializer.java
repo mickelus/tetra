@@ -11,15 +11,15 @@ import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
 
 public class StandardStatBarDeserializer {
     public static GuiStatBase deserialize(JsonElement jsonElement) {
-        StandardData data = StatBarStore.gson.fromJson(jsonElement, StandardData.class);
+        StandardData data = StatRegistry.gson.fromJson(jsonElement, StandardData.class);
         return new GuiStatBar(0, 0, StatsHelper.barLength, data.key, data.min, data.max,
                 data.segmented != null ? data.segmented : false, data.split != null ? data.split : false, data.inverted != null ? data.inverted : false,
-                data.stat, data.label, data.tooltip)
+                data.stat, data.label, data.tooltip, data.generateSorter != null ? data.generateSorter : false)
                 .setContexts(data.contexts != null ? data.contexts : new String[0])
                 .setIndicators(data.indicators != null ? data.indicators : new GuiStatIndicator[0]);
     }
 
     record StandardData(String key, String[] contexts, double min, double max, Boolean segmented, Boolean split, Boolean inverted,
-            IStatGetter stat, ILabelGetter label, ITooltipGetter tooltip, GuiStatIndicator[] indicators) {
+            IStatGetter stat, ILabelGetter label, ITooltipGetter tooltip, GuiStatIndicator[] indicators, Boolean generateSorter) {
     }
 }

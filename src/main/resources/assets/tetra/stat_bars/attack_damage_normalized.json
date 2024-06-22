@@ -1,9 +1,10 @@
 {
     "type": "tetra:default",
-    "key": "dam",
+    "key": "tetra.stats.attack_damage_normalized",
     "contexts": [ "tetra:holosphere" ],
     "min": 0,
     "max": 20,
+    "generateSorter": true,
     "stat": {
         "type": "tetra:attribute",
         "attribute": "generic.attack_damage",
@@ -42,8 +43,7 @@
                         ],
                         "offset": 0.5
                     }
-                ],
-                "attribute": "generic.attack_damage"
+                ]
             }
         ],
         "formatters": [
