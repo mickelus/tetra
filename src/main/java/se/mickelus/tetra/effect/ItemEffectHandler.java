@@ -40,6 +40,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.tetra.effect.data.DataEffectsHandler;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
@@ -102,6 +103,8 @@ public class ItemEffectHandler {
         if (stunLevel > 0) {
             StunEffect.perform(itemStack, stunLevel, attacker, target);
         }
+
+        DataEffectsHandler.applyOnHitEffects(itemStack, target, attacker);
 
         ApplyHitTargetEffectsEvent event = new ApplyHitTargetEffectsEvent(attacker, target, itemStack);
         MinecraftForge.EVENT_BUS.post(event);
@@ -171,19 +174,6 @@ public class ItemEffectHandler {
         }
 
         RevengeTracker.onAttackEntity(event);
-    }
-
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (TickEvent.Phase.START == event.phase) {
-            LungeEffect.onPlayerTick(event.player);
-            FocusEffect.onPlayerTick(event);
-        }
-    }
-
-    @SubscribeEvent
-    public void onProjectileImpact(ProjectileImpactEvent event) {
-        HowlingEffect.deflectProjectile(event, event.getProjectile(), event.getRayTraceResult());
     }
 
     @SubscribeEvent
@@ -294,6 +284,19 @@ public class ItemEffectHandler {
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
         Optional.ofNullable(event.getEntity().getEffect(EarthboundPotionEffect.instance))
                 .ifPresent(effect -> event.getEntity().setDeltaMovement(event.getEntity().getDeltaMovement().multiply(1, 0.5, 1)));
+    }
+
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (TickEvent.Phase.START == event.phase) {
+            LungeEffect.onPlayerTick(event.player);
+            FocusEffect.onPlayerTick(event);
+        }
+    }
+
+    @SubscribeEvent
+    public void onProjectileImpact(ProjectileImpactEvent event) {
+        HowlingEffect.deflectProjectile(event, event.getProjectile(), event.getRayTraceResult());
     }
 
     @SubscribeEvent

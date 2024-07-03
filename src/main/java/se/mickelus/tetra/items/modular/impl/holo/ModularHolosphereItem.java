@@ -101,7 +101,7 @@ public class ModularHolosphereItem extends ModularItem {
 
     @Override
     public void commonInit(PacketHandler packetHandler) {
-        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("holo/"));
+        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.synergyData.getOrdered("holo/"));
     }
 
     public static ItemStack getCreativeItemStack() {

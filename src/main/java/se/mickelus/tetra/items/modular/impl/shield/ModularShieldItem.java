@@ -82,7 +82,7 @@ public class ModularShieldItem extends ItemModularHandheld {
 
     @Override
     public void commonInit(PacketHandler packetHandler) {
-        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("shield/"));
+        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.synergyData.getOrdered("shield/"));
     }
 
     @Override

@@ -78,7 +78,7 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
         packetHandler.registerPacket(ToggleSuspendPacket.class, ToggleSuspendPacket::new);
         MinecraftForge.EVENT_BUS.register(new TickHandlerBooster());
 
-        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("toolbelt/"));
+        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.synergyData.getOrdered("toolbelt/"));
     }
 
     @Override
