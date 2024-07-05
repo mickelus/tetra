@@ -39,6 +39,7 @@ import se.mickelus.tetra.data.deserializer.*;
 import se.mickelus.tetra.effect.data.ItemEffectTrigger;
 import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
 import se.mickelus.tetra.effect.data.outcome.ItemEffectOutcome;
+import se.mickelus.tetra.effect.data.provider.NumberProvider;
 import se.mickelus.tetra.items.modular.impl.dynamic.ArchetypeDefinition;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
@@ -96,6 +97,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ItemEffectTrigger.class, new ItemEffectTrigger.Deserializer())
             .registerTypeAdapter(ItemEffectCondition.class, new ItemEffectCondition.Deserializer())
             .registerTypeAdapter(ItemEffectOutcome.class, new ItemEffectOutcome.Deserializer())
+            .registerTypeAdapter(NumberProvider.class, new NumberProvider.Deserializer())
             .create();
     public static DataManager instance;
 

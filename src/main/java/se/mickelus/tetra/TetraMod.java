@@ -34,6 +34,7 @@ import se.mickelus.tetra.effect.LungeEchoPacket;
 import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
 import se.mickelus.tetra.effect.data.condition.RandomItemEffectCondition;
+import se.mickelus.tetra.effect.data.provider.*;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.revenge.AddRevengePacket;
 import se.mickelus.tetra.effect.revenge.RemoveRevengePacket;
@@ -141,6 +142,15 @@ public class TetraMod {
         CraftingRequirementDeserializer.registerSupplier("tetra:perk", PerkRequrement.class);
 
         ItemEffectCondition.registerCondition("tetra:random", RandomItemEffectCondition.deserializer);
+
+        NumberProvider.registerProvider("tetra:expression", ExpressionNumberProvider::deserialize);
+        NumberProvider.registerProvider("tetra:fixed", FixedNumberProvider::deserialize);
+        NumberProvider.registerProvider("tetra:variable", ContextNumberProvider::deserialize);
+        NumberProvider.registerProvider("tetra:random", RandomNumberProvider::deserialize);
+        NumberProvider.registerProvider("tetra:sum", SumNumberProvider::deserialize);
+        NumberProvider.registerProvider("tetra:subtract", SubtractNumberProvider::deserialize);
+        NumberProvider.registerProvider("tetra:multiply", MultiplyNumberProvider::deserialize);
+        NumberProvider.registerProvider("tetra:divide", DivideNumberProvider::deserialize);
 
         packetHandler = new PacketHandler(MOD_ID, "main", "1");
     }

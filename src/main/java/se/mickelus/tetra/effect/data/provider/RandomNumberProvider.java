@@ -1,5 +1,7 @@
 package se.mickelus.tetra.effect.data.provider;
 
+import com.google.gson.JsonElement;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 
 public class RandomNumberProvider implements NumberProvider {
@@ -23,13 +25,17 @@ public class RandomNumberProvider implements NumberProvider {
         float min = this.min.getValue(context);
         float max = this.max.getValue(context);
         if (gaussian) {
-            return (float) context.level().getRandom().nextGaussian() * (max - min) + min;
+            return (float) context.getLevel().getRandom().nextGaussian() * (max - min) + min;
         }
-        return context.level().getRandom().nextFloat() * (max - min) + min;
+        return context.getLevel().getRandom().nextFloat() * (max - min) + min;
     }
 
     @Override
     public int getIntegerValue(ItemEffectContext context) {
-        return context.level().getRandom().nextInt(min.getIntegerValue(context), max.getIntegerValue(context));
+        return context.getLevel().getRandom().nextInt(min.getIntegerValue(context), max.getIntegerValue(context));
+    }
+
+    public static NumberProvider deserialize(JsonElement jsonElement) {
+        return DataManager.gson.fromJson(jsonElement, RandomNumberProvider.class);
     }
 }
