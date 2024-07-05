@@ -8,7 +8,8 @@ import se.mickelus.tetra.effect.ReachingEffect;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class StatGetterReaching extends StatGetterEffectLevel {
+public class
+StatGetterReaching extends StatGetterEffectLevel {
     public StatGetterReaching() {
         super(ItemEffect.reaching, 1);
     }
@@ -20,16 +21,16 @@ public class StatGetterReaching extends StatGetterEffectLevel {
 
     @Override
     public double getValue(Player player, ItemStack itemStack) {
-        return 100 * ReachingEffect.getOffset((int) super.getValue(player, itemStack), 3);
+        return 100 * ReachingEffect.getOffset((int) super.getValue(player, itemStack), 9);
     }
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot) {
-        return 100 * ReachingEffect.getOffset((int) super.getValue(player, itemStack, slot), 3);
+        return 100 * ReachingEffect.getOffset((int) super.getValue(player, itemStack, slot), 9);
     }
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
-        return 100 * ReachingEffect.getOffset((int) super.getValue(player, itemStack, slot, improvement), 3);
+        return 100 * ReachingEffect.getOffset((int) super.getValue(player, itemStack, slot, improvement), 9);
     }
 }

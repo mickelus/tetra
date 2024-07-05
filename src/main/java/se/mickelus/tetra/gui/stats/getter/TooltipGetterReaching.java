@@ -27,7 +27,7 @@ public class TooltipGetterReaching implements ITooltipGetter {
     @Override
     public String getTooltipBase(Player player, ItemStack itemStack) {
         return I18n.get("tetra.stats.reaching.tooltip",
-                String.format("%.0f", 100 * ReachingEffect.getOffset((int) levelGetter.getValue(player, itemStack), 3)), 3);
+                String.format("%.0f", 100 * ReachingEffect.getOffset((int) levelGetter.getValue(player, itemStack), 9)), 3);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TooltipGetterReaching implements ITooltipGetter {
         double range = rangeGetter.getValue(player, itemStack);
         return I18n.get("tetra.stats.reaching.tooltip_extended",
                 String.format("%.2f", rangedMultiplier),
-                String.format("%.0f", 100 * ReachingEffect.getOffset(level, reach)), String.format("%.1f", reach),
-                String.format("%.0f", 100 * ReachingEffect.getOffset(level, range)), String.format("%.1f", range));
+                String.format("%.0f", 100 * ReachingEffect.getOffset(level, reach * reach)), String.format("%.1f", reach),
+                String.format("%.0f", 100 * ReachingEffect.getOffset(level, range * range)), String.format("%.1f", range));
     }
 }
