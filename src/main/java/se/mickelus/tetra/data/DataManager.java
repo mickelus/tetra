@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -39,7 +40,9 @@ import se.mickelus.tetra.data.deserializer.*;
 import se.mickelus.tetra.effect.data.ItemEffectTrigger;
 import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
 import se.mickelus.tetra.effect.data.outcome.ItemEffectOutcome;
+import se.mickelus.tetra.effect.data.provider.EntityProvider;
 import se.mickelus.tetra.effect.data.provider.NumberProvider;
+import se.mickelus.tetra.effect.data.provider.PositionProvider;
 import se.mickelus.tetra.items.modular.impl.dynamic.ArchetypeDefinition;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
@@ -88,6 +91,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ModuleRequirement.class, new ModuleRequirement.Deserializer())
             .registerTypeAdapter(IntegerPredicate.class, new IntegerPredicate.Deserializer())
             .registerTypeAdapter(Item.class, new ItemDeserializer())
+            .registerTypeAdapter(ItemStack.class, new ItemStackDeserializer())
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
             .registerTypeAdapter(Vector3f.class, new VectorDeserializer())
@@ -98,6 +102,8 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ItemEffectCondition.class, new ItemEffectCondition.Deserializer())
             .registerTypeAdapter(ItemEffectOutcome.class, new ItemEffectOutcome.Deserializer())
             .registerTypeAdapter(NumberProvider.class, new NumberProvider.Deserializer())
+            .registerTypeAdapter(EntityProvider.class, new EntityProvider.Deserializer())
+            .registerTypeAdapter(PositionProvider.class, new PositionProvider.Deserializer())
             .create();
     public static DataManager instance;
 

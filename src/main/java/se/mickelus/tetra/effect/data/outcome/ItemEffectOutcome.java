@@ -10,11 +10,11 @@ import java.util.Map;
 import java.util.function.Function;
 
 public abstract class ItemEffectOutcome {
-    private static final Map<String, Function<JsonElement, ItemEffectOutcome>> deserializers = new HashMap<>();
+    private static final Map<String, Function<JsonObject, ItemEffectOutcome>> deserializers = new HashMap<>();
 
     public abstract boolean perform(ItemEffectContext context);
 
-    public static void registerCondition(String key, Function<JsonElement, ItemEffectOutcome> deserializer) {
+    public static void register(String key, Function<JsonObject, ItemEffectOutcome> deserializer) {
         deserializers.put(key, deserializer);
     }
 
@@ -27,7 +27,7 @@ public abstract class ItemEffectOutcome {
                     .map(JsonElement::getAsString)
                     .orElse("tetra:default");
             if (deserializers.containsKey(key)) {
-                return deserializers.get(key).apply(jsonElement);
+                return deserializers.get(key).apply(jsonObject);
             }
             throw new JsonParseException("No deserializer found for DataEffectOutcome type: " + key);
         }

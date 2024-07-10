@@ -15,7 +15,7 @@ public abstract class ItemEffectCondition {
 
     public abstract boolean test(ItemEffectContext context);
 
-    public static void registerCondition(String key, Function<JsonElement, ItemEffectCondition> deserializer) {
+    public static void register(String key, Function<JsonElement, ItemEffectCondition> deserializer) {
         deserializers.put(key, deserializer);
     }
 

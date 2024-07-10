@@ -32,8 +32,8 @@ import se.mickelus.tetra.data.provider.TetraTagsProvider;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.LungeEchoPacket;
 import se.mickelus.tetra.effect.TruesweepPacket;
-import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
-import se.mickelus.tetra.effect.data.condition.RandomItemEffectCondition;
+import se.mickelus.tetra.effect.data.condition.*;
+import se.mickelus.tetra.effect.data.outcome.*;
 import se.mickelus.tetra.effect.data.provider.*;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.revenge.AddRevengePacket;
@@ -141,16 +141,30 @@ public class TetraMod {
         CraftingRequirementDeserializer.registerSupplier("tetra:aspect", AspectRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:perk", PerkRequrement.class);
 
-        ItemEffectCondition.registerCondition("tetra:random", RandomItemEffectCondition.deserializer);
+        ItemEffectCondition.register("tetra:random", RandomItemEffectCondition.deserializer);
+        ItemEffectCondition.register("tetra:expression", ExpressionItemEffectCondition::deserialize);
+        ItemEffectCondition.register("tetra:and", AndItemEffectCondition::deserialize);
+        ItemEffectCondition.register("tetra:or", OrItemEffectCondition::deserialize);
+        ItemEffectCondition.register("tetra:not", NotItemEffectCondition::deserialize);
 
-        NumberProvider.registerProvider("tetra:expression", ExpressionNumberProvider::deserialize);
-        NumberProvider.registerProvider("tetra:fixed", FixedNumberProvider::deserialize);
-        NumberProvider.registerProvider("tetra:variable", ContextNumberProvider::deserialize);
-        NumberProvider.registerProvider("tetra:random", RandomNumberProvider::deserialize);
-        NumberProvider.registerProvider("tetra:sum", SumNumberProvider::deserialize);
-        NumberProvider.registerProvider("tetra:subtract", SubtractNumberProvider::deserialize);
-        NumberProvider.registerProvider("tetra:multiply", MultiplyNumberProvider::deserialize);
-        NumberProvider.registerProvider("tetra:divide", DivideNumberProvider::deserialize);
+        ItemEffectOutcome.register("tetra:apply_effect", ApplyEffectItemEffectOutcome::deserialize);
+        ItemEffectOutcome.register("tetra:conditioned", ConditionedItemEffectOutcome::deserialize);
+        ItemEffectOutcome.register("tetra:multiple", MultipleItemEffectOutcome::deserialize);
+        ItemEffectOutcome.register("tetra:function", RunFunctionItemEffectOutcome::deserialize);
+        ItemEffectOutcome.register("tetra:command", RunCommandItemEffectOutcome::deserialize);
+
+        NumberProvider.register("tetra:expression", ExpressionNumberProvider::deserialize);
+        NumberProvider.register("tetra:fixed", FixedNumberProvider::deserialize);
+        NumberProvider.register("tetra:variable", ContextNumberProvider::deserialize);
+        NumberProvider.register("tetra:random", RandomNumberProvider::deserialize);
+        NumberProvider.register("tetra:sum", SumNumberProvider::deserialize);
+        NumberProvider.register("tetra:subtract", SubtractNumberProvider::deserialize);
+        NumberProvider.register("tetra:multiply", MultiplyNumberProvider::deserialize);
+        NumberProvider.register("tetra:divide", DivideNumberProvider::deserialize);
+
+        PositionProvider.register("tetra:entity", EntityPositionProvider::deserialize);
+
+        EntityProvider.register("tetra:standard", StandardEntityProvider::deserialize);
 
         packetHandler = new PacketHandler(MOD_ID, "main", "1");
     }

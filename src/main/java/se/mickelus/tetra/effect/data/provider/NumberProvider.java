@@ -1,27 +1,22 @@
 package se.mickelus.tetra.effect.data.provider;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-import java.lang.reflect.Type;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import se.mickelus.mutil.util.JsonOptional;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 
-public interface NumberProvider {
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
+public interface NumberProvider {
     float getValue(ItemEffectContext context);
 
     default int getIntegerValue(ItemEffectContext context) {
         return Math.round(getValue(context));
     }
 
-    static void registerProvider(String key, Function<JsonElement, NumberProvider> deserializer) {
+    static void register(String key, Function<JsonElement, NumberProvider> deserializer) {
         Deserializer.deserializers.put(key, deserializer);
     }
 
@@ -35,8 +30,7 @@ public interface NumberProvider {
                 JsonPrimitive primitive = jsonElement.getAsJsonPrimitive();
                 if (primitive.isString()) {
                     return ExpressionNumberProvider.parseExpression(primitive.getAsString());
-                }
-                else if (primitive.isNumber()) {
+                } else if (primitive.isNumber()) {
                     return new FixedNumberProvider(primitive.getAsFloat());
                 }
             }

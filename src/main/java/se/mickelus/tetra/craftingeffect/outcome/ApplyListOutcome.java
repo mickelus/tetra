@@ -42,9 +42,9 @@ public class ApplyListOutcome implements CraftingEffectOutcome {
         }
         return !applicableOutcomes.isEmpty();
     }
-}
 
-class EffectPair {
-    CraftingEffectCondition requirement = CraftingEffectCondition.any;
-    CraftingEffectOutcome outcome;
+    static class EffectPair {
+        CraftingEffectCondition requirement = CraftingEffectCondition.any;
+        CraftingEffectOutcome outcome;
+    }
 }
