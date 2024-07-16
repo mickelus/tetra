@@ -1,4 +1,4 @@
-package se.mickelus.tetra.effect.data.provider;
+package se.mickelus.tetra.effect.data.provider.entity;
 
 import com.google.gson.JsonObject;
 import net.minecraft.world.entity.Entity;

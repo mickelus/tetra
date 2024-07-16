@@ -34,7 +34,10 @@ import se.mickelus.tetra.effect.LungeEchoPacket;
 import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.data.condition.*;
 import se.mickelus.tetra.effect.data.outcome.*;
-import se.mickelus.tetra.effect.data.provider.*;
+import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
+import se.mickelus.tetra.effect.data.provider.entity.StandardEntityProvider;
+import se.mickelus.tetra.effect.data.provider.number.*;
+import se.mickelus.tetra.effect.data.provider.vector.*;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.revenge.AddRevengePacket;
 import se.mickelus.tetra.effect.revenge.RemoveRevengePacket;
@@ -143,26 +146,45 @@ public class TetraMod {
 
         ItemEffectCondition.register("tetra:random", RandomItemEffectCondition.deserializer);
         ItemEffectCondition.register("tetra:expression", ExpressionItemEffectCondition::deserialize);
-        ItemEffectCondition.register("tetra:and", AndItemEffectCondition::deserialize);
-        ItemEffectCondition.register("tetra:or", OrItemEffectCondition::deserialize);
-        ItemEffectCondition.register("tetra:not", NotItemEffectCondition::deserialize);
+        ItemEffectCondition.register("tetra:and", AndItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:or", OrItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:not", NotItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:block", BlockItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:can_harvest", CanHarvestItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:entity", EntityItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:fixed", FixedItemEffectCondition.class);
 
-        ItemEffectOutcome.register("tetra:apply_effect", ApplyEffectItemEffectOutcome::deserialize);
-        ItemEffectOutcome.register("tetra:conditioned", ConditionedItemEffectOutcome::deserialize);
-        ItemEffectOutcome.register("tetra:multiple", MultipleItemEffectOutcome::deserialize);
-        ItemEffectOutcome.register("tetra:function", RunFunctionItemEffectOutcome::deserialize);
-        ItemEffectOutcome.register("tetra:command", RunCommandItemEffectOutcome::deserialize);
+        ItemEffectOutcome.register("tetra:apply_effect", ApplyEffectItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:conditioned", ConditionedItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:multiple", MultipleItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:function", RunFunctionItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:command", RunCommandItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:move_entity", MoveEntityItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:set_block", SetBlockItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:find_block", FindBlocksItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:break_block", BreakBlockItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:damage_entity", DamageEntityItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:find_entities", FindEntitiesItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:push_entity", PushEntityItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:particle", ParticleItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:sound", SoundItemEffectOutcome.class);
 
         NumberProvider.register("tetra:expression", ExpressionNumberProvider::deserialize);
-        NumberProvider.register("tetra:fixed", FixedNumberProvider::deserialize);
+        NumberProvider.register("tetra:fixed", FixedNumberProvider.class);
         NumberProvider.register("tetra:variable", ContextNumberProvider::deserialize);
-        NumberProvider.register("tetra:random", RandomNumberProvider::deserialize);
-        NumberProvider.register("tetra:sum", SumNumberProvider::deserialize);
-        NumberProvider.register("tetra:subtract", SubtractNumberProvider::deserialize);
-        NumberProvider.register("tetra:multiply", MultiplyNumberProvider::deserialize);
-        NumberProvider.register("tetra:divide", DivideNumberProvider::deserialize);
+        NumberProvider.register("tetra:random", RandomNumberProvider.class);
+        NumberProvider.register("tetra:sum", SumNumberProvider.class);
+        NumberProvider.register("tetra:subtract", SubtractNumberProvider.class);
+        NumberProvider.register("tetra:multiply", MultiplyNumberProvider.class);
+        NumberProvider.register("tetra:divide", DivideNumberProvider.class);
+        NumberProvider.register("tetra:distance", DistanceNumberProvider.class);
 
-        PositionProvider.register("tetra:entity", EntityPositionProvider::deserialize);
+        VectorProvider.register("tetra:entity", EntityVectorProvider::deserialize);
+        VectorProvider.register("tetra:expression", ExpressionVectorProvider.class);
+        VectorProvider.register("tetra:normalize", NormalizeVectorProvider.class);
+        VectorProvider.register("tetra:number", NumberVectorProvider.class);
+        VectorProvider.register("tetra:entity_facing", FacingVectorProvider.class);
+        VectorProvider.register("tetra:entity_motion", MotionVectorProvider.class);
 
         EntityProvider.register("tetra:standard", StandardEntityProvider::deserialize);
 

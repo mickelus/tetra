@@ -1,6 +1,5 @@
-package se.mickelus.tetra.effect.data.provider;
+package se.mickelus.tetra.effect.data.provider.number;
 
-import com.google.gson.JsonElement;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 
 public class FixedNumberProvider implements NumberProvider {
@@ -20,9 +19,5 @@ public class FixedNumberProvider implements NumberProvider {
     @Override
     public int getIntegerValue(ItemEffectContext context) {
         return intValue;
-    }
-
-    public static NumberProvider deserialize(JsonElement jsonElement) {
-        return new FixedNumberProvider(jsonElement.getAsJsonObject().get("value").getAsFloat());
     }
 }

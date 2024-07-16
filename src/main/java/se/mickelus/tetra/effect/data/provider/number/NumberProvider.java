@@ -1,7 +1,8 @@
-package se.mickelus.tetra.effect.data.provider;
+package se.mickelus.tetra.effect.data.provider.number;
 
 import com.google.gson.*;
 import se.mickelus.mutil.util.JsonOptional;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 
 import java.lang.reflect.Type;
@@ -16,8 +17,12 @@ public interface NumberProvider {
         return Math.round(getValue(context));
     }
 
-    static void register(String key, Function<JsonElement, NumberProvider> deserializer) {
-        Deserializer.deserializers.put(key, deserializer);
+    static void register(String identifier, Function<JsonElement, NumberProvider> deserializer) {
+        Deserializer.deserializers.put(identifier, deserializer);
+    }
+
+    static void register(String identifier, Class<? extends NumberProvider> clazz) {
+        Deserializer.deserializers.put(identifier, json -> DataManager.gson.fromJson(json, clazz));
     }
 
     class Deserializer implements JsonDeserializer<NumberProvider> {

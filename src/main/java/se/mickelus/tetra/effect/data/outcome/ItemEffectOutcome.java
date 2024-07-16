@@ -2,6 +2,7 @@ package se.mickelus.tetra.effect.data.outcome;
 
 import com.google.gson.*;
 import se.mickelus.mutil.util.JsonOptional;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 
 import java.lang.reflect.Type;
@@ -14,8 +15,12 @@ public abstract class ItemEffectOutcome {
 
     public abstract boolean perform(ItemEffectContext context);
 
-    public static void register(String key, Function<JsonObject, ItemEffectOutcome> deserializer) {
-        deserializers.put(key, deserializer);
+    public static void register(String identifier, Function<JsonObject, ItemEffectOutcome> deserializer) {
+        deserializers.put(identifier, deserializer);
+    }
+
+    public static void register(String identifier, Class<? extends ItemEffectOutcome> clazz) {
+        deserializers.put(identifier, json -> DataManager.gson.fromJson(json, clazz));
     }
 
     public static class Deserializer implements JsonDeserializer<ItemEffectOutcome> {

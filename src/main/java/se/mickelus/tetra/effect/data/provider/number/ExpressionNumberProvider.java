@@ -1,18 +1,18 @@
-package se.mickelus.tetra.effect.data.provider;
+package se.mickelus.tetra.effect.data.provider.number;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
+import se.mickelus.tetra.effect.data.ItemEffectData;
 
 import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Stack;
 
 public class ExpressionNumberProvider implements NumberProvider {
-    private static final Type dataType = new TypeToken<Map<String, ItemTransforms>>() {
+    private static final Type dataType = new TypeToken<Map<String, NumberProvider>>() {
     }.getType();
 
     private static final Map<Character, Integer> operatorPrecedence = Map.of(
@@ -24,23 +24,23 @@ public class ExpressionNumberProvider implements NumberProvider {
 
     private final NumberProvider rootProvider;
 
-    private final Map<String, Float> data;
+    private final Map<String, NumberProvider> data;
 
-    public ExpressionNumberProvider(NumberProvider rootProvider, Map<String, Float> data) {
+    public ExpressionNumberProvider(NumberProvider rootProvider, Map<String, NumberProvider> data) {
         this.rootProvider = rootProvider;
         this.data = data;
     }
 
     public float getValue(ItemEffectContext context) {
         if (data != null) {
-            return rootProvider.getValue(context.withMergedData(data));
+            return rootProvider.getValue(context.withMergedData(ItemEffectData.calculateData(data, context)));
         }
         return rootProvider.getValue(context);
     }
 
     public int getIntegerValue(ItemEffectContext context) {
         if (data != null) {
-            return rootProvider.getIntegerValue(context.withMergedData(data));
+            return rootProvider.getIntegerValue(context.withMergedData(ItemEffectData.calculateData(data, context)));
         }
         return rootProvider.getIntegerValue(context);
     }

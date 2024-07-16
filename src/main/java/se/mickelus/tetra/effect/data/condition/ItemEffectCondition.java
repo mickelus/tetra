@@ -2,6 +2,7 @@ package se.mickelus.tetra.effect.data.condition;
 
 import com.google.gson.*;
 import se.mickelus.mutil.util.JsonOptional;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 
 import java.lang.reflect.Type;
@@ -15,14 +16,22 @@ public abstract class ItemEffectCondition {
 
     public abstract boolean test(ItemEffectContext context);
 
-    public static void register(String key, Function<JsonElement, ItemEffectCondition> deserializer) {
-        deserializers.put(key, deserializer);
+    public static void register(String identifier, Function<JsonElement, ItemEffectCondition> deserializer) {
+        deserializers.put(identifier, deserializer);
+    }
+
+    public static void register(String identifier, Class<? extends ItemEffectCondition> clazz) {
+        deserializers.put(identifier, json -> DataManager.gson.fromJson(json, clazz));
     }
 
     public static class Deserializer implements JsonDeserializer<ItemEffectCondition> {
         @Override
         public ItemEffectCondition deserialize(JsonElement jsonElement, Type type,
                 JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            if (jsonElement.isJsonPrimitive()) {
+                return new FixedItemEffectCondition(jsonElement.getAsBoolean());
+            }
+            
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             String key = JsonOptional.field(jsonObject, "type")
                     .map(JsonElement::getAsString)

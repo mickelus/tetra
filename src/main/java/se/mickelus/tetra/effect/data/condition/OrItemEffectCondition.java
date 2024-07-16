@@ -1,7 +1,5 @@
 package se.mickelus.tetra.effect.data.condition;
 
-import com.google.gson.JsonElement;
-import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 
 import java.util.Arrays;
@@ -12,9 +10,5 @@ public class OrItemEffectCondition extends ItemEffectCondition {
     @Override
     public boolean test(ItemEffectContext context) {
         return Arrays.stream(conditions).anyMatch(condition -> condition.test(context));
-    }
-
-    public static ItemEffectCondition deserialize(JsonElement jsonElement) {
-        return DataManager.gson.fromJson(jsonElement, OrItemEffectCondition.class);
     }
 }

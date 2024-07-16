@@ -1,4 +1,4 @@
-package se.mickelus.tetra.effect.data.provider;
+package se.mickelus.tetra.effect.data.provider.number;
 
 import com.google.gson.JsonElement;
 import se.mickelus.tetra.effect.data.ItemEffectContext;

@@ -4,15 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.math.Transformation;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -40,9 +44,9 @@ import se.mickelus.tetra.data.deserializer.*;
 import se.mickelus.tetra.effect.data.ItemEffectTrigger;
 import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
 import se.mickelus.tetra.effect.data.outcome.ItemEffectOutcome;
-import se.mickelus.tetra.effect.data.provider.EntityProvider;
-import se.mickelus.tetra.effect.data.provider.NumberProvider;
-import se.mickelus.tetra.effect.data.provider.PositionProvider;
+import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
+import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
+import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
 import se.mickelus.tetra.items.modular.impl.dynamic.ArchetypeDefinition;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
@@ -79,6 +83,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
             .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
             .registerTypeAdapter(Block.class, new BlockDeserializer())
+            .registerTypeAdapter(BlockState.class, new BlockStateDeserializer())
             .registerTypeAdapter(AttributesDeserializer.typeToken.getRawType(), new AttributesDeserializer())
             .registerTypeAdapter(ItemTagKeyDeserializer.typeToken.getRawType(), new ItemTagKeyDeserializer())
             .registerTypeAdapter(VariantData.class, new VariantData.Deserializer())
@@ -103,7 +108,10 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ItemEffectOutcome.class, new ItemEffectOutcome.Deserializer())
             .registerTypeAdapter(NumberProvider.class, new NumberProvider.Deserializer())
             .registerTypeAdapter(EntityProvider.class, new EntityProvider.Deserializer())
-            .registerTypeAdapter(PositionProvider.class, new PositionProvider.Deserializer())
+            .registerTypeAdapter(VectorProvider.class, new VectorProvider.Deserializer())
+            .registerTypeAdapter(EntityPredicate.class, new EntityPredicateDeserializer())
+            .registerTypeAdapter(ParticleOptions.class, new ParticleOptionsDeserializer())
+            .registerTypeAdapter(SoundEvent.class, new SoundEventDeserializer())
             .create();
     public static DataManager instance;
 

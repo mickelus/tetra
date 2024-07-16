@@ -1,22 +1,24 @@
 package se.mickelus.tetra.effect.data;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 
 public class ItemEffectContext {
     private LivingEntity usingEntity;
     private ItemStack usedItemStack;
-    private Level level;
-    private @Nullable LivingEntity targetEntity;
+    private ServerLevel level;
+    private @Nullable Entity targetEntity;
     private @Nullable BlockPos targetPos;
     private @Nullable BlockState targetState;
     private Map<String, Float> data;
@@ -24,8 +26,8 @@ public class ItemEffectContext {
     public ItemEffectContext(
             LivingEntity usingEntity,
             ItemStack usedItemStack,
-            Level level,
-            @Nullable LivingEntity targetEntity,
+            ServerLevel level,
+            @Nullable Entity targetEntity,
             @Nullable BlockPos targetPos,
             @Nullable BlockState targetState) {
         this.usingEntity = usingEntity;
@@ -38,15 +40,15 @@ public class ItemEffectContext {
         this.data = Collections.emptyMap();
     }
 
-    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, Level level) {
+    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, ServerLevel level) {
         this(usingEntity, usedItemStack, level, null, null, null);
     }
 
-    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, Level level, LivingEntity targetEntity) {
+    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, ServerLevel level, Entity targetEntity) {
         this(usingEntity, usedItemStack, level, targetEntity, null, null);
     }
 
-    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, Level level, BlockPos targetPos, BlockState targetState) {
+    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, ServerLevel level, BlockPos targetPos, BlockState targetState) {
         this(usingEntity, usedItemStack, level, null, targetPos, targetState);
     }
 
@@ -69,6 +71,10 @@ public class ItemEffectContext {
         return copy;
     }
 
+    public ItemEffectContext withBlock(BlockPos pos, BlockState state) {
+        return new ItemEffectContext(usingEntity, usedItemStack, level, targetEntity, pos, state);
+    }
+
     public LivingEntity getUsingEntity() {
         return usingEntity;
     }
@@ -77,12 +83,12 @@ public class ItemEffectContext {
         return usedItemStack;
     }
 
-    public Level getLevel() {
+    public ServerLevel getLevel() {
         return level;
     }
 
     @Nullable
-    public LivingEntity getTargetEntity() {
+    public Entity getTargetEntity() {
         return targetEntity;
     }
 
@@ -98,5 +104,9 @@ public class ItemEffectContext {
 
     public Map<String, Float> getData() {
         return data;
+    }
+
+    public ItemEffectContext withTarget(Entity entity) {
+        return new ItemEffectContext(usingEntity, usedItemStack, level, entity, targetPos, targetState);
     }
 }

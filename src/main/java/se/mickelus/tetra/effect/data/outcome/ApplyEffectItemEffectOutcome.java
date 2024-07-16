@@ -1,14 +1,12 @@
 package se.mickelus.tetra.effect.data.outcome;
 
-import com.google.gson.JsonObject;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
-import se.mickelus.tetra.effect.data.provider.EntityProvider;
-import se.mickelus.tetra.effect.data.provider.NumberProvider;
+import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
+import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
 
 public class ApplyEffectItemEffectOutcome extends ItemEffectOutcome {
     MobEffect effect;
@@ -29,9 +27,5 @@ public class ApplyEffectItemEffectOutcome extends ItemEffectOutcome {
             return entity.addEffect(new MobEffectInstance(effect, targetDuration, amplifier), context.getUsingEntity());
         }
         return false;
-    }
-
-    public static ItemEffectOutcome deserialize(JsonObject jsonObject) {
-        return DataManager.gson.fromJson(jsonObject, ApplyEffectItemEffectOutcome.class);
     }
 }

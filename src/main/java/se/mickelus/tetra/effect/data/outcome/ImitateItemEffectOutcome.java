@@ -1,5 +1,6 @@
 package se.mickelus.tetra.effect.data.outcome;
 
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
@@ -19,8 +20,8 @@ public class ImitateItemEffectOutcome extends ItemEffectOutcome {
                 }
                 return false;
             case hurtEnemy:
-                if (context.getTargetEntity() != null && context.getUsingEntity() instanceof Player player) {
-                    itemStack.hurtEnemy(context.getTargetEntity(), player);
+                if (context.getTargetEntity() instanceof LivingEntity livingTarget && context.getUsingEntity() instanceof Player player) {
+                    itemStack.hurtEnemy(livingTarget, player);
                     return true;
                 }
                 return false;

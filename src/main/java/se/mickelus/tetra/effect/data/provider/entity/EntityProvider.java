@@ -1,8 +1,9 @@
-package se.mickelus.tetra.effect.data.provider;
+package se.mickelus.tetra.effect.data.provider.entity;
 
 import com.google.gson.*;
 import net.minecraft.world.entity.Entity;
 import se.mickelus.mutil.util.JsonOptional;
+import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 
 import java.lang.reflect.Type;
@@ -14,7 +15,11 @@ public interface EntityProvider {
     Entity getEntity(ItemEffectContext context);
 
     static void register(String key, Function<JsonObject, EntityProvider> deserializer) {
-        EntityProvider.Deserializer.deserializers.put(key, deserializer);
+        Deserializer.deserializers.put(key, deserializer);
+    }
+
+    static void register(String identifier, Class<? extends EntityProvider> clazz) {
+        Deserializer.deserializers.put(identifier, json -> DataManager.gson.fromJson(json, clazz));
     }
 
     class Deserializer implements JsonDeserializer<EntityProvider> {

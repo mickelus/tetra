@@ -1,9 +1,7 @@
 package se.mickelus.tetra.effect.data.outcome;
 
-import com.google.gson.JsonObject;
-import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
-import se.mickelus.tetra.effect.data.provider.NumberProvider;
+import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
 import se.mickelus.tetra.util.StreamHelper;
 
 import java.util.Arrays;
@@ -34,9 +32,5 @@ public class MultipleItemEffectOutcome extends ItemEffectOutcome {
             }
         }
         return anySucess;
-    }
-
-    public static ItemEffectOutcome deserialize(JsonObject jsonObject) {
-        return DataManager.gson.fromJson(jsonObject, MultipleItemEffectOutcome.class);
     }
 }

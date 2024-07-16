@@ -7,8 +7,8 @@ import com.google.gson.JsonParseException;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
-import se.mickelus.tetra.effect.data.provider.ExpressionNumberProvider;
-import se.mickelus.tetra.effect.data.provider.NumberProvider;
+import se.mickelus.tetra.effect.data.provider.number.ExpressionNumberProvider;
+import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
