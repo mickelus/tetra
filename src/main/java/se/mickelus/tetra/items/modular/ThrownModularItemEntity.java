@@ -214,9 +214,10 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
             ItemModularHandheld item = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class).orElse(null);
             if (ToolActionHelper.isEffectiveOn(thrownStack, blockState) && shooter instanceof Player player && item != null) {
                 double destroySpeed = item.getDestroySpeed(thrownStack, blockState);
+                double blockDestroySpeed = blockState.getDestroySpeed(level, pos);
 
-                if (destroySpeed > 1
-                        && destroySpeed * item.getEffectEfficiency(thrownStack, ItemEffect.throwable) > blockState.getDestroySpeed(level, pos)) {
+                if (destroySpeed > 1 && blockDestroySpeed != -1f
+                        && destroySpeed * item.getEffectEfficiency(thrownStack, ItemEffect.throwable) > blockDestroySpeed) {
                     if (shooter instanceof ServerPlayer serverPlayer) {
                         EffectHelper.sendEventToPlayer(serverPlayer, 2001, pos, Block.getId(blockState));
                     }
