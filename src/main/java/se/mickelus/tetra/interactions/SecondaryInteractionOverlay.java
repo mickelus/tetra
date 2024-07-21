@@ -55,6 +55,10 @@ public class SecondaryInteractionOverlay extends GuiRoot implements IGuiOverlay 
     }
 
     private void updateCurrentInteraction(BlockPos pos, Entity target) {
+        if (mc.player == null) {
+            return;
+        }
+
         SecondaryInteraction newInteraction = SecondaryInteractionHandler.findRelevantAction(mc.player, pos, target);
 
         boolean changed = newInteraction != currentInteraction;
