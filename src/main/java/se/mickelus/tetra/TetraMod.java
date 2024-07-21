@@ -20,6 +20,7 @@ import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicScrollPacket;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
+import se.mickelus.tetra.crafting.GrindstoneMergeHandler;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.craftingeffect.condition.*;
 import se.mickelus.tetra.craftingeffect.outcome.*;
@@ -81,6 +82,7 @@ public class TetraMod {
         MinecraftForge.EVENT_BUS.register(new TradeHandler());
         MinecraftForge.EVENT_BUS.register(new DataManager());
         MinecraftForge.EVENT_BUS.register(new VibrationDebuffer());
+        MinecraftForge.EVENT_BUS.register(GrindstoneMergeHandler.class);
         MinecraftForge.EVENT_BUS.register(ServerScheduler.class);
         MinecraftForge.EVENT_BUS.register(ClientScheduler.class);
 
