@@ -6,15 +6,15 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
 
-public class EntityVectorProvider implements VectorProvider {
+public class EntityPositionVectorProvider implements VectorProvider {
     private EntityProvider entity;
     private Origin origin = Origin.feet;
 
-    public EntityVectorProvider(EntityProvider entity) {
+    public EntityPositionVectorProvider(EntityProvider entity) {
         this.entity = entity;
     }
 
-    public EntityVectorProvider(EntityProvider entity, Origin origin) {
+    public EntityPositionVectorProvider(EntityProvider entity, Origin origin) {
         this(entity);
         this.origin = origin;
     }
@@ -35,6 +35,6 @@ public class EntityVectorProvider implements VectorProvider {
     }
 
     public static VectorProvider deserialize(JsonObject jsonObject) {
-        return DataManager.gson.fromJson(jsonObject, EntityVectorProvider.class);
+        return DataManager.gson.fromJson(jsonObject, EntityPositionVectorProvider.class);
     }
 }

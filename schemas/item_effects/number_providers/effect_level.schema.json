@@ -1,0 +1,16 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/number_providers/effect_level.schema.json",
+    "title": "Effect level number provider",
+    "description": "Provides the level of the given effect.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:effect_level"
+        },
+        "effect": {
+            "type": "string"
+        }
+    },
+    "required": [ "effect" ]
+}

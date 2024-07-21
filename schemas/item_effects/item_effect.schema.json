@@ -1,0 +1,49 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/item_effect.schema.json",
+    "title": "Item effect",
+    "description": "A datadriven item effect",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "effect": {
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "*": { }
+            }
+        },
+        "contexts": {
+            "type": "array",
+            "description": "Defines which UIs to show this stat bar in",
+            "items": {
+                "type": "string",
+                "examples": [ "tetra:workbench", "tetra:holosphere" ]
+            }
+        },
+        "generateSorter": {
+            "description": "If set to true, registers a stat sorter with the same label, stat and format as this stat bar",
+            "type": "boolean"
+        },
+        "stat": {
+            "$ref": "stat_getter.schema.json"
+        },
+        "label": {
+            "$ref": "label_getter.schema.json"
+        },
+        "tooltip": {
+            "$ref": "tooltip_getter.schema.json"
+        },
+        "indicators": {
+            "type": "array",
+            "items": {
+                "$ref": "stat_indicator.schema.json"
+            }
+        }
+    },
+    "required": [ "contexts", "stat" ]
+}

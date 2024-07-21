@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/and.schema.json",
+    "title": "And item effect condition",
+    "description": "Passes if ALL of the given conditions pass",
+    "examples": [
+        {
+            "type": "tetra:and",
+            "conditions": [
+                { "type": "tetra:fixed", "value": true },
+                { "type": "tetra:fixed", "value": false }
+            ]
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:and"
+        },
+        "conditions": {
+            "type": "array",
+            "items": { "$ref": "ref.schema.json" }
+        }
+    },
+    "required": [ "conditions" ]
+}

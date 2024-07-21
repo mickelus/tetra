@@ -177,14 +177,17 @@ public class TetraMod {
         NumberProvider.register("tetra:subtract", SubtractNumberProvider.class);
         NumberProvider.register("tetra:multiply", MultiplyNumberProvider.class);
         NumberProvider.register("tetra:divide", DivideNumberProvider.class);
-        NumberProvider.register("tetra:distance", DistanceNumberProvider.class);
+        NumberProvider.register("tetra:length", LengthNumberProvider.class);
+        NumberProvider.register("tetra:effect_level", EffectLevelNumberProvider.class);
+        NumberProvider.register("tetra:effect_efficiency", EffectEfficiencyNumberProvider.class);
+        NumberProvider.register("tetra:vector", VectorNumberProvider.class);
 
-        VectorProvider.register("tetra:entity", EntityVectorProvider::deserialize);
+        VectorProvider.register("tetra:entity_position", EntityPositionVectorProvider::deserialize);
         VectorProvider.register("tetra:expression", ExpressionVectorProvider.class);
         VectorProvider.register("tetra:normalize", NormalizeVectorProvider.class);
         VectorProvider.register("tetra:number", NumberVectorProvider.class);
-        VectorProvider.register("tetra:entity_facing", FacingVectorProvider.class);
-        VectorProvider.register("tetra:entity_motion", MotionVectorProvider.class);
+        VectorProvider.register("tetra:entity_facing", EntityFacingVectorProvider.class);
+        VectorProvider.register("tetra:entity_motion", EntityMotionVectorProvider.class);
 
         EntityProvider.register("tetra:standard", StandardEntityProvider::deserialize);
 

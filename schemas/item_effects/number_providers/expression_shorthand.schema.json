@@ -1,0 +1,10 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/number_providers/expression_shorthand.schema.json",
+    "title": "Expression number provider shorthand",
+    "description": "Shorthand for the expression number provider, allows an expression string to be provided without a typed object.",
+    "examples": [
+        "1 + 2 * b"
+    ],
+    "type": "string"
+}

@@ -1,0 +1,10 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/vector_provider.schema.json",
+    "title": "Vector provider",
+    "description": "Provides vectors for item effects",
+    "oneOf": [
+        { "$ref": "standard.schema.json" },
+        { "$ref": "standard_shorthand.schema.json" }
+    ]
+}

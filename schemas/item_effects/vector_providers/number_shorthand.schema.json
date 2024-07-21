@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/vector_providers/number_shorthand.schema.json",
+    "title": "Number vector provider shorthand",
+    "description": "Shorthand for the number vector provider, which is an array of three number providers rather than a typed object with three fields.",
+    "examples": [
+        [
+            { "type": "tetra:vector", "vector": "target", "field": "x" },
+            64,
+            "a + 4"
+        ]
+    ],
+    "type": "array",
+    "prefixItems": [
+        {
+            "$ref": "../number_providers/ref.schema.json"
+        },
+        {
+            "$ref": "../number_providers/ref.schema.json"
+        },
+        {
+            "$ref": "../number_providers/ref.schema.json"
+        }
+    ]
+}

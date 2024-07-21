@@ -37,7 +37,7 @@ public interface VectorProvider {
         public VectorProvider deserialize(JsonElement jsonElement, Type type,
                 JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             if (jsonElement.isJsonPrimitive()) {
-                return new EntityVectorProvider(new StandardEntityProvider(StandardEntityProvider.Target.valueOf(jsonElement.getAsString())));
+                return new EntityPositionVectorProvider(new StandardEntityProvider(StandardEntityProvider.Target.valueOf(jsonElement.getAsString())));
             }
             if (jsonElement.isJsonArray()) {
                 JsonArray jsonArray = jsonElement.getAsJsonArray();
@@ -48,11 +48,11 @@ public interface VectorProvider {
                             DataManager.gson.fromJson(jsonArray.get(2), NumberProvider.class));
                 }
             }
+
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             String key = JsonOptional.field(jsonObject, "type")
                     .map(JsonElement::getAsString)
                     .orElse(null);
-
             if (deserializers.containsKey(key)) {
                 return deserializers.get(key).apply(jsonObject);
             }

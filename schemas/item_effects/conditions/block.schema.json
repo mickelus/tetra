@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/block.schema.json",
+    "title": "Block item effect condition",
+    "description": "Tests if the block at the given position passes the given condition.",
+    "examples": [
+        {
+            "type": "tetra:block",
+            "position": {
+
+            },
+            "block": {
+                "tag": "forge:ores"
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:block"
+        },
+        "block": { "$ref": "../../property_matcher.schema.json" },
+        "position": { "$ref": "../vector_providers/ref.schema.json" }
+    },
+    "required": [ "block", "position" ]
+}

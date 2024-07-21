@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/number_providers/expression.schema.json",
+    "title": "Expression number provider",
+    "description": "Provides a numerical value based on an expression. Supports addition, subtraction, multiplication, division, and parentheses. Can use fixed numerical values, but can also source values from the context (by using variable names matching numbers in the context). A data object can be used to define additional variables to what's available across the entire item effect.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:expression"
+        },
+        "expression": {
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "$ref": "ref.schema.json" }
+            }
+        }
+    },
+    "required": [ "expression" ]
+}

@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/fixed.schema.json",
+    "title": "Fixed item effect condition",
+    "description": "Always provides either true or false",
+    "examples": [
+        {
+            "type": "tetra:fixed",
+            "value": true
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:fixed"
+        },
+        "value": { "type": "boolean" }
+    },
+    "required": [ "value" ]
+}

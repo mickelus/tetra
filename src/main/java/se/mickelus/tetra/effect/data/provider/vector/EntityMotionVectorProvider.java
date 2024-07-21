@@ -4,7 +4,7 @@ import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
 
-public class MotionVectorProvider implements VectorProvider {
+public class EntityMotionVectorProvider implements VectorProvider {
     EntityProvider entity;
 
     @Override

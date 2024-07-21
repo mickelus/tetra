@@ -7,7 +7,7 @@ import se.mickelus.tetra.effect.data.condition.FixedItemEffectCondition;
 import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
 import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
 
-public class FacingVectorProvider implements VectorProvider {
+public class EntityFacingVectorProvider implements VectorProvider {
     EntityProvider entity;
     ItemEffectCondition cardinal = new FixedItemEffectCondition(false);
     ItemEffectCondition onlyHorizontal = new FixedItemEffectCondition(false);

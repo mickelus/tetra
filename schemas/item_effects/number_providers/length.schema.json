@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/number_providers/length.schema.json",
+    "title": "Length number provider",
+    "description": "Provides the length of a vector, defaults to providing the square length as that's more performant.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:length"
+        },
+        "vector": {
+            "$ref": "../vector_providers/ref.schema.json"
+        },
+        "square": {
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "Defaults to true, can be set to false to get the actual length instead of the square length."
+        }
+    },
+    "required": [ "vector" ]
+}

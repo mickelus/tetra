@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/entity_provider.schema.json",
+    "title": "Entity provider",
+    "description": "Provides entities for item effects",
+    "oneOf": [
+        {
+            "type": "string",
+            "enum": [ "source", "target" ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "const": "tetra:standard"
+                },
+                "entity": {
+                    "type": "string",
+                    "enum": [ "source", "target" ]
+                }
+            },
+            "required": [ "key" ]
+        }
+    ]
+}

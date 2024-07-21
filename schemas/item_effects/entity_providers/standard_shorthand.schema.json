@@ -1,0 +1,8 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/vector_providers/shorthands.schema.json",
+    "title": "Entity provider shorthand",
+    "description": "Shorthand values for the standard entity provider, entity provider fields can be set to a string value matching the enum of this schema to use a standard provider which provides an entity based on the string value.",
+    "type": "string",
+    "enum": [ "source", "target" ]
+}

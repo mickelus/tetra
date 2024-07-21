@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/stat_getter.schema.json",
+    "$id": "https://tetra.mickelus.se/json/stats/stat_getter.schema.json",
     "title": "Stat getter",
     "description": "A stat getter representation, used by statbars and holosphere sorting",
     "type": "object",

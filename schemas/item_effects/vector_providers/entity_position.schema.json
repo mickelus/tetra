@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/vector_providers/entity_position.schema.json",
+    "title": "Entity position vector provider",
+    "description": "Provides the position of the given entity",
+    "examples": [
+        {
+            "type": "tetra:entity_position",
+            "entity": "target"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:entity_position"
+        },
+        "entity": { "$ref": "../entity_providers/ref.schema.json" }
+    },
+    "required": [ "entity" ]
+}

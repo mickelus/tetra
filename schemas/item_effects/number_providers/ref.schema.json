@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/number_provider.schema.json",
+    "title": "Number provider",
+    "description": "Provides numerical values for item effects",
+    "required": [ "type" ],
+    "oneOf": [
+        {
+            "$ref": "context.schema.json"
+        },
+        {
+            "$ref": "effect_level.schema.json"
+        },
+        {
+            "$ref": "effect_efficiency.schema.json"
+        },
+        {
+            "$ref": "expression.schema.json"
+        },
+        {
+            "$ref": "expression_shorthand.schema.json"
+        },
+        {
+            "$ref": "length.schema.json"
+        },
+        {
+            "$ref": "random.schema.json"
+        }
+    ]
+}

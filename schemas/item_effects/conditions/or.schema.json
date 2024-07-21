@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/or.schema.json",
+    "title": "Or item effect condition",
+    "description": "Passes if ANY of the given conditions pass",
+    "examples": [
+        {
+            "type": "tetra:or",
+            "conditions": [
+                { "type": "tetra:fixed", "value": true },
+                { "type": "tetra:fixed", "value": false }
+            ]
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:or"
+        },
+        "conditions": {
+            "type": "array",
+            "items": { "$ref": "ref.schema.json" }
+        }
+    },
+    "required": [ "conditions" ]
+}

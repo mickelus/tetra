@@ -5,7 +5,7 @@ import se.mickelus.tetra.effect.data.condition.FixedItemEffectCondition;
 import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
 import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
 
-public class DistanceNumberProvider implements NumberProvider {
+public class LengthNumberProvider implements NumberProvider {
     VectorProvider vector;
     ItemEffectCondition square = new FixedItemEffectCondition(true);
 

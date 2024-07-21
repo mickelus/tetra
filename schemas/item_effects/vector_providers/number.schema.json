@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/vector_providers/number.schema.json",
+    "title": "Number vector provider",
+    "description": "Allows the construction of a vector from three number providers",
+    "examples": [
+        {
+            "type": "tetra:number",
+            "x": 1,
+            "y": { "type": "tetra:effect_level", "effect": "bleeding" },
+            "z": { "type": "tetra:sum", "values": [ { "type": "tetra:vector", "vector": "target", "field": "y" }, 1 ] }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:number"
+        },
+        "x": { "$ref": "../number_providers/ref.schema.json" },
+        "y": { "$ref": "../number_providers/ref.schema.json" },
+        "z": { "$ref": "../number_providers/ref.schema.json" }
+    },
+    "required": [ "x", "y", "z" ]
+}
