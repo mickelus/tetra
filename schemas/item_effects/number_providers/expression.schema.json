@@ -11,7 +11,7 @@
         "expression": {
             "type": "string"
         },
-        "data": {
+        "numbers": {
             "type": "object",
             "patternProperties": {
                 ".*": { "$ref": "ref.schema.json" }

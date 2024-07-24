@@ -2,25 +2,22 @@ package se.mickelus.tetra.effect.data.outcome;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
-import se.mickelus.tetra.effect.data.provider.entity.StandardEntityProvider;
-import se.mickelus.tetra.effect.data.provider.vector.EntityPositionVectorProvider;
 import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
 
 public class RunCommandItemEffectOutcome extends ItemEffectOutcome {
     String command;
-    EntityProvider entity = new StandardEntityProvider(StandardEntityProvider.Target.source);
-    VectorProvider position = new EntityPositionVectorProvider(entity, EntityPositionVectorProvider.Origin.feet);
+    EntityProvider entity;
+    VectorProvider position;
 
     @Override
     public boolean perform(ItemEffectContext context) {
-        MinecraftServer server = ((ServerLevel) context.getLevel()).getServer();
+        MinecraftServer server = context.getLevel().getServer();
 
         CommandSourceStack commandSourceStack = server.createCommandSourceStack()
                 .withPermission(2)
-                .withLevel((ServerLevel) context.getLevel())
+                .withLevel(context.getLevel())
                 .withEntity(entity.getEntity(context))
                 .withPosition(position.getVector(context));
 

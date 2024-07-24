@@ -25,8 +25,8 @@
                 },
                 "values": {
                     "type": "object",
-                    "properties": {
-                        "*": { "$ref": "ref.schema.json" }
+                    "patternProperties": {
+                        ".*": { "$ref": "ref.schema.json" }
                     }
                 },
                 "result": { "$ref": "ref.schema.json" }

@@ -1,8 +1,6 @@
 package se.mickelus.tetra.effect.data.provider.vector;
 
-import com.google.gson.JsonObject;
 import net.minecraft.world.phys.Vec3;
-import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
 
@@ -32,9 +30,5 @@ public class EntityPositionVectorProvider implements VectorProvider {
         feet,
         head,
         center
-    }
-
-    public static VectorProvider deserialize(JsonObject jsonObject) {
-        return DataManager.gson.fromJson(jsonObject, EntityPositionVectorProvider.class);
     }
 }

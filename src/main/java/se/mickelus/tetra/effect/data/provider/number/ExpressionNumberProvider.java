@@ -7,6 +7,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 import se.mickelus.tetra.effect.data.ItemEffectData;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Stack;
@@ -24,23 +25,24 @@ public class ExpressionNumberProvider implements NumberProvider {
 
     private final NumberProvider rootProvider;
 
-    private final Map<String, NumberProvider> data;
+    @Nullable
+    private final Map<String, NumberProvider> numbers;
 
-    public ExpressionNumberProvider(NumberProvider rootProvider, Map<String, NumberProvider> data) {
+    public ExpressionNumberProvider(NumberProvider rootProvider, @Nullable Map<String, NumberProvider> numbers) {
         this.rootProvider = rootProvider;
-        this.data = data;
+        this.numbers = numbers;
     }
 
     public float getValue(ItemEffectContext context) {
-        if (data != null) {
-            return rootProvider.getValue(context.withMergedData(ItemEffectData.calculateData(data, context)));
+        if (numbers != null) {
+            return rootProvider.getValue(context.withMergedNumbers(ItemEffectData.calculateNumbers(numbers, context)));
         }
         return rootProvider.getValue(context);
     }
 
     public int getIntegerValue(ItemEffectContext context) {
-        if (data != null) {
-            return rootProvider.getIntegerValue(context.withMergedData(ItemEffectData.calculateData(data, context)));
+        if (numbers != null) {
+            return rootProvider.getIntegerValue(context.withMergedNumbers(ItemEffectData.calculateNumbers(numbers, context)));
         }
         return rootProvider.getIntegerValue(context);
     }
@@ -49,7 +51,7 @@ public class ExpressionNumberProvider implements NumberProvider {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         return new ExpressionNumberProvider(parseExpression(
                 jsonObject.get("expression").getAsString()),
-                DataManager.gson.fromJson(jsonObject.get("data"), dataType));
+                DataManager.gson.fromJson(jsonObject.get("numbers"), dataType));
     }
 
     public static NumberProvider parseExpression(String expression) {

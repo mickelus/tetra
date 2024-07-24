@@ -6,7 +6,6 @@ import net.minecraft.world.phys.Vec3;
 import se.mickelus.mutil.util.JsonOptional;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
-import se.mickelus.tetra.effect.data.provider.entity.StandardEntityProvider;
 import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
 
 import java.lang.reflect.Type;
@@ -37,7 +36,7 @@ public interface VectorProvider {
         public VectorProvider deserialize(JsonElement jsonElement, Type type,
                 JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             if (jsonElement.isJsonPrimitive()) {
-                return new EntityPositionVectorProvider(new StandardEntityProvider(StandardEntityProvider.Target.valueOf(jsonElement.getAsString())));
+                return new ContextVectorProvider(jsonElement.getAsString());
             }
             if (jsonElement.isJsonArray()) {
                 JsonArray jsonArray = jsonElement.getAsJsonArray();

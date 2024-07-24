@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/not.schema.json",
+    "title": "Not item effect condition",
+    "description": "Passes if the given condition does not pass",
+    "examples": [
+        {
+            "type": "tetra:not",
+            "condition": { "type": "tetra:fixed", "value": false }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:not"
+        },
+        "condition": {
+            "$ref": "ref.schema.json"
+        }
+    },
+    "required": [ "condition" ]
+}

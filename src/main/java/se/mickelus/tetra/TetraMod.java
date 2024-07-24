@@ -34,8 +34,8 @@ import se.mickelus.tetra.effect.LungeEchoPacket;
 import se.mickelus.tetra.effect.TruesweepPacket;
 import se.mickelus.tetra.effect.data.condition.*;
 import se.mickelus.tetra.effect.data.outcome.*;
+import se.mickelus.tetra.effect.data.provider.entity.ContextEntityProvider;
 import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
-import se.mickelus.tetra.effect.data.provider.entity.StandardEntityProvider;
 import se.mickelus.tetra.effect.data.provider.number.*;
 import se.mickelus.tetra.effect.data.provider.vector.*;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
@@ -144,7 +144,7 @@ public class TetraMod {
         CraftingRequirementDeserializer.registerSupplier("tetra:aspect", AspectRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:perk", PerkRequrement.class);
 
-        ItemEffectCondition.register("tetra:random", RandomItemEffectCondition.deserializer);
+        ItemEffectCondition.register("tetra:random", RandomItemEffectCondition.class);
         ItemEffectCondition.register("tetra:expression", ExpressionItemEffectCondition::deserialize);
         ItemEffectCondition.register("tetra:and", AndItemEffectCondition.class);
         ItemEffectCondition.register("tetra:or", OrItemEffectCondition.class);
@@ -152,6 +152,7 @@ public class TetraMod {
         ItemEffectCondition.register("tetra:block", BlockItemEffectCondition.class);
         ItemEffectCondition.register("tetra:can_harvest", CanHarvestItemEffectCondition.class);
         ItemEffectCondition.register("tetra:entity", EntityItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:entities_equals", EntityItemEffectCondition.class);
         ItemEffectCondition.register("tetra:fixed", FixedItemEffectCondition.class);
 
         ItemEffectOutcome.register("tetra:apply_effect", ApplyEffectItemEffectOutcome.class);
@@ -168,10 +169,14 @@ public class TetraMod {
         ItemEffectOutcome.register("tetra:push_entity", PushEntityItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:particle", ParticleItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:sound", SoundItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:delay", DelayItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:loop", LoopItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:stagger", StaggerItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:imitate", ImitateItemEffectOutcome.class);
 
         NumberProvider.register("tetra:expression", ExpressionNumberProvider::deserialize);
         NumberProvider.register("tetra:fixed", FixedNumberProvider.class);
-        NumberProvider.register("tetra:variable", ContextNumberProvider::deserialize);
+        NumberProvider.register("tetra:context", ContextNumberProvider.class);
         NumberProvider.register("tetra:random", RandomNumberProvider.class);
         NumberProvider.register("tetra:sum", SumNumberProvider.class);
         NumberProvider.register("tetra:subtract", SubtractNumberProvider.class);
@@ -181,15 +186,17 @@ public class TetraMod {
         NumberProvider.register("tetra:effect_level", EffectLevelNumberProvider.class);
         NumberProvider.register("tetra:effect_efficiency", EffectEfficiencyNumberProvider.class);
         NumberProvider.register("tetra:vector", VectorNumberProvider.class);
+        NumberProvider.register("tetra:block_property", BlockPropertyNumberProvider.class);
 
-        VectorProvider.register("tetra:entity_position", EntityPositionVectorProvider::deserialize);
+        VectorProvider.register("tetra:entity_position", EntityPositionVectorProvider.class);
+        VectorProvider.register("tetra:context", ContextVectorProvider.class);
         VectorProvider.register("tetra:expression", ExpressionVectorProvider.class);
         VectorProvider.register("tetra:normalize", NormalizeVectorProvider.class);
         VectorProvider.register("tetra:number", NumberVectorProvider.class);
         VectorProvider.register("tetra:entity_facing", EntityFacingVectorProvider.class);
         VectorProvider.register("tetra:entity_motion", EntityMotionVectorProvider.class);
 
-        EntityProvider.register("tetra:standard", StandardEntityProvider::deserialize);
+        EntityProvider.register("tetra:context", ContextEntityProvider.class);
 
         packetHandler = new PacketHandler(MOD_ID, "main", "1");
     }

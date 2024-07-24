@@ -23,6 +23,10 @@ public class ServerScheduler {
         queue.add(new Task(id, counter + delay, task));
     }
 
+    public static boolean isScheduled(String id) {
+        return queue.stream().anyMatch(t -> id.equals(t.id));
+    }
+
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) {

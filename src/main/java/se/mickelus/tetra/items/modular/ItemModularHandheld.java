@@ -53,6 +53,7 @@ import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.effect.*;
+import se.mickelus.tetra.effect.data.DataEffectsHandler;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
@@ -178,6 +179,7 @@ public class ItemModularHandheld extends ModularItem {
             }
 
             CritEffect.onBlockBreak(entity);
+            DataEffectsHandler.applyMineBlockEffects(itemStack, entity, pos);
         }
 
         return true;
@@ -213,6 +215,8 @@ public class ItemModularHandheld extends ModularItem {
             if (skulkTaintLevel > 0) {
                 SculkTaintEffect.perform((ServerLevel) world, pos, skulkTaintLevel, getEffectEfficiency(itemStack, ItemEffect.sculkTaint));
             }
+
+            DataEffectsHandler.applyBreakBlockEffects(itemStack, entity, pos);
         }
     }
 

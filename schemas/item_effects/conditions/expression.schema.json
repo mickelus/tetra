@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/expression.schema.json",
+    "title": "Expression item effect condition",
+    "description": "An item effect condition that is based on a comparative mathematical expression, additional numerical data may be passed to the expression.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:expression"
+        },
+        "expression": {
+            "description": "Must contain a single comparator (>, <, >=, <=, ==, !=) with an expression (same as for numbers) on both sides.",
+            "type": "string"
+        },
+        "numbers": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "$ref": "../number_providers/ref.schema.json" }
+            }
+        }
+    },
+    "required": [ "expression" ]
+}

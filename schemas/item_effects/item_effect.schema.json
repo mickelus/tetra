@@ -5,7 +5,7 @@
     "description": "A datadriven item effect",
     "type": "object",
     "properties": {
-        "type": {
+        "trigger": {
             "type": "string"
         },
         "effect": {
@@ -14,36 +14,32 @@
         "data": {
             "type": "object",
             "properties": {
-                "*": { }
+                "numbers": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "$ref": "number_providers/ref.schema.json" }
+                    }
+                },
+                "vectors": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "$ref": "vector_providers/ref.schema.json" }
+                    }
+                },
+                "entities": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "$ref": "entity_providers/ref.schema.json" }
+                    }
+                }
             }
         },
-        "contexts": {
-            "type": "array",
-            "description": "Defines which UIs to show this stat bar in",
-            "items": {
-                "type": "string",
-                "examples": [ "tetra:workbench", "tetra:holosphere" ]
-            }
+        "condition": {
+            "$ref": "conditions/ref.schema.json"
         },
-        "generateSorter": {
-            "description": "If set to true, registers a stat sorter with the same label, stat and format as this stat bar",
-            "type": "boolean"
-        },
-        "stat": {
-            "$ref": "stat_getter.schema.json"
-        },
-        "label": {
-            "$ref": "label_getter.schema.json"
-        },
-        "tooltip": {
-            "$ref": "tooltip_getter.schema.json"
-        },
-        "indicators": {
-            "type": "array",
-            "items": {
-                "$ref": "stat_indicator.schema.json"
-            }
+        "outcome": {
+            "$ref": "outcomes/ref.schema.json"
         }
     },
-    "required": [ "contexts", "stat" ]
+    "required": [ "trigger", "effect", "outcome" ]
 }

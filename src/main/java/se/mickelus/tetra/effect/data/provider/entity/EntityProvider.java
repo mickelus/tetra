@@ -29,8 +29,9 @@ public interface EntityProvider {
         public EntityProvider deserialize(JsonElement jsonElement, Type type,
                 JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             if (jsonElement.isJsonPrimitive()) {
-                return new StandardEntityProvider(StandardEntityProvider.Target.valueOf(jsonElement.getAsString()));
+                return new ContextEntityProvider(jsonElement.getAsString());
             }
+            
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             String key = JsonOptional.field(jsonObject, "type")
                     .map(JsonElement::getAsString)

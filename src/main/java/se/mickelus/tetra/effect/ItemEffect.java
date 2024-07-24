@@ -1,6 +1,12 @@
 package se.mickelus.tetra.effect;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -412,5 +418,13 @@ public class ItemEffect {
 
     public String getKey() {
         return key;
+    }
+
+    public static class Deserializer implements JsonDeserializer<ItemEffect> {
+        @Override
+        public ItemEffect deserialize(JsonElement jsonElement, Type type,
+                JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            return get(jsonElement.getAsString());
+        }
     }
 }

@@ -4,9 +4,9 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
+import se.mickelus.tetra.effect.data.ItemEffectData;
 import se.mickelus.tetra.effect.data.provider.number.ExpressionNumberProvider;
 import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
 
@@ -16,25 +16,29 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 public class ExpressionItemEffectCondition extends ItemEffectCondition {
-    private static final Type dataType = new TypeToken<Map<String, ItemTransforms>>() {
+    private static final Type dataType = new TypeToken<Map<String, NumberProvider>>() {
     }.getType();
+
     NumberProvider left;
     NumberProvider right;
     Operator operator;
 
     @Nullable
-    Map<String, Float> data;
+    Map<String, NumberProvider> numbers;
 
-    public ExpressionItemEffectCondition(NumberProvider left, NumberProvider right, Operator operator, @Nullable Map<String, Float> data) {
+    public ExpressionItemEffectCondition(NumberProvider left, NumberProvider right, Operator operator,
+            @Nullable Map<String, NumberProvider> numbers) {
         this.left = left;
         this.right = right;
         this.operator = operator;
+
+        this.numbers = numbers;
     }
 
     @Override
     public boolean test(ItemEffectContext context) {
-        if (data != null) {
-            context = context.withMergedData(data);
+        if (numbers != null) {
+            context = context.withMergedNumbers(ItemEffectData.calculateNumbers(numbers, context));
         }
         return operator.comparator.apply(left.getValue(context), right.getValue(context));
     }
@@ -48,7 +52,7 @@ public class ExpressionItemEffectCondition extends ItemEffectCondition {
                 if (expressionParts.length == 2) {
                     NumberProvider left = ExpressionNumberProvider.parseExpression(expressionParts[0]);
                     NumberProvider right = ExpressionNumberProvider.parseExpression(expressionParts[1]);
-                    Map<String, Float> data = DataManager.gson.fromJson(jsonObject.get("data"), dataType);
+                    Map<String, NumberProvider> data = DataManager.gson.fromJson(jsonObject.get("numbers"), dataType);
 
                     return new ExpressionItemEffectCondition(left, right, operator, data);
                 }

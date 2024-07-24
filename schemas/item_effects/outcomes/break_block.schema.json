@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/break_block.schema.json",
+    "title": "Break block item effect outcome",
+    "description": "Attempts to break a block at the given position. The breaker field is used to determine which entity is breaking the block. The harvest condition determines if the block should drop loot.",
+    "examples": [
+        {
+            "type": "tetra:break_block",
+            "position": {
+                "type": "tetra:expression",
+                "result": [ "targetX", "targetY+1", "targetZ" ]
+            },
+            "breaker": "breaker",
+            "harvest": true
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:not"
+        },
+        "position": {
+            "$ref": "../vector_providers/ref.schema.json"
+        },
+        "breaker": {
+            "$ref": "../entity_providers/ref.schema.json"
+        },
+        "harvest": {
+            "$ref": "../conditions/ref.schema.json"
+        }
+    },
+    "required": [ "position", "breaker" ]
+}

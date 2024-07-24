@@ -41,6 +41,7 @@ import se.mickelus.tetra.craftingeffect.CraftingEffect;
 import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.craftingeffect.outcome.CraftingEffectOutcome;
 import se.mickelus.tetra.data.deserializer.*;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.effect.data.ItemEffectTrigger;
 import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
 import se.mickelus.tetra.effect.data.outcome.ItemEffectOutcome;
@@ -103,6 +104,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(Quaternionf.class, new QuaternionDeserializer())
             .registerTypeAdapter(Transformation.class, new TransformationDeserializer())
             .registerTypeAdapter(ItemDisplayContext.class, new ItemDisplayContextDeserializer())
+            .registerTypeAdapter(ItemEffect.class, new ItemEffect.Deserializer())
             .registerTypeAdapter(ItemEffectTrigger.class, new ItemEffectTrigger.Deserializer())
             .registerTypeAdapter(ItemEffectCondition.class, new ItemEffectCondition.Deserializer())
             .registerTypeAdapter(ItemEffectOutcome.class, new ItemEffectOutcome.Deserializer())

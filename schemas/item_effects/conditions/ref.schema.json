@@ -9,6 +9,18 @@
         },
         {
             "$ref": "fixed_shorthand.schema.json"
+        },
+        {
+            "$ref": "and.schema.json"
+        },
+        {
+            "$ref": "or.schema.json"
+        },,
+        {
+            "$ref": "not.schema.json"
+        },
+        {
+            "$ref": "block.schema.json"
         }
     ]
 }

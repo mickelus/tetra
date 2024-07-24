@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/random.schema.json",
+    "title": "Random item effect condition",
+    "description": "A condition that has a chance (equal to the provided chance value) to pass.",
+    "examples": [
+        {
+            "type": "tetra:random",
+            "chance": 0.3
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:random"
+        },
+        "chance": {
+            "$ref": "../number_providers/ref.schema.json"
+        }
+    },
+    "required": [ "chance" ]
+}

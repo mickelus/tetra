@@ -1,13 +1,11 @@
 package se.mickelus.tetra.effect.data;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -18,65 +16,88 @@ public class ItemEffectContext {
     private LivingEntity usingEntity;
     private ItemStack usedItemStack;
     private ServerLevel level;
-    private @Nullable Entity targetEntity;
-    private @Nullable BlockPos targetPos;
-    private @Nullable BlockState targetState;
-    private Map<String, Float> data;
+    private Map<String, Float> numbers;
+    private Map<String, Vec3> vectors;
+    private Map<String, Entity> entities;
 
-    public ItemEffectContext(
-            LivingEntity usingEntity,
-            ItemStack usedItemStack,
-            ServerLevel level,
-            @Nullable Entity targetEntity,
-            @Nullable BlockPos targetPos,
-            @Nullable BlockState targetState) {
+    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, ServerLevel level,
+            Map<String, Float> numbers, Map<String, Vec3> vectors, Map<String, Entity> entities) {
         this.usingEntity = usingEntity;
         this.usedItemStack = usedItemStack;
         this.level = level;
-        this.targetEntity = targetEntity;
-        this.targetPos = targetPos;
-        this.targetState = targetState;
 
-        this.data = Collections.emptyMap();
+        this.numbers = numbers;
+        this.vectors = vectors;
+        this.entities = entities;
     }
 
     public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, ServerLevel level) {
-        this(usingEntity, usedItemStack, level, null, null, null);
+        this(usingEntity, usedItemStack, level, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap());
     }
 
-    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, ServerLevel level, Entity targetEntity) {
-        this(usingEntity, usedItemStack, level, targetEntity, null, null);
-    }
-
-    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, ServerLevel level, BlockPos targetPos, BlockState targetState) {
-        this(usingEntity, usedItemStack, level, null, targetPos, targetState);
-    }
 
     public ItemEffectContext copy() {
-        return new ItemEffectContext(usingEntity, usedItemStack, level, targetEntity, targetPos, targetState);
+        return new ItemEffectContext(usingEntity, usedItemStack, level, numbers, vectors, entities);
     }
 
-    public ItemEffectContext withData(Map<String, Float> data) {
+    public ItemEffectContext withNumbers(Map<String, Float> numbers) {
         ItemEffectContext copy = copy();
-        copy.data = data;
+        copy.numbers = numbers;
         return copy;
     }
 
-    public ItemEffectContext withMergedData(Map<String, Float> data) {
+    public ItemEffectContext withMergedNumbers(Map<String, Float> numbers) {
         ItemEffectContext copy = copy();
-        copy.data = Stream.of(copy.data, data)
+        copy.numbers = mergeNumbers(copy.numbers, numbers);
+        return copy;
+    }
+
+    @SafeVarargs
+    public static Map<String, Float> mergeNumbers(Map<String, Float>... numbers) {
+        return Stream.of(numbers)
                 .map(Map::entrySet)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> b));
+    }
+
+    public ItemEffectContext withVectors(Map<String, Vec3> vectors) {
+        ItemEffectContext copy = copy();
+        copy.vectors = vectors;
         return copy;
     }
 
-    public ItemEffectContext withBlock(BlockPos pos, BlockState state) {
-        return new ItemEffectContext(usingEntity, usedItemStack, level, targetEntity, pos, state);
+    public ItemEffectContext withMergedVectors(Map<String, Vec3> vectors) {
+        ItemEffectContext copy = copy();
+        copy.vectors = mergeVectors(copy.vectors, vectors);
+        return copy;
     }
 
-    public LivingEntity getUsingEntity() {
-        return usingEntity;
+    @SafeVarargs
+    public static Map<String, Vec3> mergeVectors(Map<String, Vec3>... vectors) {
+        return Stream.of(vectors)
+                .map(Map::entrySet)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> b));
+    }
+
+    public ItemEffectContext withEntities(Map<String, Entity> entities) {
+        ItemEffectContext copy = copy();
+        copy.entities = entities;
+        return copy;
+    }
+
+    public ItemEffectContext withMergedEntities(Map<String, Entity> entities) {
+        ItemEffectContext copy = copy();
+        copy.entities = mergeEntities(copy.entities, entities);
+        return copy;
+    }
+
+    @SafeVarargs
+    public static Map<String, Entity> mergeEntities(Map<String, Entity>... entities) {
+        return Stream.of(entities)
+                .map(Map::entrySet)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> b));
     }
 
     public ItemStack getUsedItemStack() {
@@ -87,26 +108,15 @@ public class ItemEffectContext {
         return level;
     }
 
-    @Nullable
-    public Entity getTargetEntity() {
-        return targetEntity;
+    public Map<String, Float> getNumbers() {
+        return numbers;
     }
 
-    @Nullable
-    public BlockPos getTargetPos() {
-        return targetPos;
+    public Map<String, Vec3> getVectors() {
+        return vectors;
     }
 
-    @Nullable
-    public BlockState getTargetState() {
-        return targetState;
-    }
-
-    public Map<String, Float> getData() {
-        return data;
-    }
-
-    public ItemEffectContext withTarget(Entity entity) {
-        return new ItemEffectContext(usingEntity, usedItemStack, level, entity, targetPos, targetState);
+    public Map<String, Entity> getEntities() {
+        return entities;
     }
 }

@@ -6,9 +6,7 @@
     "examples": [
         {
             "type": "tetra:block",
-            "position": {
-
-            },
+            "position": "target",
             "block": {
                 "tag": "forge:ores"
             }
