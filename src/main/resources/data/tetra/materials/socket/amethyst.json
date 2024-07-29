@@ -16,15 +16,15 @@
         "forge:attack_range": 0.5
     },
     "effects": {
-        "reaching": [10, 0.45]
+        "reaching": [ 5, 0.45 ]
     },
     "tints": {
         "glyph": "bd9cf6",
         "texture": "bd9cf6"
     },
-    "textures": ["default"],
+    "textures": [ "default" ],
     "experienceCost": 2,
     "material": {
-        "items": ["minecraft:amethyst_shard"]
+        "items": [ "minecraft:amethyst_shard" ]
     }
 }

@@ -16,7 +16,7 @@
         "forge:attack_range": 1
     },
     "effects": {
-        "reaching": [ 15, 0.45 ]
+        "reaching": [ 9, 0.45 ]
     },
     "tints": {
         "glyph": "bd9cf6",
