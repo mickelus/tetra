@@ -1,0 +1,42 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/delay.schema.json",
+    "title": "Delay item effect outcome",
+    "description": "Applies the given outcome after the given delay (in ticks). Can be keyed (both globally and to an entity) to have the delayed outcome either replace or get blocked with previous (active) delays sharing the key.",
+    "examples": [
+        {
+            "type": "tetra:delay",
+            "delay": 2,
+            "outcome": {
+                "type": "tetra:apply_effect",
+                "effect": "minecraft:regeneration",
+                "entity": "miner",
+                "source": "miner",
+                "duration": 20,
+                "amplifier": 1
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:delay"
+        },
+        "outcome": {
+            "$ref": "../outcomes/ref.schema.json"
+        },
+        "delay": {
+            "$ref": "../number_providers/ref.schema.json"
+        },
+        "key": {
+            "type": "string"
+        },
+        "keyEntity": {
+            "$ref": "../entity_providers/ref.schema.json"
+        },
+        "replaceKey": {
+            "$ref": "../conditions/ref.schema.json"
+        }
+    },
+    "required": [ "outcome", "delay" ]
+}

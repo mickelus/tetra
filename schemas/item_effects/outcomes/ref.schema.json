@@ -4,7 +4,22 @@
     "title": "Item effect outcome",
     "description": "Item effect outcomes are used to do things in the world when an item effect triggers",
     "oneOf": [
-        { "$ref": "standard.schema.json" },
-        { "$ref": "standard_shorthand.schema.json" }
+        { "$ref": "apply_effect.schema.json" },
+        { "$ref": "break_block.schema.json" },
+        { "$ref": "command.schema.json" },
+        { "$ref": "conditioned.schema.json" },
+        { "$ref": "damage_entity.schema.json" },
+        { "$ref": "delay.schema.json" },
+        { "$ref": "find_blocks.schema.json" },
+        { "$ref": "find_entities.schema.json" },
+        { "$ref": "function.schema.json" },
+        { "$ref": "imitate.schema.json" },
+        { "$ref": "loop.schema.json" },
+        { "$ref": "move_entity.schema.json" },
+        { "$ref": "multiple.schema.json" },
+        { "$ref": "particle.schema.json" },
+        { "$ref": "push_entity.schema.json" },
+        { "$ref": "set_block.schema.json" },
+        { "$ref": "sound.schema.json" }
     ]
 }

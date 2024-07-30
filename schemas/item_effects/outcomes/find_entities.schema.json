@@ -1,0 +1,55 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/find_entities.schema.json",
+    "title": "Find entities item effect outcome",
+    "description": "Finds all entities matching the given condition in the given bounding box and runs the given outcome for each of them, originating from the given position. Adds a 'ref' entity, an 'index' number and a 'successCount' number to the context for the outcome.",
+    "examples": [
+        {
+            "type": "tetra:find_entities",
+            "origin": "target",
+            "bounds": [ -5, -2, -5, 5, 2, 5 ],
+            "condition": {
+                "type": "#minecraft:freeze_hurts_extra_types"
+            },
+            "exclude": "attacker",
+            "outcome": {
+                "type": "tetra:apply_effect",
+                "effect": "minecraft:slowness",
+                "entity": "ref",
+                "source": "attacker",
+                "duration": 60,
+                "amplifier": 1
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:find_entities"
+        },
+        "origin": {
+            "$ref": "../vector_providers/ref.schema.json"
+        },
+        "bounds": {
+            "type": "array",
+            "items": {
+                "type": "number"
+            },
+            "minItems": 6,
+            "maxItems": 6
+        },
+        "condition": {
+            "$ref": "../../entity_predicate.schema.json"
+        },
+        "outcome": {
+            "$ref": "../outcomes/ref.schema.json"
+        },
+        "exclude": {
+            "type": "array",
+            "items": {
+                "$ref": "../entity_providers/ref.schema.json"
+            }
+        }
+    },
+    "required": [ "origin", "bounds", "outcome" ]
+}

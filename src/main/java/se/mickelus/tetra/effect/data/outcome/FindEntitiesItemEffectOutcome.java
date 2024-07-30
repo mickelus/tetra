@@ -9,10 +9,10 @@ import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
 import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
 
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FindEntitiesItemEffectOutcome extends ItemEffectOutcome {
-    EntityPredicate predicate;
+    EntityPredicate condition;
     VectorProvider origin;
     AABB bounds;
     ItemEffectOutcome outcome;
@@ -21,17 +21,20 @@ public class FindEntitiesItemEffectOutcome extends ItemEffectOutcome {
 
     @Override
     public boolean perform(ItemEffectContext context) {
-        AtomicBoolean result = new AtomicBoolean(false);
+        AtomicInteger counter = new AtomicInteger(0);
+        AtomicInteger successCounter = new AtomicInteger(0);
         context.getLevel().getEntities((Entity) null, bounds.move(origin.getBlockPos(context)),
                         entity -> Arrays.stream(exclude).noneMatch(e -> entity.equals(e.getEntity(context)))
-                                && predicate.matches(context.getLevel(), null, entity))
+                                && (condition == null || condition.matches(context.getLevel(), null, entity)))
                 .forEach(entity -> {
-                    ItemEffectContext updatedContext = context.withMergedEntities(ImmutableMap.of("ref", entity));
+                    ItemEffectContext updatedContext = context.withMergedEntities(ImmutableMap.of("ref", entity))
+                            .withMergedNumbers(ImmutableMap.of("index", counter.floatValue(), "successCount", successCounter.floatValue()));
                     boolean success = outcome.perform(updatedContext);
                     if (success) {
-                        result.set(true);
+                        successCounter.incrementAndGet();
                     }
+                    counter.incrementAndGet();
                 });
-        return result.get();
+        return successCounter.get() > 0;
     }
 }

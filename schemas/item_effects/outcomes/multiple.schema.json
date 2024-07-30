@@ -1,0 +1,60 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/multiple.schema.json",
+    "title": "Multiple item effect outcome",
+    "description": "Applies multiple outcomes. All outcomes are applied unless the 'count' field is specified.",
+    "examples": [
+        {
+            "type": "tetra:multiple",
+            "outcomes": [
+                {
+                    "type": "tetra:apply_effect",
+                    "effect": "minecraft:regeneration",
+                    "entity": "miner",
+                    "source": "miner",
+                    "duration": 20,
+                    "amplifier": 1
+                },
+                {
+                    "type": "tetra:apply_effect",
+                    "effect": "tetra:bleeding",
+                    "entity": "miner",
+                    "source": "miner",
+                    "duration": 20,
+                    "amplifier": 1
+                }
+            ],
+            "count": 1,
+            "random": true
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:multiple"
+        },
+        "outcomes": {
+            "type": "array",
+            "items": {
+                "$ref": "../outcomes/ref.schema.json"
+            }
+        },
+        "count": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The number of outcomes to apply. If not specified or if there are fewer outcomes than count, all outcomes are applied."
+        },
+        "random": {
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "If true, the outcomes are applied in a random order. Less useful when count is not present."
+        },
+        "onlyCountSuccessful": {
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "If true, only the outcomes that successfully apply are counted towards the 'count' limit."
+        },
+        "failureLimit": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "If provided, stops executing outcomes when the number of failed outcomes has reached this limit."
+        }
+    },
+    "required": [ "outcomes" ]
+}

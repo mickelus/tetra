@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/move_entity.schema.json",
+    "title": "Move entity item effect outcome",
+    "description": "Attempts to move the given entity to the given position",
+    "examples": [
+        {
+            "type": "tetra:move_entity",
+            "position": {
+                "type": "tetra:expression",
+                "result": [ "targetX", "targetY+1", "targetZ" ]
+            },
+            "entity": "breaker"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:move_entity"
+        },
+        "position": {
+            "$ref": "../vector_providers/ref.schema.json"
+        },
+        "entity": {
+            "$ref": "../entity_providers/ref.schema.json"
+        }
+    },
+    "required": [ "position", "entity" ]
+}

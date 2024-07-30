@@ -1,0 +1,28 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/entity.schema.json",
+    "title": "Entity item effect condition",
+    "description": "Tests if the given entity passes the given condition.",
+    "examples": [
+        {
+            "type": "tetra:entity",
+            "entity": "target",
+            "condition": {
+                "type": "#minecraft:freeze_hurts_extra_types"
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:entity"
+        },
+        "entity": { "$ref": "../../property_matcher.schema.json" },
+        "condition": { "$ref": "../../entity_predicate.schema.json" },
+        "origin": {
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "Used as a reference point for the optional 'distance' field in the condition, can be omitted if that's not used."
+        }
+    },
+    "required": [ "entity", "condition" ]
+}

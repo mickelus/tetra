@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/sound.schema.json",
+    "title": "Particle item effect outcome",
+    "description": "Plays a sound in the world using the given parameters",
+    "examples": [
+        {
+            "type": "tetra:sound",
+            "sound": "minecraft:block.anvil.break",
+            "position": "target"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:sound"
+        },
+        "sound": {
+            "$ref": "../../resource_location.schema.json"
+        },
+        "position": {
+            "$ref": "../vector_providers/ref.schema.json"
+        },
+        "volume": {
+            "$ref": "../number_providers/ref.schema.json"
+        },
+        "pitch": {
+            "$ref": "../number_providers/ref.schema.json"
+        }
+    },
+    "required": [ "sound", "position" ]
+}

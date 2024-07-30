@@ -6,12 +6,12 @@ import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
 import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
 
 public class EntityItemEffectCondition extends ItemEffectCondition {
-    EntityPredicate predicate;
+    EntityPredicate condition;
     EntityProvider entity;
     VectorProvider origin;
 
     @Override
     public boolean test(ItemEffectContext context) {
-        return predicate.matches(context.getLevel(), origin.getVector(context), entity.getEntity(context));
+        return condition.matches(context.getLevel(), origin != null ? origin.getVector(context) : null, entity.getEntity(context));
     }
 }

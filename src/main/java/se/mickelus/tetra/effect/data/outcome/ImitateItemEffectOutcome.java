@@ -11,14 +11,14 @@ import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
 
 public class ImitateItemEffectOutcome extends ItemEffectOutcome {
     ItemStack itemStack;
-    ImitateType type;
+    ImitateType effect;
     EntityProvider targetEntity;
     EntityProvider user;
     VectorProvider targetPosition;
 
     @Override
     public boolean perform(ItemEffectContext context) {
-        switch (type) {
+        switch (effect) {
             case swing:
                 return swing(context);
             case breakBlockStart:

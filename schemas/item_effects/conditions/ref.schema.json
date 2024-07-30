@@ -11,16 +11,31 @@
             "$ref": "fixed_shorthand.schema.json"
         },
         {
+            "$ref": "expression.schema.json"
+        },
+        {
             "$ref": "and.schema.json"
         },
         {
             "$ref": "or.schema.json"
-        },,
+        },
         {
             "$ref": "not.schema.json"
         },
         {
             "$ref": "block.schema.json"
+        },
+        {
+            "$ref": "can_harvest.schema.json"
+        },
+        {
+            "$ref": "random.schema.json"
+        },
+        {
+            "$ref": "entities_equals.schema.json"
+        },
+        {
+            "$ref": "entity.schema.json"
         }
     ]
 }

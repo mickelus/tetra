@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/damage_entity.schema.json",
+    "title": "Damage entity item effect outcome",
+    "description": "Attempts to move the given entity to the given position",
+    "examples": [
+        {
+            "type": "tetra:damage_entity",
+            "entity": "breaker",
+            "amount": 1,
+            "damageType": "minecraft:generic"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:damage_entity"
+        },
+        "entity": {
+            "$ref": "../entity_providers/ref.schema.json"
+        },
+        "amount": {
+            "$ref": "../number_providers/ref.schema.json"
+        },
+        "damageType": {
+            "$ref": "../../resource_location.schema.json"
+        }
+    },
+    "required": [ "entity", "amount", "damageType" ]
+}

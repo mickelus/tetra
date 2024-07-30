@@ -12,7 +12,7 @@ import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FindBlocksItemEffectOutcome extends ItemEffectOutcome {
-    PropertyMatcher predicate;
+    PropertyMatcher condition;
     VectorProvider origin;
     AABB bounds;
     ItemEffectOutcome outcome;
@@ -23,7 +23,7 @@ public class FindBlocksItemEffectOutcome extends ItemEffectOutcome {
         AtomicInteger successCounter = new AtomicInteger(0);
         BlockPos.betweenClosedStream(bounds.move(origin.getBlockPos(context)))
                 .map(pos -> Pair.of(pos, context.getLevel().getBlockState(pos)))
-                .filter(pair -> predicate.test(pair.getSecond()))
+                .filter(pair -> condition == null || condition.test(pair.getSecond()))
                 .forEach(state -> {
                     ItemEffectContext updatedContext = context
                             .withMergedVectors(ImmutableMap.of("ref", Vec3.atLowerCornerOf(state.getFirst())))

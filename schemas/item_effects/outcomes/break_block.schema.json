@@ -17,7 +17,7 @@
     "type": "object",
     "properties": {
         "type": {
-            "const": "tetra:not"
+            "const": "tetra:break_block"
         },
         "position": {
             "$ref": "../vector_providers/ref.schema.json"

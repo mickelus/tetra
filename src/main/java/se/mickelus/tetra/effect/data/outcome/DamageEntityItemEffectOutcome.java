@@ -9,13 +9,16 @@ import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
 import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
 
 public class DamageEntityItemEffectOutcome extends ItemEffectOutcome {
-    EntityProvider target;
+    EntityProvider entity;
     NumberProvider amount;
     ResourceLocation damageType;
 
     @Override
     public boolean perform(ItemEffectContext context) {
-        Entity targetEntity = target.getEntity(context);
-        return targetEntity.hurt(targetEntity.damageSources().source(ResourceKey.create(Registries.DAMAGE_TYPE, damageType)), amount.getValue(context));
+        Entity targetEntity = entity.getEntity(context);
+        if (targetEntity != null) {
+            return targetEntity.hurt(targetEntity.damageSources().source(ResourceKey.create(Registries.DAMAGE_TYPE, damageType)), amount.getValue(context));
+        }
+        return false;
     }
 }

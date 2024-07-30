@@ -1,0 +1,46 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/find_blocks.schema.json",
+    "title": "Find blocks item effect outcome",
+    "description": "Finds all blocks matching the given condition in the given bounding box and runs the given outcome for each of them, originating from the given position. Adds a 'ref' vector, an 'index' number and a 'successCount' number to the context for the outcome.",
+    "examples": [
+        {
+            "type": "tetra:find_blocks",
+            "origin": "target",
+            "bounds": [ -5, -2, -5, 5, 2, 5 ],
+            "condition": {
+                "tag": "tetra:nailed"
+            },
+            "outcome": {
+                "type": "tetra:break_block",
+                "position": "ref",
+                "breaker": "breaker",
+                "harvest": true
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:find_blocks"
+        },
+        "origin": {
+            "$ref": "../vector_providers/ref.schema.json"
+        },
+        "bounds": {
+            "type": "array",
+            "items": {
+                "type": "number"
+            },
+            "minItems": 6,
+            "maxItems": 6
+        },
+        "condition": {
+            "$ref": "../../property_matcher.schema.json"
+        },
+        "outcome": {
+            "$ref": "../outcomes/ref.schema.json"
+        }
+    },
+    "required": [ "origin", "bounds", "outcome" ]
+}

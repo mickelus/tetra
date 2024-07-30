@@ -21,8 +21,11 @@ public class RunFunctionItemEffectOutcome extends ItemEffectOutcome {
             CommandSourceStack commandSourceStack = server.createCommandSourceStack()
                     .withPermission(2)
                     .withLevel(context.getLevel())
-                    .withEntity(entity.getEntity(context))
                     .withPosition(position.getVector(context));
+
+            if (entity != null) {
+                commandSourceStack = commandSourceStack.withEntity(entity.getEntity(context));
+            }
 
             int result = server.getFunctions().execute(function, commandSourceStack);
             return result > 0;

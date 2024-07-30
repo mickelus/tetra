@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/entity.schema.json",
+    "title": "Entities equals item effect condition",
+    "description": "Tests if the two entities are the same.",
+    "examples": [
+        {
+            "type": "tetra:entities_equals",
+            "a": "attacker",
+            "b": "target"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:entities_equals"
+        },
+        "a": { "$ref": "../../property_matcher.schema.json" },
+        "b": { "$ref": "../../property_matcher.schema.json" }
+    },
+    "required": [ "a", "b" ]
+}

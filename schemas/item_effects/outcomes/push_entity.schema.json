@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/push_entity.schema.json",
+    "title": "Push entity item effect outcome",
+    "description": "Attempts to push the given entity in the given direction",
+    "examples": [
+        {
+            "type": "tetra:push_entity",
+            "vector": {
+                "vectors": {
+                    "facing": {
+                        "type": "tetra:entity_facing",
+                        "entity": "attacker"
+                    }
+                },
+                "type": "tetra:expression",
+                "result": [ "facingX * 0.2", 1, "facingZ * 0.2" ]
+            },
+            "entity": "target"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:push_entity"
+        },
+        "vector": {
+            "$ref": "../vector_providers/ref.schema.json"
+        },
+        "entity": {
+            "$ref": "../entity_providers/ref.schema.json"
+        }
+    },
+    "required": [ "vector", "entity" ]
+}

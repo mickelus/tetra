@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/can_harvest.schema.json",
+    "title": "Can harvest item effect condition",
+    "description": "Tests if the block at the given position can be harvested with the item the effect is sourced from.",
+    "examples": [
+        {
+            "type": "tetra:can_harvest",
+            "position": "target"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:can_harvest"
+        },
+        "position": { "$ref": "../vector_providers/ref.schema.json" }
+    },
+    "required": [ "position" ]
+}

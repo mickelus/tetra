@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/conditioned.schema.json",
+    "title": "Conditioned item effect outcome",
+    "description": "Applies the given outcome if the given condition is met.",
+    "examples": [
+        {
+            "type": "tetra:conditioned",
+            "condition": {
+                "type": "tetra:random",
+                "chance": 0.5
+            },
+            "outcome": {
+                "type": "tetra:apply_effect",
+                "effect": "minecraft:regeneration",
+                "entity": "miner",
+                "source": "miner",
+                "duration": 20,
+                "amplifier": 1
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:conditioned"
+        },
+        "condition": {
+            "$ref": "../conditions/ref.schema.json"
+        },
+        "outcome": {
+            "$ref": "../outcomes/ref.schema.json"
+        }
+    },
+    "required": [ "condition", "outcome" ]
+}

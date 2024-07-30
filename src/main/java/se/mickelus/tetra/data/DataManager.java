@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -103,6 +104,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(Vector3f.class, new VectorDeserializer())
             .registerTypeAdapter(Quaternionf.class, new QuaternionDeserializer())
             .registerTypeAdapter(Transformation.class, new TransformationDeserializer())
+            .registerTypeAdapter(AABB.class, new AABBDeserializer())
             .registerTypeAdapter(ItemDisplayContext.class, new ItemDisplayContextDeserializer())
             .registerTypeAdapter(ItemEffect.class, new ItemEffect.Deserializer())
             .registerTypeAdapter(ItemEffectTrigger.class, new ItemEffectTrigger.Deserializer())

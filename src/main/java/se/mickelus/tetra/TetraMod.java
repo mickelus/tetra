@@ -152,7 +152,7 @@ public class TetraMod {
         ItemEffectCondition.register("tetra:block", BlockItemEffectCondition.class);
         ItemEffectCondition.register("tetra:can_harvest", CanHarvestItemEffectCondition.class);
         ItemEffectCondition.register("tetra:entity", EntityItemEffectCondition.class);
-        ItemEffectCondition.register("tetra:entities_equals", EntityItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:entities_equals", EntitiesEqualsItemEffectCondition.class);
         ItemEffectCondition.register("tetra:fixed", FixedItemEffectCondition.class);
 
         ItemEffectOutcome.register("tetra:apply_effect", ApplyEffectItemEffectOutcome.class);
@@ -162,7 +162,7 @@ public class TetraMod {
         ItemEffectOutcome.register("tetra:command", RunCommandItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:move_entity", MoveEntityItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:set_block", SetBlockItemEffectOutcome.class);
-        ItemEffectOutcome.register("tetra:find_block", FindBlocksItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:find_blocks", FindBlocksItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:break_block", BreakBlockItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:damage_entity", DamageEntityItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:find_entities", FindEntitiesItemEffectOutcome.class);
@@ -171,7 +171,6 @@ public class TetraMod {
         ItemEffectOutcome.register("tetra:sound", SoundItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:delay", DelayItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:loop", LoopItemEffectOutcome.class);
-        ItemEffectOutcome.register("tetra:stagger", StaggerItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:imitate", ImitateItemEffectOutcome.class);
 
         NumberProvider.register("tetra:expression", ExpressionNumberProvider::deserialize);

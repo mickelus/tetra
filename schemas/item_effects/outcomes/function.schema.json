@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/function.schema.json",
+    "title": "Function item effect outcome",
+    "description": "Executes a function (based on the given resource location), see docs: https://minecraft.wiki/w/Function_(Java_Edition)",
+    "examples": [
+        {
+            "type": "tetra:function",
+            "function": "tetra:test",
+            "position": "miner"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:function"
+        },
+        "function": {
+            "$ref": "../../resource_location.schema.json"
+        },
+        "position": {
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position to execute the function at, ~ coordinate values will be based on this value"
+        },
+        "entity": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The @s target selector will reference this entity"
+        }
+    },
+    "required": [ "function", "position" ]
+}
+

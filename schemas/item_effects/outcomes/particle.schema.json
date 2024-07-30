@@ -1,0 +1,44 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/particle.schema.json",
+    "title": "Particle item effect outcome",
+    "description": "Spawns a particle in the world using the given parameters",
+    "examples": [
+        {
+            "type": "tetra:particle",
+            "particle": {
+                "type": "minecraft:poof"
+            },
+            "position": {
+                "type": "tetra:entity_position",
+                "entity": "target",
+                "origin": "center"
+            },
+            "count": 12,
+            "speed": 0.1,
+            "spread": [ 1, 0, 1 ]
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:particle"
+        },
+        "particle": {
+            "$ref": "../../particle.schema.json"
+        },
+        "position": {
+            "$ref": "../vector_providers/ref.schema.json"
+        },
+        "count": {
+            "$ref": "../number_providers/ref.schema.json"
+        },
+        "speed": {
+            "$ref": "../number_providers/ref.schema.json"
+        },
+        "spread": {
+            "$ref": "../vector_providers/ref.schema.json"
+        }
+    },
+    "required": [ "particle", "position", "count", "speed", "spread" ]
+}

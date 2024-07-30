@@ -15,6 +15,7 @@ public class ApplyEffectItemEffectOutcome extends ItemEffectOutcome {
     EntityProvider entity;
     EntityProvider source;
     NumberProvider stackDurationCap;
+    NumberProvider stackAmplifierCap;
 
     @Override
     public boolean perform(ItemEffectContext context) {
@@ -25,7 +26,10 @@ public class ApplyEffectItemEffectOutcome extends ItemEffectOutcome {
             int targetDuration = stackDurationCap != null && entity.hasEffect(effect)
                     ? Math.min(duration + entity.getEffect(effect).getDuration(), stackDurationCap.getIntegerValue(context))
                     : duration;
-            return entity.addEffect(new MobEffectInstance(effect, targetDuration, amplifier), source != null ? source.getEntity(context) : null);
+            int targetAmplifier = stackAmplifierCap != null && entity.hasEffect(effect)
+                    ? Math.min(amplifier + entity.getEffect(effect).getAmplifier(), stackAmplifierCap.getIntegerValue(context))
+                    : amplifier;
+            return entity.addEffect(new MobEffectInstance(effect, targetDuration, targetAmplifier), source != null ? source.getEntity(context) : null);
         }
         return false;
     }
