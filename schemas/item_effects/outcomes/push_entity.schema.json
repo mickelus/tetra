@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/push_entity.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/push_entity.schema.json",
     "title": "Push entity item effect outcome",
     "description": "Attempts to push the given entity in the given direction",
     "examples": [

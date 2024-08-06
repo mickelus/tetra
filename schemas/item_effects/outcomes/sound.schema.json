@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/sound.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/sound.schema.json",
     "title": "Particle item effect outcome",
     "description": "Plays a sound in the world using the given parameters",
     "examples": [

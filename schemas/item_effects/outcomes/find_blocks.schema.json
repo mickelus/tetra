@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/find_blocks.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/find_blocks.schema.json",
     "title": "Find blocks item effect outcome",
     "description": "Finds all blocks matching the given condition in the given bounding box and runs the given outcome for each of them, originating from the given position. Adds a 'ref' vector, an 'index' number and a 'successCount' number to the context for the outcome.",
     "examples": [

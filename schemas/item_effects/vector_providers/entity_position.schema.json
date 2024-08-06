@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/vector_providers/entity_position.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/entity_position.schema.json",
     "title": "Entity position vector provider",
     "description": "Provides the position of the given entity",
     "examples": [

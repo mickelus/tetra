@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/random.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/conditions/random.schema.json",
     "title": "Random item effect condition",
     "description": "A condition that has a chance (equal to the provided chance value) to pass.",
     "examples": [
@@ -15,8 +15,9 @@
             "const": "tetra:random"
         },
         "chance": {
-            "$ref": "../number_providers/ref.schema.json"
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "Should return a number between 0 and 1 (values outside that range will work as well), a value of 0 (or less) would never pass and a value of 1 (or greater) would always pass."
         }
     },
-    "required": [ "chance" ]
+    "required": [ "type", "chance" ]
 }

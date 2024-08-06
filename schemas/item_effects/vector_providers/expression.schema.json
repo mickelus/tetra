@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/vector_providers/expression.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/expression.schema.json",
     "title": "Expression vector provider",
     "description": "Allows number expressions to be used (in number vector providers) based on the vectors (and numbers) in the context, as well as the 'vectors' and 'numbers' objects on this provider. Values from a vector can be accessed in an expression by affixing the key used for the vector with X, Y or Z. E.g. to access the X coordinate for a vector keyed 'player' is done using 'playerX' in an expression. Expressions in the values object can reference values that are defined earlier than that expression. The result field is the vector that will be returned from this provider.",
     "type": "object",

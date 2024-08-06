@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/apply_effect.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/apply_effect.schema.json",
     "title": "Apply effect item effect outcome",
     "description": "Applies a mob (potion) effect on the provided entity. ",
     "examples": [

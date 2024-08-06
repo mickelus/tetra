@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/number_providers/effect_efficiency.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/effect_efficiency.schema.json",
     "title": "Effect efficiency number provider",
     "description": "Provides the efficiency of the given effect.",
     "type": "object",

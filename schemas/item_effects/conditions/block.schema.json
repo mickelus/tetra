@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/block.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/conditions/block.schema.json",
     "title": "Block item effect condition",
     "description": "Tests if the block at the given position passes the given condition.",
     "examples": [
@@ -17,8 +17,14 @@
         "type": {
             "const": "tetra:block"
         },
-        "block": { "$ref": "../../property_matcher.schema.json" },
-        "position": { "$ref": "../vector_providers/ref.schema.json" }
+        "position": {
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position of the block that is to be tested."
+        },
+        "block": {
+            "$ref": "../../property_matcher.schema.json",
+            "$comment": "Tests properties of the block, the condition passes if this passes."
+        }
     },
     "required": [ "block", "position" ]
 }

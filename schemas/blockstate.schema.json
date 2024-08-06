@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/blockstate.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/blockstate.schema.json",
     "title": "Blockstate",
     "description": "Vanilla json representation of a blockstate, seems to use capitalized keys.",
     "type": "object",

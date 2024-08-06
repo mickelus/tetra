@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/delay.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/delay.schema.json",
     "title": "Delay item effect outcome",
     "description": "Applies the given outcome after the given delay (in ticks). Can be keyed (both globally and to an entity) to have the delayed outcome either replace or get blocked with previous (active) delays sharing the key.",
     "examples": [

@@ -1,18 +1,18 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/entity_provider/standard.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/entity_provider/context.schema.json",
     "title": "Entity provider",
-    "description": "Provides an entity from the item effect context based on the given identifier.",
+    "description": "Provides an entity from the item effect context based on the given key.",
     "examples": [
         {
-            "type": "tetra:standard",
+            "type": "tetra:context",
             "entity": "target"
         }
     ],
     "type": "object",
     "properties": {
         "type": {
-            "const": "tetra:standard"
+            "const": "tetra:context"
         },
         "entity": {
             "type": "string",

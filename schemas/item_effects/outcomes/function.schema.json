@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/function.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/function.schema.json",
     "title": "Function item effect outcome",
     "description": "Executes a function (based on the given resource location), see docs: https://minecraft.wiki/w/Function_(Java_Edition)",
     "examples": [

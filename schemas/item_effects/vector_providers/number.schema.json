@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/vector_providers/number.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/number.schema.json",
     "title": "Number vector provider",
     "description": "Allows the construction of a vector from three number providers",
     "examples": [

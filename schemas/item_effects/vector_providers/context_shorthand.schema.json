@@ -1,0 +1,15 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/context.schema.json",
+    "title": "Context vector provider shorthand",
+    "description": "Shorthand for the context vector provider using a single string referencing a vector in the effect context.",
+    "examples": [
+        "target",
+        "source"
+    ],
+    "type": "string",
+    "enum": [
+        "source",
+        "target"
+    ]
+}

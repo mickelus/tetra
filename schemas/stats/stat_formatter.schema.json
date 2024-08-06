@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/stats/stat_formatter.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_formatter.schema.json",
     "title": "StatFormatter",
     "description": "A stat formatter representation",
     "type": "object",

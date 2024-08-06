@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/outcomes/particle.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/particle.schema.json",
     "title": "Particle item effect outcome",
     "description": "Spawns a particle in the world using the given parameters",
     "examples": [

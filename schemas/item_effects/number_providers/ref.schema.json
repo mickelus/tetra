@@ -1,9 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/number_provider.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/ref.schema.json",
     "title": "Number provider",
     "description": "Provides numerical values for item effects",
-    "required": [ "type" ],
     "oneOf": [
         {
             "$ref": "context.schema.json"
@@ -22,6 +21,9 @@
         },
         {
             "$ref": "length.schema.json"
+        },
+        {
+            "$ref": "vector.schema.json"
         },
         {
             "$ref": "random.schema.json"

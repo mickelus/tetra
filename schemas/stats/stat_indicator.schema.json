@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/stats/indicator.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/indicator.schema.json",
     "title": "Indicator",
     "description": "An indicator representation",
     "type": "object",

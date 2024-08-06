@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/entity.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/conditions/entity.schema.json",
     "title": "Entity item effect condition",
     "description": "Tests if the given entity passes the given condition.",
     "examples": [
@@ -17,8 +17,14 @@
         "type": {
             "const": "tetra:entity"
         },
-        "entity": { "$ref": "../../property_matcher.schema.json" },
-        "condition": { "$ref": "../../entity_predicate.schema.json" },
+        "entity": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity to test."
+        },
+        "condition": {
+            "$ref": "../../entity_predicate.schema.json",
+            "$comment": "An entity predicate used to test for different properties of the entity."
+        },
         "origin": {
             "$ref": "../vector_providers/ref.schema.json",
             "$comment": "Used as a reference point for the optional 'distance' field in the condition, can be omitted if that's not used."

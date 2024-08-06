@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/tier.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/tier.schema.json",
     "title": "Tier",
     "description": "A tool tier representation, either a numerical value for absolute values or a resourcelocation for tiers relative the tier sorting registry",
     "anyOf": [

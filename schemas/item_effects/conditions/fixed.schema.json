@@ -1,8 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/fixed.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/conditions/fixed.schema.json",
     "title": "Fixed item effect condition",
-    "description": "Always provides either true or false",
+    "description": "Either always passes or always fails.",
     "examples": [
         {
             "type": "tetra:fixed",
@@ -14,7 +14,10 @@
         "type": {
             "const": "tetra:fixed"
         },
-        "value": { "type": "boolean" }
+        "value": {
+            "type": "boolean",
+            "$comment": "The condition passes if this is set to true."
+        }
     },
-    "required": [ "value" ]
+    "required": [ "type", "value" ]
 }

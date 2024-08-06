@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/number_providers/context.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/context.schema.json",
     "title": "Context number provider",
     "description": "Provides a numerical value from the item effect context based on the 'key' field, either coming from providers in the data object of the effect or added from some other outcome or provider.",
     "type": "object",

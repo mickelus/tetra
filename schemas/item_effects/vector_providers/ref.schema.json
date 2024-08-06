@@ -1,37 +1,17 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/vector_providers/ref.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/ref.schema.json",
     "title": "Vector provider",
     "description": "Provides vectors for item effects",
     "oneOf": [
-        {
-            "$ref": "shorthands.schema.json"
-        },
-        {
-            "properties": {
-                "type": {
-                    "const": "tetra:entity"
-                },
-                "entity": {
-                    "$ref": "../entity_providers/ref.schema.json"
-                }
-            },
-            "required": [ "entity" ]
-        },
-        {
-            "properties": {
-                "type": {
-                    "const": "tetra:expression"
-                },
-                "values": {
-                    "type": "object",
-                    "patternProperties": {
-                        ".*": { "$ref": "ref.schema.json" }
-                    }
-                },
-                "result": { "$ref": "ref.schema.json" }
-            },
-            "required": [ "key" ]
-        }
+        { "$ref": "context.schema.json" },
+        { "$ref": "context_shorthand.schema.json" },
+        { "$ref": "number.schema.json" },
+        { "$ref": "number_shorthand.schema.json" },
+        { "$ref": "entity_facing.schema.json" },
+        { "$ref": "entity_motion.schema.json" },
+        { "$ref": "entity_position.schema.json" },
+        { "$ref": "expression.schema.json" },
+        { "$ref": "normalize.schema.json" }
     ]
 }

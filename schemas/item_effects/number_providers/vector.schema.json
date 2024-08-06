@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/vector.schema.json",
+    "title": "Vector number provider",
+    "description": "Provides a numerical value based on a vector component",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:vector"
+        },
+        "vector": {
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The vector to get the component from"
+        },
+        "field": {
+            "type": "string",
+            "enum": [ "x", "y", "z" ],
+            "$comment": "The vector component that's to be returned by the provider"
+        }
+    },
+    "required": [ "type", "vector", "field" ]
+}

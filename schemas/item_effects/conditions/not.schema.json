@@ -1,8 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/item_effects/conditions/not.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/conditions/not.schema.json",
     "title": "Not item effect condition",
-    "description": "Passes if the given condition does not pass",
+    "description": "Passes if the given condition does NOT pass.",
     "examples": [
         {
             "type": "tetra:not",
@@ -15,8 +15,9 @@
             "const": "tetra:not"
         },
         "condition": {
-            "$ref": "ref.schema.json"
+            "$ref": "ref.schema.json",
+            "$comment": "The parent condition passes if this condition does not."
         }
     },
-    "required": [ "condition" ]
+    "required": [ "type", "condition" ]
 }

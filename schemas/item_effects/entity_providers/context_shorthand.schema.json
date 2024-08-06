@@ -1,0 +1,8 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/context_shorthand.schema.json",
+    "title": "Context entity provider shorthand",
+    "description": "Shorthand value for the context entity provider, takes a string instead of typed object.",
+    "type": "string",
+    "examples": [ "target", "breaker" ]
+}

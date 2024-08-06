@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/outcomes/ref.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/ref.schema.json",
     "title": "Item effect outcome",
     "description": "Item effect outcomes are used to do things in the world when an item effect triggers",
     "oneOf": [

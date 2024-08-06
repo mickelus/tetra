@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/stats/tooltip.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/tooltip.schema.json",
     "title": "Tooltip",
     "description": "A tooltip representation",
     "type": "object",

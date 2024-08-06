@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/material.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/material.schema.json",
     "title": "Material",
     "description": "Definition of material data in tetra",
     "type": "object",

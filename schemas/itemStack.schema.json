@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/itemStack.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/itemStack.schema.json",
     "title": "ItemStack",
     "description": "Vanilla json representation of an itemStack. Some fields are capitalized!",
     "type": "object",
