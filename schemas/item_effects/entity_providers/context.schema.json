@@ -16,11 +16,7 @@
         },
         "entity": {
             "type": "string",
-            "description": "The identifier of the entity to provide.",
-            "enum": [
-                "target",
-                "source"
-            ]
+            "description": "The key used for the entity in the item effect context."
         }
     },
     "required": [ "entity" ]

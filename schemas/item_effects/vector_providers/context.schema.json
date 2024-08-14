@@ -3,13 +3,20 @@
     "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/context.schema.json",
     "title": "Context vector provider",
     "description": "Provides a vector from the item effect context based on the 'key' field, either coming from the trigger, the providers in the data object of the effect or added from some other outcome or provider.",
+    "examples": [
+        {
+            "type": "tetra:context",
+            "key": "target"
+        }
+    ],
     "type": "object",
     "properties": {
         "type": {
             "const": "tetra:context"
         },
         "key": {
-            "type": "string"
+            "type": "string",
+            "$comment": "The key of a vector in the item effect context."
         }
     },
     "required": [ "key" ]

@@ -17,9 +17,6 @@ public class ExpressionVectorProvider implements VectorProvider {
     public Vec3 getVector(ItemEffectContext context) {
         ItemEffectContext updatedContext = context;
 
-        if (numbers != null) {
-            updatedContext = updatedContext.withMergedNumbers(ItemEffectData.calculateNumbers(numbers, updatedContext));
-        }
         if (vectors != null) {
             updatedContext = updatedContext.withMergedVectors(ItemEffectData.calculateVectors(vectors, updatedContext));
         }
@@ -32,6 +29,10 @@ public class ExpressionVectorProvider implements VectorProvider {
                     key + "Y", (float) pos.y,
                     key + "Z", (float) pos.z
             ));
+        }
+        
+        if (numbers != null) {
+            updatedContext = updatedContext.withMergedNumbers(ItemEffectData.calculateNumbers(numbers, updatedContext));
         }
 
         return result.getVector(updatedContext);

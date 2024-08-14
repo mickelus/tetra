@@ -8,7 +8,10 @@
         "type": {
             "const": "tetra:normalize"
         },
-        "vector": { "$ref": "../entity_providers/ref.schema.json" }
+        "vector": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The vector that is to be normalized."
+        }
     },
     "required": [ "vector" ]
 }

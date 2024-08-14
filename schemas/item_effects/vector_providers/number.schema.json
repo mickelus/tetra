@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/number.schema.json",
     "title": "Number vector provider",
-    "description": "Allows the construction of a vector from three number providers",
+    "description": "Allows the construction of a vector from three number providers.",
     "examples": [
         {
             "type": "tetra:number",
@@ -16,9 +16,18 @@
         "type": {
             "const": "tetra:number"
         },
-        "x": { "$ref": "../number_providers/ref.schema.json" },
-        "y": { "$ref": "../number_providers/ref.schema.json" },
-        "z": { "$ref": "../number_providers/ref.schema.json" }
+        "x": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "Will be used for the x component of the vector."
+        },
+        "y": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "Will be used for the y component of the vector."
+        },
+        "z": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "Will be used for the z component of the vector."
+        }
     },
     "required": [ "x", "y", "z" ]
 }

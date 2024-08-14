@@ -38,6 +38,7 @@ import se.mickelus.tetra.client.particle.SweepingStrikeParticleType;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
 import se.mickelus.tetra.gui.stats.data.StatBarStore;
+import se.mickelus.tetra.gui.stats.data.StatIndicatorStore;
 import se.mickelus.tetra.gui.stats.data.StatRegistry;
 import se.mickelus.tetra.gui.stats.data.StatSorterStore;
 import se.mickelus.tetra.interactions.SecondaryInteractionOverlay;
@@ -59,6 +60,7 @@ public class ClientSetup {
         MinecraftForge.EVENT_BUS.register(ClientSetup.class);
 
         StatRegistry.init();
+        new StatIndicatorStore();
         new StatBarStore();
         new StatSorterStore();
 

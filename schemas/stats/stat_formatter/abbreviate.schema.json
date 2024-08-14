@@ -1,0 +1,13 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/abbreviate.schema.json",
+    "title": "Abbreviate stat getter",
+    "description": "Abbreviates values above 1000, e.g. a value of 1500 would display as 1.5k.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:abbreviate"
+        }
+    },
+    "required": [ "type" ]
+}

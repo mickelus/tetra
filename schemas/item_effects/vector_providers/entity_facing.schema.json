@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/entity_facing.schema.json",
     "title": "Entity facing vector provider",
-    "description": "Provides the facing of the given entity, with some optional parameters",
+    "description": "Provides the facing of the given entity, with some optional parameters.",
     "examples": [
         {
             "type": "tetra:entity_facing",
@@ -16,15 +16,15 @@
         },
         "entity": {
             "$ref": "../entity_providers/ref.schema.json",
-            "$comment": "The entity to get the facing of"
+            "$comment": "The entity to get the facing of."
         },
         "cardinal": {
             "$ref": "../conditions/ref.schema.json",
-            "$comment": "If true the provider returns the facing vector of the nearest cardinal direction, defaults to false"
+            "$comment": "If true the provider returns the facing vector of the nearest cardinal direction, defaults to false."
         },
         "onlyHorizontal": {
             "$ref": "../conditions/ref.schema.json",
-            "$comment": "If true the provider only returns facing along the horizontal plane, defaults to false"
+            "$comment": "If true the provider only returns facing along the horizontal plane, defaults to false."
         }
     },
     "required": [ "entity" ]

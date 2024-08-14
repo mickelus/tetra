@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/sum.schema.json",
+    "title": "Attribute stat getter",
+    "description": "A stat getter that returns the value of the given attribute.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:attribute"
+        },
+        "attribute": {
+            "type": "string",
+            "$comment": "Identifier for an attribute to get the value of. A list of vanilla attributes can be found here: https://minecraft.wiki/w/Attribute, tetra attributes can be found on the tetra wiki."
+        },
+        "ignoreBase": {
+            "type": "boolean",
+            "$comment": "Set to true to ignore the base value of the attribute. Many vanilla attributes has a base value, e.g. attack damage has a base value of 2.0. This flag is good to set for showing attributes for a part of an item, like in the holosphere."
+        },
+        "ignoreBonuses": {
+            "type": "boolean",
+            "$comment": "Set to true to ignore bonuses from item effects, e.g. the speed bonus from the counterweight effect."
+        }
+    },
+    "required": [ "attribute" ]
+}

@@ -37,7 +37,8 @@
             "type": "array",
             "items": {
                 "$ref": "../outcomes/ref.schema.json"
-            }
+            },
+            "$comment": "Outcomes in this array will be applied, which outcomes are applied depends on other fields of this outcome."
         },
         "count": {
             "$ref": "../number_providers/ref.schema.json",

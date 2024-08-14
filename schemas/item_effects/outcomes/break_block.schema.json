@@ -20,13 +20,16 @@
             "const": "tetra:break_block"
         },
         "position": {
-            "$ref": "../vector_providers/ref.schema.json"
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position of the block to break"
         },
         "breaker": {
-            "$ref": "../entity_providers/ref.schema.json"
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity that should count as the breaker of the block, possibly affecting statistics, loot drops, and other effects and mods."
         },
         "harvest": {
-            "$ref": "../conditions/ref.schema.json"
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "Set to true to cause the block to drop loot. Defaults to false."
         }
     },
     "required": [ "position", "breaker" ]

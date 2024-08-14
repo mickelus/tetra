@@ -1,31 +1,90 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/indicator.schema.json",
-    "title": "Indicator",
-    "description": "An indicator representation",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_indicator.schema.json",
+    "title": "Stat indicator",
+    "description": "Stat indicators are typically small glyphs displayed above stat bars to indicate that something related to the stat is being modified. Indicators present for a stat bar also add to the tooltip of the stat bar.",
     "type": "object",
     "properties": {
         "type": {
-            "type": "string"
+            "type": "string",
+            "$comment": "There's only one type registered in vanilla tetra, but this can be set if some other mod has registered other indicator types."
         },
         "key": {
-            "type": "string"
+            "type": "string",
+            "$comment": "The localization key for the indicator, the localized value will be used as a header and a body in the tooltip. The key for the body is this key suffixed with \".tooltip\". Tetra uses keys like this: 'tetra.stats.sharpness'."
         },
         "texture": {
-            "$ref": "../resource_location.schema.json"
+            "$ref": "../resource_location.schema.json",
+            "$comment": "A resource location referencing a texture. The glyph used by the indicator is 8x8 px. The texture probably has to be 256x256."
         },
         "textureX": {
-            "type": "integer"
+            "type": "number",
+            "$comment": "The x coordinate of the glyphs within the texture sheet."
         },
         "textureY": {
-            "type": "integer"
+            "type": "number",
+            "$comment": "The y coordinate of the glyphs within the texture sheet."
         },
         "stat": {
-            "$ref": "stat_getter.schema.json"
+            "$ref": "stat_getter/ref.schema.json",
+            "$comment": "The stat that the indicator represents. The indicator will be displayed if the getter \"should show\" (which typically means its stat is not 0). The indicator receives a change highlight when the getter value changes."
         },
         "tooltip": {
-            "$ref": "tooltip.schema.json"
+            "$ref": "tooltip_getter/ref.schema.json",
+            "$comment": "The tooltip for the indicator, this is appended to the tooltip of the stat bar."
         }
     },
-    "required": [ "type", "key", "texture", "textureX", "textureY", "stat", "tooltip" ]
+    "required": [ "key", "texture", "textureX", "textureY", "stat", "tooltip" ],
+    "examples": [
+        {
+            "key": "tetra.stats.sharpness",
+            "texture": "tetra:textures/gui/glyphs.png",
+            "textureX": 136,
+            "textureY": 160,
+            "stat": {
+                "type": "tetra:sum",
+                "stats": [
+                    {
+                        "type": "tetra:multiply",
+                        "stats": [
+                            {
+                                "type": "tetra:enchantment",
+                                "enchantment": "minecraft:sharpness"
+                            }
+                        ],
+                        "factor": 0.5
+                    }
+                ],
+                "offset": 0.5
+            },
+            "tooltip": {
+                "type": "tetra:default",
+                "key": "tetra.stats.sharpness.tooltip",
+                "stats": [
+                    {
+                        "type": "tetra:sum",
+                        "stats": [
+                            {
+                                "type": "tetra:multiply",
+                                "stats": [
+                                    {
+                                        "type": "tetra:enchantment",
+                                        "enchantment": "minecraft:sharpness"
+                                    }
+                                ],
+                                "factor": 0.5
+                            }
+                        ],
+                        "offset": 0.5
+                    }
+                ],
+                "formatters": [
+                    {
+                        "type": "tetra:basic",
+                        "format": "single_decimal"
+                    }
+                ]
+            }
+        }
+    ]
 }

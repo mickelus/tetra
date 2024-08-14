@@ -1,0 +1,14 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_formatter/ref.schema.json",
+    "title": "Stat formatter",
+    "description": "A stat formatter representation. Stat formatters are used by stat sorters and tooltip getters to format stat values. ",
+    "oneOf": [
+        {
+            "$ref": "basic.schema.json"
+        },
+        {
+            "$ref": "abbreviate.schema.json"
+        }
+    ]
+}

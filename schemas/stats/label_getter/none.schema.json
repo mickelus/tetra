@@ -1,0 +1,13 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/label_getter/none.schema.json",
+    "title": "None label getter",
+    "description": "Displays no label at all.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:none"
+        }
+    },
+    "required": [ "type" ]
+}

@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/sum.schema.json",
+    "title": "Enchantment stat getter",
+    "description": "A stat getter that returns the level of the given enchantment",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:enchantment"
+        },
+        "enchantment": {
+            "$ref": "../../resource_location.schema.json",
+            "$comment": "Identifier for the enchantment to get the level of. A full list of enchantments can be found here: https://minecraft.wiki/w/Enchanting#Summary_of_enchantments (click the enchantments in the list to see it's identifier)."
+        }
+    },
+    "required": [ "enchantment" ]
+}

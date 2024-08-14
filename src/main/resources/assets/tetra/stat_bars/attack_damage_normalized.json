@@ -6,9 +6,30 @@
     "max": 20,
     "generateSorter": true,
     "stat": {
-        "type": "tetra:attribute",
-        "attribute": "generic.attack_damage",
-        "ignoreBase": true
+        "type": "tetra:sum",
+        "stats": [
+            {
+                "type": "tetra:attribute",
+                "attribute": "generic.attack_damage",
+                "ignoreBase": true
+            },
+            {
+                "type": "tetra:sum",
+                "stats": [
+                    {
+                        "type": "tetra:multiply",
+                        "stats": [
+                            {
+                                "type": "tetra:enchantment",
+                                "enchantment": "minecraft:sharpness"
+                            }
+                        ],
+                        "factor": 0.5
+                    }
+                ],
+                "offset": 0.5
+            }
+        ]
     },
     "label": {
         "type": "tetra:basic",
@@ -16,7 +37,7 @@
         "diff_format": "double_decimal"
     },
     "tooltip": {
-        "type": "tetra:default",
+        "type": "tetra:standard",
         "key": "tetra.stats.attack_damage_normalized.tooltip",
         "stats": [
             {
@@ -53,56 +74,5 @@
             }
         ]
     },
-    "indicators": [
-        {
-            "key": "tetra.stats.sharpness",
-            "texture": "tetra:textures/gui/glyphs.png",
-            "textureX": 136,
-            "textureY": 160,
-            "stat": {
-                "type": "tetra:sum",
-                "stats": [
-                    {
-                        "type": "tetra:multiply",
-                        "stats": [
-                            {
-                                "type": "tetra:enchantment",
-                                "enchantment": "minecraft:sharpness"
-                            }
-                        ],
-                        "factor": 0.5
-                    }
-                ],
-                "offset": 0.5
-            },
-            "tooltip": {
-                "type": "tetra:default",
-                "key": "tetra.stats.sharpness.tooltip",
-                "stats": [
-                    {
-                        "type": "tetra:sum",
-                        "stats": [
-                            {
-                                "type": "tetra:multiply",
-                                "stats": [
-                                    {
-                                        "type": "tetra:enchantment",
-                                        "enchantment": "minecraft:sharpness"
-                                    }
-                                ],
-                                "factor": 0.5
-                            }
-                        ],
-                        "offset": 0.5
-                    }
-                ],
-                "formatters": [
-                    {
-                        "type": "tetra:basic",
-                        "format": "single_decimal"
-                    }
-                ]
-            }
-        }
-    ]
+    "indicators": [ "tetra:attack_damage/shared/", "tetra:attack_damage/normalized/" ]
 }

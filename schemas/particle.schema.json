@@ -6,7 +6,8 @@
     "type": "object",
     "properties": {
         "type": {
-            "$ref": "resource_location.schema.json"
+            "$ref": "resource_location.schema.json",
+            "$comment": "A resource location referencing a particle. A list of particles can be found here: https://minecraft.wiki/w/Particles_(Java_Edition)"
         }
     },
     "additionalProperties": true

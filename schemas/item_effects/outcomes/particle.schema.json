@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/particle.schema.json",
     "title": "Particle item effect outcome",
-    "description": "Spawns a particle in the world using the given parameters",
+    "description": "Spawns a particle in the world using the given parameters. Some of the parameters may have different effects depending on the particle type.",
     "examples": [
         {
             "type": "tetra:particle",
@@ -25,19 +25,24 @@
             "const": "tetra:particle"
         },
         "particle": {
-            "$ref": "../../particle.schema.json"
+            "$ref": "../../particle.schema.json",
+            "$comment": "A particle definition, most particles only require the 'type' field."
         },
         "position": {
-            "$ref": "../vector_providers/ref.schema.json"
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position to spawn the particle at."
         },
         "count": {
-            "$ref": "../number_providers/ref.schema.json"
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The number of particles to spawn."
         },
         "speed": {
-            "$ref": "../number_providers/ref.schema.json"
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The initial speed of the particles, effect tends to vary depending on particle type."
         },
         "spread": {
-            "$ref": "../vector_providers/ref.schema.json"
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "A vector typically defining a space of allowed difference in initial particle speed, effects tends to vary depending on particle type."
         }
     },
     "required": [ "particle", "position", "count", "speed", "spread" ]

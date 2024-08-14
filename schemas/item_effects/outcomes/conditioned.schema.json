@@ -26,10 +26,12 @@
             "const": "tetra:conditioned"
         },
         "condition": {
-            "$ref": "../conditions/ref.schema.json"
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "If this condition passes then the outcome will be applied."
         },
         "outcome": {
-            "$ref": "../outcomes/ref.schema.json"
+            "$ref": "../outcomes/ref.schema.json",
+            "$comment": "The outcome to apply if the condition passes."
         }
     },
     "required": [ "condition", "outcome" ]

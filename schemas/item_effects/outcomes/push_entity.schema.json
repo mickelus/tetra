@@ -25,10 +25,12 @@
             "const": "tetra:push_entity"
         },
         "vector": {
-            "$ref": "../vector_providers/ref.schema.json"
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The direction that the entity should be pushed in, the length of the vector effectively decides the strength of the push."
         },
         "entity": {
-            "$ref": "../entity_providers/ref.schema.json"
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity that should be pushed."
         }
     },
     "required": [ "vector", "entity" ]

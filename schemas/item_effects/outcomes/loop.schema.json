@@ -29,19 +29,20 @@
             "const": "tetra:loop"
         },
         "outcome": {
-            "$ref": "../outcomes/ref.schema.json"
+            "$ref": "../outcomes/ref.schema.json",
+            "$comment": "This outcome will be run 'count' times."
         },
         "count": {
             "$ref": "../number_providers/ref.schema.json",
-            "$comment": "The number of times to run the outcome"
+            "$comment": "The number of times to run the outcome."
         },
         "indexKey": {
             "type": "string",
-            "$comment": "If set the index in the loop will be added to the context using this key"
+            "$comment": "If set the index in the loop will be added to the context using this key."
         },
         "breakCondition": {
             "$ref": "../conditions/ref.schema.json",
-            "$comment": "Checked after each iteration if present, the loop breaks if the condition passes"
+            "$comment": "Checked after each iteration if present, the loop breaks if the condition passes."
         }
     },
     "required": [ "outcome", "count" ]

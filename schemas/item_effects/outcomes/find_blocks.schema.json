@@ -25,7 +25,8 @@
             "const": "tetra:find_blocks"
         },
         "origin": {
-            "$ref": "../vector_providers/ref.schema.json"
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position that the search will originate from."
         },
         "bounds": {
             "type": "array",
@@ -33,13 +34,16 @@
                 "type": "number"
             },
             "minItems": 6,
-            "maxItems": 6
+            "maxItems": 6,
+            "$comment": "The bounding box to search within. Format: [ x1, y1, z1, x2, y2, z2 ]"
         },
         "condition": {
-            "$ref": "../../property_matcher.schema.json"
+            "$ref": "../../property_matcher.schema.json",
+            "$comment": "The given outcome will be run for all blocks that match this condition."
         },
         "outcome": {
-            "$ref": "../outcomes/ref.schema.json"
+            "$ref": "../outcomes/ref.schema.json",
+            "$comment": "This outcome will be run for each block that matches the condition. A 'ref' vector (holds the position of the block), an 'index' number and a 'successCount' number will be added to the context for the outcome."
         }
     },
     "required": [ "origin", "bounds", "outcome" ]

@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/damage_entity.schema.json",
     "title": "Damage entity item effect outcome",
-    "description": "Attempts to move the given entity to the given position",
+    "description": "Attempts to damage the given entity. Keep in mind that this would be a different damage instance from a triggering attack and it will be affected by invulnerability frames.",
     "examples": [
         {
             "type": "tetra:damage_entity",
@@ -17,13 +17,16 @@
             "const": "tetra:damage_entity"
         },
         "entity": {
-            "$ref": "../entity_providers/ref.schema.json"
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity to damage"
         },
         "amount": {
-            "$ref": "../number_providers/ref.schema.json"
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The amount of damage to deal, can be a decimal value"
         },
         "damageType": {
-            "$ref": "../../resource_location.schema.json"
+            "$ref": "../../resource_location.schema.json",
+            "$comment": "A resource location referencing a damage type, the damage type has significant impact on how the damage is dealt. Datapacks can define their own damage types. More info on damage types here: https://minecraft.wiki/w/Damage_type"
         }
     },
     "required": [ "entity", "amount", "damageType" ]

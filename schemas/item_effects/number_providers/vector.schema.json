@@ -10,12 +10,12 @@
         },
         "vector": {
             "$ref": "../vector_providers/ref.schema.json",
-            "$comment": "The vector to get the component from"
+            "$comment": "The vector to get the component from."
         },
         "field": {
             "type": "string",
             "enum": [ "x", "y", "z" ],
-            "$comment": "The vector component that's to be returned by the provider"
+            "$comment": "The vector component that's to be returned by the provider."
         }
     },
     "required": [ "type", "vector", "field" ]

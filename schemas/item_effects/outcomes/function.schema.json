@@ -16,15 +16,16 @@
             "const": "tetra:function"
         },
         "function": {
-            "$ref": "../../resource_location.schema.json"
+            "$ref": "../../resource_location.schema.json",
+            "$comment": "A resource location referencing the function to execute."
         },
         "position": {
             "$ref": "../vector_providers/ref.schema.json",
-            "$comment": "The position to execute the function at, ~ coordinate values will be based on this value"
+            "$comment": "The position to execute the function at, ~ coordinate values will be based on this value. Possibly optional depending on the function."
         },
         "entity": {
             "$ref": "../entity_providers/ref.schema.json",
-            "$comment": "The @s target selector will reference this entity"
+            "$comment": "The @s target selector will reference this entity."
         }
     },
     "required": [ "function", "position" ]

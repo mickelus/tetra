@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/entity_motion.schema.json",
     "title": "Entity motion vector provider",
-    "description": "Provides the motion vector of the given entity",
+    "description": "Provides the motion vector of the given entity.",
     "examples": [
         {
             "type": "tetra:entity_motion",
@@ -16,7 +16,7 @@
         },
         "entity": {
             "$ref": "../entity_providers/ref.schema.json",
-            "$comment": "The entity to get the motion of"
+            "$comment": "The entity to get the motion of."
         }
     },
     "required": [ "entity" ]

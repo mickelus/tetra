@@ -1,0 +1,11 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/tooltip_getter/ref.schema.json",
+    "title": "Tooltip getter",
+    "description": "Defines how the tooltip of a stat bar should display.",
+    "oneOf": [
+        {
+            "$ref": "standard.schema.json"
+        }
+    ]
+}

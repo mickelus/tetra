@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/entity_position.schema.json",
     "title": "Entity position vector provider",
-    "description": "Provides the position of the given entity",
+    "description": "Provides the position of the given entity.",
     "examples": [
         {
             "type": "tetra:entity_position",
@@ -14,7 +14,10 @@
         "type": {
             "const": "tetra:entity_position"
         },
-        "entity": { "$ref": "../entity_providers/ref.schema.json" }
+        "entity": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity to get the position of."
+        }
     },
     "required": [ "entity" ]
 }

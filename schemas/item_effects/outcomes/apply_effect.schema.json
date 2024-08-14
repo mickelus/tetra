@@ -20,19 +20,24 @@
             "const": "tetra:apply_effect"
         },
         "effect": {
-            "$ref": "../../resource_location.schema.json"
+            "$ref": "../../resource_location.schema.json",
+            "$comment": "A resource location referencing a mob effect. Vanilla effects can be found here: https://minecraft.wiki/w/Effect"
         },
         "entity": {
-            "$ref": "../entity_providers/ref.schema.json"
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity that the effect should be applied to."
         },
         "source": {
-            "$ref": "../entity_providers/ref.schema.json"
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity that the effect should be applied from. Probably relevant in cases where a mob effect would kill a player, and this source entity would be used for the kill message."
         },
         "duration": {
-            "$ref": "../number_providers/ref.schema.json"
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The duration of the effect, in ticks."
         },
         "amplifier": {
-            "$ref": "../number_providers/ref.schema.json"
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The amplifier of the effect, a higher value typically makes the mob effect stronger. Starts at 0 for most effects."
         },
         "stackDurationCap": {
             "$ref": "../number_providers/ref.schema.json",

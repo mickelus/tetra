@@ -9,7 +9,8 @@
             "const": "tetra:length"
         },
         "vector": {
-            "$ref": "../vector_providers/ref.schema.json"
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The vector that is to be measured."
         },
         "square": {
             "$ref": "../conditions/ref.schema.json",

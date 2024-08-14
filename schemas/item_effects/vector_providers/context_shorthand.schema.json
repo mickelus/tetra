@@ -7,9 +7,5 @@
         "target",
         "source"
     ],
-    "type": "string",
-    "enum": [
-        "source",
-        "target"
-    ]
+    "type": "string"
 }

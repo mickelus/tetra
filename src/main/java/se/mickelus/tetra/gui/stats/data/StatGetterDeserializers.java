@@ -22,7 +22,7 @@ public class StatGetterDeserializers {
 
     public static IStatGetter orGetter(JsonElement json) {
         OrData data = StatRegistry.gson.fromJson(json, OrData.class);
-        return new StatGetterAnd(data.stats);
+        return new StatGetterOr(data.stats);
     }
 
     record OrData(IStatGetter[] stats) {

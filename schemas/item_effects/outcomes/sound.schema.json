@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/sound.schema.json",
-    "title": "Particle item effect outcome",
+    "title": "Sound item effect outcome",
     "description": "Plays a sound in the world using the given parameters",
     "examples": [
         {
@@ -16,16 +16,20 @@
             "const": "tetra:sound"
         },
         "sound": {
-            "$ref": "../../resource_location.schema.json"
+            "$ref": "../../resource_location.schema.json",
+            "$comment": "A resource location referencing a sound (haven't found a list of all sounds, but you can use the /playsound command to explore what's available)."
         },
         "position": {
-            "$ref": "../vector_providers/ref.schema.json"
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position in the world where the sound should be played."
         },
         "volume": {
-            "$ref": "../number_providers/ref.schema.json"
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The volume of the sound. 1.0 is full volume, 0.0 is silent. Defaults to 1.0."
         },
         "pitch": {
-            "$ref": "../number_providers/ref.schema.json"
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The pitch of the sound. 1.0 is normal pitch, 2.0 is double pitch, 0.5 is half pitch. Defaults to 1.0."
         }
     },
     "required": [ "sound", "position" ]

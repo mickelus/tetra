@@ -11,7 +11,7 @@
             "condition": {
                 "type": "#minecraft:freeze_hurts_extra_types"
             },
-            "exclude": "attacker",
+            "exclude": [ "attacker" ],
             "outcome": {
                 "type": "tetra:apply_effect",
                 "effect": "minecraft:slowness",
@@ -28,7 +28,8 @@
             "const": "tetra:find_entities"
         },
         "origin": {
-            "$ref": "../vector_providers/ref.schema.json"
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position that the search will originate from."
         },
         "bounds": {
             "type": "array",
@@ -36,19 +37,23 @@
                 "type": "number"
             },
             "minItems": 6,
-            "maxItems": 6
+            "maxItems": 6,
+            "$comment": "The bounding box to search within. Format: [ x1, y1, z1, x2, y2, z2 ]"
         },
         "condition": {
-            "$ref": "../../entity_predicate.schema.json"
+            "$ref": "../../entity_predicate.schema.json",
+            "$comment": "The given outcome will be run for all entities that match this condition."
         },
         "outcome": {
-            "$ref": "../outcomes/ref.schema.json"
+            "$ref": "../outcomes/ref.schema.json",
+            "$comment": "this outcome will run for each entity that matches the condition. A 'ref' entity (referencing the entity this outcome is run for), an 'index' number and a 'successCount' number will be added to the context for the outcome."
         },
         "exclude": {
             "type": "array",
             "items": {
                 "$ref": "../entity_providers/ref.schema.json"
-            }
+            },
+            "$comment": "Entities listed in this array will be excluded from the search."
         }
     },
     "required": [ "origin", "bounds", "outcome" ]
