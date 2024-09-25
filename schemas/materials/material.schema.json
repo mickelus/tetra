@@ -52,7 +52,7 @@
             "type": "object",
             "properties": {
                 "[a-z.]+": {
-                    "$ref": "tiered_value.schema.json"
+                    "$ref": "../tiered_value.schema.json"
                 }
             }
         },
@@ -63,7 +63,7 @@
             }
         },
         "toolLevel": {
-            "$ref": "tier.schema.json"
+            "$ref": "../tier.schema.json"
         },
         "toolEfficiency": {
             "type": "number"
@@ -72,10 +72,10 @@
             "type": "object",
             "properties": {
                 "glyph": {
-                    "$ref": "hexadecimal.schema.json"
+                    "$ref": "../hexadecimal.schema.json"
                 },
                 "tint": {
-                    "$ref": "hexadecimal.schema.json"
+                    "$ref": "../hexadecimal.schema.json"
                 }
             }
         },
@@ -101,7 +101,7 @@
         "requiredTools": {
             "type": "object",
             "properties": {
-                "[a-z.]+": { "$ref": "tiered_value.schema.json" }
+                "[a-z.]+": { "$ref": "../tiered_value.schema.json" }
             }
         },
         "experienceCost": {

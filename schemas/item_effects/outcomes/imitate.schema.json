@@ -17,7 +17,7 @@
             "const": "tetra:imitate"
         },
         "itemStack": {
-            "$ref": "../../itemStack.schema.json",
+            "$ref": "../../item_stack.schema.json",
             "$comment": "The item stack from which an effect will be imitated."
         },
         "effect": {

@@ -1,0 +1,9 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/modules/variant_material.schema.json",
+    "title": "Material module variant data",
+    "description": "Material module variant data",
+    "type": "object",
+    "properties": {
+    }
+}

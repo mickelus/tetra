@@ -1,0 +1,10 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/tiered_data.schema.json",
+    "title": "Tiered data",
+    "description": "A mapping between some key and a tiered value.",
+    "type": "object",
+    "patternProperties": {
+        ".*": { "$ref": "tiered_value.schema.json" }
+    }
+}

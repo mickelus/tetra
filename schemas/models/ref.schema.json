@@ -1,0 +1,11 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/models/ref.schema.json",
+    "title": "Modular model definitions",
+    "description": "Modules and improvements can provide their items with models that the item render when displayed in the world (or in a UI).",
+    "oneOf": [
+        {
+            "$ref": "flat.schema.json"
+        }
+    ]
+}

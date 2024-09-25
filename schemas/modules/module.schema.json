@@ -1,0 +1,162 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/modules/module.schema.json",
+    "title": "Module data",
+    "description": "Data defining a module and its variants.",
+    "type": "object",
+    "properties": {
+        "replace": {
+            "type": "boolean",
+            "description": "If set to true this resource will replace others with the same location, rather than them being merged."
+        },
+        "slots": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "examples": [
+                    "sword/blade"
+                ]
+            },
+            "description": "An array of slots that this module can go into, has to contain at least one value."
+        },
+        "slotSuffixes": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Use when modules should have different models depending on slot, setting this will effectively generate multiple modules with keys suffixed with values in this array. The suffixes are also applied to model locations for the variants of the module, and for models of any improvements applied to this module. Usable for double headed tool heads, like a pickaxe head. Likely not usable for modules that only go in one slot. Make sure the length of this matches the length of the slots array."
+        },
+        "type": {
+            "type": "string",
+            "description": "Defines the type of the module. Built in types are listed as examples, but addons may add additional types.",
+            "examples": [
+                "tetra:basic_module",
+                "tetra:multi_module",
+                "tetra:basic_major_module",
+                "tetra:multi_major_module",
+                "tetra:toolbelt_module"
+            ]
+        },
+        "improvements": {
+            "type": "array",
+            "items": {
+                "$ref": "../resource_location.schema.json",
+                "examples": [
+                    "tetra:sword/basic_blade/",
+                    "tetra:sword/shared_blade/",
+                    "tetra:sword/shared/",
+                    "tetra:shared/"
+                ]
+            },
+            "$comment": "An array of references to improvement resources that this module should be able to hold, only applicable for major modules. Can (and should) reference folders to allow for compatibility between addons, see structure in the examples."
+        },
+        "renderLayer": {
+            "type": "string",
+            "enum": [ "LOWEST", "LOWER", "LOW", "BASE", "HIGH", "HIGHER", "HIGHEST" ],
+            "default": "BASE",
+            "description": "Defines the layer that this module's textures should render on, default: BASE"
+        },
+        "namePriority": {
+            "type": "string",
+            "enum": [ "LOWEST", "LOWER", "LOW", "BASE", "HIGH", "HIGHER", "HIGHEST" ],
+            "default": "BASE",
+            "description": "The priority for setting the name of the item. Multiple modules may want to provide an item name e.g. hammer, or pickaxe, and this field is used to prioritize that. Default: BASE"
+        },
+        "prefixPriority": {
+            "type": "string",
+            "enum": [ "LOWEST", "LOWER", "LOW", "BASE", "HIGH", "HIGHER", "HIGHEST" ],
+            "default": "BASE",
+            "description": "The priority for setting the prefixes of the item. Multiple modules may want to provide a name prefix e.g. Iron Pickaxe, Tempered steel axe, or Serrated copper shortblade. Only two prefixes are displayed and when more than two are available, this field is used to prioritize which prefixes are used. Default: BASE"
+        },
+        "tweakKey": {
+            "$ref": "../resource_location.schema.json",
+            "$comment": "Reference to a tweak resource, use if this module should have variants or improvements that should have tweakable stats."
+        },
+        "variants": {
+            "type": "array",
+            "items": {
+                "$ref": "variant_ref.schema.json"
+            },
+            "description": "This describes all the variants of this module, should contain at least one value."
+        }
+    },
+    "required": [ "slots", "type", "variants", "improvements" ],
+    "examples": [
+        {
+            "replace": false,
+            "slots": [ "sword/blade" ],
+            "type": "tetra:basic_major_module",
+            "improvements": [
+                "tetra:sword/basic_blade/",
+                "tetra:sword/shared_blade/",
+                "tetra:sword/shared/",
+                "tetra:shared/"
+            ],
+            "variants": [
+                {
+                    "key": "example_blade/iron",
+                    "attributes": {
+                        "generic.attack_speed": -1.9,
+                        "generic.attack_damage": 5
+                    },
+                    "effects": {
+                        "sweeping": 1
+                    },
+                    "tools": {
+                        "cut": [ 1, 2 ]
+                    },
+                    "aspects": {
+                        "edged_weapon": 2,
+                        "breakable": 2
+                    },
+                    "integrity": -1,
+                    "durability": 200,
+                    "magicCapacity": 84,
+                    "tags": [ "forge:swords" ],
+                    "glyph": {
+                        "textureX": 46,
+                        "textureY": 16,
+                        "tint": "ecafbd"
+                    },
+                    "models": [
+                        {
+                            "location": "tetra:items/module/sword/blade/example/metal"
+                        }
+                    ]
+                },
+                {
+                    "materials": [ "tetra:wood/", "tetra:bone/" ],
+                    "key": "basic_blade/",
+                    "attributes": {
+                        "generic.attack_speed": -1.9
+                    },
+                    "effects": {
+                        "sweeping": 1
+                    },
+                    "tools": {
+                        "cut": [ 1, 2 ]
+                    },
+                    "aspects": {
+                        "edged_weapon": 2,
+                        "breakable": 2
+                    },
+                    "durability": -20,
+                    "tags": [ "forge:swords" ],
+                    "extract": {
+                        "primaryAttributes": {
+                            "generic.attack_damage": 1
+                        },
+                        "durability": 0.9,
+                        "integrity": -1,
+                        "magicCapacity": 1,
+                        "glyph": {
+                            "textureX": 0
+                        },
+                        "availableTextures": [ "metal", "shiny", "grainy", "crude" ],
+                        "models": [ { "location": "tetra:item/module/sword/blade/basic/" } ]
+                    }
+                }
+            ]
+        }
+    ]
+}

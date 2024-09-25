@@ -1,0 +1,78 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/modules/variant_material.schema.json",
+    "title": "Flat model definition",
+    "description": "Flat models are like standard vanilla item models (extruded from textures), several of these are then composed to form the model of most items.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "default": "item"
+        },
+        "location": {
+            "$ref": "../resource_location.schema.json"
+        },
+        "renderType": {
+            "$ref": "../resource_location.schema.json"
+        },
+        "transform": {
+            "type": "object",
+            "properties": {
+                "translation": {
+                    "type": "array",
+                    "items": { "type": "number" }
+                },
+                "leftRotation": {
+                    "type": "array",
+                    "items": { "type": "number" }
+                },
+                "scale": {
+                    "type": "array",
+                    "items": { "type": "number" }
+                },
+                "rightRotation": {
+                    "type": "array",
+                    "items": { "type": "number" }
+                }
+            }
+        },
+        "emission": {
+            "type": "number",
+            "default": 0
+        },
+        "tint": {
+            "$ref": "../hexadecimal.schema.json",
+            "default": "ffffffff"
+        },
+        "overlayTint": {
+            "$ref": "../hexadecimal.schema.json",
+            "default": "ffffffff"
+        },
+        "renderLayer": {
+            "type": "string",
+            "enum": [ "LOWEST", "LOWER", "LOW", "BASE", "HIGH", "HIGHER", "HIGHEST" ],
+            "default": "BASE"
+        },
+        "perspectives": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "none",
+                    "thirdperson_lefthand",
+                    "thirdperson_righthand",
+                    "firstperson_lefthand",
+                    "firstperson_righthand",
+                    "head",
+                    "gui",
+                    "ground",
+                    "fixed"
+                ]
+            }
+        },
+        "invertPerspectives": {
+            "type": "boolean",
+            "default": false
+        }
+    }
+}
