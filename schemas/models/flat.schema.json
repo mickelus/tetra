@@ -7,16 +7,23 @@
     "properties": {
         "type": {
             "type": "string",
-            "default": "item"
+            "default": "item",
+            "description": "For bows this usually determines when a model should be included as the bow is being drawn, where a value of \"draw_0\", \"draw_1\", \"draw_2\" would determine which draw stage the model would show during and \"static\" would cause the model to show regardless of draw stage. For shields this field is a resource location referencing a model geometry resource relative \"assets/<namespace>/models/modular/shield/\". Default: \"item\".",
+            "examples": [ "item", "static", "draw_0", "draw_1", "draw_2", "tetra:plate/tower" ]
         },
         "location": {
-            "$ref": "../resource_location.schema.json"
+            "$ref": "../resource_location.schema.json",
+            "$comment": "References a texture relative \"assets/<namespace>/textures/\". Material based module variants typically affix this based on the material and what's available in its \"availableTextures\" array.",
+            "examples": [ "tetra:item/module/shield/plate/tower/", "tetra:item/module/toolbelt/belt/inlaid" ]
         },
         "renderType": {
-            "$ref": "../resource_location.schema.json"
+            "$ref": "../resource_location.schema.json",
+            "$comment": "Allows for a different render type to be used when rendering the model. Default: \"minecraft:solid\".",
+            "default": "minecraft:solid"
         },
         "transform": {
             "type": "object",
+            "description": "Allows for the model to be scaled, translated and/or rotated.",
             "properties": {
                 "translation": {
                     "type": "array",
@@ -74,5 +81,6 @@
             "type": "boolean",
             "default": false
         }
-    }
+    },
+    "required": [ "location" ]
 }
