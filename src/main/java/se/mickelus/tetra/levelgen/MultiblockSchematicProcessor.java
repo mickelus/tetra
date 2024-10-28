@@ -47,10 +47,10 @@ public class MultiblockSchematicProcessor extends StructureProcessor {
                 BlockState newState = block.ruinedRef.get().defaultBlockState()
                         .setValue(RuinedMultiblockSchematicBlock.facingProp, blockInfo.state().getValue(MultiblockSchematicBlock.facingProp));
                 return new StructureTemplate.StructureBlockInfo(blockInfo.pos(), newState, blockInfo.nbt());
+            } else if (blockInfo.state().getBlock() instanceof PrimaryMultiblockSchematicBlock) {
+                BlockState newState = blockInfo.state().setValue(PrimaryMultiblockSchematicBlock.complete, false);
+                return new StructureTemplate.StructureBlockInfo(blockInfo.pos(), newState, blockInfo.nbt());
             }
-        } else if (blockInfo.state().getBlock() instanceof PrimaryMultiblockSchematicBlock) {
-            BlockState newState = blockInfo.state().setValue(PrimaryMultiblockSchematicBlock.complete, false);
-            return new StructureTemplate.StructureBlockInfo(blockInfo.pos(), newState, blockInfo.nbt());
         }
 
         return blockInfo;

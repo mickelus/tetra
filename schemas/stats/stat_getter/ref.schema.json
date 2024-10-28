@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/ref.schema.json",
     "title": "Stat getter",
-    "description": "A stat getter representation, used by statbars and holosphere sorting",
+    "description": "A stat getter representation, used by statbars and holosphere sorting to extract different types of stats for a module, improvement or an an entire item. Doesn't take care of the actual display of the stat.",
     "type": "object",
     "properties": {
         "type": {

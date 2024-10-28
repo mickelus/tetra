@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/stats/label_getter/ref.schema.json",
     "title": "Label Getter",
-    "description": "A label getter representation, label getters determine how the numerical value of a stat is formatted and displayed above the stat bar.",
+    "description": "A label getter representation, label getters determine how the numerical value of a stat is formatted and displayed above the stat bar. Similar to a stat formatter, but can also format the difference when comparing two values.",
     "oneOf": [
         {
             "$ref": "basic.schema.json"

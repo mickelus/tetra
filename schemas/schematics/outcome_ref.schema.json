@@ -1,0 +1,14 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20//variant_ref.schema.json",
+    "title": "Schematic outcome data",
+    "description": "Different types of outcomes that can be produced by a schematic.",
+    "oneOf": [
+        {
+            "$ref": "outcome_standard.schema.json"
+        },
+        {
+            "$ref": "outcome_material.schema.json"
+        }
+    ]
+}

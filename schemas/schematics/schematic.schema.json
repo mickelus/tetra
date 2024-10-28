@@ -111,5 +111,39 @@
                 }
             }
         }
-    }
+    },
+    "examples": [
+        {
+            "slots": [ "double/head_left", "double/head_right" ],
+            "keySuffixes": [ "_left", "_right" ],
+            "materialSlotCount": 1,
+            "glyph": {
+                "textureX": 64,
+                "textureY": 0
+            },
+            "displayType": "major",
+            "outcomes": [
+                {
+                    "material": {
+                        "tag": "forge:obsidian"
+                    },
+                    "requiredTools": {
+                        "hammer": 6
+                    },
+                    "moduleKey": "double/basic_hammer",
+                    "moduleVariant": "basic_hammer/obsidian",
+                    "improvements": {
+                        "arrested": 0
+                    }
+                },
+                {
+                    "materials": [ "tetra:metal/" ],
+                    "countFactor": 2,
+                    "toolOffset": 1,
+                    "moduleKey": "double/basic_hammer",
+                    "moduleVariant": "basic_hammer/"
+                }
+            ]
+        }
+    ]
 }

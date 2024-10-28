@@ -66,6 +66,12 @@ public class MaterialVariantData extends VariantData {
 
         result.aspects = AspectData.merge(aspects, material.aspects);
 
+        if (material.rarity != null && (rarity == null || material.rarity.ordinal() > rarity.ordinal())) {
+            result.rarity = material.rarity;
+        } else {
+            result.rarity = rarity;
+        }
+
         result.glyph = Optional.ofNullable(extract.glyph)
                 .map(glyph -> new GlyphData(glyph.textureLocation, glyph.textureX, glyph.textureY, material.tints.glyph))
                 .orElse(glyph);

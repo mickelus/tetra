@@ -1,0 +1,67 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/outcome_material.schema.json",
+    "title": "Material schematic outcome data",
+    "description": "Defines a material outcome for a schematic, this expands into several outcomes based on the referenced materials.",
+    "type": "object",
+    "properties": {
+        "materials": {
+            "type": "array",
+            "items": {
+                "$ref": "../resource_location.schema.json"
+            },
+            "description": "Can reference material folders or specific materials, referencing folders makes for improved compatability with addons."
+        },
+        "materialSlot": {
+            "type": "number",
+            "description": "The slot in which to look for the material, this can be set when doing multi-material-schematics. Can be set to a value between 0 (inclusive) and 'materialSlotCount' on the schematic. Not to be confused with the module slots of a modular item.",
+            "default": 0
+        },
+        "experienceCost": {
+            "type": "number",
+            "description": "The experience cost for the craft, in levels. The player will be required to have this amount of experience, and will lose this amount of levels when crafting something with this outcome.",
+            "default": 0
+        },
+        "countFactor": {
+            "type": "number",
+            "description": "Multiplies the number of required materials. Decimal values allowed, the result is rounded to the nearest integer.",
+            "default": 1
+        },
+        "countOffset": {
+            "type": "number",
+            "description": "Offsets the number of required materials.",
+            "default": 0
+        },
+        "toolFactor": {
+            "type": "number",
+            "description": "Multiplies the level for required tools defined by the material. Decimal values allowed, the result is rounded to the nearest integer.",
+            "default": 1
+        },
+        "toolOffset": {
+            "type": "number",
+            "description": "Offsets the level for required tools defined by the material.",
+            "default": 0
+        },
+        "requiredTools": {
+            "$ref": "../tiered_data.schema.json",
+            "$comment": "Adds additional tool requirements in addition to those required by the material."
+        },
+        "moduleKey": {
+            "type": "string",
+            "description": "A key referring to a module. Optional, but the schematic should then apply improvements or the outcome won't do anything."
+        },
+        "moduleVariant": {
+            "type": "string",
+            "description": "A module variant, this value is suffixed with the 'key' field from referenced materials. Optional, but has to be set if the moduleKey field is set."
+        },
+        "improvements": {
+            "type": "object",
+            "description": "An object describing which improvements to apply for this outcome, where the key is the improvement identifier and the value is the improvement level. This can be used both with and without the moduleKey being set. Improvements will only be added if that improvement is available for the module in the target slot. The improvement keys listed here are suffixed with the 'key' field from referenced materials."
+        },
+        "hidden": {
+            "type": "boolean",
+            "description": "If set to true the outcome will not be visible in the holosphere, but will still be craftable if the requirements are met."
+        }
+    },
+    "required": [ "materials" ]
+}

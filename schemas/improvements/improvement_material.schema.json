@@ -1,8 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/modules/variant_material.schema.json",
-    "title": "Material module variant data",
-    "description": "Expands into several module variants based on the referenced materials. Stats can be based on material properties, and some material properties are inherited by the expanded variants. Mostly has the same fields as a standard module variant, the values of those fields are merged with what is extracted from the material.",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/improvements/variant_material.schema.json",
+    "title": "Material improvement data",
+    "description": "Expands into several improvement instances based on the referenced materials. Stats can be based on material properties, and some material properties are inherited by the expanded instances. Mostly has the same fields as a standard improvement, the values of those fields are merged with what is extracted from the material.",
     "type": "object",
     "properties": {
         "materials": {
@@ -14,7 +14,7 @@
         },
         "durability": {
             "type": "number",
-            "description": "The durability that the module provides, called item damage in vanilla minecraft. A higher value makes the item last longer before it needs repairs. Swords lose one point of durability when hitting entities and two points when destroying blocks, for tools it's the opposite.",
+            "description": "The durability that the improvement provides, called item damage in vanilla minecraft. A higher value makes the item last longer before it needs repairs. Swords lose one point of durability when hitting entities and two points when destroying blocks, for tools it's the opposite.",
             "default": 0
         },
         "durabilityMultiplier": {
@@ -24,12 +24,12 @@
         },
         "integrity": {
             "type": "number",
-            "description": "Integrity is used for balancing and acts as a capacity for how many modules and improvements an item can hold. Some modules provide integrity while some have an integrity cost, if an upgrade would cause the cost to exceed the available integrity the upgrade would not be possible. A negative value represents an integrity cost while positive values cause the module to provide integrity.",
+            "description": "Integrity is used for balancing and acts as a capacity for how many modules and improvements an item can hold. Some improvements provide integrity while some have an integrity cost, if an upgrade would cause the cost to exceed the available integrity the upgrade would not be possible. A negative value represents an integrity cost while positive values cause the improvement to provide integrity.",
             "default": 0
         },
         "magicCapacity": {
             "type": "number",
-            "description": "The magic capacity determines how many enchantments a module can hold before it starts to suffer from destabilization effects. A higher value is better. Only relevant for major modules since those are the only ones that can hold enchantments.",
+            "description": "The magic capacity determines how many enchantments a module can hold before it starts to suffer from destabilization effects. A higher value is better.",
             "default": 0
         },
         "attributes": {
@@ -72,11 +72,11 @@
             "items": {
                 "$ref": "../resource_location.schema.json"
             },
-            "description": "Hacky solution to allow modules to apply tags to an item, possibly useful for mod compat. Works in cases where the functionality uses ItemStack.is to check for tags."
+            "description": "Hacky solution to allow modules and improvements to apply tags to an item, possibly useful for mod compat. Works in cases where the functionality uses ItemStack.is to check for tags."
         },
         "rarity": {
             "type": "string",
-            "description": "Determines the rarity of the module, if the material has a higher rarity than this value then that value will be used instead.",
+            "description": "Determines the rarity of the improvement, if the material has a higher rarity than this value then that value will be used instead.",
             "examples": [ "COMMON", "UNCOMMON", "RARE", "EPIC" ]
         },
         "models": {
@@ -84,7 +84,7 @@
             "items": {
                 "$ref": "../models/ref.schema.json"
             },
-            "description": "These models are added straight up to the resulting module variant without being tinted or affected by the material."
+            "description": "These models are added straight up to the resulting improvement instance without being tinted or affected by the material."
         },
         "extract": {
             "type": "object",
@@ -124,12 +124,12 @@
                 },
                 "durability": {
                     "type": "number",
-                    "description": "The material's durabililty will be multiplied by this value and the product is added to the resulting module variant.",
+                    "description": "The material's durabililty will be multiplied by this value and the product is added to the resulting improvement instance.",
                     "default": 0
                 },
                 "durabilityMultiplier": {
                     "type": "number",
-                    "description": "The material's durabililty will be multiplied by this value the result is added to the durabilityModifier field of the resulting module variant, this can get a bit wonky as material durability varies significantly.",
+                    "description": "The material's durabililty will be multiplied by this value the result is added to the durabilityModifier field of the resulting improvement instance, this can get a bit wonky as material durability varies significantly.",
                     "default": 0
                 },
                 "integrity": {
@@ -139,7 +139,7 @@
                 },
                 "magicCapacity": {
                     "type": "number",
-                    "description": "The material's magic capacity will be multiplied by this value and the product is added to the resulting module variant. You'd often want to set this to 1 for modules that can hold enchantments, otherwise leave it unset.",
+                    "description": "The material's magic capacity will be multiplied by this value and the product is added to the resulting improvement instance.",
                     "default": 0
                 },
                 "tools": {
@@ -148,14 +148,14 @@
                 },
                 "glyph": {
                     "$ref": "../glyph.schema.json",
-                    "description": "The glyph for the module, the tint from the material will be used."
+                    "description": "The glyph for the improvement, the tint from the material will be used."
                 },
                 "models": {
                     "type": "array",
                     "items": {
                         "$ref": "../models/ref.schema.json"
                     },
-                    "description": "Module models that should be tinted and suffixed based on the material."
+                    "description": "Models that should be tinted and suffixed based on the material."
                 },
                 "availableTextures": {
                     "description": "Texture suffixes available for model textures, the first material texture that matches one of the textures listed here will be used, if none matches the first of the available textures will be used."

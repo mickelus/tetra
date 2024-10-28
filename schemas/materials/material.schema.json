@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/material.schema.json",
     "title": "Material",
-    "description": "Definition of material data in tetra",
+    "description": "Definition of material data in tetra. Most of the fields in this resource are available on module variants and schematic outcomes and are probably easier to understand when read about in that context.",
     "type": "object",
     "properties": {
         "replace": {
@@ -10,72 +10,107 @@
             "type": "boolean"
         },
         "key": {
-            "type": "string"
+            "type": "string",
+            "description": "Identifier for the material, will be used as suffix for module variants from this material."
         },
         "category": {
-            "type": "string"
+            "type": "string",
+            "description": "Applied to all module variants from this material.",
+            "default": "misc"
         },
         "hidden": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "If set to true, this material will not show up in the holosphere.",
+            "default": false
         },
         "hiddenOutcomes": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "If set to true, module and improvement variants derived from this material will not show up in the holosphere.",
+            "default": false
+        },
+        "primary": {
+            "type": "number",
+            "description": "Multiplier for primary attributes & effects. Should represent hardness, sharpness or the ability to shape this material into something with a hard/sharp edge. Material module variants reference this when determining attributes and effects."
+        },
+        "secondary": {
+            "type": "number",
+            "description": "Multiplier for secondary attributes & effects. Should represent material density, rigidity or weight, how much kinetic energy does this carry as it's swung. Material module variants reference this when determining attributes and effects."
+        },
+        "tertiary": {
+            "type": "number",
+            "description": "Multiplier for tertiary attributes & effects. Should represent flexibility or tensile strength, how fast does this material spring back when bent. Material module variants reference this when determining attributes and effects."
+        },
+        "durability": {
+            "type": "number",
+            "description": "Durability base, modules use this to determine flat or multiplier durability bonuses."
+        },
+        "integrityGain": {
+            "type": "number",
+            "description": "Multiplier for modules that provide integrity."
+        },
+        "integrityCost": {
+            "type": "number",
+            "description": "Multiplier for modules that consume integrity."
+        },
+        "magicCapacity": {
+            "type": "integer",
+            "description": "The magic capacity of major modules variants made from this material."
+        },
+        "toolLevel": {
+            "$ref": "../tier.schema.json",
+            "description": "Modules that provide tools that vary based on material use this to determine the level of the tools."
+        },
+        "toolEfficiency": {
+            "type": "number",
+            "description": "Modules that provide tools that vary based on material use this to determine the efficiency of the tools."
+        },
+        "effects": {
+            "$ref": "../tiered_data.schema.json",
+            "$comment": "Effects that will be inherited by modules and improvements crafted from this material.",
+            "examples": [
+                {
+                    "stability": 10
+                }
+            ]
         },
         "attributes": {
             "type": "object",
-            "properties": {
-                "[a-z.]+": { "type": "number" }
-            }
-        },
-        "primary": {
-            "type": "number"
-        },
-        "secondary": {
-            "type": "number"
-        },
-        "tertiary": {
-            "type": "number"
-        },
-        "durability": {
-            "type": "number"
-        },
-        "integrityGain": {
-            "type": "number"
-        },
-        "integrityCost": {
-            "type": "number"
-        },
-        "magicCapacity": {
-            "type": "integer"
-        },
-        "effects": {
-            "type": "object",
-            "properties": {
-                "[a-z.]+": {
-                    "$ref": "../tiered_value.schema.json"
-                }
-            }
+            "patternProperties": {
+                ".*": { "type": "number" }
+            },
+            "description": "Innate attributes gained from the material, all modules and improvements crafted from this material will inherit these attributes."
         },
         "aspects": {
             "type": "object",
-            "properties": {
-                "[a-z.]+": { "type": "integer" }
-            }
+            "patternProperties": {
+                ".*": { "type": "integer" }
+            },
+            "description": "Aspects that will be inherited by modules and improvements crafted from this material. Intended for when the material should affect how a module can be modified by improvements and enchantments."
         },
-        "toolLevel": {
-            "$ref": "../tier.schema.json"
+        "improvements": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "type": "integer" }
+            },
+            "description": "All major modules made from this material will have these improvements. Useful for when major modules crafted from the material should have some effect but minor modules or improvements should not."
         },
-        "toolEfficiency": {
-            "type": "number"
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Variants and improvements derived from this material will have the tags listed here. Variants and improvements may add additional tags. This is a hacky solution, se schema for module variants for more info."
         },
         "tints": {
             "type": "object",
             "properties": {
                 "glyph": {
-                    "$ref": "../hexadecimal.schema.json"
+                    "$ref": "../hexadecimal.schema.json",
+                    "$comment": "Hexadecimal string for tinting glyphs in UIs."
                 },
-                "tint": {
-                    "$ref": "../hexadecimal.schema.json"
+                "texture": {
+                    "$ref": "../hexadecimal.schema.json",
+                    "$comment": "Hexadecimal string for tinting of textures."
                 }
             }
         },
@@ -83,47 +118,131 @@
             "type": "array",
             "items": {
                 "type": "string"
-            }
+            },
+            "description": "An array of texture suffixes that this material would prefer to use, the first suffix that matches a value in the 'availableTextures' from referencing material variant will be used."
         },
         "textureOverrides": {
             "type": "array",
             "items": {
                 "type": "string"
-            }
+            },
+            "description": "Referencing modules with models that have a base path matching one of these values will be forced to use the first texture suffix from this material, even if that suffix is not listed in 'availableTextures'. This is useful if an addon wants to add specific textures for some modules added by base tetra or by another addon. Obsidian has an example for this in base tetra."
         },
         "tintOverrides": {
             "type": "boolean",
-            "default": false
+            "default": false,
+            "description": "If set to true, when textures are provided through the 'textureOverrides' method the texture will still be tinted with the material's tint. Leave this as false when the textureOverrides already have colored textures."
         },
         "material": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../resource_location.schema.json"
+                    },
+                    "description": "A list of items that can be used as material for this outcome. Either this or the 'tag' field has to be set."
+                },
+                "tag": {
+                    "$ref": "../resource_location.schema.json",
+                    "description": "A tag that can be used to determine if an item can be used as material for this outcome. Either this or the 'items' field has to be set."
+                },
+                "nbt": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "type": "unknown" }
+                    },
+                    "description": "Can be set if the material stack should have some specific nbt data."
+                },
+                "count": {
+                    "type": "number",
+                    "default": 1,
+                    "description": "Determines how large the itemstack has to be to match this outcome. This also determines how many items are consumed when crafting."
+                }
+            },
+            "description": "Defines which item is required by outcomes derived from this material. The count field may be offset or multiplied by the referencing outcome."
         },
         "requiredTools": {
-            "type": "object",
-            "properties": {
-                "[a-z.]+": { "$ref": "../tiered_value.schema.json" }
-            }
+            "$ref": "../tiered_data.schema.json",
+            "description": "Defines the tools (and which levels) that are required by outcomes derived from this material, outcomes may add additional tools and multiply/offset the levels provided here."
         },
         "experienceCost": {
-            "type": "number"
-        },
-        "tags": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
-        },
-        "improvements": {
-            "type": "object",
-            "properties": {
-                "[a-z.]+": { "type": "integer" }
-            }
+            "type": "number",
+            "description": "Outcomes derived from this material will have this experience cost, outcomes may add to or subtract from this value."
         },
         "features": {
             "type": "array",
             "items": {
                 "type": "string"
+            },
+            "description": "Features are displayed when viewing the material in the holosphere, to be used to describe crafting effect behavior related to this material. E.g. tetracelium uses this to describe how Twilight Forest metals apply different enchantments depending on module type."
+        }
+    },
+    "required": [
+        "key",
+        "primary",
+        "secondary",
+        "tertiary",
+        "durability",
+        "integrityGain",
+        "integrityCost",
+        "magicCapacity",
+        "toolLevel",
+        "toolEfficiency",
+        "material",
+        "textures"
+    ],
+    "examples": [
+        {
+            "key": "oak",
+            "category": "wood",
+            "primary": "3",
+            "secondary": "4",
+            "tertiary": "6",
+            "durability": "5.2",
+            "integrityCost": "1",
+            "integrityGain": "4",
+            "magicCapacity": "90",
+            "toolLevel": "1",
+            "toolEfficiency": "2",
+            "tints": {
+                "glyph": "oak_glyph",
+                "texture": "oak"
+            },
+            "textures": [ "crude", "default" ],
+            "material": {
+                "tag": "minecraft:planks"
+            },
+            "requiredTools": {
+                "axe": 1
+            }
+        },
+        {
+            "key": "diamond",
+            "category": "gem",
+            "primary": "6",
+            "secondary": "7",
+            "tertiary": "0",
+            "durability": "156.1",
+            "integrityCost": "2",
+            "integrityGain": "2",
+            "magicCapacity": 60,
+            "toolLevel": "4",
+            "toolEfficiency": "8",
+            "tints": {
+                "glyph": "diamond_glyph",
+                "texture": "diamond"
+            },
+            "textures": [ "shiny", "crude", "default" ],
+            "material": {
+                "item": "minecraft:diamond"
+            },
+            "improvements": {
+                "arrested": 0
+            },
+            "requiredTools": {
+                "hammer": 3
             }
         }
-    }
+    ]
 }

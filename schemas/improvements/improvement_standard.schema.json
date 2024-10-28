@@ -1,22 +1,26 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/modules/variant_ref.schema.json",
-    "title": "Standard module variant data",
-    "description": "Directly defines a single module variant.",
+    "title": "Standard improvement data",
+    "description": "Defines one instance of improvement data.",
     "type": "object",
     "properties": {
         "key": {
             "type": "string",
-            "description": "Identifier for the variant, should be unique."
+            "description": "Identifier for the improvement, can be shared across multiple instances with different levels."
         },
-        "category": {
+        "level": {
+            "type": "number",
+            "default": 0,
+            "description": "The level of the improvement, essentially used to convey the strength of the improvement to the player. Higher levels should probably be better (or worse if this is more of a negative modifier than an improvement)."
+        },
+        "group": {
             "type": "string",
-            "description": "The category is used when grouping variants in the holosphere UI, the localization key used for the displayed value is 'tetra.variant_category.<value>.label'.",
-            "default": "misc"
+            "description": "Improvements with the same group cannot exist on the same module. Useful when some improvements should not be stackable, e.g. a leather wrap and a wool wrap should not be allowed on the same handle. Adding an improvement to a module when another improvement with the same group is present will replace the existing improvement. Schematic requirements can be used to stop the player from adding improvements if an improvement with a specific group is already present on the module."
         },
         "durability": {
             "type": "number",
-            "description": "The durability that the module provides, called item damage in vanilla minecraft. A higher value makes the item last longer before it needs repairs. Swords lose one point of durability when hitting entities and two points when destroying blocks, for tools it's the opposite.",
+            "description": "The durability that the improvement provides, called item damage in vanilla minecraft. A higher value makes the item last longer before it needs repairs. Swords lose one point of durability when hitting entities and two points when destroying blocks, for tools it's the opposite.",
             "default": 0
         },
         "durabilityMultiplier": {
@@ -26,12 +30,12 @@
         },
         "integrity": {
             "type": "number",
-            "description": "Integrity is used for balancing and acts as a capacity for how many modules and improvements an item can hold. Some modules provide integrity while some have an integrity cost, if an upgrade would cause the cost to exceed the available integrity the upgrade would not be possible. A negative value represents an integrity cost while positive values cause the module to provide integrity.",
+            "description": "Integrity is used for balancing and acts as a capacity for how many modules and improvements an item can hold. Some improvements provide integrity while some have an integrity cost, if an upgrade would cause the cost to exceed the available integrity the upgrade would not be possible. A negative value represents an integrity cost while positive values cause the improvement to provide integrity.",
             "default": 0
         },
         "magicCapacity": {
             "type": "number",
-            "description": "The magic capacity determines how many enchantments a module can hold before it starts to suffer from destabilization effects. A higher value is better. Only relevant for major modules since those are the only ones that can hold enchantments.",
+            "description": "The magic capacity determines how many enchantments a module can hold before it starts to suffer from destabilization effects. A higher value is better.",
             "default": 0
         },
         "attributes": {
@@ -74,29 +78,25 @@
             "items": {
                 "$ref": "../resource_location.schema.json"
             },
-            "description": "Hacky solution to allow modules to apply tags to an item, possibly useful for mod compat. Works in cases where the functionality uses ItemStack.is to check for tags."
+            "description": "Hacky solution to allow modules and improvements to apply tags to an item, possibly useful for mod compat. Works in cases where the functionality uses ItemStack.is to check for tags."
         },
         "rarity": {
             "type": "string",
             "description": "The rarity of the item is determined by the module or improvement with the highest rarity value. Vanilla values listed as examples, but other mods may add more.",
             "examples": [ "COMMON", "UNCOMMON", "RARE", "EPIC" ]
         },
-        "glyph": {
-            "$ref": "../glyph.schema.json",
-            "description": "This glyph is displayed in the workbench UI when an item has a module with this variant, and in the variant list in the holosphere UI."
-        },
         "prefixPriority": {
             "type": "string",
             "enum": [ "LOWEST", "LOWER", "LOW", "BASE", "HIGH", "HIGHER", "HIGHEST" ],
             "default": "BASE",
-            "description": "The priority for setting the prefixes of the item. Multiple modules may want to provide a name prefix e.g. Iron Pickaxe, Tempered steel axe, or Serrated copper shortblade. Only two prefixes are displayed and when more than two are available, this field is used to prioritize which prefixes are used. Default: BASE"
+            "description": "The priority for setting the prefixes of the item. Multiple modules or improvements may want to provide a name prefix e.g. Iron Pickaxe, Tempered steel axe, or Serrated copper shortblade. Only two prefixes are displayed and when more than two are available, this field is used to prioritize which prefixes are used. Default: BASE"
         },
         "models": {
             "type": "array",
             "items": {
                 "$ref": "../models/ref.schema.json"
             },
-            "description": "A set of models that this module should add to the item. The order in which the models are listed here affects how they are layered during rendering, but any 'renderLayer' fields present on the models will take precedence over this order."
+            "description": "A set of models that this improvement should add to the item. The order in which the models are listed here affects how they are layered during rendering, but any 'renderLayer' fields present on the models will take precedence over this order."
         }
     }
 }

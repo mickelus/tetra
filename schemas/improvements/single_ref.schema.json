@@ -1,0 +1,13 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/modules/variant_ref.schema.json",
+    "title": "Improvement data",
+    "oneOf": [
+        {
+            "$ref": "improvement_standard.schema.json"
+        },
+        {
+            "$ref": "improvement_material.schema.json"
+        }
+    ]
+}

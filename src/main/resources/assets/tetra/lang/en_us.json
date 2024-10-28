@@ -1812,7 +1812,6 @@
     "tetra.module.toolbelt/belt.name": "Toolbelt",
     "tetra.module.toolbelt/belt.item_name": "Toolbelt",
     "tetra.variant.belt/rope": "Rope",
-    "tetra.variant.belt/rope.name": "Rope",
     "tetra.variant.belt/rope.item_name": "Rope",
     "tetra.variant.belt/rope.description": "A very basic waistband fashioned from a rope. Can hold a very limited amount of attachments.",
     "tetra.module.toolbelt/belt_wool.name": "Wool sash",

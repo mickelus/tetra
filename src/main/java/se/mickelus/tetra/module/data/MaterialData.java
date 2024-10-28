@@ -7,6 +7,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.TierSortingRegistry;
 import se.mickelus.tetra.data.deserializer.AttributesDeserializer;
 import se.mickelus.tetra.data.deserializer.ItemTagKeyDeserializer;
@@ -82,6 +83,8 @@ public class MaterialData {
     public float experienceCost;
 
     public Set<TagKey<Item>> tags;
+
+    public Rarity rarity;
 
     public String[] features = new String[0];
 
@@ -190,6 +193,10 @@ public class MaterialData {
             to.tags = Stream.concat(from.tags.stream(), to.tags.stream()).collect(Collectors.toSet());
         } else if (from.tags != null) {
             to.tags = from.tags;
+        }
+
+        if (from.rarity != null) {
+            to.rarity = from.rarity;
         }
 
         to.features = Stream.concat(Arrays.stream(to.features), Arrays.stream(from.features))
@@ -325,8 +332,13 @@ public class MaterialData {
                             .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getAsInt()));
                 }
             }
+
             if (jsonObject.has("tags")) {
                 data.tags = context.deserialize(jsonObject.get("tags"), ItemTagKeyDeserializer.typeToken.getRawType());
+            }
+
+            if (jsonObject.has("rarity")) {
+                data.rarity = context.deserialize(jsonObject.get("rarity"), Rarity.class);
             }
 
             if (jsonObject.has("features")) {
