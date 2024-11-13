@@ -1,8 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/modules/variant_ref.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/improvements/improvement_standard.schema.json",
     "title": "Standard improvement data",
-    "description": "Defines one instance of improvement data.",
+    "description": "Defines one instance of an improvement, for improvements with multiple levels you'd have one of these per level.",
     "type": "object",
     "properties": {
         "key": {

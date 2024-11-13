@@ -1,8 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/modules/module.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/improvements/improvements.schema.json",
     "title": "Improvements resource",
-    "description": "Data defining improvements, Each resource contains an array of improvements.",
+    "description": "Data defining improvements, each resource contains an array of improvement data.",
     "type": "array",
     "items": {
         "$ref": "single_ref.schema.json"
