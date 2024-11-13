@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/not.schema.json",
+    "title": "Not crafting requirement",
+    "description": "Passes if the given requirement does NOT pass.",
+    "examples": [
+        {
+            "type": "tetra:not",
+            "requirement": { "type": "tetra:fixed", "value": false }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:not"
+        },
+        "requirement": {
+            "$ref": "ref.schema.json",
+            "$comment": "The parent requirement passes if this requirement does not."
+        }
+    },
+    "required": [ "type", "requirement" ]
+}

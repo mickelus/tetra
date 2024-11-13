@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/accepts_improvement.schema.json",
+    "title": "Aspect crafting requirement",
+    "description": "Passes if the module in the target slot has the given aspect, optionally matching the given level predicate.",
+    "examples": [
+        {
+            "type": "tetra:aspect",
+            "improvement": "blade/serrated",
+            "level": {
+                "min": 2
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:accepts_improvement"
+        },
+        "improvement": {
+            "type": "string",
+            "description": "Passes if the module in the target slot accepts an improvement with a key matching this value. Accepts as in the module references an improvements resource which define an improvement with the key."
+        },
+        "level": {
+            "$ref": "../integer_predicate.schema.json",
+            "$comment": "In addition to having the aspect the level of the aspect also has to match this predicate."
+        }
+    },
+    "required": [ "type", "improvement" ]
+}

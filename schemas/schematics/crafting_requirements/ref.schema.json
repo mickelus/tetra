@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/ref.schema.json",
+    "title": "Crafting requirements",
+    "description": "Crafting requirements are used by schematics to determine if the schematic is applicable in a given context, based on the target itemstack, player and the world.",
+    "oneOf": [
+        {
+            "$ref": "and.schema.json"
+        },
+        {
+            "$ref": "or.schema.json"
+        },
+        {
+            "$ref": "not.schema.json"
+        }
+    ]
+}
