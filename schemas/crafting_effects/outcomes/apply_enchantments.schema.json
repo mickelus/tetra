@@ -1,0 +1,38 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/outcomes/apply_enchantment.schema.json",
+    "title": "Apply enchantment crafting effect outcome",
+    "description": "Attempts to apply a list of enchantments onto the module in the target slot.",
+    "examples": [
+        {
+            "type": "tetra:apply_enchantment",
+            "enchantments": {
+                "minecraft:sharpness": 1
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:apply_enchantment"
+        },
+        "enchantments": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "type": "number" }
+            },
+            "description": "A list of enchantments to apply to the target module, the key is the enchantment id and the value is the level of the enchantment."
+        },
+        "force": {
+            "type": "boolean",
+            "description": "If true, the enchantments will be applied even if the target module doesn't have the aspects required by the enchantments."
+        },
+        "stacking": {
+            "type": "string",
+            "enum": [ "add", "stack", "max", "replace" ],
+            "default": "max",
+            "description": "Determines how the enchantments should be applied if the target module already has enchantments. 'add' will add the given level for conflicting enchantments, 'max' will use the highest level for conflicting enchantments, 'stack' works like 'max' but increments the level by 1 if the given and current levels are equal, 'replace' will override the level of conflicting enchantments with the given level."
+        }
+    },
+    "required": [ "type", "enchantments" ]
+}

@@ -1,0 +1,18 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/locked.schema.json",
+    "title": "Locked crafting requirement",
+    "description": "Passes if some nearby block provides a schematic key matching the given schematic key, the providing block typically determines under which conditions it wants to provide its schematic(s).",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:locked",
+            "key": "tetra:stone_expertise"
+        },
+        "key": {
+            "$ref": "../../resource_location.schema.json",
+            "$comment": "This schematic key that has to be provided by a nearby block."
+        }
+    },
+    "required": [ "type", "key" ]
+}

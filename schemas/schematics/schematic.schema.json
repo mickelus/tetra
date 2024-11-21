@@ -2,59 +2,54 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/schematics.schema.json",
     "title": "Schematic",
-    "description": "Definition of a schematic in tetra",
+    "description": "Data defining a schematic. Schematics determine how modules are crafted, and how existing major modules can be improved.",
     "type": "object",
     "properties": {
         "replace": {
-            "description": "Marks if this should replace or merge with existing entries (if any) for this schematic definition. The default behaviour for upgrade schematics added by other mods and datapacks is to merge values set by those into the existing entry (if any). By setting replace to true it's possible to completely replace schematics registered by tetra, which can be useful when one wants to remove something.",
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Marks if this should replace or merge with existing entries (if any) for this schematic definition. The default behaviour for upgrade schematics added by other mods and datapacks is to merge values set by those into the existing entry (if any). By setting replace to true it's possible to completely replace schematics registered by tetra, which can be useful when one wants to remove something."
         },
         "localizationKey": {
-            "description": "The key used for localized human readable strings such as name and description. If this is not available the key field is used for picking up localized strings instead, which is preferable in most cases. This field is useful when multiple schematics should use the same name, description etc.",
-            "type": "string"
+            "type": "string",
+            "description": "The key used for localized human readable strings such as name and description. If this is not available the key field is used for picking up localized strings instead, which is preferable in most cases. This field is useful when multiple schematics should use the same name, description etc."
         },
         "slots": {
-            "description": "An array of slots which this schematic is applicable for.",
             "type": "array",
+            "description": "An array of slots which this schematic is applicable for.",
             "items": {
                 "type": "string"
             }
         },
         "keySuffixes": {
-            "description": "Suffixes, used when crafted modules should have different keys depending on slot (e.g. pickaxe head keys end with \"_left\" or \"_right\" so that different textures can be used depending on the slot. Optional, but if provided it has to have the same length as the slots field.",
             "type": "array",
+            "description": "Suffixes, used when crafted modules should have different keys depending on slot (e.g. pickaxe head keys end with \"_left\" or \"_right\" so that different textures can be used depending on the slot. Optional, but if provided it has to have the same length as the slots field.",
             "items": {
                 "type": "string"
             }
         },
         "materialSlotCount": {
-            "description": "The number of material that can be used when crafting with this schematic, currently only a value 0 or 1 is supported.",
-            "type": "integer"
+            "type": "number",
+            "description": "The number of material that can be used when crafting with this schematic, currently only a value 0 or 1 is supported."
         },
         "repair": {
-            "description": "States if a repair schematic should also be generated based on this schematic. Useful when the crafted module is repaired using the same materials and tools as if it was crafted.",
-            "type": "boolean"
+            "type": "boolean",
+            "description": "States if a repair schematic should also be generated based on this schematic. Useful when the crafted module is repaired using the same materials and tools as if it was crafted."
         },
         "hone": {
-            "description": "Defines if this schematic should only be applicable when the player has a honing attempt available for the item.",
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Defines if this schematic should only be applicable when the player has a honing attempt available for the item."
         },
         "requirement": {
-            "description": "Can be specified to determine if the schematic is allowed to be used in the current context.",
-            "type": "object",
-            "properties": {
-                "type": {
-                    "type": "string"
-                }
-            }
+            "$ref": "crafting_requirements/ref.schema.json",
+            "$comment": "If present, this schematic will only be visible and applicable when the game state matches this requirement."
         },
         "materialRevealSlot": {
-            "description": "If set this schematic will only be visible if the player carries at least one itemstack that will produce an outcome if placed in the slot at the provided index.",
-            "type": "integer"
+            "type": "number",
+            "description": "If set this schematic will only be visible if the player carries at least one itemstack that will produce an outcome if placed in the slot at the provided index."
         },
         "displayType": {
-            "description": "Defines the outline around the schematic glyph, visible in most views where players interact with the schematic somehow. \"minor\" and \"major\" display a similar outline as minor and major modules, \"improvement\" looks like a major module outline with a plus, \"other\" has no outline and the outline can instead be part of the glyph.",
             "type": "string",
+            "description": "Defines the outline around the schematic glyph, visible in most views where players interact with the schematic somehow. \"minor\" and \"major\" display a similar outline as minor and major modules, \"improvement\" looks like a major module outline with a plus, \"other\" has no outline and the outline can instead be part of the glyph.",
             "enum": [
                 "other",
                 "improvement",
@@ -63,8 +58,8 @@
             ]
         },
         "rarity": {
-            "description": "The rarity of a schematic affects how it is rendered. Colors and effects are used to differentiate between effects.",
             "type": "string",
+            "description": "The rarity of a schematic affects how it is rendered. Colors and effects are used to differentiate between effects.",
             "enum": [
                 "temporary",
                 "hone",
@@ -76,39 +71,37 @@
             "type": "object",
             "properties": {
                 "textureX": {
-                    "description": "Horizontal offset (from the left) for the glyph in the sprite sheet",
-                    "type": "integer"
+                    "type": "number",
+                    "description": "Horizontal offset (from the left) for the glyph in the sprite sheet"
                 },
                 "textureY": {
-                    "description": "Vertical offset (from the top) for the glyph in the sprite sheet",
-                    "type": "integer"
+                    "type": "number",
+                    "description": "Vertical offset (from the top) for the glyph in the sprite sheet"
                 },
                 "textureLocation": {
-                    "description": "The resource location for the texture where the glyph is located.",
-                    "type": "string"
+                    "type": "string",
+                    "description": "The resource location for the texture where the glyph is located."
                 }
             }
         },
         "translation": {
-            "description": "Used to display some information about how material properties translate into stats for the module or improvement that the schematic crafts.",
             "type": "object",
+            "description": "Used to display some information about how material properties translate into stats for the module or improvement that the schematic crafts.",
             "properties": {
             }
         },
         "applicableMaterials": {
-            "description": "Used to display hints about which materials that can be used for this schematic, strings starting with # are considered as materials, others as item IDs.",
             "type": "array",
+            "description": "Used to display hints about which materials that can be used for this schematic, strings starting with # are considered as materials, others as item IDs.",
             "items": {
                 "type": "string"
             }
         },
         "outcomes": {
-            "description": "An array of all potential outcomes of this schematic.",
             "type": "array",
+            "description": "An array of all potential outcomes of this schematic.",
             "items": {
-                "type": "object",
-                "properties": {
-                }
+                "$ref": "outcome_ref.schema.json"
             }
         }
     },

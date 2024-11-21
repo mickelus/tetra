@@ -1,0 +1,21 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/crafting_effect.schema.json",
+    "title": "Crafting effect",
+    "description": "A definition of a datadriven crafting effect, crafting effects can be used to make things happen as players modify a modular item.",
+    "type": "object",
+    "properties": {
+        "requirement": {
+            "$ref": "requirements/ref.schema.json",
+            "$comment": "Determines under which conditions the crafting effect should apply"
+        },
+        "outcomes": {
+            "type": "array",
+            "description": "Determines what happens when the crafting effect applies.",
+            "items": {
+                "$ref": "outcomes/ref.schema.json"
+            }
+        }
+    },
+    "required": [ "outcomes" ]
+}

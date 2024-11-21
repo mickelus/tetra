@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/aspect.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/requirements/aspect.schema.json",
     "title": "Aspect crafting requirement",
     "description": "Passes if the module (including its improvements) in the target slot has the given aspect, optionally matching the given level predicate.",
     "examples": [
@@ -23,7 +23,11 @@
         },
         "level": {
             "$ref": "../../integer_predicate.schema.json",
-            "$comment": "In addition to having the aspect the level of the aspect also has to match this predicate."
+            "$comment": "The level of the aspect has to match this predicate if present."
+        },
+        "anySlot": {
+            "type": "boolean",
+            "description": "If true, any of the modules on the item can fulfill this requirement (not just the module in the target slot)."
         }
     },
     "required": [ "type", "aspect" ]

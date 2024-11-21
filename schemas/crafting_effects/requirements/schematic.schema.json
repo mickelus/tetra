@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/requirements/schematic.schema.json",
+    "title": "Schematic crafting requirement",
+    "description": "Passes if the used schematic matches the given key.",
+    "examples": [
+        {
+            "type": "tetra:schematic",
+            "module": "double/adze"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:schematic"
+        },
+        "schematic": {
+            "type": "string",
+            "description": "The key of the used schematic has to match this."
+        }
+    },
+    "required": [ "type", "schematic" ]
+}

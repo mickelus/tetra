@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/requirements/slot.schema.json",
+    "title": "Slot crafting requirement",
+    "description": "Passes if the target slot matches the given slot.",
+    "type": "object",
+    "examples": [
+        {
+            "type": "tetra:slot",
+            "slot": "sword/blade"
+        }
+    ],
+    "properties": {
+        "type": {
+            "const": "tetra:slot"
+        },
+        "slot": {
+            "type": "string",
+            "description": "The target slot has to match this slot."
+        }
+    },
+    "required": [ "type", "slot" ]
+}

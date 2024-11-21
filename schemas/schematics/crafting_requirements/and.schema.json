@@ -7,8 +7,8 @@
         {
             "type": "tetra:and",
             "requirements": [
-                { "type": "tetra:fixed", "value": true },
-                { "type": "tetra:fixed", "value": false }
+                { "type": "tetra:never" },
+                { "type": "tetra:never" }
             ]
         }
     ],

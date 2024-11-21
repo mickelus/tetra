@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/feature_flag.schema.json",
+    "title": "Feature flag crafting requirement",
+    "description": "Passes if the given feature flag is enabled. Internal use, please chill.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:feature_flag"
+        },
+        "feature": {
+            "type": "string",
+            "description": "This feature flag has to be enabled."
+        }
+    },
+    "required": [ "type", "flag" ]
+}

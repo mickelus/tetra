@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/perk.schema.json",
+    "title": "Perk crafting requirement",
+    "description": "Passes if the crafting player has the given perk, optionally matching the given level predicate. Intended for rewards, internal use only. Don't mess around with this please.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:perk"
+        },
+        "feature": {
+            "type": "string",
+            "description": "This feature flag has to be enabled."
+        }
+    },
+    "required": [ "type", "flag" ]
+}

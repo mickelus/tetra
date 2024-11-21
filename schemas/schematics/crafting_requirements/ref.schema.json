@@ -12,6 +12,27 @@
         },
         {
             "$ref": "not.schema.json"
+        },
+        {
+            "$ref": "accepts_improvement.schema.json"
+        },
+        {
+            "$ref": "aspect.schema.json"
+        },
+        {
+            "$ref": "feature_flag.schema.json"
+        },
+        {
+            "$ref": "locked.schema.json"
+        },
+        {
+            "$ref": "module.schema.json"
+        },
+        {
+            "$ref": "slot.schema.json"
+        },
+        {
+            "$ref": "never.schema.json"
         }
     ]
 }

@@ -1,0 +1,41 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/requirements/ref.schema.json",
+    "title": "Crafting effect requirements",
+    "description": "Crafting effect requirements are used to determine if a crafting effect should apply.",
+    "oneOf": [
+        {
+            "$ref": "and.schema.json"
+        },
+        {
+            "$ref": "or.schema.json"
+        },
+        {
+            "$ref": "not.schema.json"
+        },
+        {
+            "$ref": "craft_type.schema.json"
+        },
+        {
+            "$ref": "improvement.schema.json"
+        },
+        {
+            "$ref": "aspect.schema.json"
+        },
+        {
+            "$ref": "locked.schema.json"
+        },
+        {
+            "$ref": "module.schema.json"
+        },
+        {
+            "$ref": "material.schema.json"
+        },
+        {
+            "$ref": "schematic.schema.json"
+        },
+        {
+            "$ref": "slot.schema.json"
+        }
+    ]
+}

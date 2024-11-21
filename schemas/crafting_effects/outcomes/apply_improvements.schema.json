@@ -1,0 +1,28 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/outcomes/apply_improvements.schema.json",
+    "title": "Apply improvements crafting effect outcome",
+    "description": "Applies the given improvements with the given levels to the target module, if the module is a major module and if the module is able to accept them.",
+    "examples": [
+        {
+            "type": "tetra:apply_improvements",
+            "improvements": {
+                "blade/serrated": 1
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:apply_improvements"
+        },
+        "improvements": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "type": "number" }
+            },
+            "description": "A list of improvements to apply to the target module, the key is the improvement key and the value is the level of the improvement."
+        }
+    },
+    "required": [ "type", "improvements" ]
+}

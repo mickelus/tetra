@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/requirements/craft_type.schema.json",
+    "title": "Craft type crafting requirement",
+    "description": "Passes if the type of craft performed matches the given type.",
+    "examples": [
+        {
+            "type": "tetra:craft_type",
+            "craft": "module"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:craft_type"
+        },
+        "craft": {
+            "type": "string",
+            "enum": [
+                "module",
+                "improvement",
+                "enchantment",
+                "repair"
+            ],
+            "description": "Determined by the schematic outcome (or the schematic itself for repairs)."
+        }
+    },
+    "required": [ "type", "craft" ]
+}

@@ -1,11 +1,11 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/or.schema.json",
-    "title": "Or crafting requirement",
-    "description": "Passes if ANY of the given requirements pass.",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/requirements/and.schema.json",
+    "title": "And crafting requirement",
+    "description": "Passes if ALL of the given requirements pass.",
     "examples": [
         {
-            "type": "tetra:or",
+            "type": "tetra:and",
             "requirements": [
                 { "type": "tetra:never" },
                 { "type": "tetra:never" }
@@ -15,12 +15,12 @@
     "type": "object",
     "properties": {
         "type": {
-            "const": "tetra:or"
+            "const": "tetra:and"
         },
         "requirements": {
             "type": "array",
             "items": { "$ref": "ref.schema.json" },
-            "$comment": "At least one requirement in this array must pass for this requirement to pass."
+            "$comment": "All requirements in this array must pass for this requirement to pass."
         }
     },
     "required": [ "type", "requirements" ]
