@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/block_property.schema.json",
+    "title": "Block property number provider",
+    "description": "Provides a numerical value based on an attribute of the block at the given position",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:block_property"
+        },
+        "position": {
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position of the block to get the property from"
+        },
+        "property": {
+            "type": "string",
+            "enum": [
+                "hardness",
+                "lightValue",
+                "experienceDrop",
+                "comparatorValue",
+                "flammability",
+                "friction"
+            ],
+            "$comment": "The name of the property to get from the block"
+        }
+    },
+    "required": [ "type", "position", "field" ]
+}

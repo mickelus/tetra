@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/normalize.schema.json",
+    "title": "Normalize vector provider",
+    "description": "Normalizes a vector, making it have a length of 1.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:normalize"
+        },
+        "vector": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The vector that is to be normalized."
+        }
+    },
+    "required": [ "vector" ]
+}

@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/imitate.schema.json",
+    "title": "Imitate item effect outcome",
+    "description": "Attempts to imitate some effect from another item",
+    "examples": [
+        {
+            "type": "tetra:imitate",
+            "imitate": "tp @s ~ ~2 ~",
+            "entity": "attacker",
+            "position": "target"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:imitate"
+        },
+        "itemStack": {
+            "$ref": "../../item_stack.schema.json",
+            "$comment": "The item stack from which an effect will be imitated."
+        },
+        "effect": {
+            "type": "string",
+            "enum": [
+                "swing",
+                "leftClickEntity",
+                "hurtEnemy",
+                "breakBlockStart",
+                "mineBlock",
+                "finishUsing"
+            ],
+            "$comment": "Values: \"swing\": called when a entity tries to play the 'swing' animation, \"leftClickEntity\": called when the player Left Clicks (attacks) an entity, processed before damage is done, \"hurtEnemy\": called after the item has been used to attack an entity, \"breakBlockStart\": called before a block is broken, \"mineBlock\": called when a Block is destroyed using this ItemStack, \"finishUsing\": called when the item in use count reach 0, e.g. item food eaten."
+        },
+        "user": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity performing the effect."
+        },
+        "targetEntity": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The target that the effect will be performed on, required for swing, leftClickEntity, hurtEnemy."
+        },
+        "targetPosition": {
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The target position that the effect will be performed at, required for breakBlockStart and mineBlock."
+        }
+    },
+    "required": [ "itemStack", "effect", "user" ]
+}
+

@@ -1,0 +1,7 @@
+{
+    "trigger": "tetra:apply_hit_effects",
+    "condition": {
+        "type": "tetra:random",
+        "chance": 0.1
+    }
+}

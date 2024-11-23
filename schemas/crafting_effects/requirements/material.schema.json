@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/requirements/material.schema.json",
+    "title": "Material crafting requirement",
+    "description": "Passes if the module in the target slot matches the given parameters. When it makes sense to use, using aspects instead of relying on this requirement would make for better compat between addons. Omitting all fields would make this requirement pass if a module is present in the target slot, but fail if it's empty.",
+    "examples": [
+        {
+            "type": "tetra:material",
+            "material": {
+                "type": "tetra:material",
+                "category": "wood"
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:material"
+        },
+        "material": {
+            "type": "object",
+            "description": "The itemstack used as material for the craft, tested using an item predicate."
+        }
+    },
+    "required": [ "type", "material" ]
+}

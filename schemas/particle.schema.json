@@ -1,0 +1,14 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/particle.schema.json",
+    "title": "Particle",
+    "description": "Vanilla json representation of a particle. The type field defines the type of particle, additional fields may be present depending on the type.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "$ref": "resource_location.schema.json",
+            "$comment": "A resource location referencing a particle. A list of particles can be found here: https://minecraft.wiki/w/Particles_(Java_Edition)"
+        }
+    },
+    "additionalProperties": true
+}

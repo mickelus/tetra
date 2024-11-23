@@ -1,0 +1,102 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/improvements/improvement_standard.schema.json",
+    "title": "Standard improvement data",
+    "description": "Defines one instance of an improvement, for improvements with multiple levels you'd have one of these per level.",
+    "type": "object",
+    "properties": {
+        "key": {
+            "type": "string",
+            "description": "Identifier for the improvement, can be shared across multiple instances with different levels."
+        },
+        "level": {
+            "type": "number",
+            "default": 0,
+            "description": "The level of the improvement, essentially used to convey the strength of the improvement to the player. Higher levels should probably be better (or worse if this is more of a negative modifier than an improvement)."
+        },
+        "group": {
+            "type": "string",
+            "description": "Improvements with the same group cannot exist on the same module. Useful when some improvements should not be stackable, e.g. a leather wrap and a wool wrap should not be allowed on the same handle. Adding an improvement to a module when another improvement with the same group is present will replace the existing improvement. Schematic requirements can be used to stop the player from adding improvements if an improvement with a specific group is already present on the module."
+        },
+        "durability": {
+            "type": "number",
+            "description": "The durability that the improvement provides, called item damage in vanilla minecraft. A higher value makes the item last longer before it needs repairs. Swords lose one point of durability when hitting entities and two points when destroying blocks, for tools it's the opposite.",
+            "default": 0
+        },
+        "durabilityMultiplier": {
+            "type": "number",
+            "description": "Multiplies the durability of the item. A value of 2.0 would double the durability of the item, a value of 1.0 would cause no change.",
+            "default": 1
+        },
+        "integrity": {
+            "type": "number",
+            "description": "Integrity is used for balancing and acts as a capacity for how many modules and improvements an item can hold. Some improvements provide integrity while some have an integrity cost, if an upgrade would cause the cost to exceed the available integrity the upgrade would not be possible. A negative value represents an integrity cost while positive values cause the improvement to provide integrity.",
+            "default": 0
+        },
+        "magicCapacity": {
+            "type": "number",
+            "description": "The magic capacity determines how many enchantments a module can hold before it starts to suffer from destabilization effects. A higher value is better.",
+            "default": 0
+        },
+        "attributes": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "type": "number" }
+            },
+            "description": "A map of attributes, used to add damage, armor, toughness, attack speed or reach/range to an item."
+        },
+        "tools": {
+            "$ref": "../tiered_data.schema.json",
+            "$comment": "Adds tool capabilities for the item. Efficiency is optional, a single number can be passed instead of an array when omitting the efficiency.",
+            "examples": [
+                {
+                    "hammer": 1,
+                    "cut": [ "minecraft:iron", 20 ]
+                }
+            ]
+        },
+        "effects": {
+            "$ref": "../tiered_data.schema.json",
+            "$comment": "Adds item effects for the item. Efficiency is optional, a single number can be passed instead of an array when omitting the efficiency.",
+            "examples": [
+                {
+                    "stun": [ 20, 1.5 ]
+                }
+            ]
+        },
+        "aspects": {
+            "$ref": "../tiered_data.schema.json",
+            "$comment": "Aspects determine how a module can be modified by improvements and enchantments. Schematics may require an aspect to be present or to be of a specific level for it to be applicable for a module. Vanilla enchantment categories match against a set of aspects. For enchantment aspects level 1 allows the enchantment to be applied using books and level 2 allows the enchantment to be applied using an enchanting table.",
+            "examples": [
+                {
+                    "edged_weapon": 1
+                }
+            ]
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "$ref": "../resource_location.schema.json"
+            },
+            "description": "Hacky solution to allow modules and improvements to apply tags to an item, possibly useful for mod compat. Works in cases where the functionality uses ItemStack.is to check for tags."
+        },
+        "rarity": {
+            "type": "string",
+            "description": "The rarity of the item is determined by the module or improvement with the highest rarity value. Vanilla values listed as examples, but other mods may add more.",
+            "examples": [ "COMMON", "UNCOMMON", "RARE", "EPIC" ]
+        },
+        "prefixPriority": {
+            "type": "string",
+            "enum": [ "LOWEST", "LOWER", "LOW", "BASE", "HIGH", "HIGHER", "HIGHEST" ],
+            "default": "BASE",
+            "description": "The priority for setting the prefixes of the item. Multiple modules or improvements may want to provide a name prefix e.g. Iron Pickaxe, Tempered steel axe, or Serrated copper shortblade. Only two prefixes are displayed and when more than two are available, this field is used to prioritize which prefixes are used. Default: BASE"
+        },
+        "models": {
+            "type": "array",
+            "items": {
+                "$ref": "../models/ref.schema.json"
+            },
+            "description": "A set of models that this improvement should add to the item. The order in which the models are listed here affects how they are layered during rendering, but any 'renderLayer' fields present on the models will take precedence over this order."
+        }
+    }
+}

@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import com.google.common.collect.Streams;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolActions;
@@ -17,15 +18,14 @@ import se.mickelus.tetra.gui.stats.bar.GuiStatBase;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class WorkbenchStatsGui extends GuiElement {
 
-    private static final List<GuiStatBase> bars = new LinkedList<>(Arrays.asList(
-            GuiStats.attackDamage,
+    private static final List<GuiStatBase> staticBars = new ArrayList<>(Arrays.asList(
             GuiStats.attackSpeed,
             GuiStats.drawStrength,
             GuiStats.drawSpeed,
@@ -111,6 +111,7 @@ public class WorkbenchStatsGui extends GuiElement {
             new GuiStatBarTool(0, 0, StatsHelper.barLength, TetraToolActions.pry),
             new GuiStatBarTool(0, 0, StatsHelper.barLength, ToolActions.HOE_DIG)
     ));
+    private static List<GuiStatBase> bars = new ArrayList<>();
     private final GuiElement barGroup;
 
     public WorkbenchStatsGui(int x, int y) {
@@ -121,7 +122,11 @@ public class WorkbenchStatsGui extends GuiElement {
     }
 
     public static void addBar(GuiStatBase statBar) {
-        bars.add(statBar);
+        staticBars.add(statBar);
+    }
+
+    public static void setDataBars(GuiStatBase... statBars) {
+        bars = Arrays.asList(statBars);
     }
 
     public void update(ItemStack itemStack, ItemStack previewStack, String slot, String improvement, Player player) {
@@ -129,7 +134,7 @@ public class WorkbenchStatsGui extends GuiElement {
         setVisible(shouldShow);
         if (shouldShow) {
             barGroup.clearChildren();
-            bars.stream()
+            Streams.concat(staticBars.stream(), bars.stream())
                     .filter(bar -> bar.shouldShow(player, itemStack, previewStack, slot, improvement))
                     .forEach(bar -> {
                         bar.update(player, itemStack, previewStack, slot, improvement);

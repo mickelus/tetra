@@ -1,0 +1,27 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/effect_level.schema.json",
+    "title": "Effect level number provider",
+    "description": "Provides the level of the given effect.",
+    "examples": [
+        {
+            "type": "tetra:effect_level",
+            "effect": "howling"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:effect_level"
+        },
+        "effect": {
+            "type": "string",
+            "$comment": "The effect to get the level of."
+        },
+        "fallback": {
+            "$ref": "ref.schema.json",
+            "$comment": "Fallback value if the item is broken or doesn't have the effect. Defaults to 0."
+        }
+    },
+    "required": [ "effect" ]
+}

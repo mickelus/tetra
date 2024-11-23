@@ -1,0 +1,54 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/improvements/improvements.schema.json",
+    "title": "Improvements resource",
+    "description": "Data defining improvements, each resource contains an array of improvement data.",
+    "type": "array",
+    "items": {
+        "$ref": "single_ref.schema.json"
+    },
+    "examples": [
+        [
+            {
+                "key": "example/grip_tape",
+                "level": 1,
+                "group": "wrap",
+                "integrity": -1,
+                "attributes": {
+                    "generic.attack_speed": 0.05,
+                    "**generic.attack_damage": 0.1
+                },
+                "models": [
+                    {
+                        "location": "tetra:items/module/double/handle/basic/improvements/wrap_alt",
+                        "tint": "eebbaf"
+                    }
+                ]
+            },
+            {
+                "key": "example/grip_tape",
+                "level": 2,
+                "group": "wrap",
+                "integrity": -2,
+                "attributes": {
+                    "generic.attack_speed": 0.1,
+                    "**generic.attack_damage": 0.15
+                },
+                "models": [
+                    {
+                        "location": "tetra:items/module/double/handle/basic/improvements/wrap_alt",
+                        "tint": "eebbaf"
+                    }
+                ]
+            },
+            {
+                "key": "example/waxed",
+                "group": "wrap",
+                "durability": 200,
+                "effects": {
+                    "criticalStrike": 15
+                }
+            }
+        ]
+    ]
+}

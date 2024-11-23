@@ -1,0 +1,39 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/ref.schema.json",
+    "title": "Stat getter",
+    "description": "A stat getter representation, used by statbars and holosphere sorting to extract different types of stats for a module, improvement or an an entire item. Doesn't take care of the actual display of the stat.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        }
+    },
+    "required": [ "type" ],
+    "oneOf": [
+        {
+            "$ref": "sum.schema.json"
+        },
+        {
+            "$ref": "multiply.schema.json"
+        },
+        {
+            "$ref": "and.schema.json"
+        },
+        {
+            "$ref": "or.schema.json"
+        },
+        {
+            "$ref": "attribute.schema.json"
+        },
+        {
+            "$ref": "effect_level.schema.json"
+        },
+        {
+            "$ref": "effect_efficiency.schema.json"
+        },
+        {
+            "$ref": "enchantment.schema.json"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/modules/variant_ref.schema.json",
+    "title": "Module variant data",
+    "description": "Variant data for modules, there are two different types of variants: standard and material variants. Material variants can inherit properties from a material.",
+    "oneOf": [
+        {
+            "$ref": "variant_standard.schema.json"
+        },
+        {
+            "$ref": "variant_material.schema.json"
+        }
+    ]
+}

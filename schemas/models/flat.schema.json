@@ -1,0 +1,96 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/modules/variant_material.schema.json",
+    "title": "Flat model definition",
+    "description": "Flat models are like standard vanilla item models (extruded from textures), several of these are then composed to form the model of most items.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "default": "item",
+            "description": "For bows this usually determines when a model should be included as the bow is being drawn, where a value of \"draw_0\", \"draw_1\", \"draw_2\" would determine which draw stage the model would show during and \"static\" would cause the model to show regardless of draw stage. For shields this field is a resource location referencing a model geometry resource relative \"assets/<namespace>/models/modular/shield/\". Default: \"item\".",
+            "examples": [ "item", "static", "draw_0", "draw_1", "draw_2", "tetra:plate/tower" ]
+        },
+        "location": {
+            "$ref": "../resource_location.schema.json",
+            "$comment": "References a texture relative \"assets/<namespace>/textures/\". Material based module variants typically affix this based on the material and what's available in its \"availableTextures\" array.",
+            "examples": [ "tetra:item/module/shield/plate/tower/", "tetra:item/module/toolbelt/belt/inlaid" ]
+        },
+        "renderType": {
+            "$ref": "../resource_location.schema.json",
+            "$comment": "Allows for a different render type to be used when rendering the model. Default: \"minecraft:solid\".",
+            "default": "minecraft:solid"
+        },
+        "transform": {
+            "type": "object",
+            "properties": {
+                "translation": {
+                    "type": "array",
+                    "prefixItems": [
+                        { "type": "number" },
+                        { "type": "number" },
+                        { "type": "number" }
+                    ],
+                    "description": "Allows the model to be translated, a value of 1 would equal 16px in a standard sized model. The x and y axis align with the corresponding axis in the texture, the z axis is perpendicular to the texture. Format: [x, y, z]"
+                },
+                "scale": {
+                    "type": "array",
+                    "prefixItems": [
+                        { "type": "number" },
+                        { "type": "number" },
+                        { "type": "number" }
+                    ],
+                    "description": "Allows the model to be scaled. The x and y axis align with the corresponding axis in the texture, the z axis is perpendicular to the texture. Format: [x, y, z]"
+                },
+                "rotation": {
+                    "type": "array",
+                    "items": { "type": "number" },
+                    "description": "A quaternion used to rotate the model, the values are in degrees. The x, y and z values represent the axis of rotation and the w value represents the angle of rotation. Format: [x, y, z, w] It's also possible to provide a 3-dimensional vector with rotations around each axis. (this might not be deserializing properly, let me know if it's broken :P)"
+                }
+            }
+        },
+        "emission": {
+            "type": "number",
+            "default": 0,
+            "description": "The emission value of the model, makes the geometry appear to glow in dark environments. A value of 16 would make the model emit light at full brightness, a value of 0 would make the model not emit light at all."
+        },
+        "tint": {
+            "$ref": "../hexadecimal.schema.json",
+            "description": "A color that the model will be tinted with. The color is multiplied with the texture color, a value of #FFFFFF would cause no change, a value of #FF0000 would cause the model to be tinted red."
+        },
+        "overlayTint": {
+            "$ref": "../hexadecimal.schema.json",
+            "description": "Used to tint improvement models that reference the tint of their parent. The value of the 'tint' field is used if this field is not present."
+        },
+        "renderLayer": {
+            "type": "string",
+            "enum": [ "LOWEST", "LOWER", "LOW", "BASE", "HIGH", "HIGHER", "HIGHEST" ],
+            "default": "BASE",
+            "description": "Determines the render layer of the model, models with a higher render layer will render on top of models with a lower render layer."
+        },
+        "perspectives": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "none",
+                    "thirdperson_lefthand",
+                    "thirdperson_righthand",
+                    "firstperson_lefthand",
+                    "firstperson_righthand",
+                    "head",
+                    "gui",
+                    "ground",
+                    "fixed"
+                ]
+            },
+            "description": "Determines which perspectives the model will be rendered in. If this field is not present the model will be rendered in all perspectives."
+        },
+        "invertPerspectives": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true the model will be rendered in all perspectives except those specified in the 'perspectives' field."
+        }
+    },
+    "required": [ "location" ]
+}

@@ -1,0 +1,63 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/outcomes/apply_list.schema.json",
+    "title": "Apply list crafting effect outcome",
+    "description": "Applies a list of crafting effect outcomes. By combining the 'random', 'count' and 'requirement' fields you can use this to apply a random effect, or to apply the first effect in a set depending on some requirements.",
+    "examples": [
+        {
+            "type": "tetra:apply_list",
+            "effects": [
+                {
+                    "outcome": {
+                        "type": "tetra:apply_improvement",
+                        "improvements": {
+                            "durable": 1
+                        }
+                    }
+                },
+                {
+                    "outcome": {
+                        "type": "tetra:apply_improvement",
+                        "improvements": {
+                            "brittle": 1
+                        }
+                    }
+                }
+            ],
+            "count": 1,
+            "random": true
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:apply_list"
+        },
+        "effects": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "outcome": {
+                        "$ref": "ref.schema.json",
+                        "$comment": "The crafting effect outcome to apply."
+                    },
+                    "requirement": {
+                        "$ref": "../requirements/ref.schema.json",
+                        "$comment": "A condition that must be met for this outcome to be applied. Only outcomes with a passing requirement will be considered when the count field is set."
+                    }
+                },
+                "required": [ "outcome" ]
+            }
+        },
+        "count": {
+            "type": "number",
+            "description": "When set this outcome will apply a maximum of this many outcomes. If not set all outcomes will be applied."
+        },
+        "random": {
+            "type": "boolean",
+            "description": "When set to true the outcomes will be applied in a random order."
+        }
+    },
+    "required": [ "type", "effects" ]
+}

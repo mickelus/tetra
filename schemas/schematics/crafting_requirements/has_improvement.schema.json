@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/has_improvement.schema.json",
+    "title": "Has improvement crafting requirement",
+    "description": "Passes if the module in the target slot has the given improvement, optionally matching the given level predicate.",
+    "examples": [
+        {
+            "type": "tetra:has_improvement",
+            "improvement": "blade/serrated",
+            "level": {
+                "min": 2
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:has_improvement"
+        },
+        "improvement": {
+            "type": "string",
+            "description": "Passes if the module in the target slot has an improvement with a key matching this value."
+        },
+        "level": {
+            "$ref": "../../integer_predicate.schema.json",
+            "$comment": "In addition to the module having the improvement, the level of the improvement also has to match this predicate."
+        }
+    },
+    "required": [ "type", "improvement" ]
+}

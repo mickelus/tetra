@@ -17,14 +17,19 @@ public class StatGetterEffectLevel implements IStatGetter {
     protected final double multiplier;
     protected final double base;
 
-    public StatGetterEffectLevel(ItemEffect effect, double multiplier) {
-        this(effect, multiplier, 0);
-    }
 
     public StatGetterEffectLevel(ItemEffect effect, double multiplier, double base) {
         this.effect = effect;
         this.multiplier = multiplier;
         this.base = base;
+    }
+
+    public StatGetterEffectLevel(ItemEffect effect, double multiplier) {
+        this(effect, multiplier, 0);
+    }
+
+    public StatGetterEffectLevel(ItemEffect effect) {
+        this(effect, 1, 0);
     }
 
     @Override

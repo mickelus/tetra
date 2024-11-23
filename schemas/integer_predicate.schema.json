@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/integer_predicate.schema.json",
+    "title": "Integer predicate",
+    "description": "Allows for testing of integer values in different places in-game.",
+    "oneOf": [
+        {
+            "type": "number",
+            "description": "Passes if the value is exactly this number."
+        },
+        {
+            "type": "object",
+            "properties": {
+                "min": {
+                    "type": "number",
+                    "description": "Passes if the value is greater than or equal to this number."
+                },
+                "max": {
+                    "type": "number",
+                    "description": "Passes if the value is less than or equal to this number."
+                }
+            }
+        }
+    ]
+}

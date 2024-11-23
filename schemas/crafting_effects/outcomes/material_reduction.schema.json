@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/outcomes/material_reduction.schema.json",
+    "title": "Material reduction crafting effect outcome",
+    "description": "Has a chance to reduce the material cost for the craft by 1.",
+    "examples": [
+        {
+            "type": "tetra:material_reduction",
+            "probability": 0.5
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:material_reduction"
+        },
+        "probability": {
+            "type": "number",
+            "description": "The probability that the material cost will be reduced. A value of 1 will always reduce the material cost, while a value of 0 will never reduce the material cost."
+        }
+    },
+    "required": [ "type", "probability" ]
+}

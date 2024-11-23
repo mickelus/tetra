@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/aspect.schema.json",
+    "title": "Aspect crafting requirement",
+    "description": "Passes if the module (including its improvements) in the target slot has the given aspect, optionally matching the given level predicate.",
+    "examples": [
+        {
+            "type": "tetra:aspect",
+            "aspect": "edged_weapon",
+            "level": {
+                "min": 2
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:aspect"
+        },
+        "aspect": {
+            "type": "string",
+            "description": "The module (including its improvements) in the target slot has to have this aspect."
+        },
+        "level": {
+            "$ref": "../../integer_predicate.schema.json",
+            "$comment": "In addition to having the aspect the level of the aspect also has to match this predicate."
+        }
+    },
+    "required": [ "type", "aspect" ]
+}

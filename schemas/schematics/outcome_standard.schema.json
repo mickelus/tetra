@@ -1,0 +1,71 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/outcome_standard.schema.json",
+    "title": "Standard schematic outcome data",
+    "description": "Defines a standard outcome for a schematic, resulting in a new module or an added/updated improvement.",
+    "type": "object",
+    "properties": {
+        "material": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../resource_location.schema.json"
+                    },
+                    "description": "A list of items that can be used as material for this outcome. Either this or the 'tag' field has to be set."
+                },
+                "tag": {
+                    "$ref": "../resource_location.schema.json",
+                    "description": "A tag that can be used to determine if an item can be used as material for this outcome. Either this or the 'items' field has to be set."
+                },
+                "nbt": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "type": "unknown" }
+                    },
+                    "description": "Can be set if the material stack should have some specific nbt data."
+                },
+                "count": {
+                    "type": "number",
+                    "default": 1,
+                    "description": "Determines how large the itemstack has to be to match this outcome. This also determines how many items are consumed when crafting."
+                }
+            },
+            "description": "The required itemstack required for the outcome, basically an item predicate. Required if the schematic which contains this outcome has 1 or more material slots."
+        },
+        "materialSlot": {
+            "type": "number",
+            "description": "The slot in which to look for the material, this can be set when doing multi-material-schematics. Can be set to a value between 0 (inclusive) and 'materialSlotCount' on the schematic. Not to be confused with the module slots of a modular item.",
+            "default": 0
+        },
+        "experienceCost": {
+            "type": "number",
+            "description": "The experience cost for the craft, in levels. The player will be required to have this amount of experience, and will lose this amount of levels when crafting something with this outcome.",
+            "default": 0
+        },
+        "requiredTools": {
+            "$ref": "../tiered_data.schema.json",
+            "$comment": "Defines which tools (and which level of each tool) are required for this outcome. If no tools are required this field can be omitted."
+        },
+        "moduleKey": {
+            "type": "string",
+            "description": "A key referring to a module. Optional, but the schematic should then apply improvements or the outcome won't do anything."
+        },
+        "moduleVariant": {
+            "type": "string",
+            "description": "A module variant, has to be a variant (matching the 'key' of the variant) of the module specified by the moduleKey field. Optional, but has to be set if the moduleKey field is set."
+        },
+        "improvements": {
+            "type": "object",
+            "patternProperties": {
+                "[a-z.]+": { "type": "integer" }
+            },
+            "description": "An object describing which improvements to apply for this outcome, where the key is the improvement identifier and the value is the improvement level. This can be used both with and without the moduleKey being set. Improvements will only be added if that improvement is available for the module in the target slot."
+        },
+        "hidden": {
+            "type": "boolean",
+            "description": "If set to true the outcome will not be visible in the holosphere, but will still be craftable if the requirements are met."
+        }
+    }
+}

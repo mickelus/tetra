@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_stack.schema.json",
+    "title": "ItemStack",
+    "description": "Vanilla json representation of an itemStack. Some fields are capitalized!",
+    "type": "object",
+    "properties": {
+        "id": {
+            "$ref": "resource_location.schema.json",
+            "$comment": "A resource location pointing at an item (or a #tag?)"
+        },
+        "Count": {
+            "type": "number"
+        },
+        "tag": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "type": "string" }
+            },
+            "description": "NBT data, but json-serialized?"
+        }
+    }
+}

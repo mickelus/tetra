@@ -86,7 +86,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
     @Override
     public void commonInit(PacketHandler packetHandler) {
-        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("double/"));
+        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.synergyData.getOrdered("double/"));
     }
 
     public static Collection<ItemStack> getCreativeTabItemStacks() {

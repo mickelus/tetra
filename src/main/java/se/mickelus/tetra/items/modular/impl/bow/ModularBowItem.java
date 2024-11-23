@@ -114,7 +114,7 @@ public class ModularBowItem extends ModularItem {
 
     @Override
     public void commonInit(PacketHandler packetHandler) {
-        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("bow/"));
+        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.synergyData.getOrdered("bow/"));
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

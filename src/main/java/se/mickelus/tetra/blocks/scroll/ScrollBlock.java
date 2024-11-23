@@ -2,15 +2,12 @@ package se.mickelus.tetra.blocks.scroll;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -19,6 +16,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import se.mickelus.mutil.util.TileEntityOptional;
@@ -29,15 +29,18 @@ import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
+import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class ScrollBlock extends TetraBlock implements EntityBlock, ISchematicProviderBlock, ICraftingEffectProviderBlock {
+    public static final ResourceLocation scrollDynamicDropId = new ResourceLocation("tetra:scroll");
     public static final SoundType sound = new SoundType(0.8F, 1.3F, SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN,
             SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN);
     private final Arrangement arrangement;
 
     public ScrollBlock(Arrangement arrangement) {
-        super(Properties.of().sound(sound));
+        super(Properties.of().sound(sound).instabreak().pushReaction(PushReaction.DESTROY));
 
         this.arrangement = arrangement;
         this.registerDefaultState(this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST));
@@ -100,11 +103,9 @@ public class ScrollBlock extends TetraBlock implements EntityBlock, ISchematicPr
     }
 
     @Override
-    public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos,
+            BlockPos facingPos) {
         if (!blockState.canSurvive(world, currentPos)) {
-            if (!world.isClientSide() && world.getLevelData().getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && world instanceof Level) {
-                dropScrolls((Level) world, currentPos);
-            }
             return Blocks.AIR.defaultBlockState();
         }
 
@@ -122,27 +123,22 @@ public class ScrollBlock extends TetraBlock implements EntityBlock, ISchematicPr
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
-    @Override
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
-        super.playerWillDestroy(world, pos, state, player);
+    public List<ItemStack> getDrops(BlockState blockState, LootParams.Builder lootParams) {
+        BlockEntity blockentity = lootParams.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+        if (blockentity instanceof ScrollTile tile) {
+            lootParams.withDynamicDrop(scrollDynamicDropId, (consumer) ->
+                    Arrays.stream(tile.getItemTags())
+                            .map(nbt -> {
+                                ItemStack itemStack = new ItemStack(ScrollItem.instance);
+                                itemStack.addTagElement("BlockEntityTag", nbt);
+                                return itemStack;
+                            })
+                            .forEach(consumer)
+            );
 
-        if (!world.isClientSide && !player.isCreative() && world.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
-            dropScrolls(world, pos);
         }
-    }
 
-    public void dropScrolls(Level world, BlockPos pos) {
-        TileEntityOptional.from(world, pos, ScrollTile.class)
-                .ifPresent(tile -> {
-                    for (CompoundTag nbt : tile.getItemTags()) {
-                        ItemStack itemStack = new ItemStack(ScrollItem.instance);
-                        itemStack.addTagElement("BlockEntityTag", nbt);
-
-                        ItemEntity entity = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack);
-                        entity.setDefaultPickUpDelay();
-                        world.addFreshEntity(entity);
-                    }
-                });
+        return super.getDrops(blockState, lootParams);
     }
 
     @Nullable

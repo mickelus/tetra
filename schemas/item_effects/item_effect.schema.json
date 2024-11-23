@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/item_effect.schema.json",
+    "title": "Item effect",
+    "description": "A definition of a datadriven item effect, an effect is a combination of a trigger, a condition and an outcome. The trigger determines when the effect occurs and what data is available to the effect. The condition determines if the effect should be executed, and the outcome determines what actually happens.",
+    "type": "object",
+    "properties": {
+        "trigger": {
+            "$ref": "../resource_location.schema.json",
+            "$comment": "The trigger determines when the effect occurs and what data is available to the effect. Available triggers can be found here: https://tetra.mickelus.se/wiki/tech/item-effects/triggers"
+        },
+        "effect": {
+            "type": "string",
+            "$comment": "The string representation for this effect, if this is present on the item used for the trigger this effect will be executed."
+        },
+        "data": {
+            "$comment": "Allows data to be defined and made available across the entire effect instance. Data providers can be called directly in conditions and outcomes, but setting up data here may allow for improved performance and readability.",
+            "type": "object",
+            "properties": {
+                "numbers": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "$ref": "number_providers/ref.schema.json" }
+                    }
+                },
+                "vectors": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "$ref": "vector_providers/ref.schema.json" }
+                    }
+                },
+                "entities": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "$ref": "entity_providers/ref.schema.json" }
+                    }
+                }
+            }
+        },
+        "condition": {
+            "$ref": "conditions/ref.schema.json",
+            "$comment": "Determines if the effect outcome should be executed, can be omitted if the outcome should always execute."
+        },
+        "outcome": {
+            "$ref": "outcomes/ref.schema.json",
+            "$comment": "Determines what actually happens when the effect is triggered."
+        }
+    },
+    "required": [ "trigger", "effect", "outcome" ]
+}

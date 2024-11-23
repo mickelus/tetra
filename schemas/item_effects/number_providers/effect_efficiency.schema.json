@@ -1,0 +1,27 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/effect_efficiency.schema.json",
+    "title": "Effect efficiency number provider",
+    "description": "Provides the efficiency of the given effect.",
+    "examples": [
+        {
+            "type": "tetra:effect_efficiency",
+            "effect": "sweeping"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:effect_efficiency"
+        },
+        "effect": {
+            "type": "string",
+            "$comment": "The effect to get the efficiency of."
+        },
+        "fallback": {
+            "$ref": "ref.schema.json",
+            "$comment": "Fallback value if the item is broken or doesn't have the effect. Defaults to 0."
+        }
+    },
+    "required": [ "effect" ]
+}

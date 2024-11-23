@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/apply_effect.schema.json",
+    "title": "Apply effect item effect outcome",
+    "description": "Applies a mob (potion) effect on the provided entity. ",
+    "examples": [
+        {
+            "type": "tetra:apply_effect",
+            "effect": "minecraft:regeneration",
+            "entity": "killer",
+            "source": "killer",
+            "duration": 40,
+            "amplifier": 1,
+            "stackDurationCap": 200
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:apply_effect"
+        },
+        "effect": {
+            "$ref": "../../resource_location.schema.json",
+            "$comment": "A resource location referencing a mob effect. Vanilla effects can be found here: https://minecraft.wiki/w/Effect"
+        },
+        "entity": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity that the effect should be applied to."
+        },
+        "source": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity that the effect should be applied from. Probably relevant in cases where a mob effect would kill a player, and this source entity would be used for the kill message."
+        },
+        "duration": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The duration of the effect, in ticks."
+        },
+        "amplifier": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The amplifier of the effect, a higher value typically makes the mob effect stronger. Starts at 0 for most effects."
+        },
+        "stackDurationCap": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "If provided, when this outcome is triggered and 'entity' already has the mob effect active then the effect duration will be increased by 'duration' amount up to this cap."
+        },
+        "stackAmplifierCap": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "If provided, when this outcome is triggered and 'entity' already has the mob effect active then the effect amplifier will be increased by 'amplifier' amount up to this cap."
+        }
+    },
+    "required": [ "effect", "entity", "duration", "amplifier" ]
+}

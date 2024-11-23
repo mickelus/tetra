@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/sum.schema.json",
+    "title": "Effect level stat getter",
+    "description": "A stat getter that returns level of the given effect.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:effect_level"
+        },
+        "effect": {
+            "type": "string",
+            "$comment": "Identifier for the item effect to get the level of."
+        }
+    },
+    "required": [ "effect" ]
+}

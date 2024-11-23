@@ -10,10 +10,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class TooltipGetterMultiValue implements ITooltipGetter {
 
     protected IStatGetter[] statGetter;
-    protected StatFormat[] formatters;
+    protected IStatFormat[] formatters;
     protected String localizationKey;
 
-    public TooltipGetterMultiValue(String localizationKey, IStatGetter[] statGetters, StatFormat[] formatters) {
+    public TooltipGetterMultiValue(String localizationKey, IStatGetter[] statGetters, IStatFormat[] formatters) {
         this.localizationKey = localizationKey;
         this.statGetter = statGetters;
         this.formatters = formatters;

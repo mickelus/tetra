@@ -1,0 +1,47 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/delay.schema.json",
+    "title": "Delay item effect outcome",
+    "description": "Applies the given outcome after the given delay (in ticks). Can be keyed (both globally and to an entity) to have the delayed outcome either replace or get blocked with previous (active) delays sharing the key.",
+    "examples": [
+        {
+            "type": "tetra:delay",
+            "delay": 2,
+            "outcome": {
+                "type": "tetra:apply_effect",
+                "effect": "minecraft:regeneration",
+                "entity": "miner",
+                "source": "miner",
+                "duration": 20,
+                "amplifier": 1
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:delay"
+        },
+        "outcome": {
+            "$ref": "../outcomes/ref.schema.json",
+            "$comment": "The outcome to apply after the delay"
+        },
+        "delay": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The delay in ticks before the outcome is to be applied"
+        },
+        "key": {
+            "type": "string",
+            "$comment": "Providing a key will make the delay keyed, meaning it will replace or get blocked with previous (active) delays sharing the key depending on the value of 'replaceKey'."
+        },
+        "keyEntity": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "Providing this will make the key-ing functionality described above scoped for the specified entity, rather than the key being shared globally."
+        },
+        "replaceKey": {
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "If true (and 'key' or 'keyEntity' is provided), the delayed outcome will replace any previous (active) delays sharing the key. If false, the delayed outcome will get blocked by any previous (active) delays sharing the key. Defaults to true."
+        }
+    },
+    "required": [ "outcome", "delay" ]
+}

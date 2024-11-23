@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/random.schema.json",
+    "title": "Random number provider",
+    "description": "Provides a random number between the two given numbers.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:random"
+        },
+        "min": {
+            "$ref": "ref.schema.json",
+            "$comment": "The lower bound (inclusive) for the random value."
+        },
+        "max": {
+            "$ref": "ref.schema.json",
+            "$comment": "The upper bound (inclusive) for the random value."
+        },
+        "gaussian": {
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "If set to true the random number will be generated using a gaussian distribution (as opposed to a uniform distribution)."
+        }
+    },
+    "required": [ "min", "max" ]
+}

@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/outcomes/ref.schema.json",
+    "title": "Crafting effect outcome",
+    "description": "Crafting effect outcomes are used to make changes to the item as a player modifies a modular item.",
+    "oneOf": [
+        {
+            "$ref": "apply_improvements.schema.json"
+        },
+        {
+            "$ref": "apply_enchantments.schema.json"
+        },
+        {
+            "$ref": "apply_list.schema.json"
+        },
+        {
+            "$ref": "apply_nbt.schema.json"
+        },
+        {
+            "$ref": "remove_improvements.schema.json"
+        },
+        {
+            "$ref": "material_reduction.schema.json"
+        }
+    ]
+}

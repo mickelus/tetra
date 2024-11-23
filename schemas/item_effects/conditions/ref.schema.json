@@ -1,0 +1,41 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/conditions/ref.schema.json",
+    "title": "Item effect condition",
+    "description": "Various conditions that can be used to determine what to do depending on the state of the game.",
+    "oneOf": [
+        {
+            "$ref": "fixed.schema.json"
+        },
+        {
+            "$ref": "fixed_shorthand.schema.json"
+        },
+        {
+            "$ref": "expression.schema.json"
+        },
+        {
+            "$ref": "and.schema.json"
+        },
+        {
+            "$ref": "or.schema.json"
+        },
+        {
+            "$ref": "not.schema.json"
+        },
+        {
+            "$ref": "block.schema.json"
+        },
+        {
+            "$ref": "can_harvest.schema.json"
+        },
+        {
+            "$ref": "random.schema.json"
+        },
+        {
+            "$ref": "entities_equals.schema.json"
+        },
+        {
+            "$ref": "entity.schema.json"
+        }
+    ]
+}

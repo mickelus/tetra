@@ -1,0 +1,51 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/vector_providers/expression.schema.json",
+    "title": "Expression vector provider",
+    "description": "Allows number expressions to be used (in number vector providers) based on the vectors (and numbers) in the context, as well as the 'vectors' and 'numbers' objects on this provider. Values from a vector can be accessed in an expression by affixing the key used for the vector with X, Y or Z. E.g. to access the X coordinate for a vector keyed 'player' is done using 'playerX' in an expression. Expressions in the values object can reference values that are defined earlier than that expression. The result field is the vector that will be returned from this provider.",
+    "examples": [
+        {
+            "type": "tetra:expression",
+            "vectors": {
+                "facing": {
+                    "type": "tetra:entity_facing",
+                    "entity": "miner"
+                }
+            },
+            "numbers": {
+                "distance": {
+                    "type": "tetra:effect_efficiency",
+                    "effect": "ravenous"
+                }
+            },
+            "result": [ "minerX + facingX * distance", "minerY + facingY * distance", "minerZ + facingZ * distance" ]
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:expression"
+        },
+        "vectors": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "$ref": "ref.schema.json" }
+            },
+            "$comment": "All vectors listed here will be added to the context before numerical context values are generated from vectors."
+        },
+        "numbers": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "$ref": "../number_providers/ref.schema.json"
+                }
+            },
+            "$comment": "Numbers listed here will be added to the context before the result field is calculated. Numerical context values generated from context vectors are available to providers listed in this object."
+        },
+        "result": {
+            "$ref": "ref.schema.json",
+            "$comment": "The provider will return this vector, the number shorthand vector provider will be preferred here in most cases."
+        }
+    },
+    "required": [ "type", "result" ]
+}

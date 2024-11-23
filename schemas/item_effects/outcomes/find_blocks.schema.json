@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/find_blocks.schema.json",
+    "title": "Find blocks item effect outcome",
+    "description": "Finds all blocks matching the given condition in the given bounding box and runs the given outcome for each of them, originating from the given position. Adds a 'ref' vector, an 'index' number and a 'successCount' number to the context for the outcome.",
+    "examples": [
+        {
+            "type": "tetra:find_blocks",
+            "origin": "target",
+            "bounds": [ -5, -2, -5, 5, 2, 5 ],
+            "condition": {
+                "tag": "tetra:nailed"
+            },
+            "outcome": {
+                "type": "tetra:break_block",
+                "position": "ref",
+                "breaker": "breaker",
+                "harvest": true
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:find_blocks"
+        },
+        "origin": {
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position that the search will originate from."
+        },
+        "bounds": {
+            "type": "array",
+            "items": {
+                "type": "number"
+            },
+            "minItems": 6,
+            "maxItems": 6,
+            "$comment": "The bounding box to search within. Format: [ x1, y1, z1, x2, y2, z2 ]"
+        },
+        "condition": {
+            "$ref": "../../property_matcher.schema.json",
+            "$comment": "The given outcome will be run for all blocks that match this condition."
+        },
+        "outcome": {
+            "$ref": "../outcomes/ref.schema.json",
+            "$comment": "This outcome will be run for each block that matches the condition. A 'ref' vector (holds the position of the block), an 'index' number and a 'successCount' number will be added to the context for the outcome."
+        }
+    },
+    "required": [ "origin", "bounds", "outcome" ]
+}

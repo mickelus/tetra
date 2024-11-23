@@ -36,7 +36,7 @@ public class TooltipGetterTool implements ITooltipGetter {
         if (includeSpeedModifier) {
             totalEfficiencyGetter = new StatGetterToolCompoundEfficiency(baseEfficiencyGetter, attackSpeedGetter, enchantmentGetter);
         } else {
-            totalEfficiencyGetter = new StatGetterSum(baseEfficiencyGetter, enchantmentGetter);
+            totalEfficiencyGetter = new StatGetterAdd(baseEfficiencyGetter, enchantmentGetter);
         }
     }
 

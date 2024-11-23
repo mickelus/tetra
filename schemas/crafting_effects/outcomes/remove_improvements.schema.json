@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/outcomes/remove_improvements.schema.json",
+    "title": "Remove improvement crafting effect outcome",
+    "description": "Removes improvements matching the specified keys from the target module.",
+    "examples": [
+        {
+            "type": "tetra:remove_improvements",
+            "improvements": [ "unbound_stonecutter/fractured" ]
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:remove_improvements"
+        },
+        "improvements": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "All improvements matching any of these keys will be removed from the module."
+        }
+    },
+    "required": [ "type", "improvements" ]
+}

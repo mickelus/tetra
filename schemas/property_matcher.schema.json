@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/property_matcher.schema.json",
+    "title": "Property matcher",
+    "description": "Used to test for properties on a block",
+    "type": "object",
+    "properties": {
+        "block": {
+            "$ref": "resource_location.schema.json",
+            "$comment": "A resource location pointing at a block"
+        },
+        "tag": {
+            "$ref": "resource_location.schema.json",
+            "$comment": "A resource location pointing at a block tag"
+        },
+        "state": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "type": "string" }
+            },
+            "description": "A map of block states to match against, requires the block field to be present to function"
+        }
+    }
+}

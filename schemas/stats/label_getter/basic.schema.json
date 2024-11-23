@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/label_getter/basic.schema.json",
+    "title": "Basic label getter",
+    "description": "Has support for a small set of different formats, primarily for varying amounts of decimals.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:basic"
+        },
+        "format": {
+            "type": "string",
+            "description": "The primary formatting for the label, this is always displayed.",
+            "enum": [
+                "integer",
+                "single_decimal",
+                "double_decimal",
+                "percentage",
+                "percentage_decimal"
+            ]
+        },
+        "diff_format": {
+            "type": "string",
+            "description": "Formatting used when showing diffs for a stat when comparing different variants of an item. You'd want this to be the same as \"format\" most of the time.",
+            "enum": [
+                "integer",
+                "single_decimal",
+                "double_decimal",
+                "percentage",
+                "percentage_decimal"
+            ]
+        }
+    },
+    "required": [ "type", "format", "diff_format" ]
+}

@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/glyph.schema.json",
+    "title": "Glyph",
+    "description": "Definition of a glyph. Determines which texture, uv coordinates and tint to use when rendering some texture.",
+    "type": "object",
+    "properties": {
+        "textureLocation": {
+            "$ref": "resource_location.schema.json",
+            "$comment": "A resource location pointing to the texture sheet that the glyph is to be taken from, has to include .png in the end since it's a gui texture. Probably has to be 256x256."
+        },
+        "textureX": {
+            "type": "number",
+            "$comment": "X coordinate within the texture sheet",
+            "default": 0
+        },
+        "textureY": {
+            "type": "number",
+            "$comment": "Y coordinate within the texture sheet",
+            "default": 0
+        },
+        "tint": {
+            "$ref": "hexadecimal.schema.json"
+        }
+    },
+    "examples": [
+        {
+            "_comment": "This example would use the glyph at x: 224, y: 32 in the texture `\"tetra:textures/gui/my_custom_glyphs.png\"` with a red tint.",
+            "textureX": 224,
+            "textureY": 32,
+            "textureLocation": "tetra:textures/gui/my_custom_glyphs.png",
+            "tint": "ff0000"
+        }
+    ]
+}

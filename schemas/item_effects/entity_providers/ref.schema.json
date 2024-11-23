@@ -1,0 +1,10 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/entity_providers/ref.schema.json",
+    "title": "Enitity provider",
+    "description": "Provides entities for item effects",
+    "oneOf": [
+        { "$ref": "context.schema.json" },
+        { "$ref": "context_shorthand.schema.json" }
+    ]
+}

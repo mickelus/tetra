@@ -1,0 +1,71 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/tooltip_getter/ref.schema.json",
+    "title": "Standard tooltip getter",
+    "description": "The standard definition of a tooltip. The number of stats, formatters, and placeholders in the tooltip body has to match or we're gonna have a bad time.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:standard"
+        },
+        "key": {
+            "type": "string",
+            "$comment": "This key is used to look up the localization entry for the tooltip body, typically the key for the stat suffixed with \".tooltip\"."
+        },
+        "stats": {
+            "type": "array",
+            "items": {
+                "$ref": "../stat_getter/ref.schema.json"
+            },
+            "$comment": "The stats to display in the tooltip. The order of these stats will be the order they are displayed in the tooltip."
+        },
+        "formatters": {
+            "type": "array",
+            "items": {
+                "$ref": "../stat_formatter/ref.schema.json"
+            },
+            "$comment": "Formatters for each to the stats listed above, should match the order of the stats."
+        }
+    },
+    "required": [ "key", "stats", "formatters" ],
+    "examples": [
+        {
+            "type": "tetra:standard",
+            "key": "tetra.stats.attack_damage.tooltip",
+            "stats": [
+                {
+                    "type": "tetra:sum",
+                    "stats": [
+                        {
+                            "type": "tetra:attribute",
+                            "attribute": "generic.attack_damage"
+                        },
+                        {
+                            "type": "tetra:sum",
+                            "stats": [
+                                {
+                                    "type": "tetra:multiply",
+                                    "stats": [
+                                        {
+                                            "type": "tetra:enchantment",
+                                            "enchantment": "minecraft:sharpness"
+                                        }
+                                    ],
+                                    "factor": 0.5
+                                }
+                            ],
+                            "offset": 0.5
+                        }
+                    ],
+                    "attribute": "generic.attack_damage"
+                }
+            ],
+            "formatters": [
+                {
+                    "type": "tetra:basic",
+                    "format": "double_decimal"
+                }
+            ]
+        }
+    ]
+}

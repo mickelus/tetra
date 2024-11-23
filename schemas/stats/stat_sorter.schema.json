@@ -1,0 +1,46 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_bar.schema.json",
+    "title": "Stat Sorter",
+    "description": "Defines a start sorter, which stat it should be based on, how the preview is formatted and how the sorter is labeled.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "$comment": "There's only one type registered in vanilla tetra, but this can be set if some other mod has registered other stat sorter types."
+        },
+        "key": {
+            "type": "string",
+            "$comment": "The localization key for the sorter, the localized value will be displayed in the sorter list. Probably something along the lines of 'mymod.stats.my_sorter'."
+        },
+        "stat": {
+            "$ref": "stat_getter/ref.schema.json",
+            "$comment": "The stat that the sorter should be based on. If this getter \"should show\" for any variant determines if the sorter shows in the dropdown."
+        },
+        "format": {
+            "$ref": "stat_formatter/ref.schema.json",
+            "$comment": "Formatting used for the preview label that is shown for each variant while sorting is active."
+        },
+        "inverted": {
+            "type": "boolean",
+            "description": "If set to true, the sorter will be inverted and lower values will come out on top."
+        }
+    },
+    "required": [ "key", "stat", "format" ],
+    "examples": [
+        {
+            "type": "tetra:default",
+            "key": "tetra.stats.speed_normalized",
+            "stat": {
+                "type": "tetra:attribute",
+                "attribute": "generic.attack_speed",
+                "ignoreBase": true,
+                "ignoreBonuses": true
+            },
+            "format": {
+                "type": "tetra:basic",
+                "format": "single_decimal"
+            }
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/outcomes/apply_effect.schema.json",
+    "title": " crafting effect outcome",
+    "description": "",
+    "examples": [
+        {
+            "type": "tetra:apply_effect"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:apply_effect"
+        },
+        "effect": {
+            "$ref": "../../resource_location.schema.json",
+            "$comment": "A resource location referencing a mob effect. Vanilla effects can be found here: https://minecraft.wiki/w/Effect"
+        }
+    },
+    "required": [ "type", "effect" ]
+}

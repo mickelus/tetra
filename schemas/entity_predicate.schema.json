@@ -1,0 +1,11 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/entity_predicate.schema.json",
+    "title": "Entity predicate",
+    "description": "A vanilla minecraft entity predicate, used to test for properties on an entity. More info here: https://minecraft.wiki/w/Predicate",
+    "type": "object",
+    "properties": {
+        "Name": { "$ref": "resource_location.schema.json" },
+        "Properties": { "type": "object" }
+    }
+}

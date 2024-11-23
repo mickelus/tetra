@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/set_block.schema.json",
+    "title": "Set block item effect outcome",
+    "description": "Set the block at the given position to the given blockstate",
+    "examples": [
+        {
+            "type": "tetra:set_block",
+            "position": {
+                "type": "tetra:expression",
+                "result": [ "targetX", "targetY+1", "targetZ" ]
+            },
+            "block": {
+                "Name": "minecraft:beetroots",
+                "Properties": {
+                    "age": "0"
+                }
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:set_block"
+        },
+        "position": {
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position in the world at which the block will be set."
+        },
+        "block": {
+            "$ref": "../../blockstate.schema.json",
+            "$comment": "A blockstate definition, the block in the world at the given position will be set to this."
+        }
+    },
+    "required": [ "position", "block" ]
+}

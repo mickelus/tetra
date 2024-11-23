@@ -38,9 +38,9 @@ public class StatGetterAttribute implements IStatGetter {
         this.ignoreBonuses = ignoreBonuses;
     }
 
-    public StatGetterAttribute withOffset(double offset) {
+    public StatGetterAttribute(Attribute attribute, boolean ignoreBase, boolean ignoreBonuses, double offset) {
+        this(attribute, ignoreBase, ignoreBonuses);
         this.offset = offset;
-        return this;
     }
 
     @Override

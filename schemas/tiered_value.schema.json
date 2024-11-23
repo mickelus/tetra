@@ -1,15 +1,15 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/tiered_value.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/tiered_value.schema.json",
     "title": "Tiered value",
     "description": "A value representing tier data, representing the level and efficiency of some stat. When the efficiency value is not relevant a single integer can be provided which will be used as the level value. Otherwise the value is an array where the first value is an integer representing the level and the second value is a decimal number representing the efficiency",
-    "anyOf": [
+    "oneOf": [
         {
             "$ref": "tier.schema.json"
         },
         {
             "type": "array",
-            "items": [
+            "prefixItems": [
                 { "$ref": "tier.schema.json" },
                 { "type": "number" }
             ]

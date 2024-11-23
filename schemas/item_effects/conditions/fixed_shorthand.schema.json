@@ -1,0 +1,10 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/conditions/fixed_shorthand.schema.json",
+    "title": "Fixed item effect condition shorthand",
+    "description": "Shorthand for the fixed item effect condition, using a boolean value instead of a typed object.",
+    "examples": [
+        true
+    ],
+    "type": "boolean"
+}

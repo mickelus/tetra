@@ -108,7 +108,7 @@ public class ModularCrossbowItem extends ModularItem {
 
     @Override
     public void commonInit(PacketHandler packetHandler) {
-        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("crossbow/"));
+        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.synergyData.getOrdered("crossbow/"));
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

@@ -109,7 +109,10 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return getOrDelegate().handler.cast();
+            ForgedContainerBlockEntity delegate = getOrDelegate();
+            if (delegate != null) {
+                return delegate.handler.cast();
+            }
         }
         return super.getCapability(cap, side);
     }

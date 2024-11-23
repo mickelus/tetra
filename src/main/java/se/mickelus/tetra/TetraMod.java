@@ -26,12 +26,19 @@ import se.mickelus.tetra.craftingeffect.condition.*;
 import se.mickelus.tetra.craftingeffect.outcome.*;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
+import se.mickelus.tetra.data.provider.StatBarProvider;
 import se.mickelus.tetra.data.provider.TetraBlockStateProvider;
 import se.mickelus.tetra.data.provider.TetraLootTableProvider;
 import se.mickelus.tetra.data.provider.TetraTagsProvider;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.LungeEchoPacket;
 import se.mickelus.tetra.effect.TruesweepPacket;
+import se.mickelus.tetra.effect.data.condition.*;
+import se.mickelus.tetra.effect.data.outcome.*;
+import se.mickelus.tetra.effect.data.provider.entity.ContextEntityProvider;
+import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
+import se.mickelus.tetra.effect.data.provider.number.*;
+import se.mickelus.tetra.effect.data.provider.vector.*;
 import se.mickelus.tetra.effect.howling.HowlingPacket;
 import se.mickelus.tetra.effect.revenge.AddRevengePacket;
 import se.mickelus.tetra.effect.revenge.RemoveRevengePacket;
@@ -139,20 +146,76 @@ public class TetraMod {
         CraftingRequirementDeserializer.registerSupplier("tetra:aspect", AspectRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:perk", PerkRequrement.class);
 
+        ItemEffectCondition.register("tetra:random", RandomItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:expression", ExpressionItemEffectCondition::deserialize);
+        ItemEffectCondition.register("tetra:and", AndItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:or", OrItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:not", NotItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:block", BlockItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:can_harvest", CanHarvestItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:entity", EntityItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:entities_equals", EntitiesEqualsItemEffectCondition.class);
+        ItemEffectCondition.register("tetra:fixed", FixedItemEffectCondition.class);
+
+        ItemEffectOutcome.register("tetra:apply_effect", ApplyEffectItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:conditioned", ConditionedItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:multiple", MultipleItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:function", RunFunctionItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:command", RunCommandItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:move_entity", MoveEntityItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:set_block", SetBlockItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:find_blocks", FindBlocksItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:break_block", BreakBlockItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:damage_entity", DamageEntityItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:find_entities", FindEntitiesItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:push_entity", PushEntityItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:particle", ParticleItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:sound", SoundItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:delay", DelayItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:loop", LoopItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:imitate", ImitateItemEffectOutcome.class);
+
+        NumberProvider.register("tetra:expression", ExpressionNumberProvider::deserialize);
+        NumberProvider.register("tetra:fixed", FixedNumberProvider.class);
+        NumberProvider.register("tetra:context", ContextNumberProvider.class);
+        NumberProvider.register("tetra:random", RandomNumberProvider.class);
+        NumberProvider.register("tetra:sum", SumNumberProvider.class);
+        NumberProvider.register("tetra:subtract", SubtractNumberProvider.class);
+        NumberProvider.register("tetra:multiply", MultiplyNumberProvider.class);
+        NumberProvider.register("tetra:divide", DivideNumberProvider.class);
+        NumberProvider.register("tetra:length", LengthNumberProvider.class);
+        NumberProvider.register("tetra:effect_level", EffectLevelNumberProvider.class);
+        NumberProvider.register("tetra:effect_efficiency", EffectEfficiencyNumberProvider.class);
+        NumberProvider.register("tetra:vector", VectorNumberProvider.class);
+        NumberProvider.register("tetra:block_property", BlockPropertyNumberProvider.class);
+
+        VectorProvider.register("tetra:entity_position", EntityPositionVectorProvider.class);
+        VectorProvider.register("tetra:context", ContextVectorProvider.class);
+        VectorProvider.register("tetra:expression", ExpressionVectorProvider.class);
+        VectorProvider.register("tetra:normalize", NormalizeVectorProvider.class);
+        VectorProvider.register("tetra:number", NumberVectorProvider.class);
+        VectorProvider.register("tetra:entity_facing", EntityFacingVectorProvider.class);
+        VectorProvider.register("tetra:entity_motion", EntityMotionVectorProvider.class);
+
+        EntityProvider.register("tetra:context", ContextEntityProvider.class);
+
         packetHandler = new PacketHandler(MOD_ID, "main", "1");
     }
 
     @SubscribeEvent
     public static void onGatherData(final GatherDataEvent event) {
         DataGenerator dataGenerator = event.getGenerator();
-        if (event.includeServer()) {
-            DataGenerator gen = event.getGenerator();
-            PackOutput packOutput = gen.getPackOutput();
-            CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        DataGenerator gen = event.getGenerator();
+        PackOutput packOutput = gen.getPackOutput();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
+        if (event.includeServer()) {
             dataGenerator.addProvider(true, new TetraBlockStateProvider(packOutput, MOD_ID, event.getExistingFileHelper()));
             dataGenerator.addProvider(true, new TetraTagsProvider(packOutput, lookupProvider, MOD_ID, event.getExistingFileHelper()));
             dataGenerator.addProvider(true, new TetraLootTableProvider(packOutput));
+        }
+        if (event.includeClient()) {
+            dataGenerator.addProvider(true, new StatBarProvider(packOutput));
         }
     }
 

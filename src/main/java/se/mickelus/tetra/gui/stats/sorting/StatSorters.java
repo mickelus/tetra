@@ -11,17 +11,16 @@ import se.mickelus.tetra.gui.stats.getter.StatGetterToolLevel;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class StatSorters {
 
     public static final IStatSorter none = new NaturalSorter();
-    public static final List<IStatSorter> sorters = new ArrayList<>(Arrays.asList(
+    public static final List<IStatSorter> staticSorters = new ArrayList<>(Arrays.asList(
             none,
-            new BasicStatSorter(GuiStats.attackDamageNormalizedGetter, "tetra.stats.attack_damage_normalized", StatFormat.oneDecimal),
             new BasicStatSorter(GuiStats.counterweightGetter, "tetra.stats.counterweight", StatFormat.noDecimal),
-            new BasicStatSorter(GuiStats.attackSpeedGetterNormalized, "tetra.stats.speed_normalized", StatFormat.oneDecimal),
             new BasicStatSorter(GuiStats.drawStrengthGetter, "tetra.stats.draw_strength", StatFormat.oneDecimal),
             new BasicStatSorter(GuiStats.drawSpeedGetter, "tetra.stats.draw_speed", StatFormat.oneDecimal),
             new BasicStatSorter(GuiStats.abilityDamageGetter, "tetra.stats.ability_damage", StatFormat.oneDecimal),
@@ -85,4 +84,9 @@ public class StatSorters {
             new BasicStatSorter(GuiStats.stabilityGetter, "tetra.stats.stability", StatFormat.noDecimal),
             new BasicStatSorter(GuiStats.workableGetter, "tetra.stats.workable", StatFormat.noDecimal)
     ));
+    public static List<IStatSorter> derivedSorters = Collections.emptyList();
+
+    public static void setDerivedSorters(List<IStatSorter> sorters) {
+        derivedSorters = sorters;
+    }
 }

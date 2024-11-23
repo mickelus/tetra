@@ -1,0 +1,49 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/loop.schema.json",
+    "title": "Loop item effect outcome",
+    "description": "Applies the given outcome several times",
+    "examples": [
+        {
+            "type": "tetra:loop",
+            "outcome": {
+                "type": "tetra:apply_effect",
+                "effect": "minecraft:regeneration",
+                "entity": "miner",
+                "source": "miner",
+                "duration": "20*(1+i)",
+                "amplifier": 1,
+                "stackDurationCap": 400
+            },
+            "count": {
+                "type": "tetra:random",
+                "min": 1,
+                "max": 5
+            },
+            "indexKey": "i"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:loop"
+        },
+        "outcome": {
+            "$ref": "../outcomes/ref.schema.json",
+            "$comment": "This outcome will be run 'count' times."
+        },
+        "count": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The number of times to run the outcome."
+        },
+        "indexKey": {
+            "type": "string",
+            "$comment": "If set the index in the loop will be added to the context using this key."
+        },
+        "breakCondition": {
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "Checked after each iteration if present, the loop breaks if the condition passes."
+        }
+    },
+    "required": [ "outcome", "count" ]
+}

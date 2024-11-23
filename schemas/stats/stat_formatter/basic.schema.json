@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/basic.schema.json",
+    "title": "Basic stat getter",
+    "description": "Has support for a small set of different formats, primarily for varying amounts of decimals.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:basic"
+        },
+        "format": {
+            "type": "string",
+            "description": "The formatting used to display a stat.",
+            "enum": [
+                "integer",
+                "single_decimal",
+                "double_decimal",
+                "percentage",
+                "percentage_decimal"
+            ]
+        }
+    },
+    "required": [ "type", "format" ]
+}

@@ -1,0 +1,31 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/module.schema.json",
+    "title": "Module crafting requirement",
+    "description": "Passes if the module in the target slot matches the given parameters. When it makes sense to use, using aspects instead of relying on this requirement would make for better compat between addons. Omitting all fields would make this requirement pass if a module is present in the target slot, but fail if it's empty.",
+    "examples": [
+        {
+            "type": "tetra:module",
+            "module": "double/adze_right"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:module"
+        },
+        "module": {
+            "type": "string",
+            "description": "The key of the module has to match this if present."
+        },
+        "variant": {
+            "type": "string",
+            "description": "The key of the module variant has to match this if present."
+        },
+        "material": {
+            "type": "string",
+            "description": "When present, attempts to extract a material string from the variant key to be matched against this value."
+        }
+    },
+    "required": [ "type" ]
+}

@@ -1,0 +1,34 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/command.schema.json",
+    "title": "Command item effect outcome",
+    "description": "Executes the given command, see docs for commands: https://minecraft.wiki/w/Commands.",
+    "examples": [
+        {
+            "type": "tetra:command",
+            "command": "tp @s ~ ~2 ~",
+            "entity": "attacker",
+            "position": "target"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:command"
+        },
+        "command": {
+            "type": "string",
+            "$comment": "A standard minecraft command."
+        },
+        "position": {
+            "$ref": "../vector_providers/ref.schema.json",
+            "$comment": "The position to execute the command at, ~ coordinate values will be based on this value. Possibly optional depending on the command."
+        },
+        "entity": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The @s target selector will reference this entity."
+        }
+    },
+    "required": [ "command", "position" ]
+}
+

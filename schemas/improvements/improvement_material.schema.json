@@ -1,0 +1,166 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/improvements/variant_material.schema.json",
+    "title": "Material improvement data",
+    "description": "Expands into several improvement instances based on the referenced materials. Stats can be based on material properties, and some material properties are inherited by the expanded instances. Mostly has the same fields as a standard improvement, the values of those fields are merged with what is extracted from the material.",
+    "type": "object",
+    "properties": {
+        "materials": {
+            "type": "array",
+            "items": {
+                "$ref": "../resource_location.schema.json"
+            },
+            "description": "Can reference material folders or specific materials, referencing folders makes for improved compatability with addons."
+        },
+        "durability": {
+            "type": "number",
+            "description": "The durability that the improvement provides, called item damage in vanilla minecraft. A higher value makes the item last longer before it needs repairs. Swords lose one point of durability when hitting entities and two points when destroying blocks, for tools it's the opposite.",
+            "default": 0
+        },
+        "durabilityMultiplier": {
+            "type": "number",
+            "description": "Multiplies the durability of the item. A value of 2.0 would double the durability of the item, a value of 1.0 would cause no change.",
+            "default": 1
+        },
+        "integrity": {
+            "type": "number",
+            "description": "Integrity is used for balancing and acts as a capacity for how many modules and improvements an item can hold. Some improvements provide integrity while some have an integrity cost, if an upgrade would cause the cost to exceed the available integrity the upgrade would not be possible. A negative value represents an integrity cost while positive values cause the improvement to provide integrity.",
+            "default": 0
+        },
+        "magicCapacity": {
+            "type": "number",
+            "description": "The magic capacity determines how many enchantments a module can hold before it starts to suffer from destabilization effects. A higher value is better.",
+            "default": 0
+        },
+        "attributes": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "type": "number" }
+            },
+            "description": "A map of attributes, used to add damage, armor, toughness, attack speed or reach/range to an item."
+        },
+        "tools": {
+            "$ref": "../tiered_data.schema.json",
+            "$comment": "Adds tool capabilities for the item. Efficiency is optional, a single number can be passed instead of an array when omitting the efficiency.",
+            "examples": [
+                {
+                    "hammer": 1,
+                    "cut": [ "minecraft:iron", 20 ]
+                }
+            ]
+        },
+        "effects": {
+            "$ref": "../tiered_data.schema.json",
+            "$comment": "Adds item effects for the item. Efficiency is optional, a single number can be passed instead of an array when omitting the efficiency.",
+            "examples": [
+                {
+                    "stun": [ 20, 1.5 ]
+                }
+            ]
+        },
+        "aspects": {
+            "$ref": "../tiered_data.schema.json",
+            "$comment": "Aspects determine how a module can be modified by improvements and enchantments. Schematics may require an aspect to be present or to be of a specific level for it to be applicable for a module. Vanilla enchantment categories match against a set of aspects. For enchantment aspects level 1 allows the enchantment to be applied using books and level 2 allows the enchantment to be applied using an enchanting table.",
+            "examples": [
+                {
+                    "edged_weapon": 1
+                }
+            ]
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "$ref": "../resource_location.schema.json"
+            },
+            "description": "Hacky solution to allow modules and improvements to apply tags to an item, possibly useful for mod compat. Works in cases where the functionality uses ItemStack.is to check for tags."
+        },
+        "rarity": {
+            "type": "string",
+            "description": "Determines the rarity of the improvement, if the material has a higher rarity than this value then that value will be used instead.",
+            "examples": [ "COMMON", "UNCOMMON", "RARE", "EPIC" ]
+        },
+        "models": {
+            "type": "array",
+            "items": {
+                "$ref": "../models/ref.schema.json"
+            },
+            "description": "These models are added straight up to the resulting improvement instance without being tinted or affected by the material."
+        },
+        "extract": {
+            "type": "object",
+            "properties": {
+                "primaryAttributes": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "type": "number" }
+                    },
+                    "description": "A map of attributes, will be multiplied by the material's primary multiplier."
+                },
+                "secondaryAttributes": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "type": "number" }
+                    },
+                    "description": "A map of attributes, will be multiplied by the material's secondary multiplier."
+                },
+                "tertiaryAttributes": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "type": "number" }
+                    },
+                    "description": "A map of attributes, will be multiplied by the material's tertiary multiplier."
+                },
+                "primaryEffects": {
+                    "$ref": "../tiered_data.schema.json",
+                    "description": "Effects that will be multiplied (both level and efficiency) by the material's primary multiplier."
+                },
+                "secondaryEffects": {
+                    "$ref": "../tiered_data.schema.json",
+                    "description": "Effects that will be multiplied (both level and efficiency) by the material's secondary multiplier."
+                },
+                "tertiaryEffects": {
+                    "$ref": "../tiered_data.schema.json",
+                    "description": "Effects that will be multiplied (both level and efficiency) by the material's tertiary multiplier."
+                },
+                "durability": {
+                    "type": "number",
+                    "description": "The material's durabililty will be multiplied by this value and the product is added to the resulting improvement instance.",
+                    "default": 0
+                },
+                "durabilityMultiplier": {
+                    "type": "number",
+                    "description": "The material's durabililty will be multiplied by this value the result is added to the durabilityModifier field of the resulting improvement instance, this can get a bit wonky as material durability varies significantly.",
+                    "default": 0
+                },
+                "integrity": {
+                    "type": "number",
+                    "description": "Defines integrity gain/cost that should be based on the material's integrity factor. Decimal value are allowed, the result will be rounded off to the nearest integer.",
+                    "default": 0
+                },
+                "magicCapacity": {
+                    "type": "number",
+                    "description": "The material's magic capacity will be multiplied by this value and the product is added to the resulting improvement instance.",
+                    "default": 0
+                },
+                "tools": {
+                    "$ref": "../tiered_data.schema.json",
+                    "description": "Tools that should be based the level/efficiency on the material, e.g. pickaxe for pickaxes."
+                },
+                "glyph": {
+                    "$ref": "../glyph.schema.json",
+                    "description": "The glyph for the improvement, the tint from the material will be used."
+                },
+                "models": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../models/ref.schema.json"
+                    },
+                    "description": "Models that should be tinted and suffixed based on the material."
+                },
+                "availableTextures": {
+                    "description": "Texture suffixes available for model textures, the first material texture that matches one of the textures listed here will be used, if none matches the first of the available textures will be used."
+                }
+            }
+        }
+    }
+}

@@ -68,7 +68,7 @@ public class ModularBladedItem extends ItemModularHandheld {
 
     @Override
     public void commonInit(PacketHandler packetHandler) {
-        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("sword/"));
+        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.synergyData.getOrdered("sword/"));
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

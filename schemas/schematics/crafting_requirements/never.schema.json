@@ -1,0 +1,13 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/crafting_requirements/never.schema.json",
+    "title": "Never crafting requirement",
+    "description": "Never passes, no surprises.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:never"
+        }
+    },
+    "required": [ "type" ]
+}

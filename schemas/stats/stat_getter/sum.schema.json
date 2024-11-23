@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/sum.schema.json",
+    "title": "Sum stat getter",
+    "description": "A stat getter that sums the values of the stats in the given array.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:sum"
+        },
+        "stats": {
+            "type": "array",
+            "items": {
+                "$ref": "ref.schema.json"
+            },
+            "$comment": "Stats from all getters in this array will be summed."
+        },
+        "offset": {
+            "type": "number",
+            "$comment": "Can be set to offset the sum by some amount. Only added to the final sum if the sum is not 0."
+        }
+    },
+    "required": [ "stats" ]
+}

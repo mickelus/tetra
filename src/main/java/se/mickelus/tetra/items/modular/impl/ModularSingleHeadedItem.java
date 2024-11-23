@@ -51,7 +51,7 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
 
     @Override
     public void commonInit(PacketHandler packetHandler) {
-        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.getSynergyData("single/"));
+        DataManager.instance.synergyData.onReload(() -> synergies = DataManager.instance.synergyData.getOrdered("single/"));
     }
 
     public void updateConfig(int honeBase, int honeIntegrityMultiplier) {

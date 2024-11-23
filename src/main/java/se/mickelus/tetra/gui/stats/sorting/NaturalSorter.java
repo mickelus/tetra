@@ -3,6 +3,7 @@ package se.mickelus.tetra.gui.stats.sorting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import se.mickelus.tetra.module.Priority;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -28,7 +29,12 @@ public class NaturalSorter implements IStatSorter {
     }
 
     @Override
-    public int getWeight(Player player, ItemStack itemStack) {
-        return 1;
+    public boolean shouldShow(Player player, ItemStack itemStack) {
+        return true;
+    }
+
+    @Override
+    public Priority getPriority() {
+        return Priority.HIGHEST;
     }
 }

@@ -4,14 +4,20 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.math.Transformation;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -36,6 +42,13 @@ import se.mickelus.tetra.craftingeffect.CraftingEffect;
 import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.craftingeffect.outcome.CraftingEffectOutcome;
 import se.mickelus.tetra.data.deserializer.*;
+import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.effect.data.ItemEffectTrigger;
+import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
+import se.mickelus.tetra.effect.data.outcome.ItemEffectOutcome;
+import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
+import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
+import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
 import se.mickelus.tetra.items.modular.impl.dynamic.ArchetypeDefinition;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
@@ -72,6 +85,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ReplacementDefinition.class, new ReplacementDeserializer())
             .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
             .registerTypeAdapter(Block.class, new BlockDeserializer())
+            .registerTypeAdapter(BlockState.class, new BlockStateDeserializer())
             .registerTypeAdapter(AttributesDeserializer.typeToken.getRawType(), new AttributesDeserializer())
             .registerTypeAdapter(ItemTagKeyDeserializer.typeToken.getRawType(), new ItemTagKeyDeserializer())
             .registerTypeAdapter(VariantData.class, new VariantData.Deserializer())
@@ -84,12 +98,24 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ModuleRequirement.class, new ModuleRequirement.Deserializer())
             .registerTypeAdapter(IntegerPredicate.class, new IntegerPredicate.Deserializer())
             .registerTypeAdapter(Item.class, new ItemDeserializer())
+            .registerTypeAdapter(ItemStack.class, new ItemStackDeserializer())
             .registerTypeAdapter(Enchantment.class, new EnchantmentDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
             .registerTypeAdapter(Vector3f.class, new VectorDeserializer())
             .registerTypeAdapter(Quaternionf.class, new QuaternionDeserializer())
             .registerTypeAdapter(Transformation.class, new TransformationDeserializer())
+            .registerTypeAdapter(AABB.class, new AABBDeserializer())
             .registerTypeAdapter(ItemDisplayContext.class, new ItemDisplayContextDeserializer())
+            .registerTypeAdapter(ItemEffect.class, new ItemEffect.Deserializer())
+            .registerTypeAdapter(ItemEffectTrigger.class, new ItemEffectTrigger.Deserializer())
+            .registerTypeAdapter(ItemEffectCondition.class, new ItemEffectCondition.Deserializer())
+            .registerTypeAdapter(ItemEffectOutcome.class, new ItemEffectOutcome.Deserializer())
+            .registerTypeAdapter(NumberProvider.class, new NumberProvider.Deserializer())
+            .registerTypeAdapter(EntityProvider.class, new EntityProvider.Deserializer())
+            .registerTypeAdapter(VectorProvider.class, new VectorProvider.Deserializer())
+            .registerTypeAdapter(EntityPredicate.class, new EntityPredicateDeserializer())
+            .registerTypeAdapter(ParticleOptions.class, new ParticleOptionsDeserializer())
+            .registerTypeAdapter(SoundEvent.class, new SoundEventDeserializer())
             .create();
     public static DataManager instance;
 
@@ -100,7 +126,7 @@ public class DataManager implements DataDistributor {
     public final DataStore<ModuleData> moduleData;
     public final DataStore<RepairDefinition> repairData;
     public final DataStore<EnchantmentMapping[]> enchantmentData;
-    public final DataStore<SynergyData[]> synergyData;
+    public final SynergyStore synergyData;
     public final DataStore<ReplacementDefinition[]> replacementData;
     public final SchematicStore schematicData;
     public final DataStore<CraftingEffect> craftingEffectData;
@@ -108,6 +134,7 @@ public class DataManager implements DataDistributor {
     public final DataStore<DestabilizationEffect[]> destabilizationData;
     public final DataStore<UnlockData> unlockData;
     public final DataStore<ArchetypeDefinition> archetypeData;
+    public final ItemEffectStore itemEffectData;
     private final Logger logger = LogManager.getLogger();
     private final DataStore[] dataStores;
 
@@ -121,7 +148,7 @@ public class DataManager implements DataDistributor {
         this.moduleData = new ModuleStore(gson, TetraMod.MOD_ID, "modules", this);
         this.repairData = new DataStore<>(gson, TetraMod.MOD_ID, "repairs", RepairDefinition.class, this);
         this.enchantmentData = new DataStore<>(gson, TetraMod.MOD_ID, "enchantments", EnchantmentMapping[].class, this);
-        this.synergyData = new DataStore<>(gson, TetraMod.MOD_ID, "synergies", SynergyData[].class, this);
+        this.synergyData = new SynergyStore(gson, TetraMod.MOD_ID, "synergies", this);
         this.replacementData = new DataStore<>(gson, TetraMod.MOD_ID, "replacements", ReplacementDefinition[].class, this);
         this.schematicData = new SchematicStore(gson, TetraMod.MOD_ID, "schematics", this);
         this.craftingEffectData = new CraftingEffectStore(gson, TetraMod.MOD_ID, "crafting_effects", this);
@@ -129,9 +156,10 @@ public class DataManager implements DataDistributor {
         this.destabilizationData = new DataStore<>(gson, TetraMod.MOD_ID, "destabilization", DestabilizationEffect[].class, this);
         this.unlockData = new DataStore<>(gson, TetraMod.MOD_ID, "unlocks", UnlockData.class, this);
         this.archetypeData = new DataStore<>(gson, TetraMod.MOD_ID, "archetypes", ArchetypeDefinition.class, this);
+        this.itemEffectData = new ItemEffectStore(gson, TetraMod.MOD_ID, "item_effects", this);
 
-        dataStores = new DataStore[] { tierData, tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData,
-                replacementData, schematicData, craftingEffectData, repairData, actionData, destabilizationData, unlockData, archetypeData };
+        dataStores = new DataStore[] { tierData, tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData, replacementData,
+                schematicData, craftingEffectData, repairData, actionData, destabilizationData, unlockData, archetypeData, itemEffectData };
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -158,24 +186,6 @@ public class DataManager implements DataDistributor {
         Arrays.stream(dataStores)
                 .filter(dataStore -> dataStore.getDirectory().equals(directory))
                 .forEach(dataStore -> dataStore.loadFromPacket(data));
-    }
-
-    /**
-     * Wrapped data getter for synergy data so that data may be ordered in such a way that it's efficiently compared. Skipping this step
-     * would cause items to incorrectly gain synergies.
-     *
-     * @param path The path to the synergy data
-     * @return An array of synergy data
-     */
-    public SynergyData[] getSynergyData(String path) {
-        SynergyData[] data = synergyData.getDataIn(new ResourceLocation(TetraMod.MOD_ID, path)).stream()
-                .flatMap(Arrays::stream)
-                .toArray(SynergyData[]::new);
-        for (SynergyData entry : data) {
-            Arrays.sort(entry.moduleVariants);
-            Arrays.sort(entry.modules);
-        }
-        return data;
     }
 
     @Override

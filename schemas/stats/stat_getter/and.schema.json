@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/sum.schema.json",
+    "title": "And stat getter",
+    "description": "A stat getter that \"should show\" when all given stat getters also \"should show\". Typically used in boolean cases, like when determining if an indicator should show. Returns 1 if shown, otherwise 0.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:and"
+        },
+        "stats": {
+            "type": "array",
+            "items": {
+                "$ref": "ref.schema.json"
+            },
+            "$comment": "All getters in this should show for the parent getter to show."
+        }
+    },
+    "required": [ "stats" ]
+}

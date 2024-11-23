@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/json/tiered_value.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/resource_location.schema.json",
     "title": "Resource location",
     "description": "A minecraft resource location, typically expressed on the format 'namespace:resource'. Defaults to the minecraft namespace if the namespace is omitted",
     "type": "string",

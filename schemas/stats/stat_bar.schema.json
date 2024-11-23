@@ -1,0 +1,135 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_bar.schema.json",
+    "title": "Stat Bar",
+    "description": "Defines how a statbar displays, including labels, formatting, tooltip and possibly bar indicators.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "$comment": "There's only one type registered in vanilla tetra, but this can be set if some other mod has registered other statbar types."
+        },
+        "key": {
+            "$ref": "../resource_location.schema.json",
+            "$comment": "The localization key for the stat bar, the localized value will be displayed next to the numerical label above the stat bar. Probably something along the lines of 'mymod.stats.attack_damage'."
+        },
+        "stat": {
+            "$ref": "stat_getter/ref.schema.json",
+            "$comment": "The stat to display in the stat bar, this value backs how the bar is displayed and the label."
+        },
+        "min": {
+            "type": "number",
+            "description": "The minimum value for the stat bar, sets the lower bound for the actual bar."
+        },
+        "max": {
+            "type": "number",
+            "description": "The maximum value for the stat bar, sets the upper bound for the actual bar."
+        },
+        "label": {
+            "$ref": "label_getter/ref.schema.json",
+            "$comment": "Defines how the actual value of the stat is displayed above the bar."
+        },
+        "tooltip": {
+            "$ref": "tooltip_getter/ref.schema.json",
+            "$comment": "Defines the tooltip for the stat bar, this is displayed when hovering over the stat bar."
+        },
+        "indicators": {
+            "type": "array",
+            "items": {
+                "$ref": "../resource_location.schema.json"
+            },
+            "$comment": "An array of resource locations referencing directories (relative stat_indicators/) of indicators which should be displayed for this stat bar."
+        },
+        "contexts": {
+            "type": "array",
+            "description": "Defines which UIs to show this stat bar in.",
+            "items": {
+                "type": "string",
+                "examples": [ "tetra:workbench", "tetra:holosphere" ]
+            }
+        },
+        "generateSorter": {
+            "description": "If set to true, registers a stat sorter with the same label, stat and format as this stat bar.",
+            "type": "boolean"
+        }
+    },
+    "required": [ "key", "min", "max", "contexts", "stat", "label", "tooltip" ],
+    "examples": [
+        {
+            "type": "tetra:default",
+            "key": "tetra.stats.attack_damage",
+            "contexts": [ "tetra:workbench" ],
+            "min": 0,
+            "max": 40,
+            "stat": {
+                "type": "tetra:sum",
+                "stats": [
+                    {
+                        "type": "tetra:attribute",
+                        "attribute": "generic.attack_damage"
+                    },
+                    {
+                        "type": "tetra:sum",
+                        "stats": [
+                            {
+                                "type": "tetra:multiply",
+                                "stats": [
+                                    {
+                                        "type": "tetra:enchantment",
+                                        "enchantment": "minecraft:sharpness"
+                                    }
+                                ],
+                                "factor": 0.5
+                            }
+                        ],
+                        "offset": 0.5
+                    }
+                ]
+            },
+            "label": {
+                "type": "tetra:basic",
+                "format": "double_decimal",
+                "diff_format": "double_decimal"
+            },
+            "tooltip": {
+                "type": "tetra:default",
+                "key": "tetra.stats.attack_damage.tooltip",
+                "stats": [
+                    {
+                        "type": "tetra:sum",
+                        "stats": [
+                            {
+                                "type": "tetra:attribute",
+                                "attribute": "generic.attack_damage"
+                            },
+                            {
+                                "type": "tetra:sum",
+                                "stats": [
+                                    {
+                                        "type": "tetra:multiply",
+                                        "stats": [
+                                            {
+                                                "type": "tetra:enchantment",
+                                                "enchantment": "minecraft:sharpness"
+                                            }
+                                        ],
+                                        "factor": 0.5
+                                    }
+                                ],
+                                "offset": 0.5
+                            }
+                        ],
+                        "attribute": "generic.attack_damage"
+                    }
+                ],
+                "formatters": [
+                    {
+                        "type": "tetra:basic",
+                        "format": "double_decimal"
+                    }
+                ]
+            },
+            "indicators": [ "tetra:attack_damage/shared", "tetra:attack_damage/normalized" ]
+        }
+    ]
+}

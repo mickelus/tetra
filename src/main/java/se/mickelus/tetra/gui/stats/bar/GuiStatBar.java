@@ -17,6 +17,8 @@ import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.gui.stats.getter.ILabelGetter;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
+import se.mickelus.tetra.gui.stats.sorting.BasicStatSorter;
+import se.mickelus.tetra.gui.stats.sorting.IStatSorter;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 import javax.annotation.Nullable;
@@ -51,9 +53,22 @@ public class GuiStatBar extends GuiStatBase {
     protected ILabelGetter labelGetter;
     protected ITooltipGetter tooltipGetter;
 
+    protected String[] contexts = new String[0];
+
+    protected IStatSorter sorter = null;
+
     public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented,
             IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
         this(x, y, barLength, labelKey, min, max, segmented, false, false, statGetter, labelGetter, tooltipGetter);
+    }
+
+    public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented, boolean split,
+            boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter, boolean generateSorter) {
+        this(x, y, barLength, labelKey, min, max, segmented, split, inverted, statGetter, labelGetter, tooltipGetter);
+
+        if (generateSorter) {
+            sorter = new BasicStatSorter(statGetter, labelKey, (value) -> labelGetter.getLabel(value, value, false));
+        }
     }
 
     public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented, boolean split,
@@ -94,6 +109,11 @@ public class GuiStatBar extends GuiStatBase {
 
     public GuiStatBar setIndicators(GuiStatIndicator... indicators) {
         this.indicators = indicators;
+        return this;
+    }
+
+    public GuiStatBar setContexts(String... contexts) {
+        this.contexts = contexts;
         return this;
     }
 
@@ -259,5 +279,15 @@ public class GuiStatBar extends GuiStatBase {
         }
 
         return result;
+    }
+
+    @Override
+    public String[] getContexts() {
+        return contexts;
+    }
+
+    @Override
+    public IStatSorter getSorter() {
+        return sorter;
     }
 }

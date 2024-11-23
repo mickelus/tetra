@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/sum.schema.json",
+    "title": "Or stat getter",
+    "description": "A stat getter that \"should show\" if any of the given stat getters \"should show\". Typically used in boolean cases, like when determining if an indicator should show. Returns 1 if shown, otherwise 0.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:or"
+        },
+        "stats": {
+            "type": "array",
+            "items": {
+                "$ref": "ref.schema.json"
+            },
+            "$comment": "If any of the getters in this array shows then the parent will show as well."
+        }
+    },
+    "required": [ "stats" ]
+}
