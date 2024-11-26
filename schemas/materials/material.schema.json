@@ -6,7 +6,7 @@
     "type": "object",
     "properties": {
         "replace": {
-            "description": "Marks if this should replace or merge with existing entries (if any) for this schematic definition. The default behaviour for upgrade schematics added by other mods and datapacks is to merge values set by those into the existing entry (if any). By setting replace to true it's possible to completely replace schematics registered by tetra, which can be useful when one wants to remove something.",
+            "description": "Marks if this should replace or merge with existing entries (if any) for this schematic definition. The default behaviour for materials added by other mods and datapacks is to merge values set by those into the existing entry (if any). By setting replace to true it's possible to completely replace materials registered by tetra, which can be useful when one wants to remove something.",
             "type": "boolean"
         },
         "key": {

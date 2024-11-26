@@ -5,6 +5,10 @@
     "description": "A definition of a datadriven crafting effect, crafting effects can be used to make things happen as players modify a modular item.",
     "type": "object",
     "properties": {
+        "replace": {
+            "description": "Marks if this should replace or merge with existing entries (if any) for this schematic definition. The default behaviour for crafting effects added by other mods and datapacks is to merge values set by those into the existing entry (if any). By setting replace to true it's possible to completely replace crafting effects registered by tetra, which can be useful when one wants to remove something.",
+            "type": "boolean"
+        },
         "requirement": {
             "$ref": "requirements/ref.schema.json",
             "$comment": "Determines under which conditions the crafting effect should apply"
