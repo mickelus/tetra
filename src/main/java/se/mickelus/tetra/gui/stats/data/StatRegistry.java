@@ -57,7 +57,7 @@ public class StatRegistry {
 
         StatRegistry.registerTooltipGetter("tetra:default", TooltipGetterDeserializers::defaultGetter);
 
-        StatRegistry.registerIndicator("tetra:default", IndicatorDeserializers::standardGetter);
+        StatRegistry.registerIndicator("tetra:default", IndicatorDeserializers::defaultGetter);
     }
 
     public static void registerStatBar(String key, Function<JsonElement, GuiStatBase> deserializer) {

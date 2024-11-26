@@ -7,7 +7,7 @@ import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
 
 public class IndicatorDeserializers {
-    public static GuiStatIndicator standardGetter(JsonElement json) {
+    public static GuiStatIndicator defaultGetter(JsonElement json) {
         StandardData data = StatRegistry.gson.fromJson(json, StandardData.class);
         return new GuiStatIndicator(0, 0, data.key, data.textureX, data.textureY, data.texture, data.stat, data.tooltip);
     }

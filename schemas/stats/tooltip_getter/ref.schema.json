@@ -5,7 +5,7 @@
     "description": "Defines how the tooltip of a stat bar should display.",
     "oneOf": [
         {
-            "$ref": "standard.schema.json"
+            "$ref": "default.schema.json"
         }
     ]
 }

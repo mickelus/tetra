@@ -1,12 +1,12 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/stats/tooltip_getter/ref.schema.json",
-    "title": "Standard tooltip getter",
+    "title": "Default tooltip getter",
     "description": "The standard definition of a tooltip. The number of stats, formatters, and placeholders in the tooltip body has to match or we're gonna have a bad time.",
     "type": "object",
     "properties": {
         "type": {
-            "const": "tetra:standard"
+            "const": "tetra:default"
         },
         "key": {
             "type": "string",
@@ -30,7 +30,7 @@
     "required": [ "key", "stats", "formatters" ],
     "examples": [
         {
-            "type": "tetra:standard",
+            "type": "tetra:default",
             "key": "tetra.stats.attack_damage.tooltip",
             "stats": [
                 {

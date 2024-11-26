@@ -37,7 +37,7 @@
         "diff_format": "double_decimal"
     },
     "tooltip": {
-        "type": "tetra:standard",
+        "type": "tetra:default",
         "key": "tetra.stats.attack_damage_normalized.tooltip",
         "stats": [
             {
