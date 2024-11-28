@@ -1,0 +1,28 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/time.schema.json",
+    "title": "Time number provider",
+    "description": "Provides some representation of time from the world of the triggering entity.",
+    "examples": [
+        {
+            "type": "tetra:time"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:time"
+        },
+        "property": {
+            "type": "string",
+            "description": "The type of time value to get. gameTime: the time in ticks since the world was created, dayTime: the time of the current day, in ticks . moonPhase: The current moon phase, as a value between 0 and 7 (inclusive).",
+            "enum": [
+                "gameTime",
+                "dayTime",
+                "moonPhase"
+            ],
+            "default": "gameTime"
+        }
+    },
+    "required": [ "type" ]
+}

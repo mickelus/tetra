@@ -23,6 +23,9 @@
             "$ref": "length.schema.json"
         },
         {
+            "$ref": "time.schema.json"
+        },
+        {
             "$ref": "vector.schema.json"
         },
         {
