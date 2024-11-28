@@ -1,0 +1,41 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/entity_property.schema.json",
+    "title": "Entity property item effect outcome",
+    "description": "Set a property on the given entity to the given value.",
+    "examples": [
+        {
+            "type": "tetra:entity_property",
+            "entity": "target",
+            "property": "fireDuration",
+            "value": 20
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:entity_property"
+        },
+        "property": {
+            "type": "string",
+            "description": "The property to set on the entity.",
+            "enum": [
+                "freezingTicks",
+                "frozenLimit",
+                "burningDuration",
+                "airSupply",
+                "maxAirSupply",
+                "fallDistance",
+                "health",
+                "maxHealth",
+                "armor",
+                "absorption"
+            ]
+        },
+        "value": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The value to set the property to."
+        }
+    },
+    "required": [ "type", "property", "value" ]
+}

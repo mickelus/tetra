@@ -1,0 +1,40 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/entity_property.schema.json",
+    "title": "Entity property number provider",
+    "description": "Provides a numerical property from the given entity.",
+    "examples": [
+        {
+            "type": "tetra:entity_property",
+            "entity": "target",
+            "property": "health"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:entity_property"
+        },
+        "entity": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity to get properties from."
+        },
+        "property": {
+            "type": "string",
+            "description": "The property to get from the entity.",
+            "enum": [
+                "freezingTicks",
+                "frozenLimit",
+                "burningDuration",
+                "airSupply",
+                "maxAirSupply",
+                "fallDistance",
+                "health",
+                "maxHealth",
+                "armor",
+                "absorption"
+            ]
+        }
+    },
+    "required": [ "type", "entity", "property" ]
+}

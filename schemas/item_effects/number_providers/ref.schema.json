@@ -17,6 +17,9 @@
             "$ref": "entity_data.schema.json"
         },
         {
+            "$ref": "entity_property.schema.json"
+        },
+        {
             "$ref": "expression.schema.json"
         },
         {

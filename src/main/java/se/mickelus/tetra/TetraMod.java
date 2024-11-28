@@ -188,6 +188,8 @@ public class TetraMod {
         NumberProvider.register("tetra:length", LengthNumberProvider.class);
         NumberProvider.register("tetra:effect_level", EffectLevelNumberProvider.class);
         NumberProvider.register("tetra:effect_efficiency", EffectEfficiencyNumberProvider.class);
+        NumberProvider.register("tetra:entity_data", EntityDataNumberProvider.class);
+        NumberProvider.register("tetra:entity_property", EntityPropertyNumberProvider.class);
         NumberProvider.register("tetra:vector", VectorNumberProvider.class);
         NumberProvider.register("tetra:block_property", BlockPropertyNumberProvider.class);
         NumberProvider.register("tetra:time", TimeNumberProvider.class);
