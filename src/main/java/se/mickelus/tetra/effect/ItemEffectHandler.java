@@ -50,6 +50,7 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.properties.PropertyHelper;
@@ -164,11 +165,12 @@ public class ItemEffectHandler {
             CastOptional.cast(event.getSource().getEntity(), LivingEntity.class)
                     .map(shooter -> Stream.of(shooter.getMainHandItem(), shooter.getOffhandItem()))
                     .orElseGet(Stream::empty)
-                    .filter(itemStack -> itemStack.getItem() instanceof ModularBowItem)
+                    .filter(itemStack -> itemStack.getItem() instanceof ModularBowItem || itemStack.getItem() instanceof ModularCrossbowItem)
                     .findFirst()
                     .ifPresent(itemStack -> {
-                        ModularBowItem item = (ModularBowItem) itemStack.getItem();
+                        IModularItem item = (IModularItem) itemStack.getItem();
                         item.tickHoningProgression((LivingEntity) event.getSource().getEntity(), itemStack, 2);
+                        applyHitEffects(itemStack, (LivingEntity) event.getSource().getEntity(), event.getEntity());
                     });
 
         }
