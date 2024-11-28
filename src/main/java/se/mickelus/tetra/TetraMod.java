@@ -172,6 +172,8 @@ public class TetraMod {
         ItemEffectOutcome.register("tetra:particle", ParticleItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:sound", SoundItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:delay", DelayItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:entity_data", EntityDataItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:entity_property", EntityPropertyItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:loop", LoopItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:imitate", ImitateItemEffectOutcome.class);
 

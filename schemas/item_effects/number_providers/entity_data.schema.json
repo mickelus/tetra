@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/number_providers/entity_data.schema.json",
+    "title": "Entity data number provider",
+    "description": "Provides a numerical value from persisted data on the given entity.",
+    "examples": [
+        {
+            "type": "tetra:entity_data",
+            "key": "my_addon:effect_name_hit_count"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:entity_data"
+        },
+        "entity": {
+            "$ref": "../entity_providers/ref.schema.json",
+            "$comment": "The entity to get properties from."
+        },
+        "key": {
+            "type": "string",
+            "description": "The key for the data field to get from the entity."
+        },
+        "defaultValue": {
+            "$ref": "../number_providers/ref.schema.json",
+            "description": "The value to return if the entity does not have the data field.",
+            "default": -1
+        }
+    },
+    "required": [ "entity", "key" ]
+}

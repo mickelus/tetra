@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/outcomes/entity_data.schema.json",
+    "title": "Entity data item effect outcome",
+    "description": "Set persisted data on the given entity to the given value.",
+    "examples": [
+        {
+            "type": "tetra:entity_data",
+            "entity": "target",
+            "key": "my_addon:effect_name_hit_count",
+            "value": "hitCount + 1"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:entity_data"
+        },
+        "key": {
+            "type": "string",
+            "description": "The key for the data field to set on the entity."
+        },
+        "value": {
+            "$ref": "../number_providers/ref.schema.json",
+            "$comment": "The value to set the data to."
+        }
+    },
+    "required": [ "type", "key", "value" ]
+}

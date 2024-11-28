@@ -14,6 +14,9 @@
             "$ref": "effect_efficiency.schema.json"
         },
         {
+            "$ref": "entity_data.schema.json"
+        },
+        {
             "$ref": "expression.schema.json"
         },
         {
