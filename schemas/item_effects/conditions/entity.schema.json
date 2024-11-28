@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/item_effects/conditions/entity.schema.json",
     "title": "Entity item effect condition",
-    "description": "Tests if the given entity passes the given condition.",
+    "description": "Tests if the given entity passes the given condition(s).",
     "examples": [
         {
             "type": "tetra:entity",
@@ -25,10 +25,22 @@
             "$ref": "../../entity_predicate.schema.json",
             "$comment": "An entity predicate used to test for different properties of the entity."
         },
+        "canFreeze": {
+            "$ref": "ref.schema.json",
+            "$comment": "If provided, wheter or not the entity can freeze (entity can accumulate freezing ticks) needs to match this value."
+        },
+        "isFreezing": {
+            "$ref": "ref.schema.json",
+            "$comment": "If provided, wheter or not the entity is freezing (freezing ticks is > 0) needs to match this value."
+        },
+        "isFrozen": {
+            "$ref": "ref.schema.json",
+            "$comment": "If provided, wheter or not the entity is frozen (freezing ticks is above freezing limit) to match this value."
+        },
         "origin": {
             "$ref": "../vector_providers/ref.schema.json",
             "$comment": "Used as a reference point for the optional 'distance' field in the condition, can be omitted if that's not used."
         }
     },
-    "required": [ "entity", "condition" ]
+    "required": [ "entity" ]
 }
