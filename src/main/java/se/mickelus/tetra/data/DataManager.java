@@ -11,6 +11,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -116,6 +117,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(EntityPredicate.class, new EntityPredicateDeserializer())
             .registerTypeAdapter(ParticleOptions.class, new ParticleOptionsDeserializer())
             .registerTypeAdapter(SoundEvent.class, new SoundEventDeserializer())
+            .registerTypeAdapter(MobEffect.class, new MobEffectDeserializer())
             .create();
     public static DataManager instance;
 
