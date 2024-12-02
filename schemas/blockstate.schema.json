@@ -7,14 +7,14 @@
     "properties": {
         "Name": {
             "$ref": "resource_location.schema.json",
-            "$comment": "A resource location pointing at a block (or a #tag?)"
+            "$comment": "A resource location pointing at a block (or a #tag?)."
         },
         "Properties": {
             "type": "object",
             "patternProperties": {
                 ".*": { "type": "string" }
             },
-            "description": "A map of block states (properties?) to match against"
+            "description": "A map of block states (properties?) to match against."
         }
     }
 }

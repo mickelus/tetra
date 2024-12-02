@@ -1,0 +1,38 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/unlocks/unlock.schema.json",
+    "title": "Schematic & crafting effect unlock data",
+    "description": "Allows for blocks to unlock schematics and crafting effects without having to implement tetra interfaces. Uses the 'block' predicate to test blocks within 'bounds' of a workbench to determine what should be unlocked.",
+    "type": "object",
+    "properties": {
+        "schematics": {
+            "type": "array",
+            "items": {
+                "$ref": "../resource_location.schema.json"
+            },
+            "description": "The schematics that are made available by this unlock."
+        },
+        "effects": {
+            "type": "array",
+            "items": {
+                "$ref": "../resource_location.schema.json"
+            },
+            "description": "The crafting effects that are made available by this unlock."
+        },
+        "block": {
+            "$ref": "../property_matcher.schema.json",
+            "description": "Used to test for a block that must be present near the workbench for this unlock to be available."
+        },
+        "bounds": {
+            "type": "array",
+            "items": {
+                "type": "number"
+            },
+            "minItems": 6,
+            "maxItems": 6,
+            "default": [ -2, 0, -2, 2, 4, 2 ],
+            "description": "The bounds in which a workbench can look for a block to match against this unlock. The bounds are defined as [minX, minY, minZ, maxX, maxY, maxZ]."
+        }
+    },
+    "required": [ "block" ]
+}

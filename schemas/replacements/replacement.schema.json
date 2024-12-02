@@ -1,0 +1,56 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/replacements/replacement.schema.json",
+    "title": "Item replacement definition",
+    "description": "Tetra items are typically not crafted as the player would place a piece of equipment (vanilla or modded) in the workbench and modify it, turning it into a tetra item. Replacement definitions determine which type item and which modules an item would initially have when converted into a modular item.",
+    "examples": [
+        {
+            "predicate": { "item": "minecraft:wooden_axe" },
+            "item": "tetra:modular_double",
+            "modules": {
+                "double/head_left": [ "double/basic_axe_left", "basic_axe/oak" ],
+                "double/head_right": [ "double/butt_right", "butt/oak" ],
+                "double/handle": [ "double/basic_handle", "basic_handle/stick" ]
+            },
+            "improvements": {
+                "double/head_left:hone/efficiency": 1
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "predicate": {
+            "type": "object",
+            "description": "An item predicate matching the item that is to be turned into a modular item. See item predicate: (https://minecraft.wiki/w/Predicate)."
+        },
+        "item": {
+            "$ref": "../resource_location.schema.json",
+            "$comment": "A reference to the modular item (or the essentially the type of modular item) that the item will be turned into."
+        },
+        "archetype": {
+            "$ref": "../resource_location.schema.json",
+            "$comment": "Can be used instead of item, references an archetype instead of a modular item. (Archetypes are defined through data, items are registered programmatically)"
+        },
+        "modules": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "type": "array",
+                    "prefixItems": [
+                        { "type": "string" },
+                        { "type": "string" }
+                    ]
+                }
+            },
+            "description": "The modules that the resulting item should be composed of. The key is a slot on the item, the first item in the array is a module reference and the second item is the module variant."
+        },
+        "improvements": {
+            "type": "object",
+            "patternProperties": {
+                ".*": { "type": "string" }
+            },
+            "description": "The improvements that the resulting item should have. The key is split in two parts, \"slot:improvement_key\", and the value is the improvement level."
+        }
+    },
+    "required": [ "type", "predicate", "modules" ]
+}

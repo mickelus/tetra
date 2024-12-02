@@ -19,7 +19,7 @@
         },
         "material": {
             "type": "object",
-            "description": "The itemstack used as material for the craft, tested using an item predicate."
+            "description": "The itemstack used as material for the craft, tested using an item predicate (https://minecraft.wiki/w/Predicate)."
         }
     },
     "required": [ "type", "material" ]

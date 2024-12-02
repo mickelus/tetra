@@ -1,0 +1,55 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/archetypes/archetype.schema.json",
+    "title": "Archetype definition",
+    "description": "Archetypes allow for new types of modular items to be defined without having to register a new item programmatically, making it possible for datapacks or lowcode mods to add new types of items. All archetype items share the same item ID (tetra:dynamic_handheld), an nbt field (key: \"archetype\") determines the archetype of a given itemstack. Archetype items all act as handheld items, like swords and tools.",
+    "type": "object",
+    "properties": {
+        "id": {
+            "$ref": "../resource_location.schema.json",
+            "$comment": "Identifier for the archetype, use your own namespace."
+        },
+        "honeable": {
+            "type": "boolean",
+            "description": "Determines if the item can gain progress towards honing."
+        },
+        "honeBase": {
+            "type": "number",
+            "description": "The base value for the number of times the item has to be used for honing to become available."
+        },
+        "honeIntegrityMultiplier": {
+            "type": "number",
+            "description": "Integrity multiplier values used when calculating the number of times the item has to be used for honing to become available."
+        },
+        "slots": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "The key of the slot, referenced by modules, schematics and replacements. Should be unique within the archetype but could be reused between multiple archetypes and items."
+                    },
+                    "major": {
+                        "type": "boolean",
+                        "description": "Set to true if this should be a major module slot, major modules can hold improvements."
+                    },
+                    "required": {
+                        "type": "boolean",
+                        "description": "If set to false, the player can remove the module from this slot."
+                    },
+                    "x": {
+                        "type": "number",
+                        "description": "The x offset for the module in the item view (used in the workbench UI and the holosphere UI)."
+                    },
+                    "y": {
+                        "type": "number",
+                        "description": "The y offset for the module in the item view (used in the workbench UI and the holosphere UI)."
+                    }
+                },
+                "required": [ "key", "major", "required", "x", "y" ]
+            }
+        }
+    },
+    "required": [ "id", "honeable", "honeBase", "honeIntegrityMultiplier", "slots" ]
+}
