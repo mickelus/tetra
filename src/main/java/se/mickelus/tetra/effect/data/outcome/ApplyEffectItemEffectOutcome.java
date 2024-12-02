@@ -5,6 +5,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
+import se.mickelus.tetra.effect.data.condition.FixedItemEffectCondition;
+import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
 import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
 import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
 
@@ -16,6 +18,10 @@ public class ApplyEffectItemEffectOutcome extends ItemEffectOutcome {
     EntityProvider source;
     NumberProvider stackDurationCap;
     NumberProvider stackAmplifierCap;
+    ItemEffectCondition ambient = new FixedItemEffectCondition(false);
+    ItemEffectCondition visible = new FixedItemEffectCondition(true);
+    ItemEffectCondition showIcon = new FixedItemEffectCondition(true);
+
 
     @Override
     public boolean perform(ItemEffectContext context) {
@@ -29,7 +35,9 @@ public class ApplyEffectItemEffectOutcome extends ItemEffectOutcome {
             int targetAmplifier = stackAmplifierCap != null && entity.hasEffect(effect)
                     ? Math.min(amplifier + entity.getEffect(effect).getAmplifier(), stackAmplifierCap.getIntegerValue(context))
                     : amplifier;
-            return entity.addEffect(new MobEffectInstance(effect, targetDuration, targetAmplifier), source != null ? source.getEntity(context) : null);
+            return entity.addEffect(new MobEffectInstance(effect, targetDuration, targetAmplifier,
+                            ambient.test(context), visible.test(context), showIcon.test(context)),
+                    source != null ? source.getEntity(context) : null);
         }
         return false;
     }

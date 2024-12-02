@@ -46,6 +46,18 @@
         "stackAmplifierCap": {
             "$ref": "../number_providers/ref.schema.json",
             "$comment": "If provided, when this outcome is triggered and 'entity' already has the mob effect active then the effect amplifier will be increased by 'amplifier' amount up to this cap."
+        },
+        "ambient": {
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "Denotes that the effect is an ambient effect in the world, usually true for beacon effects."
+        },
+        "visible": {
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "Determines if particle effects should appear around the entity while the effect is active."
+        },
+        "showIcon": {
+            "$ref": "../conditions/ref.schema.json",
+            "$comment": "Determines if the effect icon should appear in the player's UI while the effect is active."
         }
     },
     "required": [ "effect", "entity", "duration", "amplifier" ]
