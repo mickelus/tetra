@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/unlocks/unlock.schema.json",
-    "title": "Schematic & crafting effect unlock data",
+    "title": "Schematic & crafting effect unlock definition",
     "description": "Allows for blocks to unlock schematics and crafting effects without having to implement tetra interfaces. Uses the 'block' predicate to test blocks within 'bounds' of a workbench to determine what should be unlocked.",
     "type": "object",
     "properties": {

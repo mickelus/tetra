@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/replacements/replacement.schema.json",
-    "title": "Item replacement definition",
+    "title": "Replacement definition",
     "description": "Tetra items are typically not crafted as the player would place a piece of equipment (vanilla or modded) in the workbench and modify it, turning it into a tetra item. Replacement definitions determine which type item and which modules an item would initially have when converted into a modular item.",
     "examples": [
         {

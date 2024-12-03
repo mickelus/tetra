@@ -49,15 +49,18 @@
         },
         "ambient": {
             "$ref": "../conditions/ref.schema.json",
-            "$comment": "Denotes that the effect is an ambient effect in the world, usually true for beacon effects."
+            "$comment": "Denotes that the effect is an ambient effect in the world. Usually true for beacon effects, likely not be true for an item effect.",
+            "default": false
         },
         "visible": {
             "$ref": "../conditions/ref.schema.json",
-            "$comment": "Determines if particle effects should appear around the entity while the effect is active."
+            "$comment": "Determines if particle effects should appear around the entity while the effect is active.",
+            "default": true
         },
         "showIcon": {
             "$ref": "../conditions/ref.schema.json",
-            "$comment": "Determines if the effect icon should appear in the player's UI while the effect is active."
+            "$comment": "Determines if the effect icon should appear in the player's UI while the effect is active.",
+            "default": true
         }
     },
     "required": [ "effect", "entity", "duration", "amplifier" ]

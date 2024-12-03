@@ -1,0 +1,10 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/replacements/replacements.schema.json",
+    "title": "Replacements",
+    "description": "Data defining replacements, each resource contains an array of replacement data.",
+    "type": "array",
+    "items": {
+        "$ref": "replacement.schema.json"
+    }
+}
