@@ -22,9 +22,10 @@ import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
+import se.mickelus.tetra.blocks.ICraftingEffectProviderBlock;
 import se.mickelus.tetra.blocks.ISchematicProviderBlock;
 
-public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock implements ISchematicProviderBlock {
+public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock implements ISchematicProviderBlock, ICraftingEffectProviderBlock {
     public static final BooleanProperty complete = BooleanProperty.create("complete");
 
     protected final ResourceLocation[] schematics;
@@ -44,6 +45,16 @@ public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock im
 
     @Override
     public ResourceLocation[] getSchematics(Level world, BlockPos pos, BlockState blockState) {
+        return schematics;
+    }
+
+    @Override
+    public boolean canUnlockCraftingEffects(Level world, BlockPos pos, BlockPos targetPos) {
+        return world.getBlockState(pos).getValue(complete);
+    }
+
+    @Override
+    public ResourceLocation[] getCraftingEffects(Level world, BlockPos pos, BlockState blockState) {
         return schematics;
     }
 
