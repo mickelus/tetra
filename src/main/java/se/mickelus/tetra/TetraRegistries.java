@@ -68,11 +68,13 @@ import se.mickelus.tetra.blocks.scroll.*;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
+import se.mickelus.tetra.blocks.workbench.gui.WorkbenchStatsGui;
 import se.mickelus.tetra.client.particle.SweepingStrikeParticleType;
 import se.mickelus.tetra.crafting.ScrollIngredient;
 import se.mickelus.tetra.crafting.ToolActionIngredient;
 import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.*;
+import se.mickelus.tetra.gui.stats.sorting.StatSorters;
 import se.mickelus.tetra.items.InitializableItem;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
 import se.mickelus.tetra.items.forged.*;
@@ -89,6 +91,7 @@ import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.crossbow.ShootableDummyItem;
 import se.mickelus.tetra.items.modular.impl.dynamic.DynamicModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloStatsGui;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;
@@ -419,7 +422,8 @@ public class TetraRegistries {
         return items.register(block.getId().getPath(), () -> new BlockItem(block.get(), itemProperties));
     }
 
-    public static <P extends StructureProcessor> RegistryObject<StructureProcessorType<?>> registerStructureProcessor(String id, StructureProcessorType<P> type) {
+    public static <P extends StructureProcessor> RegistryObject<StructureProcessorType<?>> registerStructureProcessor(String id,
+            StructureProcessorType<P> type) {
         return structureProcessors.register(id, () -> type);
     }
 
@@ -528,6 +532,10 @@ public class TetraRegistries {
 
                 MinecraftForge.EVENT_BUS.register(new InteractiveBlockOverlay());
 //                MinecraftForge.EVENT_BUS.register(MultiblockSchematicScrollHandler.class);
+
+                HoloStatsGui.initializeStaticBars();
+                WorkbenchStatsGui.initializeStaticBars();
+                StatSorters.initializeStaticSorters();
             } catch (Exception e) {
                 e.printStackTrace();
             }
