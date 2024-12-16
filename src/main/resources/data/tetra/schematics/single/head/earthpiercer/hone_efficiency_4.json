@@ -12,18 +12,9 @@
         "textureX": 176
     },
     "requirement": {
-        "type": "tetra:and",
-        "requirements": [
-            {
-                "type": "tetra:module",
-                "module": "single/earthpiercer"
-            },
-            {
-                "type": "tetra:improvement",
-                "improvement": "head_hone/pickaxe_efficiency",
-                "level": 3
-            }
-        ]
+        "type": "tetra:improvement",
+        "improvement": "head_hone/pickaxe_efficiency",
+        "level": 3
     },
     "outcomes": [
         {

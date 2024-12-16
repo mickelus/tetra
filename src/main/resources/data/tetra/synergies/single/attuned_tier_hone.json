@@ -1,0 +1,14 @@
+[
+    {
+        "improvements": [ "unbound_earthpiercer/earth_attunement", "head_hone/pickaxe_tier" ],
+        "tools": {
+            "shovel_dig": 1
+        }
+    },
+    {
+        "improvements": [ "unbound_earthpiercer/wood_attunement", "head_hone/pickaxe_tier" ],
+        "tools": {
+            "axe_dig": 1
+        }
+    }
+]

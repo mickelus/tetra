@@ -10,18 +10,9 @@
         "textureY": 32
     },
     "requirement": {
-        "type": "tetra:and",
-        "requirements": [
-            {
-                "type": "tetra:module",
-                "module": "single/earthpiercer"
-            },
-            {
-                "type": "tetra:improvement",
-                "improvement": "head_hone/piercing",
-                "level": 1
-            }
-        ]
+        "type": "tetra:improvement",
+        "improvement": "head_hone/piercing",
+        "level": 1
     },
     "outcomes": [
         {

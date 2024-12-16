@@ -15,8 +15,17 @@
         "type": "tetra:and",
         "requirements": [
             {
-                "type": "tetra:module",
-                "module": "single/earthpiercer"
+                "type": "tetra:or",
+                "requirements": [
+                    {
+                        "type": "tetra:module",
+                        "module": "single/earthpiercer"
+                    },
+                    {
+                        "type": "tetra:module",
+                        "module": "single/unbound_earthpiercer"
+                    }
+                ]
             },
             {
                 "type": "tetra:not",
