@@ -29,6 +29,13 @@
                         "module": "double/adze_left"
                     }
                 ]
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "double/warforged"
+                }
             }
         ]
     },

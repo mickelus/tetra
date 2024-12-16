@@ -29,6 +29,13 @@
                         "module": "double/claw_left"
                     }
                 ]
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "double/warforged"
+                }
             }
         ]
     },

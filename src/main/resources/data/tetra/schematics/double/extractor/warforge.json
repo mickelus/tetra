@@ -19,6 +19,13 @@
             {
                 "type": "tetra:module",
                 "module": "double/extractor_right"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "double/warforged"
+                }
             }
         ]
     },

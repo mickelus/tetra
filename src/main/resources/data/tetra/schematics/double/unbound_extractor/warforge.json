@@ -1,7 +1,7 @@
 {
     "replace": true,
     "localizationKey": "double/warforge",
-    "slots": ["double/head_right"],
+    "slots": [ "double/head_right" ],
     "materialSlotCount": 0,
     "rarity": "temporary",
     "displayType": "improvement",
@@ -19,6 +19,13 @@
             {
                 "type": "tetra:module",
                 "module": "double/unbound_extractor_right"
+            },
+            {
+                "type": "tetra:not",
+                "requirement": {
+                    "type": "tetra:improvement",
+                    "improvement": "double/warforged"
+                }
             }
         ]
     },
