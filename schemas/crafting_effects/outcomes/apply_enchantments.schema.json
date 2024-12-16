@@ -1,11 +1,11 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/outcomes/apply_enchantment.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/crafting_effects/outcomes/apply_enchantments.schema.json",
     "title": "Apply enchantment crafting effect outcome",
     "description": "Attempts to apply a list of enchantments onto the module in the target slot.",
     "examples": [
         {
-            "type": "tetra:apply_enchantment",
+            "type": "tetra:apply_enchantments",
             "enchantments": {
                 "minecraft:sharpness": 1
             }
@@ -14,7 +14,7 @@
     "type": "object",
     "properties": {
         "type": {
-            "const": "tetra:apply_enchantment"
+            "const": "tetra:apply_enchantments"
         },
         "enchantments": {
             "type": "object",
