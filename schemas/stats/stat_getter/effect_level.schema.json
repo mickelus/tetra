@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/sum.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/effect_level.schema.json",
     "title": "Effect level stat getter",
     "description": "A stat getter that returns level of the given effect.",
     "type": "object",

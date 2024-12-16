@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/schematics/schematic.schema.json",
     "title": "Schematic",
     "description": "Data defining a schematic. Schematics determine how modules are crafted, and how existing major modules can be improved.",
     "type": "object",

@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/tooltip_getter/ref.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/tooltip_getter/default.schema.json",
     "title": "Default tooltip getter",
     "description": "The standard definition of a tooltip. The number of stats, formatters, and placeholders in the tooltip body has to match or we're gonna have a bad time.",
     "type": "object",

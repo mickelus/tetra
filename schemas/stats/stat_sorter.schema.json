@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_bar.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_sorter.schema.json",
     "title": "Stat Sorter",
     "description": "Defines a start sorter, which stat it should be based on, how the preview is formatted and how the sorter is labeled.",
     "type": "object",
