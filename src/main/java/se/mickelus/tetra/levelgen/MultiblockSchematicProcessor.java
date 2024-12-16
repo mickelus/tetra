@@ -40,7 +40,7 @@ public class MultiblockSchematicProcessor extends StructureProcessor {
                     .boxed()
                     .collect(StreamHelper.toShuffledList(random))
                     .stream()
-                    .limit((int) (size * 0.6))
+                    .limit((int) Math.ceil(size * 0.25))
                     .anyMatch(index -> index == block.y * block.width + block.x);
 
             if (isRuined) {
