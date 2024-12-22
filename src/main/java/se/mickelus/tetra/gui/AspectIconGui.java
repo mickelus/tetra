@@ -60,6 +60,7 @@ public class AspectIconGui extends GuiElement {
         } else {
             tooltip.add(Component.translatable("tetra.modular.aspects.empty").withStyle(ChatFormatting.GRAY));
             detailTooltip = null;
+            this.aspects = new ArrayList<>();
         }
     }
 
