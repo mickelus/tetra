@@ -145,6 +145,7 @@ public class TetraMod {
         CraftingRequirementDeserializer.registerSupplier("tetra:module", ModuleRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:aspect", AspectRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:perk", PerkRequrement.class);
+        CraftingRequirementDeserializer.registerSupplier("tetra:slot", SlotRequirement.class);
 
         ItemEffectCondition.register("tetra:random", RandomItemEffectCondition.class);
         ItemEffectCondition.register("tetra:expression", ExpressionItemEffectCondition::deserialize);

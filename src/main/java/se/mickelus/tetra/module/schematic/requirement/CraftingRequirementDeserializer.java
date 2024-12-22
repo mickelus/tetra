@@ -26,7 +26,7 @@ public class CraftingRequirementDeserializer implements JsonDeserializer<Craftin
         return Optional.ofNullable(type)
                 .map(requirements::get)
                 .map(getter -> getter.apply(jsonObject))
-                .orElseThrow(() -> new JsonParseException("Crafting effect outcome type \"" + type + "\" is not valid"));
+                .orElseThrow(() -> new JsonParseException("Crafting requirement type \"" + type + "\" is not valid"));
     }
 
     @Override
