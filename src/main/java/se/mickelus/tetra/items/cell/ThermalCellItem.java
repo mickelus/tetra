@@ -65,20 +65,19 @@ public class ThermalCellItem extends TetraItem {
     public void appendHoverText(final ItemStack stack, @Nullable final Level world, final List<Component> tooltip, final TooltipFlag advanced) {
         int charge = getCharge(stack);
 
-        MutableComponent chargeLine = Component.translatable("item.tetra.thermal_cell.charge");
+        MutableComponent chargeLine;
 
         if (charge == maxCharge) {
-            chargeLine.append(Component.translatable("item.tetra.thermal_cell.charge_full"));
+            chargeLine = Component.translatable("item.tetra.thermal_cell.charge", Component.translatable("item.tetra.thermal_cell.charge_full"));
         } else if (charge > maxCharge * 0.4) {
-            chargeLine.append(Component.translatable("item.tetra.thermal_cell.charge_good"));
+            chargeLine = Component.translatable("item.tetra.thermal_cell.charge", Component.translatable("item.tetra.thermal_cell.charge_good"));
         } else if (charge > 0) {
-            chargeLine.append(Component.translatable("item.tetra.thermal_cell.charge_low"));
+            chargeLine = Component.translatable("item.tetra.thermal_cell.charge", Component.translatable("item.tetra.thermal_cell.charge_low"));
         } else {
-            chargeLine.append(Component.translatable("item.tetra.thermal_cell.charge_empty"));
+            chargeLine = Component.translatable("item.tetra.thermal_cell.charge", Component.translatable("item.tetra.thermal_cell.charge_empty"));
         }
 
         tooltip.add(chargeLine);
-        tooltip.add(Component.literal(" "));
         tooltip.add(Component.literal(" "));
         tooltip.add(locationTooltip);
     }
