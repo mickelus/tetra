@@ -2,7 +2,7 @@
     "type": "minecraft:block",
     "pools": [
         {
-            "name": "forged/crate_break_content",
+            "name": "forged/forged_workbench_break",
             "rolls": 1,
             "entries": [
                 {
@@ -19,7 +19,7 @@
                         },
                         {
                             "function": "minecraft:apply_bonus",
-                            "enchantment":"minecraft:fortune",
+                            "enchantment": "minecraft:fortune",
                             "formula": "uniform_bonus_count",
                             "parameters": {
                                 "bonusMultiplier": 1
