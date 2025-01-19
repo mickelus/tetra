@@ -62,6 +62,9 @@ public class StatGetterDeserializers {
 
     public static IStatGetter effectEfficiencyGetter(JsonElement json) {
         EffectEfficiencyData data = StatRegistry.gson.fromJson(json, EffectEfficiencyData.class);
+        if (data.effect == null) {
+            throw new JsonParseException("Failed to parse effect efficiency stat getter, missing field 'effect'");
+        }
         return new StatGetterEffectEfficiency(ItemEffect.get(data.effect));
     }
 
@@ -70,6 +73,9 @@ public class StatGetterDeserializers {
 
     public static IStatGetter effectLevelGetter(JsonElement json) {
         EffectLevelData data = StatRegistry.gson.fromJson(json, EffectLevelData.class);
+        if (data.effect == null) {
+            throw new JsonParseException("Failed to parse effect level stat getter, missing field 'effect'");
+        }
         return new StatGetterEffectLevel(ItemEffect.get(data.effect));
     }
 

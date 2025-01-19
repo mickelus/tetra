@@ -48,7 +48,7 @@ public class StatSorterStore implements ResourceManagerReloadListener {
         try (BufferedReader reader = resource.openAsReader()) {
             return GsonHelper.fromJson(StatRegistry.gson, reader, IStatSorter.class);
         } catch (IOException | JsonParseException e) {
-            logger.warn("Failed to parse stat sorter data from '{}': {}", resourceLocation, e);
+            logger.error("Failed to parse stat sorter data from '{}': {}", resourceLocation, e);
         }
 
         return null;

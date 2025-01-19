@@ -62,7 +62,7 @@ public class StatIndicatorStore implements ResourceManagerReloadListener {
         try (BufferedReader reader = resource.openAsReader()) {
             return GsonHelper.fromJson(StatRegistry.gson, reader, GuiStatIndicator.class);
         } catch (IOException | JsonParseException e) {
-            logger.warn("Failed to parse stat indicator from '{}': {}", resourceLocation, e);
+            logger.error("Failed to parse stat indicator from '{}': {}", resourceLocation, e);
         }
 
         return null;
