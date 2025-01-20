@@ -170,7 +170,7 @@ public class ItemEffectHandler {
                     .ifPresent(itemStack -> {
                         IModularItem item = (IModularItem) itemStack.getItem();
                         item.tickHoningProgression((LivingEntity) event.getSource().getEntity(), itemStack, 2);
-                        applyHitEffects(itemStack, (LivingEntity) event.getSource().getEntity(), event.getEntity());
+                        applyHitEffects(itemStack, event.getEntity(), (LivingEntity) event.getSource().getEntity());
                     });
 
         }
