@@ -39,7 +39,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         itemsView = new HoloItemsGui(0, 70, width, height, this::onItemSelect, this::onSlotSelect, this::onMaterialsSelect);
         addChild(itemsView);
 
-        schematicsView = new HoloSchematicListGui(0, 20, width, height, this::onSchematicSelect);
+        schematicsView = new HoloSchematicListGui(0, 13, width, height, this::onSchematicSelect);
         schematicsView.setVisible(false);
         addChild(schematicsView);
 

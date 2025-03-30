@@ -1,9 +1,10 @@
 {
     "replace": true,
-    "slots": ["single/head"],
+    "slots": [ "single/head" ],
     "materialSlotCount": 1,
     "rarity": "temporary",
-    "displayType": "major",
+    "displayType": "improvement",
+    "preview": "applicable",
     "requirement": {
         "type": "tetra:and",
         "requirements": [
@@ -31,7 +32,7 @@
     "outcomes": [
         {
             "material": {
-                "items": ["minecraft:echo_shard"]
+                "items": [ "minecraft:echo_shard" ]
             },
             "requiredTools": {
                 "hammer_dig": "minecraft:wood"

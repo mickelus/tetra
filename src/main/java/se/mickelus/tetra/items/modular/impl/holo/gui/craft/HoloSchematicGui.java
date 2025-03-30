@@ -21,7 +21,7 @@ public class HoloSchematicGui extends GuiElement {
     private final GuiElement listGroup;
     private final Consumer<OutcomePreview> onVariantOpen;
     private final HoloDescription description;
-    private final HoloMaterialTranslation translation;
+    private final HoloMaterialTranslationGui translation;
     private final HoloSortButton sortbutton;
     private final HoloFilterButton filterButton;
     private final HoloVariantListGui list;
@@ -50,7 +50,7 @@ public class HoloSchematicGui extends GuiElement {
         description = new HoloDescription(0, 0);
         buttons.addChild(description);
 
-        translation = new HoloMaterialTranslation(0, 0);
+        translation = new HoloMaterialTranslationGui(0, 0);
         buttons.addChild(translation);
 
         sortbutton = new HoloSortButton(0, 0, this::onSortChange);

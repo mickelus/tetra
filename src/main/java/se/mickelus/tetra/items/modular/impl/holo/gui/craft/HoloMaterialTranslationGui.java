@@ -26,13 +26,13 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
-public class HoloMaterialTranslation extends GuiElement {
+public class HoloMaterialTranslationGui extends GuiElement {
     private final List<Component> emptyTooltipImprovement;
     private final List<Component> emptyTooltip;
     private final GuiTexture icon;
     private List<Component> tooltip;
 
-    public HoloMaterialTranslation(int x, int y) {
+    public HoloMaterialTranslationGui(int x, int y) {
         super(x, y, 9, 9);
 
         icon = new GuiTexture(0, 0, 9, 9, 224, 0, GuiTextures.workbench);

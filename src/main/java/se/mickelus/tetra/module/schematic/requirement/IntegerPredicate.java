@@ -1,8 +1,11 @@
 package se.mickelus.tetra.module.schematic.requirement;
 
 import com.google.gson.*;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.TierSortingRegistry;
 import se.mickelus.mutil.util.JsonOptional;
 import se.mickelus.tetra.util.TierHelper;
@@ -63,6 +66,28 @@ public class IntegerPredicate implements Predicate<Integer> {
                 : null;
     }
 
+
+    @OnlyIn(Dist.CLIENT)
+    @Nullable
+    public String getDescription() {
+        return getDescription(I18n.get("tetra.integer_predicate_value"));
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Nullable
+    public String getDescription(String key) {
+        if (min != null && max != null) {
+            return I18n.get("tetra.integer_predicate_both", min, key, max);
+        }
+        if (min != null) {
+            return I18n.get("tetra.integer_predicate_min", key, min);
+        }
+        if (max != null) {
+            return I18n.get("tetra.integer_predicate_max", key, max);
+        }
+        return "BROKEN PREDICATE";
+    }
+
     public static class Deserializer implements JsonDeserializer<IntegerPredicate> {
 
         private static int getLevel(JsonElement element) {
@@ -75,7 +100,7 @@ public class IntegerPredicate implements Predicate<Integer> {
                     .map(index -> index + 1)
                     .orElse(0);
         }
-        
+
         @Override
         public IntegerPredicate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             return deserialize(json);

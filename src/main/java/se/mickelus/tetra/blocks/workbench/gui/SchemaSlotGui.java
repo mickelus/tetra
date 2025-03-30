@@ -13,7 +13,7 @@ import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.ZOffsetGui;
 import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialApplicable;
-import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialTranslation;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialTranslationGui;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class SchemaSlotGui extends GuiElement {
     private GuiElement placeholderBorder;
     private GuiTexture border;
 
-    private HoloMaterialTranslation materialTranslation;
+    private HoloMaterialTranslationGui materialTranslation;
     private HoloMaterialApplicable applicableMaterials;
 
     private final int index;
@@ -58,7 +58,7 @@ public class SchemaSlotGui extends GuiElement {
         border.setOpacity(0.8f);
         addChild(border);
 
-        materialTranslation = new HoloMaterialTranslation(1, 1);
+        materialTranslation = new HoloMaterialTranslationGui(1, 1);
         addChild(materialTranslation);
         applicableMaterials = new HoloMaterialApplicable(1, 9);
         addChild(applicableMaterials);

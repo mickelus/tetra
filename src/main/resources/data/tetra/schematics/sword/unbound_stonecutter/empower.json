@@ -3,7 +3,8 @@
     "slots": [ "sword/blade" ],
     "materialSlotCount": 1,
     "rarity": "temporary",
-    "displayType": "major",
+    "displayType": "improvement",
+    "preview": "applicable",
     "requirement": {
         "type": "tetra:and",
         "requirements": [

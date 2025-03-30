@@ -6,6 +6,7 @@ import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.tetra.blocks.workbench.gui.GuiModuleGlyph;
+import se.mickelus.tetra.blocks.workbench.gui.SchematicRequirementGui;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
@@ -27,7 +28,8 @@ public class HoloImprovementGui extends GuiElement {
     private final GuiString label;
 
     private final HoloDescription description;
-    private final HoloMaterialTranslation translation;
+    private final HoloMaterialTranslationGui translation;
+    private final SchematicRequirementGui requirement;
 
     private final GuiElement variants;
     private final Consumer<OutcomeStack> onVariantSelect;
@@ -68,9 +70,13 @@ public class HoloImprovementGui extends GuiElement {
         description.update(schematic, baseStack);
         header.addChild(description);
 
-        translation = new HoloMaterialTranslation(0, 0);
+        translation = new HoloMaterialTranslationGui(0, 0);
         translation.update(schematic);
         header.addChild(translation);
+
+        requirement = new SchematicRequirementGui(0, 0);
+        requirement.update(schematic);
+        header.addChild(requirement);
 
         variants = new GuiElement(24, 11, 0, 11);
         addChild(variants);

@@ -4,6 +4,7 @@
     "materialSlotCount": 1,
     "displayType": "minor",
     "rarity": "temporary",
+    "preview": "applicable",
     "requirement": {
         "type": "tetra:perk",
         "perk": "support",

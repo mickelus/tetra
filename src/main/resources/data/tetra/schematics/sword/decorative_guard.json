@@ -4,6 +4,7 @@
     "materialSlotCount": 1,
     "rarity": "temporary",
     "displayType": "minor",
+    "preview": "applicable",
     "glyph": {
         "textureX": 152,
         "textureY": 112

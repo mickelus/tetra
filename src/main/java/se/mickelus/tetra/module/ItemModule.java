@@ -58,6 +58,14 @@ public abstract class ItemModule implements IToolProvider {
         return I18n.get("tetra.variant." + variantKey);
     }
 
+    public static String getModuleName(String moduleKey) {
+        return I18n.get("tetra.module." + moduleKey + ".name");
+    }
+
+    public static String getVariantName(String variantKey) {
+        return I18n.get("tetra.variant." + variantKey);
+    }
+
     public String getKey() {
         return moduleKey;
     }

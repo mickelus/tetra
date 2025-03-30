@@ -28,7 +28,7 @@ public class HolosphereActionGui extends GuiElement {
 
         this.performRunnable = perform;
 
-        backdrop = new GuiTexture(0, 0, 23, 23, 54, 28, GuiTextures.toolbelt);
+        backdrop = new GuiTexture(0, 0, 23, 23, 55, 28, GuiTextures.toolbelt);
         addChild(backdrop);
 
         icon = new GuiTexture(0, 0, 23, 23, u, v, GuiTextures.toolbelt);

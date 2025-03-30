@@ -5,6 +5,13 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -44,6 +51,44 @@ public class ItemAspect {
 
     public String getKey() {
         return key;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public MutableComponent getLabel() {
+        return getAspectLabel(this);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static MutableComponent getAspectLabel(ItemAspect aspect) {
+        return getAspectLabel(aspect.getKey());
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static MutableComponent getAspectLabel(String key) {
+        String localizationKey = "tetra.aspect." + key;
+        if (I18n.exists(localizationKey)) {
+            return Component.translatable(localizationKey);
+        }
+        return Component.literal(StringUtils.capitalize(key.replace("_", " ")));
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public MutableComponent getDescription() {
+        return getAspectDescription(this);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static MutableComponent getAspectDescription(ItemAspect aspect) {
+        return getAspectDescription(aspect.getKey());
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static MutableComponent getAspectDescription(String key) {
+        String localizationKey = "tetra.aspect." + key + ".description";
+        if (I18n.exists(localizationKey)) {
+            return Component.translatable(localizationKey);
+        }
+        return Component.translatable("tetra.modular.aspects.missing_description").withStyle(ChatFormatting.GRAY);
     }
 
     public static class Deserializer implements JsonDeserializer<ItemAspect> {

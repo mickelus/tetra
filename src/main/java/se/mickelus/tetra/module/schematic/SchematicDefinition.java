@@ -51,7 +51,7 @@ public class SchematicDefinition {
      */
     public boolean hone = false;
 
-    public CraftingRequirement requirement = CraftingRequirement.any;
+    public CraftingRequirement requirement = new CraftingRequirement.AnyRequirement();
 
     /**
      * If set this schematic will only be visible if the player carries at least one itemstack that will produce an outcome if placed in the slot at the
@@ -77,6 +77,12 @@ public class SchematicDefinition {
      * Used to display some information about how material properties translate into stats for the module or improvement that the schematic crafts.
      */
     public MaterialMultiplier translation;
+    /**
+     * Determines if the schematic should be visible in the holosphere. "always" will always show the schematic, "revealable" will show when "show all"
+     * is toggled on even if requirements are not met, "applicable" will show the schematic if requirements are met, "never" will never show the
+     * schematic.
+     */
+    public PreviewVisibility preview = PreviewVisibility.revealable;
     /**
      * Used to display hints about which materials that can be used for this schematic, strings starting with # are considered as materials, others
      * as item IDs.
@@ -147,6 +153,10 @@ public class SchematicDefinition {
             to.displayType = from.displayType;
         }
 
+        if (from.preview != defaultValues.preview) {
+            to.preview = from.preview;
+        }
+
 
         if (from.rarity != defaultValues.rarity) {
             to.rarity = from.rarity;
@@ -155,6 +165,10 @@ public class SchematicDefinition {
 
         if (!from.glyph.equals(defaultValues.glyph)) {
             to.glyph = from.glyph;
+        }
+
+        if (!Objects.equals(from.translation, defaultValues.translation)) {
+            to.translation = from.translation;
         }
 
         if (to.applicableMaterials != null && from.applicableMaterials != null) {

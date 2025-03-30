@@ -1,14 +1,17 @@
 package se.mickelus.tetra.module.schematic;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
-import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.MaterialMultiplier;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public interface UpgradeSchematic {
@@ -90,6 +93,12 @@ public interface UpgradeSchematic {
         return true;
     }
 
+    @OnlyIn(Dist.CLIENT)
+    @Nullable
+    default List<Component> getRequirementDescription() {
+        return null;
+    }
+
     /**
      * Returns true if this upgrade can be applied to the given slot on the given item.
      *
@@ -100,15 +109,13 @@ public interface UpgradeSchematic {
     boolean isApplicableForSlot(String slot, ItemStack itemStack);
 
     /**
-     * This is a final check if the player should be able to see the schematic in schematic listings, based on the player or its surroundings.
+     * Used to check if the player should be able to preview this schematic in the holosphere.
      *
-     * @param player      The player
-     * @param tile
-     * @param targetStack The target itemstack for the schematic
-     * @return true if it should be visible, otherwise false
+     * @param context            @return true if it should be visible, otherwise false
+     * @param ignoreRequirements
      */
-    default boolean isVisibleForPlayer(Player player, @Nullable WorkbenchTile tile, ItemStack targetStack) {
-        return true;
+    default boolean canPreview(CraftingContext context, boolean ignoreRequirements) {
+        return matchesRequirements(context);
     }
 
     /**

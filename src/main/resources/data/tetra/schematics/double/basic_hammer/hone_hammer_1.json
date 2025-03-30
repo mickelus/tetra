@@ -12,7 +12,8 @@
     "materialSlotCount": 0,
     "hone": true,
     "rarity": "hone",
-    "displayType": "major",
+    "displayType": "improvement",
+    "preview": "always",
     "glyph": {
         "textureX": 64
     },

@@ -1,12 +1,10 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiStringOutline;
 import se.mickelus.mutil.gui.GuiTexture;
-import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.client.ToolActionIconStore;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -53,31 +51,5 @@ public class GuiTool extends GuiElement {
 
     public ToolAction getToolAction() {
         return toolAction;
-    }
-
-    protected int getOffset(ToolAction tool) {
-        if (TetraToolActions.hammer.equals(tool)) {
-            return 0;
-        }
-        if (ToolActions.AXE_DIG.equals(tool)) {
-            return 1;
-        }
-        if (ToolActions.PICKAXE_DIG.equals(tool)) {
-            return 2;
-        }
-        if (ToolActions.SHOVEL_DIG.equals(tool)) {
-            return 3;
-        }
-        if (TetraToolActions.cut.equals(tool)) {
-            return 4;
-        }
-        if (TetraToolActions.pry.equals(tool)) {
-            return 5;
-        }
-        if (ToolActions.HOE_DIG.equals(tool)) {
-            return 6;
-        }
-
-        return 14;
     }
 }

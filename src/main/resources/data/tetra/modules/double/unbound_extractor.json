@@ -23,6 +23,12 @@
                 "unboundExtraction": 12,
                 "sculkTaint": [ 12, 0.005 ]
             },
+            "tools": {
+                "hammer_dig": [ 0, 0.001 ],
+                "pickaxe_dig": [ 0, 0.001 ],
+                "shovel_dig": [ 0, 0.001 ],
+                "axe_dig": [ 0, 0.001 ]
+            },
             "glyph": {
                 "textureX": 208,
                 "textureY": 48,

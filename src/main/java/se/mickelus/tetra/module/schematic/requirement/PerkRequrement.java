@@ -1,7 +1,14 @@
 package se.mickelus.tetra.module.schematic.requirement;
 
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.Perks;
 import se.mickelus.tetra.module.schematic.CraftingContext;
+
+import java.util.List;
 
 public class PerkRequrement implements CraftingRequirement {
     String perk;
@@ -33,5 +40,12 @@ public class PerkRequrement implements CraftingRequirement {
                 return perkData.moderate;
         }
         return 0;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    @Nullable
+    public List<Component> getDescription() {
+        return List.of(Component.literal(I18n.get("tetra.holo.perk_requirement", perk, level.getDescription(I18n.get("tetra.holo.perk_requirement.level_label")))));
     }
 }

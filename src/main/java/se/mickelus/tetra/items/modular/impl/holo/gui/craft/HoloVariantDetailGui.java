@@ -136,7 +136,7 @@ public class HoloVariantDetailGui extends GuiElement {
             Player player = Minecraft.getInstance().player;
             ItemStack improvementStack = baseOutcome.itemStack;
             CraftingContext context = new CraftingContext(null, null, null, player, improvementStack, slot, new ResourceLocation[0]);
-            UpgradeSchematic[] improvementSchematics = Arrays.stream(SchematicRegistry.getSchematics(context))
+            UpgradeSchematic[] improvementSchematics = Arrays.stream(SchematicRegistry.getPreviewSchematics(context, false))
                     .filter(improvementSchematic -> SchematicType.improvement.equals(improvementSchematic.getType()))
                     .toArray(UpgradeSchematic[]::new);
 

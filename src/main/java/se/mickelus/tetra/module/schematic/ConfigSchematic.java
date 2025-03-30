@@ -1,9 +1,12 @@
 package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.Filter;
@@ -11,7 +14,6 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
-import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -190,6 +192,19 @@ public class ConfigSchematic extends BaseSchematic {
         return definition.requirement == null || definition.requirement.test(context);
     }
 
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    @Nullable
+    public List<Component> getRequirementDescription() {
+        if (definition.materialRevealSlot > -1) {
+            return List.of(Component.translatable("tetra.holo.material_reveal"));
+        }
+        if (definition.requirement != null) {
+            return definition.requirement.getDescription();
+        }
+        return null;
+    }
+
     private boolean hasAnyMaterial(Player player) {
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 4; y++) {
@@ -203,8 +218,21 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean isVisibleForPlayer(Player player, @Nullable WorkbenchTile tile, ItemStack targetStack) {
-        return true;
+    public boolean canPreview(CraftingContext context, boolean ignoreRequirements) {
+        if (definition.preview == PreviewVisibility.always) {
+            return true;
+        }
+
+        boolean matchesRequirements = matchesRequirements(context);
+        if (ignoreRequirements && definition.preview == PreviewVisibility.revealable || matchesRequirements) {
+            return true;
+        }
+
+        if (definition.preview == PreviewVisibility.applicable && matchesRequirements) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

@@ -4,6 +4,7 @@
         "toolbelt/belt"
     ],
     "materialSlotCount": 1,
+    "preview": "always",
     "requirement": {
         "type": "tetra:module",
         "variant": "belt/leather"

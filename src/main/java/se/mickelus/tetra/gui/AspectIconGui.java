@@ -2,12 +2,9 @@ package se.mickelus.tetra.gui;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import org.apache.commons.lang3.StringUtils;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.mutil.util.CastOptional;
@@ -47,7 +44,7 @@ public class AspectIconGui extends GuiElement {
             aspects.getLevelMap().forEach((aspect, level) -> {
                 Component levelString = Component.translatable("enchantment.level." + level);
                 tooltip.add(Component.literal("  ")
-                        .append(getAspectLabel(aspect.getKey()))
+                        .append(ItemAspect.getAspectLabel(aspect.getKey()))
                         .append(Component.literal(" "))
                         .append(levelString));
             });
@@ -76,29 +73,13 @@ public class AspectIconGui extends GuiElement {
         detailTooltip = new ArrayList<>();
         detailTooltip.add(Component.translatable("tetra.modular.aspects.detail_header", detailOffset + 1, aspects.size()).withStyle(ChatFormatting.GRAY));
         detailTooltip.add(Component.literal(" "));
-        detailTooltip.add(getAspectLabel(aspect.getKey()).withStyle(ChatFormatting.YELLOW));
-        detailTooltip.add(getAspectDescription(aspect.getKey()));
+        detailTooltip.add(ItemAspect.getAspectLabel(aspect.getKey()).withStyle(ChatFormatting.YELLOW));
+        detailTooltip.add(ItemAspect.getAspectDescription(aspect.getKey()));
         detailTooltip.add(Component.literal(" "));
         detailTooltip.add(Tooltips.expanded);
         if (aspects.size() > 1) {
             detailTooltip.add(Component.translatable("tetra.modular.aspects.scroll_tooltip"));
         }
-    }
-
-    private MutableComponent getAspectLabel(String key) {
-        String localizationKey = "tetra.aspect." + key;
-        if (I18n.exists(localizationKey)) {
-            return Component.translatable(localizationKey);
-        }
-        return Component.literal(StringUtils.capitalize(key.replace("_", " ")));
-    }
-
-    private MutableComponent getAspectDescription(String key) {
-        String localizationKey = "tetra.aspect." + key + ".description";
-        if (I18n.exists(localizationKey)) {
-            return Component.translatable(localizationKey);
-        }
-        return Component.translatable("tetra.modular.aspects.missing_description").withStyle(ChatFormatting.GRAY);
     }
 
     @Override

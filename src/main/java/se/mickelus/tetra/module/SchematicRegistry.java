@@ -73,7 +73,17 @@ public class SchematicRegistry {
     }
 
 
-    public static UpgradeSchematic[] getSchematics(ItemStack itemStack, String slot, Player player, Level level, BlockPos pos, BlockState blockState, ResourceLocation[] unlocks) {
+    public static UpgradeSchematic[] getPreviewSchematics(CraftingContext context, boolean ignoreRequirements) {
+        return getAllSchematics().stream()
+                .filter(upgradeSchematic -> upgradeSchematic.isRelevant(context.targetStack))
+                .filter(upgradeSchematic -> upgradeSchematic.isApplicableForSlot(context.slot, context.targetStack))
+                .filter(upgradeSchematic -> upgradeSchematic.canPreview(context, ignoreRequirements))
+                .toArray(UpgradeSchematic[]::new);
+    }
+
+
+    public static UpgradeSchematic[] getSchematics(ItemStack itemStack, String slot, Player player, Level level, BlockPos pos, BlockState blockState,
+            ResourceLocation[] unlocks) {
         return getSchematics(new CraftingContext(level, pos, blockState, player, itemStack, slot, unlocks));
     }
 

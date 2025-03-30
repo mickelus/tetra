@@ -5,6 +5,7 @@
     ],
     "materialSlotCount": 2,
     "displayType": "major",
+    "preview": "applicable",
     "glyph": {
         "textureX": 240,
         "textureY": 48
