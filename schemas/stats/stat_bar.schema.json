@@ -57,6 +57,24 @@
     "examples": [
         {
             "type": "tetra:default",
+            "key": "tetra.stats.test",
+            "contexts": [ "tetra:workbench", "tetra:holosphere" ],
+            "min": 0,
+            "max": 1,
+            "stat": {
+                "type": "tetra:enchantment",
+                "enchantment": "minecraft:silk_touch"
+            },
+            "label": {
+                "type": "tetra:none"
+            },
+            "tooltip": {
+                "type": "tetra:default",
+                "key": "tetra.stats.test.tooltip"
+            }
+        },
+        {
+            "type": "tetra:default",
             "key": "tetra.stats.attack_damage",
             "contexts": [ "tetra:workbench" ],
             "min": 0,
