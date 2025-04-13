@@ -13,7 +13,6 @@
     "hone": true,
     "rarity": "hone",
     "displayType": "improvement",
-    "preview": "always",
     "glyph": {
         "textureX": 64
     },
