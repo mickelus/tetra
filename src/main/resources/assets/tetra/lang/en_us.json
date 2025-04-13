@@ -875,6 +875,7 @@
     "block.tetra.multi_schematic.extractor.name": "Ancient schematic: Extractor",
     "block.tetra.multi_schematic.extractor.description": "Allows extractor (double-headed) tool butts to be crafted and further improved.",
     "tetra.unlock.tetra.extractor.description": "Requires a restored §lEarthpiercer§r ancient schematic nearby",
+    "tetra.unlock.tetra.forged_workbench.description": "Requires a §lForged workbench§r nearby",
     "item.tetra.forged_bolt": "Bolt",
     "tetra.salvage_bolt_action.label": "Salvage",
     "item.tetra.forged_beam": "Structure Beam",
