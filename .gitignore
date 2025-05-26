@@ -21,6 +21,7 @@ classes
 # other
 eclipse
 run
+run-data
 logs/
 
 src/generated/resources/.cache
