@@ -121,7 +121,7 @@
                         "tag": "forge:obsidian"
                     },
                     "requiredTools": {
-                        "hammer": 6
+                        "hammer_dig": 6
                     },
                     "moduleKey": "double/basic_hammer",
                     "moduleVariant": "basic_hammer/obsidian",

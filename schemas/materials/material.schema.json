@@ -241,7 +241,7 @@
                 "arrested": 0
             },
             "requiredTools": {
-                "hammer": 3
+                "hammer_dig": 3
             }
         }
     ]

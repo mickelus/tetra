@@ -50,7 +50,7 @@
             "$comment": "Adds tool capabilities for the item. Efficiency is optional, a single number can be passed instead of an array when omitting the efficiency.",
             "examples": [
                 {
-                    "hammer": 1,
+                    "hammer_dig": 1,
                     "cut": [ "minecraft:iron", 20 ]
                 }
             ]
