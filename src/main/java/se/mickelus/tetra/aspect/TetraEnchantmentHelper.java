@@ -159,7 +159,7 @@ public class TetraEnchantmentHelper {
     }
 
     public static int getEnchantmentCapacityCost(Enchantment enchantment, int level) {
-        return -(enchantment.getMaxCost(level) + enchantment.getMinCost(level)) / 2;
+        return -(enchantment.getMaxCost(level) + enchantment.getMinCost(level));
     }
 
     public static void removeEnchantment(ItemStack itemStack, Enchantment enchantment) {
