@@ -474,7 +474,10 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         int level = entityData.get(LOYALTY_LEVEL);
         if (pickup != Pickup.ALLOWED || level <= 0) {
             despawnTimer++;
-            if (despawnTimer >= 500000) { // 4-5 hours of loaded time
+            if (despawnTimer > 72000 && !hasGlowingTag()) { // start glowing after an hour
+                setGlowingTag(true);
+            }
+            if (despawnTimer >= 500000) { // 7 hours of loaded time
                 discard();
             }
         }
