@@ -16,6 +16,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemColors;
@@ -162,6 +163,22 @@ public abstract class ItemModuleMajor extends ItemModule {
         }
 
         return new ImprovementData[0];
+    }
+
+    public String[] getAcceptedImprovements() {
+        return Arrays.stream(improvements)
+                .map(improvement -> improvement.key)
+                .distinct()
+                .toArray(String[]::new);
+    }
+
+
+    public String[] getAcceptedImprovements(ItemAspect aspect) {
+        return Arrays.stream(improvements)
+                .filter(improvement -> improvement.aspects != null && improvement.aspects.contains(aspect))
+                .map(improvement -> improvement.key)
+                .distinct()
+                .toArray(String[]::new);
     }
 
     public boolean acceptsImprovement(String improvementKey) {

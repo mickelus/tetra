@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
+import se.mickelus.tetra.craftingeffect.StackMode;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -27,8 +28,10 @@ public class ApplyEnchantmentOutcome implements CraftingEffectOutcome {
     StackMode stacking = StackMode.max;
 
     @Override
-    public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
-            Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials) {
+    public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
+            ItemStack[] preMaterials,
+            Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
+            ItemStack[] postMaterials) {
         if (upgradedStack.getItem() instanceof IModularItem item && item.getModuleFromSlot(upgradedStack, slot) instanceof ItemModuleMajor module) {
             AtomicBoolean success = new AtomicBoolean(false);
             Map<Enchantment, Integer> currentEnchantments = EnchantmentHelper.getEnchantments(upgradedStack);
@@ -37,7 +40,7 @@ public class ApplyEnchantmentOutcome implements CraftingEffectOutcome {
                     .forEach(entry -> {
                         int level = entry.getValue();
                         if (stacksEnchantment(upgradedStack, module, entry.getKey(), level)) {
-                            currentEnchantments.put(entry.getKey(), stackLevel(currentEnchantments.get(entry.getKey()), level));
+                            currentEnchantments.put(entry.getKey(), stacking.evaluate(currentEnchantments.get(entry.getKey()), level));
                             EnchantmentHelper.setEnchantments(currentEnchantments, upgradedStack);
                         } else {
                             TetraEnchantmentHelper.applyEnchantment(upgradedStack, slot, entry.getKey(), level);
@@ -49,17 +52,6 @@ public class ApplyEnchantmentOutcome implements CraftingEffectOutcome {
         return false;
     }
 
-    protected int stackLevel(int currentLevel, int newLevel) {
-        return switch (stacking) {
-            case add -> currentLevel + newLevel;
-            case stack -> newLevel == currentLevel
-                    ? currentLevel + 1
-                    : Math.max(currentLevel, newLevel);
-            case max -> Math.max(currentLevel, newLevel);
-            case replace -> newLevel;
-        };
-    }
-
     protected boolean stacksEnchantment(ItemStack itemStack, ItemModuleMajor module, Enchantment enchantment, int level) {
         Map<Enchantment, Integer> moduleEnchantments = module.getEnchantments(itemStack);
         if (moduleEnchantments.containsKey(enchantment)) {
@@ -69,15 +61,10 @@ public class ApplyEnchantmentOutcome implements CraftingEffectOutcome {
         return false;
     }
 
-    protected boolean acceptsEnchantment(ItemStack itemStack, ItemModuleMajor module, Set<Enchantment> currentEnchantments, Enchantment enchantment, int level) {
+    protected boolean acceptsEnchantment(ItemStack itemStack, ItemModuleMajor module, Set<Enchantment> currentEnchantments, Enchantment enchantment,
+            int level) {
         return (module.acceptsEnchantment(itemStack, enchantment, false) || force)
                 && (stacksEnchantment(itemStack, module, enchantment, level) || EnchantmentHelper.isEnchantmentCompatible(currentEnchantments, enchantment));
     }
 
-    enum StackMode {
-        add,
-        stack,
-        max,
-        replace
-    }
 }

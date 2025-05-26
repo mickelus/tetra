@@ -118,6 +118,8 @@ public class TetraMod {
         CraftingEffectRegistry.registerEffectType("tetra:apply_list", ApplyListOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:remove_improvements", RemoveImprovementOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:material_reduction", MaterialReductionOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:per_slot", PerSlotOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:destabilize", DestabilizeOutcome.class);
 
         new RepairRegistry();
 

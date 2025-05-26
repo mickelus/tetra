@@ -1,0 +1,21 @@
+{
+    "outcomes": [
+        {
+            "type": "tetra:per_slot",
+            "minor": false,
+            "outcome": {
+                "type": "tetra:destabilize",
+                "outcomes": [
+                    {
+                        "type": "tetra:apply_improvements",
+                        "stacking": "stack",
+                        "improvements": {
+                            "#destabilized": 1
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
+

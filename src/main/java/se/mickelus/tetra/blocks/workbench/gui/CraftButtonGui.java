@@ -16,10 +16,10 @@ import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class CraftButtonGui extends GuiClickable {
@@ -59,29 +59,31 @@ public class CraftButtonGui extends GuiClickable {
             labelColor = GuiColors.normal;
             backdropColor = GuiColors.normal;
 
-            if (!schematic.willReplace(itemStack, materials, slot)) {
-                float severity = schematic.getSeverity(itemStack, materials, slot);
-                List<String> destabilizationChance = getDestabilizationChance(previewStack.isEmpty() ? itemStack : previewStack, severity);
+            float severity = schematic.getSeverity(itemStack, materials, slot);
+            List<String> destabilizationChance = getDestabilizationChance(previewStack.isEmpty() ? itemStack : previewStack, severity, schematic.willReplace(itemStack, materials, slot) ? slot : null);
 
-                if (!destabilizationChance.isEmpty()) {
-                    backdropColor = GuiColors.destabilized;
-                    tooltip.add(Component.translatable("tetra.workbench.schematic_detail.destabilize_tooltip").withStyle(ChatFormatting.GRAY));
-                    destabilizationChance.stream()
-                            .map(Component::literal)
-                            .forEach(tooltip::add);
-                }
-            } else {
-                boolean willRepair = CastOptional.cast(itemStack.getItem(), IModularItem.class)
-                        .map(item -> item.getRepairSlot(itemStack))
-                        .map(repairSlot -> repairSlot.equals(slot))
-                        .orElse(false)
-                        && itemStack.isDamageableItem()
-                        && itemStack.getDamageValue() * 1d / itemStack.getMaxDamage() > 0;
-
-                if (willRepair) {
-                    tooltip.add(Component.translatable("tetra.workbench.schematic_detail.repair_tooltip"));
-                }
+            if (!destabilizationChance.isEmpty()) {
+                backdropColor = GuiColors.destabilized;
+                tooltip.add(Component.translatable("tetra.workbench.schematic_detail.destabilize_tooltip"));
+                destabilizationChance.stream()
+                        .map(Component::literal)
+                        .forEach(tooltip::add);
             }
+
+            boolean willRepair = CastOptional.cast(itemStack.getItem(), IModularItem.class)
+                    .map(item -> item.getRepairSlot(itemStack))
+                    .map(repairSlot -> repairSlot.equals(slot))
+                    .orElse(false)
+                    && itemStack.isDamageableItem()
+                    && itemStack.getDamageValue() * 1d / itemStack.getMaxDamage() > 0;
+
+            if (willRepair) {
+                if (!tooltip.isEmpty()) {
+                    tooltip.add(Component.literal(" "));
+                }
+                tooltip.add(Component.translatable("tetra.workbench.schematic_detail.repair_tooltip"));
+            }
+
 
         } else {
             labelColor = GuiColors.muted;
@@ -112,12 +114,13 @@ public class CraftButtonGui extends GuiClickable {
         updateColors();
     }
 
-    private List<String> getDestabilizationChance(ItemStack itemStack, float severity) {
+    private List<String> getDestabilizationChance(ItemStack itemStack, float severity, @Nullable String ignoredSlot) {
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getMajorModules(itemStack))
-                .map(Arrays::stream)
-                .orElseGet(Stream::empty)
+                .stream()
+                .flatMap(Arrays::stream)
                 .filter(Objects::nonNull)
+                .filter(module -> !module.getSlot().equals(ignoredSlot))
                 .filter(module -> module.getMagicCapacity(itemStack) < 0)
                 .map(module -> String.format("  %s%s: %s%.0f%%", ChatFormatting.WHITE, module.getName(itemStack), ChatFormatting.YELLOW,
                         module.getDestabilizationChance(itemStack, severity) * 100))
