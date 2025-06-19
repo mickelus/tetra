@@ -1,0 +1,72 @@
+[
+    {
+        "key": "destabilized/burdened",
+        "level": 1,
+        "aspects": {
+            "destabilized": 1
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "tetra:ability_cooldown": -0.5,
+            "tetra:ability_damage": 1.5
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 2,
+        "aspects": {
+            "destabilized": 2
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "tetra:ability_cooldown": -1.25,
+            "tetra:ability_damage": 2.25
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 3,
+        "aspects": {
+            "destabilized": 3
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "tetra:ability_cooldown": -2.25,
+            "tetra:ability_damage": 3
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 4,
+        "aspects": {
+            "destabilized": 4
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "tetra:ability_cooldown": -3.5,
+            "tetra:ability_damage": 3.75
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 5,
+        "aspects": {
+            "destabilized": 5
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "tetra:ability_cooldown": -5,
+            "tetra:ability_damage": 4.5
+        }
+    }
+]

@@ -1,0 +1,72 @@
+[
+    {
+        "key": "destabilized/burdened",
+        "level": 1,
+        "aspects": {
+            "destabilized": 1
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "tetra:draw_speed": -0.1,
+            "tetra:draw_strength": 1
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 2,
+        "aspects": {
+            "destabilized": 2
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "tetra:draw_speed": -0.25,
+            "tetra:draw_strength": 1.5
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 3,
+        "aspects": {
+            "destabilized": 3
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "tetra:draw_speed": -0.5,
+            "tetra:draw_strength": 2
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 4,
+        "aspects": {
+            "destabilized": 4
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "tetra:draw_speed": -0.85,
+            "tetra:draw_strength": 2.5
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 5,
+        "aspects": {
+            "destabilized": 5
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "tetra:draw_speed": -1.3,
+            "tetra:draw_strength": 3
+        }
+    }
+]

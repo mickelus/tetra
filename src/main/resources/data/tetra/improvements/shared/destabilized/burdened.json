@@ -1,0 +1,112 @@
+[
+    {
+        "key": "destabilized/burdened",
+        "level": 1,
+        "aspects": {
+            "destabilized": 1
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "generic.attack_speed": -0.1,
+            "generic.attack_damage": 1
+        },
+        "tools": {
+            "hammer_dig": [ 0, 2 ],
+            "axe_dig": [ 0, 2 ],
+            "pickaxe_dig": [ 0, 2 ],
+            "shovel_dig": [ 0, 2 ],
+            "cut": [ 0, 2 ],
+            "pry": [ 0, 2 ]
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 2,
+        "aspects": {
+            "destabilized": 2
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "generic.attack_speed": -0.25,
+            "generic.attack_damage": 1.5
+        },
+        "tools": {
+            "hammer_dig": [ 0, 5 ],
+            "axe_dig": [ 0, 5 ],
+            "pickaxe_dig": [ 0, 5 ],
+            "shovel_dig": [ 0, 5 ],
+            "cut": [ 0, 5 ],
+            "pry": [ 0, 5 ]
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 3,
+        "aspects": {
+            "destabilized": 3
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "generic.attack_speed": -0.5,
+            "generic.attack_damage": 2
+        },
+        "tools": {
+            "hammer_dig": [ 0, 10 ],
+            "axe_dig": [ 0, 10 ],
+            "pickaxe_dig": [ 0, 10 ],
+            "shovel_dig": [ 0, 10 ],
+            "cut": [ 0, 10 ],
+            "pry": [ 0, 10 ]
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 4,
+        "aspects": {
+            "destabilized": 4
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "generic.attack_speed": -0.85,
+            "generic.attack_damage": 2.5
+        },
+        "tools": {
+            "hammer_dig": [ 0, 17 ],
+            "axe_dig": [ 0, 17 ],
+            "pickaxe_dig": [ 0, 17 ],
+            "shovel_dig": [ 0, 17 ],
+            "cut": [ 0, 17 ],
+            "pry": [ 0, 17 ]
+        }
+    },
+    {
+        "key": "destabilized/burdened",
+        "level": 5,
+        "aspects": {
+            "destabilized": 5
+        },
+        "glyph": {
+            "tint": "ee5599"
+        },
+        "attributes": {
+            "generic.attack_speed": -1.3,
+            "generic.attack_damage": 3
+        },
+        "tools": {
+            "hammer_dig": [ 0, 26 ],
+            "axe_dig": [ 0, 26 ],
+            "pickaxe_dig": [ 0, 26 ],
+            "shovel_dig": [ 0, 26 ],
+            "cut": [ 0, 26 ],
+            "pry": [ 0, 26 ]
+        }
+    }
+]
