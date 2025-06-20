@@ -18,7 +18,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,6 +31,7 @@ import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
+import se.mickelus.tetra.effect.CombustingEffect;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
 import se.mickelus.tetra.util.TierHelper;
 
@@ -39,7 +39,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedList;
 
 @ParametersAreNonnullByDefault
 public class HammerBaseBlockEntity extends BlockEntity {
@@ -249,24 +248,7 @@ public class HammerBaseBlockEntity extends BlockEntity {
                 spawnParticle(ParticleTypes.LAVA, oppositePos, 2, 0.06f);
                 spawnParticle(ParticleTypes.LARGE_SMOKE, oppositePos, 2, 0f);
 
-                // gather flammable blocks
-                LinkedList<BlockPos> flammableBlocks = new LinkedList<>();
-                for (int x = -3; x < 3; x++) {
-                    for (int y = -3; y < 2; y++) {
-                        for (int z = -3; z < 3; z++) {
-                            BlockPos firePos = getBlockPos().offset(x, y, z);
-                            if (level.isEmptyBlock(firePos)) {
-                                flammableBlocks.add(firePos);
-                            }
-                        }
-                    }
-                }
-
-                // set blocks on fire
-                Collections.shuffle(flammableBlocks);
-                flammableBlocks.stream()
-                        .limit(count)
-                        .forEach(blockPos -> level.setBlock(blockPos, Blocks.FIRE.defaultBlockState(), 11));
+                CombustingEffect.igniteBlocksAround(level, getBlockPos(), 3, count, true);
             }
         }
 

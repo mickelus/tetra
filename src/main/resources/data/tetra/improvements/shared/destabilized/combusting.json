@@ -1,0 +1,67 @@
+[
+    {
+        "key": "destabilized/combusting",
+        "level": 1,
+        "aspects": {
+            "destabilized": 1
+        },
+        "effects": {
+            "combusting": [ 2, 5 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/combusting",
+        "level": 2,
+        "aspects": {
+            "destabilized": 2
+        },
+        "effects": {
+            "combusting": [ 3, 5 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/combusting",
+        "level": 3,
+        "aspects": {
+            "destabilized": 3
+        },
+        "effects": {
+            "combusting": [ 4, 5 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/combusting",
+        "level": 4,
+        "aspects": {
+            "destabilized": 4
+        },
+        "effects": {
+            "combusting": [ 5, 5 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/combusting",
+        "level": 5,
+        "aspects": {
+            "destabilized": 5
+        },
+        "effects": {
+            "combusting": [ 6, 5 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    }
+]

@@ -422,6 +422,7 @@ public interface IModularItem {
         HauntedEffect.perform(entity, itemStack, multiplier);
         FierySelfEffect.perform(entity, itemStack, multiplier);
         EnderReverbEffect.perform(entity, itemStack, multiplier);
+        CombustingEffect.perform(entity, itemStack, multiplier);
     }
 
     default void applyDamage(int amount, ItemStack itemStack, @Nullable LivingEntity responsibleEntity) {

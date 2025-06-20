@@ -261,6 +261,9 @@ public class ItemEffect {
      * is 1.
      */
     public static final ItemEffect haunted = get("haunted");
+
+    public static final ItemEffect combusting = get("combusting");
+
     public static final ItemEffect stabilizing = get("stabilizing");
 
     /**
