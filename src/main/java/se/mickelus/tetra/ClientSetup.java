@@ -33,8 +33,7 @@ import se.mickelus.tetra.blocks.workbench.gui.WorkbenchScreen;
 import se.mickelus.tetra.client.ToolActionIconStore;
 import se.mickelus.tetra.client.keymap.TetraKeyMappings;
 import se.mickelus.tetra.client.model.ModularModelLoader;
-import se.mickelus.tetra.client.particle.SweepingStrikeParticle;
-import se.mickelus.tetra.client.particle.SweepingStrikeParticleType;
+import se.mickelus.tetra.client.particle.*;
 import se.mickelus.tetra.effect.gui.AbilityOverlays;
 import se.mickelus.tetra.effect.howling.HowlingOverlay;
 import se.mickelus.tetra.gui.stats.data.StatBarStore;
@@ -86,6 +85,9 @@ public class ClientSetup {
     public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(SparkleParticleType.instance, SparkleParticle.Provider::new);
         event.registerSpriteSet(SweepingStrikeParticleType.instance, SweepingStrikeParticle.Provider::new);
+        event.registerSpriteSet(PlainParticleType.instance, PlainParticle.Provider::new);
+        event.registerSpriteSet(DripParticles.fallingBlood.get(), DripParticles.FallingBloodProvider::new);
+        event.registerSpriteSet(DripParticles.landingBlood.get(), DripParticles.LandingBloodProvider::new);
     }
 
     @SubscribeEvent

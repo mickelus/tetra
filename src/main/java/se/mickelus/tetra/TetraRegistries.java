@@ -69,6 +69,8 @@ import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.blocks.workbench.WorkbenchContainer;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchStatsGui;
+import se.mickelus.tetra.client.particle.DripParticles;
+import se.mickelus.tetra.client.particle.PlainParticleType;
 import se.mickelus.tetra.client.particle.SweepingStrikeParticleType;
 import se.mickelus.tetra.crafting.ScrollIngredient;
 import se.mickelus.tetra.crafting.ToolActionIngredient;
@@ -344,6 +346,9 @@ public class TetraRegistries {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         particles.register(SparkleParticleType.identifier, () -> new SimpleParticleType(false));
         particles.register(SweepingStrikeParticleType.identifier, SweepingStrikeParticleType::new);
+        particles.register(PlainParticleType.identifier, PlainParticleType::new);
+        DripParticles.fallingBlood = particles.register("falling_blood", () -> new SimpleParticleType(true));
+        DripParticles.landingBlood = particles.register("landing_blood", () -> new SimpleParticleType(true));
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

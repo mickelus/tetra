@@ -36,6 +36,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.effect.*;
+import se.mickelus.tetra.event.ModularItemDamageEvent;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -50,6 +51,7 @@ import se.mickelus.tetra.properties.AttributeHelper;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -425,6 +427,23 @@ public interface IModularItem {
         CombustingEffect.perform(entity, itemStack, multiplier);
     }
 
+    /**
+     * Helper method to be called in damageItem in implementing classes. Implement durability damage effects in here. When damaging items from effects,
+     * call {@link #applyDamage} instead.
+     */
+    default <T extends LivingEntity> int damageItemImpl(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
+        ModularItemDamageEvent event = new ModularItemDamageEvent(entity, stack, amount);
+        MinecraftForge.EVENT_BUS.post(event);
+        amount = event.getAmount();
+
+        amount = BloodboundEffect.reduceDamage(stack, entity, amount);
+
+        return Math.min(stack.getMaxDamage() - stack.getDamageValue() - 1, amount);
+    }
+
+    /**
+     * Helper for damaging the item from an affect, durability effects should go in {@link #damageItemImpl}.
+     */
     default void applyDamage(int amount, ItemStack itemStack, @Nullable LivingEntity responsibleEntity) {
         int damage = itemStack.getDamageValue();
         int maxDamage = itemStack.getMaxDamage();
@@ -440,7 +459,10 @@ public interface IModularItem {
         }
     }
 
-    default int getReducedDamage(int amount, ItemStack itemStack, LivingEntity responsibleEntity) {
+    /**
+     * Emulates vanilla damage reductions, used when damaging items through tetra effects.
+     */
+    private int getReducedDamage(int amount, ItemStack itemStack, @Nullable LivingEntity responsibleEntity) {
         if (amount > 0) {
             int level = getEffectLevel(itemStack, ItemEffect.unbreaking);
             int reduction = 0;
