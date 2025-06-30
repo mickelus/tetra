@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+        "minecraft:slime",
+        "minecraft:spider",
+        "minecraft:cave_spider",
+        "minecraft:creeper"
+    ]
+}

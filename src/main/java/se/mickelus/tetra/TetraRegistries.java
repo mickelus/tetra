@@ -349,6 +349,8 @@ public class TetraRegistries {
         particles.register(PlainParticleType.identifier, PlainParticleType::new);
         DripParticles.fallingBlood = particles.register("falling_blood", () -> new SimpleParticleType(true));
         DripParticles.landingBlood = particles.register("landing_blood", () -> new SimpleParticleType(true));
+        DripParticles.fallingSlime = particles.register("falling_slime", () -> new SimpleParticleType(true));
+        DripParticles.landingSlime = particles.register("landing_slime", () -> new SimpleParticleType(true));
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

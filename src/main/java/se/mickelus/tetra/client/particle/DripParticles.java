@@ -52,6 +52,39 @@ public class DripParticles {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public static class FallingSlimeProvider implements ParticleProvider<SimpleParticleType> {
+        SpriteSet sprites;
+
+        public FallingSlimeProvider(SpriteSet spriteSet) {
+            this.sprites = spriteSet;
+        }
+
+        public Particle createParticle(SimpleParticleType option, ClientLevel level, double x, double y, double z, double dx, double dy,
+                double dz) {
+            FallAndLandParticle particle = new FallAndLandParticle(level, x, y, z, Fluids.EMPTY, landingSlime.get(), this.sprites);
+            particle.setParticleSpeed(dx, dy, dz);
+            particle.setColor(0.42f, 0.65f, 0.31f);
+            return particle;
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static class LandingSlimeProvider implements ParticleProvider<SimpleParticleType> {
+        SpriteSet sprites;
+
+        public LandingSlimeProvider(SpriteSet spriteSet) {
+            this.sprites = spriteSet;
+        }
+
+        public Particle createParticle(SimpleParticleType option, ClientLevel level, double x, double y, double z, double dx, double dy,
+                double dz) {
+            DripLandParticle particle = new DripLandParticle(level, x, y, z, Fluids.EMPTY, this.sprites);
+            particle.setColor(0.42f, 0.65f, 0.31f);
+            return particle;
+        }
+    }
+
     static class FallAndLandParticle extends DripParticle.FallAndLandParticle {
         public FallAndLandParticle(ClientLevel pLevel, double pX, double pY, double pZ, Fluid pType, ParticleOptions pLandParticle,
                 SpriteSet sprites) {

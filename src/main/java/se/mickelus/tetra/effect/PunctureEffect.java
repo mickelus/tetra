@@ -27,7 +27,8 @@ public class PunctureEffect extends ChargedAbilityEffect {
     }
 
     @Override
-    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec, int chargedTicks) {
+    public void perform(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, Vec3 hitVec,
+            int chargedTicks) {
         if (!attacker.level().isClientSide) {
             int armorBefore = target.getArmorValue();
             int comboPoints = ComboPoints.get(attacker);
@@ -98,6 +99,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
                 }
 
                 target.addEffect(new MobEffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
+                BleedingPotionEffect.spawnParticles(target, 8);
             }
 
             if (!(armor < 6 || isPunctured) || reversal) {
@@ -133,7 +135,8 @@ public class PunctureEffect extends ChargedAbilityEffect {
         return result;
     }
 
-    public AbilityUseResult performDefensive(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
+    public AbilityUseResult performDefensive(Player attacker, InteractionHand hand, ItemModularHandheld item, ItemStack itemStack,
+            LivingEntity target) {
         int armor = target.getArmorValue();
 
         float knockbackMultiplier = 0.3f;

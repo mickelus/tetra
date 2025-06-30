@@ -76,9 +76,9 @@ public class ItemEffectHandler {
     public static void applyHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
         int bleedingLevel = getEffectLevel(itemStack, ItemEffect.bleeding);
         if (bleedingLevel > 0) {
-            if (!MobType.UNDEAD.equals(target.getMobType())
-                    && attacker.getRandom().nextFloat() < 0.3f) {
-                target.addEffect(new MobEffectInstance(BleedingPotionEffect.instance, 40, bleedingLevel));
+            if (!MobType.UNDEAD.equals(target.getMobType()) && attacker.getRandom().nextFloat() < 0.3f) {
+                target.addEffect(new MobEffectInstance(BleedingPotionEffect.instance, 40, bleedingLevel, false, false));
+                BleedingPotionEffect.spawnParticles(target, 8);
             }
         }
 

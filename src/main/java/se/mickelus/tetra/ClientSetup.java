@@ -88,6 +88,8 @@ public class ClientSetup {
         event.registerSpriteSet(PlainParticleType.instance, PlainParticle.Provider::new);
         event.registerSpriteSet(DripParticles.fallingBlood.get(), DripParticles.FallingBloodProvider::new);
         event.registerSpriteSet(DripParticles.landingBlood.get(), DripParticles.LandingBloodProvider::new);
+        event.registerSpriteSet(DripParticles.fallingSlime.get(), DripParticles.FallingSlimeProvider::new);
+        event.registerSpriteSet(DripParticles.landingSlime.get(), DripParticles.LandingSlimeProvider::new);
     }
 
     @SubscribeEvent
