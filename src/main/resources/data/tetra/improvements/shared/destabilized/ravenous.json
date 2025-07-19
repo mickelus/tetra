@@ -1,0 +1,112 @@
+[
+    {
+        "key": "destabilized/ravenous",
+        "level": 1,
+        "effects": {
+            "ravenous": [ 100, 0.15 ]
+        },
+        "attributes": {
+            "**generic.attack_damage": 0.05,
+            "**tetra:draw_damage": 0.05,
+            "**tetra:ability_damage": 0.05
+        },
+        "tools": {
+            "axe_dig": [ 0, 3 ],
+            "shovel_dig": [ 0, 3 ],
+            "pickaxe_dig": [ 0, 3 ],
+            "hoe_dig": [ 0, 3 ],
+            "cut": [ 0, 3 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/ravenous",
+        "level": 2,
+        "effects": {
+            "ravenous": [ 100, 0.3 ]
+        },
+        "attributes": {
+            "**generic.attack_damage": 0.1,
+            "**tetra:draw_damage": 0.1,
+            "**tetra:ability_damage": 0.1
+        },
+        "tools": {
+            "axe_dig": [ 0, 6 ],
+            "shovel_dig": [ 0, 6 ],
+            "pickaxe_dig": [ 0, 6 ],
+            "hoe_dig": [ 0, 6 ],
+            "cut": [ 0, 6 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/ravenous",
+        "level": 3,
+        "effects": {
+            "ravenous": [ 100, 0.45 ]
+        },
+        "attributes": {
+            "**generic.attack_damage": 0.15,
+            "**tetra:draw_damage": 0.15,
+            "**tetra:ability_damage": 0.15
+        },
+        "tools": {
+            "axe_dig": [ 0, 9 ],
+            "shovel_dig": [ 0, 9 ],
+            "pickaxe_dig": [ 0, 9 ],
+            "hoe_dig": [ 0, 9 ],
+            "cut": [ 0, 9 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/ravenous",
+        "level": 4,
+        "effects": {
+            "ravenous": [ 100, 0.6 ]
+        },
+        "attributes": {
+            "**generic.attack_damage": 0.2,
+            "**tetra:draw_damage": 0.2,
+            "**tetra:ability_damage": 0.2
+        },
+        "tools": {
+            "axe_dig": [ 0, 12 ],
+            "shovel_dig": [ 0, 12 ],
+            "pickaxe_dig": [ 0, 12 ],
+            "hoe_dig": [ 0, 12 ],
+            "cut": [ 0, 12 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/ravenous",
+        "level": 4,
+        "effects": {
+            "ravenous": [ 100, 0.75 ]
+        },
+        "attributes": {
+            "**generic.attack_damage": 0.25,
+            "**tetra:draw_damage": 0.25,
+            "**tetra:ability_damage": 0.25
+        },
+        "tools": {
+            "axe_dig": [ 0, 15 ],
+            "shovel_dig": [ 0, 15 ],
+            "pickaxe_dig": [ 0, 15 ],
+            "hoe_dig": [ 0, 15 ],
+            "cut": [ 0, 15 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    }
+]

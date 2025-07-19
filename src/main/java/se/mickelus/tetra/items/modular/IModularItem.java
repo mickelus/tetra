@@ -425,6 +425,7 @@ public interface IModularItem {
         FierySelfEffect.perform(entity, itemStack, multiplier);
         EnderReverbEffect.perform(entity, itemStack, multiplier);
         CombustingEffect.perform(entity, itemStack, multiplier);
+        RavenousEffect.perform(entity, itemStack, multiplier);
     }
 
     /**

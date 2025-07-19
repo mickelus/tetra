@@ -1,0 +1,41 @@
+{
+    "type": "tetra:default",
+    "key": "tetra.stats.ravenous",
+    "contexts": [ "tetra:workbench" ],
+    "min": 0,
+    "max": 100,
+    "stat": {
+        "type": "tetra:effect_efficiency",
+        "effect": "ravenous"
+    },
+    "label": {
+        "type": "tetra:basic",
+        "format": "percentage",
+        "diff_format": "percentage"
+    },
+    "tooltip": {
+        "type": "tetra:default",
+        "key": "tetra.stats.ravenous.tooltip",
+        "stats": [
+            {
+                "type": "tetra:effect_efficiency",
+                "effect": "ravenous"
+            },
+            {
+                "type": "tetra:effect_level",
+                "effect": "ravenous"
+            }
+        ],
+        "formatters": [
+            {
+                "type": "tetra:basic",
+                "format": "percentage"
+            },
+            {
+                "type": "tetra:basic",
+                "format": "integer"
+            }
+        ]
+    },
+    "generateSorter": true
+}

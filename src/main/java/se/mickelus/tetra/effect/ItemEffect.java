@@ -265,6 +265,7 @@ public class ItemEffect {
     public static final ItemEffect combusting = get("combusting");
 
     public static final ItemEffect bloodbound = get("bloodbound");
+    public static final ItemEffect ravenous = get("ravenous");
 
     public static final ItemEffect stabilizing = get("stabilizing");
 
