@@ -227,7 +227,7 @@ public class GuiStatBar extends GuiStatBase {
                 .map(indicator -> ChatFormatting.YELLOW + indicator.getLabel() + "\n" + ChatFormatting.GRAY + indicator.getTooltipBase(player, itemStack))
                 .map(string -> "\n \n" + string)
                 .collect(Collectors.joining())
-                .replace(ChatFormatting.RESET.toString(), ChatFormatting.GRAY.toString());
+                .replace(ChatFormatting.RESET.toString(), ChatFormatting.RESET.toString() + ChatFormatting.GRAY);
 
         return tooltip;
     }
@@ -247,8 +247,6 @@ public class GuiStatBar extends GuiStatBase {
     }
 
     protected List<Component> getCombinedTooltipExtended(Player player, ItemStack itemStack) {
-        String tooltip = getCombinedTooltipBase(player, itemStack);
-
         List<Component> result = new ArrayList<>();
         Arrays.stream(getCombinedTooltipBase(player, itemStack).split("\\\\n"))
                 .map(Component::literal)
@@ -261,6 +259,7 @@ public class GuiStatBar extends GuiStatBase {
 
             if (hasExtendedTooltip) {
                 Arrays.stream(tooltipGetter.getTooltipExtension(player, itemStack).split("\\\\n"))
+                        .map(string -> string.replace(ChatFormatting.RESET.toString(), ChatFormatting.RESET.toString() + ChatFormatting.GRAY))
                         .map(Component::literal)
                         .map(component -> component.withStyle(ChatFormatting.GRAY))
                         .forEach(result::add);
