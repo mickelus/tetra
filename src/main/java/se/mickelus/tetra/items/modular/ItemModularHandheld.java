@@ -55,6 +55,7 @@ import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.effect.data.DataEffectsHandler;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
+import se.mickelus.tetra.effect.lunge.LungeEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;

@@ -1,4 +1,4 @@
-package se.mickelus.tetra.effect;
+package se.mickelus.tetra.effect.lunge;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;

@@ -1,4 +1,4 @@
-package se.mickelus.tetra.effect;
+package se.mickelus.tetra.effect.lunge;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -28,6 +28,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.effect.AbilityUseResult;
+import se.mickelus.tetra.effect.ChargedAbilityEffect;
+import se.mickelus.tetra.effect.ComboPoints;
+import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
@@ -308,7 +312,8 @@ public class LungeEffect extends ChargedAbilityEffect {
         int echoCount;
         double echoStrength;
 
-        public LungeData(ItemStack itemStack, float damageMultiplierOffset, float hitCooldown, float exhaustDuration, int echoCount, double echoStrength) {
+        public LungeData(ItemStack itemStack, float damageMultiplierOffset, float hitCooldown, float exhaustDuration, int echoCount,
+                double echoStrength) {
             this.itemStack = itemStack;
             this.damageMultiplierOffset = damageMultiplierOffset;
             this.hitCooldown = hitCooldown;
