@@ -76,6 +76,7 @@ import se.mickelus.tetra.crafting.ScrollIngredient;
 import se.mickelus.tetra.crafting.ToolActionIngredient;
 import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.*;
+import se.mickelus.tetra.effect.vexing.RetakenMobEffect;
 import se.mickelus.tetra.gui.stats.sorting.StatSorters;
 import se.mickelus.tetra.items.InitializableItem;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
@@ -387,6 +388,7 @@ public class TetraRegistries {
         effects.register(SmallAbsorbPotionEffect.identifier, SmallAbsorbPotionEffect::new);
         effects.register(SuspendPotionEffect.identifier, SuspendPotionEffect::new);
         effects.register(MiningSpeedPotionEffect.identifier, MiningSpeedPotionEffect::new);
+        effects.register(RetakenMobEffect.identifier, RetakenMobEffect::new);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // SOUNDS

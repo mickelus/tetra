@@ -2072,8 +2072,6 @@
     "tetra.advancements.upgrades.workbench.description": "망치를 들고 제작대를 향해 오른쪽 버튼을 눌러 테트라의 작업대를 만드세요",
     "tetra.advancements.upgrades.rack.title": "걸어두기",
     "tetra.advancements.upgrades.rack.description": "도구에 쉽게 접근할 수 있도록 작업대 근처에 선반을 설치하세요",
-    "tetra.improvement.destabilized/haunted.name": "§5불안정한: 유령",
-    "tetra.improvement.destabilized/haunted.description": "가끔 부품에 귀신이 들려 아이템이 사용하는 사람에게 등을 돌리기도 합니다! 시간이 지남에 따라 사라집니다.",
     "tetra.slot.holo/frame": "틀",
     "tetra.slot.holo/core": "핵",
     "tetra.slot.holo/attachment_0": "부가 장치",

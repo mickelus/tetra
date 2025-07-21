@@ -36,6 +36,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.effect.*;
+import se.mickelus.tetra.effect.vexing.VexingEffect;
 import se.mickelus.tetra.event.ModularItemDamageEvent;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.module.ItemModule;
@@ -421,7 +422,7 @@ public interface IModularItem {
     }
 
     default void applyNegativeUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {
-        HauntedEffect.perform(entity, itemStack, multiplier);
+        VexingEffect.perform(entity, itemStack, multiplier);
         FierySelfEffect.perform(entity, itemStack, multiplier);
         EnderReverbEffect.perform(entity, itemStack, multiplier);
         CombustingEffect.perform(entity, itemStack, multiplier);

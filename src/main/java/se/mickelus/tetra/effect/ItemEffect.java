@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @ParametersAreNonnullByDefault
 public class ItemEffect {
-    public static final String hauntedKey = "destabilized/haunted";
     private static final Map<String, ItemEffect> effectMap = new ConcurrentHashMap<>();
     public static final ItemEffect workable = get("workable");
     public static final ItemEffect unstable = get("unstable");
@@ -254,13 +253,10 @@ public class ItemEffect {
     public static final ItemEffect sculkTaint = get("sculkTaint");
 
     /**
-     * Haunted: Using the item has a chance to spawn an invisible vex that holds a copy of the item, the vex will live for 1 second per effect level
-     * and the probability for the effect to occur is equal to the effect efficiency.
-     * <p>
-     * todo: less hack, If the item has a module with the "destabilized/haunted" improvement it's level will be reduced by 1 or removed if its level
-     * is 1.
+     * Vexing: Using the item has a chance to spawn a vex, the vex will live for 1 second per effect level and the probability for the effect to occur
+     * is equal to the effect efficiency.
      */
-    public static final ItemEffect haunted = get("haunted");
+    public static final ItemEffect vexing = get("vexing");
 
     public static final ItemEffect combusting = get("combusting");
 

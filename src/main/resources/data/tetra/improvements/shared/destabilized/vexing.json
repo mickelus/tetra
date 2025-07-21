@@ -1,39 +1,49 @@
 [
     {
-        "key": "destabilized/haunted",
+        "key": "destabilized/vexing",
         "level": 1,
         "effects": {
-            "haunted": [ 10, 0.1 ]
+            "vexing": [ 1, 0.5 ]
         },
         "glyph": {
             "tint": "ee5599"
         }
     },
     {
-        "key": "destabilized/haunted",
+        "key": "destabilized/vexing",
         "level": 2,
         "effects": {
-            "haunted": [ 10, 0.2 ]
+            "vexing": [ 2, 1 ]
         },
         "glyph": {
             "tint": "ee5599"
         }
     },
     {
-        "key": "destabilized/haunted",
+        "key": "destabilized/vexing",
         "level": 3,
         "effects": {
-            "haunted": [ 10, 0.3 ]
+            "vexing": [ 3, 1.5 ]
         },
         "glyph": {
             "tint": "ee5599"
         }
     },
     {
-        "key": "destabilized/haunted",
+        "key": "destabilized/vexing",
         "level": 4,
         "effects": {
-            "haunted": [ 10, 0.4 ]
+            "vexing": [ 4, 2 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/vexing",
+        "level": 5,
+        "effects": {
+            "vexing": [ 5, 2.5 ]
         },
         "glyph": {
             "tint": "ee5599"

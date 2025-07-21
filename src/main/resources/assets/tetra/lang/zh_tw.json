@@ -1766,8 +1766,6 @@
     "tetra.advancements.upgrades.workbench.description": "以錘右擊升級工作台",
     "tetra.advancements.upgrades.rack.title": "觸手可及",
     "tetra.advancements.upgrades.rack.description": "在工作台附近放置架子,可以輕鬆存取你的工具",
-    "tetra.improvement.destabilized/haunted.name": "\u00a75不穩定: 鬧鬼",
-    "tetra.improvement.destabilized/haunted.description": "這個部件見鬼了,有時會反抗物品持有者!將隨時間消失.",
     "tetra.slot.holo/frame": "框架",
     "tetra.slot.holo/core": "核心",
     "tetra.slot.holo/attachment_0": "附件",

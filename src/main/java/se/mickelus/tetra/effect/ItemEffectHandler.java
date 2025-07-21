@@ -42,10 +42,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.data.DataEffectsHandler;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
+import se.mickelus.tetra.effect.lunge.LungeEffect;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
+import se.mickelus.tetra.effect.vexing.RetakenMobEffect;
+import se.mickelus.tetra.effect.vexing.VexingEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
@@ -251,6 +254,7 @@ public class ItemEffectHandler {
                 .ifPresent(player -> FocusEffect.onLivingDamage(event));
 
         ArmorPenetrationEffect.onLivingDamage(event);
+        RetakenMobEffect.onLivingDamage(event);
     }
 
     @SubscribeEvent
@@ -278,6 +282,8 @@ public class ItemEffectHandler {
                 if (jankLevel > 0) {
                     JankEffect.jankItemsDelayed((ServerLevel) level, event.getEntity().blockPosition(), jankLevel, getEffectEfficiency(itemStack, ItemEffect.janking), killer);
                 }
+
+                VexingEffect.onLivingDeath(event.getEntity(), killer);
             }
         }
     }
@@ -402,6 +408,7 @@ public class ItemEffectHandler {
     public void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         ExhaustedPotionEffect.onBreakSpeed(event);
         ReachingEffect.onBreakSpeed(event);
+        RetakenMobEffect.onBreakSpeed(event);
     }
 
     @SubscribeEvent

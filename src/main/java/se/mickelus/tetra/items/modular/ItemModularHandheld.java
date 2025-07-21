@@ -165,6 +165,7 @@ public class ItemModularHandheld extends ModularItem {
         applyBlockBreakEffects(itemStack, world, state, pos, entity);
 
         if (!world.isClientSide && !isBroken(itemStack)) {
+            // todo (destabilization): apply chaotic effect here
             if (getEffectLevel(itemStack, ItemEffect.piercingHarvest) > 0) {
                 PiercingEffect.pierceBlocks(this, itemStack, getEffectLevel(itemStack, ItemEffect.piercing), (ServerLevel) world, state, pos, entity);
             }
