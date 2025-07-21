@@ -27,7 +27,7 @@ public class MiningSpeedPotionEffect extends MobEffect {
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         if (event.getEntity().hasEffect(instance)) {
-            event.setNewSpeed(event.getNewSpeed() * event.getEntity().getEffect(instance).getAmplifier() / 10f);
+            event.setNewSpeed(event.getNewSpeed() * (1 + event.getEntity().getEffect(instance).getAmplifier() / 10f));
         }
     }
 
