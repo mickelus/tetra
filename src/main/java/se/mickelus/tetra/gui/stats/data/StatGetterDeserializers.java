@@ -44,6 +44,14 @@ public class StatGetterDeserializers {
     record MultiplyData(IStatGetter[] stats, Double factor) {
     }
 
+    public static IStatGetter clampGetter(JsonElement json) {
+        ClampData data = StatRegistry.gson.fromJson(json, ClampData.class);
+        return new StatGetterClamp(data.stat, data.min, data.max);
+    }
+
+    record ClampData(IStatGetter stat, Double min, Double max) {
+    }
+
     public static IStatGetter attributeGetter(JsonElement json) {
         AttributeData data = StatRegistry.gson.fromJson(json, AttributeData.class);
         Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(data.attribute));

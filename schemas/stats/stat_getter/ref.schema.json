@@ -18,6 +18,9 @@
             "$ref": "multiply.schema.json"
         },
         {
+            "$ref": "clamp.schema.json"
+        },
+        {
             "$ref": "and.schema.json"
         },
         {

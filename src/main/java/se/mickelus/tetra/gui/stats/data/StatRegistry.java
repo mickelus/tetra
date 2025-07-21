@@ -44,6 +44,7 @@ public class StatRegistry {
         StatRegistry.registerStatGetter("tetra:or", StatGetterDeserializers::orGetter);
         StatRegistry.registerStatGetter("tetra:multiply", StatGetterDeserializers::multiplyGetter);
         StatRegistry.registerStatGetter("tetra:sum", StatGetterDeserializers::sumGetter);
+        StatRegistry.registerStatGetter("tetra:clamp", StatGetterDeserializers::clampGetter);
         StatRegistry.registerStatGetter("tetra:attribute", StatGetterDeserializers::attributeGetter);
         StatRegistry.registerStatGetter("tetra:effect_efficiency", StatGetterDeserializers::effectEfficiencyGetter);
         StatRegistry.registerStatGetter("tetra:effect_level", StatGetterDeserializers::effectLevelGetter);

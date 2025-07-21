@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/clamp.schema.json",
+    "title": "clamp stat getter",
+    "description": "A stat getter which clamps the value of a stat to a minimum and maximum value.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:clamp"
+        },
+        "stats": {
+            "$ref": "ref.schema.json",
+            "$comment": "The stats to clamp the value of."
+        },
+        "min": {
+            "type": "number",
+            "description": "The minimum value to clamp the stat to, can be omitted to not clamp to a lower bound."
+        },
+        "max": {
+            "type": "number",
+            "description": "The maximum value to clamp the stat to, can be omitted to not clamp to an upper bound."
+        }
+    },
+    "required": [ "stat" ]
+}
