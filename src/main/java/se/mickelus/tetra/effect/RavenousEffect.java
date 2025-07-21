@@ -9,16 +9,18 @@ import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import java.util.Optional;
 
 public class RavenousEffect {
-    private static int exhaustionInitialDuration = 100;
-    private static int exhaustionStackDuration = 20;
+    private static final int exhaustionInitialDuration = 100;
+    private static final int exhaustionStackDuration = 20;
 
     public static void perform(LivingEntity entity, ItemStack itemStack, double multiplier) {
         if (!entity.level().isClientSide && entity instanceof Player player) {
             double effectProbability = EffectHelper.getEffectLevel(itemStack, ItemEffect.ravenous);
+
             if (effectProbability > 0 && entity.getRandom().nextDouble() < effectProbability / 100 * multiplier) {
                 float exhaustAmount = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.ravenous);
-                player.getFoodData().addExhaustion(exhaustAmount);
+                player.causeFoodExhaustion(exhaustAmount);
             }
+
             if (effectProbability > 0 && player.getFoodData().getFoodLevel() == 0) {
                 MobEffectInstance currentExhaustedInstance = player.getEffect(ExhaustedPotionEffect.instance);
                 int currentAmplifier = Optional.ofNullable(currentExhaustedInstance)
