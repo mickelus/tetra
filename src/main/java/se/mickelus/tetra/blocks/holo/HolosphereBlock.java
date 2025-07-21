@@ -52,7 +52,8 @@ public class HolosphereBlock extends TetraWaterloggedBlock implements EntityBloc
     }
 
     public static InteractionResult place(BlockPlaceContext context) {
-        if (context.canPlace()) {
+        ItemStack itemstack = context.getItemInHand();
+        if (context.canPlace() && itemstack.hasTag()) {
             Block block = instance.get();
             BlockState blockState = block.defaultBlockState();
             boolean couldPlace = context.getLevel().setBlock(context.getClickedPos(), blockState, 11);
@@ -60,7 +61,6 @@ public class HolosphereBlock extends TetraWaterloggedBlock implements EntityBloc
                 BlockPos pos = context.getClickedPos();
                 Level level = context.getLevel();
                 Player player = context.getPlayer();
-                ItemStack itemstack = context.getItemInHand();
                 BlockState placedBlockState = level.getBlockState(pos);
                 if (placedBlockState.is(blockState.getBlock())) {
                     level.getBlockEntity(pos, HolosphereBlockEntity.type.get())

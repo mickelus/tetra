@@ -43,7 +43,9 @@ public class HolosphereBlockEntity extends BlockEntity {
     private long scanModeTimestamp = 0;
 
     private CompoundTag itemTag;
-    private LazyOptional<Boolean> canScan = LazyOptional.of(() -> this.itemTag)
+
+    // should not be null but players can use commands to get to that state
+    private LazyOptional<Boolean> canScan = LazyOptional.of(() -> this.itemTag != null ? this.itemTag : new CompoundTag())
             .lazyMap(tag -> {
                 ItemStack itemStack = new ItemStack(ModularHolosphereItem.instance);
                 itemStack.setTag(tag);
