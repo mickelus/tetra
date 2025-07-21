@@ -36,6 +36,7 @@ import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -125,6 +126,26 @@ public class ItemEffectHandler {
                     int xp = event.getDroppedExperience();
                     if (intuitLevel > 0 && xp > 0) {
                         ((IModularItem) itemStack.getItem()).tickHoningProgression(event.getAttackingPlayer(), itemStack, intuitLevel * xp);
+                    }
+
+                    int satiatingXpDrain = SatiatingEffect.perform(itemStack, event.getAttackingPlayer(), event.getDroppedExperience());
+                    if (satiatingXpDrain > 0) {
+                        event.setDroppedExperience(event.getDroppedExperience() - satiatingXpDrain);
+                    }
+                });
+    }
+
+    @SubscribeEvent
+    public void onBreakBlock(BlockEvent.BreakEvent event) {
+        Optional.ofNullable(event.getPlayer())
+                .map(entity -> Stream.of(entity.getMainHandItem(), entity.getOffhandItem()))
+                .orElseGet(Stream::empty)
+                .filter(itemStack -> !itemStack.isEmpty())
+                .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
+                .forEach(itemStack -> {
+                    int satiatingXpDrain = SatiatingEffect.perform(itemStack, event.getPlayer(), event.getExpToDrop());
+                    if (satiatingXpDrain > 0) {
+                        event.setExpToDrop(event.getExpToDrop() - satiatingXpDrain);
                     }
                 });
     }

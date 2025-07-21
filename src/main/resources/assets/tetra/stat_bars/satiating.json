@@ -1,0 +1,27 @@
+{
+    "type": "tetra:default",
+    "key": "tetra.stats.satiating",
+    "contexts": [ "tetra:workbench" ],
+    "min": 0,
+    "max": 20,
+    "stat": {
+        "type": "tetra:effect_level",
+        "effect": "satiating"
+    },
+    "label": {
+        "type": "tetra:basic",
+        "format": "integer",
+        "diff_format": "integer"
+    },
+    "tooltip": {
+        "type": "tetra:default",
+        "key": "tetra.stats.satiating.tooltip",
+        "stats": [
+            { "type": "tetra:effect_level", "effect": "satiating" }
+        ],
+        "formatters": [
+            { "type": "tetra:basic", "format": "integer" }
+        ]
+    },
+    "generateSorter": true
+}

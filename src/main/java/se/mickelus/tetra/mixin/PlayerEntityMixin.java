@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import se.mickelus.tetra.effect.SatiatingEffect;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 @Mixin(Player.class)
@@ -15,6 +16,15 @@ public abstract class PlayerEntityMixin {
         ItemStack itemStack = getInstance().getUseItem();
         if (itemStack.getItem() instanceof ItemModularHandheld) {
             ((ItemModularHandheld) itemStack.getItem()).onShieldDisabled(getInstance(), itemStack);
+        }
+    }
+
+
+    @Inject(method = "causeFoodExhaustion(F)V", at = @At("HEAD"), cancellable = true)
+    private void modifyFoodExhaustion(float exhaustion, CallbackInfo callback) {
+        boolean modifiedOutcome = SatiatingEffect.handleFoodExhaustion(getInstance(), exhaustion);
+        if (modifiedOutcome) {
+            callback.cancel();
         }
     }
 

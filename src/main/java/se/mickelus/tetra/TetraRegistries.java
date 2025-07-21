@@ -389,6 +389,7 @@ public class TetraRegistries {
         effects.register(SuspendPotionEffect.identifier, SuspendPotionEffect::new);
         effects.register(MiningSpeedPotionEffect.identifier, MiningSpeedPotionEffect::new);
         effects.register(RetakenMobEffect.identifier, RetakenMobEffect::new);
+        effects.register(SatiatedPotionEffect.identifier, SatiatedPotionEffect::new);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // SOUNDS
