@@ -2,6 +2,9 @@
     {
         "key": "destabilized/vexing",
         "level": 1,
+        "aspects": {
+            "destabilized": 1
+        },
         "effects": {
             "vexing": [ 1, 0.5 ]
         },
@@ -12,6 +15,9 @@
     {
         "key": "destabilized/vexing",
         "level": 2,
+        "aspects": {
+            "destabilized": 2
+        },
         "effects": {
             "vexing": [ 2, 1 ]
         },
@@ -22,6 +28,9 @@
     {
         "key": "destabilized/vexing",
         "level": 3,
+        "aspects": {
+            "destabilized": 3
+        },
         "effects": {
             "vexing": [ 3, 1.5 ]
         },
@@ -32,6 +41,9 @@
     {
         "key": "destabilized/vexing",
         "level": 4,
+        "aspects": {
+            "destabilized": 4
+        },
         "effects": {
             "vexing": [ 4, 2 ]
         },
@@ -42,6 +54,9 @@
     {
         "key": "destabilized/vexing",
         "level": 5,
+        "aspects": {
+            "destabilized": 5
+        },
         "effects": {
             "vexing": [ 5, 2.5 ]
         },
