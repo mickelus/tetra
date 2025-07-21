@@ -3,7 +3,7 @@
         "key": "destabilized/ravenous",
         "level": 1,
         "effects": {
-            "ravenous": [ 100, 0.15 ]
+            "ravenous": [ 100, 0.2 ]
         },
         "attributes": {
             "**generic.attack_damage": 0.05,
@@ -25,7 +25,7 @@
         "key": "destabilized/ravenous",
         "level": 2,
         "effects": {
-            "ravenous": [ 100, 0.3 ]
+            "ravenous": [ 100, 0.4 ]
         },
         "attributes": {
             "**generic.attack_damage": 0.1,
@@ -47,7 +47,7 @@
         "key": "destabilized/ravenous",
         "level": 3,
         "effects": {
-            "ravenous": [ 100, 0.45 ]
+            "ravenous": [ 100, 0.6 ]
         },
         "attributes": {
             "**generic.attack_damage": 0.15,
@@ -69,7 +69,7 @@
         "key": "destabilized/ravenous",
         "level": 4,
         "effects": {
-            "ravenous": [ 100, 0.6 ]
+            "ravenous": [ 100, 0.8 ]
         },
         "attributes": {
             "**generic.attack_damage": 0.2,
@@ -89,9 +89,9 @@
     },
     {
         "key": "destabilized/ravenous",
-        "level": 4,
+        "level": 5,
         "effects": {
-            "ravenous": [ 100, 0.75 ]
+            "ravenous": [ 100, 1 ]
         },
         "attributes": {
             "**generic.attack_damage": 0.25,
