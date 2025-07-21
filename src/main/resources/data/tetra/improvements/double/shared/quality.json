@@ -6,11 +6,11 @@
             "**generic.attack_damage": 0.05
         },
         "tools": {
-            "axe_dig": [ 0, 1 ],
-            "shovel_dig": [ 0, 1 ],
-            "pickaxe_dig": [ 0, 1 ],
-            "hoe_dig": [ 0, 1 ],
-            "cut": [ 0, 1 ]
+            "axe_dig": [ 0, 3 ],
+            "shovel_dig": [ 0, 3 ],
+            "pickaxe_dig": [ 0, 3 ],
+            "hoe_dig": [ 0, 3 ],
+            "cut": [ 0, 3 ]
         }
     },
     {
@@ -20,11 +20,11 @@
             "**generic.attack_damage": 0.1
         },
         "tools": {
-            "axe_dig": [ 0, 2 ],
-            "shovel_dig": [ 0, 2 ],
-            "pickaxe_dig": [ 0, 2 ],
-            "hoe_dig": [ 0, 2 ],
-            "cut": [ 0, 2 ]
+            "axe_dig": [ 0, 6 ],
+            "shovel_dig": [ 0, 6 ],
+            "pickaxe_dig": [ 0, 6 ],
+            "hoe_dig": [ 0, 6 ],
+            "cut": [ 0, 6 ]
         }
     }
 ]
