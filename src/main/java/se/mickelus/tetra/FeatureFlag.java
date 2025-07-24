@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public enum FeatureFlag {
     laminatedStave(true),
+    bookEnchantmentSchematic(false),
     bedrockExtraction(false);
 
     boolean experimental;

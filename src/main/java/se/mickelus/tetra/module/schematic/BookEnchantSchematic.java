@@ -11,6 +11,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.registries.ForgeRegistries;
 import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.tetra.FeatureFlag;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
@@ -108,7 +109,8 @@ public class BookEnchantSchematic implements UpgradeSchematic {
         return false;
     }
 
-    protected boolean acceptsEnchantment(ItemStack itemStack, ItemModuleMajor module, Set<Enchantment> currentEnchantments, Enchantment enchantment, int level) {
+    protected boolean acceptsEnchantment(ItemStack itemStack, ItemModuleMajor module, Set<Enchantment> currentEnchantments, Enchantment enchantment,
+            int level) {
         return module.acceptsEnchantment(itemStack, enchantment, false)
                 && (stacksEnchantment(itemStack, module, enchantment, level)
                 || EnchantmentHelper.isEnchantmentCompatible(currentEnchantments, enchantment));
@@ -126,7 +128,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     @Override
     public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
-        return CastOptional.cast(targetStack.getItem(), IModularItem.class)
+        return FeatureFlag.isEnabled(FeatureFlag.bookEnchantmentSchematic) && CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .map(module -> module.getMagicCapacityGain(targetStack) > 0)
                 .orElse(false);
