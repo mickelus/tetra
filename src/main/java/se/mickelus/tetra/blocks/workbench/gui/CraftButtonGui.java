@@ -121,7 +121,7 @@ public class CraftButtonGui extends GuiClickable {
                 .flatMap(Arrays::stream)
                 .filter(Objects::nonNull)
                 .filter(module -> !module.getSlot().equals(ignoredSlot))
-                .filter(module -> module.getMagicCapacity(itemStack) < 0)
+                .filter(module -> module.getDestabilizationChance(itemStack, severity) > 0)
                 .map(module -> String.format("  %s%s: %s%.0f%%", ChatFormatting.WHITE, module.getName(itemStack), ChatFormatting.YELLOW,
                         module.getDestabilizationChance(itemStack, severity) * 100))
                 .collect(Collectors.toList());

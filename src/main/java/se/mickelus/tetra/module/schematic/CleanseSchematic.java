@@ -6,19 +6,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolAction;
-import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.aspect.ItemAspect;
+import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.GlyphData;
-import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
-import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class CleanseSchematic implements UpgradeSchematic {
@@ -29,7 +28,9 @@ public class CleanseSchematic implements UpgradeSchematic {
     private static final String descriptionSuffix = ".description";
     private static final String slotLabel = "item.minecraft.lapis_lazuli";
 
-    private final GlyphData glyph = new GlyphData("textures/gui/workbench.png", 80, 32);
+    private final GlyphData glyph = new GlyphData(GuiTextures.glyphs, 96, 224);
+
+    public static final ItemAspect destabilizedAspect = ItemAspect.get("destabilized");
 
     public CleanseSchematic() {
     }
@@ -86,20 +87,18 @@ public class CleanseSchematic implements UpgradeSchematic {
 
     @Override
     public boolean isRelevant(ItemStack itemStack) {
-        return true;
+        return itemStack.getItem() instanceof IModularItem;
     }
 
     @Override
     public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
-        String[] destabilizationKeys = DestabilizationEffect.getKeys();
-
         return CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)
-                .map(module -> Arrays.stream(module.getImprovements(targetStack)))
-                .orElse(Stream.empty())
-                .anyMatch(improvement -> ArrayUtils.contains(destabilizationKeys, improvement.key));
+                .map(module -> module.getAspects(targetStack))
+                .map(aspectData -> aspectData.getLevel(destabilizedAspect) > 0)
+                .orElse(false);
     }
 
     @Override
@@ -117,13 +116,13 @@ public class CleanseSchematic implements UpgradeSchematic {
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, Player player) {
         ItemStack upgradedStack = itemStack.copy();
 
-        String[] destabilizationKeys = DestabilizationEffect.getKeys();
-
         CastOptional.cast(itemStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(itemStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)
-                .ifPresent(module -> Arrays.stream(destabilizationKeys).forEach(key -> module.removeImprovement(upgradedStack, key)));
+                .ifPresent(module -> Arrays.stream(module.getImprovements(itemStack))
+                        .filter(improvement -> improvement.aspects != null && improvement.aspects.getLevel(destabilizedAspect) > 0)
+                        .forEach(improvement -> module.removeImprovement(upgradedStack, improvement.key)));
 
         if (consumeMaterials) {
             materials[0].shrink(1);
@@ -144,17 +143,13 @@ public class CleanseSchematic implements UpgradeSchematic {
 
     @Override
     public int getExperienceCost(ItemStack targetStack, ItemStack[] materials, String slot) {
-        String[] destabilizationKeys = DestabilizationEffect.getKeys();
-
         int cost = CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .filter(module -> module instanceof ItemModuleMajor)
                 .map(module -> (ItemModuleMajor) module)
-                .map(module -> Arrays.stream(module.getImprovements(targetStack)))
-                .orElse(Stream.empty())
-                .filter(improvement -> ArrayUtils.contains(destabilizationKeys, improvement.key))
-                .mapToInt(improvement -> improvement.level + 1)
-                .sum();
+                .map(module -> module.getAspects(targetStack))
+                .map(aspects -> aspects.getLevel(destabilizedAspect))
+                .orElse(0);
 
         cost += 3;
 
