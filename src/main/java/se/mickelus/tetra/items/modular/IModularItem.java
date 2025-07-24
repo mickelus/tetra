@@ -44,7 +44,6 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.data.*;
-import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 import se.mickelus.tetra.properties.AttributeHelper;
@@ -697,46 +696,6 @@ public interface IModularItem {
         return 1 + (getEffectLevel(itemStack, ItemEffect.stabilizing) - getEffectLevel(itemStack, ItemEffect.unstable)) / 100f;
     }
 
-    default void applyDestabilizationEffects(ItemStack itemStack, Level world, float probabilityMultiplier) {
-        if (!world.isClientSide) {
-            Arrays.stream(getMajorModules(itemStack))
-                    .filter(Objects::nonNull)
-                    .forEach(module -> {
-                        int instability = -module.getMagicCapacity(itemStack);
-
-                        if (instability > 0) {
-                            float destabilizationChance = module.getDestabilizationChance(itemStack, probabilityMultiplier);
-                            DestabilizationEffect[] possibleEffects =
-                                    DestabilizationEffect.getEffectsForImprovement(instability, module.getImprovements(itemStack));
-
-                            if (possibleEffects.length > 0) {
-                                do {
-                                    if (destabilizationChance > world.random.nextFloat()) {
-                                        DestabilizationEffect effect = possibleEffects[world.random.nextInt(possibleEffects.length)];
-                                        int currentEffectLevel = module.getImprovementLevel(itemStack, effect.destabilizationKey);
-                                        int newLevel;
-
-                                        if (currentEffectLevel >= 0) {
-                                            newLevel = currentEffectLevel + 1;
-                                        } else if (effect.minLevel == effect.maxLevel) {
-                                            newLevel = effect.minLevel;
-                                        } else {
-                                            newLevel = effect.minLevel + world.random.nextInt(effect.maxLevel - effect.minLevel);
-                                        }
-
-                                        if (module.acceptsImprovementLevel(effect.destabilizationKey, newLevel)) {
-                                            module.addImprovement(itemStack, effect.destabilizationKey, newLevel);
-                                        }
-                                    }
-
-                                    destabilizationChance--;
-                                } while (destabilizationChance > 1);
-                            }
-                        }
-                    });
-        }
-    }
-
     default void tweak(ItemStack itemStack, String slot, Map<String, Integer> tweaks) {
         ItemModule module = getModuleFromSlot(itemStack, slot);
         double durabilityFactor = 0;
@@ -1075,16 +1034,9 @@ public interface IModularItem {
             itemStack.setDamageValue(itemStack.getMaxDamage());
         }
 
-        if (world != null) {
-            applyDestabilizationEffects(itemStack, world, severity);
-        }
-
         CompoundTag nbt = itemStack.getOrCreateTag();
-
         // this stops the tooltip renderer from showing enchantments
         nbt.putInt("HideFlags", 1);
-
-//        EnchantmentHelper.setEnchantments(getEnchantmentsFromImprovements(itemStack), itemStack);
 
         updateIdentifier(itemStack);
     }

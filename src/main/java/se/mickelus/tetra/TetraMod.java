@@ -49,7 +49,6 @@ import se.mickelus.tetra.items.modular.SecondaryAbilityPacket;
 import se.mickelus.tetra.items.modular.impl.bow.ProjectileMotionPacket;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
 import se.mickelus.tetra.module.*;
-import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
 import se.mickelus.tetra.module.schematic.BookEnchantSchematic;
@@ -244,7 +243,6 @@ public class TetraMod {
 
         WorkbenchTile.init(packetHandler);
 
-        DestabilizationEffect.init();
         SchematicRegistry.instance.registerSchematic(new CleanseSchematic());
         SchematicRegistry.instance.registerSchematic(new RemoveSchematic());
     }

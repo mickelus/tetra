@@ -24,7 +24,6 @@ public class SatiatingEffect {
     public static final int satiatedStackDuration = 100;
 
     public static int perform(ItemStack itemStack, Player player, int xp) {
-        player.level().getMoonPhase()
         int maxXpDrain = EffectHelper.getEffectLevel(itemStack, ItemEffect.satiating);
         if (maxXpDrain > 0 && xp > 0) {
             int xpDrain = Math.min(xp, maxXpDrain);

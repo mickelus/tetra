@@ -54,7 +54,6 @@ import se.mickelus.tetra.items.modular.impl.dynamic.ArchetypeDefinition;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
-import se.mickelus.tetra.module.improvement.DestabilizationEffect;
 import se.mickelus.tetra.module.schematic.OutcomeDefinition;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
@@ -133,7 +132,6 @@ public class DataManager implements DataDistributor {
     public final SchematicStore schematicData;
     public final DataStore<CraftingEffect> craftingEffectData;
     public final DataStore<ConfigActionImpl[]> actionData;
-    public final DataStore<DestabilizationEffect[]> destabilizationData;
     public final DataStore<UnlockData> unlockData;
     public final DataStore<ArchetypeDefinition> archetypeData;
     public final ItemEffectStore itemEffectData;
@@ -155,13 +153,12 @@ public class DataManager implements DataDistributor {
         this.schematicData = new SchematicStore(gson, TetraMod.MOD_ID, "schematics", this);
         this.craftingEffectData = new CraftingEffectStore(gson, TetraMod.MOD_ID, "crafting_effects", this);
         this.actionData = new DataStore<>(gson, TetraMod.MOD_ID, "actions", ConfigActionImpl[].class, this);
-        this.destabilizationData = new DataStore<>(gson, TetraMod.MOD_ID, "destabilization", DestabilizationEffect[].class, this);
         this.unlockData = new DataStore<>(gson, TetraMod.MOD_ID, "unlocks", UnlockData.class, this);
         this.archetypeData = new DataStore<>(gson, TetraMod.MOD_ID, "archetypes", ArchetypeDefinition.class, this);
         this.itemEffectData = new ItemEffectStore(gson, TetraMod.MOD_ID, "item_effects", this);
 
         dataStores = new DataStore[] { tierData, tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData, replacementData,
-                schematicData, craftingEffectData, repairData, actionData, destabilizationData, unlockData, archetypeData, itemEffectData };
+                schematicData, craftingEffectData, repairData, actionData, unlockData, archetypeData, itemEffectData };
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
