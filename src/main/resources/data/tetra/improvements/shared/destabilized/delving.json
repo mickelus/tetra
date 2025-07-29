@@ -1,0 +1,67 @@
+[
+    {
+        "key": "destabilized/delving",
+        "level": 1,
+        "aspects": {
+            "destabilized": 1
+        },
+        "effects": {
+            "delving": [ 20, 10 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/delving",
+        "level": 2,
+        "aspects": {
+            "destabilized": 2
+        },
+        "effects": {
+            "delving": [ 30, 15 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/delving",
+        "level": 3,
+        "aspects": {
+            "destabilized": 3
+        },
+        "effects": {
+            "delving": [ 40, 20 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/delving",
+        "level": 4,
+        "aspects": {
+            "destabilized": 4
+        },
+        "effects": {
+            "delving": [ 50, 25 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/delving",
+        "level": 5,
+        "aspects": {
+            "destabilized": 5
+        },
+        "effects": {
+            "delving": [ 60, 30 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    }
+]

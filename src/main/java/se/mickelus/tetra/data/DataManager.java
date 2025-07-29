@@ -50,6 +50,7 @@ import se.mickelus.tetra.effect.data.outcome.ItemEffectOutcome;
 import se.mickelus.tetra.effect.data.provider.entity.EntityProvider;
 import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
 import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
+import se.mickelus.tetra.effect.modifier.ModifierType;
 import se.mickelus.tetra.items.modular.impl.dynamic.ArchetypeDefinition;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
@@ -113,6 +114,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(NumberProvider.class, new NumberProvider.Deserializer())
             .registerTypeAdapter(EntityProvider.class, new EntityProvider.Deserializer())
             .registerTypeAdapter(VectorProvider.class, new VectorProvider.Deserializer())
+            .registerTypeAdapter(ModifierType.class, new ModifierType.Deserializer())
             .registerTypeAdapter(EntityPredicate.class, new EntityPredicateDeserializer())
             .registerTypeAdapter(ParticleOptions.class, new ParticleOptionsDeserializer())
             .registerTypeAdapter(SoundEvent.class, new SoundEventDeserializer())
@@ -135,6 +137,8 @@ public class DataManager implements DataDistributor {
     public final DataStore<UnlockData> unlockData;
     public final DataStore<ArchetypeDefinition> archetypeData;
     public final ItemEffectStore itemEffectData;
+    public final ModifierEffectStore modifierEffectData;
+
     private final Logger logger = LogManager.getLogger();
     private final DataStore[] dataStores;
 
@@ -156,9 +160,10 @@ public class DataManager implements DataDistributor {
         this.unlockData = new DataStore<>(gson, TetraMod.MOD_ID, "unlocks", UnlockData.class, this);
         this.archetypeData = new DataStore<>(gson, TetraMod.MOD_ID, "archetypes", ArchetypeDefinition.class, this);
         this.itemEffectData = new ItemEffectStore(gson, TetraMod.MOD_ID, "item_effects", this);
+        this.modifierEffectData = new ModifierEffectStore(gson, TetraMod.MOD_ID, "modifier_effects", this);
 
         dataStores = new DataStore[] { tierData, tweakData, materialData, improvementData, moduleData, enchantmentData, synergyData, replacementData,
-                schematicData, craftingEffectData, repairData, actionData, unlockData, archetypeData, itemEffectData };
+                schematicData, craftingEffectData, repairData, actionData, unlockData, archetypeData, itemEffectData, modifierEffectData };
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

@@ -44,6 +44,7 @@ import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.data.DataEffectsHandler;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
 import se.mickelus.tetra.effect.lunge.LungeEffect;
+import se.mickelus.tetra.effect.modifier.ModifierEffectHandler;
 import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
@@ -430,6 +431,7 @@ public class ItemEffectHandler {
         ExhaustedPotionEffect.onBreakSpeed(event);
         ReachingEffect.onBreakSpeed(event);
         RetakenMobEffect.onBreakSpeed(event);
+        ModifierEffectHandler.onBreakSpeed(event);
     }
 
     @SubscribeEvent

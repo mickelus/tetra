@@ -1,0 +1,30 @@
+{
+    "type": "tetra:default",
+    "key": "tetra.stats.delving",
+    "contexts": [ "tetra:workbench" ],
+    "min": 0,
+    "max": 100,
+    "stat": {
+        "type": "tetra:effect_level",
+        "effect": "delving"
+    },
+    "label": {
+        "type": "tetra:basic",
+        "format": "percentage",
+        "diff_format": "percentage"
+    },
+    "tooltip": {
+        "type": "tetra:default",
+        "key": "tetra.stats.delving.tooltip",
+        "stats": [
+            { "type": "tetra:effect_level", "effect": "delving" },
+            { "type": "tetra:effect_efficiency", "effect": "delving" }
+        ],
+        "formatters": [
+            { "type": "tetra:basic", "format": "percentage" },
+            { "type": "tetra:basic", "format": "percentage" }
+        ]
+    },
+    "generateSorter": true
+}
+
