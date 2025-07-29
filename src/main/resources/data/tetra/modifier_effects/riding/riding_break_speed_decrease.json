@@ -1,0 +1,9 @@
+{
+    "type": "tetra:break_speed",
+    "effect": "riding",
+    "condition": {
+        "type": "tetra:entity",
+        "isRiding": false
+    },
+    "result": "speed * (1 - efficiency / 100)"
+}
