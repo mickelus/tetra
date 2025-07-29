@@ -27,15 +27,19 @@
         },
         "canFreeze": {
             "$ref": "ref.schema.json",
-            "$comment": "If provided, wheter or not the entity can freeze (entity can accumulate freezing ticks) needs to match this value."
+            "$comment": "If provided, whether or not the entity can freeze (entity can accumulate freezing ticks) needs to match this value."
         },
         "isFreezing": {
             "$ref": "ref.schema.json",
-            "$comment": "If provided, wheter or not the entity is freezing (freezing ticks is > 0) needs to match this value."
+            "$comment": "If provided, whether or not the entity is freezing (freezing ticks is > 0) needs to match this value."
         },
         "isFrozen": {
             "$ref": "ref.schema.json",
-            "$comment": "If provided, wheter or not the entity is frozen (freezing ticks is above freezing limit) to match this value."
+            "$comment": "If provided, whether or not the entity is frozen (freezing ticks is above freezing limit) needs to match this value."
+        },
+        "isRiding": {
+            "$ref": "ref.schema.json",
+            "$comment": "If provided, whether or not the entity is riding on another entity needs to match this value."
         },
         "origin": {
             "$ref": "../vector_providers/ref.schema.json",
