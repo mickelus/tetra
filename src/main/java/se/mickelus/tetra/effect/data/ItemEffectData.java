@@ -20,9 +20,9 @@ public class ItemEffectData {
     public ItemEffectCondition condition;
     public ItemEffectOutcome outcome;
 
-    public static Map<String, Float> calculateNumbers(ItemEffectData effectData, ItemEffectContext context) {
-        if (effectData.data != null && effectData.data.numbers != null) {
-            return calculateNumbers(effectData.data.numbers, context);
+    public static Map<String, Float> calculateNumbers(ItemEffectData.Data dataProviders, ItemEffectContext context) {
+        if (dataProviders != null && dataProviders.numbers != null) {
+            return calculateNumbers(dataProviders.numbers, context);
         }
         return Collections.emptyMap();
     }
@@ -37,9 +37,9 @@ public class ItemEffectData {
         return result;
     }
 
-    public static Map<String, Vec3> calculateVectors(ItemEffectData effectData, ItemEffectContext context) {
-        if (effectData.data != null && effectData.data.vectors != null) {
-            return calculateVectors(effectData.data.vectors, context);
+    public static Map<String, Vec3> calculateVectors(ItemEffectData.Data dataProviders, ItemEffectContext context) {
+        if (dataProviders != null && dataProviders.vectors != null) {
+            return calculateVectors(dataProviders.vectors, context);
         }
         return Collections.emptyMap();
     }
@@ -54,9 +54,9 @@ public class ItemEffectData {
         return result;
     }
 
-    public static Map<String, Entity> calculateEntities(ItemEffectData effectData, ItemEffectContext context) {
-        if (effectData.data != null && effectData.data.entities != null) {
-            return calculateEntities(effectData.data.entities, context);
+    public static Map<String, Entity> calculateEntities(ItemEffectData.Data dataProviders, ItemEffectContext context) {
+        if (dataProviders != null && dataProviders.entities != null) {
+            return calculateEntities(dataProviders.entities, context);
         }
         return Collections.emptyMap();
     }

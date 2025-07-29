@@ -21,7 +21,7 @@ public class ItemEffectTrigger {
         return type;
     }
 
-    public static void registerCondition(String key, Function<JsonElement, ItemEffectTrigger> deserializer) {
+    public static void registerTrigger(String key, Function<JsonElement, ItemEffectTrigger> deserializer) {
         deserializers.put(key, deserializer);
     }
 

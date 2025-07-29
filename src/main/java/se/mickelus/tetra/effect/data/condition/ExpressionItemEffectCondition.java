@@ -63,12 +63,12 @@ public class ExpressionItemEffectCondition extends ItemEffectCondition {
     }
 
     public enum Operator {
-        equals("==", Float::equals),
         notEquals("!=", (a, b) -> !a.equals(b)),
-        lessThan("<", (a, b) -> a < b),
+        equals("==", Float::equals),
         lessThanOrEquals("<=", (a, b) -> a <= b),
-        greaterThan(">", (a, b) -> a > b),
-        greaterThanOrEquals(">=", (a, b) -> a >= b);
+        greaterThanOrEquals(">=", (a, b) -> a >= b),
+        lessThan("<", (a, b) -> a < b),
+        greaterThan(">", (a, b) -> a > b);
 
         final String key;
         final BiFunction<Float, Float, Boolean> comparator;

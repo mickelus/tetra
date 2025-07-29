@@ -1,9 +1,9 @@
 package se.mickelus.tetra.effect.data;
 
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Collection;
@@ -15,12 +15,12 @@ import java.util.stream.Stream;
 public class ItemEffectContext {
     private LivingEntity usingEntity;
     private ItemStack usedItemStack;
-    private ServerLevel level;
+    private Level level;
     private Map<String, Float> numbers;
     private Map<String, Vec3> vectors;
     private Map<String, Entity> entities;
 
-    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, ServerLevel level,
+    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, Level level,
             Map<String, Float> numbers, Map<String, Vec3> vectors, Map<String, Entity> entities) {
         this.usingEntity = usingEntity;
         this.usedItemStack = usedItemStack;
@@ -31,7 +31,7 @@ public class ItemEffectContext {
         this.entities = entities;
     }
 
-    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, ServerLevel level) {
+    public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, Level level) {
         this(usingEntity, usedItemStack, level, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap());
     }
 
@@ -104,7 +104,7 @@ public class ItemEffectContext {
         return usedItemStack;
     }
 
-    public ServerLevel getLevel() {
+    public Level getLevel() {
         return level;
     }
 

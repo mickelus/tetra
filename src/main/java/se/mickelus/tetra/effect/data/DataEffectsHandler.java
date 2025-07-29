@@ -43,9 +43,9 @@ public class DataEffectsHandler {
     }
 
     private static void prepareDataAndPerformOutcome(ItemEffectData effect, ItemEffectContext context) {
-        context = context.withMergedNumbers(ItemEffectData.calculateNumbers(effect, context));
-        context = context.withMergedVectors(ItemEffectData.calculateVectors(effect, context));
-        context = context.withMergedEntities(ItemEffectData.calculateEntities(effect, context));
+        context = context.withMergedNumbers(ItemEffectData.calculateNumbers(effect.data, context));
+        context = context.withMergedVectors(ItemEffectData.calculateVectors(effect.data, context));
+        context = context.withMergedEntities(ItemEffectData.calculateEntities(effect.data, context));
         if (effect.condition == null || effect.condition.test(context)) {
             effect.outcome.perform(context);
         }

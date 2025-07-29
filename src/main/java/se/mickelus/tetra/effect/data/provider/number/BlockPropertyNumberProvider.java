@@ -2,9 +2,9 @@ package se.mickelus.tetra.effect.data.provider.number;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 import se.mickelus.tetra.effect.data.condition.FixedItemEffectCondition;
@@ -18,7 +18,7 @@ public class BlockPropertyNumberProvider implements NumberProvider {
 
     @Override
     public float getValue(ItemEffectContext context) {
-        ServerLevel level = context.getLevel();
+        Level level = context.getLevel();
         BlockPos blockPos = position.getBlockPos(context);
         BlockState blockState = level.getBlockState(blockPos);
         return switch (property) {
@@ -31,7 +31,7 @@ public class BlockPropertyNumberProvider implements NumberProvider {
         };
     }
 
-    private float getExpDrop(ItemEffectContext context, ServerLevel level, BlockPos blockPos, BlockState blockState) {
+    private float getExpDrop(ItemEffectContext context, Level level, BlockPos blockPos, BlockState blockState) {
         if (relative.test(context)) {
             return blockState.getExpDrop(level, level.getRandom(), blockPos,
                     EnchantmentHelper.getTagEnchantmentLevel(Enchantments.BLOCK_FORTUNE, context.getUsedItemStack()),
