@@ -119,6 +119,7 @@ public class TetraMod {
         CraftingEffectRegistry.registerEffectType("tetra:material_reduction", MaterialReductionOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:per_slot", PerSlotOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:destabilize", DestabilizeOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:spawn_sculk", SpawnSculkOutcome.class);
 
         new RepairRegistry();
 
