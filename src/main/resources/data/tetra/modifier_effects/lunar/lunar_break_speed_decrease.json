@@ -1,0 +1,15 @@
+{
+    "type": "tetra:break_speed",
+    "effect": "lunar",
+    "condition": {
+        "type": "tetra:expression",
+        "numbers": {
+            "moonPhase": {
+                "type": "tetra:time",
+                "property": "moonPhase"
+            }
+        },
+        "expression": "moonPhase != 0"
+    },
+    "result": "speed * (1 - efficiency / 100)"
+}

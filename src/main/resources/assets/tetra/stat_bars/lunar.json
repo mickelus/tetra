@@ -1,0 +1,29 @@
+{
+    "type": "tetra:default",
+    "key": "tetra.stats.lunar",
+    "contexts": [ "tetra:workbench" ],
+    "min": 0,
+    "max": 100,
+    "stat": {
+        "type": "tetra:effect_level",
+        "effect": "lunar"
+    },
+    "label": {
+        "type": "tetra:basic",
+        "format": "percentage",
+        "diff_format": "percentage"
+    },
+    "tooltip": {
+        "type": "tetra:default",
+        "key": "tetra.stats.lunar.tooltip",
+        "stats": [
+            { "type": "tetra:effect_level", "effect": "lunar" },
+            { "type": "tetra:effect_efficiency", "effect": "lunar" }
+        ],
+        "formatters": [
+            { "type": "tetra:basic", "format": "percentage" },
+            { "type": "tetra:basic", "format": "percentage" }
+        ]
+    },
+    "generateSorter": true
+}

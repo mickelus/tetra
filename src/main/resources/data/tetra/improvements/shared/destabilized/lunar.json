@@ -1,0 +1,67 @@
+[
+    {
+        "key": "destabilized/lunar",
+        "level": 1,
+        "aspects": {
+            "destabilized": 1
+        },
+        "effects": {
+            "lunar": [ 10, 5 ]
+        },
+        "glyph": {
+            "tint": "ccccff"
+        }
+    },
+    {
+        "key": "destabilized/lunar",
+        "level": 2,
+        "aspects": {
+            "destabilized": 2
+        },
+        "effects": {
+            "lunar": [ 20, 10 ]
+        },
+        "glyph": {
+            "tint": "ccccff"
+        }
+    },
+    {
+        "key": "destabilized/lunar",
+        "level": 3,
+        "aspects": {
+            "destabilized": 3
+        },
+        "effects": {
+            "lunar": [ 30, 15 ]
+        },
+        "glyph": {
+            "tint": "ccccff"
+        }
+    },
+    {
+        "key": "destabilized/lunar",
+        "level": 4,
+        "aspects": {
+            "destabilized": 4
+        },
+        "effects": {
+            "lunar": [ 40, 20 ]
+        },
+        "glyph": {
+            "tint": "ccccff"
+        }
+    },
+    {
+        "key": "destabilized/lunar",
+        "level": 5,
+        "aspects": {
+            "destabilized": 5
+        },
+        "effects": {
+            "lunar": [ 50, 25 ]
+        },
+        "glyph": {
+            "tint": "ccccff"
+        }
+    }
+]
