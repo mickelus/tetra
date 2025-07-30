@@ -1,6 +1,7 @@
 [
     {
         "key": "destabilized/lunar",
+        "group": "imprint",
         "level": 1,
         "aspects": {
             "destabilized": 1
@@ -9,11 +10,12 @@
             "lunar": [ 10, 5 ]
         },
         "glyph": {
-            "tint": "ccccff"
+            "tint": "ee5599"
         }
     },
     {
         "key": "destabilized/lunar",
+        "group": "imprint",
         "level": 2,
         "aspects": {
             "destabilized": 2
@@ -22,11 +24,12 @@
             "lunar": [ 20, 10 ]
         },
         "glyph": {
-            "tint": "ccccff"
+            "tint": "ee5599"
         }
     },
     {
         "key": "destabilized/lunar",
+        "group": "imprint",
         "level": 3,
         "aspects": {
             "destabilized": 3
@@ -35,11 +38,12 @@
             "lunar": [ 30, 15 ]
         },
         "glyph": {
-            "tint": "ccccff"
+            "tint": "ee5599"
         }
     },
     {
         "key": "destabilized/lunar",
+        "group": "imprint",
         "level": 4,
         "aspects": {
             "destabilized": 4
@@ -48,11 +52,12 @@
             "lunar": [ 40, 20 ]
         },
         "glyph": {
-            "tint": "ccccff"
+            "tint": "ee5599"
         }
     },
     {
         "key": "destabilized/lunar",
+        "group": "imprint",
         "level": 5,
         "aspects": {
             "destabilized": 5
@@ -61,7 +66,7 @@
             "lunar": [ 50, 25 ]
         },
         "glyph": {
-            "tint": "ccccff"
+            "tint": "ee5599"
         }
     }
 ]

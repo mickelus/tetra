@@ -1,6 +1,7 @@
 [
     {
         "key": "destabilized/burdened",
+        "group": "burdened",
         "level": 1,
         "aspects": {
             "destabilized": 1
@@ -23,6 +24,7 @@
     },
     {
         "key": "destabilized/burdened",
+        "group": "burdened",
         "level": 2,
         "aspects": {
             "destabilized": 2
@@ -45,6 +47,7 @@
     },
     {
         "key": "destabilized/burdened",
+        "group": "burdened",
         "level": 3,
         "aspects": {
             "destabilized": 3
@@ -67,6 +70,7 @@
     },
     {
         "key": "destabilized/burdened",
+        "group": "burdened",
         "level": 4,
         "aspects": {
             "destabilized": 4
@@ -89,6 +93,7 @@
     },
     {
         "key": "destabilized/burdened",
+        "group": "burdened",
         "level": 5,
         "aspects": {
             "destabilized": 5

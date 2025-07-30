@@ -1,6 +1,7 @@
 [
     {
         "key": "destabilized/ravenous",
+        "group": "ravenous",
         "level": 1,
         "aspects": {
             "destabilized": 1
@@ -26,6 +27,7 @@
     },
     {
         "key": "destabilized/ravenous",
+        "group": "ravenous",
         "level": 2,
         "aspects": {
             "destabilized": 2
@@ -51,6 +53,7 @@
     },
     {
         "key": "destabilized/ravenous",
+        "group": "ravenous",
         "level": 3,
         "aspects": {
             "destabilized": 3
@@ -76,6 +79,7 @@
     },
     {
         "key": "destabilized/ravenous",
+        "group": "ravenous",
         "level": 4,
         "aspects": {
             "destabilized": 4
@@ -101,6 +105,7 @@
     },
     {
         "key": "destabilized/ravenous",
+        "group": "ravenous",
         "level": 5,
         "aspects": {
             "destabilized": 5
