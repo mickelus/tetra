@@ -6,7 +6,7 @@
             "destabilized": 1
         },
         "effects": {
-            "delving": [ 20, 10 ]
+            "delving": [ 10, 5 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -19,7 +19,7 @@
             "destabilized": 2
         },
         "effects": {
-            "delving": [ 30, 15 ]
+            "delving": [ 20, 10 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -32,7 +32,7 @@
             "destabilized": 3
         },
         "effects": {
-            "delving": [ 40, 20 ]
+            "delving": [ 30, 15 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -45,7 +45,7 @@
             "destabilized": 4
         },
         "effects": {
-            "delving": [ 50, 25 ]
+            "delving": [ 40, 20 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -58,7 +58,7 @@
             "destabilized": 5
         },
         "effects": {
-            "delving": [ 60, 30 ]
+            "delving": [ 50, 25 ]
         },
         "glyph": {
             "tint": "ee5599"
