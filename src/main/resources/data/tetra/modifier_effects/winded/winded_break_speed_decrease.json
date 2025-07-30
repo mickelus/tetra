@@ -1,0 +1,23 @@
+{
+    "type": "tetra:break_speed",
+    "effect": "winded",
+    "data": {
+        "numbers": {
+            "air": {
+                "type": "tetra:entity_property",
+                "entity": "miner",
+                "property": "airSupply"
+            },
+            "maxAir": {
+                "type": "tetra:entity_property",
+                "entity": "miner",
+                "property": "maxAirSupply"
+            }
+        }
+    },
+    "condition": {
+        "type": "tetra:expression",
+        "expression": "air >= maxAir"
+    },
+    "result": "speed * (1 - efficiency / 100)"
+}
