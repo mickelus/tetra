@@ -45,6 +45,7 @@ import se.mickelus.tetra.craftingeffect.outcome.ExplosionOutcome;
 import se.mickelus.tetra.craftingeffect.outcome.MaterialReductionOutcome;
 import se.mickelus.tetra.craftingeffect.outcome.PerSlotOutcome;
 import se.mickelus.tetra.craftingeffect.outcome.RemoveImprovementOutcome;
+import se.mickelus.tetra.craftingeffect.outcome.SpawnEffectCloud;
 import se.mickelus.tetra.craftingeffect.outcome.SpawnSculkOutcome;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.data.UpdateDataPacket;
@@ -213,6 +214,7 @@ public class TetraMod {
         CraftingEffectRegistry.registerEffectType("tetra:destabilize", DestabilizeOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:spawn_sculk", SpawnSculkOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:explosion", ExplosionOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:spawn_effect_cloud", SpawnEffectCloud.class);
 
         new RepairRegistry();
 
