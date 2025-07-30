@@ -9,6 +9,11 @@
             "description": "Marks if this should replace or merge with existing entries (if any) for this schematic definition. The default behaviour for crafting effects added by other mods and datapacks is to merge values set by those into the existing entry (if any). By setting replace to true it's possible to completely replace crafting effects registered by tetra, which can be useful when one wants to remove something.",
             "type": "boolean"
         },
+        "active": {
+            "description": "Can be set to false to stop this crafting effect from being triggered directly, but it can still be triggered by other crafting effects.",
+            "type": "boolean",
+            "default": true
+        },
         "requirement": {
             "$ref": "requirements/ref.schema.json",
             "$comment": "Determines under which conditions the crafting effect should apply"
