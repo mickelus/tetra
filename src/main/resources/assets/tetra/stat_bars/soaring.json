@@ -1,0 +1,30 @@
+{
+    "type": "tetra:default",
+    "key": "tetra.stats.soaring",
+    "contexts": [ "tetra:workbench" ],
+    "min": 0,
+    "max": 100,
+    "stat": {
+        "type": "tetra:effect_level",
+        "effect": "soaring"
+    },
+    "label": {
+        "type": "tetra:basic",
+        "format": "percentage",
+        "diff_format": "percentage"
+    },
+    "tooltip": {
+        "type": "tetra:default",
+        "key": "tetra.stats.soaring.tooltip",
+        "stats": [
+            { "type": "tetra:effect_level", "effect": "soaring" },
+            { "type": "tetra:effect_efficiency", "effect": "soaring" }
+        ],
+        "formatters": [
+            { "type": "tetra:basic", "format": "percentage" },
+            { "type": "tetra:basic", "format": "percentage" }
+        ]
+    },
+    "generateSorter": true
+}
+

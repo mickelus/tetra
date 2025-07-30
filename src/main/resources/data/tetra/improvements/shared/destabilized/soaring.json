@@ -1,0 +1,68 @@
+[
+    {
+        "key": "destabilized/soaring",
+        "level": 1,
+        "aspects": {
+            "destabilized": 1
+        },
+        "effects": {
+            "soaring": [ 15, 5 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/soaring",
+        "level": 2,
+        "aspects": {
+            "destabilized": 2
+        },
+        "effects": {
+            "soaring": [ 30, 10 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/soaring",
+        "level": 3,
+        "aspects": {
+            "destabilized": 3
+        },
+        "effects": {
+            "soaring": [ 45, 15 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/soaring",
+        "level": 4,
+        "aspects": {
+            "destabilized": 4
+        },
+        "effects": {
+            "soaring": [ 60, 20 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/soaring",
+        "level": 5,
+        "aspects": {
+            "destabilized": 5
+        },
+        "effects": {
+            "soaring": [ 75, 25 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    }
+]
+

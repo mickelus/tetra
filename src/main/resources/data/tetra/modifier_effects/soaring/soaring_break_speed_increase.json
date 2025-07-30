@@ -1,0 +1,26 @@
+{
+    "type": "tetra:break_speed",
+    "effect": "soaring",
+    "data": {
+        "vectors": {
+            "minerPosition": {
+                "type": "tetra:entity_position",
+                "entity": "miner",
+                "origin": "feet"
+            }
+        }
+    },
+    "condition": {
+        "type": "tetra:expression",
+        "numbers": {
+            "y": {
+                "type": "tetra:vector",
+                "vector": "minerPosition",
+                "field": "y"
+            }
+        },
+        "expression": "y > 128"
+    },
+    "result": "speed * (1 + level / 100)"
+}
+
