@@ -1,5 +1,9 @@
 package se.mickelus.tetra.craftingeffect.outcome;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -15,38 +19,39 @@ import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.effect.SculkTaintEffect;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
-
 @ParametersAreNonnullByDefault
 public class SpawnSculkOutcome implements CraftingEffectOutcome {
 
     int severity = 5;
     double chance = 1;
+    boolean catalystSource = false;
+    boolean workbenchSource = true;
 
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos origin, BlockState blockState,
             boolean consumeResources, ItemStack[] postMaterials) {
         if (consumeResources && !world.isClientSide() && world.random.nextDouble() < chance) {
-            Optional<BlockPos> catalystOrigin = BlockPos.betweenClosedStream(new AABB(-2, 0, -2, 2, 5, 2))
-                    .map(origin::offset)
-                    .filter(pos -> world.getBlockState(pos).is(Blocks.SCULK_CATALYST))
-                    .map(pos -> findVeinOrigin(world, pos))
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .findAny();
-            if (catalystOrigin.isPresent()) {
-                SculkTaintEffect.startSpread((ServerLevel) world, catalystOrigin.get(), severity);
-                return true;
+            if (catalystSource) {
+                Optional<BlockPos> catalystOrigin = BlockPos.betweenClosedStream(new AABB(-2, 0, -2, 2, 5, 2))
+                        .map(origin::offset)
+                        .filter(pos -> world.getBlockState(pos).is(Blocks.SCULK_CATALYST))
+                        .map(pos -> findVeinOrigin(world, pos))
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .findAny();
+                if (catalystOrigin.isPresent()) {
+                    SculkTaintEffect.startSpread((ServerLevel) world, catalystOrigin.get(), severity);
+                    return true;
+                }
             }
 
-            Optional<BlockPos> workbenchOrigin = findVeinOrigin(world, origin);
-            if (workbenchOrigin.isPresent()) {
-                SculkTaintEffect.startSpread((ServerLevel) world, workbenchOrigin.get(), severity);
-                return true;
+            if (workbenchSource) {
+                Optional<BlockPos> workbenchOrigin = findVeinOrigin(world, origin);
+                if (workbenchOrigin.isPresent()) {
+                    SculkTaintEffect.startSpread((ServerLevel) world, workbenchOrigin.get(), severity);
+                    return true;
+                }
             }
         }
         return false;
@@ -56,10 +61,12 @@ public class SpawnSculkOutcome implements CraftingEffectOutcome {
         return Direction.allShuffled(world.getRandom()).stream()
                 .map(origin::relative)
                 .filter(world::isEmptyBlock)
-                .filter(pos ->
-                        Arrays.stream(Direction.values())
-                                .anyMatch(direction ->
-                                        MultifaceBlock.canAttachTo(world, direction, pos.relative(direction), world.getBlockState(pos.relative(direction))) && !world.getBlockState(pos.relative(direction)).is(Blocks.SCULK_CATALYST)))
+                .filter(pos -> Arrays.stream(Direction.values()).anyMatch(direction -> canSpawnVeinAt(world, direction, pos)))
                 .findAny();
+    }
+
+    private static boolean canSpawnVeinAt(Level world, Direction direction, BlockPos pos) {
+        return MultifaceBlock.canAttachTo(world, direction, pos.relative(direction), world.getBlockState(pos.relative(direction)))
+                && !world.getBlockState(pos.relative(direction)).is(Blocks.SCULK_CATALYST);
     }
 }
