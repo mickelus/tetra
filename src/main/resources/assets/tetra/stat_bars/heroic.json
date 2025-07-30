@@ -1,12 +1,14 @@
 {
     "type": "tetra:default",
-    "key": "tetra.stats.exiled",
-    "contexts": [ "tetra:workbench" ],
+    "key": "tetra.stats.heroic",
+    "contexts": [
+        "tetra:workbench"
+    ],
     "min": 0,
     "max": 100,
     "stat": {
         "type": "tetra:effect_level",
-        "effect": "exiled"
+        "effect": "heroic"
     },
     "label": {
         "type": "tetra:basic",
@@ -15,15 +17,15 @@
     },
     "tooltip": {
         "type": "tetra:default",
-        "key": "tetra.stats.exiled.tooltip",
+        "key": "tetra.stats.heroic.tooltip",
         "stats": [
             {
                 "type": "tetra:effect_level",
-                "effect": "exiled"
+                "effect": "heroic"
             },
             {
                 "type": "tetra:effect_efficiency",
-                "effect": "exiled"
+                "effect": "heroic"
             }
         ]
     }
