@@ -1,0 +1,13 @@
+{
+    "type": "tetra:break_speed",
+    "effect": "exiled",
+    "condition": {
+        "type": "tetra:entity",
+        "condition": {
+            "effects": {
+                "minecraft:bad_omen": {}
+            }
+        }
+    },
+    "result": "speed * (1 - efficiency / 100)"
+}
