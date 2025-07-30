@@ -13,8 +13,10 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 public class CraftingEffectRegistry {
@@ -45,7 +47,16 @@ public class CraftingEffectRegistry {
     public static CraftingEffect[] getEffects(ResourceLocation[] unlocks, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] materials, Map<ToolAction, Integer> tools, UpgradeSchematic schematic, Level world, BlockPos pos, BlockState blockState) {
         return DataManager.instance.craftingEffectData.getData().values().stream()
+                .filter(effect -> effect.active)
                 .filter(effect -> effect.isApplicable(unlocks, upgradedStack, slot, isReplacing, player, materials, tools, schematic, world, pos, blockState))
+                .toArray(CraftingEffect[]::new);
+    }
+
+    public static CraftingEffect[] getEffects(ResourceLocation[] identifiers) {
+        return Arrays.stream(identifiers)
+                .flatMap(rl -> rl.getPath().endsWith("/")
+                        ? DataManager.instance.craftingEffectData.getDataIn(rl).stream()
+                        : Optional.ofNullable(DataManager.instance.craftingEffectData.getData(rl)).stream())
                 .toArray(CraftingEffect[]::new);
     }
 }

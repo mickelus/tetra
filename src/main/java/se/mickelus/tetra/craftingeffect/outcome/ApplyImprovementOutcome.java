@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.aspect.ItemAspect;
+import se.mickelus.tetra.craftingeffect.StackMode;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -22,7 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @ParametersAreNonnullByDefault
 public class ApplyImprovementOutcome implements CraftingEffectOutcome {
     Map<String, Integer> improvements;
-    se.mickelus.tetra.craftingeffect.StackMode stacking = se.mickelus.tetra.craftingeffect.StackMode.max;
+    StackMode stacking = StackMode.max;
 
 
     @Override

@@ -11,6 +11,7 @@ import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.craftingeffect.outcome.CraftingEffectOutcome;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
@@ -19,6 +20,7 @@ import java.util.stream.Stream;
 @ParametersAreNonnullByDefault
 public class CraftingEffect {
     public boolean replace = false;
+    public boolean active = true;
     CraftingEffectCondition requirement = CraftingEffectCondition.any;
     CraftingEffectOutcome[] outcomes = new CraftingEffectOutcome[0];
     CraftingProperties properties = new CraftingProperties();
@@ -37,8 +39,9 @@ public class CraftingEffect {
         return requirement.test(unlocks, upgradedStack, slot, isReplacing, player, materials, tools, schematic, world, pos, blockState);
     }
 
-    public boolean applyOutcomes(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
-            ItemStack[] postMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources) {
+    public boolean applyOutcomes(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
+            ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic,
+            BlockPos pos, BlockState blockState, boolean consumeResources) {
         boolean success = false;
         for (CraftingEffectOutcome outcome : outcomes) {
             if (outcome.apply(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, schematic, pos, blockState, consumeResources, postMaterials)) {
@@ -47,5 +50,19 @@ public class CraftingEffect {
         }
 
         return success;
+    }
+
+    public record EffectPair(@Nullable CraftingEffectCondition requirement, CraftingEffectOutcome outcome) {
+        public EffectPair {
+            if (requirement == null) {
+                requirement = CraftingEffectCondition.any;
+            }
+        }
+
+        public static EffectPair[] fromEffect(CraftingEffect craftingEffect) {
+            return Arrays.stream(craftingEffect.outcomes)
+                    .map(outcome -> new EffectPair(craftingEffect.requirement, outcome))
+                    .toArray(EffectPair[]::new);
+        }
     }
 }
