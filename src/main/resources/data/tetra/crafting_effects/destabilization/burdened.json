@@ -1,0 +1,12 @@
+{
+    "active": false,
+    "outcomes": [
+        {
+            "type": "tetra:apply_improvements",
+            "stacking": "stack",
+            "improvements": {
+                "destabilized/burdened": 1
+            }
+        }
+    ]
+}

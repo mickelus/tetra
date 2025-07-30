@@ -7,11 +7,10 @@
                 "type": "tetra:destabilize",
                 "outcomes": [
                     {
-                        "type": "tetra:apply_improvements",
-                        "stacking": "stack",
-                        "improvements": {
-                            "#destabilized": 1
-                        }
+                        "type": "tetra:apply_list",
+                        "count": 1,
+                        "random": true,
+                        "references": [ "tetra:destabilization/" ]
                     }
                 ]
             }
