@@ -1,0 +1,4 @@
+{
+    "active": false,
+    "outcomes": [ { "type": "tetra:explosion" } ]
+}
