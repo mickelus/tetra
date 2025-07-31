@@ -1,0 +1,16 @@
+{
+    "replace": true,
+    "active": false,
+    "outcomes": [
+        {
+            "type": "tetra:spawn_entity",
+            "entity": {
+                "id": "minecraft:endermite",
+                "Lifetime": 1200
+            },
+            "particle": {
+                "type": "minecraft:portal"
+            }
+        }
+    ]
+}
