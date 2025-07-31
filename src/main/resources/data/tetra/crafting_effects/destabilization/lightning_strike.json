@@ -1,0 +1,9 @@
+{
+    "active": false,
+    "outcomes": [
+        {
+            "type": "tetra:lightning_strike",
+            "randomOriginDistance": 8
+        }
+    ]
+}
