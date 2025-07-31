@@ -18,7 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
 
 @ParametersAreNonnullByDefault
-public class SpawnEffectCloud implements CraftingEffectOutcome {
+public class SpawnEffectCloudOutcome implements CraftingEffectOutcome {
     MobEffect effect;
     int amplifier = 0;
     int duration = 200;

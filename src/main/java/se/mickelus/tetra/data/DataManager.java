@@ -8,10 +8,12 @@ import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -119,6 +121,8 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ParticleOptions.class, new ParticleOptionsDeserializer())
             .registerTypeAdapter(SoundEvent.class, new SoundEventDeserializer())
             .registerTypeAdapter(MobEffect.class, new MobEffectDeserializer())
+            .registerTypeAdapter(EntityType.class, new EntityTypeDeserializer())
+            .registerTypeAdapter(CompoundTag.class, new CompoundTagDeserializer())
             .create();
     public static DataManager instance;
 

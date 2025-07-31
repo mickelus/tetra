@@ -17,6 +17,22 @@
             "count": 12,
             "speed": 0.1,
             "spread": [ 1, 0, 1 ]
+        },
+        {
+            "type": "tetra:particle",
+            "particle": {
+                "type": "minecraft:dust",
+                "color": [ 1, 0.5, 0.25 ],
+                "scale": 1
+            },
+            "position": {
+                "type": "tetra:entity_position",
+                "entity": "target",
+                "origin": "center"
+            },
+            "count": 20,
+            "speed": 1,
+            "spread": [ 0.5, 0.5, 0.5 ]
         }
     ],
     "type": "object",
