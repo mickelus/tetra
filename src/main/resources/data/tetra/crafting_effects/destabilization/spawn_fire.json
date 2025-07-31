@@ -1,0 +1,10 @@
+{
+    "replace": true,
+    "active": false,
+    "outcomes": [
+        {
+            "type": "tetra:spawn_fire",
+            "soulfire": true
+        }
+    ]
+}

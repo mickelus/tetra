@@ -248,7 +248,7 @@ public class HammerBaseBlockEntity extends BlockEntity {
                 spawnParticle(ParticleTypes.LAVA, oppositePos, 2, 0.06f);
                 spawnParticle(ParticleTypes.LARGE_SMOKE, oppositePos, 2, 0f);
 
-                CombustingEffect.igniteBlocksAround(level, getBlockPos(), 3, count, true);
+                CombustingEffect.igniteBlocksAround(level, getBlockPos(), 3, count, true, false);
             }
         }
 

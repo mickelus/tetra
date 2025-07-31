@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.util.StreamHelper;
@@ -19,7 +20,7 @@ public class CombustingEffect {
         if (!entity.level().isClientSide) {
             int effectLevel = (int) Math.round(EffectHelper.getEffectLevel(itemStack, ItemEffect.combusting) * multiplier);
             if (effectLevel > 0 && entity.getRandom().nextFloat() < EffectHelper.getEffectEfficiency(itemStack, ItemEffect.combusting) / 100) {
-                if (igniteBlocksAround(entity.level(), entity.blockPosition(), 4, effectLevel, true)) {
+                if (igniteBlocksAround(entity.level(), entity.blockPosition(), 4, effectLevel, true, false)) {
                     Vec3 pos = entity.blockPosition().getCenter();
                     ((ServerLevel) entity.level()).sendParticles(ParticleTypes.LAVA, pos.x, pos.y, pos.z, 2, 0, 0, 0, 0.06f);
                     ((ServerLevel) entity.level()).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, 2, 0, 0, 0, 0);
@@ -29,22 +30,28 @@ public class CombustingEffect {
         }
     }
 
-    public static boolean igniteBlocksAround(Level level, BlockPos origin, int radius, int count, boolean skipCenter) {
+    public static boolean igniteBlocksAround(Level level, BlockPos origin, int radius, int count, boolean skipCenter, boolean soulfire) {
         AtomicBoolean success = new AtomicBoolean(false);
+        Block fireBlock = soulfire ? Blocks.SOUL_FIRE : Blocks.FIRE;
         BlockPos.withinManhattanStream(origin, radius, radius, radius)
                 .map(BlockPos::new)
                 .filter(blockPos -> !origin.equals(blockPos) || !skipCenter)
                 .collect(StreamHelper.toShuffledList())
                 .stream()
                 .filter(level::isEmptyBlock)
-                .filter(blockPos -> Blocks.FIRE.canSurvive(Blocks.FIRE.defaultBlockState(), level, blockPos))
+                .filter(blockPos -> soulfire && canSoulfireSpawn(level, blockPos) || !soulfire && fireBlock.canSurvive(fireBlock.defaultBlockState(), level, blockPos))
                 .limit(count)
                 .forEach(blockPos -> {
-                    if (level.setBlock(blockPos, Blocks.FIRE.defaultBlockState(), 11)) {
+                    if (level.setBlock(blockPos, fireBlock.defaultBlockState(), 2)) {
                         success.set(true);
                     }
                 });
 
         return success.get();
+    }
+
+    private static boolean canSoulfireSpawn(Level level, BlockPos pos) {
+        BlockPos belowPos = pos.immutable().below();
+        return Block.isShapeFullBlock(level.getBlockState(belowPos).getCollisionShape(level, belowPos));
     }
 }
