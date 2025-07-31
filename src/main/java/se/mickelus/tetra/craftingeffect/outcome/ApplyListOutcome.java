@@ -11,9 +11,11 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.util.LazyOptional;
 import se.mickelus.tetra.craftingeffect.CraftingEffect;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
+import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.util.StreamHelper;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
@@ -26,22 +28,29 @@ import java.util.stream.Stream;
 public class ApplyListOutcome implements CraftingEffectOutcome {
 
     ResourceLocation[] references = new ResourceLocation[0];
-    CraftingEffect.EffectPair[] effects = new CraftingEffect.EffectPair[0];
+    EffectPair[] effects = new EffectPair[0];
     boolean random = false;
     int count = Integer.MAX_VALUE;
 
-    LazyOptional<CraftingEffect.EffectPair[]> resolvedReferences = LazyOptional.of(() -> resolveReferences(references));
+    public ApplyListOutcome() {
+    }
+
+    public ApplyListOutcome(EffectPair[] effects) {
+        this.effects = effects;
+    }
+
+    LazyOptional<EffectPair[]> resolvedReferences = LazyOptional.of(() -> resolveReferences(references));
 
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials,
             Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
             ItemStack[] postMaterials) {
-        Collector<CraftingEffect.EffectPair, ?, List<CraftingEffect.EffectPair>> collector = random
+        Collector<EffectPair, ?, List<EffectPair>> collector = random
                 ? StreamHelper.toShuffledList()
                 : Collectors.toUnmodifiableList();
 
-        List<CraftingEffect.EffectPair> applicableOutcomes = Streams.concat(Arrays.stream(effects), resolvedReferences.lazyMap(Arrays::stream).orElseGet(Stream::empty))
+        List<EffectPair> applicableOutcomes = Streams.concat(Arrays.stream(effects), resolvedReferences.lazyMap(Arrays::stream).orElseGet(Stream::empty))
                 .filter(outcome -> outcome.requirement().test(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, schematic,
                         world, pos, blockState))
                 .collect(collector);
@@ -52,10 +61,26 @@ public class ApplyListOutcome implements CraftingEffectOutcome {
         return !applicableOutcomes.isEmpty();
     }
 
-    private static CraftingEffect.EffectPair[] resolveReferences(ResourceLocation[] references) {
+    private static EffectPair[] resolveReferences(ResourceLocation[] references) {
         return Arrays.stream(CraftingEffectRegistry.getEffects(references))
-                .map(CraftingEffect.EffectPair::fromEffect)
-                .flatMap(Arrays::stream)
-                .toArray(CraftingEffect.EffectPair[]::new);
+                .map(EffectPair::fromEffect)
+                .toArray(EffectPair[]::new);
+    }
+
+    public record EffectPair(@Nullable CraftingEffectCondition requirement, CraftingEffectOutcome outcome) {
+        public EffectPair {
+            if (requirement == null) {
+                requirement = CraftingEffectCondition.any;
+            }
+        }
+
+        public static EffectPair fromEffect(CraftingEffect craftingEffect) {
+            if (craftingEffect.getOutcomes().length > 1) {
+                return new EffectPair(craftingEffect.getRequirement(), new ApplyListOutcome(Arrays.stream(craftingEffect.getOutcomes())
+                        .map(outcome -> new EffectPair(craftingEffect.getRequirement(), outcome))
+                        .toArray(EffectPair[]::new)));
+            }
+            return new EffectPair(craftingEffect.getRequirement(), craftingEffect.getOutcomes()[0]);
+        }
     }
 }

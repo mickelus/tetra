@@ -1,4 +1,5 @@
 {
+    "replace": true,
     "outcomes": [
         {
             "type": "tetra:per_slot",

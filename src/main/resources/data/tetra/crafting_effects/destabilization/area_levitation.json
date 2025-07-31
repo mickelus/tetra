@@ -1,0 +1,15 @@
+{
+    "active": false,
+    "outcomes": [
+        {
+            "type": "tetra:spawn_effect_cloud",
+            "effect": "minecraft:levitation",
+            "duration": 80,
+            "amplifier": 0,
+            "cloudDuration": 80,
+            "waitTime": 0,
+            "radius": 0.5,
+            "radiusChange": 0.06
+        }
+    ]
+}

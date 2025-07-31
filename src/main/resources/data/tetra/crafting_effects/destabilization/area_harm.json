@@ -1,0 +1,45 @@
+{
+    "active": false,
+    "outcomes": [
+        {
+            "type": "tetra:spawn_effect_cloud",
+            "effect": "minecraft:instant_damage",
+            "duration": 80,
+            "amplifier": 0,
+            "cloudDuration": 400,
+            "waitTime": 40,
+            "radius": 0.4,
+            "randomOriginDistance": 8
+        },
+        {
+            "type": "tetra:spawn_effect_cloud",
+            "effect": "minecraft:instant_damage",
+            "duration": 80,
+            "amplifier": 0,
+            "cloudDuration": 400,
+            "waitTime": 40,
+            "radius": 0.4,
+            "randomOriginDistance": 8
+        },
+        {
+            "type": "tetra:spawn_effect_cloud",
+            "effect": "minecraft:instant_damage",
+            "duration": 80,
+            "amplifier": 0,
+            "cloudDuration": 400,
+            "waitTime": 40,
+            "radius": 0.4,
+            "randomOriginDistance": 8
+        },
+        {
+            "type": "tetra:spawn_effect_cloud",
+            "effect": "minecraft:instant_damage",
+            "duration": 80,
+            "amplifier": 0,
+            "cloudDuration": 400,
+            "waitTime": 40,
+            "radius": 0.4,
+            "randomOriginDistance": 8
+        }
+    ]
+}

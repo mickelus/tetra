@@ -11,7 +11,6 @@ import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.craftingeffect.outcome.CraftingEffectOutcome;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
@@ -52,17 +51,11 @@ public class CraftingEffect {
         return success;
     }
 
-    public record EffectPair(@Nullable CraftingEffectCondition requirement, CraftingEffectOutcome outcome) {
-        public EffectPair {
-            if (requirement == null) {
-                requirement = CraftingEffectCondition.any;
-            }
-        }
+    public CraftingEffectCondition getRequirement() {
+        return requirement;
+    }
 
-        public static EffectPair[] fromEffect(CraftingEffect craftingEffect) {
-            return Arrays.stream(craftingEffect.outcomes)
-                    .map(outcome -> new EffectPair(craftingEffect.requirement, outcome))
-                    .toArray(EffectPair[]::new);
-        }
+    public CraftingEffectOutcome[] getOutcomes() {
+        return outcomes;
     }
 }

@@ -1,0 +1,14 @@
+{
+    "active": false,
+    "outcomes": [
+        {
+            "type": "tetra:spawn_effect_cloud",
+            "effect": "minecraft:speed",
+            "duration": 30,
+            "amplifier": 255,
+            "waitTime": 0,
+            "radius": 4,
+            "randomOriginDistance": 4
+        }
+    ]
+}
