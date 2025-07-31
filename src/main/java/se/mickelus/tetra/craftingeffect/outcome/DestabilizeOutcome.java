@@ -2,6 +2,8 @@ package se.mickelus.tetra.craftingeffect.outcome;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -23,7 +25,7 @@ public class DestabilizeOutcome implements CraftingEffectOutcome {
             boolean consumeResources, ItemStack[] postMaterials) {
         AtomicBoolean success = new AtomicBoolean(false);
 
-        if (consumeResources && upgradedStack.getItem() instanceof IModularItem item) {
+        if (consumeResources && !world.isClientSide && upgradedStack.getItem() instanceof IModularItem item) {
             ItemModule module = item.getModuleFromSlot(upgradedStack, slot);
             if (module != null) {
                 float destabilizationChance = module.getDestabilizationChance(upgradedStack, 1);
@@ -43,6 +45,11 @@ public class DestabilizeOutcome implements CraftingEffectOutcome {
                 }
             }
         }
+
+        if (success.get()) {
+            world.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1f, 0.5f);
+        }
+
         return success.get();
     }
 }
