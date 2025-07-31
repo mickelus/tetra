@@ -42,7 +42,6 @@ public class CraftButtonGui extends GuiClickable {
         label = new GuiStringOutline(0, 1, I18n.get("tetra.workbench.schematic_detail.craft"));
         label.setAttachment(GuiAttachment.middleCenter);
         addChild(label);
-
     }
 
     @Override
@@ -59,8 +58,10 @@ public class CraftButtonGui extends GuiClickable {
             labelColor = GuiColors.normal;
             backdropColor = GuiColors.normal;
 
+            boolean willReplace = schematic.willReplace(itemStack, materials, slot);
             float severity = schematic.getSeverity(itemStack, materials, slot);
-            List<String> destabilizationChance = getDestabilizationChance(previewStack.isEmpty() ? itemStack : previewStack, severity, schematic.willReplace(itemStack, materials, slot) ? slot : null);
+            List<String> destabilizationChance =
+                    getDestabilizationChance(previewStack.isEmpty() ? itemStack : previewStack, severity, willReplace ? slot : null);
 
             if (!destabilizationChance.isEmpty()) {
                 backdropColor = GuiColors.destabilized;
@@ -74,6 +75,7 @@ public class CraftButtonGui extends GuiClickable {
                     .map(item -> item.getRepairSlot(itemStack))
                     .map(repairSlot -> repairSlot.equals(slot))
                     .orElse(false)
+                    && willReplace
                     && itemStack.isDamageableItem()
                     && itemStack.getDamageValue() * 1d / itemStack.getMaxDamage() > 0;
 
@@ -83,8 +85,6 @@ public class CraftButtonGui extends GuiClickable {
                 }
                 tooltip.add(Component.translatable("tetra.workbench.schematic_detail.repair_tooltip"));
             }
-
-
         } else {
             labelColor = GuiColors.muted;
             backdropColor = GuiColors.negative;
