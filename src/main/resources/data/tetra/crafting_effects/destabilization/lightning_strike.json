@@ -1,9 +1,11 @@
 {
+    "replace": true,
     "active": false,
     "outcomes": [
         {
             "type": "tetra:lightning_strike",
-            "randomOriginDistance": 8
+            "randomOriginDistance": 8,
+            "delayTicks": 80
         }
     ]
 }
