@@ -25,6 +25,11 @@
                 "type": "tetra:effect_efficiency",
                 "effect": "exiled"
             }
+        ],
+        "formatters": [
+            { "type": "tetra:basic", "format": "percentage" },
+            { "type": "tetra:basic", "format": "percentage" }
         ]
-    }
+    },
+    "generateSorter": true
 }

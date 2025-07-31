@@ -25,6 +25,10 @@
                 "type": "tetra:effect_efficiency",
                 "effect": "riding"
             }
+        ],
+        "formatters": [
+            { "type": "tetra:basic", "format": "percentage" },
+            { "type": "tetra:basic", "format": "percentage" }
         ]
     },
     "generateSorter": true

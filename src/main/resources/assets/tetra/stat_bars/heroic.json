@@ -27,6 +27,11 @@
                 "type": "tetra:effect_efficiency",
                 "effect": "heroic"
             }
+        ],
+        "formatters": [
+            { "type": "tetra:basic", "format": "percentage" },
+            { "type": "tetra:basic", "format": "percentage" }
         ]
-    }
+    },
+    "generateSorter": true
 }
