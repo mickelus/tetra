@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.effect.potion.UnstablePowerMobEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;

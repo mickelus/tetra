@@ -1,18 +1,22 @@
 {
-    "replace": true,
-    "active": false,
-    "outcomes": [
-        {
-            "type": "tetra:spawn_entity",
-            "entity": {
-                "id": "minecraft:vex",
-                "LifeTicks": 80
-            },
-            "particle": {
-                "type": "minecraft:dust",
-                "color": [ 0.9333, 0.332, 0.59765625 ],
-                "scale": 1.0
-            }
-        }
-    ]
+  "replace": true,
+  "active": false,
+  "outcomes": [
+    {
+      "type": "tetra:spawn_entity",
+      "entity": {
+        "id": "minecraft:vex",
+        "LifeTicks": 80
+      },
+      "particle": {
+        "type": "minecraft:dust",
+        "color": [
+          0.9333,
+          0.332,
+          0.5976
+        ],
+        "scale": 1.0
+      }
+    }
+  ]
 }

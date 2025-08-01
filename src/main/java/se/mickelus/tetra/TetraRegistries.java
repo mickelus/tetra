@@ -43,6 +43,7 @@ import se.mickelus.tetra.advancements.BlockInteractionCriterion;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.advancements.ModuleCraftCriterion;
+import se.mickelus.tetra.blocks.ArcaneFireBlock;
 import se.mickelus.tetra.blocks.InitializableBlock;
 import se.mickelus.tetra.blocks.forged.*;
 import se.mickelus.tetra.blocks.forged.chthonic.*;
@@ -72,11 +73,11 @@ import se.mickelus.tetra.blocks.workbench.gui.WorkbenchStatsGui;
 import se.mickelus.tetra.client.particle.DripParticles;
 import se.mickelus.tetra.client.particle.PlainParticleType;
 import se.mickelus.tetra.client.particle.SweepingStrikeParticleType;
+import se.mickelus.tetra.client.particle.UnstablePowerParticle;
 import se.mickelus.tetra.crafting.ScrollIngredient;
 import se.mickelus.tetra.crafting.ToolActionIngredient;
 import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.*;
-import se.mickelus.tetra.effect.vexing.UnstablePowerMobEffect;
 import se.mickelus.tetra.gui.stats.sorting.StatSorters;
 import se.mickelus.tetra.items.InitializableItem;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
@@ -202,6 +203,9 @@ public class TetraRegistries {
         HolosphereBlock.instance = blocks.register(HolosphereBlock.identifier, HolosphereBlock::new);
         rack = blocks.register(RackBlock.identifier, RackBlock::new);
         registerBlockItem(rack);
+
+        // arcane fire - no block item needed
+        ArcaneFireBlock.instance = blocks.register(ArcaneFireBlock.identifier, ArcaneFireBlock::new);
 
         // scrolls
         RegistryObject<RolledScrollBlock> rolledScroll = blocks.register(RolledScrollBlock.identifier, RolledScrollBlock::new);
@@ -353,6 +357,7 @@ public class TetraRegistries {
         particles.register(SparkleParticleType.identifier, () -> new SimpleParticleType(false));
         particles.register(SweepingStrikeParticleType.identifier, SweepingStrikeParticleType::new);
         particles.register(PlainParticleType.identifier, PlainParticleType::new);
+        UnstablePowerParticle.instance = particles.register(UnstablePowerParticle.identifier, () -> new SimpleParticleType(false));
         DripParticles.fallingBlood = particles.register("falling_blood", () -> new SimpleParticleType(true));
         DripParticles.landingBlood = particles.register("landing_blood", () -> new SimpleParticleType(true));
         DripParticles.fallingSlime = particles.register("falling_slime", () -> new SimpleParticleType(true));

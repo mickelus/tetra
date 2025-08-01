@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import se.mickelus.tetra.util.StreamHelper;
 
@@ -31,18 +32,22 @@ public class CombustingEffect {
     }
 
     public static boolean igniteBlocksAround(Level level, BlockPos origin, int radius, int count, boolean skipCenter, boolean soulfire) {
+        return setBlocksAround(level, origin, radius, count, skipCenter, soulfire ? Blocks.SOUL_FIRE.defaultBlockState() :
+                Blocks.FIRE.defaultBlockState());
+    }
+
+    public static boolean setBlocksAround(Level level, BlockPos origin, int radius, int count, boolean skipCenter, BlockState blockState) {
         AtomicBoolean success = new AtomicBoolean(false);
-        Block fireBlock = soulfire ? Blocks.SOUL_FIRE : Blocks.FIRE;
         BlockPos.withinManhattanStream(origin, radius, radius, radius)
                 .map(BlockPos::new)
                 .filter(blockPos -> !origin.equals(blockPos) || !skipCenter)
                 .collect(StreamHelper.toShuffledList())
                 .stream()
                 .filter(level::isEmptyBlock)
-                .filter(blockPos -> soulfire && canSoulfireSpawn(level, blockPos) || !soulfire && fireBlock.canSurvive(fireBlock.defaultBlockState(), level, blockPos))
+                .filter(blockPos -> blockState.canSurvive(level, blockPos))
                 .limit(count)
                 .forEach(blockPos -> {
-                    if (level.setBlock(blockPos, fireBlock.defaultBlockState(), 2)) {
+                    if (level.setBlock(blockPos, blockState, Block.UPDATE_ALL)) {
                         success.set(true);
                     }
                 });

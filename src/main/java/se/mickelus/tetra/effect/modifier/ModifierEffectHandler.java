@@ -10,7 +10,7 @@ import se.mickelus.tetra.data.ModifierEffectStore;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 import se.mickelus.tetra.effect.data.ItemEffectData;
-import se.mickelus.tetra.effect.vexing.UnstablePowerMobEffect;
+import se.mickelus.tetra.effect.potion.UnstablePowerMobEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 

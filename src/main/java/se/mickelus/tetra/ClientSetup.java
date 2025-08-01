@@ -90,6 +90,7 @@ public class ClientSetup {
         event.registerSpriteSet(DripParticles.landingBlood.get(), DripParticles.LandingBloodProvider::new);
         event.registerSpriteSet(DripParticles.fallingSlime.get(), DripParticles.FallingSlimeProvider::new);
         event.registerSpriteSet(DripParticles.landingSlime.get(), DripParticles.LandingSlimeProvider::new);
+        event.registerSpriteSet(UnstablePowerParticle.instance.get(), UnstablePowerParticle::new);
     }
 
     @SubscribeEvent
