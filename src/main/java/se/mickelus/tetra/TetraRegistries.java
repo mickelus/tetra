@@ -76,7 +76,7 @@ import se.mickelus.tetra.crafting.ScrollIngredient;
 import se.mickelus.tetra.crafting.ToolActionIngredient;
 import se.mickelus.tetra.effect.howling.HowlingPotionEffect;
 import se.mickelus.tetra.effect.potion.*;
-import se.mickelus.tetra.effect.vexing.RetakenMobEffect;
+import se.mickelus.tetra.effect.vexing.UnstablePowerMobEffect;
 import se.mickelus.tetra.gui.stats.sorting.StatSorters;
 import se.mickelus.tetra.items.InitializableItem;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
@@ -109,18 +109,23 @@ import java.util.List;
 public class TetraRegistries {
     public static final DeferredRegister<Block> blocks = DeferredRegister.create(ForgeRegistries.BLOCKS, TetraMod.MOD_ID);
     public static final DeferredRegister<Item> items = DeferredRegister.create(ForgeRegistries.ITEMS, TetraMod.MOD_ID);
-    public static final DeferredRegister<BlockEntityType<?>> blockEntities = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TetraMod.MOD_ID);
+    public static final DeferredRegister<BlockEntityType<?>> blockEntities = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES,
+            TetraMod.MOD_ID);
     public static final DeferredRegister<MenuType<?>> containers = DeferredRegister.create(ForgeRegistries.MENU_TYPES, TetraMod.MOD_ID);
     public static final DeferredRegister<EntityType<?>> entities = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, TetraMod.MOD_ID);
     public static final DeferredRegister<ParticleType<?>> particles = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, TetraMod.MOD_ID);
     public static final DeferredRegister<MobEffect> effects = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, TetraMod.MOD_ID);
 
     public static final DeferredRegister<SoundEvent> sounds = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, TetraMod.MOD_ID);
-    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> lootModifiers = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, TetraMod.MOD_ID);
+    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> lootModifiers =
+            DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, TetraMod.MOD_ID);
 
-    public static final DeferredRegister<LootItemConditionType> lootConditions = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE, TetraMod.MOD_ID);
-    public static final DeferredRegister<LootItemFunctionType> lootFunctions = DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE, TetraMod.MOD_ID);
-    public static final DeferredRegister<StructureProcessorType<?>> structureProcessors = DeferredRegister.create(Registries.STRUCTURE_PROCESSOR, TetraMod.MOD_ID);
+    public static final DeferredRegister<LootItemConditionType> lootConditions = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE,
+            TetraMod.MOD_ID);
+    public static final DeferredRegister<LootItemFunctionType> lootFunctions = DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE,
+            TetraMod.MOD_ID);
+    public static final DeferredRegister<StructureProcessorType<?>> structureProcessors = DeferredRegister.create(Registries.STRUCTURE_PROCESSOR,
+            TetraMod.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> creativeTabs = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TetraMod.MOD_ID);
 
     public static final TagKey<Block> forgeHammerBreakTag = BlockTags.create(new ResourceLocation("tetra:needs_forge_hammer_tool"));
@@ -388,7 +393,7 @@ public class TetraRegistries {
         effects.register(SmallAbsorbPotionEffect.identifier, SmallAbsorbPotionEffect::new);
         effects.register(SuspendPotionEffect.identifier, SuspendPotionEffect::new);
         effects.register(MiningSpeedPotionEffect.identifier, MiningSpeedPotionEffect::new);
-        effects.register(RetakenMobEffect.identifier, RetakenMobEffect::new);
+        effects.register(UnstablePowerMobEffect.identifier, UnstablePowerMobEffect::new);
         effects.register(SatiatedPotionEffect.identifier, SatiatedPotionEffect::new);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -400,12 +405,14 @@ public class TetraRegistries {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // LOOT CONDITIONS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        FortuneBonusCondition.type = lootConditions.register(FortuneBonusCondition.identifier, () -> new LootItemConditionType(new FortuneBonusCondition.ConditionSerializer()));
+        FortuneBonusCondition.type = lootConditions.register(FortuneBonusCondition.identifier,
+                () -> new LootItemConditionType(new FortuneBonusCondition.ConditionSerializer()));
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // LOOT FUNCTIONS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ScrollDataFunction.type = lootFunctions.register(ScrollDataFunction.identifier, () -> new LootItemFunctionType(new ScrollDataFunction.Serializer()));
+        ScrollDataFunction.type = lootFunctions.register(ScrollDataFunction.identifier,
+                () -> new LootItemFunctionType(new ScrollDataFunction.Serializer()));
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // LOOT MODIFIERS

@@ -10,7 +10,7 @@ import se.mickelus.tetra.data.ModifierEffectStore;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 import se.mickelus.tetra.effect.data.ItemEffectData;
-import se.mickelus.tetra.effect.vexing.RetakenMobEffect;
+import se.mickelus.tetra.effect.vexing.UnstablePowerMobEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
@@ -34,7 +34,8 @@ public class ModifierEffectHandler {
                             context = new ItemEffectContext(event.getEntity(), itemStack, event.getEntity().level())
                                     .withNumbers(ImmutableMap.of("unmodifiedSpeed", event.getOriginalSpeed(), "speed", event.getNewSpeed()))
                                     .withEntities(ImmutableMap.of("miner", event.getEntity()))
-                                    .withVectors(ImmutableMap.of("target", event.getPosition().map(Vec3::atLowerCornerOf).orElse(event.getEntity().position())));
+                                    .withVectors(ImmutableMap.of("target",
+                                            event.getPosition().map(Vec3::atLowerCornerOf).orElse(event.getEntity().position())));
                         }
 
                         for (ModifierEffect effect : presentEffects) {
@@ -59,8 +60,8 @@ public class ModifierEffectHandler {
     }
 
     public static void onLivingDamage(ItemStack itemStack, LivingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity livingEntity && livingEntity.hasEffect(RetakenMobEffect.instance)) {
-            event.setAmount(event.getAmount() * (1.1f + livingEntity.getEffect(RetakenMobEffect.instance).getAmplifier() * 0.1f));
+        if (event.getSource().getEntity() instanceof LivingEntity livingEntity && livingEntity.hasEffect(UnstablePowerMobEffect.instance)) {
+            event.setAmount(event.getAmount() * (1.1f + livingEntity.getEffect(UnstablePowerMobEffect.instance).getAmplifier() * 0.1f));
         }
     }
 }

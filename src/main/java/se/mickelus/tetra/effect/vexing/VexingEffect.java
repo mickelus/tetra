@@ -28,7 +28,7 @@ public class VexingEffect {
             .build();
 
     private static boolean isInTimeout(LivingEntity entity) {
-        return entity.hasEffect(RetakenMobEffect.instance)
+        return entity.hasEffect(UnstablePowerMobEffect.instance)
                 || Optional.of(entity.getUUID())
                 .map(currentVexCache::getIfPresent)
                 .map(entity.level()::getEntity)
@@ -72,7 +72,7 @@ public class VexingEffect {
     public static void onLivingDeath(Entity killedEntity, Entity killer) {
         short effectLevel = killedEntity.getPersistentData().getShort(dataKey);
         if (effectLevel > 0 && killer instanceof LivingEntity livingKiller) {
-            livingKiller.addEffect(new MobEffectInstance(RetakenMobEffect.instance, 320, effectLevel - 1, false, false, true));
+            livingKiller.addEffect(new MobEffectInstance(UnstablePowerMobEffect.instance, 320, effectLevel - 1, false, false, true));
         }
     }
 }

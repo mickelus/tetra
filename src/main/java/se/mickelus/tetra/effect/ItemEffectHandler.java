@@ -49,7 +49,7 @@ import se.mickelus.tetra.effect.potion.BleedingPotionEffect;
 import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
-import se.mickelus.tetra.effect.vexing.RetakenMobEffect;
+import se.mickelus.tetra.effect.vexing.UnstablePowerMobEffect;
 import se.mickelus.tetra.effect.vexing.VexingEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -174,7 +174,8 @@ public class ItemEffectHandler {
                         if (event.getSource().getDirectEntity() instanceof LivingEntity attacker) {
                             if (item.getEffectLevel(itemStack, ItemEffect.blockingReflect) > attacker.getRandom().nextFloat() * 100) {
                                 attacker.hurt(event.getEntity().damageSources().thorns(event.getEntity()),
-                                        (float) (item.getAbilityBaseDamage(itemStack) * item.getEffectEfficiency(itemStack, ItemEffect.blockingReflect)));
+                                        (float) (item.getAbilityBaseDamage(itemStack) * item.getEffectEfficiency(itemStack,
+                                                ItemEffect.blockingReflect)));
                                 applyHitEffects(itemStack, attacker, blocker);
                                 EffectHelper.applyEnchantmentHitEffects(itemStack, attacker, blocker);
 
@@ -236,7 +237,8 @@ public class ItemEffectHandler {
                     .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
                     .forEach(itemStack -> {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
-                        if (item.getAttributeValue(itemStack, Attributes.ARMOR) > 0 || item.getAttributeValue(itemStack, Attributes.ARMOR_TOUGHNESS) > 0) {
+                        if (item.getAttributeValue(itemStack, Attributes.ARMOR) > 0 || item.getAttributeValue(itemStack,
+                                Attributes.ARMOR_TOUGHNESS) > 0) {
                             int reducedAmount = (int) Math.ceil(event.getAmount() - CombatRules.getDamageAfterAbsorb(event.getAmount(),
                                     (float) event.getEntity().getArmorValue(),
                                     (float) event.getEntity().getAttribute(Attributes.ARMOR_TOUGHNESS).getValue()));
@@ -276,7 +278,7 @@ public class ItemEffectHandler {
                 .ifPresent(player -> FocusEffect.onLivingDamage(event));
 
         ArmorPenetrationEffect.onLivingDamage(event);
-        RetakenMobEffect.onLivingDamage(event);
+        UnstablePowerMobEffect.onLivingDamage(event);
     }
 
     @SubscribeEvent
@@ -302,7 +304,8 @@ public class ItemEffectHandler {
             if (!level.isClientSide) {
                 int jankLevel = getEffectLevel(itemStack, ItemEffect.janking);
                 if (jankLevel > 0) {
-                    JankEffect.jankItemsDelayed((ServerLevel) level, event.getEntity().blockPosition(), jankLevel, getEffectEfficiency(itemStack, ItemEffect.janking), killer);
+                    JankEffect.jankItemsDelayed((ServerLevel) level, event.getEntity().blockPosition(), jankLevel, getEffectEfficiency(itemStack,
+                            ItemEffect.janking), killer);
                 }
 
                 VexingEffect.onLivingDeath(event.getEntity(), killer);
@@ -430,7 +433,7 @@ public class ItemEffectHandler {
     public void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         ExhaustedPotionEffect.onBreakSpeed(event);
         ReachingEffect.onBreakSpeed(event);
-        RetakenMobEffect.onBreakSpeed(event);
+        UnstablePowerMobEffect.onBreakSpeed(event);
         ModifierEffectHandler.onBreakSpeed(event);
     }
 
