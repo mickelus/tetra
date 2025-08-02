@@ -124,7 +124,7 @@ public class TetraMod {
         CraftingEffectRegistry.registerEffectType("tetra:explosion", ExplosionOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:spawn_effect_cloud", SpawnEffectCloudOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:spawn_entity", SpawnEntityOutcome.class);
-        CraftingEffectRegistry.registerEffectType("tetra:spawn_fire", SpawnFireOutcome.class);
+        CraftingEffectRegistry.registerEffectType("tetra:set_blocks", SetBlocksOutcome.class);
         CraftingEffectRegistry.registerEffectType("tetra:lightning_strike", LightningStrikeOutcome.class);
 
         new RepairRegistry();
