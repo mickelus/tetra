@@ -19,6 +19,7 @@ import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicScrollPacket;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
+import se.mickelus.tetra.client.particle.SpawnParticlesPacket;
 import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.crafting.GrindstoneMergeHandler;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
@@ -246,6 +247,7 @@ public class TetraMod {
         packetHandler.registerPacket(LungeEchoPacket.class, LungeEchoPacket::new);
         packetHandler.registerPacket(MultiblockSchematicScrollPacket.class, MultiblockSchematicScrollPacket::new);
         packetHandler.registerPacket(SecondaryInteractionPacket.class, SecondaryInteractionPacket::new);
+        packetHandler.registerPacket(SpawnParticlesPacket.class, SpawnParticlesPacket::new);
 
         WorkbenchTile.init(packetHandler);
 

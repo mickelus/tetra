@@ -27,7 +27,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.RegistryObject;
 import org.joml.Vector3f;
-import se.mickelus.tetra.client.particle.UnstablePowerParticle;
+import se.mickelus.tetra.client.particle.ArcaneFireParticle;
 import se.mickelus.tetra.effect.potion.UnstablePowerMobEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -156,7 +156,7 @@ public class ArcaneFireBlock extends BaseFireBlock {
                     x + random.nextDouble(), y + random.nextDouble() * 0.5 + 0.5, z + random.nextDouble(), 0, 0, 0);
         }
 
-        level.addParticle(UnstablePowerParticle.instance.get(),
+        level.addParticle(ArcaneFireParticle.instance.get(),
                 x + 0.5f + random.nextGaussian() * 0.7f, y, z + 0.5 + random.nextGaussian() * 0.7f,
                 x + 0.5, y + random.nextDouble(), z + 0.5f);
     }
