@@ -4,7 +4,6 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.item.ItemStack;
@@ -73,7 +72,7 @@ public class VexingEffect {
     public static void onLivingDeath(Entity killedEntity, Entity killer) {
         short effectLevel = killedEntity.getPersistentData().getShort(dataKey);
         if (effectLevel > 0 && killer instanceof LivingEntity livingKiller) {
-            livingKiller.addEffect(new MobEffectInstance(UnstablePowerMobEffect.instance, 320, effectLevel - 1, false, false, true));
+            UnstablePowerMobEffect.addOrUpdate(livingKiller, 1200, effectLevel - 1);
         }
     }
 }

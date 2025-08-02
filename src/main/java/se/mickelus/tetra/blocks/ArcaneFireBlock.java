@@ -103,7 +103,7 @@ public class ArcaneFireBlock extends BaseFireBlock {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         int factor = BlockStateProperties.MAX_AGE_15 - state.getValue(ageProperty) + 1;
-        UnstablePowerMobEffect.addOrUpdate(player, factor * 40, 0);
+        UnstablePowerMobEffect.addOrUpdate(player, factor * 20, 0);
         return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
 
@@ -112,7 +112,7 @@ public class ArcaneFireBlock extends BaseFireBlock {
         entity.hurt(level.damageSources().inFire(), 0.5f);
 
         if (!level.isClientSide() && level.getGameTime() % 10 == 0 && entity instanceof LivingEntity livingEntity) {
-            UnstablePowerMobEffect.addOrUpdate(livingEntity, 80, level.random.nextInt(16) == 0 ? 1 : 0);
+            UnstablePowerMobEffect.addOrUpdate(livingEntity, 40, level.random.nextInt(16) == 0 ? 1 : 0);
             drainOrExtinguish(state, level, pos);
         }
     }

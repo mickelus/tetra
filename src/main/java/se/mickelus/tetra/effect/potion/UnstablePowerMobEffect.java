@@ -52,6 +52,7 @@ public class UnstablePowerMobEffect extends MobEffect {
                 if (current.getDuration() >= splinterTreshhold) {
                     RandomSource random = entity.level().getRandom();
                     findSplinterPosition(entity.level(), entity.blockPosition()).ifPresent(blockPos -> {
+                        // offset duration drain by 1 or the tick handler applies twice
                         if (current.getAmplifier() > 0 && random.nextInt(4) == 0) {
                             addOrUpdate(entity, -1, -1);
                         } else {
@@ -59,7 +60,8 @@ public class UnstablePowerMobEffect extends MobEffect {
                         }
                         TetraMod.packetHandler.sendToAllPlayersNear(new SpawnParticlesPacket(
                                         entity.getX(), entity.getY(0.5f), entity.getZ(),
-                                        blockPos.getX() + 0.5f, blockPos.getY(), blockPos.getZ() + 0.5f, false, 8, SplinteredPowerParticle.instance.get()),
+                                        blockPos.getX() + 0.5f, blockPos.getY(), blockPos.getZ() + 0.5f, false, 8,
+                                        SplinteredPowerParticle.instance.get()),
                                 entity.blockPosition(), 64, entity.level().dimension());
 
                         ServerScheduler.schedule(40, () -> spawnDust(entity.level(), blockPos, 0.5f));
@@ -67,7 +69,8 @@ public class UnstablePowerMobEffect extends MobEffect {
 
                         entity.level().playSound(null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.8f, 1.2f);
 
-                        ServerScheduler.schedule(80, () -> entity.level().setBlock(blockPos, ArcaneFireBlock.instance.get().defaultBlockState(), Block.UPDATE_ALL));
+                        ServerScheduler.schedule(80, () -> entity.level().setBlock(blockPos, ArcaneFireBlock.instance.get().defaultBlockState(),
+                                Block.UPDATE_ALL));
                     });
                 }
             }
