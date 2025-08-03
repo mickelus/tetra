@@ -25,9 +25,15 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.RegistryObject;
 import org.joml.Vector3f;
+import se.mickelus.tetra.ServerScheduler;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.client.particle.ArcaneFireParticle;
+import se.mickelus.tetra.client.particle.SpawnParticlesPacket;
+import se.mickelus.tetra.client.particle.SplinteredPowerParticle;
+import se.mickelus.tetra.client.particle.SputteringPowerParticle;
 import se.mickelus.tetra.effect.potion.UnstablePowerMobEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -40,16 +46,43 @@ public class ArcaneFireBlock extends BaseFireBlock {
 
     public ArcaneFireBlock() {
         super(BlockBehaviour.Properties.of()
-            .noCollission()
-            .instabreak()
-            .replaceable()
-            .lightLevel(state -> 8)
-            .sound(net.minecraft.world.level.block.SoundType.WOOL)
-            .noOcclusion()
-            .noLootTable()
-            .pushReaction(PushReaction.DESTROY), 0);
+                .noCollission()
+                .instabreak()
+                .replaceable()
+                .lightLevel(state -> 8)
+                .sound(net.minecraft.world.level.block.SoundType.WOOL)
+                .noOcclusion()
+                .noLootTable()
+                .pushReaction(PushReaction.DESTROY), 0);
 
         registerDefaultState(stateDefinition.any().setValue(ageProperty, 0));
+    }
+
+    public static void spawnDelayed(ServerLevel level, BlockPos blockPos, Vec3 origin) {
+        TetraMod.packetHandler.sendToAllPlayersNear(new SpawnParticlesPacket(
+                        origin.x(), origin.y(), origin.z(),
+                        blockPos.getX() + 0.5f, blockPos.getY(), blockPos.getZ() + 0.5f, false, 8,
+                        SplinteredPowerParticle.instance.get()),
+                blockPos, 64, level.dimension());
+
+        ServerScheduler.schedule(40, () -> spawnDust(level, blockPos, 0.5f));
+        ServerScheduler.schedule(38, () -> level.playSound(null, blockPos, SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.1f, 0.6f));
+        ServerScheduler.schedule(55, () -> spawnDust(level, blockPos, 0.2f));
+        ServerScheduler.schedule(52, () -> level.playSound(null, blockPos, SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.15f, 0.8f));
+
+        level.playSound(null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.8f, 1.2f);
+        ServerScheduler.schedule(80, () -> level.playSound(null, blockPos, SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 0.2f, 1f));
+
+        ServerScheduler.schedule(80, () -> level.setBlock(blockPos, ArcaneFireBlock.instance.get().defaultBlockState(),
+                Block.UPDATE_ALL));
+    }
+
+    private static void spawnDust(Level level, BlockPos pos, float spread) {
+        RandomSource random = level.getRandom();
+        ((ServerLevel) level).sendParticles(
+                new DustColorTransitionOptions(new Vector3f(1, 0.5f, 0.725f), new Vector3f(1, 0.738f, 0.578f), 0.8f + random.nextFloat() * 0.4f),
+                pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                8, spread, spread, spread, 0.1);
     }
 
     @Override
@@ -75,7 +108,7 @@ public class ArcaneFireBlock extends BaseFireBlock {
 
     @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos,
-        BlockPos neighborPos) {
+            BlockPos neighborPos) {
         if (!canSurvive(state, level, currentPos)) {
             return Blocks.AIR.defaultBlockState();
         }
@@ -104,6 +137,9 @@ public class ArcaneFireBlock extends BaseFireBlock {
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         int factor = BlockStateProperties.MAX_AGE_15 - state.getValue(ageProperty) + 1;
         UnstablePowerMobEffect.addOrUpdate(player, factor * 20, 0);
+        if (!level.isClientSide()) {
+            SputteringPowerParticle.addParticles((ServerLevel) level, pos.getX() + 0.5f, pos.getY() + 0.2f, pos.getZ() + 0.5f, player, Math.max(4, factor));
+        }
         return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
 
@@ -146,18 +182,18 @@ public class ArcaneFireBlock extends BaseFireBlock {
         double z = pos.getZ();
         if (random.nextInt(24) == 0) {
             level.playLocalSound(x + 0.5, y + 0.5, z + 0.5,
-                SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS, 0.6f + random.nextFloat() * 0.4f,
-                random.nextFloat() * 0.7f + 0.5f, false);
+                    SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS, 0.6f + random.nextFloat() * 0.4f,
+                    random.nextFloat() * 0.7f + 0.5f, false);
         }
 
         for (int i = 0; i < 4; ++i) {
             level.addParticle(new DustColorTransitionOptions(new Vector3f(1, 0.5f, 0.725f), new Vector3f(1, 0.738f, 0.578f),
-                    0.8f + random.nextFloat() * 0.4f),
-                x + random.nextDouble(), y + random.nextDouble() * 0.5 + 0.5, z + random.nextDouble(), 0, 0, 0);
+                            0.8f + random.nextFloat() * 0.4f),
+                    x + random.nextDouble(), y + random.nextDouble() * 0.5 + 0.5, z + random.nextDouble(), 0, 0, 0);
         }
 
         level.addParticle(ArcaneFireParticle.instance.get(),
-            x + 0.5f + random.nextGaussian() * 0.7f, y, z + 0.5 + random.nextGaussian() * 0.7f,
-            x + 0.5, y + random.nextDouble(), z + 0.5f);
+                x + 0.5f + random.nextGaussian() * 0.7f, y, z + 0.5 + random.nextGaussian() * 0.7f,
+                x + 0.5, y + random.nextDouble(), z + 0.5f);
     }
 }

@@ -92,6 +92,7 @@ public class ClientSetup {
         event.registerSpriteSet(DripParticles.landingSlime.get(), DripParticles.LandingSlimeProvider::new);
         event.registerSpriteSet(ArcaneFireParticle.instance.get(), ArcaneFireParticle::new);
         event.registerSpriteSet(SplinteredPowerParticle.instance.get(), SplinteredPowerParticle::new);
+        event.registerSpriteSet(SputteringPowerParticle.instance.get(), SputteringPowerParticle::new);
     }
 
     @SubscribeEvent

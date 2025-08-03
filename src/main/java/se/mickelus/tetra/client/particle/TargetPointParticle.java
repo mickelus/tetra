@@ -20,13 +20,8 @@ public class TargetPointParticle extends TextureSheetParticle {
 
     List<Vector3f> colors;
 
-    TargetPointParticle(ClientLevel level, double x, double y, double z, double tarX, double tarY, double tarZ, SpriteSet spriteSet) {
-        this(level, x, y, z, tarX, tarY, tarZ, 0.99f, 0.01f, 40, spriteSet);
-    }
-
     TargetPointParticle(ClientLevel level, double x, double y, double z, double tarX, double tarY, double tarZ, float friction, float gravity,
-            int delay,
-            SpriteSet spriteSet) {
+            int delay, SpriteSet spriteSet) {
         super(level, x, y, z);
         this.gravity = gravity;
         this.friction = friction;

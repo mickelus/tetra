@@ -356,6 +356,7 @@ public class TetraRegistries {
         particles.register(PlainParticleType.identifier, PlainParticleType::new);
         ArcaneFireParticle.instance = particles.register(ArcaneFireParticle.identifier, () -> new SimpleParticleType(false));
         SplinteredPowerParticle.instance = particles.register(SplinteredPowerParticle.identifier, () -> new SimpleParticleType(false));
+        SputteringPowerParticle.instance = particles.register(SputteringPowerParticle.identifier, () -> new SimpleParticleType(false));
         DripParticles.fallingBlood = particles.register("falling_blood", () -> new SimpleParticleType(true));
         DripParticles.landingBlood = particles.register("landing_blood", () -> new SimpleParticleType(true));
         DripParticles.fallingSlime = particles.register("falling_slime", () -> new SimpleParticleType(true));
