@@ -1,22 +1,30 @@
 {
-  "replace": true,
-  "active": false,
-  "outcomes": [
-    {
-      "type": "tetra:spawn_entity",
-      "entity": {
-        "id": "minecraft:vex",
-        "LifeTicks": 80
-      },
-      "particle": {
-        "type": "minecraft:dust",
-        "color": [
-          0.9333,
-          0.332,
-          0.5976
-        ],
-        "scale": 1.0
-      }
-    }
-  ]
+    "replace": true,
+    "active": false,
+    "outcomes": [
+        {
+            "type": "tetra:spawn_entity",
+            "entity": {
+                "id": "minecraft:vex",
+                "LifeTicks": 80,
+                "ActiveEffects": [
+                    {
+                        "forge:id": "tetra:unstable_power",
+                        "ShowParticles": false,
+                        "Duration": 1799,
+                        "Amplifier": 1
+                    }
+                ]
+            },
+            "particle": {
+                "type": "minecraft:dust",
+                "color": [
+                    0.9333,
+                    0.332,
+                    0.5976
+                ],
+                "scale": 1.0
+            }
+        }
+    ]
 }

@@ -63,7 +63,7 @@
             "destabilized": 5
         },
         "effects": {
-            "vexing": [ 5, 2.5 ]
+            "vexing": [ 5, 50 ]
         },
         "glyph": {
             "tint": "ee5599"

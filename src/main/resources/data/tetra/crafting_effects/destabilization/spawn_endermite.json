@@ -6,7 +6,15 @@
             "type": "tetra:spawn_entity",
             "entity": {
                 "id": "minecraft:endermite",
-                "Lifetime": 1200
+                "Lifetime": 1200,
+                "ActiveEffects": [
+                    {
+                        "forge:id": "tetra:unstable_power",
+                        "ShowParticles": false,
+                        "Duration": 1499,
+                        "Amplifier": 0
+                    }
+                ]
             },
             "particle": {
                 "type": "minecraft:portal"

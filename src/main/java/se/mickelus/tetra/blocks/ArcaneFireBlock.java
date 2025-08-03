@@ -40,14 +40,14 @@ public class ArcaneFireBlock extends BaseFireBlock {
 
     public ArcaneFireBlock() {
         super(BlockBehaviour.Properties.of()
-                .noCollission()
-                .instabreak()
-                .replaceable()
-                .lightLevel(state -> 8)
-                .sound(net.minecraft.world.level.block.SoundType.WOOL)
-                .noOcclusion()
-                .noLootTable()
-                .pushReaction(PushReaction.DESTROY), 0);
+            .noCollission()
+            .instabreak()
+            .replaceable()
+            .lightLevel(state -> 8)
+            .sound(net.minecraft.world.level.block.SoundType.WOOL)
+            .noOcclusion()
+            .noLootTable()
+            .pushReaction(PushReaction.DESTROY), 0);
 
         registerDefaultState(stateDefinition.any().setValue(ageProperty, 0));
     }
@@ -75,7 +75,7 @@ public class ArcaneFireBlock extends BaseFireBlock {
 
     @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos,
-            BlockPos neighborPos) {
+        BlockPos neighborPos) {
         if (!canSurvive(state, level, currentPos)) {
             return Blocks.AIR.defaultBlockState();
         }
@@ -112,7 +112,7 @@ public class ArcaneFireBlock extends BaseFireBlock {
         entity.hurt(level.damageSources().inFire(), 0.5f);
 
         if (!level.isClientSide() && level.getGameTime() % 10 == 0 && entity instanceof LivingEntity livingEntity) {
-            UnstablePowerMobEffect.addOrUpdate(livingEntity, 40, level.random.nextInt(16) == 0 ? 1 : 0);
+            UnstablePowerMobEffect.addOrUpdate(livingEntity, 30, level.random.nextFloat() < 0.04f ? 1 : 0);
             drainOrExtinguish(state, level, pos);
         }
     }
@@ -146,18 +146,18 @@ public class ArcaneFireBlock extends BaseFireBlock {
         double z = pos.getZ();
         if (random.nextInt(24) == 0) {
             level.playLocalSound(x + 0.5, y + 0.5, z + 0.5,
-                    SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS, 0.6f + random.nextFloat() * 0.4f,
-                    random.nextFloat() * 0.7f + 0.5f, false);
+                SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS, 0.6f + random.nextFloat() * 0.4f,
+                random.nextFloat() * 0.7f + 0.5f, false);
         }
 
         for (int i = 0; i < 4; ++i) {
             level.addParticle(new DustColorTransitionOptions(new Vector3f(1, 0.5f, 0.725f), new Vector3f(1, 0.738f, 0.578f),
-                            0.8f + random.nextFloat() * 0.4f),
-                    x + random.nextDouble(), y + random.nextDouble() * 0.5 + 0.5, z + random.nextDouble(), 0, 0, 0);
+                    0.8f + random.nextFloat() * 0.4f),
+                x + random.nextDouble(), y + random.nextDouble() * 0.5 + 0.5, z + random.nextDouble(), 0, 0, 0);
         }
 
         level.addParticle(ArcaneFireParticle.instance.get(),
-                x + 0.5f + random.nextGaussian() * 0.7f, y, z + 0.5 + random.nextGaussian() * 0.7f,
-                x + 0.5, y + random.nextDouble(), z + 0.5f);
+            x + 0.5f + random.nextGaussian() * 0.7f, y, z + 0.5 + random.nextGaussian() * 0.7f,
+            x + 0.5, y + random.nextDouble(), z + 0.5f);
     }
 }
