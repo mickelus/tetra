@@ -185,6 +185,7 @@ public class TetraMod {
         ItemEffectOutcome.register("tetra:entity_property", EntityPropertyItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:loop", LoopItemEffectOutcome.class);
         ItemEffectOutcome.register("tetra:imitate", ImitateItemEffectOutcome.class);
+        ItemEffectOutcome.register("tetra:spawn_entity", SpawnEntityItemEffectOutcome.class);
 
         NumberProvider.register("tetra:expression", ExpressionNumberProvider::deserialize);
         NumberProvider.register("tetra:fixed", FixedNumberProvider.class);
