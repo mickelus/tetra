@@ -50,7 +50,6 @@ import se.mickelus.tetra.effect.potion.EarthboundPotionEffect;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.potion.UnstablePowerMobEffect;
 import se.mickelus.tetra.effect.revenge.RevengeTracker;
-import se.mickelus.tetra.effect.vexing.VexingEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
@@ -308,7 +307,7 @@ public class ItemEffectHandler {
                             ItemEffect.janking), killer);
                 }
 
-                VexingEffect.onLivingDeath(event.getEntity(), killer);
+                UnstablePowerMobEffect.onLivingDeath(event.getEntity(), killer);
             }
         }
     }
