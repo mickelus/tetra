@@ -7,7 +7,7 @@
             "destabilized": 1
         },
         "effects": {
-            "combusting": [ 2, 5 ]
+            "combusting": [ 2, 4 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -21,7 +21,7 @@
             "destabilized": 2
         },
         "effects": {
-            "combusting": [ 3, 5 ]
+            "combusting": [ 3, 4 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -35,7 +35,7 @@
             "destabilized": 3
         },
         "effects": {
-            "combusting": [ 4, 5 ]
+            "combusting": [ 4, 4 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -49,7 +49,7 @@
             "destabilized": 4
         },
         "effects": {
-            "combusting": [ 5, 5 ]
+            "combusting": [ 5, 4 ]
         },
         "glyph": {
             "tint": "ee5599"
@@ -63,7 +63,7 @@
             "destabilized": 5
         },
         "effects": {
-            "combusting": [ 6, 5 ]
+            "combusting": [ 6, 4 ]
         },
         "glyph": {
             "tint": "ee5599"

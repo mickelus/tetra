@@ -5,6 +5,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import se.mickelus.tetra.blocks.ArcaneFireBlock;
 import se.mickelus.tetra.util.StreamHelper;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -21,7 +23,9 @@ public class CombustingEffect {
         if (!entity.level().isClientSide) {
             int effectLevel = (int) Math.round(EffectHelper.getEffectLevel(itemStack, ItemEffect.combusting) * multiplier);
             if (effectLevel > 0 && entity.getRandom().nextFloat() < EffectHelper.getEffectEfficiency(itemStack, ItemEffect.combusting) / 100) {
-                if (igniteBlocksAround(entity.level(), entity.blockPosition(), 4, effectLevel, true, false)) {
+                boolean regularSuccess = igniteBlocksAround(entity.level(), entity.blockPosition(), 4, Mth.floor(effectLevel / 2f), true, false);
+                boolean arcaneSuccess = setBlocksAround(entity.level(), entity.blockPosition(), 4, Mth.ceil(effectLevel / 2f), true, ArcaneFireBlock.instance.get().defaultBlockState());
+                if (regularSuccess || arcaneSuccess) {
                     Vec3 pos = entity.blockPosition().getCenter();
                     ((ServerLevel) entity.level()).sendParticles(ParticleTypes.LAVA, pos.x, pos.y, pos.z, 2, 0, 0, 0, 0.06f);
                     ((ServerLevel) entity.level()).sendParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, 2, 0, 0, 0, 0);
