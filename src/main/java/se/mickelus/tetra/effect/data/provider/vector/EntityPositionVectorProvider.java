@@ -8,6 +8,8 @@ public class EntityPositionVectorProvider implements VectorProvider {
     private EntityProvider entity;
     private Origin origin = Origin.feet;
 
+    public EntityPositionVectorProvider() {}
+
     public EntityPositionVectorProvider(EntityProvider entity) {
         this.entity = entity;
     }
