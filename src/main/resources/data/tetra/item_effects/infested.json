@@ -1,0 +1,63 @@
+{
+    "trigger": "tetra:on_use",
+    "effect": "infested",
+    "data": {
+        "numbers": {
+            "effectLevel": {
+                "type": "tetra:effect_level",
+                "effect": "infested"
+            }
+        },
+        "vectors": {
+            "origin": {
+                "type": "tetra:entity_position",
+                "entity": "user"
+            }
+        }
+    },
+    "outcome": {
+        "type": "tetra:find_blocks",
+        "origin": "origin",
+        "bounds": [ -5, -2, -5, 5, 3, 5 ],
+        "solidBelow": true,
+        "random": true,
+        "count": 1,
+        "outcome": {
+            "type": "tetra:multiple",
+            "outcomes": [
+                {
+                    "type": "tetra:particle",
+                    "particle": {
+                        "type": "minecraft:portal"
+                    },
+                    "count": 8,
+                    "position": {
+                        "type": "tetra:expression",
+                        "result": [ "refX + 0.5", "refY + 0.5", "refZ + 0.5" ]
+                    },
+                    "spread": [ 0, 0, 0 ],
+                    "speed": 0
+                },
+                {
+                    "type": "tetra:spawn_entity",
+                    "entity": {
+                        "id": "minecraft:endermite",
+                        "Lifetime": 800
+                    },
+                    "position": {
+                        "type": "tetra:expression",
+                        "result": [ "refX + 0.5", "refY", "refZ + 0.5" ]
+                    },
+                    "outcome": {
+                        "type": "tetra:apply_effect",
+                        "effect": "tetra:unstable_power",
+                        "entity": "spawnedEntity",
+                        "visible": false,
+                        "duration": 1499,
+                        "amplifier": "effectLevel"
+                    }
+                }
+            ]
+        }
+    }
+}

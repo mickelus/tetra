@@ -1,0 +1,53 @@
+{
+    "type": "tetra:default",
+    "key": "tetra.stats.infested",
+    "contexts": [ "tetra:workbench" ],
+    "min": 0,
+    "max": 100,
+    "stat": {
+        "type": "tetra:multiply",
+        "stats": [
+            {
+                "type": "tetra:effect_level",
+                "effect": "infested"
+            }
+        ],
+        "factor": 10
+    },
+    "label": {
+        "type": "tetra:basic",
+        "format": "percentage",
+        "diff_format": "percentage"
+    },
+    "tooltip": {
+        "type": "tetra:default",
+        "key": "tetra.stats.infested.tooltip",
+        "stats": [
+            {
+                "type": "tetra:effect_efficiency",
+                "effect": "infested"
+            },
+            {
+                "type": "tetra:multiply",
+                "stats": [
+                    {
+                        "type": "tetra:effect_level",
+                        "effect": "infested"
+                    }
+                ],
+                "factor": 10
+            }
+        ],
+        "formatters": [
+            {
+                "type": "tetra:basic",
+                "format": "percentage"
+            },
+            {
+                "type": "tetra:basic",
+                "format": "percentage"
+            }
+        ]
+    },
+    "generateSorter": true
+}

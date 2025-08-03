@@ -1,0 +1,72 @@
+[
+    {
+        "key": "destabilized/infested",
+        "group": "infested",
+        "level": 1,
+        "aspects": {
+            "destabilized": 1
+        },
+        "effects": {
+            "infested": [ 1, 0.5 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/infested",
+        "group": "infested",
+        "level": 2,
+        "aspects": {
+            "destabilized": 2
+        },
+        "effects": {
+            "infested": [ 2, 1 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/infested",
+        "group": "infested",
+        "level": 3,
+        "aspects": {
+            "destabilized": 3
+        },
+        "effects": {
+            "infested": [ 3, 1.5 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/infested",
+        "group": "infested",
+        "level": 4,
+        "aspects": {
+            "destabilized": 4
+        },
+        "effects": {
+            "infested": [ 4, 2 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    },
+    {
+        "key": "destabilized/infested",
+        "group": "infested",
+        "level": 5,
+        "aspects": {
+            "destabilized": 5
+        },
+        "effects": {
+            "infested": [ 5, 50 ]
+        },
+        "glyph": {
+            "tint": "ee5599"
+        }
+    }
+]
