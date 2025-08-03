@@ -3,8 +3,30 @@
     "active": false,
     "outcomes": [
         {
-            "type": "tetra:spawn_fire",
-            "soulfire": true
+            "type": "tetra:set_blocks",
+            "blockState": {
+                "Name": "tetra:arcane_fire"
+            },
+            "count": 4,
+            "delay": 70,
+            "randomDelay": 30,
+            "particle": {
+                "type": "minecraft:dust_color_transition",
+                "fromColor": [ 1, 0.5, 0.725 ],
+                "toColor": [ 1, 0.738, 0.578 ],
+                "scale": 1
+            },
+            "intervalParticle": {
+                "type": "minecraft:dust_color_transition",
+                "fromColor": [ 1, 0.5, 0.725 ],
+                "toColor": [ 1, 0.738, 0.578 ],
+                "scale": 1
+            },
+            "sound": {
+                "type": "item.firecharge.use",
+                "volume": 0.3,
+                "pitch": 1.2
+            }
         }
     ]
 }
