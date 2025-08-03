@@ -11,7 +11,7 @@ import java.util.function.Function;
 public class ItemEffectTrigger {
     private static final Map<String, Function<JsonElement, ItemEffectTrigger>> deserializers = new HashMap<>();
 
-    public final String type;
+    protected final String type;
 
     public ItemEffectTrigger(String type) {
         this.type = type;

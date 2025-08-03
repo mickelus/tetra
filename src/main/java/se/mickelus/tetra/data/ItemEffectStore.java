@@ -12,6 +12,7 @@ import se.mickelus.tetra.effect.data.ItemEffectData;
 import java.util.stream.Stream;
 
 public class ItemEffectStore extends DataStore<ItemEffectData> {
+    public static Multimap<ItemEffect, ItemEffectData> onUseEffects = ArrayListMultimap.create();
     public static Multimap<ItemEffect, ItemEffectData> onHitEffects = ArrayListMultimap.create();
     public static Multimap<ItemEffect, ItemEffectData> onMineBlockEffects = ArrayListMultimap.create();
     public static Multimap<ItemEffect, ItemEffectData> onBreakBlockEffects = ArrayListMultimap.create();
@@ -22,22 +23,29 @@ public class ItemEffectStore extends DataStore<ItemEffectData> {
 
     @Override
     protected void processData() {
+        onUseEffects = dataMap.values().stream()
+                .filter(data -> data.trigger.getType().equals("tetra:on_use"))
+                .collect(Multimaps.flatteningToMultimap(
+                        entry -> entry.effect,
+                        Stream::of,
+                        ArrayListMultimap::create));
+
         onHitEffects = dataMap.values().stream()
-                .filter(data -> data.trigger.type.equals("tetra:apply_hit_effects"))
+                .filter(data -> data.trigger.getType().equals("tetra:apply_hit_effects"))
                 .collect(Multimaps.flatteningToMultimap(
                         entry -> entry.effect,
                         Stream::of,
                         ArrayListMultimap::create));
 
         onMineBlockEffects = dataMap.values().stream()
-                .filter(data -> data.trigger.type.equals("tetra:mine_block"))
+                .filter(data -> data.trigger.getType().equals("tetra:mine_block"))
                 .collect(Multimaps.flatteningToMultimap(
                         entry -> entry.effect,
                         Stream::of,
                         ArrayListMultimap::create));
 
         onBreakBlockEffects = dataMap.values().stream()
-                .filter(data -> data.trigger.type.equals("tetra:break_block"))
+                .filter(data -> data.trigger.getType().equals("tetra:break_block"))
                 .collect(Multimaps.flatteningToMultimap(
                         entry -> entry.effect,
                         Stream::of,

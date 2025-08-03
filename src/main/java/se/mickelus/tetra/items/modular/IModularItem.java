@@ -36,6 +36,7 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.effect.*;
+import se.mickelus.tetra.effect.data.DataEffectsHandler;
 import se.mickelus.tetra.effect.vexing.VexingEffect;
 import se.mickelus.tetra.event.ModularItemDamageEvent;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
@@ -412,6 +413,8 @@ public interface IModularItem {
         ApplyUsageEffectsEvent event = new ApplyUsageEffectsEvent(entity, itemStack, multiplier);
         MinecraftForge.EVENT_BUS.post(event);
 
+        DataEffectsHandler.applyOnUseEffects(itemStack, entity);
+
         applyPositiveUsageEffects(entity, itemStack, event.getPositiveMultiplier());
         applyNegativeUsageEffects(entity, itemStack, event.getNegativeMultiplier());
     }
@@ -429,7 +432,8 @@ public interface IModularItem {
     }
 
     /**
-     * Helper method to be called in damageItem in implementing classes. Implement durability damage effects in here. When damaging items from effects,
+     * Helper method to be called in damageItem in implementing classes. Implement durability damage effects in here. When damaging items from
+     * effects,
      * call {@link #applyDamage} instead.
      */
     default <T extends LivingEntity> int damageItemImpl(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {

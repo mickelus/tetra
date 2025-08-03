@@ -10,35 +10,45 @@ import se.mickelus.tetra.data.ItemEffectStore;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 public class DataEffectsHandler {
+    public static void applyOnUseEffects(ItemStack itemStack, LivingEntity usingEntity) {
+        if (usingEntity.level() instanceof ServerLevel serverLevel) {
+            ItemEffectContext context = new ItemEffectContext(usingEntity, itemStack, serverLevel)
+                .withEntities(ImmutableMap.of("user", usingEntity));
+            ((IModularItem) itemStack.getItem()).getEffects(itemStack).stream()
+                .flatMap(effect -> ItemEffectStore.onUseEffects.get(effect).stream())
+                .forEach(effect -> prepareDataAndPerformOutcome(effect, context));
+        }
+    }
+
     public static void applyOnHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
         if (attacker.level() instanceof ServerLevel serverLevel) {
             ItemEffectContext context = new ItemEffectContext(attacker, itemStack, serverLevel)
-                    .withEntities(ImmutableMap.of("attacker", attacker, "target", target));
+                .withEntities(ImmutableMap.of("attacker", attacker, "target", target));
             ((IModularItem) itemStack.getItem()).getEffects(itemStack).stream()
-                    .flatMap(effect -> ItemEffectStore.onHitEffects.get(effect).stream())
-                    .forEach(effect -> prepareDataAndPerformOutcome(effect, context));
+                .flatMap(effect -> ItemEffectStore.onHitEffects.get(effect).stream())
+                .forEach(effect -> prepareDataAndPerformOutcome(effect, context));
         }
     }
 
     public static void applyMineBlockEffects(ItemStack itemStack, LivingEntity breaker, BlockPos targetPos) {
         if (breaker.level() instanceof ServerLevel serverLevel) {
             ItemEffectContext context = new ItemEffectContext(breaker, itemStack, serverLevel)
-                    .withEntities(ImmutableMap.of("miner", breaker))
-                    .withVectors(ImmutableMap.of("target", Vec3.atLowerCornerOf(targetPos)));
+                .withEntities(ImmutableMap.of("miner", breaker))
+                .withVectors(ImmutableMap.of("target", Vec3.atLowerCornerOf(targetPos)));
             ((IModularItem) itemStack.getItem()).getEffects(itemStack).stream()
-                    .flatMap(effect -> ItemEffectStore.onMineBlockEffects.get(effect).stream())
-                    .forEach(effect -> prepareDataAndPerformOutcome(effect, context));
+                .flatMap(effect -> ItemEffectStore.onMineBlockEffects.get(effect).stream())
+                .forEach(effect -> prepareDataAndPerformOutcome(effect, context));
         }
     }
 
     public static void applyBreakBlockEffects(ItemStack itemStack, LivingEntity breaker, BlockPos targetPos) {
         if (breaker.level() instanceof ServerLevel serverLevel) {
             ItemEffectContext context = new ItemEffectContext(breaker, itemStack, serverLevel)
-                    .withEntities(ImmutableMap.of("breaker", breaker))
-                    .withVectors(ImmutableMap.of("target", Vec3.atLowerCornerOf(targetPos)));
+                .withEntities(ImmutableMap.of("breaker", breaker))
+                .withVectors(ImmutableMap.of("target", Vec3.atLowerCornerOf(targetPos)));
             ((IModularItem) itemStack.getItem()).getEffects(itemStack).stream()
-                    .flatMap(effect -> ItemEffectStore.onBreakBlockEffects.get(effect).stream())
-                    .forEach(effect -> prepareDataAndPerformOutcome(effect, context));
+                .flatMap(effect -> ItemEffectStore.onBreakBlockEffects.get(effect).stream())
+                .forEach(effect -> prepareDataAndPerformOutcome(effect, context));
         }
     }
 
