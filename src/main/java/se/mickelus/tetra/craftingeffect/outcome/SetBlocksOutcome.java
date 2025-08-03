@@ -61,12 +61,10 @@ public class SetBlocksOutcome implements CraftingEffectOutcome {
                 .filter(blockPos -> !origin.equals(blockPos) || !skipCenter)
                 .collect(StreamHelper.toShuffledList())
                 .stream()
-                .filter(level::isEmptyBlock)
                 .filter(blockPos -> blockState.canSurvive(level, blockPos))
                 .filter(blockPos -> testRequirements(level, level.getBlockState(blockPos), blockPos))
                 .limit(count)
                 .forEach(blockPos -> setBlock(level, blockPos));
-
     }
 
     private void setBlock(ServerLevel level, BlockPos pos) {
@@ -98,6 +96,15 @@ public class SetBlocksOutcome implements CraftingEffectOutcome {
                     ServerScheduler.schedule(i * fxInterval, () -> level.playSound(null, pos, intervalSound.type, SoundSource.PLAYERS, volume,
                             pitch));
                 }
+            }
+        } else {
+            level.setBlock(pos, blockState, Block.UPDATE_ALL);
+            if (particle != null) {
+                level.sendParticles(particle, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                        8, 0.5, 0.5, 0.5, 0.1);
+            }
+            if (sound != null) {
+                level.playSound(null, pos, sound.type, SoundSource.BLOCKS, sound.volume, sound.pitch);
             }
         }
     }
