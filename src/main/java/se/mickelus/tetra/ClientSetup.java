@@ -90,9 +90,9 @@ public class ClientSetup {
         event.registerSpriteSet(DripParticles.landingBlood.get(), DripParticles.LandingBloodProvider::new);
         event.registerSpriteSet(DripParticles.fallingSlime.get(), DripParticles.FallingSlimeProvider::new);
         event.registerSpriteSet(DripParticles.landingSlime.get(), DripParticles.LandingSlimeProvider::new);
-        event.registerSpriteSet(ArcaneFireParticle.instance.get(), ArcaneFireParticle::new);
-        event.registerSpriteSet(SplinteredPowerParticle.instance.get(), SplinteredPowerParticle::new);
-        event.registerSpriteSet(SputteringPowerParticle.instance.get(), SputteringPowerParticle::new);
+        event.registerSpriteSet(Particles.arcaneFire.get(), ArcaneFireParticleProvider::new);
+        event.registerSpriteSet(Particles.splinteredPower.get(), SplinteredPowerParticleProvider::new);
+        event.registerSpriteSet(Particles.sputteringPower.get(), SputteringPowerParticleProvider::new);
     }
 
     @SubscribeEvent

@@ -5,15 +5,8 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.RegistryObject;
 
-@OnlyIn(Dist.CLIENT)
-public record SplinteredPowerParticle(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
-    public static final String identifier = "splintered_power";
-    public static RegistryObject<SimpleParticleType> instance;
-
+public record SplinteredPowerParticleProvider(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
     @Override
     public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z, double tarX, double tarY,
             double tarZ) {

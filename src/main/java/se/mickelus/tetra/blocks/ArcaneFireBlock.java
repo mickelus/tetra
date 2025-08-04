@@ -31,10 +31,8 @@ import org.joml.Vector3f;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraSounds;
-import se.mickelus.tetra.client.particle.ArcaneFireParticle;
+import se.mickelus.tetra.client.particle.Particles;
 import se.mickelus.tetra.client.particle.SpawnParticlesPacket;
-import se.mickelus.tetra.client.particle.SplinteredPowerParticle;
-import se.mickelus.tetra.client.particle.SputteringPowerParticle;
 import se.mickelus.tetra.effect.potion.UnstablePowerMobEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -63,7 +61,7 @@ public class ArcaneFireBlock extends BaseFireBlock {
         TetraMod.packetHandler.sendToAllPlayersNear(new SpawnParticlesPacket(
                         origin.x(), origin.y(), origin.z(),
                         blockPos.getX() + 0.5f, blockPos.getY(), blockPos.getZ() + 0.5f, false, 8,
-                        SplinteredPowerParticle.instance.get()),
+                        Particles.splinteredPower.get()),
                 blockPos, 64, level.dimension());
 
         ServerScheduler.schedule(40, () -> spawnDust(level, blockPos, 0.5f));
@@ -139,7 +137,7 @@ public class ArcaneFireBlock extends BaseFireBlock {
         int factor = BlockStateProperties.MAX_AGE_15 - state.getValue(ageProperty) + 1;
         UnstablePowerMobEffect.addOrUpdate(player, factor * 20, 0);
         if (!level.isClientSide()) {
-            SputteringPowerParticle.addParticles((ServerLevel) level, pos.getX() + 0.5f, pos.getY() + 0.2f, pos.getZ() + 0.5f, player, Math.max(4, factor));
+            Particles.addSputteringPower((ServerLevel) level, pos.getX() + 0.5f, pos.getY() + 0.2f, pos.getZ() + 0.5f, player, Math.max(4, factor));
         }
         return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
@@ -193,7 +191,7 @@ public class ArcaneFireBlock extends BaseFireBlock {
                     x + random.nextDouble(), y + random.nextDouble() * 0.5 + 0.5, z + random.nextDouble(), 0, 0, 0);
         }
 
-        level.addParticle(ArcaneFireParticle.instance.get(),
+        level.addParticle(Particles.arcaneFire.get(),
                 x + 0.5f + random.nextGaussian() * 0.7f, y, z + 0.5 + random.nextGaussian() * 0.7f,
                 x + 0.5, y + random.nextDouble(), z + 0.5f);
     }

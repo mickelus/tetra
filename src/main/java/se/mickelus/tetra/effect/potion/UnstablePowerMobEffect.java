@@ -26,7 +26,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import se.mickelus.mutil.effect.EffectTooltipRenderer;
 import se.mickelus.tetra.blocks.ArcaneFireBlock;
-import se.mickelus.tetra.client.particle.SputteringPowerParticle;
+import se.mickelus.tetra.client.particle.Particles;
 import se.mickelus.tetra.util.StreamHelper;
 import se.mickelus.tetra.util.StringHelper;
 
@@ -66,7 +66,7 @@ public class UnstablePowerMobEffect extends MobEffect {
                 }
             }
             if (entity.level().getGameTime() % 20 == 0 && entity.level().getRandom().nextFloat() < 0.25) {
-                ((ServerLevel) entity.level()).sendParticles(SputteringPowerParticle.instance.get(), entity.getX(), entity.getY(0.5), entity.getZ(), 0, entity.getId(), 0, 0, 1);
+                Particles.addSputteringPower((ServerLevel) entity.level(), entity.getX(), entity.getY(0.5), entity.getZ(), entity);
             }
         }
     }
