@@ -30,6 +30,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.joml.Vector3f;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.TetraSounds;
 import se.mickelus.tetra.client.particle.ArcaneFireParticle;
 import se.mickelus.tetra.client.particle.SpawnParticlesPacket;
 import se.mickelus.tetra.client.particle.SplinteredPowerParticle;
@@ -66,11 +67,11 @@ public class ArcaneFireBlock extends BaseFireBlock {
                 blockPos, 64, level.dimension());
 
         ServerScheduler.schedule(40, () -> spawnDust(level, blockPos, 0.5f));
-        ServerScheduler.schedule(38, () -> level.playSound(null, blockPos, SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.1f, 0.6f));
+        ServerScheduler.schedule(38, () -> level.playSound(null, blockPos, TetraSounds.arcane_fire_1, SoundSource.PLAYERS, 0.05f, 1));
         ServerScheduler.schedule(55, () -> spawnDust(level, blockPos, 0.2f));
-        ServerScheduler.schedule(52, () -> level.playSound(null, blockPos, SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.15f, 0.8f));
+        ServerScheduler.schedule(52, () -> level.playSound(null, blockPos, TetraSounds.arcane_fire_2, SoundSource.PLAYERS, 0.075f, 1));
 
-        level.playSound(null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.8f, 1.2f);
+        level.playSound(null, blockPos, TetraSounds.destabilize, SoundSource.PLAYERS, 0.4f, 1.2f);
         ServerScheduler.schedule(80, () -> level.playSound(null, blockPos, SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 0.2f, 1f));
 
         ServerScheduler.schedule(80, () -> level.setBlock(blockPos, ArcaneFireBlock.instance.get().defaultBlockState(),

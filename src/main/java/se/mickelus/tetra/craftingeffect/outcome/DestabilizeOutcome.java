@@ -2,13 +2,13 @@ package se.mickelus.tetra.craftingeffect.outcome;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
+import se.mickelus.tetra.TetraSounds;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -47,7 +47,7 @@ public class DestabilizeOutcome implements CraftingEffectOutcome {
         }
 
         if (success.get()) {
-            world.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1f, 0.5f);
+            world.playSound(null, pos, TetraSounds.destabilize, SoundSource.PLAYERS, 0.7f, 1);
         }
 
         return success.get();
