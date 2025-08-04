@@ -40,6 +40,8 @@ public class UnstablePowerMobEffect extends MobEffect {
     public static UnstablePowerMobEffect instance;
     private static final int splinterTreshhold = 16 * 20;
 
+    public static final float bonusMultiplier = 0.05f;
+
     public UnstablePowerMobEffect() {
         super(MobEffectCategory.BENEFICIAL, 0xeeeeee);
 
@@ -109,13 +111,13 @@ public class UnstablePowerMobEffect extends MobEffect {
 
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         if (event.getEntity().hasEffect(instance)) {
-            event.setNewSpeed(event.getNewSpeed() * (1.1f + event.getEntity().getEffect(instance).getAmplifier() * 0.1f));
+            event.setNewSpeed(event.getNewSpeed() * (1 + bonusMultiplier + event.getEntity().getEffect(instance).getAmplifier() * bonusMultiplier));
         }
     }
 
     public static void onLivingDamage(LivingDamageEvent event) {
         if (event.getSource().getEntity() instanceof LivingEntity livingEntity && livingEntity.hasEffect(instance)) {
-            event.setAmount(event.getAmount() * (1.1f + livingEntity.getEffect(instance).getAmplifier() * 0.1f));
+            event.setAmount(event.getAmount() * (1 + bonusMultiplier + livingEntity.getEffect(instance).getAmplifier() * bonusMultiplier));
         }
     }
 
@@ -183,15 +185,7 @@ public class UnstablePowerMobEffect extends MobEffect {
 
             renderIcon(guiGraphics, x, y, duration);
 
-
-            Font font = Minecraft.getInstance().font;
-            String amplifierText = StringHelper.toRoman(amplifier + 1);
-            int xo = 12 - font.width(amplifierText) / 2;
-            guiGraphics.drawString(font, amplifierText, x + xo + 1, y + 18, 0x212121, false);
-            guiGraphics.drawString(font, amplifierText, x + xo - 1, y + 18, 0x212121, false);
-            guiGraphics.drawString(font, amplifierText, x + xo, y + 19, 0x212121, false);
-            guiGraphics.drawString(font, amplifierText, x + xo, y + 17, 0x212121, false);
-            guiGraphics.drawString(font, amplifierText, x + xo, y + 18, 0xffffff, false);
+            renderAmplifierLabel(guiGraphics, x, y, amplifier);
 
             return true;
         }
@@ -232,6 +226,17 @@ public class UnstablePowerMobEffect extends MobEffect {
         private static void fill(GuiGraphics graphics, int x, int y, int width, int height, int color) {
             graphics.fill(x + Math.min(width, 0), y + Math.min(height, 0), x + Math.max(width, 0), y + Math.max(height, 0),
                     color);
+        }
+
+        private static void renderAmplifierLabel(GuiGraphics guiGraphics, int x, int y, int amplifier) {
+            Font font = Minecraft.getInstance().font;
+            String amplifierText = StringHelper.toRoman(amplifier + 1);
+            int xo = 12 - font.width(amplifierText) / 2;
+            guiGraphics.drawString(font, amplifierText, x + xo + 1, y + 18, 0x212121, false);
+            guiGraphics.drawString(font, amplifierText, x + xo - 1, y + 18, 0x212121, false);
+            guiGraphics.drawString(font, amplifierText, x + xo, y + 19, 0x212121, false);
+            guiGraphics.drawString(font, amplifierText, x + xo, y + 17, 0x212121, false);
+            guiGraphics.drawString(font, amplifierText, x + xo, y + 18, 0xffffff, false);
         }
     }
 }

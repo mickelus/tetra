@@ -12,7 +12,7 @@
                 "effect": "vexing"
             }
         ],
-        "factor": 10
+        "factor": 5
     },
     "label": {
         "type": "tetra:basic",
@@ -35,7 +35,7 @@
                         "effect": "vexing"
                     }
                 ],
-                "factor": 10
+                "factor": 5
             }
         ],
         "formatters": [
