@@ -1,0 +1,29 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:vex_armor_trim_smithing_template"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.unstable_power.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.unstable_power.description"
+        }
+    },
+    "parent": "tetra:upgrades/destabilized_item",
+    "criteria": {
+        "cleanse": {
+            "trigger": "minecraft:effects_changed",
+            "conditions": {
+                "effects": {
+                    "tetra:unstable_power": {
+                        "amplifier": {
+                            "min": 10
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "requirements": [ [ "cleanse" ] ]
+}

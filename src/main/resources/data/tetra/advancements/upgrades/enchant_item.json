@@ -1,0 +1,62 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:enchanted_book"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.enchant_item.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.enchant_item.description"
+        }
+    },
+    "parent": "tetra:upgrades/workbench",
+    "criteria": {
+        "workbench": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "schematic": "book_enchant"
+            }
+        },
+        "enchanting_table_sword": {
+            "trigger": "minecraft:enchanted_item",
+            "conditions": {
+                "item": { "items": [ "tetra:modular_sword" ] }
+            }
+        },
+        "enchanting_table_double": {
+            "trigger": "minecraft:enchanted_item",
+            "conditions": {
+                "item": { "items": [ "tetra:modular_double" ] }
+            }
+        },
+        "enchanting_table_single": {
+            "trigger": "minecraft:enchanted_item",
+            "conditions": {
+                "item": { "items": [ "tetra:modular_single" ] }
+            }
+        },
+        "enchanting_table_bow": {
+            "trigger": "minecraft:enchanted_item",
+            "conditions": {
+                "item": { "items": [ "tetra:modular_bow" ] }
+            }
+        },
+        "enchanting_table_crossbow": {
+            "trigger": "minecraft:enchanted_item",
+            "conditions": {
+                "item": { "items": [ "tetra:modular_crossbow" ] }
+            }
+        }
+    },
+    "requirements": [
+        [
+            "workbench",
+            "enchanting_table_sword",
+            "enchanting_table_double",
+            "enchanting_table_single",
+            "enchanting_table_bow",
+            "enchanting_table_crossbow"
+        ]
+    ]
+}

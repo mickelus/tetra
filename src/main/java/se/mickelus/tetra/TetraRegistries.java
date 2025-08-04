@@ -39,10 +39,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import se.mickelus.tetra.advancements.BlockInteractionCriterion;
-import se.mickelus.tetra.advancements.BlockUseCriterion;
-import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
-import se.mickelus.tetra.advancements.ModuleCraftCriterion;
+import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ArcaneFireBlock;
 import se.mickelus.tetra.blocks.InitializableBlock;
 import se.mickelus.tetra.blocks.forged.*;
@@ -460,6 +457,7 @@ public class TetraRegistries {
                 CriteriaTriggers.register(BlockInteractionCriterion.trigger);
                 CriteriaTriggers.register(ModuleCraftCriterion.trigger);
                 CriteriaTriggers.register(ImprovementCraftCriterion.trigger);
+                CriteriaTriggers.register(DestabilizeCriterion.trigger);
 
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 // ITEM PREDICATES

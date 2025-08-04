@@ -1,6 +1,7 @@
 package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -8,6 +9,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
 import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -123,6 +125,11 @@ public class CleanseSchematic implements UpgradeSchematic {
                 .ifPresent(module -> Arrays.stream(module.getImprovements(itemStack))
                         .filter(improvement -> improvement.aspects != null && improvement.aspects.getLevel(destabilizedAspect) > 0)
                         .forEach(improvement -> module.removeImprovement(upgradedStack, improvement.key)));
+
+        if (consumeMaterials && player instanceof ServerPlayer serverPlayer) {
+            ImprovementCraftCriterion.trigger(serverPlayer, itemStack, upgradedStack, getKey(), slot,
+                    null, -1, null, -1);
+        }
 
         if (consumeMaterials) {
             materials[0].shrink(1);

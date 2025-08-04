@@ -1,0 +1,23 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:lapis_lazuli"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.cleanse_item.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.cleanse_item.description"
+        }
+    },
+    "parent": "tetra:upgrades/destabilized_item",
+    "criteria": {
+        "cleanse": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "schematic": "cleanse"
+            }
+        }
+    },
+    "requirements": [ [ "cleanse" ] ]
+}
