@@ -46,6 +46,7 @@ import se.mickelus.tetra.items.modular.ThrownModularItemRenderer;
 import se.mickelus.tetra.items.modular.impl.BlockProgressOverlay;
 import se.mickelus.tetra.items.modular.impl.bow.RangedProgressOverlay;
 import se.mickelus.tetra.items.modular.impl.crossbow.CrossbowOverlay;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HolosphereEntryStore;
 import se.mickelus.tetra.items.modular.impl.holo.gui.scan.ScannerOverlayGui;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldBannerModel;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldModel;
@@ -58,13 +59,17 @@ public class ClientSetup {
         FMLJavaModLoadingContext.get().getModEventBus().register(ClientSetup.class);
         MinecraftForge.EVENT_BUS.register(ClientSetup.class);
 
+        ReloadableResourceManager resourceManager = (ReloadableResourceManager) Minecraft.getInstance().getResourceManager();
+
         StatRegistry.init();
-        new StatIndicatorStore();
-        new StatBarStore();
-        new StatSorterStore();
+        resourceManager.registerReloadListener(new StatIndicatorStore());
+        resourceManager.registerReloadListener(new StatBarStore());
+        resourceManager.registerReloadListener(new StatSorterStore());
+
+        resourceManager.registerReloadListener(new HolosphereEntryStore());
 
         // todo: seems to cause issues during datagen
-        ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(new ToolActionIconStore());
+        resourceManager.registerReloadListener(new ToolActionIconStore());
     }
 
     @SubscribeEvent

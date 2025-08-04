@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.dynamic;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -8,6 +9,7 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -20,9 +22,23 @@ public class DynamicModularItem extends ItemModularHandheld {
         super(new Item.Properties().stacksTo(1).fireResistant());
     }
 
+    public static String getArchetypeKey(@Nullable CompoundTag tag) {
+        return Optional.ofNullable(tag)
+                .map(t -> t.getString(typeKey))
+                .orElse(null);
+    }
+
+    public static String getArchetypeKey(ItemStack itemStack) {
+        return getArchetypeKey(itemStack.getTag());
+    }
+
+    public static void setArchetypeKey(ItemStack itemStack, String key) {
+        itemStack.getOrCreateTag().putString(typeKey, key);
+    }
+
     protected Optional<ArchetypeDefinition> getDefinition(ItemStack itemStack) {
         return Optional.ofNullable(itemStack.getTag())
-                .map(tag -> tag.getString(typeKey))
+                .map(DynamicModularItem::getArchetypeKey)
                 .map(key -> new ResourceLocation(TetraMod.MOD_ID, key))
                 .map(rl -> DataManager.instance.archetypeData.getData(rl));
     }

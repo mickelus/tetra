@@ -3,7 +3,6 @@ package se.mickelus.tetra.gui.stats.data;
 import com.google.gson.JsonParseException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -14,7 +13,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchStatsGui;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBase;
 import se.mickelus.tetra.gui.stats.sorting.StatSorters;
-import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloStatsGui;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.schematic.HoloStatsGui;
 
 import javax.annotation.Nullable;
 import java.io.BufferedReader;
@@ -29,14 +28,14 @@ public class StatBarStore implements ResourceManagerReloadListener {
     private GuiStatBase[] statBars = new GuiStatBase[0];
 
     public StatBarStore() {
-        ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(this);
-
         instance = this;
     }
 
     @Override
     public void onResourceManagerReload(ResourceManager resourceManager) {
         statBars = prepareBars();
+        logger.info("Loaded {} stat bars", this.statBars.length);
+
         HoloStatsGui.setDataBars(Arrays.stream(statBars).filter(bar -> Arrays.asList(bar.getContexts()).contains("tetra:holosphere")).toArray(GuiStatBase[]::new));
         WorkbenchStatsGui.setDataBars(Arrays.stream(statBars).filter(bar -> Arrays.asList(bar.getContexts()).contains("tetra:workbench")).toArray(GuiStatBase[]::new));
         StatSorters.setDerivedSorters(Arrays.stream(statBars)

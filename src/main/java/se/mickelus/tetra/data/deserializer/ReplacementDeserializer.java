@@ -62,7 +62,7 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
             }
 
             if (jsonObject.has("archetype")) {
-                replacement.itemStack.getOrCreateTag().putString(DynamicModularItem.typeKey, jsonObject.get("archetype").getAsString());
+                DynamicModularItem.setArchetypeKey(replacement.itemStack, jsonObject.get("archetype").getAsString());
             }
         }
 

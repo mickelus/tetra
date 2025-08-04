@@ -12,8 +12,8 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.gui.ZOffsetGui;
-import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialApplicable;
-import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloMaterialTranslationGui;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.schematic.HoloMaterialApplicable;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.schematic.HoloMaterialTranslationGui;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.List;

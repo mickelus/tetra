@@ -94,7 +94,7 @@ public class HoloGui extends Screen {
     public void openSchematic(IModularItem item, ItemStack itemStack, String slot, UpgradeSchematic schematic, Runnable closeCallback) {
         changePage(HoloPage.craft);
 
-        ((HoloCraftRootGui) pages[0]).updateState(item, itemStack, slot, schematic);
+        ((HoloCraftRootGui) pages[0]).openFromWorkbench(item, itemStack, slot, schematic);
         this.closeCallback = closeCallback;
     }
 

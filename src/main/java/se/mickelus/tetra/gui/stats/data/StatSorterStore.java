@@ -3,7 +3,6 @@ package se.mickelus.tetra.gui.stats.data;
 import com.google.gson.JsonParseException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -24,14 +23,13 @@ public class StatSorterStore implements ResourceManagerReloadListener {
     private IStatSorter[] sorters = new IStatSorter[0];
 
     public StatSorterStore() {
-        ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(this);
-
         instance = this;
     }
 
     @Override
     public void onResourceManagerReload(ResourceManager resourceManager) {
         sorters = prepare();
+        logger.info("Loaded {} stat sorters", this.sorters.length);
     }
 
     private static IStatSorter[] prepare() {

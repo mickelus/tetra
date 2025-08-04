@@ -3,7 +3,6 @@ package se.mickelus.tetra.gui.stats.data;
 import com.google.gson.JsonParseException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -27,14 +26,13 @@ public class StatIndicatorStore implements ResourceManagerReloadListener {
     private Map<ResourceLocation, GuiStatIndicator> indicators = Collections.emptyMap();
 
     public StatIndicatorStore() {
-        ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(this);
-
         instance = this;
     }
 
     @Override
     public void onResourceManagerReload(ResourceManager resourceManager) {
         indicators = prepareIndicators();
+        logger.info("Loaded {} stat indicators", this.indicators.size());
     }
 
     public GuiStatIndicator[] getIndicatorsIn(ResourceLocation resourceLocation) {

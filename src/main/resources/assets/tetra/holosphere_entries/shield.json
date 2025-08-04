@@ -1,0 +1,8 @@
+{
+    "item": "tetra:modular_shield",
+    "icon": {
+        "textureLocation": "tetra:textures/gui/holo.png",
+        "textureX": 114,
+        "textureY": 218
+    }
+}

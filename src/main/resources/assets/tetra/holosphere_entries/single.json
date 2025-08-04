@@ -1,0 +1,8 @@
+{
+    "item": "tetra:modular_single",
+    "icon": {
+        "textureLocation": "tetra:textures/gui/holo.png",
+        "textureX": 76,
+        "textureY": 218
+    }
+}
