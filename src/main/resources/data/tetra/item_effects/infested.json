@@ -6,6 +6,10 @@
             "effectLevel": {
                 "type": "tetra:effect_level",
                 "effect": "infested"
+            },
+            "effectEfficiency": {
+                "type": "tetra:effect_efficiency",
+                "effect": "infested"
             }
         },
         "vectors": {
@@ -15,10 +19,15 @@
             }
         }
     },
+    "condition": {
+        "type": "tetra:random",
+        "chance": "effectEfficiency / 100"
+    },
     "outcome": {
         "type": "tetra:find_blocks",
         "origin": "origin",
         "bounds": [ -5, -2, -5, 5, 3, 5 ],
+        "isReplaceable": true,
         "solidBelow": true,
         "random": true,
         "count": 1,
@@ -46,7 +55,7 @@
                     },
                     "position": {
                         "type": "tetra:expression",
-                        "result": [ "refX + 0.5", "refY", "refZ + 0.5" ]
+                        "result": [ "refX + 0.5", "refY + 0.5", "refZ + 0.5" ]
                     },
                     "outcome": {
                         "type": "tetra:apply_effect",

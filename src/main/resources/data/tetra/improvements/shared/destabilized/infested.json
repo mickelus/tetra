@@ -63,7 +63,7 @@
             "destabilized": 5
         },
         "effects": {
-            "infested": [ 5, 50 ]
+            "infested": [ 5, 2.5 ]
         },
         "glyph": {
             "tint": "ee5599"
