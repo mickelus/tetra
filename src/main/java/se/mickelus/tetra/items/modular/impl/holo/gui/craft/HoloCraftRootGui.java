@@ -165,7 +165,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
     public void openFromWorkbench(IModularItem item, ItemStack itemStack, @Nullable String slot, @Nullable UpgradeSchematic schematic) {
         String key = HolosphereEntryStore.instance.getEntries().entrySet().stream()
                 .filter(entry -> entry.getValue().item.equals(item))
-                .filter(entry -> entry.getValue().archetype != null || entry.getValue().archetype.equals(DynamicModularItem.getArchetypeKey(itemStack)))
+                .filter(entry -> entry.getValue().archetype == null || entry.getValue().archetype.equals(DynamicModularItem.getArchetypeKey(itemStack)))
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(null);
@@ -189,7 +189,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
         if (state.getDepth() > 0) {
             if (state.getSelectedItem() != null) {
                 result.add(I18n.get("tetra.holo.craft.breadcrumb.root"));
-                result.add(I18n.get("tetra.holo.craft." + state.getSelectedItemState().itemData().key));
+                result.add(state.getSelectedItemName());
 
                 if (state.getSelectedSlot() != null) {
                     result.add(state.getSelectedSlotName());

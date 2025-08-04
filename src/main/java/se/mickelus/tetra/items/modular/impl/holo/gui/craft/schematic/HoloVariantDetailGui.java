@@ -26,6 +26,7 @@ import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.properties.PropertyHelper;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.function.Consumer;
@@ -121,7 +122,7 @@ public class HoloVariantDetailGui extends GuiElement {
                 .applyTo(new Applier.TranslateY(y));
     }
 
-    public void updateVariant(OutcomePreview selectedOutcome, OutcomePreview hoveredOutcome, String slot) {
+    public void updateVariant(@Nullable OutcomePreview selectedOutcome, @Nullable OutcomePreview hoveredOutcome, String slot) {
         variantOutcome = selectedOutcome;
         currentOutcome = selectedOutcome;
         this.slot = slot;

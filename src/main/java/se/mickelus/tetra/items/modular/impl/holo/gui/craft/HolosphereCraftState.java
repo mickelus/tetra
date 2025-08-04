@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -9,6 +10,7 @@ import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class HolosphereCraftState {
@@ -169,7 +171,14 @@ public class HolosphereCraftState {
         this.onNavigationChange.run();
     }
 
-    public class ItemState {
+    public String getSelectedItemName() {
+        return Optional.ofNullable(getSelectedItemState())
+                .map(ItemState::itemData)
+                .map(itemData -> I18n.get(I18n.get("tetra.holo.craft." + itemData.key)))
+                .orElse("???");
+    }
+
+    public static class ItemState {
         HolosphereEntryData itemData;
         ItemStack workingStack;
 
