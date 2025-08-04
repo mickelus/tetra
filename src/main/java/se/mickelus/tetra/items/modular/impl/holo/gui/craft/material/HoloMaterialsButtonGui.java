@@ -57,6 +57,18 @@ public class HoloMaterialsButtonGui extends GuiClickable {
                 .applyTo(new Applier.Opacity(0), new Applier.TranslateY(0, 2)));
     }
 
+    // prevents weird behaviour when spam-toggling
+    @Override
+    public void setVisible(boolean visible) {
+        if (hideAnimation.isActive()) {
+            hideAnimation.stop();
+        }
+        if (showAnimation.isActive()) {
+            showAnimation.stop();
+        }
+        super.setVisible(visible);
+    }
+
     @Override
     protected void onFocus() {
         backdrop.setColor(GuiColors.hover);

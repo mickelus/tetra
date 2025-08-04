@@ -20,28 +20,10 @@ public class HolosphereCraftState {
     private OutcomePreview selectedVariant = null;
     private boolean showingMaterials = false;
 
-    public HolosphereCraftState() {
+    private Runnable onNavigationChange;
 
-    }
-
-    public void setSelectedItem(String selectedItem) {
-        this.selectedItem = selectedItem;
-    }
-
-    public void setSelectedSlot(String selectedSlot) {
-        this.selectedSlot = selectedSlot;
-    }
-
-    public void setSelectedSchematic(UpgradeSchematic selectedSchematic) {
-        this.selectedSchematic = selectedSchematic;
-    }
-
-    public void setSelectedVariant(OutcomePreview selectedVariant) {
-        this.selectedVariant = selectedVariant;
-    }
-
-    public void setShowingMaterials(boolean showingMaterials) {
-        this.showingMaterials = showingMaterials;
+    public HolosphereCraftState(Runnable onNavigationChange) {
+        this.onNavigationChange = onNavigationChange;
     }
 
     public int getDepth() {
@@ -138,6 +120,8 @@ public class HolosphereCraftState {
         this.selectedSlot = null;
         this.selectedSchematic = null;
         this.showingMaterials = true;
+
+        this.onNavigationChange.run();
     }
 
     public void onItemSelect(String item) {
@@ -146,6 +130,8 @@ public class HolosphereCraftState {
         this.selectedVariant = null;
         this.selectedSchematic = null;
         this.showingMaterials = false;
+
+        this.onNavigationChange.run();
     }
 
     public void onSlotSelect(String slot) {
@@ -153,17 +139,23 @@ public class HolosphereCraftState {
         this.selectedVariant = null;
         this.selectedSchematic = null;
         this.showingMaterials = false;
+
+        this.onNavigationChange.run();
     }
 
     public void onSchematicSelect(UpgradeSchematic schematic) {
         this.selectedSchematic = schematic;
         this.selectedVariant = null;
         this.showingMaterials = false;
+
+        this.onNavigationChange.run();
     }
 
     public void onVariantSelect(OutcomePreview variant) {
         this.selectedVariant = variant;
         this.showingMaterials = false;
+
+        this.onNavigationChange.run();
     }
 
     public void openFromWorkbench(String key, ItemStack itemStack, String slot, UpgradeSchematic schematic) {
@@ -173,6 +165,8 @@ public class HolosphereCraftState {
 
         // todo: enable this for templating feature
         // this.getSelectedItemState().setWorkingStack(itemStack);
+
+        this.onNavigationChange.run();
     }
 
     public class ItemState {

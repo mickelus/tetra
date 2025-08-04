@@ -29,7 +29,7 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
     private final HoloSchematicGui schematicView;
     private final HoloMaterialListGui materialsView;
 
-    private final HolosphereCraftState state = new HolosphereCraftState();
+    private final HolosphereCraftState state = new HolosphereCraftState(this::onNavigationChanged);
 
 
     public HoloCraftRootGui(int x, int y) {
@@ -55,6 +55,52 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
 
         HolosphereEntryStore.instance.setListener(this::onItemsLoaded);
         onItemsLoaded();
+    }
+
+    private void onNavigationChanged() {
+        HolosphereCraftState.ItemState selectedItemState = state.getSelectedItemState();
+        if (state.isShowingMaterials()) {
+            itemsView.setVisible(false);
+            schematicsView.setVisible(false);
+            schematicView.setVisible(false);
+            materialsView.setVisible(true);
+        } else if (state.getSelectedVariant() != null) {
+            schematicView.openVariant(state.getSelectedVariant());
+            schematicView.setVisible(true);
+
+            schematicsView.setVisible(false);
+            itemsView.setVisible(false);
+            materialsView.setVisible(false);
+        } else if (state.getSelectedSchematic() != null && selectedItemState != null) {
+            schematicView.update(selectedItemState.workingStack(), state.getSelectedSlot(), state.getSelectedSchematic());
+            schematicView.openVariant(null);
+            schematicView.setVisible(true);
+
+            schematicsView.setVisible(false);
+            itemsView.setVisible(false);
+            materialsView.setVisible(false);
+        } else if (state.getSelectedSlot() != null && selectedItemState != null) {
+            schematicsView.update(selectedItemState.itemData().getAsModularItem(), state.getSelectedSlot());
+            schematicsView.setVisible(true);
+
+            itemsView.setVisible(false);
+            schematicView.setVisible(false);
+            materialsView.setVisible(false);
+        } else {
+            itemsView.changeItem(state.getSelectedItem());
+            itemsView.setVisible(true);
+
+            schematicsView.setVisible(false);
+            schematicView.setVisible(false);
+            materialsView.setVisible(false);
+
+            if (state.getDepth() > 1) {
+                itemsView.animateBack();
+            }
+        }
+
+
+        updateBreadcrumb();
     }
 
     private void onItemsLoaded() {
@@ -98,71 +144,22 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
 
     private void onMaterialsSelect() {
         state.onMaterialsSelect();
-
-        itemsView.setVisible(false);
-        schematicsView.setVisible(false);
-        schematicView.setVisible(false);
-        materialsView.setVisible(true);
-
-        updateBreadcrumb();
     }
 
     private void onItemSelect(@Nullable String item) {
         state.onItemSelect(item);
-
-        itemsView.changeItem(item);
-        itemsView.setVisible(true);
-
-        schematicsView.setVisible(false);
-        schematicView.setVisible(false);
-        materialsView.setVisible(false);
-
-        if (state.getDepth() > 1) {
-            itemsView.animateBack();
-        }
-
-
-        updateBreadcrumb();
     }
 
     private void onSlotSelect(String slot) {
         state.onSlotSelect(slot);
-
-        schematicsView.update(state.getSelectedItemState().itemData().getAsModularItem(), slot);
-        schematicsView.setVisible(true);
-
-        itemsView.setVisible(false);
-        schematicView.setVisible(false);
-        materialsView.setVisible(false);
-
-        updateBreadcrumb();
     }
 
     private void onSchematicSelect(UpgradeSchematic schematic) {
         state.onSchematicSelect(schematic);
-
-        schematicView.update(state.getSelectedItemState().workingStack(), state.getSelectedSlot(), schematic);
-        schematicView.setVisible(true);
-        schematicView.openVariant(null);
-
-        schematicsView.setVisible(false);
-        itemsView.setVisible(false);
-        materialsView.setVisible(false);
-
-        updateBreadcrumb();
     }
 
     private void onVariantSelect(OutcomePreview variant) {
         state.onVariantSelect(variant);
-
-        schematicView.openVariant(variant);
-        schematicView.setVisible(true);
-
-        schematicsView.setVisible(false);
-        itemsView.setVisible(false);
-        materialsView.setVisible(false);
-
-        updateBreadcrumb();
     }
 
     public void openFromWorkbench(IModularItem item, ItemStack itemStack, @Nullable String slot, @Nullable UpgradeSchematic schematic) {
@@ -172,14 +169,14 @@ public class HoloCraftRootGui extends HoloRootBaseGui {
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(null);
-        if (key == null) {
+        if (key != null) {
             state.openFromWorkbench(key, itemStack, slot, schematic);
 
-            if (slot == null && schematic == null) {
-                itemsView.changeItem(key);
+            if (slot != null && schematic != null) {
+                onSchematicSelect(schematic);
+            } else {
+                onItemSelect(null);
             }
-
-            onSchematicSelect(schematic);
         } else {
             onItemSelect(null);
         }

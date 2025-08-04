@@ -149,6 +149,18 @@ public class HoloItemGui extends GuiClickable {
         isSelected = selected;
     }
 
+    // prevents weird behaviour when spam-toggling
+    @Override
+    public void setVisible(boolean visible) {
+        if (itemHide.isActive()) {
+            itemHide.stop();
+        }
+        if (itemShow.isActive()) {
+            itemShow.stop();
+        }
+        super.setVisible(visible);
+    }
+
     @Override
     protected void onShow() {
         super.onShow();

@@ -67,7 +67,7 @@ public class HoloSchematicGui extends GuiElement {
                 .withDelay(100);
 
         hideListAnimation = new KeyframeAnimation(100, listGroup)
-                .applyTo(new Applier.Opacity(0), new Applier.TranslateY(-50))
+                .applyTo(new Applier.Opacity(0), new Applier.TranslateY(-8))
                 .onStop(complete -> {
                     if (complete) {
                         list.setVisible(false);
