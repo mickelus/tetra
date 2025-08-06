@@ -92,7 +92,7 @@ import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
 import se.mickelus.tetra.items.modular.impl.crossbow.ShootableDummyItem;
 import se.mickelus.tetra.items.modular.impl.dynamic.DynamicModularItem;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
-import se.mickelus.tetra.items.modular.impl.holo.gui.craft.schematic.HoloStatsGui;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloStatsGui;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltContainer;

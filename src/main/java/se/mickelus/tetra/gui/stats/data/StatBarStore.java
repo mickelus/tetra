@@ -13,7 +13,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchStatsGui;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBase;
 import se.mickelus.tetra.gui.stats.sorting.StatSorters;
-import se.mickelus.tetra.items.modular.impl.holo.gui.craft.schematic.HoloStatsGui;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloStatsGui;
 
 import javax.annotation.Nullable;
 import java.io.BufferedReader;

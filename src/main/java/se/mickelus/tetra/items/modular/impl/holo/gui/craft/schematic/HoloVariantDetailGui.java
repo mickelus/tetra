@@ -18,6 +18,7 @@ import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
 import se.mickelus.tetra.blocks.workbench.gui.ToolRequirementGui;
 import se.mickelus.tetra.gui.GuiItemRolling;
 import se.mickelus.tetra.gui.GuiSynergyIndicator;
+import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloStatsGui;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.CraftingContext;

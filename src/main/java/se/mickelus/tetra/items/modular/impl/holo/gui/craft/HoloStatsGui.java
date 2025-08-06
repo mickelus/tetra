@@ -1,4 +1,4 @@
-package se.mickelus.tetra.items.modular.impl.holo.gui.craft.schematic;
+package se.mickelus.tetra.items.modular.impl.holo.gui.craft;
 
 import com.google.common.collect.Streams;
 import net.minecraft.world.entity.player.Player;
