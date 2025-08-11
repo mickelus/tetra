@@ -13,7 +13,7 @@ ij_continuation_indent_size = 8
 [*.md]
 max_line_length = 80
 
-[en_us.json]
+[**/lang/*.json]
 indent_size = 2
 
 
