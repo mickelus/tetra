@@ -42,7 +42,7 @@
   "tetra.holo.craft.shield": "Shields",
   "tetra.holo.craft.crossbow": "Crossbows",
   "tetra.holo.craft.slot": "Slot",
-  "tetra.holo.craft.material_requirement": "Can be crafted from %s",
+  "tetra.holo.craft.material_requirement": "Pode ser fabricado usando %s",
   "tetra.holo.craft.improvements": "Improvements",
   "tetra.holo.craft.improvement_button": "%s improvements",
   "tetra.holo.craft.stats": "Stats",
