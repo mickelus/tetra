@@ -98,7 +98,7 @@ public class QuickslotInventory extends ToolbeltInventory {
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getContainerSize(); i++) {
             ItemStack storedStack = getItem(i);
-            if (storedStack.is(itemStack.getItem())
+            if (ItemStack.isSameItemSameTags(itemStack, storedStack)
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());
