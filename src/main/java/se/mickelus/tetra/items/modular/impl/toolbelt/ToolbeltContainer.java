@@ -93,6 +93,12 @@ public class ToolbeltContainer extends AbstractContainerMenu {
         }
     }
 
+    public Slot getSlotAt(int index, Class containerClass) {
+        return slots.stream().filter(slot -> slot.getSlotIndex() == index && containerClass.isInstance(slot.container))
+                .findFirst()
+                .orElse(null);
+    }
+
     @OnlyIn(Dist.CLIENT)
     public static ToolbeltContainer create(int windowId, Inventory inv) {
         ItemStack itemStack = inv.player.getMainHandItem();

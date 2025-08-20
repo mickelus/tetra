@@ -89,9 +89,10 @@ public class ToolbeltScreen extends AbstractContainerScreen<ToolbeltContainer> {
     @Override
     protected void slotClicked(Slot slot, int slotIndex, int barIndex, ClickType clickType) {
         // todo: based on how quick swapping is implemented in AbstractContainerMenu.doClick, there has to be a cleaner way
-        if (!(slot instanceof DisabledSlot)) {
-            super.slotClicked(slot, slotIndex, barIndex, clickType);
+        if (slot instanceof DisabledSlot || (clickType == ClickType.SWAP && getMenu().getSlotAt(barIndex, Inventory.class) instanceof DisabledSlot)) {
+            return;
         }
+        super.slotClicked(slot, slotIndex, barIndex, clickType);
     }
 
     @Override
