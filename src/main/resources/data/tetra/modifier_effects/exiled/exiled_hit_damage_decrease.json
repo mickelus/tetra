@@ -1,0 +1,18 @@
+{
+    "type": "tetra:hit_damage",
+    "effect": "exiled",
+    "condition": {
+        "type": "tetra:not",
+        "condition": {
+            "type": "tetra:entity",
+            "entity": "attacker",
+            "condition": {
+                "effects": {
+                    "minecraft:bad_omen": { }
+                }
+            }
+        }
+    },
+    "result": "damage * (1 - efficiency / 100)"
+}
+

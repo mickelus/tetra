@@ -1,0 +1,24 @@
+{
+    "type": "tetra:hit_damage",
+    "effect": "winded",
+    "data": {
+        "numbers": {
+            "air": {
+                "type": "tetra:entity_property",
+                "entity": "attacker",
+                "property": "airSupply"
+            },
+            "maxAir": {
+                "type": "tetra:entity_property",
+                "entity": "attacker",
+                "property": "maxAirSupply"
+            }
+        }
+    },
+    "condition": {
+        "type": "tetra:expression",
+        "expression": "air < maxAir"
+    },
+    "result": "damage * (1 - efficiency / 100)"
+}
+

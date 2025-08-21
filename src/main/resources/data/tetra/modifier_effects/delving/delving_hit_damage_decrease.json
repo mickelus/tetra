@@ -1,0 +1,26 @@
+{
+    "type": "tetra:hit_damage",
+    "effect": "delving",
+    "data": {
+        "vectors": {
+            "attackerPosition": {
+                "type": "tetra:entity_position",
+                "entity": "attacker",
+                "origin": "feet"
+            }
+        }
+    },
+    "condition": {
+        "type": "tetra:expression",
+        "numbers": {
+            "y": {
+                "type": "tetra:vector",
+                "vector": "attackerPosition",
+                "field": "y"
+            }
+        },
+        "expression": "y >= 0"
+    },
+    "result": "damage * (1 - efficiency / 100)"
+}
+

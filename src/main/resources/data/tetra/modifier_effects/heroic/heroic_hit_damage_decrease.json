@@ -1,0 +1,18 @@
+{
+    "type": "tetra:hit_damage",
+    "effect": "heroic",
+    "condition": {
+        "type": "tetra:not",
+        "condition": {
+            "type": "tetra:entity",
+            "entity": "attacker",
+            "condition": {
+                "effects": {
+                    "minecraft:hero_of_the_village": { }
+                }
+            }
+        }
+    },
+    "result": "damage * (1 - efficiency / 100)"
+}
+

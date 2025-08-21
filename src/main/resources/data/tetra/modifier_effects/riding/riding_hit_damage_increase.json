@@ -1,0 +1,10 @@
+{
+    "type": "tetra:hit_damage",
+    "effect": "riding",
+    "condition": {
+        "type": "tetra:entity",
+        "isRiding": true
+    },
+    "result": "damage * (1 + level / 100)"
+}
+
