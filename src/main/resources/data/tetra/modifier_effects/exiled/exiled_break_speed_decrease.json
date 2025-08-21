@@ -3,9 +3,10 @@
     "effect": "exiled",
     "condition": {
         "type": "tetra:entity",
+        "entity": "miner",
         "condition": {
             "effects": {
-                "minecraft:bad_omen": {}
+                "minecraft:bad_omen": { }
             }
         }
     },

@@ -3,9 +3,10 @@
     "effect": "heroic",
     "condition": {
         "type": "tetra:entity",
+        "entity": "miner",
         "condition": {
             "effects": {
-                "minecraft:hero_of_the_village": {}
+                "minecraft:hero_of_the_village": { }
             }
         }
     },
