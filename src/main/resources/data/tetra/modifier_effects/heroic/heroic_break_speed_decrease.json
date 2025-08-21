@@ -2,13 +2,16 @@
     "type": "tetra:break_speed",
     "effect": "heroic",
     "condition": {
-        "type": "tetra:entity",
-        "entity": "miner",
+        "type": "tetra:not",
         "condition": {
-            "effects": {
-                "minecraft:hero_of_the_village": { }
+            "type": "tetra:entity",
+            "entity": "miner",
+            "condition": {
+                "effects": {
+                    "minecraft:hero_of_the_village": { }
+                }
             }
         }
     },
-    "result": "speed * (1 + efficiency / 100)"
+    "result": "speed * (1 - efficiency / 100)"
 }

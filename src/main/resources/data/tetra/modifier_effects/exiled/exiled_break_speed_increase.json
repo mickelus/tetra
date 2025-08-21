@@ -10,5 +10,5 @@
             }
         }
     },
-    "result": "speed * (1 - efficiency / 100)"
+    "result": "speed * (1 + level / 100)"
 }

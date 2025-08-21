@@ -2,11 +2,14 @@
     "type": "tetra:break_speed",
     "effect": "exiled",
     "condition": {
-        "type": "tetra:entity",
-        "entity": "miner",
+        "type": "tetra:not",
         "condition": {
-            "effects": {
-                "minecraft:bad_omen": { }
+            "type": "tetra:entity",
+            "entity": "miner",
+            "condition": {
+                "effects": {
+                    "minecraft:bad_omen": { }
+                }
             }
         }
     },
