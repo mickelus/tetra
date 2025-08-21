@@ -21,17 +21,19 @@ public class ModifierEffectStore extends DataStore<ModifierEffect> {
 
     @Override
     protected void processData() {
+        dataMap.forEach((key, value) -> value.key = key.getPath());
+
         hitDamageModifiers = dataMap.values().stream()
-                .filter(data -> data.type().getKey().equals("tetra:hit_damage"))
+                .filter(data -> data.type.getKey().equals("tetra:hit_damage"))
                 .collect(Multimaps.flatteningToMultimap(
-                        ModifierEffect::effect,
+                        modifier -> modifier.effect,
                         Stream::of,
                         ArrayListMultimap::create));
 
         breakSpeedModifiers = dataMap.values().stream()
-                .filter(data -> data.type().getKey().equals("tetra:break_speed"))
+                .filter(data -> data.type.getKey().equals("tetra:break_speed"))
                 .collect(Multimaps.flatteningToMultimap(
-                        entry -> entry.effect(),
+                        entry -> entry.effect,
                         Stream::of,
                         ArrayListMultimap::create));
     }

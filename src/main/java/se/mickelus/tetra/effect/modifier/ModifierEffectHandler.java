@@ -1,16 +1,16 @@
 package se.mickelus.tetra.effect.modifier;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.ModifierEffectStore;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 import se.mickelus.tetra.effect.data.ItemEffectData;
-import se.mickelus.tetra.effect.potion.UnstablePowerMobEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ModifierEffectHandler {
+    private static final Logger logger = LogManager.getLogger();
 
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         if (event.getPosition().isPresent()) {
@@ -39,16 +40,21 @@ public class ModifierEffectHandler {
                         }
 
                         for (ModifierEffect effect : presentEffects) {
-                            ItemEffectContext localContext = context.withMergedNumbers(ImmutableMap.of(
-                                    "level", (float) EffectHelper.getEffectLevel(itemStack, effect.effect()),
-                                    "efficiency", EffectHelper.getEffectEfficiency(itemStack, effect.effect())));
-                            if (effect.data() != null) {
-                                localContext = localContext.withMergedNumbers(ItemEffectData.calculateNumbers(effect.data(), localContext));
-                                localContext = localContext.withMergedVectors(ItemEffectData.calculateVectors(effect.data(), localContext));
-                                localContext = localContext.withMergedEntities(ItemEffectData.calculateEntities(effect.data(), localContext));
-                            }
-                            if (effect.condition() == null || effect.condition().test(localContext)) {
-                                context = context.withMergedNumbers(ImmutableMap.of("speed", effect.result().getValue(localContext)));
+                            try {
+                                ItemEffectContext localContext = context.withMergedNumbers(ImmutableMap.of(
+                                        "level", (float) EffectHelper.getEffectLevel(itemStack, effect.effect),
+                                        "efficiency", EffectHelper.getEffectEfficiency(itemStack, effect.effect)));
+                                if (effect.data != null) {
+                                    localContext = localContext.withMergedNumbers(ItemEffectData.calculateNumbers(effect.data, localContext));
+                                    localContext = localContext.withMergedVectors(ItemEffectData.calculateVectors(effect.data, localContext));
+                                    localContext = localContext.withMergedEntities(ItemEffectData.calculateEntities(effect.data, localContext));
+                                }
+                                if (effect.condition == null || effect.condition.test(localContext)) {
+                                    context = context.withMergedNumbers(ImmutableMap.of("speed", effect.result.getValue(localContext)));
+                                }
+                            } catch (Exception e) {
+                                logger.error("An error occured when calculating break speed for modifier effect '{}': {}", effect.key, e.getMessage());
+                                logger.debug(e.getMessage(), e);
                             }
                         }
 
