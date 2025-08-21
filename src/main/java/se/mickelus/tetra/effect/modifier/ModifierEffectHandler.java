@@ -60,8 +60,38 @@ public class ModifierEffectHandler {
     }
 
     public static void onLivingDamage(ItemStack itemStack, LivingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity livingEntity && livingEntity.hasEffect(UnstablePowerMobEffect.instance)) {
-            event.setAmount(event.getAmount() * (1.1f + livingEntity.getEffect(UnstablePowerMobEffect.instance).getAmplifier() * 0.1f));
+        List<ModifierEffect> presentEffects = ((IModularItem) itemStack.getItem()).getEffects(itemStack).stream()
+                .flatMap(effect -> ModifierEffectStore.hitDamageModifiers.get(effect).stream())
+                .toList();
+
+        ItemEffectContext context = null;
+        if (!presentEffects.isEmpty()) {
+            context = new ItemEffectContext(event.getEntity(), itemStack, event.getEntity().level())
+                    .withNumbers(ImmutableMap.of("damage", event.getAmount()))
+                    .withEntities(ImmutableMap.of("attacker", event.getSource().getEntity(), "target", event.getEntity()));
+        }
+
+        for (ModifierEffect effect : presentEffects) {
+            try {
+                ItemEffectContext localContext = context.withMergedNumbers(ImmutableMap.of(
+                        "level", (float) EffectHelper.getEffectLevel(itemStack, effect.effect),
+                        "efficiency", EffectHelper.getEffectEfficiency(itemStack, effect.effect)));
+                if (effect.data != null) {
+                    localContext = localContext.withMergedNumbers(ItemEffectData.calculateNumbers(effect.data, localContext));
+                    localContext = localContext.withMergedVectors(ItemEffectData.calculateVectors(effect.data, localContext));
+                    localContext = localContext.withMergedEntities(ItemEffectData.calculateEntities(effect.data, localContext));
+                }
+                if (effect.condition == null || effect.condition.test(localContext)) {
+                    context = context.withMergedNumbers(ImmutableMap.of("damage", effect.result.getValue(localContext)));
+                }
+            } catch (Exception e) {
+                logger.error("An error occured when calculating living damage for modifier effect '{}': {}", effect.key, e.getMessage());
+                logger.debug(e.getMessage(), e);
+            }
+        }
+
+        if (context != null) {
+            event.setAmount(context.getNumbers().get("damage"));
         }
     }
 }

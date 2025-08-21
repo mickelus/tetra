@@ -270,6 +270,8 @@ public class ItemEffectHandler {
                     if (reachingLevel > 0) {
                         ReachingEffect.onLivingDamage(event, reachingLevel, getEffectEfficiency(itemStack, ItemEffect.reaching));
                     }
+
+                    ModifierEffectHandler.onLivingDamage(itemStack, event);
                 });
 
         Optional.ofNullable(event.getEntity())
