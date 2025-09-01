@@ -6,8 +6,8 @@ import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
-import se.mickelus.tetra.module.data.ModuleModel;
 import se.mickelus.tetra.module.data.TweakData;
+import se.mickelus.tetra.module.model.AbstractTextureModel;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -67,15 +67,14 @@ public class MultiSlotMajorModule extends ItemModuleMajor {
     }
 
     @Override
-    protected ModuleModel[] getImprovementModels(ItemStack itemStack, int tint) {
+    protected AbstractTextureModel[] getImprovementModels(ItemStack itemStack, int tint) {
         return super.getImprovementModels(itemStack, tint);
     }
 
     @Override
-    public ModuleModel[] getModels(ItemStack itemStack) {
+    public AbstractTextureModel[] getModels(ItemStack itemStack) {
         return Arrays.stream(super.getModels(itemStack))
-                .map(ModuleModel::copy)
-                .peek(model -> model.location = new ResourceLocation(model.location.getNamespace(), model.location.getPath() + slotSuffix))
-                .toArray(ModuleModel[]::new);
+                .map(model -> model.withSlotSuffix(slotSuffix))
+                .toArray(AbstractTextureModel[]::new);
     }
 }

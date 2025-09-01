@@ -45,7 +45,7 @@ import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
-import se.mickelus.tetra.module.data.ModuleModel;
+import se.mickelus.tetra.module.model.AbstractTextureModel;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
@@ -68,9 +68,9 @@ public class ModularBowItem extends ModularItem {
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
     @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularBowItem instance;
-    protected ModuleModel arrowModel0 = new ModuleModel("draw_0", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
-    protected ModuleModel arrowModel1 = new ModuleModel("draw_1", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_1"));
-    protected ModuleModel arrowModel2 = new ModuleModel("draw_2", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_2"));
+    protected AbstractTextureModel arrowModel0 = new AbstractTextureModel("draw_0", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
+    protected AbstractTextureModel arrowModel1 = new AbstractTextureModel("draw_1", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_1"));
+    protected AbstractTextureModel arrowModel2 = new AbstractTextureModel("draw_2", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_2"));
     protected ItemStack vanillaBow;
 
     public ModularBowItem() {
@@ -448,7 +448,7 @@ public class ModularBowItem extends ModularItem {
         return "draw_2";
     }
 
-    private ModuleModel getArrowModel(String drawVariant) {
+    private AbstractTextureModel getArrowModel(String drawVariant) {
         switch (drawVariant) {
             case "draw_0":
                 return arrowModel0;
@@ -468,19 +468,19 @@ public class ModularBowItem extends ModularItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
+    public ImmutableList<AbstractTextureModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
         String modelType = getDrawVariant(itemStack, entity);
 
-        ImmutableList<ModuleModel> models = getAllModules(itemStack).stream()
+        ImmutableList<AbstractTextureModel> models = getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
                 .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
                 .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(ModuleModel::getRenderLayer))
+                .sorted(Comparator.comparing(AbstractTextureModel::getRenderLayer))
                 .filter(model -> model.type.equals(modelType) || model.type.equals("static"))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 
         if (!modelType.equals("item")) {
-            return ImmutableList.<ModuleModel>builder()
+            return ImmutableList.<AbstractTextureModel>builder()
                     .addAll(models)
                     .add(getArrowModel(modelType))
                     .build();

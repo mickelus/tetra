@@ -45,7 +45,7 @@ import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
-import se.mickelus.tetra.module.data.ModuleModel;
+import se.mickelus.tetra.module.model.AbstractTextureModel;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
@@ -71,9 +71,9 @@ public class ModularCrossbowItem extends ModularItem {
     @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularCrossbowItem instance;
     public static double multishotDefaultSpread = 10;
-    protected ModuleModel arrowModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/arrow"));
-    protected ModuleModel extractorModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/extractor"));
-    protected ModuleModel fireworkModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/firework"));
+    protected AbstractTextureModel arrowModel = new AbstractTextureModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/arrow"));
+    protected AbstractTextureModel extractorModel = new AbstractTextureModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/extractor"));
+    protected AbstractTextureModel fireworkModel = new AbstractTextureModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/firework"));
     // used to pick projectiles from the player inventory
     protected ItemStack shootableDummy;
     // todo: based on vanilla, uses bool in singleton to keep track of which sound to play. Would break if multiple entities use this simultaneously
@@ -490,7 +490,7 @@ public class ModularCrossbowItem extends ModularItem {
         return "p0";
     }
 
-    private ModuleModel getProjectileModel(ItemStack itemStack) {
+    private AbstractTextureModel getProjectileModel(ItemStack itemStack) {
         ItemStack projectileStack = getFirstProjectile(itemStack);
 
         if (projectileStack.getItem() instanceof FireworkRocketItem) {
@@ -511,19 +511,19 @@ public class ModularCrossbowItem extends ModularItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
+    public ImmutableList<AbstractTextureModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
         String modelType = getDrawVariant(itemStack, entity);
 
-        ImmutableList<ModuleModel> models = getAllModules(itemStack).stream()
+        ImmutableList<AbstractTextureModel> models = getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
                 .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
                 .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(ModuleModel::getRenderLayer))
+                .sorted(Comparator.comparing(AbstractTextureModel::getRenderLayer))
                 .filter(model -> model.type.equals(modelType) || model.type.equals("static"))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 
         if (isLoaded(itemStack)) {
-            return ImmutableList.<ModuleModel>builder()
+            return ImmutableList.<AbstractTextureModel>builder()
                     .addAll(models)
                     .add(getProjectileModel(itemStack))
                     .build();

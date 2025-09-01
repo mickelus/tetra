@@ -11,6 +11,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.TierSortingRegistry;
 import se.mickelus.tetra.data.deserializer.AttributesDeserializer;
 import se.mickelus.tetra.data.deserializer.ItemTagKeyDeserializer;
+import se.mickelus.tetra.module.model.AbstractTextureModel;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.TierHelper;
@@ -95,7 +96,8 @@ public class MaterialData {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Non-configurable stuff below
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void copyFields(MaterialData from, MaterialData to) {
         if (from.key != null) {
@@ -204,29 +206,8 @@ public class MaterialData {
                 .toArray(String[]::new);
     }
 
-    public static ModuleModel kneadModel(ModuleModel model, MaterialData material, List<String> availableTextures) {
-        if (Arrays.stream(material.textureOverrides).anyMatch(override -> model.location.getPath().equals(override))) {
-            ModuleModel copy = model.copy();
-            copy.location = appendString(model.location, material.textures[0]);
-            copy.tint = material.tintOverrides ? material.tints.texture : 0xffffff;
-            copy.overlayTint = material.tints.texture;
-            return copy;
-        }
-
-        ResourceLocation updatedLocation = Arrays.stream(material.textures)
-                .filter(availableTextures::contains)
-                .findFirst()
-                .map(texture -> appendString(model.location, texture))
-                .orElseGet(() -> appendString(model.location, availableTextures.get(0)));
-        ModuleModel copy = model.copy();
-        copy.location = updatedLocation;
-        copy.tint = material.tints.texture;
-        copy.overlayTint = material.tints.texture;
-        return copy;
-    }
-
-    public static ResourceLocation appendString(ResourceLocation resourceLocation, String string) {
-        return new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath() + string);
+    public static AbstractTextureModel kneadModel(AbstractTextureModel model, MaterialData material, List<String> availableTextures) {
+        return model.forMaterial(availableTextures, material.textureOverrides, material.textures, material.tintOverrides, material.tints.texture);
     }
 
     public MaterialData shallowCopy() {

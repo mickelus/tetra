@@ -5,6 +5,7 @@ import com.google.gson.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import se.mickelus.tetra.module.Priority;
+import se.mickelus.tetra.module.model.AbstractTextureModel;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -79,7 +80,7 @@ public class VariantData extends ItemProperties {
      */
     public GlyphData glyph = new GlyphData();
 
-    public ModuleModel[] models = new ModuleModel[0];
+    public AbstractTextureModel[] models = new AbstractTextureModel[0];
 
     public int magicCapacity = 0;
 

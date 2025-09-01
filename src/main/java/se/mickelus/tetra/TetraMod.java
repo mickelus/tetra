@@ -52,6 +52,8 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
 import se.mickelus.tetra.module.*;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
+import se.mickelus.tetra.module.model.GridTextureModel;
+import se.mickelus.tetra.module.model.ModuleModelRegistry;
 import se.mickelus.tetra.module.schematic.BookEnchantSchematic;
 import se.mickelus.tetra.module.schematic.CleanseSchematic;
 import se.mickelus.tetra.module.schematic.RemoveSchematic;
@@ -97,6 +99,8 @@ public class TetraMod {
         TierHelper.init();
 
         ConfigHandler.setup();
+
+        ModuleModelRegistry.register("tetra:grid_texture", GridTextureModel.class);
 
         new CraftingEffectRegistry();
         CraftingEffectRegistry.registerConditionType("tetra:or", OrCondition.class);

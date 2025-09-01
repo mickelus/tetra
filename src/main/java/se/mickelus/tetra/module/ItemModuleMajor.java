@@ -19,9 +19,9 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.SettlePacket;
+import se.mickelus.tetra.module.model.AbstractTextureModel;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import java.util.*;
@@ -393,24 +393,17 @@ public abstract class ItemModuleMajor extends ItemModule {
                 .sum();
     }
 
-    protected ModuleModel[] getImprovementModels(ItemStack itemStack, int tint) {
+    protected AbstractTextureModel[] getImprovementModels(ItemStack itemStack, int tint) {
         return Arrays.stream(getImprovements(itemStack))
                 .filter(improvement -> improvement.models.length > 0)
                 .flatMap(improvement -> Arrays.stream(improvement.models))
-                .map(model -> {
-                    if (ItemColors.inherit == model.tint) {
-                        ModuleModel copy = model.copy();
-                        copy.tint = tint;
-                        return copy;
-                    }
-                    return model;
-                })
-                .toArray(ModuleModel[]::new);
+                .map(model -> model.inheritTint(tint))
+                .toArray(AbstractTextureModel[]::new);
     }
 
     @Override
-    public ModuleModel[] getModels(ItemStack itemStack) {
-        ModuleModel[] models = super.getModels(itemStack);
-        return ArrayUtils.addAll(models, getImprovementModels(itemStack, models.length > 0 ? models[0].overlayTint : 0xffffff));
+    public AbstractTextureModel[] getModels(ItemStack itemStack) {
+        AbstractTextureModel[] models = super.getModels(itemStack);
+        return ArrayUtils.addAll(models, getImprovementModels(itemStack, models.length > 0 ? models[0].getOverlayTint() : 0xffffff));
     }
 }

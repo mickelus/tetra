@@ -9,7 +9,10 @@ import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.*;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +25,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.module.data.ModuleModel;
+import se.mickelus.tetra.module.model.AbstractTextureModel;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -92,10 +95,10 @@ public class ModularOverrideList extends ItemOverrides {
         ItemTransforms cameraTransforms = model.getCameraTransforms(transformVariant);
         BakingContextWrapper contextWrapper = new BakingContextWrapper(context, cameraTransforms);
 
-        List<ModuleModel> models = item.getModels(itemStack, entity);
+        List<AbstractTextureModel> models = item.getModels(itemStack, entity);
 
         Set<ItemDisplayContext> contexts = models.stream()
-                .map(model -> model.contexts)
+                .map(AbstractTextureModel::getContexts)
                 .filter(Objects::nonNull)
                 .flatMap(Arrays::stream)
                 .filter(Objects::nonNull)
@@ -112,35 +115,35 @@ public class ModularOverrideList extends ItemOverrides {
         return model.bake(contextWrapper, baker, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
     }
 
-    protected ItemLayerModel createLayerModel(List<ModuleModel> models) {
+    protected ItemLayerModel createLayerModel(List<AbstractTextureModel> models) {
         ImmutableList<Material> textures = models.stream()
-                .map(moduleModel -> new Material(TextureAtlas.LOCATION_BLOCKS, moduleModel.location))
+                .map(moduleModel -> new Material(TextureAtlas.LOCATION_BLOCKS, moduleModel.getLocation()))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 
         var renderTypes = new Int2ObjectOpenHashMap<ResourceLocation>();
         var builder = new QuadTransformerBuilder();
         for (int i = 0; i < models.size(); i++) {
             var model = models.get(i);
-            if (model.tint != 0xffffffff) {
-                builder.add(i, new ColorQuadTransformer(model.tint));
+            if (model.getTint() != 0xffffffff) {
+                builder.add(i, new ColorQuadTransformer(model.getTint()));
             }
-            if (model.emission >= 0 && model.emission < 16) {
-                builder.add(i, QuadTransformers.settingEmissivity(model.emission));
+            if (model.getEmission() >= 0 && model.getEmission() < 16) {
+                builder.add(i, QuadTransformers.settingEmissivity(model.getEmission()));
             }
-            if (model.transform != null) {
-                builder.add(i, QuadTransformers.applying(model.transform));
+            if (model.getTransform() != null) {
+                builder.add(i, QuadTransformers.applying(model.getTransform()));
             }
-            if (model.renderType != null) {
-                renderTypes.put(i, model.renderType);
+            if (model.getRenderType() != null) {
+                renderTypes.put(i, model.getRenderType());
             }
         }
 
         return new ItemLayerModel(textures, builder.get(), renderTypes);
     }
 
-    protected List<ModuleModel> filterModels(List<ModuleModel> models, @Nullable ItemDisplayContext context) {
+    protected List<AbstractTextureModel> filterModels(List<AbstractTextureModel> models, @Nullable ItemDisplayContext context) {
         return models.stream()
-                .filter(model -> model.contexts == null || ArrayUtils.contains(model.contexts, context) != model.invertPerspectives)
+                .filter(model -> model.getContexts() == null || ArrayUtils.contains(model.getContexts(), context) != model.isInvertPerspectives())
                 .toList();
     }
 

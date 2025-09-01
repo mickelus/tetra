@@ -30,7 +30,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.module.data.ModuleModel;
+import se.mickelus.tetra.module.model.AbstractTextureModel;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
@@ -63,12 +63,13 @@ public class ModularShieldRenderer extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack itemStack, ItemDisplayContext displayContext, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void renderByItem(ItemStack itemStack, ItemDisplayContext displayContext, PoseStack matrixStack, MultiBufferSource buffer,
+            int combinedLight, int combinedOverlay) {
 //        boolean flag = itemStack.getChildTag("BlockEntityTag") != null;
         matrixStack.pushPose();
         matrixStack.scale(1.0F, -1.0F, -1.0F);
 
-        Collection<ModuleModel> models = CastOptional.cast(itemStack.getItem(), ModularShieldItem.class)
+        Collection<AbstractTextureModel> models = CastOptional.cast(itemStack.getItem(), ModularShieldItem.class)
                 .map(item -> item.getModels(itemStack, null))
                 .orElse(ImmutableList.of());
 
@@ -84,14 +85,14 @@ public class ModularShieldRenderer extends BlockEntityWithoutLevelRenderer {
 
             ModelPart modelPart = model.getModel(modelData.type);
             if (modelPart != null) {
-                Material material = new Material(TextureAtlas.LOCATION_BLOCKS, modelData.location);
+                Material material = new Material(TextureAtlas.LOCATION_BLOCKS, modelData.getLocation());
                 VertexConsumer vertexBuilder = material.sprite().wrap(
                         ItemRenderer.getFoilBuffer(buffer, model.renderType(material.atlasLocation()), false, itemStack.hasFoil()));
 
-                float r = ((modelData.tint >> 16) & 0xFF) / 255f; // red
-                float g = ((modelData.tint >> 8) & 0xFF) / 255f; // green
-                float b = ((modelData.tint >> 0) & 0xFF) / 255f; // blue
-                float a = ((modelData.tint >> 24) & 0xFF) / 255f; // alpha
+                float r = ((modelData.getTint() >> 16) & 0xFF) / 255f; // red
+                float g = ((modelData.getTint() >> 8) & 0xFF) / 255f; // green
+                float b = ((modelData.getTint() >> 0) & 0xFF) / 255f; // blue
+                float a = ((modelData.getTint() >> 24) & 0xFF) / 255f; // alpha
 
                 // reset alpha to 1 if it's 0 to avoid mistakes & make things cleaner
                 a = a == 0 ? 1 : a;

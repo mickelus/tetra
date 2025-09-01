@@ -17,6 +17,7 @@ import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.*;
+import se.mickelus.tetra.module.model.AbstractTextureModel;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.IToolProvider;
@@ -366,7 +367,7 @@ public abstract class ItemModule implements IToolProvider {
                 .orElse(1d);
     }
 
-    public ModuleModel[] getModels(ItemStack itemStack) {
+    public AbstractTextureModel[] getModels(ItemStack itemStack) {
         return getVariantData(itemStack).models;
     }
 
