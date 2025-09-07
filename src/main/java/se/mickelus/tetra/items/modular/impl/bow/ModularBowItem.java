@@ -46,6 +46,8 @@ import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.model.AbstractTextureModel;
+import se.mickelus.tetra.module.model.FilteredGridTextureModel;
+import se.mickelus.tetra.module.model.GridTextureModel;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
@@ -68,9 +70,9 @@ public class ModularBowItem extends ModularItem {
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
     @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularBowItem instance;
-    protected AbstractTextureModel arrowModel0 = new AbstractTextureModel("draw_0", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
-    protected AbstractTextureModel arrowModel1 = new AbstractTextureModel("draw_1", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_1"));
-    protected AbstractTextureModel arrowModel2 = new AbstractTextureModel("draw_2", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_2"));
+    protected GridTextureModel arrowModel0 = new GridTextureModel(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
+    protected GridTextureModel arrowModel1 = new GridTextureModel(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_1"));
+    protected GridTextureModel arrowModel2 = new GridTextureModel(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_2"));
     protected ItemStack vanillaBow;
 
     public ModularBowItem() {
@@ -170,7 +172,6 @@ public class ModularBowItem extends ModularItem {
         return super.finishUsingItem(itemStack, world, entity);
     }
 
-    // todo 1.20 verify: quick latches release bows when fully drawn
     @Override
     public void onUseTick(Level level, LivingEntity entity, ItemStack itemStack, int count) {
         if (getEffectLevel(itemStack, ItemEffect.releaseLatch) > 0 && getProgress(itemStack, entity) >= 1) {
@@ -206,9 +207,8 @@ public class ModularBowItem extends ModularItem {
                         .orElse((ArrowItem) Items.ARROW);
                 boolean infiniteAmmo = player.getAbilities().instabuild || ammoItem.isInfinite(ammoStack, itemStack, player);
 
-                ModularLooseProjectilesEvent looseProjectilesEvent = new ModularLooseProjectilesEvent(itemStack, ammoStack, player, world, drawProgress,
-                        getAttributeValue(itemStack, TetraAttributes.drawStrength.get()),
-                        suspendLevel > 0,
+                ModularLooseProjectilesEvent looseProjectilesEvent = new ModularLooseProjectilesEvent(itemStack, ammoStack, player, world,
+                        drawProgress, getAttributeValue(itemStack, TetraAttributes.drawStrength.get()), suspendLevel > 0,
                         getArrowVelocity(drawProgress, strength, getEffectLevel(itemStack, ItemEffect.velocity) / 100f, suspendLevel > 0),
                         getEffectEfficiency(itemStack, ItemEffect.multishot),
                         Math.max(0, 100 - getEffectEfficiency(itemStack, ItemEffect.spread) - FocusEffect.getSpreadReduction(player, itemStack)),
@@ -236,11 +236,14 @@ public class ModularBowItem extends ModularItem {
                         int powerLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.POWER_ARROWS, itemStack);
                         int punchLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PUNCH_ARROWS, itemStack);
                         int flameLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.FLAMING_ARROWS, itemStack);
-                        int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing) + EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PIERCING, itemStack);
+                        int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing)
+                                + EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PIERCING, itemStack);
 
                         for (int i = 0; i < count; i++) {
                             double yaw = baseYaw - multishotSpread * (count - 1) / 2f + multishotSpread * i;
-                            fireProjectile(itemStack, world, (ArrowItem) ammoStack.getItem(), ammoStack, projectileRemappers, player, (float) basePitch, (float) yaw, projectileVelocity, accuracy, drawProgress, strength, powerLevel, punchLevel, flameLevel, piercingLevel, hasSuspend, infiniteAmmo);
+                            fireProjectile(itemStack, world, (ArrowItem) ammoStack.getItem(), ammoStack, projectileRemappers, player,
+                                    (float) basePitch, (float) yaw, projectileVelocity, accuracy, drawProgress, strength, powerLevel, punchLevel,
+                                    flameLevel, piercingLevel, hasSuspend, infiniteAmmo);
                         }
 
 
@@ -439,7 +442,7 @@ public class ModularBowItem extends ModularItem {
         float progress = getProgress(itemStack, entity);
 
         if (progress == 0) {
-            return "item";
+            return "undrawn";
         } else if (progress < 0.65) {
             return "draw_0";
         } else if (progress < 0.9) {
@@ -476,10 +479,10 @@ public class ModularBowItem extends ModularItem {
                 .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
                 .filter(Objects::nonNull)
                 .sorted(Comparator.comparing(AbstractTextureModel::getRenderLayer))
-                .filter(model -> model.type.equals(modelType) || model.type.equals("static"))
+                .filter(model -> filterModel(model, modelType))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 
-        if (!modelType.equals("item")) {
+        if (!modelType.equals("undrawn")) {
             return ImmutableList.<AbstractTextureModel>builder()
                     .addAll(models)
                     .add(getArrowModel(modelType))
@@ -487,6 +490,10 @@ public class ModularBowItem extends ModularItem {
         }
 
         return models;
+    }
+
+    private static boolean filterModel(AbstractTextureModel model, String filter) {
+        return !(model instanceof FilteredGridTextureModel filteredModel) || filteredModel.getFilter().equals(filter);
     }
 
     @Override

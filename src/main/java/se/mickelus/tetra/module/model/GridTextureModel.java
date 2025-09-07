@@ -10,9 +10,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GridTextureModel extends AbstractTextureModel {
+
+    public GridTextureModel(ResourceLocation location) {
+        this(location, null, null, null, null, null, Priority.BASE, null, new ItemDisplayContext[]{ItemDisplayContext.NONE});
+    }
+
     public GridTextureModel(ResourceLocation location, ResourceLocation renderType, Transformation transform, Integer emission, Integer tint,
-            Integer overlayTint,
-            Priority renderLayer, Boolean invertPerspectives, ItemDisplayContext[] contexts) {
+            Integer overlayTint, Priority renderLayer, Boolean invertPerspectives, ItemDisplayContext[] contexts) {
         this.location = location;
         this.renderType = renderType;
         this.transform = transform;
@@ -25,7 +29,9 @@ public class GridTextureModel extends AbstractTextureModel {
         if (overlayTint != null) {
             this.overlayTint = overlayTint;
         }
-        this.renderLayer = renderLayer;
+        if (renderLayer != null) {
+            this.renderLayer = renderLayer;
+        }
         if (invertPerspectives != null) {
             this.invertPerspectives = invertPerspectives;
         }

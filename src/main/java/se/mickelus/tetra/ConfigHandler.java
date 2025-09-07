@@ -11,7 +11,7 @@ import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.ModularDoubleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItemImpl;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -104,14 +104,16 @@ public class ConfigHandler {
                 .defineListAllowEmpty("disabled_features", Collections.emptyList(), o -> FeatureFlag.matchesAnyKey(o));
 
         magicCapacityMultiplier = builder
-                .comment("Multiplier for magic capacity gains, increasing this may be useful when having a large set enchantments added by other mods")
+                .comment("Multiplier for magic capacity gains, increasing this may be useful when having a large set enchantments added by other " +
+                        "mods")
                 .defineInRange("magic_cap_multiplier", 1, 0, Double.MAX_VALUE);
 
         builder.pop();
 
         // module progression config
         builder
-                .comment("Allows tetra items to \"level up\" after being used a certain amount of times, allowing the player to choose from different ways to \"hone\" 1 module on the item. Major modules also settle after some time, increasing its integrity")
+                .comment("Allows tetra items to \"level up\" after being used a certain amount of times, allowing the player to choose from " +
+                        "different ways to \"hone\" 1 module on the item. Major modules also settle after some time, increasing its integrity")
                 .push("module_progression");
 
         moduleProgression = builder
@@ -122,11 +124,13 @@ public class ConfigHandler {
                 .defineInRange("settle_base", 270, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         settleLimitLevelMultiplier = builder
-                .comment("Level multiplier for settling limit, a value of 3 would cause a module that has settled once to require 3x as many uses before it settles again")
+                .comment("Level multiplier for settling limit, a value of 3 would cause a module that has settled once to require 3x as many uses " +
+                        "before it settles again")
                 .defineInRange("settle_level_multiplier", 3d, Double.MIN_VALUE, Double.MAX_VALUE);
 
         settleLimitDurabilityMultiplier = builder
-                .comment("Durability multiplier for settling limit, a value of 1 would cause a module with 75 durability to require an additional 75 uses before it settles")
+                .comment("Durability multiplier for settling limit, a value of 1 would cause a module with 75 durability to require an additional " +
+                        "75 uses before it settles")
                 .defineInRange("settle_durability_multiplier", 0.5d, Double.MIN_VALUE, Double.MAX_VALUE);
 
         honeSwordBase = builder
@@ -134,7 +138,8 @@ public class ConfigHandler {
                 .defineInRange("hone_sword_base", 110, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeSwordIntegrityMultiplier = builder
-                .comment("Integrity multiplier for sword honing, a value of 2 would cause a sword which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .comment("Integrity multiplier for sword honing, a value of 2 would cause a sword which uses 3 integrity to require 2*3 times as " +
+                        "many uses before it can be honed")
                 .defineInRange("hone_sword_integrity_multiplier", 65, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honedoubleBase = builder
@@ -142,7 +147,8 @@ public class ConfigHandler {
                 .defineInRange("hone_double_base", 140, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honedoubleIntegrityMultiplier = builder
-                .comment("Integrity multiplier for tool honing, a value of 2 would cause a sword which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .comment("Integrity multiplier for tool honing, a value of 2 would cause a sword which uses 3 integrity to require 2*3 times as " +
+                        "many uses before it can be honed")
                 .defineInRange("hone_double_integrity_multiplier", 75, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeBowBase = builder
@@ -150,7 +156,8 @@ public class ConfigHandler {
                 .defineInRange("hone_bow_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeBowIntegrityMultiplier = builder
-                .comment("Integrity multiplier for bow honing, a value of 2 would cause a bow which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .comment("Integrity multiplier for bow honing, a value of 2 would cause a bow which uses 3 integrity to require 2*3 times as many " +
+                        "uses before it can be honed")
                 .defineInRange("hone_bow_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeShieldBase = builder
@@ -158,7 +165,8 @@ public class ConfigHandler {
                 .defineInRange("hone_shield_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeShieldIntegrityMultiplier = builder
-                .comment("Integrity multiplier for shield honing, a value of 2 would cause a shield which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .comment("Integrity multiplier for shield honing, a value of 2 would cause a shield which uses 3 integrity to require 2*3 times as " +
+                        "many uses before it can be honed")
                 .defineInRange("hone_shield_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeCrossbowBase = builder
@@ -166,7 +174,8 @@ public class ConfigHandler {
                 .defineInRange("hone_crossbow_base", 48, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeCrossbowIntegrityMultiplier = builder
-                .comment("Integrity multiplier for crossbow honing, a value of 2 would cause a crossbow which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .comment("Integrity multiplier for crossbow honing, a value of 2 would cause a crossbow which uses 3 integrity to require 2*3 times" +
+                        " as many uses before it can be honed")
                 .defineInRange("hone_crossbow_integrity_multiplier", 32, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeSingleBase = builder
@@ -174,7 +183,8 @@ public class ConfigHandler {
                 .defineInRange("hone_single_headed_base", 120, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         honeSingleIntegrityMultiplier = builder
-                .comment("Integrity multiplier for single headed implement honing, a value of 2 would cause an implement which uses 3 integrity to require 2*3 times as many uses before it can be honed")
+                .comment("Integrity multiplier for single headed implement honing, a value of 2 would cause an implement which uses 3 integrity to " +
+                        "require 2*3 times as many uses before it can be honed")
                 .defineInRange("hone_single_headed_integrity_multiplier", 60, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         builder.pop();
@@ -233,8 +243,8 @@ public class ConfigHandler {
             ModularBowItem.instance.updateConfig(honeBowBase.get(), honeBowIntegrityMultiplier.get());
         }
 
-        if (ModularCrossbowItem.instance != null) {
-            ModularCrossbowItem.instance.updateConfig(honeCrossbowBase.get(), honeCrossbowIntegrityMultiplier.get());
+        if (ModularCrossbowItemImpl.instance != null) {
+            ModularCrossbowItemImpl.instance.updateConfig(honeCrossbowBase.get(), honeCrossbowIntegrityMultiplier.get());
         }
 
         if (ModularSingleHeadedItem.instance != null) {

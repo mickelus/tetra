@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
-import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItemImpl;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -71,7 +71,7 @@ public class RackTESR implements BlockEntityRenderer<RackTile> {
             } else if (itemStack.getItem() instanceof ModularBladedItem || itemStack.getItem() instanceof SwordItem) {
                 matrixStack.translate(0, -0.2, 0);
                 matrixStack.mulPose(Axis.ZP.rotationDegrees(135.0F));
-            } else if (itemStack.getItem() instanceof ModularCrossbowItem || itemStack.getItem() instanceof CrossbowItem) {
+            } else if (itemStack.getItem() instanceof ModularCrossbowItemImpl || itemStack.getItem() instanceof CrossbowItem) {
                 matrixStack.translate(0, -0.2, 0);
                 matrixStack.mulPose(Axis.ZP.rotationDegrees(225.0F));
             } else if (model.isGui3d()) {

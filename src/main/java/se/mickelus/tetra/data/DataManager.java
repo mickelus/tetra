@@ -57,9 +57,7 @@ import se.mickelus.tetra.items.modular.impl.dynamic.ArchetypeDefinition;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
-import se.mickelus.tetra.module.model.AbstractTextureModel;
-import se.mickelus.tetra.module.model.IModuleModel;
-import se.mickelus.tetra.module.model.ModuleModelRegistry;
+import se.mickelus.tetra.module.model.*;
 import se.mickelus.tetra.module.schematic.OutcomeDefinition;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
@@ -83,7 +81,8 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
             .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
             .registerTypeAdapter(IModuleModel.class, new ModuleModelRegistry.Deserializer())
-            .registerTypeAdapter(AbstractTextureModel.class, new GridTextureModelDeserializer())
+            .registerTypeAdapter(GridTextureModel.class, new GridTextureModelDeserializer())
+            .registerTypeAdapter(FilteredGridTextureModel.class, new FilteredGridTextureModelDeserializer())
             .registerTypeAdapter(Priority.class, new Priority.Deserializer())
             .registerTypeAdapter(ItemPredicate.class, new ItemPredicateDeserializer())
             .registerTypeAdapter(PropertyMatcher.class, new PropertyMatcherDeserializer())
