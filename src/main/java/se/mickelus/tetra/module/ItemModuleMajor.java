@@ -13,6 +13,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import se.mickelus.mutil.gui.SimpleColor;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -21,7 +22,7 @@ import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.*;
 import se.mickelus.tetra.module.improvement.SettlePacket;
-import se.mickelus.tetra.module.model.AbstractTextureModel;
+import se.mickelus.tetra.module.model.IModuleModel;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import java.util.*;
@@ -393,17 +394,17 @@ public abstract class ItemModuleMajor extends ItemModule {
                 .sum();
     }
 
-    protected AbstractTextureModel[] getImprovementModels(ItemStack itemStack, int tint) {
+    protected IModuleModel[] getImprovementModels(ItemStack itemStack, SimpleColor tint) {
         return Arrays.stream(getImprovements(itemStack))
                 .filter(improvement -> improvement.models.length > 0)
                 .flatMap(improvement -> Arrays.stream(improvement.models))
                 .map(model -> model.inheritTint(tint))
-                .toArray(AbstractTextureModel[]::new);
+                .toArray(IModuleModel[]::new);
     }
 
     @Override
-    public AbstractTextureModel[] getModels(ItemStack itemStack) {
-        AbstractTextureModel[] models = super.getModels(itemStack);
-        return ArrayUtils.addAll(models, getImprovementModels(itemStack, models.length > 0 ? models[0].getOverlayTint() : 0xffffff));
+    public IModuleModel[] getModels(ItemStack itemStack) {
+        IModuleModel[] models = super.getModels(itemStack);
+        return ArrayUtils.addAll(models, getImprovementModels(itemStack, models.length > 0 ? models[0].getOverlayTint() : new SimpleColor(0xffffff)));
     }
 }

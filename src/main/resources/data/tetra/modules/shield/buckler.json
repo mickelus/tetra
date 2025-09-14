@@ -45,8 +45,9 @@
                 "availableTextures": [ "wooden", "metal", "bone", "vent" ],
                 "models": [
                     {
-                        "type": "tetra:plate/buckler",
-                        "location": "tetra:item/module/shield/plate/buckler/"
+                        "type": "tetra:shield",
+                        "model": "tetra:plate/buckler",
+                        "texture": "tetra:item/module/shield/plate/buckler/"
                     }
                 ]
             }

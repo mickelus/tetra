@@ -9,9 +9,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.TierSortingRegistry;
+import se.mickelus.mutil.gui.SimpleColor;
 import se.mickelus.tetra.data.deserializer.AttributesDeserializer;
 import se.mickelus.tetra.data.deserializer.ItemTagKeyDeserializer;
-import se.mickelus.tetra.module.model.AbstractTextureModel;
+import se.mickelus.tetra.module.model.IModuleModel;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.util.TierHelper;
@@ -206,8 +207,8 @@ public class MaterialData {
                 .toArray(String[]::new);
     }
 
-    public static AbstractTextureModel kneadModel(AbstractTextureModel model, MaterialData material, List<String> availableTextures) {
-        return model.forMaterial(availableTextures, material.textureOverrides, material.textures, material.tintOverrides, material.tints.texture);
+    public static IModuleModel kneadModel(IModuleModel model, MaterialData material, List<String> availableTextures) {
+        return model.forMaterial(availableTextures, material.textureOverrides, material.textures, material.tintOverrides, new SimpleColor(material.tints.texture));
     }
 
     public MaterialData shallowCopy() {

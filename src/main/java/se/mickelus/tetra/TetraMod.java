@@ -48,12 +48,13 @@ import se.mickelus.tetra.items.forged.VibrationDebuffer;
 import se.mickelus.tetra.items.modular.ChargedAbilityPacket;
 import se.mickelus.tetra.items.modular.SecondaryAbilityPacket;
 import se.mickelus.tetra.items.modular.impl.bow.ProjectileMotionPacket;
+import se.mickelus.tetra.items.modular.impl.shield.ShieldModuleModel;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltModule;
 import se.mickelus.tetra.module.*;
 import se.mickelus.tetra.module.improvement.HonePacket;
 import se.mickelus.tetra.module.improvement.SettlePacket;
-import se.mickelus.tetra.module.model.FilteredGridTextureModel;
-import se.mickelus.tetra.module.model.GridTextureModel;
+import se.mickelus.tetra.module.model.FilteredGridTextureModelData;
+import se.mickelus.tetra.module.model.GridTextureModelData;
 import se.mickelus.tetra.module.model.ModuleModelRegistry;
 import se.mickelus.tetra.module.schematic.BookEnchantSchematic;
 import se.mickelus.tetra.module.schematic.CleanseSchematic;
@@ -101,8 +102,9 @@ public class TetraMod {
 
         ConfigHandler.setup();
 
-        ModuleModelRegistry.register("tetra:grid_texture", GridTextureModel.class);
-        ModuleModelRegistry.register("tetra:filtered_grid_texture", FilteredGridTextureModel.class);
+        ModuleModelRegistry.register(GridTextureModelData.TYPE.toString(), GridTextureModelData.class);
+        ModuleModelRegistry.register(FilteredGridTextureModelData.TYPE.toString(), FilteredGridTextureModelData.class);
+        ModuleModelRegistry.register("tetra:shield", ShieldModuleModel.class);
 
         new CraftingEffectRegistry();
         CraftingEffectRegistry.registerConditionType("tetra:or", OrCondition.class);

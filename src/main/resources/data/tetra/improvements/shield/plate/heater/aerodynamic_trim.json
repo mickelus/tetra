@@ -12,8 +12,9 @@
         },
         "models": [
             {
-                "type": "tetra:plate/heater",
-                "location": "tetra:item/module/shield/plate/heater/improvements/aerodynamic_trim_bevel",
+                "type": "tetra:shield",
+                "model": "tetra:plate/heater",
+                "texture": "tetra:item/module/shield/plate/heater/improvements/aerodynamic_trim_bevel",
                 "tint": "inherit"
             }
         ],
@@ -25,8 +26,9 @@
             "availableTextures": [ "aerodynamic_trim" ],
             "models": [
                 {
-                    "type": "tetra:plate/heater",
-                    "location": "tetra:item/module/shield/plate/heater/improvements/"
+                    "type": "tetra:shield",
+                    "model": "tetra:plate/heater",
+                    "texture": "tetra:item/module/shield/plate/heater/improvements/"
                 }
             ]
         }

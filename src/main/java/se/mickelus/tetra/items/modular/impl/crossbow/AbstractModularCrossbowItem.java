@@ -16,9 +16,9 @@ import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
-import se.mickelus.tetra.module.model.AbstractTextureModel;
-import se.mickelus.tetra.module.model.FilteredGridTextureModel;
-import se.mickelus.tetra.module.model.GridTextureModel;
+import se.mickelus.tetra.module.model.FilteredGridTextureModelData;
+import se.mickelus.tetra.module.model.GridTextureModelData;
+import se.mickelus.tetra.module.model.IModuleModel;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 
 import javax.annotation.Nullable;
@@ -40,9 +40,9 @@ public abstract class AbstractModularCrossbowItem extends ModularItem {
     public static final String identifier = "modular_crossbow";
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, 0, -13, 18);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(4, -1, 13, 12, 4, 25);
-    protected GridTextureModel arrowModel = new GridTextureModel(new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/arrow"));
-    protected GridTextureModel extractorModel = new GridTextureModel(new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/extractor"));
-    protected GridTextureModel fireworkModel = new GridTextureModel(new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/firework"));
+    protected GridTextureModelData arrowModel = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/arrow"));
+    protected GridTextureModelData extractorModel = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/extractor"));
+    protected GridTextureModelData fireworkModel = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/firework"));
     // used to pick projectiles from the player inventory
 
     public AbstractModularCrossbowItem(Properties properties) {
@@ -80,7 +80,7 @@ public abstract class AbstractModularCrossbowItem extends ModularItem {
         if (isLoaded(itemStack)) {
             return "loaded";
         } else if (progress == 0) {
-            return "item";
+            return "undrawn";
         } else if (progress < 0.58) {
             return "draw_0";
         } else if (progress < 1) {
@@ -103,7 +103,7 @@ public abstract class AbstractModularCrossbowItem extends ModularItem {
         return "p0";
     }
 
-    private AbstractTextureModel getProjectileModel(ItemStack itemStack) {
+    private IModuleModel getProjectileModel(ItemStack itemStack) {
         ItemStack projectileStack = getFirstProjectile(itemStack);
 
         if (projectileStack.getItem() instanceof FireworkRocketItem) {
@@ -124,19 +124,20 @@ public abstract class AbstractModularCrossbowItem extends ModularItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public ImmutableList<AbstractTextureModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
+    public ImmutableList<IModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
         String modelType = getDrawVariant(itemStack, entity);
 
-        ImmutableList<AbstractTextureModel> models = getAllModules(itemStack).stream()
+        ImmutableList<IModuleModel> models = getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
-                .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
+                .map(module -> module.getModels(itemStack))
+                .flatMap(Arrays::stream)
                 .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(AbstractTextureModel::getRenderLayer))
+                .sorted(Comparator.comparing(IModuleModel::getRenderLayer))
                 .filter(model -> filterModel(model, modelType))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 
         if (isLoaded(itemStack)) {
-            return ImmutableList.<AbstractTextureModel>builder()
+            return ImmutableList.<IModuleModel>builder()
                     .addAll(models)
                     .add(getProjectileModel(itemStack))
                     .build();
@@ -145,8 +146,8 @@ public abstract class AbstractModularCrossbowItem extends ModularItem {
         return models;
     }
 
-    private static boolean filterModel(AbstractTextureModel model, String filter) {
-        return !(model instanceof FilteredGridTextureModel filteredModel) || filteredModel.getFilter().equals(filter);
+    private static boolean filterModel(IModuleModel model, String filter) {
+        return !(model instanceof FilteredGridTextureModelData filteredModel) || filteredModel.getFilter().equals(filter);
     }
 
     @Override

@@ -183,6 +183,11 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         // todo: crossbows don't fire the nock event when loading arrows so needs some way to load ammo from quiver
 //        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
         ItemStack itemstack = player.getItemInHand(hand);
+
+        if (isBroken(itemstack)) {
+            return InteractionResultHolder.pass(itemstack);
+        }
+
         if (isLoaded(itemstack)) {
             fireProjectiles(itemstack, world, player);
             setLoaded(itemstack, false);
@@ -255,30 +260,6 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         }
     }
 
-    public int getReloadDuration(ItemStack itemStack) {
-        return Math.max((int) (20 * (getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())
-                - EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
-    }
-
-    /**
-     * Returns a value between 0 - 1 representing how far the crossbow has been drawn, a value of 1 means that the crossbow is fully drawn
-     *
-     * @param itemStack
-     * @param entity
-     * @return
-     */
-    public float getProgress(ItemStack itemStack, @Nullable LivingEntity entity) {
-        return Optional.ofNullable(entity)
-                .filter(e -> e.getUseItemRemainingTicks() > 0)
-                .filter(e -> itemStack.equals(e.getUseItem()))
-                .map(e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getReloadDuration(itemStack))
-                .orElse(0f);
-    }
-
-    private ItemStack findAmmo(LivingEntity entity) {
-        return entity.getProjectile(shootableDummy);
-    }
-
     protected void fireProjectile(Level world, ItemStack crossbowStack, ItemStack ammoStack, Player player, double yaw, boolean isDupe) {
         double strength = getAttributeValue(crossbowStack, TetraAttributes.drawStrength.get());
         float velocityBonus = getEffectLevel(crossbowStack, ItemEffect.velocity) / 100f;
@@ -329,6 +310,30 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
             projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 3.15F, 1.0F);
             world.addFreshEntity(projectile);
         }
+    }
+
+    public int getReloadDuration(ItemStack itemStack) {
+        return Math.max((int) (20 * (getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())
+                - EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
+    }
+
+    /**
+     * Returns a value between 0 - 1 representing how far the crossbow has been drawn, a value of 1 means that the crossbow is fully drawn
+     *
+     * @param itemStack
+     * @param entity
+     * @return
+     */
+    public float getProgress(ItemStack itemStack, @Nullable LivingEntity entity) {
+        return Optional.ofNullable(entity)
+                .filter(e -> e.getUseItemRemainingTicks() > 0)
+                .filter(e -> itemStack.equals(e.getUseItem()))
+                .map(e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getReloadDuration(itemStack))
+                .orElse(0f);
+    }
+
+    private ItemStack findAmmo(LivingEntity entity) {
+        return entity.getProjectile(shootableDummy);
     }
 
     @Override

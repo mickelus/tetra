@@ -7,8 +7,9 @@
         "durability": 20,
         "models": [
             {
-                "type": "tetra:plate/tower",
-                "location": "tetra:item/module/shield/plate/tower/improvements/studs_shadow",
+                "type": "tetra:shield",
+                "model": "tetra:plate/tower",
+                "texture": "tetra:item/module/shield/plate/tower/improvements/studs_shadow",
                 "tint": "inherit"
             }
         ],
@@ -17,8 +18,9 @@
             "availableTextures": [ "studs" ],
             "models": [
                 {
-                    "type": "tetra:plate/tower",
-                    "location": "tetra:item/module/shield/plate/tower/improvements/"
+                    "type": "tetra:shield",
+                    "model": "tetra:plate/tower",
+                    "texture": "tetra:item/module/shield/plate/tower/improvements/"
                 }
             ]
         }

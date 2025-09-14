@@ -36,6 +36,7 @@ import se.mickelus.mutil.data.deserializer.BlockDeserializer;
 import se.mickelus.mutil.data.deserializer.BlockPosDeserializer;
 import se.mickelus.mutil.data.deserializer.ItemDeserializer;
 import se.mickelus.mutil.data.deserializer.ResourceLocationDeserializer;
+import se.mickelus.mutil.gui.SimpleColor;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.blocks.PropertyMatcher;
@@ -54,6 +55,8 @@ import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
 import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
 import se.mickelus.tetra.effect.modifier.ModifierType;
 import se.mickelus.tetra.items.modular.impl.dynamic.ArchetypeDefinition;
+import se.mickelus.tetra.items.modular.impl.shield.ShieldModuleModel;
+import se.mickelus.tetra.items.modular.impl.shield.ShieldModuleModelDeserializer;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
@@ -80,9 +83,11 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ItemAspect.class, new ItemAspect.Deserializer())
             .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
             .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
+            .registerTypeAdapter(SimpleColor.class, new SimpleColorDeserializer())
             .registerTypeAdapter(IModuleModel.class, new ModuleModelRegistry.Deserializer())
-            .registerTypeAdapter(GridTextureModel.class, new GridTextureModelDeserializer())
-            .registerTypeAdapter(FilteredGridTextureModel.class, new FilteredGridTextureModelDeserializer())
+            .registerTypeAdapter(GridTextureModelData.class, new GridTextureModelDeserializer())
+            .registerTypeAdapter(FilteredGridTextureModelData.class, new FilteredGridTextureModelDeserializer())
+            .registerTypeAdapter(ShieldModuleModel.class, new ShieldModuleModelDeserializer())
             .registerTypeAdapter(Priority.class, new Priority.Deserializer())
             .registerTypeAdapter(ItemPredicate.class, new ItemPredicateDeserializer())
             .registerTypeAdapter(PropertyMatcher.class, new PropertyMatcherDeserializer())

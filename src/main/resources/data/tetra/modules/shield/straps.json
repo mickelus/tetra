@@ -27,8 +27,9 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "type": "tetra:grip/straps",
-                        "location": "tetra:item/module/shield/grip/straps/"
+                        "type": "tetra:shield",
+                        "model": "tetra:grip/straps",
+                        "texture": "tetra:item/module/shield/grip/straps/"
                     }
                 ]
             }

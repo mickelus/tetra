@@ -2,12 +2,13 @@ package se.mickelus.tetra.module;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import se.mickelus.mutil.gui.SimpleColor;
 import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.TweakData;
-import se.mickelus.tetra.module.model.AbstractTextureModel;
+import se.mickelus.tetra.module.model.IModuleModel;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -67,14 +68,14 @@ public class MultiSlotMajorModule extends ItemModuleMajor {
     }
 
     @Override
-    protected AbstractTextureModel[] getImprovementModels(ItemStack itemStack, int tint) {
+    protected IModuleModel[] getImprovementModels(ItemStack itemStack, SimpleColor tint) {
         return super.getImprovementModels(itemStack, tint);
     }
 
     @Override
-    public AbstractTextureModel[] getModels(ItemStack itemStack) {
+    public IModuleModel[] getModels(ItemStack itemStack) {
         return Arrays.stream(super.getModels(itemStack))
                 .map(model -> model.withSlotSuffix(slotSuffix))
-                .toArray(AbstractTextureModel[]::new);
+                .toArray(IModuleModel[]::new);
     }
 }

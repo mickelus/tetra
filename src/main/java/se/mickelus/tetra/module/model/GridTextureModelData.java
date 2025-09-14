@@ -2,26 +2,36 @@ package se.mickelus.tetra.module.model;
 
 import com.mojang.math.Transformation;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
+import se.mickelus.mutil.gui.SimpleColor;
 import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.module.Priority;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class GridTextureModel extends AbstractTextureModel {
+public class GridTextureModelData extends AbstractTextureModelData {
+    public static final ResourceLocation TYPE = new ResourceLocation("tetra", "grid_texture");
 
-    public GridTextureModel(ResourceLocation location) {
-        this(location, null, null, null, null, null, Priority.BASE, null, new ItemDisplayContext[]{ItemDisplayContext.NONE});
+    public GridTextureModelData() {
+        super();
     }
 
-    public GridTextureModel(ResourceLocation location, ResourceLocation renderType, Transformation transform, Integer emission, Integer tint,
-            Integer overlayTint, Priority renderLayer, Boolean invertPerspectives, ItemDisplayContext[] contexts) {
+    public GridTextureModelData(ResourceLocation location) {
+        this(TYPE, location, null, null, 0, null, null, null, false, null);
+    }
+
+    public GridTextureModelData(ResourceLocation type, ResourceLocation location, ResourceLocation renderType, Transformation transform,
+            Integer emission, SimpleColor tint, SimpleColor overlayTint, Priority renderLayer, Boolean invertPerspectives,
+            ItemDisplayContext[] contexts) {
+        super();
+        this.type = type;
         this.location = location;
         this.renderType = renderType;
         this.transform = transform;
         if (emission != null) {
-            this.emission = emission;
+            this.emission = Mth.clamp(0, emission, 15);
         }
         if (tint != null) {
             this.tint = tint;
@@ -38,12 +48,12 @@ public class GridTextureModel extends AbstractTextureModel {
         this.contexts = contexts;
     }
 
-    public GridTextureModel forMaterial(List<String> availableTextures, String[] modelOverrides, String[] materialTextures, boolean tintOverride,
-            int materialTint) {
+    public GridTextureModelData forMaterial(List<String> availableTextures, String[] modelOverrides, String[] materialTextures, boolean tintOverride,
+            SimpleColor materialTint) {
         if (Arrays.stream(modelOverrides).anyMatch(override -> location.getPath().equals(override))) {
-            GridTextureModel copy = copy();
+            GridTextureModelData copy = copy();
             copy.location = appendString(location, materialTextures[0]);
-            copy.tint = tintOverride ? materialTint : 0xffffff;
+            copy.tint = tintOverride ? materialTint : new SimpleColor(0xffffffff);
             copy.overlayTint = materialTint;
             return copy;
         }
@@ -53,7 +63,7 @@ public class GridTextureModel extends AbstractTextureModel {
                 .findFirst()
                 .map(texture -> appendString(location, texture))
                 .orElseGet(() -> appendString(location, availableTextures.get(0)));
-        GridTextureModel copy = copy();
+        GridTextureModelData copy = copy();
         copy.location = updatedLocation;
         copy.tint = materialTint;
         copy.overlayTint = materialTint;
@@ -64,23 +74,24 @@ public class GridTextureModel extends AbstractTextureModel {
         return new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath() + string);
     }
 
-    public GridTextureModel withSlotSuffix(String suffix) {
-        GridTextureModel copy = copy();
+    public GridTextureModelData withSlotSuffix(String suffix) {
+        GridTextureModelData copy = copy();
         copy.location = new ResourceLocation(location.getNamespace(), location.getPath() + suffix);
         return copy;
     }
 
-    public GridTextureModel inheritTint(int parentTint) {
-        if (ItemColors.inherit == tint) {
-            GridTextureModel copy = copy();
+    public GridTextureModelData inheritTint(SimpleColor parentTint) {
+        if (ItemColors.inherit == tint.getRaw()) {
+            GridTextureModelData copy = copy();
             copy.tint = parentTint;
             return copy;
         }
         return this;
     }
 
-    public GridTextureModel copy() {
-        return new GridTextureModel(
+    public GridTextureModelData copy() {
+        return new GridTextureModelData(
+                type,
                 location,
                 renderType,
                 transform,

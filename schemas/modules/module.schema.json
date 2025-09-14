@@ -80,7 +80,7 @@
             "description": "This describes all the variants of this module, should contain at least one value."
         }
     },
-    "required": [ "slots", "type", "variants", "improvements" ],
+    "required": [ "slots", "type", "variants" ],
     "examples": [
         {
             "replace": false,

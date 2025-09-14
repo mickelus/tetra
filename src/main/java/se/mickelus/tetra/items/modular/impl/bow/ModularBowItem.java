@@ -45,9 +45,9 @@ import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
-import se.mickelus.tetra.module.model.AbstractTextureModel;
-import se.mickelus.tetra.module.model.FilteredGridTextureModel;
-import se.mickelus.tetra.module.model.GridTextureModel;
+import se.mickelus.tetra.module.model.FilteredGridTextureModelData;
+import se.mickelus.tetra.module.model.GridTextureModelData;
+import se.mickelus.tetra.module.model.IModuleModel;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
@@ -70,9 +70,9 @@ public class ModularBowItem extends ModularItem {
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
     @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularBowItem instance;
-    protected GridTextureModel arrowModel0 = new GridTextureModel(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
-    protected GridTextureModel arrowModel1 = new GridTextureModel(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_1"));
-    protected GridTextureModel arrowModel2 = new GridTextureModel(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_2"));
+    protected GridTextureModelData arrowModel0 = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
+    protected GridTextureModelData arrowModel1 = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_1"));
+    protected GridTextureModelData arrowModel2 = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_2"));
     protected ItemStack vanillaBow;
 
     public ModularBowItem() {
@@ -451,7 +451,7 @@ public class ModularBowItem extends ModularItem {
         return "draw_2";
     }
 
-    private AbstractTextureModel getArrowModel(String drawVariant) {
+    private GridTextureModelData getArrowModel(String drawVariant) {
         switch (drawVariant) {
             case "draw_0":
                 return arrowModel0;
@@ -471,19 +471,20 @@ public class ModularBowItem extends ModularItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public ImmutableList<AbstractTextureModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
+    public ImmutableList<IModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
         String modelType = getDrawVariant(itemStack, entity);
 
-        ImmutableList<AbstractTextureModel> models = getAllModules(itemStack).stream()
+        ImmutableList<IModuleModel> models = getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
-                .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
+                .map(itemModule -> itemModule.getModels(itemStack))
+                .flatMap(Arrays::stream)
                 .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(AbstractTextureModel::getRenderLayer))
+                .sorted(Comparator.comparing(IModuleModel::getRenderLayer))
                 .filter(model -> filterModel(model, modelType))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 
         if (!modelType.equals("undrawn")) {
-            return ImmutableList.<AbstractTextureModel>builder()
+            return ImmutableList.<IModuleModel>builder()
                     .addAll(models)
                     .add(getArrowModel(modelType))
                     .build();
@@ -492,8 +493,8 @@ public class ModularBowItem extends ModularItem {
         return models;
     }
 
-    private static boolean filterModel(AbstractTextureModel model, String filter) {
-        return !(model instanceof FilteredGridTextureModel filteredModel) || filteredModel.getFilter().equals(filter);
+    private static boolean filterModel(IModuleModel model, String filter) {
+        return !(model instanceof FilteredGridTextureModelData filteredModel) || filteredModel.getFilter().equals(filter);
     }
 
     @Override

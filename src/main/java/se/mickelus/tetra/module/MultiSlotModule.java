@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.TweakData;
-import se.mickelus.tetra.module.model.AbstractTextureModel;
+import se.mickelus.tetra.module.model.IModuleModel;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
@@ -47,9 +47,9 @@ public class MultiSlotModule extends ItemModule {
     }
 
     @Override
-    public AbstractTextureModel[] getModels(ItemStack itemStack) {
+    public IModuleModel[] getModels(ItemStack itemStack) {
         return Arrays.stream(super.getModels(itemStack))
                 .map(model -> model.withSlotSuffix(slotSuffix))
-                .toArray(AbstractTextureModel[]::new);
+                .toArray(IModuleModel[]::new);
     }
 }

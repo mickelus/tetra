@@ -49,7 +49,7 @@ import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.ItemProperties;
 import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.module.improvement.HonePacket;
-import se.mickelus.tetra.module.model.AbstractTextureModel;
+import se.mickelus.tetra.module.model.IModuleModel;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 import se.mickelus.tetra.properties.AttributeHelper;
 
@@ -1065,12 +1065,13 @@ public interface IModularItem {
     }
 
     @OnlyIn(Dist.CLIENT)
-    default ImmutableList<AbstractTextureModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
+    default ImmutableList<IModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
         return getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
-                .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
+                .map(itemModule -> itemModule.getModels(itemStack))
+                .flatMap(Arrays::stream)
                 .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(AbstractTextureModel::getRenderLayer))
+                .sorted(Comparator.comparing(IModuleModel::getRenderLayer))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
     }
 

@@ -25,7 +25,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.items.modular.IModularItem;
-import se.mickelus.tetra.module.model.AbstractTextureModel;
+import se.mickelus.tetra.module.model.GridTextureModelData;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -95,10 +95,13 @@ public class ModularOverrideList extends ItemOverrides {
         ItemTransforms cameraTransforms = model.getCameraTransforms(transformVariant);
         BakingContextWrapper contextWrapper = new BakingContextWrapper(context, cameraTransforms);
 
-        List<AbstractTextureModel> models = item.getModels(itemStack, entity);
+        List<GridTextureModelData> models = item.getModels(itemStack, entity).stream()
+                .filter(model -> model instanceof GridTextureModelData)
+                .map(model -> (GridTextureModelData) model)
+                .toList();
 
         Set<ItemDisplayContext> contexts = models.stream()
-                .map(AbstractTextureModel::getContexts)
+                .map(GridTextureModelData::getContexts)
                 .filter(Objects::nonNull)
                 .flatMap(Arrays::stream)
                 .filter(Objects::nonNull)
@@ -115,7 +118,7 @@ public class ModularOverrideList extends ItemOverrides {
         return model.bake(contextWrapper, baker, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
     }
 
-    protected ItemLayerModel createLayerModel(List<AbstractTextureModel> models) {
+    protected ItemLayerModel createLayerModel(List<GridTextureModelData> models) {
         ImmutableList<Material> textures = models.stream()
                 .map(moduleModel -> new Material(TextureAtlas.LOCATION_BLOCKS, moduleModel.getLocation()))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
@@ -124,8 +127,8 @@ public class ModularOverrideList extends ItemOverrides {
         var builder = new QuadTransformerBuilder();
         for (int i = 0; i < models.size(); i++) {
             var model = models.get(i);
-            if (model.getTint() != 0xffffffff) {
-                builder.add(i, new ColorQuadTransformer(model.getTint()));
+            if (model.getTint() != null && model.getTint().getRaw() != 0xffffffff) {
+                builder.add(i, new ColorQuadTransformer(model.getTint().getRaw()));
             }
             if (model.getEmission() >= 0 && model.getEmission() < 16) {
                 builder.add(i, QuadTransformers.settingEmissivity(model.getEmission()));
@@ -141,7 +144,7 @@ public class ModularOverrideList extends ItemOverrides {
         return new ItemLayerModel(textures, builder.get(), renderTypes);
     }
 
-    protected List<AbstractTextureModel> filterModels(List<AbstractTextureModel> models, @Nullable ItemDisplayContext context) {
+    protected List<GridTextureModelData> filterModels(List<GridTextureModelData> models, @Nullable ItemDisplayContext context) {
         return models.stream()
                 .filter(model -> model.getContexts() == null || ArrayUtils.contains(model.getContexts(), context) != model.isInvertPerspectives())
                 .toList();

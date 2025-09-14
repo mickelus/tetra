@@ -7,8 +7,9 @@
         "durability": 20,
         "models": [
             {
-                "type": "tetra:plate/buckler",
-                "location": "tetra:item/module/shield/plate/buckler/improvements/trim_bevel",
+                "type": "tetra:shield",
+                "model": "tetra:plate/buckler",
+                "texture": "tetra:item/module/shield/plate/buckler/improvements/trim_bevel",
                 "tint": "inherit"
             }
         ],
@@ -17,8 +18,9 @@
             "availableTextures": [ "trim" ],
             "models": [
                 {
-                    "type": "tetra:plate/buckler",
-                    "location": "tetra:item/module/shield/plate/buckler/improvements/"
+                    "type": "tetra:shield",
+                    "model": "tetra:plate/buckler",
+                    "texture": "tetra:item/module/shield/plate/buckler/improvements/"
                 }
             ]
         }
@@ -31,8 +33,9 @@
         "durability": 20,
         "models": [
             {
-                "type": "tetra:plate/buckler",
-                "location": "tetra:item/module/shield/plate/buckler/improvements/trim_shadow",
+                "type": "tetra:shield",
+                "model": "tetra:plate/buckler",
+                "texture": "tetra:item/module/shield/plate/buckler/improvements/trim_shadow",
                 "tint": "inherit"
             }
         ],
@@ -41,8 +44,9 @@
             "availableTextures": [ "trim" ],
             "models": [
                 {
-                    "type": "tetra:plate/buckler",
-                    "location": "tetra:item/module/shield/plate/buckler/improvements/"
+                    "type": "tetra:shield",
+                    "model": "tetra:plate/buckler",
+                    "texture": "tetra:item/module/shield/plate/buckler/improvements/"
                 }
             ]
         }
@@ -54,12 +58,14 @@
         "durability": 120,
         "models": [
             {
-                "type": "tetra:plate/buckler",
-                "location": "tetra:item/module/shield/plate/buckler/improvements/trim_scrap"
+                "type": "tetra:shield",
+                "model": "tetra:plate/buckler",
+                "texture": "tetra:item/module/shield/plate/buckler/improvements/trim_scrap"
             },
             {
-                "type": "tetra:plate/buckler",
-                "location": "tetra:item/module/shield/plate/buckler/improvements/trim_scrap_bevel",
+                "type": "tetra:shield",
+                "model": "tetra:plate/buckler",
+                "texture": "tetra:item/module/shield/plate/buckler/improvements/trim_scrap_bevel",
                 "tint": "inherit"
             }
         ]
