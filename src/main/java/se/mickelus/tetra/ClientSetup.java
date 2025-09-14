@@ -2,7 +2,6 @@ package se.mickelus.tetra;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.*;
@@ -59,17 +58,12 @@ public class ClientSetup {
         FMLJavaModLoadingContext.get().getModEventBus().register(ClientSetup.class);
         MinecraftForge.EVENT_BUS.register(ClientSetup.class);
 
-        ReloadableResourceManager resourceManager = (ReloadableResourceManager) Minecraft.getInstance().getResourceManager();
-
         StatRegistry.init();
-        resourceManager.registerReloadListener(new StatIndicatorStore());
-        resourceManager.registerReloadListener(new StatBarStore());
-        resourceManager.registerReloadListener(new StatSorterStore());
-
-        resourceManager.registerReloadListener(new HolosphereEntryStore());
-
-        // todo: seems to cause issues during datagen
-        resourceManager.registerReloadListener(new ToolActionIconStore());
+        new StatIndicatorStore();
+        new StatBarStore();
+        new StatSorterStore();
+        new HolosphereEntryStore();
+        new ToolActionIconStore();
     }
 
     @SubscribeEvent
@@ -84,6 +78,15 @@ public class ClientSetup {
                 e.printStackTrace();
             }
         });
+    }
+
+    @SubscribeEvent
+    public static void registerClientReloadListeners(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener(StatIndicatorStore.instance);
+        event.registerReloadListener(StatBarStore.instance);
+        event.registerReloadListener(StatSorterStore.instance);
+        event.registerReloadListener(HolosphereEntryStore.instance);
+        event.registerReloadListener(ToolActionIconStore.instance);
     }
 
     @SubscribeEvent
