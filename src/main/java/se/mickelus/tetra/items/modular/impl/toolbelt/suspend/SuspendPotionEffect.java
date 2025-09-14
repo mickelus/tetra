@@ -45,7 +45,7 @@ public class SuspendPotionEffect extends MobEffect {
 
             MobEffectInstance effectInstance = entity.getEffect(this);
             if (effectInstance != null && effectInstance.getDuration() < 20) {
-                if (SuspendEffect.canSuspend((Player) entity)) {
+                if (entity instanceof Player player && SuspendEffect.canSuspend(player)) {
                     entity.addEffect(new MobEffectInstance(SuspendPotionEffect.instance, 100, 0, false, false));
                 } else {
                     entity.removeEffect(this);
