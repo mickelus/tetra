@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.multischematic;
 
 
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -26,6 +25,8 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
@@ -33,7 +34,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import se.mickelus.mutil.util.RotationHelper;
-import se.mickelus.tetra.ServerScheduler;
+import se.mickelus.tetra.ClientScheduler;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
@@ -113,7 +114,7 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity entity, ItemStack itemStack) {
         super.setPlacedBy(level, blockPos, blockState, entity, itemStack);
         if (level.isClientSide()) {
-            spawnParticles(blockState, (ClientLevel) level, blockPos);
+            spawnParticles(blockState, level, blockPos);
         }
     }
 
@@ -126,7 +127,8 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolAction> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face,
+            Collection<ToolAction> tools) {
         if (pryTable != null && face.getOpposite().equals(blockState.getValue(facingProp))) {
             return pryAction;
         }
@@ -150,15 +152,18 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
                         ((PrimaryMultiblockSchematicBlock) part.blockState.getBlock()).updateComplete(part.blockState(), level, part.worldPos(), blockPos));
     }
 
-    protected void spawnParticles(BlockState blockState, ClientLevel level, BlockPos blockPos) {
+    @OnlyIn(Dist.CLIENT)
+    protected void spawnParticles(BlockState blockState, Level level, BlockPos blockPos) {
         Vec3 face = Vec3.atLowerCornerOf(blockState.getValue(facingProp).getNormal());
         Vec3 dir = Vec3.atLowerCornerOf(blockState.getValue(facingProp).getClockWise().getNormal());
         getSchematicParts(blockState, level, blockPos).forEach(part ->
-                ServerScheduler.schedule(blockPos.distManhattan(part.worldPos) * 2, () ->
+                ClientScheduler.schedule(blockPos.distManhattan(part.worldPos) * 2, () ->
                         spawnParticleBlock(level, blockState, part.basePos(), part.blockState(), part.worldPos(), face, dir)));
     }
 
-    protected void spawnParticleBlock(ClientLevel level, BlockState originState, BlockPos basePos, BlockState blockState, BlockPos pos, Vec3 face, Vec3 dir) {
+    @OnlyIn(Dist.CLIENT)
+    protected void spawnParticleBlock(Level level, BlockState originState, BlockPos basePos, BlockState blockState, BlockPos pos, Vec3 face,
+            Vec3 dir) {
         Vec3 facePos = Vec3.atCenterOf(pos).add(face.scale(0.52));
         DustParticleOptions particle;
         if (blockState.getBlock() instanceof MultiblockSchematicBlock block && block.x == basePos.getX() && block.y == basePos.getY()) {
@@ -170,7 +175,8 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
         spawnParticle(level, particle, facePos);
     }
 
-    protected void spawnParticle(ClientLevel level, DustParticleOptions particle, Vec3 pos) {
+    @OnlyIn(Dist.CLIENT)
+    protected void spawnParticle(Level level, DustParticleOptions particle, Vec3 pos) {
         level.addParticle(particle, pos.x, pos.y, pos.z, 0, 0, 0);
     }
 
