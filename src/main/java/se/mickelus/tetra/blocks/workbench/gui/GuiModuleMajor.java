@@ -170,6 +170,7 @@ public class GuiModuleMajor extends GuiModule {
             }
 
             GuiModuleImprovement improvement = new GuiModuleImprovement(0, 0, improvementKey, previewValue, color,
+                    previewValue != -1 ? previewStack : itemStack,
                     () -> hoverHandler.accept(slotKey, improvementKey),
                     () -> {
                         if (hasFocus()) {

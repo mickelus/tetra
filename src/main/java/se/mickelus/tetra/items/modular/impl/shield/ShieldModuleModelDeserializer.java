@@ -20,7 +20,7 @@ public class ShieldModuleModelDeserializer implements JsonDeserializer<ShieldMod
                 new ResourceLocation(GsonHelper.getAsString(jsonObject, "texture")),
                 jsonObject.has("tint") ? SimpleColorDeserializer.deserialize(jsonObject.get("tint")) : new SimpleColor(0xffffffff),
                 jsonObject.has("overlayTint") ? SimpleColorDeserializer.deserialize(jsonObject.get("overlayTint")) : new SimpleColor(0xffffffff),
-                jsonObject.has("renderLayer") ? context.deserialize(jsonObject.get("renderLayer"), Priority.class) : null
+                jsonObject.has("renderLayer") ? context.deserialize(jsonObject.get("renderLayer"), Priority.class) : Priority.BASE
         );
     }
 }

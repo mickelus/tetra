@@ -2,8 +2,10 @@ package se.mickelus.tetra.gui.stats.data;
 
 import com.google.gson.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.crafting.conditions.ICondition;
 import se.mickelus.mutil.data.deserializer.ResourceLocationDeserializer;
 import se.mickelus.mutil.util.JsonOptional;
+import se.mickelus.tetra.data.deserializer.ConditionDeserializer;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBase;
 import se.mickelus.tetra.gui.stats.bar.GuiStatIndicator;
 import se.mickelus.tetra.gui.stats.getter.ILabelGetter;
@@ -27,6 +29,7 @@ public class StatRegistry {
             .registerTypeAdapter(ITooltipGetter.class, new TooltipGetterDeserializer())
             .registerTypeAdapter(GuiStatIndicator.class, new IndicatorDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
+            .registerTypeAdapter(ICondition.class, new ConditionDeserializer())
             .create();
     private static final Map<String, Function<JsonElement, GuiStatBase>> statBarDeserializers = new HashMap<>();
     private static final Map<String, Function<JsonElement, IStatSorter>> statSorterDeserializers = new HashMap<>();

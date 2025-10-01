@@ -2,6 +2,7 @@ package se.mickelus.tetra.gui.stats.data;
 
 import com.google.gson.JsonElement;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.crafting.conditions.ICondition;
 import se.mickelus.tetra.gui.stats.StatsHelper;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBar;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBase;
@@ -17,7 +18,7 @@ public class StandardStatBarDeserializer {
         StandardData data = StatRegistry.gson.fromJson(jsonElement, StandardData.class);
         return new GuiStatBar(0, 0, StatsHelper.barLength, data.key, data.min, data.max,
                 data.segmented != null ? data.segmented : false, data.split != null ? data.split : false, data.inverted != null ? data.inverted : false,
-                data.stat, data.label, data.tooltip, data.generateSorter != null ? data.generateSorter : false)
+                data.stat, data.label, data.tooltip, data.conditions, data.generateSorter != null ? data.generateSorter : false)
                 .setContexts(data.contexts != null ? data.contexts : new String[0])
                 .setIndicators(data.indicators != null ? resolveIndicators(data.indicators) : new GuiStatIndicator[0]);
     }
@@ -29,7 +30,8 @@ public class StandardStatBarDeserializer {
                 .toArray(GuiStatIndicator[]::new);
     }
 
-    record StandardData(String key, String[] contexts, double min, double max, Boolean segmented, Boolean split, Boolean inverted,
+    record StandardData(ICondition[] conditions, String key, String[] contexts, double min, double max, Boolean segmented, Boolean split,
+            Boolean inverted,
             IStatGetter stat, ILabelGetter label, ITooltipGetter tooltip, ResourceLocation[] indicators, Boolean generateSorter) {
     }
 }

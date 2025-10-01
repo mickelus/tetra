@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.gui.GuiColors;
@@ -22,7 +23,8 @@ public class GuiModuleImprovement extends GuiElement {
     private int color;
     private GuiTexture texture;
 
-    public GuiModuleImprovement(int x, int y, String improvement, int level, int color, Runnable hoverHandler, Runnable blurHandler) {
+    public GuiModuleImprovement(int x, int y, String improvement, int level, int color, ItemStack itemStack, Runnable hoverHandler,
+            Runnable blurHandler) {
         super(x, y, 5, 4);
 
         this.color = color;
@@ -32,12 +34,12 @@ public class GuiModuleImprovement extends GuiElement {
         tooltipLines = new ArrayList<>();
 
         if (level < 0) {
-            tooltipLines.add(Component.literal("-" + IModularItem.getImprovementName(improvement, 0)).withStyle(ChatFormatting.DARK_RED));
+            tooltipLines.add(Component.literal("-" + IModularItem.getImprovementName(improvement, level, itemStack)).withStyle(ChatFormatting.DARK_RED));
         } else {
-            tooltipLines.add(Component.literal(IModularItem.getImprovementName(improvement, level)));
+            tooltipLines.add(Component.literal(IModularItem.getImprovementName(improvement, level, itemStack)));
         }
 
-        Arrays.stream(IModularItem.getImprovementDescription(improvement).split("\\\\n"))
+        Arrays.stream(IModularItem.getImprovementDescription(improvement, level, itemStack).split("\\\\n"))
                 .map(line -> Component.literal(line).withStyle(ChatFormatting.DARK_GRAY))
                 .forEachOrdered(tooltipLines::add);
 

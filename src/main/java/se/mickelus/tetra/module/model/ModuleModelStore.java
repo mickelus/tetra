@@ -28,7 +28,7 @@ public class ModuleModelStore implements ResourceManagerReloadListener {
 
     @Override
     public void onResourceManagerReload(ResourceManager resourceManager) {
-        statBars = prepareBars();
+        statBars = prepareModels();
         logger.info("Loaded {} module models", this.statBars.length);
     }
 
@@ -36,21 +36,22 @@ public class ModuleModelStore implements ResourceManagerReloadListener {
         return statBars;
     }
 
-    private static IModuleModel[] prepareBars() {
+    private static IModuleModel[] prepareModels() {
         ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
         return resourceManager.listResources("module_model", rl -> rl.getPath().endsWith(".json")).entrySet().stream()
                 .filter(entry -> TetraMod.MOD_ID.equals(entry.getKey().getNamespace()))
-                .map(entry -> parseBar(entry.getKey(), entry.getValue()))
+                .map(entry -> parseModel(entry.getKey(), entry.getValue()))
                 .filter(Objects::nonNull)
                 .toArray(IModuleModel[]::new);
     }
 
     @Nullable
-    private static IModuleModel parseBar(ResourceLocation resourceLocation, Resource resource) {
+    private static IModuleModel parseModel(ResourceLocation resourceLocation, Resource resource) {
         try (BufferedReader reader = resource.openAsReader()) {
             return GsonHelper.fromJson(StatRegistry.gson, reader, IModuleModel.class);
         } catch (IOException | JsonParseException e) {
-            logger.error("Failed to parse statbar data from '{}': {}", resourceLocation, e);
+            logger.error("Failed to parse module model data from '{}': {}", resourceLocation, e.getMessage());
+            logger.error(e);
         }
 
         return null;

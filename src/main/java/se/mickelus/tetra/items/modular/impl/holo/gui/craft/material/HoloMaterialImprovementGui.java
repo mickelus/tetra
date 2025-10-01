@@ -24,10 +24,10 @@ public class HoloMaterialImprovementGui extends GuiElement {
     public HoloMaterialImprovementGui(int x, int y, String key, boolean current, boolean preview) {
         super(x, y, 29, 29);
 
-        String improvementName = IModularItem.getImprovementName(key, 0);
+        String improvementName = IModularItem.getImprovementName(key, 0, null);
 
         tooltip = ImmutableList.of(Component.translatable("tetra.holo.craft.materials.stat_modifier.tooltip", improvementName),
-                Component.literal(IModularItem.getImprovementDescription(key)).withStyle(ChatFormatting.DARK_GRAY));
+                Component.literal(IModularItem.getImprovementDescription(key, 0, null)).withStyle(ChatFormatting.DARK_GRAY));
 
         backdrop = new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench);
         backdrop.setColor(0x222222);

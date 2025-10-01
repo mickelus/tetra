@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import se.mickelus.mutil.gui.SimpleColor;
 import se.mickelus.tetra.items.modular.ItemColors;
 import se.mickelus.tetra.module.Priority;
+import se.mickelus.tetra.module.data.MaterialData;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,25 +49,24 @@ public class GridTextureModelData extends AbstractTextureModelData {
         this.contexts = contexts;
     }
 
-    public GridTextureModelData forMaterial(List<String> availableTextures, String[] modelOverrides, String[] materialTextures, boolean tintOverride,
-            SimpleColor materialTint) {
-        if (Arrays.stream(modelOverrides).anyMatch(override -> location.getPath().equals(override))) {
+    public GridTextureModelData forMaterial(List<String> availableTextures, MaterialData material) {
+        if (Arrays.stream(material.textureOverrides).anyMatch(override -> location.getPath().equals(override))) {
             GridTextureModelData copy = copy();
-            copy.location = appendString(location, materialTextures[0]);
-            copy.tint = tintOverride ? materialTint : new SimpleColor(0xffffffff);
-            copy.overlayTint = materialTint;
+            copy.location = appendString(location, material.textures[0]);
+            copy.tint = material.tintOverrides ? new SimpleColor(material.tints.texture) : new SimpleColor(0xffffffff);
+            copy.overlayTint = new SimpleColor(material.tints.texture);
             return copy;
         }
 
-        ResourceLocation updatedLocation = Arrays.stream(materialTextures)
+        ResourceLocation updatedLocation = Arrays.stream(material.textures)
                 .filter(availableTextures::contains)
                 .findFirst()
                 .map(texture -> appendString(location, texture))
                 .orElseGet(() -> appendString(location, availableTextures.get(0)));
         GridTextureModelData copy = copy();
         copy.location = updatedLocation;
-        copy.tint = materialTint;
-        copy.overlayTint = materialTint;
+        copy.tint = new SimpleColor(material.tints.texture);
+        copy.overlayTint = new SimpleColor(material.tints.texture);
         return copy;
     }
 

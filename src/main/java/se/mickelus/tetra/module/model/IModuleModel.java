@@ -3,6 +3,7 @@ package se.mickelus.tetra.module.model;
 import net.minecraft.resources.ResourceLocation;
 import se.mickelus.mutil.gui.SimpleColor;
 import se.mickelus.tetra.module.Priority;
+import se.mickelus.tetra.module.data.MaterialData;
 
 import java.util.List;
 
@@ -11,8 +12,7 @@ public interface IModuleModel {
 
     public Priority getRenderLayer();
 
-    public IModuleModel forMaterial(List<String> availableTextures, String[] modelOverrides, String[] materialTextures, boolean tintOverride,
-            SimpleColor materialTint);
+    public IModuleModel forMaterial(List<String> availableTextures, MaterialData material);
 
     public IModuleModel withSlotSuffix(String suffix);
 

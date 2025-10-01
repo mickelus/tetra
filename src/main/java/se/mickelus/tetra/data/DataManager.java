@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -103,6 +104,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ImprovementData.class, new ImprovementData.Deserializer())
             .registerTypeAdapter(OutcomeDefinition.class, new OutcomeDefinition.Deserializer())
             .registerTypeAdapter(MaterialColors.class, new MaterialColors.Deserializer())
+            .registerTypeAdapter(ArmorMaterial.class, new ArmorMaterialDeserializer())
             .registerTypeAdapter(CraftingEffectCondition.class, new CraftingEffectCondition.Deserializer())
             .registerTypeAdapter(CraftingEffectOutcome.class, new CraftingEffectOutcome.Deserializer())
             .registerTypeAdapter(CraftingRequirement.class, new CraftingRequirementDeserializer())
