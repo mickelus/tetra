@@ -49,20 +49,21 @@ public class IntegerPredicate implements Predicate<Integer> {
     }
 
     public void toBuffer(FriendlyByteBuf buffer) {
-        if (min != Integer.MIN_VALUE) {
-            buffer.writeInt(min);
-        }
-        if (max != Integer.MIN_VALUE) {
-            buffer.writeInt(max);
-        }
+        buffer.writeInt(min);
+        buffer.writeInt(max);
+    }
+
+    public static void writeNull(FriendlyByteBuf buffer) {
+        buffer.writeInt(-1);
+        buffer.writeInt(-1);
     }
 
     @Nullable
     public static IntegerPredicate fromBuffer(FriendlyByteBuf buffer) {
-        int tierMin = buffer.readVarInt();
-        int tierMax = buffer.readVarInt();
-        return tierMin != Integer.MIN_VALUE || tierMax != Integer.MIN_VALUE
-                ? new IntegerPredicate(tierMin != Integer.MIN_VALUE ? tierMin : null, tierMax != Integer.MIN_VALUE ? tierMax : null)
+        int tierMin = buffer.readInt();
+        int tierMax = buffer.readInt();
+        return tierMin != -1 || tierMax != -1
+                ? new IntegerPredicate(tierMin != -1 ? tierMin : null, tierMax != -1 ? tierMax : null)
                 : null;
     }
 

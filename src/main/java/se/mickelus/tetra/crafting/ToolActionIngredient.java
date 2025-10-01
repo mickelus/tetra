@@ -90,8 +90,7 @@ public class ToolActionIngredient extends Ingredient {
             if (ingredient.tier != null) {
                 ingredient.tier.toBuffer(buffer);
             } else {
-                buffer.writeVarInt(Integer.MIN_VALUE);
-                buffer.writeVarInt(Integer.MIN_VALUE);
+                IntegerPredicate.writeNull(buffer);
             }
         }
     }
