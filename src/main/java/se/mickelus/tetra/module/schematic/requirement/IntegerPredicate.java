@@ -49,8 +49,16 @@ public class IntegerPredicate implements Predicate<Integer> {
     }
 
     public void toBuffer(FriendlyByteBuf buffer) {
-        buffer.writeInt(min);
-        buffer.writeInt(max);
+        if (min != null) {
+            buffer.writeInt(min);
+        }else {
+            buffer.writeInt(-1);
+        }
+        if (max != null) {
+            buffer.writeInt(max);
+        }else {
+            buffer.writeInt(-1);
+        }
     }
 
     public static void writeNull(FriendlyByteBuf buffer) {
