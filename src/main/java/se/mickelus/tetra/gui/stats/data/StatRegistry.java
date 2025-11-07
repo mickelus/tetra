@@ -58,6 +58,7 @@ public class StatRegistry {
 
         StatRegistry.registerStatFormat("tetra:basic", StatFormatDeserializers::basicStatformat);
         StatRegistry.registerStatFormat("tetra:abbreviate", StatFormatDeserializers::abbreviateStatformat);
+        StatRegistry.registerStatFormat("tetra:roman", StatFormatDeserializers::romanStatformat);
 
         StatRegistry.registerTooltipGetter("tetra:default", TooltipGetterDeserializers::defaultGetter);
 

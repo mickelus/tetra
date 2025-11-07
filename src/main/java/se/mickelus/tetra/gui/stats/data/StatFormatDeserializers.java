@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 import se.mickelus.mutil.util.JsonOptional;
 import se.mickelus.tetra.gui.stats.getter.IStatFormat;
 import se.mickelus.tetra.gui.stats.getter.StatFormat;
+import se.mickelus.tetra.gui.stats.getter.StatFormatRoman;
 
 import java.util.Map;
 
@@ -42,5 +43,9 @@ public class StatFormatDeserializers {
 
     public static IStatFormat abbreviateStatformat(JsonElement json) {
         return StatFormat.abbreviate;
+    }
+
+    public static IStatFormat romanStatformat(JsonElement json) {
+        return StatFormatRoman.instance;
     }
 }

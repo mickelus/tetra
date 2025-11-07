@@ -68,8 +68,8 @@ public interface IModularItem {
             new GuiModuleOffsets(),
             new GuiModuleOffsets(4, 0),
             new GuiModuleOffsets(4, 0, 4, 18),
-            new GuiModuleOffsets(4, 0, 4, 18, -4, 0),
-            new GuiModuleOffsets(4, 0, 4, 18, -4, 0, -4, 18)
+            new GuiModuleOffsets(4, 0, 4, 18, -14, 0),
+            new GuiModuleOffsets(4, 0, 4, 18, -14, 0, -14, 18)
     };
 
     GuiModuleOffsets[] defaultMinorOffsets = {
