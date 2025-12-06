@@ -53,7 +53,7 @@
         "references": {
             "type": "array",
             "items": {
-                "$ref": "../resource_location.schema.json",
+                "$ref": "../../resource_location.schema.json",
                 "$comment": "Can be used to invoke other crafting effects, can directly reference a crafting effect or all crafting effects in a directory."
             }
         },
