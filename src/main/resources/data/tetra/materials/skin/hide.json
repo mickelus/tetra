@@ -15,6 +15,7 @@
         "texture": "hide"
     },
     "textures": [
+        "skin",
         "crude",
         "default"
     ],
