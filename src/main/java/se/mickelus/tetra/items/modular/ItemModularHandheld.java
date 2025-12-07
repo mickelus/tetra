@@ -35,7 +35,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -943,14 +942,13 @@ public class ItemModularHandheld extends ModularItem {
                         .orElse(0f);
             }
 
-            // todo: need a better way to handle how swords break stuff faster
             if (getToolLevel(itemStack, TetraToolActions.cut) > 0) {
-                if (blockState.getBlock().equals(Blocks.COBWEB)) {
+                if (blockState.is(ToolActionHelper.swordVeryEfficient)) {
                     speed *= 10;
                 }
 
-                if (blockState.getBlock().equals(Blocks.BAMBOO)) {
-                    speed = 30; // makes swords instamine bamboo
+                if (blockState.is(ToolActionHelper.swordInstamine)) {
+                    speed = 30;
                 }
             }
 
