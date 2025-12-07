@@ -15,6 +15,7 @@
         "texture": "leather"
     },
     "textures": [
+        "skin",
         "crude",
         "default"
     ],
