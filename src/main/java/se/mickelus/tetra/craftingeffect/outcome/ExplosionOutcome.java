@@ -1,6 +1,5 @@
 package se.mickelus.tetra.craftingeffect.outcome;
 
-import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -10,6 +9,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
+
+import java.util.Map;
 
 public class ExplosionOutcome implements CraftingEffectOutcome {
     float chance = 1;
@@ -21,7 +22,7 @@ public class ExplosionOutcome implements CraftingEffectOutcome {
     public boolean apply(final ResourceLocation[] unlockedEffects, final ItemStack upgradedStack, final String slot, final boolean isReplacing,
             final Player player, final ItemStack[] preMaterials, final Map<ToolAction, Integer> tools, final Level world,
             final UpgradeSchematic schematic, final BlockPos pos, final BlockState blockState, final boolean consumeResources,
-            final ItemStack[] postMaterials) {
+            final ItemStack[] postMaterials, float severity) {
         if (consumeResources && !world.isClientSide()) {
             BlockPos origin = pos.above();
             if (randomOriginDistance > 0) {

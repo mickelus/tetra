@@ -389,6 +389,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
         if (schematic.isMaterialsValid(targetStack, slot, materials)) {
             ItemStack result = schematic.applyUpgrade(targetStack, materials, false, slot, null);
 
+            float severity = schematic.getSeverity(targetStack, materials, slot);
             boolean willReplace = schematic.willReplace(targetStack, materials, slot);
 
             if (willReplace) {
@@ -402,7 +403,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
             }
 
             result = WorkbenchTile.applyCraftingBonusEffects(result, slot, willReplace, viewingPlayer, materials, materials, tools, schematic,
-                    tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), false);
+                    tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), false, severity);
 
             IModularItem.updateIdentifier(result);
             return result;

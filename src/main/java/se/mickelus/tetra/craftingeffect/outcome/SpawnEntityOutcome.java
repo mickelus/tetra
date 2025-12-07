@@ -28,7 +28,7 @@ public class SpawnEntityOutcome implements CraftingEffectOutcome {
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState,
-            boolean consumeResources, ItemStack[] postMaterials) {
+            boolean consumeResources, ItemStack[] postMaterials, float severity) {
         if (consumeResources && !world.isClientSide() && world.getRandom().nextFloat() < chance) {
             ServerLevel serverLevel = (ServerLevel) world;
             BlockPos spawnPos = randomOriginDistance > 0

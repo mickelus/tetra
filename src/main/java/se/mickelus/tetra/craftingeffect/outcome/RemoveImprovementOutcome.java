@@ -20,8 +20,10 @@ public class RemoveImprovementOutcome implements CraftingEffectOutcome {
     String[] improvements;
 
     @Override
-    public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
-            Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials) {
+    public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
+            ItemStack[] preMaterials,
+            Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
+            ItemStack[] postMaterials, float severity) {
         return CastOptional.cast(upgradedStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(upgradedStack, slot))
                 .flatMap(module -> CastOptional.cast(module, ItemModuleMajor.class))

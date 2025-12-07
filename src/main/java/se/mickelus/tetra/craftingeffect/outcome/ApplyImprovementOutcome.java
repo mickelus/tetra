@@ -30,7 +30,7 @@ public class ApplyImprovementOutcome implements CraftingEffectOutcome {
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials,
             Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
-            ItemStack[] postMaterials) {
+            ItemStack[] postMaterials, float severity) {
         return CastOptional.cast(upgradedStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(upgradedStack, slot))
                 .flatMap(module -> CastOptional.cast(module, ItemModuleMajor.class))

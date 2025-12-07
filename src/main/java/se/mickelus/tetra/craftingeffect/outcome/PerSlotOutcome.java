@@ -28,7 +28,7 @@ public class PerSlotOutcome implements CraftingEffectOutcome {
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String targetSlot, boolean isReplacing, Player player,
             ItemStack[] preMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState,
-            boolean consumeResources, ItemStack[] postMaterials) {
+            boolean consumeResources, ItemStack[] postMaterials, float severity) {
         if (upgradedStack.getItem() instanceof IModularItem item) {
             AtomicBoolean result = new AtomicBoolean(false);
             Stream.concat(
@@ -39,7 +39,7 @@ public class PerSlotOutcome implements CraftingEffectOutcome {
                     .filter(slot -> current || !slot.equals(targetSlot))
                     .filter(slot -> item.getModuleFromSlot(upgradedStack, slot) != null)
                     .forEach(slot -> {
-                        if (outcome.apply(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, schematic, pos, blockState, consumeResources, postMaterials)) {
+                        if (outcome.apply(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, schematic, pos, blockState, consumeResources, postMaterials, severity)) {
                             result.set(true);
                         }
                     });

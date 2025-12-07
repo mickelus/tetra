@@ -18,8 +18,10 @@ public class MaterialReductionOutcome implements CraftingEffectOutcome {
 
     // todo 1.20 verify: material treatises occasionally returns mats when crafting modules
     @Override
-    public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
-            Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials) {
+    public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
+            ItemStack[] preMaterials,
+            Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
+            ItemStack[] postMaterials, float severity) {
         if (consumeResources
                 && !preMaterials[0].isEmpty()
                 && (ItemStack.isSameItem(preMaterials[0], postMaterials[0]) || postMaterials[0].isEmpty())
