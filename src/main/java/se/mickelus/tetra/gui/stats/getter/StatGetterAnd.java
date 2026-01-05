@@ -13,29 +13,29 @@ public class StatGetterAnd implements IStatGetter {
     }
 
     @Override
-    public double getValue(Player player, ItemStack itemStack) {
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
         return Arrays.stream(statGetters)
-                .map(statGetter -> statGetter.getValue(player, itemStack))
-                .allMatch(value -> value > 0)
-                ? 1
+                .allMatch(statGetter -> statGetter.shouldShow(player, currentStack, previewStack));
+    }
+
+    @Override
+    public double getValue(Player player, ItemStack itemStack) {
+        return shouldShow(player, itemStack, itemStack) && statGetters.length > 0
+                ? statGetters[0].getValue(player, itemStack)
                 : 0;
     }
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot) {
-        return Arrays.stream(statGetters)
-                .map(statGetter -> statGetter.getValue(player, itemStack, slot))
-                .allMatch(value -> value > 0)
-                ? 1
+        return shouldShow(player, itemStack, itemStack) && statGetters.length > 0
+                ? statGetters[0].getValue(player, itemStack, slot)
                 : 0;
     }
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
-        return Arrays.stream(statGetters)
-                .map(statGetter -> statGetter.getValue(player, itemStack, slot, improvement))
-                .allMatch(value -> value > 0)
-                ? 1
+        return shouldShow(player, itemStack, itemStack) && statGetters.length > 0
+                ? statGetters[0].getValue(player, itemStack, slot, improvement)
                 : 0;
     }
 }

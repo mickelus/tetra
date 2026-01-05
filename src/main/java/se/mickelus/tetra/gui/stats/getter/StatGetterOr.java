@@ -13,29 +13,35 @@ public class StatGetterOr implements IStatGetter {
     }
 
     @Override
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
+        return Arrays.stream(statGetters)
+                .anyMatch(statGetter -> statGetter.shouldShow(player, currentStack, previewStack));
+    }
+
+    @Override
     public double getValue(Player player, ItemStack itemStack) {
         return Arrays.stream(statGetters)
+                .filter(statGetters -> statGetters.shouldShow(player, itemStack, itemStack))
                 .map(statGetter -> statGetter.getValue(player, itemStack))
-                .anyMatch(value -> value > 0)
-                ? 1
-                : 0;
+                .findFirst()
+                .orElse(0d);
     }
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot) {
         return Arrays.stream(statGetters)
+                .filter(statGetters -> statGetters.shouldShow(player, itemStack, itemStack))
                 .map(statGetter -> statGetter.getValue(player, itemStack, slot))
-                .anyMatch(value -> value > 0)
-                ? 1
-                : 0;
+                .findFirst()
+                .orElse(0d);
     }
 
     @Override
     public double getValue(Player player, ItemStack itemStack, String slot, String improvement) {
         return Arrays.stream(statGetters)
+                .filter(statGetters -> statGetters.shouldShow(player, itemStack, itemStack))
                 .map(statGetter -> statGetter.getValue(player, itemStack, slot, improvement))
-                .anyMatch(value -> value > 0)
-                ? 1
-                : 0;
+                .findFirst()
+                .orElse(0d);
     }
 }
