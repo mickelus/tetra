@@ -1,13 +1,13 @@
 {
     "key": "shulker_shell",
     "category": "scale",
-    "primary": 5,
-    "secondary": 0.4,
-    "tertiary": 1,
-    "durability": 200,
+    "primary": 4.5,
+    "secondary": 0.6,
+    "tertiary": 0.8,
+    "durability": 183,
     "integrityCost": 1,
     "integrityGain": 4,
-    "magicCapacity": 90,
+    "magicCapacity": 72,
     "toolLevel": 0,
     "toolEfficiency": 0,
     "tints": {
