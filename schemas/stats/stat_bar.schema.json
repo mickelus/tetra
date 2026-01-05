@@ -25,6 +25,16 @@
             "type": "number",
             "description": "The maximum value for the stat bar, sets the upper bound for the actual bar."
         },
+        "split": {
+            "type": "boolean",
+            "description": "If the stat bar should be split in two at the midpoint between min and max. Useful for stats that can be both positive and negative. Mutually exclusive with 'segmented'.",
+            "default": false
+        },
+        "segmented": {
+            "type": "boolean",
+            "description": "If the stat bar split into segments, useful if the stat has a small range. The bar may look wonky depending on the difference between min and max. Mutually exclusive with 'split'.",
+            "default": false
+        },
         "label": {
             "$ref": "label_getter/ref.schema.json",
             "$comment": "Defines how the actual value of the stat is displayed above the bar."
