@@ -10,7 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class TooltipGetterAttackSpeed implements ITooltipGetter {
 
-    private static final String localizationKey = "tetra.stats.speed.tooltip";
+    private static final String localizationKey = "tetra.stats.attack_speed.tooltip";
     private final IStatGetter statGetter;
 
     public TooltipGetterAttackSpeed(IStatGetter statGetter) {
@@ -33,6 +33,6 @@ public class TooltipGetterAttackSpeed implements ITooltipGetter {
 
     @Override
     public String getTooltipExtension(Player player, ItemStack itemStack) {
-        return I18n.get("tetra.stats.speed.tooltip_extended");
+        return I18n.get("tetra.stats.attack_speed.tooltip_extended");
     }
 }

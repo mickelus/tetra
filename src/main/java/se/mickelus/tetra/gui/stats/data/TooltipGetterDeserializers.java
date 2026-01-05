@@ -1,10 +1,8 @@
 package se.mickelus.tetra.gui.stats.data;
 
 import com.google.gson.JsonElement;
-import se.mickelus.tetra.gui.stats.getter.IStatFormat;
-import se.mickelus.tetra.gui.stats.getter.IStatGetter;
-import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
-import se.mickelus.tetra.gui.stats.getter.TooltipGetterMultiValue;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import se.mickelus.tetra.gui.stats.getter.*;
 
 public class TooltipGetterDeserializers {
     public static ITooltipGetter defaultGetter(JsonElement json) {
@@ -15,5 +13,13 @@ public class TooltipGetterDeserializers {
     }
 
     record StandardData(String key, IStatGetter[] stats, IStatFormat[] formatters) {
+    }
+
+    public static ITooltipGetter counterweight(JsonElement json) {
+        return new TooltipGetterCounterweight();
+    }
+
+    public static ITooltipGetter attackSpeed(JsonElement json) {
+        return new TooltipGetterAttackSpeed(new StatGetterAttribute(Attributes.ATTACK_SPEED));
     }
 }

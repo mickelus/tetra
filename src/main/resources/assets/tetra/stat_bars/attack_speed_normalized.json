@@ -1,0 +1,39 @@
+{
+    "type": "tetra:default",
+    "key": "tetra.stats.attack_speed_normalized",
+    "contexts": [ "tetra:holosphere" ],
+    "min": -3,
+    "max": 3,
+    "split": true,
+    "generateSorter": true,
+    "stat": {
+        "type": "tetra:attribute",
+        "attribute": "generic.attack_speed",
+        "ignoreBase": true,
+        "ignoreBonuses": true
+    },
+    "label": {
+        "type": "tetra:basic",
+        "format": "double_decimal",
+        "diff_format": "double_decimal"
+    },
+    "tooltip": {
+        "type": "tetra:default",
+        "key": "tetra.stats.attack_speed_normalized.tooltip",
+        "stats": [
+            {
+                "type": "tetra:attribute",
+                "attribute": "generic.attack_speed",
+                "ignoreBase": true,
+                "ignoreBonuses": true
+            }
+        ],
+        "formatters": [
+            {
+                "type": "tetra:basic",
+                "format": "double_decimal"
+            }
+        ]
+    },
+    "indicators": [ "tetra:attack_speed/shared/", "tetra:attack_speed/normalized/" ]
+}

@@ -38,7 +38,6 @@ public class WorkbenchStatsGui extends GuiElement {
 
     public static void initializeStaticBars() {
         Arrays.asList(
-                GuiStats.attackSpeed,
                 GuiStats.drawStrength,
                 GuiStats.drawSpeed,
                 GuiStats.abilityDamage,
