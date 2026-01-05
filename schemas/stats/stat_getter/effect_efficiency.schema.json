@@ -11,6 +11,11 @@
         "effect": {
             "type": "string",
             "$comment": "Identifier for the item effect to get the efficiency of."
+        },
+        "showNegative": {
+            "type": "boolean",
+            "description": "If true, the bar using the getter will show even if the value is negative.",
+            "default": false
         }
     },
     "required": [ "effect" ]

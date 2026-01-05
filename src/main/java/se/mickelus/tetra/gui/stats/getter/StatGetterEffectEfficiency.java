@@ -17,18 +17,38 @@ public class StatGetterEffectEfficiency implements IStatGetter {
     protected final double multiplier;
     protected final double base;
 
-    public StatGetterEffectEfficiency(ItemEffect effect, double multiplier, double base) {
+    protected final boolean showNegative;
+
+
+    public StatGetterEffectEfficiency(ItemEffect effect, double multiplier, double base, boolean showNegative) {
         this.effect = effect;
         this.multiplier = multiplier;
         this.base = base;
+        this.showNegative = showNegative;
+    }
+
+    public StatGetterEffectEfficiency(ItemEffect effect, double multiplier, double base) {
+        this(effect, multiplier, base, false);
     }
 
     public StatGetterEffectEfficiency(ItemEffect effect, double multiplier) {
         this(effect, multiplier, 0);
     }
 
+    public StatGetterEffectEfficiency(ItemEffect effect, boolean showNegative) {
+        this(effect, 1, 0, showNegative);
+    }
+
     public StatGetterEffectEfficiency(ItemEffect effect) {
-        this(effect, 1, 0);
+        this(effect, false);
+    }
+
+    @Override
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
+        double baseValue = getValue(player, ItemStack.EMPTY);
+        return showNegative
+                ? getValue(player, currentStack) != baseValue || getValue(player, previewStack) != baseValue
+                : getValue(player, currentStack) > baseValue || getValue(player, previewStack) > baseValue;
     }
 
     @Override

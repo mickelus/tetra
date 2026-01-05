@@ -17,19 +17,39 @@ public class StatGetterEffectLevel implements IStatGetter {
     protected final double multiplier;
     protected final double base;
 
+    protected final boolean showNegative;
 
-    public StatGetterEffectLevel(ItemEffect effect, double multiplier, double base) {
+
+    public StatGetterEffectLevel(ItemEffect effect, double multiplier, double base, boolean showNegative) {
         this.effect = effect;
         this.multiplier = multiplier;
         this.base = base;
+        this.showNegative = showNegative;
+    }
+
+
+    public StatGetterEffectLevel(ItemEffect effect, double multiplier, double base) {
+        this(effect, multiplier, base, false);
     }
 
     public StatGetterEffectLevel(ItemEffect effect, double multiplier) {
         this(effect, multiplier, 0);
     }
 
+    public StatGetterEffectLevel(ItemEffect effect, boolean showNegative) {
+        this(effect, 1, 0, showNegative);
+    }
+
     public StatGetterEffectLevel(ItemEffect effect) {
-        this(effect, 1, 0);
+        this(effect, false);
+    }
+
+    @Override
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
+        double baseValue = getValue(player, ItemStack.EMPTY);
+        return showNegative
+                ? getValue(player, currentStack) != baseValue || getValue(player, previewStack) != baseValue
+                : getValue(player, currentStack) > baseValue || getValue(player, previewStack) > baseValue;
     }
 
     @Override
