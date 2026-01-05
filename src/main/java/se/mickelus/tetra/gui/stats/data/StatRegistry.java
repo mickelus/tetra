@@ -52,6 +52,7 @@ public class StatRegistry {
         StatRegistry.registerStatGetter("tetra:effect_efficiency", StatGetterDeserializers::effectEfficiencyGetter);
         StatRegistry.registerStatGetter("tetra:effect_level", StatGetterDeserializers::effectLevelGetter);
         StatRegistry.registerStatGetter("tetra:enchantment", StatGetterDeserializers::enchantmentGetter);
+        StatRegistry.registerStatGetter("tetra:is_item", StatGetterDeserializers::isItemGetter);
 
         StatRegistry.registerLabelGetter("tetra:basic", LabelGetterDeserializers::basicLabelGetter);
         StatRegistry.registerLabelGetter("tetra:none", LabelGetterDeserializers::noLabelGetter);
@@ -61,6 +62,8 @@ public class StatRegistry {
         StatRegistry.registerStatFormat("tetra:roman", StatFormatDeserializers::romanStatformat);
 
         StatRegistry.registerTooltipGetter("tetra:default", TooltipGetterDeserializers::defaultGetter);
+        StatRegistry.registerTooltipGetter("tetra:counterweight", TooltipGetterDeserializers::counterweight);
+        StatRegistry.registerTooltipGetter("tetra:attack_speed", TooltipGetterDeserializers::attackSpeed);
 
         StatRegistry.registerIndicator("tetra:default", IndicatorDeserializers::defaultGetter);
     }

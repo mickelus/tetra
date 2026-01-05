@@ -4,12 +4,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.stats.getter.*;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class StatGetterDeserializers {
     public static IStatGetter andGetter(JsonElement json) {
@@ -76,7 +80,7 @@ public class StatGetterDeserializers {
         return new StatGetterEffectEfficiency(ItemEffect.get(data.effect));
     }
 
-    record EffectEfficiencyData(String effect) {
+    record EffectEfficiencyData(String effect, boolean showNegative) {
     }
 
     public static IStatGetter effectLevelGetter(JsonElement json) {
@@ -84,10 +88,10 @@ public class StatGetterDeserializers {
         if (data.effect == null) {
             throw new JsonParseException("Failed to parse effect level stat getter, missing field 'effect'");
         }
-        return new StatGetterEffectLevel(ItemEffect.get(data.effect));
+        return new StatGetterEffectLevel(ItemEffect.get(data.effect), data.showNegative);
     }
 
-    record EffectLevelData(String effect) {
+    record EffectLevelData(String effect, boolean showNegative) {
     }
 
     public static IStatGetter enchantmentGetter(JsonElement json) {
@@ -101,5 +105,14 @@ public class StatGetterDeserializers {
     }
 
     record EnchantmentData(String enchantment) {
+    }
+
+    public static IStatGetter isItemGetter(JsonElement json) {
+        IsItemData data = StatRegistry.gson.fromJson(json, IsItemData.class);
+        List<Item> items = Arrays.stream(data.items).map(ForgeRegistries.ITEMS::getValue).filter(Objects::nonNull).toList();
+        return new StatGetterIsItem(items, data.inverted);
+    }
+
+    record IsItemData(ResourceLocation[] items, boolean inverted) {
     }
 }
