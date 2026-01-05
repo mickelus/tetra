@@ -15,10 +15,15 @@ public class StatFormatDeserializers {
 
     static final Map<String, String> predefinedFormats = ImmutableMap.<String, String>builder()
             .put("integer", "%.0f")
+            .put("integer_signed", "%+.0f")
             .put("single_decimal", "%.01f")
+            .put("single_decimal_signed", "%+.01f")
             .put("double_decimal", "%.02f")
+            .put("double_decimal_signed", "%+.02f")
             .put("percentage", "%.0f%%")
+            .put("percentage_signed", "%+.0f%%")
             .put("percentage_decimal", "%.01f%%")
+            .put("percentage_decimal_signed", "%+.01f%%")
             .build();
     static final Map<String, String> predefinedDiffFormats = ImmutableMap.<String, String>builder()
             .put("integer", "%+.0f")
