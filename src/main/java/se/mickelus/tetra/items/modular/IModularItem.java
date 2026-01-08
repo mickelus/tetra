@@ -347,10 +347,10 @@ public interface IModularItem {
         }
 
         tickHoningProgression(entity, itemStack, multiplier);
-
-        for (ItemModuleMajor module : getMajorModules(itemStack)) {
-            module.tickProgression(entity, itemStack, multiplier);
-        }
+        
+        Arrays.stream(getMajorModules(itemStack))
+                .filter(Objects::nonNull)
+                .forEach(module -> module.tickProgression(entity, itemStack, multiplier));
     }
 
     default void tickHoningProgression(@Nullable LivingEntity entity, ItemStack itemStack, int multiplier) {
