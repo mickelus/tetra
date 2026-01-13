@@ -49,7 +49,7 @@ public abstract class ItemModule implements IToolProvider {
         }
 
         if (I18n.exists("tetra.module." + moduleKey + ".material_name")) {
-            String variant = variantKey.substring(variantKey.indexOf('/') + 1);
+            String variant = variantKey.substring(variantKey.lastIndexOf('/') + 1);
             if (I18n.exists("tetra.material." + variant + ".prefix")) {
                 return StringUtils.capitalize(I18n.get("tetra.module." + moduleKey + ".material_name",
                         I18n.get("tetra.material." + variant + ".prefix")).toLowerCase());
