@@ -21,7 +21,7 @@ public class StatGetterAttributeMultiply implements IStatGetter {
 
     @Override
     public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
-        return getValue(player, currentStack) != 0 || getValue(player, previewStack) != 0;
+        return getValue(player, currentStack) != 1 || getValue(player, previewStack) != 1;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class StatGetterAttributeMultiply implements IStatGetter {
                 .map(item -> item.getAttributeModifiers(itemStack))
                 .map(map -> map.get(attribute))
                 .map(AttributeHelper::getMultiplyAmount)
-                .orElseGet(attribute::getDefaultValue);
+                .orElse(1d);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class StatGetterAttributeMultiply implements IStatGetter {
                 .map(module -> module.getAttributeModifiers(itemStack))
                 .map(map -> map.get(attribute))
                 .map(AttributeHelper::getMultiplyAmount)
-                .orElse(0d);
+                .orElse(1d);
     }
 
     @Override
@@ -51,6 +51,6 @@ public class StatGetterAttributeMultiply implements IStatGetter {
                 .map(improvementData -> improvementData.attributes)
                 .map(map -> map.get(attribute))
                 .map(AttributeHelper::getMultiplyAmount)
-                .orElse(0d);
+                .orElse(1d);
     }
 }

@@ -72,6 +72,32 @@ public class StatGetterDeserializers {
     record AttributeData(String attribute, @Nullable Boolean ignoreBase, @Nullable Boolean ignoreBonuses) {
     }
 
+    public static IStatGetter attributeMultiplierGetter(JsonElement json) {
+        AttributeMultiplierData data = StatRegistry.gson.fromJson(json, AttributeMultiplierData.class);
+        Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(data.attribute));
+        if (attribute == null) {
+            throw new JsonParseException("Failed to parse attribute multiplier stat getter, unknown attribute: " + data.attribute);
+        }
+
+        return new StatGetterAttributeMultiply(attribute);
+    }
+
+    record AttributeMultiplierData(String attribute) {
+    }
+
+    public static IStatGetter attributeAdditionGetter(JsonElement json) {
+        AttributeAdditionData data = StatRegistry.gson.fromJson(json, AttributeAdditionData.class);
+        Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(data.attribute));
+        if (attribute == null) {
+            throw new JsonParseException("Failed to parse attribute addition stat getter, unknown attribute: " + data.attribute);
+        }
+
+        return new StatGetterAttributeAddition(attribute);
+    }
+
+    record AttributeAdditionData(String attribute) {
+    }
+
     public static IStatGetter effectEfficiencyGetter(JsonElement json) {
         EffectEfficiencyData data = StatRegistry.gson.fromJson(json, EffectEfficiencyData.class);
         if (data.effect == null) {
