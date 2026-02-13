@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class SchematicDefinition {
-
+    private static final CraftingRequirement anyRequirement = new CraftingRequirement.AnyRequirement();
     private static final SchematicDefinition defaultValues = new SchematicDefinition();
     /**
      * Marks if this should replace or merge with existing entries (if any) for this schematic definition. The default behaviour for upgrade
@@ -51,7 +51,7 @@ public class SchematicDefinition {
      */
     public boolean hone = false;
 
-    public CraftingRequirement requirement = new CraftingRequirement.AnyRequirement();
+    public CraftingRequirement requirement = anyRequirement;
 
     /**
      * If set this schematic will only be visible if the player carries at least one itemstack that will produce an outcome if placed in the slot at the
