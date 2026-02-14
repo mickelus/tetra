@@ -6,7 +6,9 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
@@ -29,6 +31,7 @@ import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -126,7 +129,14 @@ public class ModularShieldItem extends ItemModularHandheld {
     }
 
     @Override
-    public double getAbilityBaseDamage(ItemStack itemStack) {
+    public double getAbilityBaseDamage(@Nullable LivingEntity entity, ItemStack itemStack) {
+        if (entity != null) {
+            AttributeInstance entityInstance = entity.getAttribute(TetraAttributes.abilityDamage.get());
+            if (entityInstance != null) {
+                return AttributeHelper.calculateValue(TetraAttributes.abilityDamage.get(), entityInstance.getModifiers(),
+                        getAttributeModifiersCached(itemStack).get(TetraAttributes.abilityDamage.get()));
+            }
+        }
         return getAttributeValue(itemStack, TetraAttributes.abilityDamage.get());
     }
 

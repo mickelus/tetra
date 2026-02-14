@@ -173,7 +173,7 @@ public class ItemEffectHandler {
                         if (event.getSource().getDirectEntity() instanceof LivingEntity attacker) {
                             if (item.getEffectLevel(itemStack, ItemEffect.blockingReflect) > attacker.getRandom().nextFloat() * 100) {
                                 attacker.hurt(event.getEntity().damageSources().thorns(event.getEntity()),
-                                        (float) (item.getAbilityBaseDamage(itemStack) * item.getEffectEfficiency(itemStack,
+                                        (float) (item.getAbilityBaseDamage(event.getEntity(), itemStack) * item.getEffectEfficiency(itemStack,
                                                 ItemEffect.blockingReflect)));
                                 applyHitEffects(itemStack, attacker, blocker);
                                 EffectHelper.applyEnchantmentHitEffects(itemStack, attacker, blocker);
