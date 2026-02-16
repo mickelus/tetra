@@ -24,6 +24,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -41,8 +42,11 @@ import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 import se.mickelus.tetra.blocks.forged.chthonic.ExtractorProjectileEntity;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.event.ModularLooseProjectilesEvent;
+import se.mickelus.tetra.event.ModularProjectileSpawnEvent;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
+import se.mickelus.tetra.items.modular.impl.bow.ProjectileMotionPacket;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleModel;
@@ -53,6 +57,7 @@ import se.mickelus.tetra.properties.TetraAttributes;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
@@ -244,22 +249,46 @@ public class ModularCrossbowItem extends ModularItem {
     protected void fireProjectiles(ItemStack itemStack, Level world, LivingEntity entity) {
         if (entity instanceof Player player && !world.isClientSide) {
             ItemStack advancementCopy = itemStack.copy();
-            int multishotEnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, itemStack) * 3;
-            int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot) + multishotEnchantLevel, 1);
-            List<ItemStack> list = takeProjectiles(itemStack, 1);
 
+            List<ItemStack> list = takeProjectiles(itemStack, 1);
             if (!list.isEmpty()) {
+                int multishotEnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, itemStack) * 3;
+                int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot) + multishotEnchantLevel, 1);
+                double strength = getAttributeValue(itemStack, TetraAttributes.drawStrength.get());
+                float velocityBonus = getEffectLevel(itemStack, ItemEffect.velocity) / 100f;
+                float projectileVelocity = getProjectileVelocity(strength, velocityBonus);
                 double spread = getEffectEfficiency(itemStack, ItemEffect.multishot);
 
                 if (spread == 0 && multishotEnchantLevel > 0) {
                     spread = multishotDefaultSpread;
                 }
 
+                ModularLooseProjectilesEvent looseProjectilesEvent = new ModularLooseProjectilesEvent(itemStack, list.get(0), player, world, 1,
+                        strength,
+                        false,
+                        projectileVelocity,
+                        spread,
+                        1,
+                        player.getAbilities().instabuild,
+                        count,
+                        player.getXRot(),
+                        player.getYRot());
+                MinecraftForge.EVENT_BUS.post(looseProjectilesEvent);
+
+                count = looseProjectilesEvent.getCount();
+                spread = looseProjectilesEvent.getMultishotSpread();
                 for (int i = 0; i < count; i++) {
-                    ItemStack ammoStack = list.get(0);
-                    double yaw = player.getYRot() - spread * (count - 1) / 2f + spread * i;
-                    boolean isDupe = player.getAbilities().instabuild || count > 1 && i != count / 2;
-                    fireProjectile(world, itemStack, ammoStack, player, yaw, isDupe);
+                    double yaw = looseProjectilesEvent.getBaseYaw() - spread * (count - 1) / 2f + spread * i;
+                    boolean isDupe = looseProjectilesEvent.isInfiniteAmmo() || count > 1 && i != count / 2;
+                    fireProjectile(world, looseProjectilesEvent.getFiringStack(),
+                            looseProjectilesEvent.getAmmoStack(),
+                            looseProjectilesEvent.getProjectileRemappers(),
+                            player,
+                            looseProjectilesEvent.getStrength(),
+                            looseProjectilesEvent.getProjectileVelocity(),
+                            (float) looseProjectilesEvent.getBasePitch(),
+                            (float) yaw,
+                            isDupe);
                 }
 
                 // todo: needs to apply 3 points of damage if it's firework
@@ -302,11 +331,9 @@ public class ModularCrossbowItem extends ModularItem {
         return entity.getProjectile(shootableDummy);
     }
 
-    protected void fireProjectile(Level world, ItemStack crossbowStack, ItemStack ammoStack, Player player, double yaw, boolean isDupe) {
-        double strength = getAttributeValue(crossbowStack, TetraAttributes.drawStrength.get());
-        float velocityBonus = getEffectLevel(crossbowStack, ItemEffect.velocity) / 100f;
-        float projectileVelocity = getProjectileVelocity(strength, velocityBonus);
-
+    protected void fireProjectile(Level world, ItemStack crossbowStack, ItemStack ammoStack,
+            ImmutableList<Function<AbstractArrow, AbstractArrow>> projectileRemappers, Player player, double strength, float projectileVelocity,
+            float pitch, float yaw, boolean isDupe) {
         if (ChthonicExtractorBlock.item.equals(ammoStack.getItem()) || ChthonicExtractorBlock.usedItem.equals(ammoStack.getItem())) {
             ExtractorProjectileEntity projectileEntity = new ExtractorProjectileEntity(world, player, ammoStack);
 
@@ -314,14 +341,13 @@ public class ModularCrossbowItem extends ModularItem {
                 projectileEntity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             }
 
-            projectileEntity.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity, 1.0F);
+            projectileEntity.shootFromRotation(player, pitch, yaw, 0.0F, projectileVelocity, 1.0F);
             world.addFreshEntity(projectileEntity);
         } else if (ammoStack.getItem() instanceof FireworkRocketItem) {
             FireworkRocketEntity projectile = new FireworkRocketEntity(world, ammoStack, player, player.getX(),
                     player.getEyeY() - 0.15, player.getZ(), true);
 
-            projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 1.6F, 1.0F);
-            world.addFreshEntity(projectile);
+            spawnProjectile(player, world, projectile, projectileVelocity * 1.6F, pitch, yaw);
         } else {
             ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class).orElse((ArrowItem) Items.ARROW);
 
@@ -348,8 +374,22 @@ public class ModularCrossbowItem extends ModularItem {
                 projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             }
 
-            projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 3.15F, 1.0F);
-            world.addFreshEntity(projectile);
+            for (Function<AbstractArrow, AbstractArrow> remapper : projectileRemappers) {
+                projectile = remapper.apply(projectile);
+            }
+            spawnProjectile(player, world, projectile, projectileVelocity * 3.15F, pitch, yaw);
+            ModularProjectileSpawnEvent event = new ModularProjectileSpawnEvent(crossbowStack, ammoStack, player, projectile, world, 1);
+            MinecraftForge.EVENT_BUS.post(event);
+        }
+    }
+
+    protected void spawnProjectile(Player player, Level world, Projectile projectile, float projectileVelocity, float pitch, float yaw) {
+        projectile.shootFromRotation(player, pitch, yaw, 0.0F, projectileVelocity, 1.0F);
+        world.addFreshEntity(projectile);
+
+        // vanilla velocity sync breaks when velocity is >3.9 on any axis
+        if (projectileVelocity > 4) {
+            TetraMod.packetHandler.sendToAllPlayersNear(new ProjectileMotionPacket(projectile), projectile.blockPosition(), 512, world.dimension());
         }
     }
 
