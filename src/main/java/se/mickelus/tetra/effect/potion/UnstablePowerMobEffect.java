@@ -10,7 +10,6 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -51,22 +50,39 @@ public class UnstablePowerMobEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.level().isClientSide()) {
-            if (entity.level().getGameTime() % 80 == 0 && entity.level().getRandom().nextFloat() < 0.25) {
+            if (entity.level().getGameTime() % 10 == 0) {
                 MobEffectInstance current = entity.getEffect(instance);
-                if (current.getDuration() >= splinterTreshhold) {
-                    RandomSource random = entity.level().getRandom();
-                    findSplinterPosition(entity.level(), entity.blockPosition()).ifPresent(blockPos -> {
-                        if (current.getAmplifier() > 0 && random.nextInt(4) == 0) {
-                            addOrUpdate(entity, 0, -1);
-                        } else {
-                            addOrUpdate(entity, -splinterTreshhold, 0);
-                        }
-                        ArcaneFireBlock.spawnDelayed((ServerLevel) entity.level(), blockPos, entity.blockPosition().getCenter());
-                    });
+                if (current != null) {
+                    splinterAmplifier(current, entity);
+                    splinterDuration(current, entity);
                 }
             }
             if (entity.level().getGameTime() % 20 == 0 && entity.level().getRandom().nextFloat() < 0.25) {
                 Particles.addSputteringPower((ServerLevel) entity.level(), entity.getX(), entity.getY(0.5), entity.getZ(), entity);
+            }
+        }
+    }
+
+    private void splinterAmplifier(MobEffectInstance current, LivingEntity entity) {
+        if (current.getAmplifier() > 0) {
+            int interval = 10 * (int) Mth.clampedMap(current.getAmplifier(), 1, 16, 16, 1);
+            float chance = Mth.clampedMap(current.getAmplifier(), 1, 32, 0.1f, 0.9f);
+            if (entity.level().getGameTime() % interval == 0 && entity.level().getRandom().nextFloat() < chance) {
+                addOrUpdate(entity, 0, -1);
+                findSplinterPosition(entity.level(), entity.blockPosition()).ifPresent(blockPos ->
+                        ArcaneFireBlock.spawnDelayed((ServerLevel) entity.level(), blockPos, entity.blockPosition().getCenter()));
+            }
+        }
+    }
+
+    private void splinterDuration(MobEffectInstance current, LivingEntity entity) {
+        if (current.getDuration() > splinterTreshhold) {
+            int interval = 20 * (int) Mth.clampedMap(current.getDuration(), splinterTreshhold, 3600, 8, 1);
+            float chance = Mth.clampedMap(current.getDuration(), 1200, 7200, 0.05f, 0.9f);
+            if (entity.level().getGameTime() % interval == 0 && entity.level().getRandom().nextFloat() < chance) {
+                addOrUpdate(entity, -splinterTreshhold, 0);
+                findSplinterPosition(entity.level(), entity.blockPosition()).ifPresent(blockPos ->
+                        ArcaneFireBlock.spawnDelayed((ServerLevel) entity.level(), blockPos, entity.blockPosition().getCenter()));
             }
         }
     }
