@@ -37,7 +37,7 @@ public class HoloSortButton extends GuiElement {
         icon = new GuiTexture(-3, -3, 16, 16, 48, 0, GuiTextures.holo);
         addChild(icon);
 
-        label = new GuiString(11, 0, width - 11, "");
+        label = new GuiString(11, 0, "");
         addChild(label);
 
         popover = new HoloSortPopover(0, 11, this::onSelect);
@@ -47,7 +47,7 @@ public class HoloSortButton extends GuiElement {
     }
 
     public void update(OutcomePreview[] previews) {
-        this.label.setString(StatSorters.none.getName());
+        setLabelText(StatSorters.none.getName());
         if (previews.length > 0) {
             Player player = Minecraft.getInstance().player;
 
@@ -63,11 +63,15 @@ public class HoloSortButton extends GuiElement {
     }
 
     private void onSelect(IStatSorter sorter) {
-        String name = sorter.getName();
-        this.label.setString(name.length() > 4 ? name.substring(0, 4) : name);
+        setLabelText(sorter.getName());
         icon.setColor(GuiColors.normal);
         label.setColor(GuiColors.normal);
         this.onSelect.accept(sorter);
+    }
+
+    private void setLabelText(String value) {
+        label.setString(value);
+        setWidth(11 + Math.max(25, label.getWidth()));
     }
 
     @Override
@@ -115,6 +119,6 @@ public class HoloSortButton extends GuiElement {
 
 
     public void reset() {
-        this.label.setString(StatSorters.none.getName());
+        setLabelText(StatSorters.none.getName());
     }
 }
