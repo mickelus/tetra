@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import se.mickelus.mutil.gui.GuiButton;
 import se.mickelus.mutil.gui.GuiElement;
@@ -23,6 +24,8 @@ public class GuiSchematicList extends GuiElement {
     private final GuiButton buttonBack;
     private final GuiButton buttonForward;
     private final GuiText emptyStateText;
+    private final int buttonBackX;
+    private final int buttonForwardX;
     private final AnimationChain flash;
     private int page = 0;
     private UpgradeSchematic[] schematics;
@@ -35,9 +38,16 @@ public class GuiSchematicList extends GuiElement {
         listGroup = new GuiElement(3, 3, width - 6, height - 6);
         addChild(listGroup);
 
-        buttonBack = new GuiButton(-25, height + 4, 45, 12, "< Previous", () -> setPage(getPage() - 1));
+        String previousLabel = "< " + I18n.get("tetra.workbench.schematic_list.previous");
+        int previousButtonWidth = Minecraft.getInstance().font.width(previousLabel) + 10;
+        int previousButtonRightEdge = 36;
+        buttonBackX = previousButtonRightEdge - previousButtonWidth;
+        buttonBack = new GuiButton(buttonBackX, height, previousButtonWidth, 8, previousLabel, () -> setPage(getPage() - 1));
         addChild(buttonBack);
-        buttonForward = new GuiButton(width - 20, height + 4, 30, 12, "Next >", () -> setPage(getPage() + 1));
+        String nextLabel = I18n.get("tetra.workbench.schematic_list.next") + " >";
+        int nextButtonWidth = Minecraft.getInstance().font.width(nextLabel) + 10;
+        buttonForwardX = width - 27;
+        buttonForward = new GuiButton(buttonForwardX, height, nextButtonWidth, 8, nextLabel, () -> setPage(getPage() + 1));
         addChild(buttonForward);
 
         emptyStateText = new GuiText(10, 23, 204, ChatFormatting.GRAY + I18n.get("tetra.workbench.schematic_list.empty"));
@@ -85,8 +95,8 @@ public class GuiSchematicList extends GuiElement {
     private void setPage(int page) {
         this.page = page;
 
-        buttonBack.setVisible(page > 0);
-        buttonForward.setVisible(page < getNumPages() - 1);
+        buttonBack.setX(page > 0 ? buttonBackX : -1000);
+        buttonForward.setX(page < getNumPages() - 1 ? buttonForwardX : -1000);
         updateSchematics();
 
     }

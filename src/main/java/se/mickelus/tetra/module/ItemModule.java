@@ -146,12 +146,12 @@ public abstract class ItemModule implements IToolProvider {
     public String getItemName(ItemStack itemStack) {
         String variantItemNameKey = "tetra.variant." + getVariantData(itemStack).key + ".item_name";
         if (I18n.exists(variantItemNameKey)) {
-            return I18n.get(variantItemNameKey);
+            return I18n.get(variantItemNameKey, "%s");
         }
 
         String moduleItemNameKey = "tetra.module." + getUnlocalizedName() + ".item_name";
         if (I18n.exists(moduleItemNameKey)) {
-            return I18n.get(moduleItemNameKey);
+            return I18n.get(moduleItemNameKey, "%s");
         }
 
         return null;

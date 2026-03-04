@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -50,7 +51,10 @@ public class GuiSchematicDetail extends GuiElement {
 
         addChild(new GuiTexture(-4, -4, 239, 69, 0, 187, GuiTextures.workbench));
 
-        addChild(new GuiButton(-4, height - 2, 40, 8, "< " + I18n.get("tetra.workbench.schematic_detail.back"), backListener));
+        String backLabel = "< " + I18n.get("tetra.workbench.schematic_detail.back");
+        int backButtonWidth = Minecraft.getInstance().font.width(backLabel) + 10;
+        int backButtonRightEdge = 36;
+        addChild(new GuiButton(backButtonRightEdge - backButtonWidth, height, backButtonWidth, 8, backLabel, backListener));
 
         glyph = new GuiElement(3, 3, 16, 16);
         addChild(glyph);

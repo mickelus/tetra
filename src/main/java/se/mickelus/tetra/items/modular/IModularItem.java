@@ -923,8 +923,16 @@ public interface IModularItem {
                     .findFirst().orElse("");
         }
 
-        String prefixes = getDisplayNamePrefixes(itemStack);
-        return WordUtils.capitalize(prefixes + name);
+        String prefixes = getDisplayNamePrefixes(itemStack).trim();
+        if (name.contains("%s")) {
+            return WordUtils.capitalize(String.format(name, prefixes).trim());
+        }
+
+        if (prefixes.isEmpty()) {
+            return WordUtils.capitalize(name);
+        }
+
+        return WordUtils.capitalize(prefixes + " " + name);
     }
 
     SynergyData[] getAllSynergyData(ItemStack itemStack);
