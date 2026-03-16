@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import se.mickelus.tetra.effect.ItemEffect;
-import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItemImpl;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -24,7 +24,7 @@ public class TooltipGetterMultishot implements ITooltipGetter {
         double spread = efficiencyGetter.getValue(player, itemStack);
 
         if (spread == 0 && enchantmentCount > 0) {
-            spread = ModularCrossbowItem.multishotDefaultSpread;
+            spread = ModularCrossbowItemImpl.multishotDefaultSpread;
         }
 
         return I18n.get("tetra.stats.multishot.tooltip",

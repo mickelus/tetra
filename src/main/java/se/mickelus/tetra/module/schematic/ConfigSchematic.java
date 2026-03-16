@@ -444,7 +444,7 @@ public class ConfigSchematic extends BaseSchematic {
                         if (outcome.improvements.size() == 1) {
                             for (Map.Entry<String, Integer> entry : outcome.improvements.entrySet()) {
                                 key = entry.getKey();
-                                name = IModularItem.getImprovementName(key, entry.getValue());
+                                name = IModularItem.getImprovementName(key, entry.getValue(), itemStack);
                                 level = entry.getValue();
                             }
                             glyph = definition.glyph;

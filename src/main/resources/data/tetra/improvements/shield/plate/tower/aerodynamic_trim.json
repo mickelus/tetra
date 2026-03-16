@@ -12,8 +12,9 @@
         },
         "models": [
             {
-                "type": "tetra:plate/tower",
-                "location": "tetra:item/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
+                "type": "tetra:shield",
+                "model": "tetra:plate/tower",
+                "texture": "tetra:item/module/shield/plate/tower/improvements/aerodynamic_trim_bevel",
                 "tint": "inherit"
             }
         ],
@@ -25,8 +26,9 @@
             "availableTextures": [ "aerodynamic_trim" ],
             "models": [
                 {
-                    "type": "tetra:plate/tower",
-                    "location": "tetra:item/module/shield/plate/tower/improvements/"
+                    "type": "tetra:shield",
+                    "model": "tetra:plate/tower",
+                    "texture": "tetra:item/module/shield/plate/tower/improvements/"
                 }
             ]
         }

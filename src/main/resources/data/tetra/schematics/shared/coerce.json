@@ -1,0 +1,52 @@
+{
+    "replace": true,
+    "slots": [
+        "double/handle",
+        "double/head_left",
+        "double/head_right",
+        "single/handle",
+        "single/head",
+        "sword/blade",
+        "sword/hilt",
+        "bow/stave",
+        "bow/string",
+        "shield/plate",
+        "shield/grip",
+        "crossbow/stave",
+        "crossbow/stock"
+    ],
+    "materialSlotCount": 0,
+    "displayType": "improvement",
+    "glyph": {
+        "textureX": 112,
+        "textureY": 224
+    },
+    "requirement": {
+        "type": "tetra:and",
+        "requirements": [
+            {
+                "type": "tetra:aspect",
+                "aspect": "honed",
+                "level": { "min": 4 }
+            },
+            {
+                "type": "tetra:module",
+                "material": "forged\\_mesh"
+            },
+            {
+                "type": "tetra:improvement",
+                "improvement": "arrested"
+            }
+        ]
+    },
+    "outcomes": [
+        {
+            "requiredTools": {
+                "hammer_dig": "tetra:maxed_forge_hammer"
+            },
+            "improvements": {
+                "coerced": 0
+            }
+        }
+    ]
+}

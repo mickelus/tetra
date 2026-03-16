@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/and.schema.json",
     "title": "And stat getter",
-    "description": "A stat getter that \"should show\" when all given stat getters also \"should show\". Typically used in boolean cases, like when determining if an indicator should show. Returns 1 if shown, otherwise 0.",
+    "description": "A stat getter that \"should show\" when all given stat getters also \"should show\". Typically used in boolean cases, like when determining if an indicator should show. Returns the value of the first getter if shown, otherwise 0.",
     "type": "object",
     "properties": {
         "type": {

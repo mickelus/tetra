@@ -24,7 +24,7 @@ public class StatGetterAbilityDamage implements IStatGetter {
     @Override
     public double getValue(Player player, ItemStack itemStack) {
         return CastOptional.cast(itemStack.getItem(), ItemModularHandheld.class)
-                .map(item -> item.getAbilityBaseDamage(itemStack))
+                .map(item -> item.getAbilityBaseDamage(null, itemStack))
                 .orElse(0d) * multiplier + offset;
     }
 

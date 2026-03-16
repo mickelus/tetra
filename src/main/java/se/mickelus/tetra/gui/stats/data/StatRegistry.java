@@ -2,8 +2,10 @@ package se.mickelus.tetra.gui.stats.data;
 
 import com.google.gson.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.crafting.conditions.ICondition;
 import se.mickelus.mutil.data.deserializer.ResourceLocationDeserializer;
 import se.mickelus.mutil.util.JsonOptional;
+import se.mickelus.tetra.data.deserializer.ConditionDeserializer;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBase;
 import se.mickelus.tetra.gui.stats.bar.GuiStatIndicator;
 import se.mickelus.tetra.gui.stats.getter.ILabelGetter;
@@ -27,6 +29,7 @@ public class StatRegistry {
             .registerTypeAdapter(ITooltipGetter.class, new TooltipGetterDeserializer())
             .registerTypeAdapter(GuiStatIndicator.class, new IndicatorDeserializer())
             .registerTypeAdapter(ResourceLocation.class, new ResourceLocationDeserializer())
+            .registerTypeAdapter(ICondition.class, new ConditionDeserializer())
             .create();
     private static final Map<String, Function<JsonElement, GuiStatBase>> statBarDeserializers = new HashMap<>();
     private static final Map<String, Function<JsonElement, IStatSorter>> statSorterDeserializers = new HashMap<>();
@@ -46,17 +49,23 @@ public class StatRegistry {
         StatRegistry.registerStatGetter("tetra:sum", StatGetterDeserializers::sumGetter);
         StatRegistry.registerStatGetter("tetra:clamp", StatGetterDeserializers::clampGetter);
         StatRegistry.registerStatGetter("tetra:attribute", StatGetterDeserializers::attributeGetter);
+        StatRegistry.registerStatGetter("tetra:attribute_multiplier", StatGetterDeserializers::attributeMultiplierGetter);
+        StatRegistry.registerStatGetter("tetra:attribute_addition", StatGetterDeserializers::attributeAdditionGetter);
         StatRegistry.registerStatGetter("tetra:effect_efficiency", StatGetterDeserializers::effectEfficiencyGetter);
         StatRegistry.registerStatGetter("tetra:effect_level", StatGetterDeserializers::effectLevelGetter);
         StatRegistry.registerStatGetter("tetra:enchantment", StatGetterDeserializers::enchantmentGetter);
+        StatRegistry.registerStatGetter("tetra:is_item", StatGetterDeserializers::isItemGetter);
 
         StatRegistry.registerLabelGetter("tetra:basic", LabelGetterDeserializers::basicLabelGetter);
         StatRegistry.registerLabelGetter("tetra:none", LabelGetterDeserializers::noLabelGetter);
 
         StatRegistry.registerStatFormat("tetra:basic", StatFormatDeserializers::basicStatformat);
         StatRegistry.registerStatFormat("tetra:abbreviate", StatFormatDeserializers::abbreviateStatformat);
+        StatRegistry.registerStatFormat("tetra:roman", StatFormatDeserializers::romanStatformat);
 
         StatRegistry.registerTooltipGetter("tetra:default", TooltipGetterDeserializers::defaultGetter);
+        StatRegistry.registerTooltipGetter("tetra:counterweight", TooltipGetterDeserializers::counterweight);
+        StatRegistry.registerTooltipGetter("tetra:attack_speed", TooltipGetterDeserializers::attackSpeed);
 
         StatRegistry.registerIndicator("tetra:default", IndicatorDeserializers::defaultGetter);
     }

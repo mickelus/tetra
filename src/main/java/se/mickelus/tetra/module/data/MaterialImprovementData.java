@@ -1,6 +1,7 @@
 package se.mickelus.tetra.module.data;
 
 import net.minecraft.resources.ResourceLocation;
+import se.mickelus.tetra.module.model.IModuleModel;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -76,7 +77,7 @@ public class MaterialImprovementData extends ImprovementData {
         result.models = Stream.concat(
                         Arrays.stream(models),
                         Arrays.stream(extract.models).map(model -> MaterialData.kneadModel(model, material, availableTextures)))
-                .toArray(ModuleModel[]::new);
+                .toArray(IModuleModel[]::new);
 
         return result;
     }

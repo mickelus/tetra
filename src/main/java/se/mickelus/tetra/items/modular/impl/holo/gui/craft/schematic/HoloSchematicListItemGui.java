@@ -1,10 +1,10 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.craft.schematic;
 
 import net.minecraft.network.chat.Component;
-import se.mickelus.mutil.gui.ColorHelper;
 import se.mickelus.mutil.gui.GuiClickable;
 import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiTexture;
+import se.mickelus.mutil.gui.SimpleColor;
 import se.mickelus.tetra.blocks.workbench.gui.SchematicRequirementGui;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -52,7 +52,7 @@ public class HoloSchematicListItemGui extends GuiClickable {
         }
 
         if (border != null) {
-            border.setColor(ColorHelper.withBrightness(rarity.tint, 0.3));
+            border.setColor(SimpleColor.withBrightness(rarity.tint, 0.3));
             addChild(border);
         }
 
@@ -72,7 +72,7 @@ public class HoloSchematicListItemGui extends GuiClickable {
     @Override
     protected void onFocus() {
         if (border != null) {
-            border.setColor(ColorHelper.withBrightness(rarity.tint, 0.6));
+            border.setColor(SimpleColor.withBrightness(rarity.tint, 0.6));
         }
         label.setColor(GuiColors.hover);
     }
@@ -80,7 +80,7 @@ public class HoloSchematicListItemGui extends GuiClickable {
     @Override
     protected void onBlur() {
         if (border != null) {
-            border.setColor(ColorHelper.withBrightness(rarity.tint, 0.3));
+            border.setColor(SimpleColor.withBrightness(rarity.tint, 0.3));
         }
         label.setColor(rarity.tint);
     }

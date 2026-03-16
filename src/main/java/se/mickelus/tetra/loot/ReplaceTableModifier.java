@@ -32,7 +32,6 @@ public class ReplaceTableModifier extends LootModifier {
         this.table = table;
     }
 
-    // todo 1.20 verify: bartering with piglins can grant all warforge schematics & can still get regular barter drops
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         LootParams newParams = new LootParams.Builder(context.getLevel())

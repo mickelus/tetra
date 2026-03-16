@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/stats/stat_getter/is_item.schema.json",
+    "title": "Is item stat getter",
+    "description": "A stat getter that returns 1 if the item matches any of the items in the given list.",
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "tetra:is_item"
+        },
+        "items": {
+            "type": "array",
+            "description": "A list of item IDs to check against.",
+            "items": {
+                "$ref": "../../resource_location.schema.json"
+            },
+            "minItems": 1
+        },
+        "invert": {
+            "type": "boolean",
+            "description": "If true, the stat getter will return 1 if the item does NOT match any of the items in the list.",
+            "default": false
+        }
+    },
+    "required": [ "items" ]
+}

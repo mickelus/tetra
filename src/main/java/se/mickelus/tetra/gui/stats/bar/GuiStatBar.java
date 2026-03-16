@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.crafting.conditions.ICondition;
 import se.mickelus.mutil.gui.GuiAlignment;
 import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiStringSmall;
@@ -31,6 +32,8 @@ import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class GuiStatBar extends GuiStatBase {
+    protected ICondition[] conditions;
+
     protected double min;
     protected double max;
 
@@ -63,17 +66,26 @@ public class GuiStatBar extends GuiStatBase {
     }
 
     public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented, boolean split,
-            boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter, boolean generateSorter) {
-        this(x, y, barLength, labelKey, min, max, segmented, split, inverted, statGetter, labelGetter, tooltipGetter);
+            boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter, @Nullable ICondition[] conditions,
+            boolean generateSorter) {
+        this(x, y, barLength, labelKey, min, max, segmented, split, inverted, statGetter, labelGetter, tooltipGetter, conditions);
 
         if (generateSorter) {
             sorter = new BasicStatSorter(statGetter, labelKey, (value) -> labelGetter.getLabel(value, value, false));
         }
     }
 
+
     public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented, boolean split,
             boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter) {
+        this(x, y, barLength, labelKey, min, max, segmented, split, inverted, statGetter, labelGetter, tooltipGetter, null);
+    }
+
+    public GuiStatBar(int x, int y, int barLength, String labelKey, double min, double max, boolean segmented, boolean split,
+            boolean inverted, IStatGetter statGetter, ILabelGetter labelGetter, ITooltipGetter tooltipGetter, @Nullable ICondition[] conditions) {
         super(x, y, barLength, 12);
+
+        this.conditions = conditions;
 
         this.min = min;
         this.max = max;
@@ -180,7 +192,8 @@ public class GuiStatBar extends GuiStatBase {
 
     @Override
     public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack, String slot, String improvement) {
-        return statGetter.shouldShow(player, currentStack, previewStack);
+        return (conditions == null || Arrays.stream(conditions).allMatch(condition -> condition.test(ICondition.IContext.EMPTY)))
+                && statGetter.shouldShow(player, currentStack, previewStack);
     }
 
     protected double getSlotValue(Player player, ItemStack itemStack, @Nullable String slot, @Nullable String improvement) {

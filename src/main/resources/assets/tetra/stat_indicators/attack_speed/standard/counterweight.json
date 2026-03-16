@@ -1,0 +1,13 @@
+{
+    "key": "tetra.stats.counterweight",
+    "texture": "tetra:textures/gui/glyphs.png",
+    "textureX": 136,
+    "textureY": 160,
+    "stat": {
+        "type": "tetra:effect_level",
+        "effect": "counterweight"
+    },
+    "tooltip": {
+        "type": "tetra:counterweight"
+    }
+}

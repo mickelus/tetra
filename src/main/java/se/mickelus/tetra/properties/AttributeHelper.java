@@ -34,7 +34,8 @@ public class AttributeHelper {
      * @param b
      * @return
      */
-    public static Multimap<Attribute, AttributeModifier> overwrite(Multimap<Attribute, AttributeModifier> a, Multimap<Attribute, AttributeModifier> b) {
+    public static Multimap<Attribute, AttributeModifier> overwrite(Multimap<Attribute, AttributeModifier> a,
+            Multimap<Attribute, AttributeModifier> b) {
         if (a == null) {
             return b;
         } else if (b == null) {
@@ -72,7 +73,8 @@ public class AttributeHelper {
         return retainMax(modifiers, Arrays.asList(attributes));
     }
 
-    public static Multimap<Attribute, AttributeModifier> retainMax(Multimap<Attribute, AttributeModifier> modifiers, Collection<Attribute> attributes) {
+    public static Multimap<Attribute, AttributeModifier> retainMax(Multimap<Attribute, AttributeModifier> modifiers,
+            Collection<Attribute> attributes) {
         if (modifiers == null) {
             return null;
         }
@@ -198,16 +200,22 @@ public class AttributeHelper {
                 .collect(Multimaps.toMultimap(Map.Entry::getKey, e -> round(e.getKey(), e.getValue()), ArrayListMultimap::create));
     }
 
-    private static AttributeModifier round(Attribute attribute, AttributeModifier mod) {
-        double multiplier = (Attributes.ATTACK_DAMAGE.equals(attribute)
+    private static float getRounding(Attribute attribute, AttributeModifier mod) {
+        if (mod.getOperation() != AttributeModifier.Operation.ADDITION) {
+            return 0.01f;
+        } else if (Attributes.ATTACK_DAMAGE.equals(attribute)
                 || Attributes.ARMOR.equals(attribute)
                 || Attributes.ARMOR_TOUGHNESS.equals(attribute)
                 || TetraAttributes.drawStrength.get().equals(attribute)
-                || TetraAttributes.abilityDamage.get().equals(attribute))
-                && mod.getOperation() == AttributeModifier.Operation.ADDITION
-                ? 2 : 20;
-        return new AttributeModifier(mod.getId(), mod.getName(), Math.round(mod.getAmount() * multiplier) / multiplier, mod.getOperation());
-//        return mod;
+                || TetraAttributes.abilityDamage.get().equals(attribute)) {
+            return 0.5f;
+        }
+        return 0.05f;
+    }
+
+    private static AttributeModifier round(Attribute attribute, AttributeModifier mod) {
+        double rounding = getRounding(attribute, mod);
+        return new AttributeModifier(mod.getId(), mod.getName(), Math.round(mod.getAmount() / rounding) * rounding, mod.getOperation());
     }
 
     public static String getAttributeKey(Attribute attribute, AttributeModifier.Operation operation) {
@@ -231,5 +239,28 @@ public class AttributeHelper {
                         entry -> fixIdentifiers(entry.getKey(), entry.getValue()),
                         ArrayListMultimap::create)))
                 .orElse(null);
+    }
+
+
+    public static double calculateValue(Attribute attribute, Collection<AttributeModifier>... modifiers) {
+        double sum = Arrays.stream(modifiers)
+                .flatMap(Collection::stream)
+                .filter(modifier -> modifier.getOperation() == AttributeModifier.Operation.ADDITION)
+                .mapToDouble(AttributeModifier::getAmount)
+                .sum() + attribute.getDefaultValue();
+
+        double additiveMultiplier = Arrays.stream(modifiers)
+                .flatMap(Collection::stream)
+                .filter(modifier -> modifier.getOperation() == AttributeModifier.Operation.MULTIPLY_BASE)
+                .mapToDouble(AttributeModifier::getAmount)
+                .sum() + 1;
+
+        double multiplicativeMultiplier = Arrays.stream(modifiers)
+                .flatMap(Collection::stream)
+                .filter(modifier -> modifier.getOperation() == AttributeModifier.Operation.MULTIPLY_TOTAL)
+                .mapToDouble(modifier -> modifier.getAmount() + 1)
+                .reduce(1, (a, b) -> a * b);
+
+        return attribute.sanitizeValue(sum * additiveMultiplier * multiplicativeMultiplier);
     }
 }

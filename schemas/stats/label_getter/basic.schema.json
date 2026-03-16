@@ -13,10 +13,15 @@
             "description": "The primary formatting for the label, this is always displayed.",
             "enum": [
                 "integer",
+                "integer_signed",
                 "single_decimal",
+                "single_decimal_signed",
                 "double_decimal",
+                "double_decimal_signed",
                 "percentage",
-                "percentage_decimal"
+                "percentage_signed",
+                "percentage_decimal",
+                "percentage_decimal_signed"
             ]
         },
         "diff_format": {

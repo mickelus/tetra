@@ -326,19 +326,21 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
             LivingEntity targetLivingEntity = (LivingEntity) target;
             ItemModularHandheld item = (ItemModularHandheld) thrownStack.getItem();
 
+            double abilityDamage = item.getAbilityBaseDamage(shooter instanceof LivingEntity living ? living : null, thrownStack);
+
             double critModifier = CritEffect.rollMultiplier(targetLivingEntity.getRandom(), item, thrownStack);
-            double damage = item.getAbilityBaseDamage(thrownStack) * item.getEffectEfficiency(thrownStack, ItemEffect.throwable);
+            double damage = abilityDamage * item.getEffectEfficiency(thrownStack, ItemEffect.throwable);
 
             damage += EnchantmentHelper.getDamageBonus(thrownStack, targetLivingEntity.getMobType());
             damage *= critModifier;
 
             if (target.hurt(damagesource, (float) damage)) {
-                if (shooter instanceof LivingEntity) {
+                if (shooter instanceof LivingEntity livingShooter) {
                     EnchantmentHelper.doPostHurtEffects(targetLivingEntity, shooter);
-                    EffectHelper.applyEnchantmentHitEffects(getPickupItem(), targetLivingEntity, (LivingEntity) shooter);
-                    ItemEffectHandler.applyHitEffects(thrownStack, targetLivingEntity, (LivingEntity) shooter);
+                    EffectHelper.applyEnchantmentHitEffects(getPickupItem(), targetLivingEntity, livingShooter);
+                    ItemEffectHandler.applyHitEffects(thrownStack, targetLivingEntity, livingShooter);
 
-                    item.tickProgression((LivingEntity) shooter, thrownStack, 1);
+                    item.tickProgression(livingShooter, thrownStack, 1);
                 }
 
                 doPostHurtEffects(targetLivingEntity);

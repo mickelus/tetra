@@ -30,8 +30,8 @@ public class HasImprovementRequirement implements CraftingRequirement {
     @Nullable
     public List<Component> getDescription() {
         if (level != null) {
-            return List.of(Component.literal(I18n.get("tetra.holo.improvement_requirement_level", IModularItem.getImprovementName(improvement, 0), level.getDescription(I18n.get("tetra.holo.improvement_requirement_level.level_label")))));
+            return List.of(Component.literal(I18n.get("tetra.holo.improvement_requirement_level", IModularItem.getImprovementName(improvement, 0, null), level.getDescription(I18n.get("tetra.holo.improvement_requirement_level.level_label")))));
         }
-        return List.of(Component.literal(I18n.get("tetra.holo.improvement_requirement", IModularItem.getImprovementName(improvement, 0))));
+        return List.of(Component.literal(I18n.get("tetra.holo.improvement_requirement", IModularItem.getImprovementName(improvement, 0, null))));
     }
 }

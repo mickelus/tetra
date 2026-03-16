@@ -34,6 +34,7 @@ import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.module.BasicMajorModule;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ToolData;
@@ -95,7 +96,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
                 setupHammerStack("stone", "stick"),
                 setupHammerStack("iron", "spruce"),
                 setupHammerStack("blackstone", "spruce"),
-                setupHammerStack("obsidian", "iron"),
+                setupObsidianHammerStack(),
                 setupHammerStack("netherite", "forged_beam")
         );
     }
@@ -106,6 +107,20 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         IModularItem.putModuleInSlot(itemStack, headLeftKey, "double/basic_hammer_left", "double/basic_hammer_left_material", "basic_hammer/" + headMaterial);
         IModularItem.putModuleInSlot(itemStack, headRightKey, "double/basic_hammer_right", "double/basic_hammer_right_material", "basic_hammer/" + headMaterial);
         IModularItem.putModuleInSlot(itemStack, handleKey, "double/basic_handle", "double/basic_handle_material", "basic_handle/" + handleMaterial);
+
+        IModularItem.updateIdentifier(itemStack);
+
+        return itemStack;
+    }
+
+    public static ItemStack setupObsidianHammerStack() {
+        ItemStack itemStack = new ItemStack(instance);
+
+        IModularItem.putModuleInSlot(itemStack, headLeftKey, "double/basic_hammer_left", "double/basic_hammer_left_material", "basic_hammer/obsidian");
+        IModularItem.putModuleInSlot(itemStack, headRightKey, "double/basic_hammer_right", "double/basic_hammer_right_material", "basic_hammer/obsidian");
+        IModularItem.putModuleInSlot(itemStack, handleKey, "double/basic_handle", "double/basic_handle_material", "basic_handle/iron");
+        BasicMajorModule.addImprovement(itemStack, headLeftKey, "arrested", 0);
+        BasicMajorModule.addImprovement(itemStack, headRightKey, "arrested", 0);
 
         IModularItem.updateIdentifier(itemStack);
 

@@ -29,8 +29,7 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:item/module/bow/riser/sight/",
-                        "type": "static"
+                        "location": "tetra:item/module/bow/riser/sight/"
                     }
                 ]
             }
@@ -53,8 +52,7 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:item/module/bow/riser/sight/",
-                        "type": "static"
+                        "location": "tetra:item/module/bow/riser/sight/"
                     }
                 ]
             }
@@ -77,8 +75,7 @@
             "models": [
                 {
                     "location": "tetra:item/module/bow/riser/sight/default",
-                    "tint": "052931",
-                    "type": "static"
+                    "tint": "052931"
                 }
             ]
         }

@@ -32,7 +32,7 @@ public class ModuleRequirement implements CraftingRequirement {
         this.moduleVariant = moduleVariant;
 
         if (moduleMaterial != null) {
-            this.materialPattern = "\\/" + moduleMaterial + "(?:_|$)";
+            this.materialPattern = ".*/" + moduleMaterial + "(?:_|$)";
         }
     }
 

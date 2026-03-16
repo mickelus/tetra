@@ -1,0 +1,28 @@
+{
+    "key": "mangrove_root",
+    "category": "fibre",
+    "primary": 2.2,
+    "secondary": 2.5,
+    "tertiary": 2,
+    "durability": 156,
+    "integrityCost": 1,
+    "integrityGain": 4,
+    "magicCapacity": 80,
+    "toolLevel": 0,
+    "toolEfficiency": 0,
+    "tints": {
+        "glyph": "ffa094",
+        "texture": "f5a99f"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "items": [ "minecraft:mangrove_roots" ],
+        "count": 2
+    },
+    "requiredTools": {
+        "axe_dig": "minecraft:iron"
+    }
+}

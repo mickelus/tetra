@@ -26,8 +26,8 @@ public class CrossbowOverlay implements IGuiOverlay {
         if (TickEvent.Phase.END == event.phase && mc.player != null) {
             ItemStack activeStack = mc.player.getUseItem();
 
-            if (activeStack.getItem() instanceof ModularCrossbowItem) {
-                ModularCrossbowItem item = (ModularCrossbowItem) activeStack.getItem();
+            if (activeStack.getItem() instanceof ModularCrossbowItemImpl) {
+                ModularCrossbowItemImpl item = (ModularCrossbowItemImpl) activeStack.getItem();
                 this.gui.setProgress(item.getProgress(activeStack, mc.player), 0);
             } else {
                 this.gui.setProgress(0, 0);

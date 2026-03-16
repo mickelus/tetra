@@ -17,17 +17,21 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItemImpl;
 
 @OnlyIn(Dist.CLIENT)
 @Mixin(ItemInHandRenderer.class)
 public abstract class ItemInHandRendererMixin {
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", ordinal = 1),
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderItem" +
+            "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;" +
+            "ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", ordinal = 1),
             method = "renderArmWithItem")
-    private void renderArmWithItem(AbstractClientPlayer player, float partialTicks, float interpolatedPitch, InteractionHand hand, float swingProgress,
+    private void renderArmWithItem(AbstractClientPlayer player, float partialTicks, float interpolatedPitch, InteractionHand hand,
+            float swingProgress,
             ItemStack itemStack, float equipProgress, PoseStack poseStack, MultiBufferSource buffer, int light, CallbackInfo ci) {
-        if (ModularCrossbowItem.instance.equals(itemStack.getItem())) {
-            tetraTransformCrossbow(player, partialTicks, interpolatedPitch, hand, swingProgress, itemStack, equipProgress, poseStack, buffer, light, ci);
+        if (ModularCrossbowItemImpl.instance.equals(itemStack.getItem())) {
+            tetraTransformCrossbow(player, partialTicks, interpolatedPitch, hand, swingProgress, itemStack, equipProgress, poseStack, buffer, light
+                    , ci);
         }
     }
 
@@ -39,7 +43,8 @@ public abstract class ItemInHandRendererMixin {
         throw new IllegalStateException("Mixin failed to shadow getItem()");
     }
 
-    private void tetraTransformCrossbow(AbstractClientPlayer player, float partialTicks, float interpolatedPitch, InteractionHand hand, float p_109376_,
+    private void tetraTransformCrossbow(AbstractClientPlayer player, float partialTicks, float interpolatedPitch, InteractionHand hand,
+            float p_109376_,
             ItemStack itemStack, float p_109378_, PoseStack poseStack, MultiBufferSource buffer, int light, CallbackInfo ci) {
         boolean isMainhand = hand == InteractionHand.MAIN_HAND;
         HumanoidArm arm = isMainhand ? player.getMainArm() : player.getMainArm().getOpposite();
@@ -53,7 +58,7 @@ public abstract class ItemInHandRendererMixin {
             poseStack.mulPose(Axis.YP.rotationDegrees(i * 65.3F));
             poseStack.mulPose(Axis.ZP.rotationDegrees(i * -9.785F));
             float f9 = itemStack.getUseDuration() - (player.getUseItemRemainingTicks() - partialTicks + 1.0F);
-            float f13 = f9 / ((ModularCrossbowItem) itemStack.getItem()).getReloadDuration(itemStack);
+            float f13 = f9 / ((ModularCrossbowItemImpl) itemStack.getItem()).getReloadDuration(itemStack);
             if (f13 > 1.0F) {
                 f13 = 1.0F;
             }

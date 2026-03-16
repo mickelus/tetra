@@ -3,6 +3,7 @@ package se.mickelus.tetra.module.data;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import se.mickelus.tetra.module.model.IModuleModel;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -26,5 +27,5 @@ public class MaterialMultiplier {
     public GlyphData glyph;
 
     public String[] availableTextures = {};
-    public ModuleModel[] models = {};
+    public IModuleModel[] models = {};
 }

@@ -28,7 +28,6 @@
             "availableTextures": [ "wrap" ],
             "models": [
                 {
-                    "type": "static",
                     "location": "tetra:item/module/bow/stave/improvements/"
                 }
             ]
