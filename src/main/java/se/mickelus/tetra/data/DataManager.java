@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -36,6 +37,7 @@ import se.mickelus.mutil.data.deserializer.BlockDeserializer;
 import se.mickelus.mutil.data.deserializer.BlockPosDeserializer;
 import se.mickelus.mutil.data.deserializer.ItemDeserializer;
 import se.mickelus.mutil.data.deserializer.ResourceLocationDeserializer;
+import se.mickelus.mutil.gui.SimpleColor;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.blocks.PropertyMatcher;
@@ -54,9 +56,12 @@ import se.mickelus.tetra.effect.data.provider.number.NumberProvider;
 import se.mickelus.tetra.effect.data.provider.vector.VectorProvider;
 import se.mickelus.tetra.effect.modifier.ModifierType;
 import se.mickelus.tetra.items.modular.impl.dynamic.ArchetypeDefinition;
+import se.mickelus.tetra.items.modular.impl.shield.ShieldModuleModel;
+import se.mickelus.tetra.items.modular.impl.shield.ShieldModuleModelDeserializer;
 import se.mickelus.tetra.module.Priority;
 import se.mickelus.tetra.module.ReplacementDefinition;
 import se.mickelus.tetra.module.data.*;
+import se.mickelus.tetra.module.model.*;
 import se.mickelus.tetra.module.schematic.OutcomeDefinition;
 import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
@@ -79,7 +84,11 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ItemAspect.class, new ItemAspect.Deserializer())
             .registerTypeAdapter(EffectData.class, new EffectData.Deserializer())
             .registerTypeAdapter(GlyphData.class, new GlyphDeserializer())
-            .registerTypeAdapter(ModuleModel.class, new ModuleModelDeserializer())
+            .registerTypeAdapter(SimpleColor.class, new SimpleColorDeserializer())
+            .registerTypeAdapter(IModuleModel.class, new ModuleModelRegistry.Deserializer())
+            .registerTypeAdapter(GridTextureModelData.class, new GridTextureModelDeserializer())
+            .registerTypeAdapter(FilteredGridTextureModelData.class, new FilteredGridTextureModelDeserializer())
+            .registerTypeAdapter(ShieldModuleModel.class, new ShieldModuleModelDeserializer())
             .registerTypeAdapter(Priority.class, new Priority.Deserializer())
             .registerTypeAdapter(ItemPredicate.class, new ItemPredicateDeserializer())
             .registerTypeAdapter(PropertyMatcher.class, new PropertyMatcherDeserializer())
@@ -95,6 +104,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(ImprovementData.class, new ImprovementData.Deserializer())
             .registerTypeAdapter(OutcomeDefinition.class, new OutcomeDefinition.Deserializer())
             .registerTypeAdapter(MaterialColors.class, new MaterialColors.Deserializer())
+            .registerTypeAdapter(ArmorMaterial.class, new ArmorMaterialDeserializer())
             .registerTypeAdapter(CraftingEffectCondition.class, new CraftingEffectCondition.Deserializer())
             .registerTypeAdapter(CraftingEffectOutcome.class, new CraftingEffectOutcome.Deserializer())
             .registerTypeAdapter(CraftingRequirement.class, new CraftingRequirementDeserializer())

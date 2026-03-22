@@ -1,5 +1,6 @@
 package se.mickelus.tetra.module.schematic.requirement;
 
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -28,6 +29,6 @@ public class AcceptsImprovementRequirement implements CraftingRequirement {
     @Override
     @Nullable
     public List<Component> getDescription() {
-        return List.of(Component.translatable("tetra.holo.accepts_improvement_requirement", IModularItem.getImprovementName(improvement, level != null ? level : 0)));
+        return List.of(Component.literal(I18n.get("tetra.holo.accepts_improvement_requirement", IModularItem.getImprovementName(improvement, level != null ? level : 0, null))));
     }
 }

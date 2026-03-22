@@ -62,10 +62,9 @@ public class StatBarStore implements ResourceManagerReloadListener {
         try (BufferedReader reader = resource.openAsReader()) {
             return GsonHelper.fromJson(StatRegistry.gson, reader, GuiStatBase.class);
         } catch (IOException | JsonParseException e) {
-            logger.error("Failed to parse statbar data from '{}': {}", resourceLocation, e);
+            logger.error("Failed to parse statbar data from '{}'", resourceLocation, e);
         }
 
         return null;
     }
-
 }

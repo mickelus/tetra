@@ -31,7 +31,7 @@ public class ApplyEnchantmentOutcome implements CraftingEffectOutcome {
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials,
             Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
-            ItemStack[] postMaterials) {
+            ItemStack[] postMaterials, float severity) {
         if (upgradedStack.getItem() instanceof IModularItem item && item.getModuleFromSlot(upgradedStack, slot) instanceof ItemModuleMajor module) {
             AtomicBoolean success = new AtomicBoolean(false);
             Map<Enchantment, Integer> currentEnchantments = EnchantmentHelper.getEnchantments(upgradedStack);

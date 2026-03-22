@@ -44,19 +44,24 @@
                 "availableTextures": [ "crude" ],
                 "models": [
                     {
-                        "location": "tetra:item/module/bow/stave/straight/"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/bow/stave/straight/",
+                        "filter": "undrawn"
                     },
                     {
-                        "type": "draw_0",
-                        "location": "tetra:item/module/bow/stave/straight/0_"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/bow/stave/straight/0_",
+                        "filter": "draw_0"
                     },
                     {
-                        "type": "draw_1",
-                        "location": "tetra:item/module/bow/stave/straight/1_"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/bow/stave/straight/1_",
+                        "filter": "draw_1"
                     },
                     {
-                        "type": "draw_2",
-                        "location": "tetra:item/module/bow/stave/straight/2_"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/bow/stave/straight/2_",
+                        "filter": "draw_2"
                     }
                 ]
             }

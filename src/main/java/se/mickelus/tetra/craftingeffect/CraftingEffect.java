@@ -40,10 +40,10 @@ public class CraftingEffect {
 
     public boolean applyOutcomes(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic,
-            BlockPos pos, BlockState blockState, boolean consumeResources) {
+            BlockPos pos, BlockState blockState, boolean consumeResources, float severity) {
         boolean success = false;
         for (CraftingEffectOutcome outcome : outcomes) {
-            if (outcome.apply(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, schematic, pos, blockState, consumeResources, postMaterials)) {
+            if (outcome.apply(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, schematic, pos, blockState, consumeResources, postMaterials, severity)) {
                 success = true;
             }
         }

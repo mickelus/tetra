@@ -22,6 +22,12 @@ public class StatGetterAdd implements IStatGetter {
     }
 
     @Override
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
+        return Arrays.stream(statGetters)
+                .anyMatch(statGetter -> statGetter.shouldShow(player, currentStack, previewStack));
+    }
+
+    @Override
     public double getValue(Player player, ItemStack itemStack) {
         return Optional.of(Arrays.stream(statGetters)
                         .mapToDouble(getter -> getter.getValue(player, itemStack))

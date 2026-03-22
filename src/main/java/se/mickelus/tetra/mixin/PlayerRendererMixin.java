@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItemImpl;
 
 @OnlyIn(Dist.CLIENT)
 @Mixin(PlayerRenderer.class)
@@ -21,8 +21,8 @@ public abstract class PlayerRendererMixin {
         ItemStack itemStack = player.getItemInHand(hand);
         if (!player.isUsingItem()
                 && !player.swinging
-                && ModularCrossbowItem.instance.equals(itemStack.getItem())
-                && ((ModularCrossbowItem) itemStack.getItem()).isLoaded(itemStack)) {
+                && ModularCrossbowItemImpl.instance.equals(itemStack.getItem())
+                && ((ModularCrossbowItemImpl) itemStack.getItem()).isLoaded(itemStack)) {
             callback.setReturnValue(HumanoidModel.ArmPose.CROSSBOW_HOLD);
             callback.cancel();
         }

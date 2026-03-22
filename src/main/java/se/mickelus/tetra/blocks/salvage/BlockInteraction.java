@@ -141,10 +141,10 @@ public class BlockInteraction {
                 }
             }
 
-            if (player instanceof ServerPlayer) {
+            if (player instanceof ServerPlayer serverPlayer) {
                 BlockState newState = world.getBlockState(pos);
 
-                BlockInteractionCriterion.trigger((ServerPlayer) player, blockState, newState, possibleInteraction.requiredTool,
+                BlockInteractionCriterion.trigger(serverPlayer, blockState, newState, possibleInteraction.requiredTool,
                         possibleInteraction.requiredLevel);
             }
 
@@ -263,7 +263,8 @@ public class BlockInteraction {
         return table.getRandomItems(context);
     }
 
-    public static void dropLoot(ResourceLocation lootTable, @Nullable Player player, @Nullable InteractionHand hand, ServerLevel world, BlockState blockState) {
+    public static void dropLoot(ResourceLocation lootTable, @Nullable Player player, @Nullable InteractionHand hand, ServerLevel world,
+            BlockState blockState) {
         getLoot(lootTable, player, hand, world, blockState).forEach(itemStack -> {
             if (!player.getInventory().add(itemStack)) {
                 player.drop(itemStack, false);
@@ -285,7 +286,8 @@ public class BlockInteraction {
         return minX <= x && x <= maxX && minY <= y && y <= maxY;
     }
 
-    public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction hitFace, Collection<ToolAction> availableTools) {
+    public boolean isPotentialInteraction(Level world, BlockPos pos, BlockState blockState, Direction hitFace,
+            Collection<ToolAction> availableTools) {
         return isPotentialInteraction(world, pos, blockState, Direction.NORTH, hitFace, availableTools);
     }
 
@@ -296,7 +298,8 @@ public class BlockInteraction {
                 && (alwaysReveal || availableTools.contains(requiredTool));
     }
 
-    public void applyOutcome(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace) {
+    public void applyOutcome(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand,
+            Direction hitFace) {
         outcome.apply(world, pos, blockState, player, hand, hitFace);
     }
 

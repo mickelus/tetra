@@ -54,7 +54,7 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
-import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItem;
+import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItemImpl;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.properties.PropertyHelper;
@@ -173,7 +173,7 @@ public class ItemEffectHandler {
                         if (event.getSource().getDirectEntity() instanceof LivingEntity attacker) {
                             if (item.getEffectLevel(itemStack, ItemEffect.blockingReflect) > attacker.getRandom().nextFloat() * 100) {
                                 attacker.hurt(event.getEntity().damageSources().thorns(event.getEntity()),
-                                        (float) (item.getAbilityBaseDamage(itemStack) * item.getEffectEfficiency(itemStack,
+                                        (float) (item.getAbilityBaseDamage(event.getEntity(), itemStack) * item.getEffectEfficiency(itemStack,
                                                 ItemEffect.blockingReflect)));
                                 applyHitEffects(itemStack, attacker, blocker);
                                 EffectHelper.applyEnchantmentHitEffects(itemStack, attacker, blocker);
@@ -190,7 +190,7 @@ public class ItemEffectHandler {
             CastOptional.cast(event.getSource().getEntity(), LivingEntity.class)
                     .map(shooter -> Stream.of(shooter.getMainHandItem(), shooter.getOffhandItem()))
                     .orElseGet(Stream::empty)
-                    .filter(itemStack -> itemStack.getItem() instanceof ModularBowItem || itemStack.getItem() instanceof ModularCrossbowItem)
+                    .filter(itemStack -> itemStack.getItem() instanceof ModularBowItem || itemStack.getItem() instanceof ModularCrossbowItemImpl)
                     .findFirst()
                     .ifPresent(itemStack -> {
                         IModularItem item = (IModularItem) itemStack.getItem();

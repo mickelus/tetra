@@ -35,6 +35,7 @@ import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
+import se.mickelus.tetra.client.override.ImprovementOverride;
 import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.effect.data.DataEffectsHandler;
 import se.mickelus.tetra.effect.vexing.VexingEffect;
@@ -44,8 +45,12 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.Priority;
-import se.mickelus.tetra.module.data.*;
+import se.mickelus.tetra.module.data.EffectData;
+import se.mickelus.tetra.module.data.ImprovementData;
+import se.mickelus.tetra.module.data.ItemProperties;
+import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.module.improvement.HonePacket;
+import se.mickelus.tetra.module.model.IModuleModel;
 import se.mickelus.tetra.module.schematic.RepairDefinition;
 import se.mickelus.tetra.properties.AttributeHelper;
 
@@ -63,8 +68,8 @@ public interface IModularItem {
             new GuiModuleOffsets(),
             new GuiModuleOffsets(4, 0),
             new GuiModuleOffsets(4, 0, 4, 18),
-            new GuiModuleOffsets(4, 0, 4, 18, -4, 0),
-            new GuiModuleOffsets(4, 0, 4, 18, -4, 0, -4, 18)
+            new GuiModuleOffsets(4, 0, 4, 18, -14, 0),
+            new GuiModuleOffsets(4, 0, 4, 18, -14, 0, -14, 18)
     };
 
     GuiModuleOffsets[] defaultMinorOffsets = {
@@ -150,35 +155,48 @@ public interface IModularItem {
         }
     }
 
-    static String getImprovementName(String key, int level) {
+    static String getImprovementName(String key, int level, ItemStack itemStack) {
         String name = null;
-        if (I18n.exists("tetra.improvement." + key + ".name")) {
-            name = I18n.get("tetra.improvement." + key + ".name");
-        } else {
-            int lastSlash = key.lastIndexOf("/");
-            if (lastSlash != -1) {
-                String templateKey = "tetra.improvement." + key.substring(0, lastSlash) + ".name";
-                if (I18n.exists(templateKey)) {
-                    String materialKey = "tetra.material." + key.substring(lastSlash + 1) + ".prefix";
-                    if (I18n.exists(materialKey)) {
-                        name = StringUtils.capitalize(I18n.get(templateKey, I18n.get(materialKey).toLowerCase()));
+        if (ImprovementOverride.names.hasOverride(key)) {
+            name = ImprovementOverride.names.resolve(key, level, itemStack);
+        }
+
+        if (name == null) {
+            if (I18n.exists("tetra.improvement." + key + ".name")) {
+                name = I18n.get("tetra.improvement." + key + ".name");
+            } else {
+                int lastSlash = key.lastIndexOf("/");
+                if (lastSlash != -1) {
+                    String templateKey = "tetra.improvement." + key.substring(0, lastSlash) + ".name";
+                    if (I18n.exists(templateKey)) {
+                        String materialKey = "tetra.material." + key.substring(lastSlash + 1) + ".prefix";
+                        if (I18n.exists(materialKey)) {
+                            name = StringUtils.capitalize(I18n.get(templateKey, I18n.get(materialKey).toLowerCase()));
+                        }
                     }
+                }
+
+                if (name == null) {
+                    name = "tetra.improvement." + key + ".name";
                 }
             }
 
-            if (name == null) {
-                name = "tetra.improvement." + key + ".name";
+            if (level > 0) {
+                name += " " + I18n.get("enchantment.level." + level);
             }
-        }
-
-        if (level > 0) {
-            name += " " + I18n.get("enchantment.level." + level);
         }
 
         return name;
     }
 
-    static String getImprovementDescription(String key) {
+    static String getImprovementDescription(String key, int level, @Nullable ItemStack itemStack) {
+        if (ImprovementOverride.descriptions.hasOverride(key)) {
+            String name = ImprovementOverride.descriptions.resolve(key, level, itemStack);
+            if (name != null) {
+                return name;
+            }
+        }
+
         if (I18n.exists("tetra.improvement." + key + ".description")) {
             return I18n.get("tetra.improvement." + key + ".description");
         }
@@ -329,10 +347,10 @@ public interface IModularItem {
         }
 
         tickHoningProgression(entity, itemStack, multiplier);
-
-        for (ItemModuleMajor module : getMajorModules(itemStack)) {
-            module.tickProgression(entity, itemStack, multiplier);
-        }
+        
+        Arrays.stream(getMajorModules(itemStack))
+                .filter(Objects::nonNull)
+                .forEach(module -> module.tickProgression(entity, itemStack, multiplier));
     }
 
     default void tickHoningProgression(@Nullable LivingEntity entity, ItemStack itemStack, int multiplier) {
@@ -552,10 +570,10 @@ public interface IModularItem {
 
     default String getImprovementTooltip(String key, int level, boolean clearFormatting) {
         if (clearFormatting) {
-            return ChatFormatting.stripFormatting(getImprovementName(key, level));
+            return ChatFormatting.stripFormatting(getImprovementName(key, level, null));
         }
 
-        return getImprovementName(key, level);
+        return getImprovementName(key, level, null);
     }
 
 //    default RepairInstance[] getRepairInstances(ItemStack itemStack) {
@@ -1061,12 +1079,13 @@ public interface IModularItem {
     }
 
     @OnlyIn(Dist.CLIENT)
-    default ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
+    default ImmutableList<IModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
         return getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
-                .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
+                .map(itemModule -> itemModule.getModels(itemStack))
+                .flatMap(Arrays::stream)
                 .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(ModuleModel::getRenderLayer))
+                .sorted(Comparator.comparing(IModuleModel::getRenderLayer))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
     }
 

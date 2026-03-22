@@ -24,19 +24,18 @@ public class DestabilizeOutcome implements CraftingEffectOutcome {
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState,
-            boolean consumeResources, ItemStack[] postMaterials) {
+            boolean consumeResources, ItemStack[] postMaterials, float severity) {
         AtomicBoolean success = new AtomicBoolean(false);
 
         if (consumeResources && !world.isClientSide && upgradedStack.getItem() instanceof IModularItem item) {
             ItemModule module = item.getModuleFromSlot(upgradedStack, slot);
             if (module != null) {
-                float destabilizationChance = module.getDestabilizationChance(upgradedStack, 1);
+                float destabilizationChance = module.getDestabilizationChance(upgradedStack, severity);
                 if (destabilizationChance > 0) {
-
                     do {
                         if (destabilizationChance > world.getRandom().nextFloat()) {
                             CraftingEffectOutcome outcome = outcomes[world.getRandom().nextInt(0, outcomes.length)];
-                            if (outcome.apply(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, schematic, pos, blockState, consumeResources, postMaterials)) {
+                            if (outcome.apply(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, schematic, pos, blockState, consumeResources, postMaterials, severity)) {
                                 success.set(true);
                             }
                         }

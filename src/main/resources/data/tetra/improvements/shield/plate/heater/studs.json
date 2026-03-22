@@ -7,8 +7,9 @@
         "durability": 15,
         "models": [
             {
-                "type": "tetra:plate/heater",
-                "location": "tetra:item/module/shield/plate/heater/improvements/studs_shadow",
+                "type": "tetra:shield",
+                "model": "tetra:plate/heater",
+                "texture": "tetra:item/module/shield/plate/heater/improvements/studs_shadow",
                 "tint": "inherit"
             }
         ],
@@ -17,8 +18,9 @@
             "availableTextures": [ "studs" ],
             "models": [
                 {
-                    "type": "tetra:plate/heater",
-                    "location": "tetra:item/module/shield/plate/heater/improvements/"
+                    "type": "tetra:shield",
+                    "model": "tetra:plate/heater",
+                    "texture": "tetra:item/module/shield/plate/heater/improvements/"
                 }
             ]
         }

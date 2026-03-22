@@ -10,7 +10,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
@@ -26,11 +25,11 @@ import java.util.stream.Stream;
 public class ToolActionHelper {
     public static final BiMap<ToolAction, TagKey<Block>> appropriateTools = HashBiMap.create(5);
     public static final TagKey<Block> hoeExtraTag = BlockTags.create(new ResourceLocation(TetraMod.MOD_ID, "hoe_extra_mineable"));
+    public static final TagKey<Block> swordVeryEfficient = BlockTags.create(new ResourceLocation(TetraMod.MOD_ID, "sword_very_efficient"));
+    public static final TagKey<Block> swordInstamine = BlockTags.create(new ResourceLocation(TetraMod.MOD_ID, "sword_instamine"));
 
-    public static final Set<TagKey<Block>> cuttingDestroyTags = Sets.newHashSet(BlockTags.SWORD_EFFICIENT);
+    public static final Set<TagKey<Block>> cuttingEfficientTags = Sets.newHashSet(BlockTags.SWORD_EFFICIENT, swordVeryEfficient, swordInstamine);
 
-    // copy of hardcoded values in SwordItem, blocks that the sword explicitly state it can efficiently HARVEST
-    public static final Set<Block> cuttingHarvestBlocks = Sets.newHashSet(Blocks.COBWEB);
     public static final TagKey<Block> hammerMineable = BlockTags.create(new ResourceLocation("mineable/hammer"));
 
     public static void init() {
@@ -65,10 +64,7 @@ public class ToolActionHelper {
         if (appropriateTools.containsKey(action) && state.is(appropriateTools.get(action)))
             return true;
 
-        if (TetraToolActions.cut.equals(action)
-                && (cuttingHarvestBlocks.contains(state.getBlock())
-//                || cuttingDestroyMaterials.contains(state.getMaterial())
-                || cuttingDestroyTags.stream().anyMatch(state::is))) {
+        if (TetraToolActions.cut.equals(action) && cuttingEfficientTags.stream().anyMatch(state::is)) {
             return true;
         }
 

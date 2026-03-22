@@ -16,7 +16,6 @@
             "models": [
                 {
                     "location": "tetra:item/module/bow/riser/adjustable_strength/bolt",
-                    "type": "static",
                     "tint": "bolt"
                 }
             ]

@@ -1,0 +1,28 @@
+{
+    "key": "azalea_root",
+    "category": "fibre",
+    "primary": 2,
+    "secondary": 2,
+    "tertiary": 2.1,
+    "durability": 212,
+    "integrityCost": 1,
+    "integrityGain": 4,
+    "magicCapacity": 111,
+    "toolLevel": 0,
+    "toolEfficiency": 0,
+    "tints": {
+        "glyph": "996e4d",
+        "texture": "b9855c"
+    },
+    "textures": [
+        "crude",
+        "default"
+    ],
+    "material": {
+        "items": [ "minecraft:hanging_roots" ],
+        "count": 2
+    },
+    "requiredTools": {
+        "cut": "minecraft:gold"
+    }
+}

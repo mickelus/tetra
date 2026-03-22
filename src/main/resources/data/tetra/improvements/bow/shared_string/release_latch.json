@@ -10,19 +10,24 @@
         },
         "models": [
             {
-                "location": "tetra:item/module/bow/string/improvements/latch"
+                "type": "tetra:filtered_grid_texture",
+                "location": "tetra:item/module/bow/string/improvements/latch",
+                "filter": "undrawn"
             },
             {
-                "type": "draw_0",
-                "location": "tetra:item/module/bow/string/improvements/latch_0"
+                "type": "tetra:filtered_grid_texture",
+                "location": "tetra:item/module/bow/string/improvements/latch_0",
+                "filter": "draw_0"
             },
             {
-                "type": "draw_1",
-                "location": "tetra:item/module/bow/string/improvements/latch_1"
+                "type": "tetra:filtered_grid_texture",
+                "location": "tetra:item/module/bow/string/improvements/latch_1",
+                "filter": "draw_1"
             },
             {
-                "type": "draw_2",
-                "location": "tetra:item/module/bow/string/improvements/latch_2"
+                "type": "tetra:filtered_grid_texture",
+                "location": "tetra:item/module/bow/string/improvements/latch_2",
+                "filter": "draw_2"
             }
         ]
     }

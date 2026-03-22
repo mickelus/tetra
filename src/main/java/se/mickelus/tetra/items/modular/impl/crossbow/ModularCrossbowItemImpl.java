@@ -8,7 +8,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -24,6 +23,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -35,64 +35,42 @@ import net.minecraftforge.registries.ObjectHolder;
 import org.jetbrains.annotations.NotNull;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 import se.mickelus.tetra.blocks.forged.chthonic.ExtractorProjectileEntity;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ItemEffect;
-import se.mickelus.tetra.gui.GuiModuleOffsets;
-import se.mickelus.tetra.items.modular.ModularItem;
-import se.mickelus.tetra.module.ItemModule;
-import se.mickelus.tetra.module.SchematicRegistry;
-import se.mickelus.tetra.module.data.ModuleModel;
-import se.mickelus.tetra.module.schematic.RepairSchematic;
+import se.mickelus.tetra.event.ModularLooseProjectilesEvent;
+import se.mickelus.tetra.event.ModularProjectileSpawnEvent;
+import se.mickelus.tetra.items.modular.impl.bow.ProjectileMotionPacket;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 
 @ParametersAreNonnullByDefault
-public class ModularCrossbowItem extends ModularItem {
-    public final static String staveKey = "crossbow/stave";
-    public final static String stockKey = "crossbow/stock";
-    public final static String stringKey = "crossbow/string";
-
-    public final static String attachmentAKey = "crossbow/attachment_0";
-    public final static String attachmentBKey = "crossbow/attachment_1";
-
-    public static final String identifier = "modular_crossbow";
+public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
     public static final double velocityFactor = 1 / 8d;
-    private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, 0, -13, 18);
-    private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(4, -1, 13, 12, 4, 25);
+
     @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
-    public static ModularCrossbowItem instance;
+    public static ModularCrossbowItemImpl instance;
     public static double multishotDefaultSpread = 10;
-    protected ModuleModel arrowModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/arrow"));
-    protected ModuleModel extractorModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/extractor"));
-    protected ModuleModel fireworkModel = new ModuleModel("item", new ResourceLocation(TetraMod.MOD_ID, "item/module/crossbow/firework"));
     // used to pick projectiles from the player inventory
     protected ItemStack shootableDummy;
     // todo: based on vanilla, uses bool in singleton to keep track of which sound to play. Would break if multiple entities use this simultaneously
     private boolean isLoadingStart = false;
     private boolean isLoadingMiddle = false;
 
-    public ModularCrossbowItem(@NotNull Item shootableDummy) {
+    public ModularCrossbowItemImpl(@NotNull Item shootableDummy) {
         super(new Properties().stacksTo(1).fireResistant());
 
-        majorModuleKeys = new String[] { staveKey, stockKey };
-        minorModuleKeys = new String[] { attachmentAKey, stringKey, attachmentBKey };
-
-        requiredModules = new String[] { stringKey, stockKey, staveKey };
-
         this.shootableDummy = new ItemStack(shootableDummy);
-
-        updateConfig(ConfigHandler.honeCrossbowBase.get(), ConfigHandler.honeCrossbowIntegrityMultiplier.get());
-
-        SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
     }
 
     /**
@@ -120,7 +98,8 @@ public class ModularCrossbowItem extends ModularItem {
     public void clientInit() {
         super.clientInit();
 
-        // todo: add item model property for transform overrides here, update overridelist and look at shield for props, or perhaps there's an arm rendering hook?
+        // todo: add item model property for transform overrides here, update overridelist and look at shield for props, or perhaps there's an arm
+        //  rendering hook?
 
         MinecraftForge.EVENT_BUS.register(new CrossbowOverlay(Minecraft.getInstance()));
     }
@@ -206,6 +185,11 @@ public class ModularCrossbowItem extends ModularItem {
         // todo: crossbows don't fire the nock event when loading arrows so needs some way to load ammo from quiver
 //        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
         ItemStack itemstack = player.getItemInHand(hand);
+
+        if (isBroken(itemstack)) {
+            return InteractionResultHolder.pass(itemstack);
+        }
+
         if (isLoaded(itemstack)) {
             fireProjectiles(itemstack, world, player);
             setLoaded(itemstack, false);
@@ -244,22 +228,46 @@ public class ModularCrossbowItem extends ModularItem {
     protected void fireProjectiles(ItemStack itemStack, Level world, LivingEntity entity) {
         if (entity instanceof Player player && !world.isClientSide) {
             ItemStack advancementCopy = itemStack.copy();
-            int multishotEnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, itemStack) * 3;
-            int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot) + multishotEnchantLevel, 1);
-            List<ItemStack> list = takeProjectiles(itemStack, 1);
 
+            List<ItemStack> list = takeProjectiles(itemStack, 1);
             if (!list.isEmpty()) {
+                int multishotEnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, itemStack) * 3;
+                int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot) + multishotEnchantLevel, 1);
+                double strength = getAttributeValue(itemStack, TetraAttributes.drawStrength.get());
+                float velocityBonus = getEffectLevel(itemStack, ItemEffect.velocity) / 100f;
+                float projectileVelocity = getProjectileVelocity(strength, velocityBonus);
                 double spread = getEffectEfficiency(itemStack, ItemEffect.multishot);
 
                 if (spread == 0 && multishotEnchantLevel > 0) {
                     spread = multishotDefaultSpread;
                 }
 
+                ModularLooseProjectilesEvent looseProjectilesEvent = new ModularLooseProjectilesEvent(itemStack, list.get(0), player, world, 1,
+                        strength,
+                        false,
+                        projectileVelocity,
+                        spread,
+                        1,
+                        player.getAbilities().instabuild,
+                        count,
+                        player.getXRot(),
+                        player.getYRot());
+                MinecraftForge.EVENT_BUS.post(looseProjectilesEvent);
+
+                count = looseProjectilesEvent.getCount();
+                spread = looseProjectilesEvent.getMultishotSpread();
                 for (int i = 0; i < count; i++) {
-                    ItemStack ammoStack = list.get(0);
-                    double yaw = player.getYRot() - spread * (count - 1) / 2f + spread * i;
-                    boolean isDupe = player.getAbilities().instabuild || count > 1 && i != count / 2;
-                    fireProjectile(world, itemStack, ammoStack, player, yaw, isDupe);
+                    double yaw = looseProjectilesEvent.getBaseYaw() - spread * (count - 1) / 2f + spread * i;
+                    boolean isDupe = looseProjectilesEvent.isInfiniteAmmo() || count > 1 && i != count / 2;
+                    fireProjectile(world, looseProjectilesEvent.getFiringStack(),
+                            looseProjectilesEvent.getAmmoStack(),
+                            looseProjectilesEvent.getProjectileRemappers(),
+                            player,
+                            looseProjectilesEvent.getStrength(),
+                            looseProjectilesEvent.getProjectileVelocity(),
+                            (float) looseProjectilesEvent.getBasePitch(),
+                            (float) yaw,
+                            isDupe);
                 }
 
                 // todo: needs to apply 3 points of damage if it's firework
@@ -275,6 +283,69 @@ public class ModularCrossbowItem extends ModularItem {
                     player.awardStat(Stats.ITEM_USED.get(this));
                 }
             }
+        }
+    }
+
+    protected void fireProjectile(Level world, ItemStack crossbowStack, ItemStack ammoStack,
+            ImmutableList<Function<AbstractArrow, AbstractArrow>> projectileRemappers, Player player, double strength, float projectileVelocity,
+            float pitch, float yaw, boolean isDupe) {
+        if (ChthonicExtractorBlock.item.equals(ammoStack.getItem()) || ChthonicExtractorBlock.usedItem.equals(ammoStack.getItem())) {
+            ExtractorProjectileEntity projectileEntity = new ExtractorProjectileEntity(world, player, ammoStack);
+
+            if (isDupe) {
+                projectileEntity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
+            }
+
+            projectileEntity.shootFromRotation(player, pitch, yaw, 0.0F, projectileVelocity, 1.0F);
+            world.addFreshEntity(projectileEntity);
+        } else if (ammoStack.getItem() instanceof FireworkRocketItem) {
+            FireworkRocketEntity projectile = new FireworkRocketEntity(world, ammoStack, player, player.getX(),
+                    player.getEyeY() - 0.15, player.getZ(), true);
+
+            spawnProjectile(player, world, projectile, projectileVelocity * 1.6F, pitch, yaw);
+        } else {
+            ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class).orElse((ArrowItem) Items.ARROW);
+
+            AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player);
+            projectile.setSoundEvent(SoundEvents.CROSSBOW_HIT);
+            projectile.setShotFromCrossbow(true);
+            projectile.setCritArrow(true);
+
+            // the damage modifier is based on fully drawn damage, vanilla bows deal 3 times base damage + 0-4 crit damage
+            projectile.setBaseDamage(projectile.getBaseDamage() - 2 + strength / 3);
+
+            // velocity multiplies arrow damage for vanilla projectiles, need to reduce damage if velocity > 1
+            if (projectileVelocity > 1) {
+                projectile.setBaseDamage(projectile.getBaseDamage() / projectileVelocity);
+            }
+
+            int piercingLevel =
+                    getEffectLevel(crossbowStack, ItemEffect.piercing) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING,
+                            crossbowStack);
+            if (piercingLevel > 0) {
+                projectile.setPierceLevel((byte) piercingLevel);
+            }
+
+            if (isDupe) {
+                projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
+            }
+
+            for (Function<AbstractArrow, AbstractArrow> remapper : projectileRemappers) {
+                projectile = remapper.apply(projectile);
+            }
+            spawnProjectile(player, world, projectile, projectileVelocity * 3.15F, pitch, yaw);
+            ModularProjectileSpawnEvent event = new ModularProjectileSpawnEvent(crossbowStack, ammoStack, player, projectile, world, 1);
+            MinecraftForge.EVENT_BUS.post(event);
+        }
+    }
+
+    protected void spawnProjectile(Player player, Level world, Projectile projectile, float projectileVelocity, float pitch, float yaw) {
+        projectile.shootFromRotation(player, pitch, yaw, 0.0F, projectileVelocity, 1.0F);
+        world.addFreshEntity(projectile);
+
+        // vanilla velocity sync breaks when velocity is >3.9 on any axis
+        if (projectileVelocity > 4) {
+            TetraMod.packetHandler.sendToAllPlayersNear(new ProjectileMotionPacket(projectile), projectile.blockPosition(), 512, world.dimension());
         }
     }
 
@@ -302,57 +373,7 @@ public class ModularCrossbowItem extends ModularItem {
         return entity.getProjectile(shootableDummy);
     }
 
-    protected void fireProjectile(Level world, ItemStack crossbowStack, ItemStack ammoStack, Player player, double yaw, boolean isDupe) {
-        double strength = getAttributeValue(crossbowStack, TetraAttributes.drawStrength.get());
-        float velocityBonus = getEffectLevel(crossbowStack, ItemEffect.velocity) / 100f;
-        float projectileVelocity = getProjectileVelocity(strength, velocityBonus);
-
-        if (ChthonicExtractorBlock.item.equals(ammoStack.getItem()) || ChthonicExtractorBlock.usedItem.equals(ammoStack.getItem())) {
-            ExtractorProjectileEntity projectileEntity = new ExtractorProjectileEntity(world, player, ammoStack);
-
-            if (isDupe) {
-                projectileEntity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-            }
-
-            projectileEntity.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity, 1.0F);
-            world.addFreshEntity(projectileEntity);
-        } else if (ammoStack.getItem() instanceof FireworkRocketItem) {
-            FireworkRocketEntity projectile = new FireworkRocketEntity(world, ammoStack, player, player.getX(),
-                    player.getEyeY() - 0.15, player.getZ(), true);
-
-            projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 1.6F, 1.0F);
-            world.addFreshEntity(projectile);
-        } else {
-            ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class).orElse((ArrowItem) Items.ARROW);
-
-            AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player);
-            projectile.setSoundEvent(SoundEvents.CROSSBOW_HIT);
-            projectile.setShotFromCrossbow(true);
-            projectile.setCritArrow(true);
-
-            // the damage modifier is based on fully drawn damage, vanilla bows deal 3 times base damage + 0-4 crit damage
-            projectile.setBaseDamage(projectile.getBaseDamage() - 2 + strength / 3);
-
-            // velocity multiplies arrow damage for vanilla projectiles, need to reduce damage if velocity > 1
-            if (projectileVelocity > 1) {
-                projectile.setBaseDamage(projectile.getBaseDamage() / projectileVelocity);
-            }
-
-
-            int piercingLevel = getEffectLevel(crossbowStack, ItemEffect.piercing) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, crossbowStack);
-            if (piercingLevel > 0) {
-                projectile.setPierceLevel((byte) piercingLevel);
-            }
-
-            if (isDupe) {
-                projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-            }
-
-            projectile.shootFromRotation(player, player.getXRot(), (float) yaw, 0.0F, projectileVelocity * 3.15F, 1.0F);
-            world.addFreshEntity(projectile);
-        }
-    }
-
+    @Override
     public boolean isLoaded(ItemStack stack) {
         CompoundTag compoundnbt = stack.getTag();
         return compoundnbt != null && compoundnbt.getBoolean("Charged");
@@ -388,7 +409,8 @@ public class ModularCrossbowItem extends ModularItem {
         crossbowTag.put("ChargedProjectiles", list);
     }
 
-    private ItemStack getFirstProjectile(ItemStack itemStack) {
+    @Override
+    protected ItemStack getFirstProjectile(ItemStack itemStack) {
         ListTag projectiles = getProjectilesNBT(itemStack);
         if (projectiles.size() > 0) {
             return ItemStack.of(projectiles.getCompound(0));
@@ -461,77 +483,6 @@ public class ModularCrossbowItem extends ModularItem {
         return true;
     }
 
-    private String getDrawVariant(ItemStack itemStack, @Nullable LivingEntity entity) {
-        float progress = getProgress(itemStack, entity);
-
-        if (isLoaded(itemStack)) {
-            return "loaded";
-        } else if (progress == 0) {
-            return "item";
-        } else if (progress < 0.58) {
-            return "draw_0";
-        } else if (progress < 1) {
-            return "draw_1";
-        }
-        return "draw_2";
-    }
-
-    private String getProjectileVariant(ItemStack itemStack) {
-        ItemStack projectileStack = getFirstProjectile(itemStack);
-
-        if (projectileStack.getItem() instanceof FireworkRocketItem) {
-            return "p1";
-        }
-
-        if (ChthonicExtractorBlock.item.equals(projectileStack.getItem()) || ChthonicExtractorBlock.usedItem.equals(projectileStack.getItem())) {
-            return "p2";
-        }
-
-        return "p0";
-    }
-
-    private ModuleModel getProjectileModel(ItemStack itemStack) {
-        ItemStack projectileStack = getFirstProjectile(itemStack);
-
-        if (projectileStack.getItem() instanceof FireworkRocketItem) {
-            return fireworkModel;
-        }
-
-        if (ChthonicExtractorBlock.item.equals(projectileStack.getItem()) || ChthonicExtractorBlock.usedItem.equals(projectileStack.getItem())) {
-            return extractorModel;
-        }
-
-        return arrowModel;
-    }
-
-    @Override
-    public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
-        return super.getModelCacheKey(itemStack, entity) + ":" + getDrawVariant(itemStack, entity) + getProjectileVariant(itemStack);
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
-        String modelType = getDrawVariant(itemStack, entity);
-
-        ImmutableList<ModuleModel> models = getAllModules(itemStack).stream()
-                .sorted(Comparator.comparing(ItemModule::getRenderLayer))
-                .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
-                .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(ModuleModel::getRenderLayer))
-                .filter(model -> model.type.equals(modelType) || model.type.equals("static"))
-                .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
-
-        if (isLoaded(itemStack)) {
-            return ImmutableList.<ModuleModel>builder()
-                    .addAll(models)
-                    .add(getProjectileModel(itemStack))
-                    .build();
-        }
-
-        return models;
-    }
-
     private boolean reload(LivingEntity entity, ItemStack crossbowStack) {
         int count = Math.max(getEffectLevel(crossbowStack, ItemEffect.ammoCapacity), 1);
         boolean infinite = CastOptional.cast(entity, Player.class)
@@ -556,18 +507,6 @@ public class ModularCrossbowItem extends ModularItem {
         }
 
         return true;
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public GuiModuleOffsets getMajorGuiOffsets(ItemStack itemStack) {
-        return majorOffsets;
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public GuiModuleOffsets getMinorGuiOffsets(ItemStack itemStack) {
-        return minorOffsets;
     }
 
     private boolean loadProjectiles(LivingEntity entity, ItemStack crossbowStack, ItemStack ammoStack, boolean infiniteAmmo) {

@@ -45,7 +45,7 @@ public class ApplyListOutcome implements CraftingEffectOutcome {
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials,
             Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
-            ItemStack[] postMaterials) {
+            ItemStack[] postMaterials, float severity) {
         Collector<EffectPair, ?, List<EffectPair>> collector = random
                 ? StreamHelper.toShuffledList()
                 : Collectors.toUnmodifiableList();
@@ -56,7 +56,7 @@ public class ApplyListOutcome implements CraftingEffectOutcome {
                 .collect(collector);
 
         for (int i = 0; i < applicableOutcomes.size() & i < count; i++) {
-            applicableOutcomes.get(i).outcome().apply(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, schematic, pos, blockState, consumeResources, postMaterials);
+            applicableOutcomes.get(i).outcome().apply(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, world, schematic, pos, blockState, consumeResources, postMaterials, severity);
         }
         return !applicableOutcomes.isEmpty();
     }

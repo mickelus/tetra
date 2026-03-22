@@ -45,19 +45,24 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:item/module/bow/stave/laminated/"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/bow/stave/laminated/",
+                        "filter": "undrawn"
                     },
                     {
-                        "type": "draw_0",
-                        "location": "tetra:item/module/bow/stave/laminated/"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/bow/stave/laminated/",
+                        "filter": "draw_0"
                     },
                     {
-                        "type": "draw_1",
-                        "location": "tetra:item/module/bow/stave/laminated/1_"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/bow/stave/laminated/1_",
+                        "filter": "draw_1"
                     },
                     {
-                        "type": "draw_2",
-                        "location": "tetra:item/module/bow/stave/laminated/1_"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/bow/stave/laminated/1_",
+                        "filter": "draw_2"
                     }
                 ]
             }

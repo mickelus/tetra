@@ -30,7 +30,7 @@ public class StatGetterAttributeAddition implements IStatGetter {
                 .map(item -> item.getAttributeModifiers(itemStack))
                 .map(map -> map.get(attribute))
                 .map(AttributeHelper::getAdditionAmount)
-                .orElseGet(attribute::getDefaultValue);
+                .orElse(0d);
     }
 
     @Override

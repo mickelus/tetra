@@ -1,10 +1,10 @@
 {
     "key": "leather",
     "category": "skin",
-    "primary": 5,
+    "primary": 3,
     "secondary": 2,
-    "tertiary": 1,
-    "durability": 200,
+    "tertiary": 4.5,
+    "durability": 198,
     "integrityCost": 1,
     "integrityGain": 4,
     "magicCapacity": 90,
@@ -15,6 +15,7 @@
         "texture": "leather"
     },
     "textures": [
+        "skin",
         "crude",
         "default"
     ],

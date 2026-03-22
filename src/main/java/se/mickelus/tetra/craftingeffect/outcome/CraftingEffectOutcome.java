@@ -17,8 +17,10 @@ import java.util.Map;
 
 public interface CraftingEffectOutcome {
 
-    boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] preMaterials,
-            Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources, ItemStack[] postMaterials);
+    boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
+            ItemStack[] preMaterials,
+            Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
+            ItemStack[] postMaterials, float severity);
 
     class Deserializer implements JsonDeserializer<CraftingEffectOutcome> {
         @Override

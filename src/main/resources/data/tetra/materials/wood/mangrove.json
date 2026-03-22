@@ -1,0 +1,27 @@
+{
+    "key": "mangrove",
+    "category": "wood",
+    "primary": 4,
+    "secondary": 2,
+    "tertiary": 5,
+    "durability": 50,
+    "integrityCost": 1,
+    "integrityGain": 5,
+    "magicCapacity": 80,
+    "toolLevel": "minecraft:wood",
+    "toolEfficiency": 2,
+    "tints": {
+        "glyph": "e3b1ab",
+        "texture": "f5c8c2"
+    },
+    "textures": [
+        "crude",
+        "wooden"
+    ],
+    "material": {
+        "items": [ "minecraft:mangrove_planks" ]
+    },
+    "requiredTools": {
+        "axe_dig": "minecraft:stone"
+    }
+}

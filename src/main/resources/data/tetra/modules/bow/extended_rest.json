@@ -27,8 +27,7 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:item/module/bow/riser/extended_rest/",
-                        "type": "static"
+                        "location": "tetra:item/module/bow/riser/extended_rest/"
                     }
                 ]
             }
@@ -50,8 +49,7 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:item/module/bow/riser/extended_rest/",
-                        "type": "static"
+                        "location": "tetra:item/module/bow/riser/extended_rest/"
                     }
                 ]
             }
@@ -71,7 +69,6 @@
             "models": [
                 {
                     "location": "tetra:item/module/bow/riser/extended_rest/bolt",
-                    "type": "static",
                     "tint": "bolt"
                 }
             ]

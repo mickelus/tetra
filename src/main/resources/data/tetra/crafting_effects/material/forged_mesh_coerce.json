@@ -1,0 +1,13 @@
+{
+    "replace": true,
+    "requirement": {
+        "type": "tetra:schematic",
+        "schematic": "shared/coerce"
+    },
+    "outcomes": [
+        {
+            "type": "tetra:remove_improvements",
+            "improvements": [ "arrested" ]
+        }
+    ]
+}

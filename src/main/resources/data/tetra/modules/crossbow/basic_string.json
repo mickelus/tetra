@@ -24,23 +24,29 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:item/module/crossbow/string/basic/"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/crossbow/string/basic/",
+                        "filter": "undrawn"
                     },
                     {
-                        "type": "draw_0",
-                        "location": "tetra:item/module/crossbow/string/basic/0_"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/crossbow/string/basic/0_",
+                        "filter": "draw_0"
                     },
                     {
-                        "type": "draw_1",
-                        "location": "tetra:item/module/crossbow/string/basic/1_"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/crossbow/string/basic/1_",
+                        "filter": "draw_1"
                     },
                     {
-                        "type": "draw_2",
-                        "location": "tetra:item/module/crossbow/string/basic/2_"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/crossbow/string/basic/2_",
+                        "filter": "draw_2"
                     },
                     {
-                        "type": "loaded",
-                        "location": "tetra:item/module/crossbow/string/basic/2_"
+                        "type": "tetra:filtered_grid_texture",
+                        "location": "tetra:item/module/crossbow/string/basic/2_",
+                        "filter": "loaded"
                     }
                 ]
             }

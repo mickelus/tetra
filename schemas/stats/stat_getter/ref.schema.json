@@ -37,6 +37,9 @@
         },
         {
             "$ref": "enchantment.schema.json"
+        },
+        {
+            "$ref": "is_item.schema.json"
         }
     ]
 }

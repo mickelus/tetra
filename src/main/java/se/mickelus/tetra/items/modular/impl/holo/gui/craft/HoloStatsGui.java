@@ -40,7 +40,6 @@ public class HoloStatsGui extends GuiElement {
                 GuiStats.integrity,
                 GuiStats.drawStrength,
                 GuiStats.abilityDamage,
-                GuiStats.attackSpeedNormalized,
                 GuiStats.drawSpeedNormalized,
                 GuiStats.abilityCooldownNormalized,
                 GuiStats.reach,

@@ -19,9 +19,10 @@ public class ItemEffectContext {
     private Map<String, Float> numbers;
     private Map<String, Vec3> vectors;
     private Map<String, Entity> entities;
+    private Map<String, String> strings;
 
     public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, Level level,
-            Map<String, Float> numbers, Map<String, Vec3> vectors, Map<String, Entity> entities) {
+            Map<String, Float> numbers, Map<String, Vec3> vectors, Map<String, Entity> entities, Map<String, String> strings) {
         this.usingEntity = usingEntity;
         this.usedItemStack = usedItemStack;
         this.level = level;
@@ -29,15 +30,16 @@ public class ItemEffectContext {
         this.numbers = numbers;
         this.vectors = vectors;
         this.entities = entities;
+        this.strings = strings;
     }
 
     public ItemEffectContext(LivingEntity usingEntity, ItemStack usedItemStack, Level level) {
-        this(usingEntity, usedItemStack, level, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap());
+        this(usingEntity, usedItemStack, level, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap());
     }
 
 
     public ItemEffectContext copy() {
-        return new ItemEffectContext(usingEntity, usedItemStack, level, numbers, vectors, entities);
+        return new ItemEffectContext(usingEntity, usedItemStack, level, numbers, vectors, entities, strings);
     }
 
     public ItemEffectContext withNumbers(Map<String, Float> numbers) {
@@ -100,6 +102,27 @@ public class ItemEffectContext {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> b));
     }
 
+    public ItemEffectContext withStrings(Map<String, String> strings) {
+        ItemEffectContext copy = copy();
+        copy.strings = strings;
+        return copy;
+    }
+
+    public ItemEffectContext withMergedStrings(Map<String, String> strings) {
+        ItemEffectContext copy = copy();
+        copy.strings = mergeStrings(copy.strings, strings);
+        return copy;
+    }
+
+    @SafeVarargs
+    public static Map<String, String> mergeStrings(Map<String, String>... strings) {
+        return Stream.of(strings)
+                .map(Map::entrySet)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> b));
+    }
+
+
     public ItemStack getUsedItemStack() {
         return usedItemStack;
     }
@@ -118,5 +141,9 @@ public class ItemEffectContext {
 
     public Map<String, Entity> getEntities() {
         return entities;
+    }
+
+    public Map<String, String> getStrings() {
+        return strings;
     }
 }

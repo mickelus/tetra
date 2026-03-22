@@ -22,18 +22,6 @@ import static se.mickelus.tetra.gui.stats.StatsHelper.*;
 
 @ParametersAreNonnullByDefault
 public class GuiStats {
-    public static final IStatGetter sharpnessGetter = new StatGetterEnchantmentLevel(Enchantments.SHARPNESS, 0.5, 0.5);
-    public static final IStatGetter attackDamageNormalizedGetter = sum(new StatGetterAttribute(Attributes.ATTACK_DAMAGE, true), sharpnessGetter);
-
-    public static final IStatGetter counterweightGetter = new StatGetterEffectLevel(ItemEffect.counterweight, 1);
-    public static final IStatGetter attackSpeedGetter = new StatGetterAttribute(Attributes.ATTACK_SPEED);
-    public static final GuiStatBar attackSpeed = new GuiStatBar(0, 0, barLength, "tetra.stats.speed",
-            0, 4, false, attackSpeedGetter, LabelGetterBasic.decimalLabel, new TooltipGetterAttackSpeed(attackSpeedGetter))
-            .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.counterweight", 5, counterweightGetter, new TooltipGetterCounterweight()));
-    public static final IStatGetter attackSpeedGetterNormalized = new StatGetterAttribute(Attributes.ATTACK_SPEED, true, true);
-    public static final GuiStatBar attackSpeedNormalized = new GuiStatBar(0, 0, barLength, "tetra.stats.speed_normalized",
-            -3, 3, false, true, false, attackSpeedGetterNormalized, LabelGetterBasic.decimalLabel,
-            new TooltipGetterDecimal("tetra.stats.speed_normalized.tooltip", attackSpeedGetterNormalized));
 
     public static final IStatGetter powerGetter = new StatGetterEnchantmentLevel(Enchantments.POWER_ARROWS, 0.5, 0.5);
     public static final IStatGetter drawStrengthGetter = sum(new StatGetterAttribute(TetraAttributes.drawStrength.get()), powerGetter);
@@ -378,10 +366,10 @@ public class GuiStats {
             0, 1, false, percussionScannerGetter, LabelGetterBasic.noLabel,
             new TooltipGetterNone("tetra.stats.holo.percussionScanner.tooltip"));
 
+    public static final IStatGetter counterweightGetter = new StatGetterEffectLevel(ItemEffect.counterweight, 1);
     private static final ITooltipGetter counterweightTooltip = new TooltipGetterInteger("tetra.stats.counterweight.tooltip", counterweightGetter);
     public static final GuiStatBar counterweight = new GuiStatBar(0, 0, barLength, "tetra.stats.counterweight",
             0, 12, true, counterweightGetter, LabelGetterBasic.integerLabel, counterweightTooltip);
-
 
 // todo: remaining effects
 //        ItemEffect.strikingAxe

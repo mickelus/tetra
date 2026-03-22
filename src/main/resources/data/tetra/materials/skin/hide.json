@@ -1,13 +1,13 @@
 {
     "key": "hide",
     "category": "skin",
-    "primary": 5,
+    "primary": 2.5,
     "secondary": 1.5,
-    "tertiary": 1,
-    "durability": 200,
+    "tertiary": 5,
+    "durability": 165,
     "integrityCost": 1,
     "integrityGain": 5,
-    "magicCapacity": 90,
+    "magicCapacity": 92,
     "toolLevel": 0,
     "toolEfficiency": 0,
     "tints": {
@@ -15,6 +15,7 @@
         "texture": "hide"
     },
     "textures": [
+        "skin",
         "crude",
         "default"
     ],

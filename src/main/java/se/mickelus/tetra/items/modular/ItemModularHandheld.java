@@ -24,6 +24,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +36,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -61,6 +61,7 @@ import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.properties.AttributeHelper;
+import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.TierHelper;
 import se.mickelus.tetra.util.ToolActionHelper;
 
@@ -442,7 +443,7 @@ public class ItemModularHandheld extends ModularItem {
                 .map(CriticalHitEvent::getDamageModifier)
                 .orElse(1f);
 
-        double damage = (1 + getAbilityBaseDamage(itemStack) + targetModifier) * critMultiplier * damageMultiplier + damageBonus;
+        double damage = (1 + getAbilityBaseDamage(player, itemStack) + targetModifier) * critMultiplier * damageMultiplier + damageBonus;
 
         boolean success = target.hurt(player.damageSources().playerAttack(player), (float) damage);
         if (success) {
@@ -823,6 +824,17 @@ public class ItemModularHandheld extends ModularItem {
         return false;
     }
 
+    private boolean isMainhandAllowedAttribute(Attribute attribute) {
+        return !attribute.equals(TetraAttributes.abilityDamage.get()) && !attribute.equals(TetraAttributes.abilityCooldown.get());
+    }
+
+    private boolean isOffhandAllowedAttribute(Attribute attribute) {
+        return !attribute.equals(TetraAttributes.abilityDamage.get())
+                && !attribute.equals(TetraAttributes.abilityCooldown.get())
+                && !attribute.equals(Attributes.ARMOR)
+                && !attribute.equals(Attributes.ARMOR_TOUGHNESS);
+    }
+
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack itemStack) {
         if (isBroken(itemStack)) {
@@ -830,19 +842,28 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         if (slot == EquipmentSlot.MAINHAND) {
-            return getAttributeModifiersCached(itemStack);
+            return getAttributeModifiersCached(itemStack).entries().stream()
+                    .filter(entry -> isMainhandAllowedAttribute(entry.getKey()))
+                    .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
         }
 
         if (slot == EquipmentSlot.OFFHAND) {
             return getAttributeModifiersCached(itemStack).entries().stream()
-                    .filter(entry -> entry.getKey().equals(Attributes.ARMOR) || entry.getKey().equals(Attributes.ARMOR_TOUGHNESS))
+                    .filter(entry -> isOffhandAllowedAttribute(entry.getKey()))
                     .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
         }
 
         return AttributeHelper.emptyMap;
     }
 
-    public double getAbilityBaseDamage(ItemStack itemStack) {
+    public double getAbilityBaseDamage(@Nullable LivingEntity entity, ItemStack itemStack) {
+        if (entity != null) {
+            AttributeInstance entityInstance = entity.getAttribute(Attributes.ATTACK_DAMAGE);
+            if (entityInstance != null) {
+                return AttributeHelper.calculateValue(Attributes.ATTACK_DAMAGE, entityInstance.getModifiers(),
+                        getAttributeModifiersCached(itemStack).get(Attributes.ATTACK_DAMAGE));
+            }
+        }
         // +1 so that this equals the base damage of the item, including the players base attack damage
         return getAttributeValue(itemStack, Attributes.ATTACK_DAMAGE) + 1;
     }
@@ -943,14 +964,13 @@ public class ItemModularHandheld extends ModularItem {
                         .orElse(0f);
             }
 
-            // todo: need a better way to handle how swords break stuff faster
             if (getToolLevel(itemStack, TetraToolActions.cut) > 0) {
-                if (blockState.getBlock().equals(Blocks.COBWEB)) {
+                if (blockState.is(ToolActionHelper.swordVeryEfficient)) {
                     speed *= 10;
                 }
 
-                if (blockState.getBlock().equals(Blocks.BAMBOO)) {
-                    speed = 30; // makes swords instamine bamboo
+                if (blockState.is(ToolActionHelper.swordInstamine)) {
+                    speed = 30;
                 }
             }
 

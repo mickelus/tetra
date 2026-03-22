@@ -1,9 +1,5 @@
 package se.mickelus.tetra.craftingeffect.outcome;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
-import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +15,11 @@ import net.minecraftforge.common.ToolAction;
 import se.mickelus.tetra.effect.SculkTaintEffect;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+
 @ParametersAreNonnullByDefault
 public class SpawnSculkOutcome implements CraftingEffectOutcome {
 
@@ -30,7 +31,7 @@ public class SpawnSculkOutcome implements CraftingEffectOutcome {
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos origin, BlockState blockState,
-            boolean consumeResources, ItemStack[] postMaterials) {
+            boolean consumeResources, ItemStack[] postMaterials, float craftingSeverity) {
         if (consumeResources && !world.isClientSide() && world.random.nextDouble() < chance) {
             if (catalystSource) {
                 Optional<BlockPos> catalystOrigin = BlockPos.betweenClosedStream(new AABB(-2, 0, -2, 2, 5, 2))
@@ -41,7 +42,7 @@ public class SpawnSculkOutcome implements CraftingEffectOutcome {
                         .map(Optional::get)
                         .findAny();
                 if (catalystOrigin.isPresent()) {
-                    SculkTaintEffect.startSpread((ServerLevel) world, catalystOrigin.get(), severity);
+                    SculkTaintEffect.startSpread((ServerLevel) world, catalystOrigin.get(), this.severity);
                     return true;
                 }
             }
@@ -49,7 +50,7 @@ public class SpawnSculkOutcome implements CraftingEffectOutcome {
             if (workbenchSource) {
                 Optional<BlockPos> workbenchOrigin = findVeinOrigin(world, origin);
                 if (workbenchOrigin.isPresent()) {
-                    SculkTaintEffect.startSpread((ServerLevel) world, workbenchOrigin.get(), severity);
+                    SculkTaintEffect.startSpread((ServerLevel) world, workbenchOrigin.get(), this.severity);
                     return true;
                 }
             }

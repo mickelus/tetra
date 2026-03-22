@@ -48,7 +48,7 @@ public class SetBlocksOutcome implements CraftingEffectOutcome {
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState,
-            boolean consumeResources, ItemStack[] postMaterials) {
+            boolean consumeResources, ItemStack[] postMaterials, float severity) {
         if (consumeResources && !world.isClientSide() && world.getRandom().nextFloat() < chance) {
             setBlocksAround((ServerLevel) world, pos);
         }

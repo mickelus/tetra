@@ -100,8 +100,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
         ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(tool, level, player);
         if (!providingStack.isEmpty()) {
             if (providingStack.getItem() instanceof IToolProvider) {
-                upgradedStack = ((IToolProvider) providingStack.getItem()).onCraftConsume(providingStack,
-                        upgradedStack, player, tool, level, consumeResources);
+                upgradedStack = ((IToolProvider) providingStack.getItem()).onCraftConsume(providingStack, upgradedStack, player, tool, level, consumeResources);
             }
         } else {
             ItemStack toolbeltResult = PropertyHelper.consumeCraftToolToolbelt(player, upgradedStack, tool, level, consumeResources);
@@ -120,14 +119,14 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
 
     public static ItemStack applyCraftingBonusEffects(ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ToolAction, Integer> tools, UpgradeSchematic schematic,
-            Level world, BlockPos pos, BlockState blockState, boolean consumeResources) {
+            Level world, BlockPos pos, BlockState blockState, boolean consumeResources, float severity) {
         ItemStack result = upgradedStack.copy();
         ResourceLocation[] unlockedEffects = CastOptional.cast(blockState.getBlock(), AbstractWorkbenchBlock.class)
                 .map(block -> block.getCraftingEffects(world, pos, blockState))
                 .orElse(new ResourceLocation[0]);
         Arrays.stream(CraftingEffectRegistry.getEffects(unlockedEffects, upgradedStack, slot, isReplacing, player, preMaterials, tools, schematic, world, pos, blockState))
                 .forEach(craftingEffect -> craftingEffect.applyOutcomes(unlockedEffects, result, slot, isReplacing, player, preMaterials, postMaterials, tools, world,
-                        schematic, pos, blockState, consumeResources));
+                        schematic, pos, blockState, consumeResources, severity));
 
         return result;
     }
@@ -392,7 +391,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
 
             upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
-            upgradedStack = applyCraftingBonusEffects(upgradedStack, currentSlot, willReplace, player, materials, materialsAltered, tools, currentSchematic, level, worldPosition, blockState, true);
+            upgradedStack = applyCraftingBonusEffects(upgradedStack, currentSlot, willReplace, player, materials, materialsAltered, tools, currentSchematic, level, worldPosition, blockState, true, severity);
 
             for (Map.Entry<ToolAction, Integer> entry : tools.entrySet()) {
                 upgradedStack = consumeCraftingToolEffects(upgradedStack, currentSlot, willReplace, entry.getKey(), entry.getValue(), player, level, worldPosition, blockState, true);

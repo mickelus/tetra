@@ -16,6 +16,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -45,7 +46,9 @@ import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.SchematicRegistry;
-import se.mickelus.tetra.module.data.ModuleModel;
+import se.mickelus.tetra.module.model.FilteredGridTextureModelData;
+import se.mickelus.tetra.module.model.GridTextureModelData;
+import se.mickelus.tetra.module.model.IModuleModel;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
@@ -66,11 +69,12 @@ public class ModularBowItem extends ModularItem {
     public static final double velocityFactor = 1 / 8d;
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, 21, -11, -3);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
+    public static final int maxUseDuration = 37000;
     @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularBowItem instance;
-    protected ModuleModel arrowModel0 = new ModuleModel("draw_0", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
-    protected ModuleModel arrowModel1 = new ModuleModel("draw_1", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_1"));
-    protected ModuleModel arrowModel2 = new ModuleModel("draw_2", new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_2"));
+    protected GridTextureModelData arrowModel0 = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
+    protected GridTextureModelData arrowModel1 = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_1"));
+    protected GridTextureModelData arrowModel2 = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_2"));
     protected ItemStack vanillaBow;
 
     public ModularBowItem() {
@@ -128,6 +132,17 @@ public class ModularBowItem extends ModularItem {
         MinecraftForge.EVENT_BUS.register(new RangedFOVTransformer());
     }
 
+    private boolean isMainhandAllowedAttribute(Attribute attribute) {
+        return !attribute.equals(TetraAttributes.drawStrength.get()) && !attribute.equals(TetraAttributes.drawSpeed.get());
+    }
+
+    private boolean isOffhandAllowedAttribute(Attribute attribute) {
+        return !attribute.equals(TetraAttributes.drawStrength.get())
+                && !attribute.equals(TetraAttributes.drawSpeed.get())
+                && !attribute.equals(Attributes.ATTACK_DAMAGE)
+                && !attribute.equals(Attributes.ATTACK_SPEED);
+    }
+
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack itemStack) {
         if (isBroken(itemStack)) {
@@ -135,12 +150,14 @@ public class ModularBowItem extends ModularItem {
         }
 
         if (slot == EquipmentSlot.MAINHAND) {
-            return getAttributeModifiersCached(itemStack);
+            return getAttributeModifiersCached(itemStack).entries().stream()
+                    .filter(entry -> isMainhandAllowedAttribute(entry.getKey()))
+                    .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
         }
 
         if (slot == EquipmentSlot.OFFHAND) {
             return getAttributeModifiersCached(itemStack).entries().stream()
-                    .filter(entry -> !(entry.getKey().equals(Attributes.ATTACK_DAMAGE) || entry.getKey().equals(Attributes.ATTACK_DAMAGE)))
+                    .filter(entry -> isOffhandAllowedAttribute(entry.getKey()))
                     .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
         }
 
@@ -150,8 +167,10 @@ public class ModularBowItem extends ModularItem {
     /**
      * Called when the player stops using an Item (stops holding the right mouse button).
      */
+    @Override
     public void releaseUsing(ItemStack itemStack, Level world, LivingEntity entity, int timeLeft) {
-        if (getEffectLevel(itemStack, ItemEffect.overbowed) > 0 && timeLeft <= 0) {
+        int usedTicks = getUseDuration(itemStack) - timeLeft;
+        if (getEffectLevel(itemStack, ItemEffect.overbowed) > 0 && exceedsOverbowedLimit(entity, itemStack, usedTicks)) {
             entity.stopUsingItem();
             // trigger a small cooldown here to avoid the bow getting drawn again instantly
             CastOptional.cast(entity, Player.class).ifPresent(player -> player.getCooldowns().addCooldown(this, 10));
@@ -161,20 +180,16 @@ public class ModularBowItem extends ModularItem {
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack itemStack, Level world, LivingEntity entity) {
-        if (getEffectLevel(itemStack, ItemEffect.overbowed) > 0) {
-            entity.stopUsingItem();
-            CastOptional.cast(entity, Player.class).ifPresent(player -> player.getCooldowns().addCooldown(this, 10));
-        }
-
-        return super.finishUsingItem(itemStack, world, entity);
-    }
-
-    // todo 1.20 verify: quick latches release bows when fully drawn
-    @Override
     public void onUseTick(Level level, LivingEntity entity, ItemStack itemStack, int count) {
         if (getEffectLevel(itemStack, ItemEffect.releaseLatch) > 0 && getProgress(itemStack, entity) >= 1) {
             entity.releaseUsingItem();
+        } else {
+            int usedTicks = getUseDuration(itemStack) - count;
+            if (getEffectLevel(itemStack, ItemEffect.overbowed) > 0 && exceedsOverbowedLimit(entity, itemStack, usedTicks)) {
+                entity.stopUsingItem();
+                // trigger a small cooldown here to avoid the bow getting drawn again instantly
+                CastOptional.cast(entity, Player.class).ifPresent(player -> player.getCooldowns().addCooldown(this, 10));
+            }
         }
     }
 
@@ -199,16 +214,15 @@ public class ModularBowItem extends ModularItem {
                     ammoStack = new ItemStack(Items.ARROW);
                 }
 
-                double strength = getAttributeValue(itemStack, TetraAttributes.drawStrength.get());
+                double strength = getDrawStrength(entity, itemStack);
                 float velocityBonus = getEffectLevel(itemStack, ItemEffect.velocity) / 100f;
                 int suspendLevel = getEffectLevel(itemStack, ItemEffect.suspend);
                 ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
                         .orElse((ArrowItem) Items.ARROW);
                 boolean infiniteAmmo = player.getAbilities().instabuild || ammoItem.isInfinite(ammoStack, itemStack, player);
 
-                ModularLooseProjectilesEvent looseProjectilesEvent = new ModularLooseProjectilesEvent(itemStack, ammoStack, player, world, drawProgress,
-                        getAttributeValue(itemStack, TetraAttributes.drawStrength.get()),
-                        suspendLevel > 0,
+                ModularLooseProjectilesEvent looseProjectilesEvent = new ModularLooseProjectilesEvent(itemStack, ammoStack, player, world,
+                        drawProgress, strength, suspendLevel > 0,
                         getArrowVelocity(drawProgress, strength, getEffectLevel(itemStack, ItemEffect.velocity) / 100f, suspendLevel > 0),
                         getEffectEfficiency(itemStack, ItemEffect.multishot),
                         Math.max(0, 100 - getEffectEfficiency(itemStack, ItemEffect.spread) - FocusEffect.getSpreadReduction(player, itemStack)),
@@ -236,11 +250,14 @@ public class ModularBowItem extends ModularItem {
                         int powerLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.POWER_ARROWS, itemStack);
                         int punchLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PUNCH_ARROWS, itemStack);
                         int flameLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.FLAMING_ARROWS, itemStack);
-                        int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing) + EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PIERCING, itemStack);
+                        int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing)
+                                + EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PIERCING, itemStack);
 
                         for (int i = 0; i < count; i++) {
                             double yaw = baseYaw - multishotSpread * (count - 1) / 2f + multishotSpread * i;
-                            fireProjectile(itemStack, world, (ArrowItem) ammoStack.getItem(), ammoStack, projectileRemappers, player, (float) basePitch, (float) yaw, projectileVelocity, accuracy, drawProgress, strength, powerLevel, punchLevel, flameLevel, piercingLevel, hasSuspend, infiniteAmmo);
+                            fireProjectile(itemStack, world, (ArrowItem) ammoStack.getItem(), ammoStack, projectileRemappers, player,
+                                    (float) basePitch, (float) yaw, projectileVelocity, accuracy, drawProgress, strength, powerLevel, punchLevel,
+                                    flameLevel, piercingLevel, hasSuspend, infiniteAmmo);
                         }
 
 
@@ -277,6 +294,26 @@ public class ModularBowItem extends ModularItem {
                 }
             }
         }
+    }
+
+    private double getDrawStrength(LivingEntity entity, ItemStack itemStack) {
+        AttributeInstance instance = entity.getAttribute(TetraAttributes.drawStrength.get());
+        if (instance != null) {
+            return AttributeHelper.calculateValue(TetraAttributes.drawStrength.get(),
+                    instance.getModifiers(),
+                    getAttributeModifiersCached(itemStack).get(TetraAttributes.drawStrength.get()));
+        }
+        return getAttributeValue(itemStack, TetraAttributes.drawStrength.get());
+    }
+
+    private double getDrawSpeed(LivingEntity entity, ItemStack itemStack) {
+        AttributeInstance instance = entity.getAttribute(TetraAttributes.drawSpeed.get());
+        if (instance != null) {
+            return AttributeHelper.calculateValue(TetraAttributes.drawSpeed.get(),
+                    instance.getModifiers(),
+                    getAttributeModifiersCached(itemStack).get(TetraAttributes.drawSpeed.get()));
+        }
+        return getAttributeValue(itemStack, TetraAttributes.drawSpeed.get());
     }
 
     public static void fireProjectile(ItemStack itemStack, Level world, ArrowItem ammoItem, ItemStack ammoStack,
@@ -355,8 +392,8 @@ public class ModularBowItem extends ModularItem {
                 .orElse(false);
     }
 
-    public int getDrawDuration(ItemStack itemStack) {
-        return Math.max((int) (20 * (getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())
+    public int getDrawDuration(LivingEntity entity, ItemStack itemStack) {
+        return Math.max((int) (20 * (getDrawSpeed(entity, itemStack)
                 - EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
     }
 
@@ -372,36 +409,40 @@ public class ModularBowItem extends ModularItem {
         return Optional.ofNullable(entity)
                 .filter(e -> e.getUseItemRemainingTicks() > 0)
                 .filter(e -> itemStack.equals(e.getUseItem()))
-                .map(e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getDrawDuration(itemStack))
+                .map(e -> (getUseDuration(itemStack) - e.getUseItemRemainingTicks()) * 1f / getDrawDuration(e, itemStack))
                 .orElse(0f);
     }
 
     public float getOverbowProgress(ItemStack itemStack, @Nullable LivingEntity entity) {
         int overbowedLevel = getEffectLevel(itemStack, ItemEffect.overbowed);
-        if (overbowedLevel > 0) {
-            return Optional.ofNullable(entity)
-                    .filter(e -> itemStack.equals(e.getUseItem()))
-                    .map(LivingEntity::getUseItemRemainingTicks)
-                    .map(useCount -> 1 - useCount / (overbowedLevel * 2f))
-                    .map(progress -> Mth.clamp(progress, 0, 1))
-                    .orElse(0f);
+        if (overbowedLevel > 0 && entity != null && itemStack.equals(entity.getUseItem())) {
+            int overbowedLimit = getOverbowedLimit(overbowedLevel);
+            int drawDuration = getDrawDuration(entity, itemStack);
+            int usedTicks = getUseDuration(itemStack) - entity.getUseItemRemainingTicks();
+            return Mth.clamp(1f * (usedTicks - drawDuration) / overbowedLimit, 0, 1);
         }
-
         return 0;
     }
 
     /**
-     * How long it takes to use or consume an item
+     * Assuming an overbowed bow, this represents the number of ticks the bow can be held after reaching full draw
      */
-    @Override
-    public int getUseDuration(ItemStack itemStack) {
-        int overbowedLevel = getEffectLevel(itemStack, ItemEffect.overbowed);
-        if (overbowedLevel > 0) {
-            // each level equals a 0.1 seconds, times 20 ticks per second = 2
-            return overbowedLevel * 2 + getDrawDuration(itemStack);
-        }
+    public int getOverbowedLimit(int overbowedLevel) {
+        return overbowedLevel * 2;
+    }
 
-        return 37000;
+    public int getOverbowedLimit(ItemStack itemStack) {
+        return getOverbowedLimit(getEffectLevel(itemStack, ItemEffect.overbowed));
+    }
+
+
+    public boolean exceedsOverbowedLimit(LivingEntity entity, ItemStack itemStack, int usedTicks) {
+        return usedTicks > getOverbowedLimit(itemStack) + getDrawDuration(entity, itemStack);
+    }
+
+    @Override
+    public int getUseDuration(ItemStack pStack) {
+        return maxUseDuration;
     }
 
     /**
@@ -439,7 +480,7 @@ public class ModularBowItem extends ModularItem {
         float progress = getProgress(itemStack, entity);
 
         if (progress == 0) {
-            return "item";
+            return "undrawn";
         } else if (progress < 0.65) {
             return "draw_0";
         } else if (progress < 0.9) {
@@ -448,7 +489,7 @@ public class ModularBowItem extends ModularItem {
         return "draw_2";
     }
 
-    private ModuleModel getArrowModel(String drawVariant) {
+    private GridTextureModelData getArrowModel(String drawVariant) {
         switch (drawVariant) {
             case "draw_0":
                 return arrowModel0;
@@ -468,25 +509,30 @@ public class ModularBowItem extends ModularItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public ImmutableList<ModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
+    public ImmutableList<IModuleModel> getModels(ItemStack itemStack, @Nullable LivingEntity entity) {
         String modelType = getDrawVariant(itemStack, entity);
 
-        ImmutableList<ModuleModel> models = getAllModules(itemStack).stream()
+        ImmutableList<IModuleModel> models = getAllModules(itemStack).stream()
                 .sorted(Comparator.comparing(ItemModule::getRenderLayer))
-                .flatMap(itemModule -> Arrays.stream(itemModule.getModels(itemStack)))
+                .map(itemModule -> itemModule.getModels(itemStack))
+                .flatMap(Arrays::stream)
                 .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(ModuleModel::getRenderLayer))
-                .filter(model -> model.type.equals(modelType) || model.type.equals("static"))
+                .sorted(Comparator.comparing(IModuleModel::getRenderLayer))
+                .filter(model -> filterModel(model, modelType))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), ImmutableList::copyOf));
 
-        if (!modelType.equals("item")) {
-            return ImmutableList.<ModuleModel>builder()
+        if (!modelType.equals("undrawn")) {
+            return ImmutableList.<IModuleModel>builder()
                     .addAll(models)
                     .add(getArrowModel(modelType))
                     .build();
         }
 
         return models;
+    }
+
+    private static boolean filterModel(IModuleModel model, String filter) {
+        return !(model instanceof FilteredGridTextureModelData filteredModel) || filteredModel.getFilter().equals(filter);
     }
 
     @Override

@@ -39,8 +39,7 @@
                 "availableTextures": [ "default" ],
                 "models": [
                     {
-                        "location": "tetra:item/module/crossbow/stave/basic/",
-                        "type": "static"
+                        "location": "tetra:item/module/crossbow/stave/basic/"
                     }
                 ]
             }

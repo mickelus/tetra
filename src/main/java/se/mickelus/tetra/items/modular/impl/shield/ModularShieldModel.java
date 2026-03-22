@@ -45,11 +45,11 @@ public class ModularShieldModel extends Model {
         this.root = modelPart;
     }
 
-    private static Optional<Pair<ResourceLocation, ShieldModelData>> getModel(ResourceLocation resourceLocation, Resource resource) {
+    private static Optional<Pair<ResourceLocation, ShieldModelPartData>> getModel(ResourceLocation resourceLocation, Resource resource) {
         try (BufferedReader reader = resource.openAsReader()) {
             return Optional.of(reader)
                     .map(r -> GsonHelper.fromJson(DataManager.gson, r, JsonElement.class))
-                    .map(json -> ShieldModelData.codec.decode(JsonOps.INSTANCE, json))
+                    .map(json -> ShieldModelPartData.codec.decode(JsonOps.INSTANCE, json))
                     .map(DataResult::result)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
@@ -90,6 +90,7 @@ public class ModularShieldModel extends Model {
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer vertexBuilder, int light, int overlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer vertexBuilder, int light, int overlay, float red, float green, float blue,
+            float alpha) {
     }
 }

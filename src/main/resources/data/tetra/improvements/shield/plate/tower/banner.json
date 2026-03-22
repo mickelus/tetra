@@ -1,6 +1,12 @@
 [
     {
         "key": "shield/banner",
-        "models": [ { "type": "tetra:banner/tower" } ]
+        "models": [
+            {
+                "type": "tetra:shield",
+                "model": "tetra:banner/tower",
+                "texture": ""
+            }
+        ]
     }
 ]

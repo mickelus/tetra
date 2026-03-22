@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tetra.mickelus.se/schemas/1.20/material.schema.json",
+    "$id": "https://tetra.mickelus.se/schemas/1.20/materials/material.schema.json",
     "title": "Material",
     "description": "Definition of material data in tetra. Most of the fields in this resource are available on module variants and schematic outcomes and are probably easier to understand when read about in that context.",
     "type": "object",
@@ -214,7 +214,7 @@
                 "tag": "minecraft:planks"
             },
             "requiredTools": {
-                "axe": 1
+                "axe_dig": 1
             }
         },
         {
@@ -235,7 +235,7 @@
             },
             "textures": [ "shiny", "crude", "default" ],
             "material": {
-                "item": "minecraft:diamond"
+                "items": [ "minecraft:diamond" ]
             },
             "improvements": {
                 "arrested": 0
