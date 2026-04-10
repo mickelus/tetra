@@ -105,7 +105,9 @@ import se.mickelus.tetra.loot.ReplaceTableModifier;
 import se.mickelus.tetra.loot.ScrollDataFunction;
 import se.mickelus.mutil.network.PacketHandler;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -141,6 +143,10 @@ public class TetraRegistries {
             List.of(Tiers.NETHERITE),
             List.of()
     );
+
+    static {
+        validateTierOrdering();
+    }
 
     private static Item.Properties itemProperties;
     private static RegistryObject<CreativeModeTab> defaultCreativeTabs;
@@ -255,7 +261,8 @@ public class TetraRegistries {
         registerBlockItem(ForgedContainerBlock.instance);
         forgedCrate = register(blocks, ForgedCrateBlock.identifier, ForgedCrateBlock::new);
         registerBlockItem(forgedCrate);
-        transferUnit = register(blocks, TransferUnitBlock.identifier, TransferUnitBlock::new);
+        transferUnit = register(blocks, TransferUnitBlock.identifier, TransferUnitBlock::new,
+                value -> TransferUnitBlock.instance = value);
         registerBlockItem(transferUnit);
 
         // chthonic extractor
@@ -616,6 +623,44 @@ public class TetraRegistries {
     private static <R, T extends R> RegistryObject<T> register(DeferredRegister<R> registry, String id, Supplier<T> supplier,
             Consumer<? super T> assignment) {
         return RegistryObject.of(registry.register(id, assigning(supplier, assignment)));
+    }
+
+    private static void validateTierOrdering() {
+        List<ResourceLocation> expectedOrder = List.of(
+                ResourceLocation.withDefaultNamespace("wood"),
+                ResourceLocation.withDefaultNamespace("gold"),
+                ResourceLocation.withDefaultNamespace("stone"),
+                ResourceLocation.withDefaultNamespace("iron"),
+                ResourceLocation.withDefaultNamespace("diamond"),
+                ResourceLocation.withDefaultNamespace("netherite"),
+                ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "maxed_forge_hammer")
+        );
+
+        Map<ResourceLocation, Integer> indexes = new HashMap<>();
+        List<ResourceLocation> resolvedOrder = TierSortingRegistry.getSortedTiers().stream()
+                .map(TierSortingRegistry::getName)
+                .toList();
+
+        for (int i = 0; i < resolvedOrder.size(); i++) {
+            ResourceLocation name = resolvedOrder.get(i);
+            if (name != null) {
+                indexes.put(name, i);
+            }
+        }
+
+        ResourceLocation previous = null;
+        int previousIndex = -1;
+        for (ResourceLocation expected : expectedOrder) {
+            Integer index = indexes.get(expected);
+            if (index == null) {
+                throw new IllegalStateException("Missing expected tier " + expected + " in resolved order " + resolvedOrder);
+            }
+            if (index <= previousIndex) {
+                throw new IllegalStateException("Unexpected tier order, expected " + previous + " before " + expected + ": " + resolvedOrder);
+            }
+            previous = expected;
+            previousIndex = index;
+        }
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
