@@ -80,7 +80,7 @@ dependencies {
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
-            neo_version         : neo_version,
+            neo_version         : neo_version, neo_version_range: neo_version_range,
             mutil_version       : mutil_version, mutil_version_range: mutil_version_range,
             curios_version      : curios_version, curios_version_range: curios_version_range,
             loader_version_range: loader_version_range,
