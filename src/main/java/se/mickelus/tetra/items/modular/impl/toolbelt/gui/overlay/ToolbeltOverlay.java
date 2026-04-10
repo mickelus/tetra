@@ -145,9 +145,9 @@ public class ToolbeltOverlay extends GuiRoot implements IGuiOverlay {
 
         ItemStack toolbeltStack = ToolbeltHelper.findToolbelt(mc.player);
         if (!toolbeltStack.isEmpty()) {
-            quickslotGroup.setInventory(new QuickslotInventory(toolbeltStack));
-            potionGroup.setInventory(new PotionsInventory(toolbeltStack));
-            quiverGroup.setInventory(new QuiverInventory(toolbeltStack));
+            quickslotGroup.setInventory(new QuickslotInventory(toolbeltStack, mc.player.registryAccess()));
+            potionGroup.setInventory(new PotionsInventory(toolbeltStack, mc.player.registryAccess()));
+            quiverGroup.setInventory(new QuiverInventory(toolbeltStack, mc.player.registryAccess()));
 
             canShow = true;
         } else {

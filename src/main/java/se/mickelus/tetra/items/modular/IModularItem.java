@@ -552,7 +552,7 @@ public interface IModularItem {
                         tooltip.add(Component.literal("\u00BB ").withStyle(ChatFormatting.DARK_GRAY)
                                 .append(Component.literal(module.getName(itemStack)).withStyle(ChatFormatting.GRAY)));
 
-                        module.getEnchantments(itemStack).forEach((enchantment, level) ->
+                        module.getEnchantmentHolders(itemStack).forEach((enchantment, level) ->
                                 tooltip.add(Component.literal("  - " + TetraEnchantmentHelper.getEnchantmentName(enchantment, level))
                                         .withStyle(ChatFormatting.DARK_GRAY)));
 

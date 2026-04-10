@@ -2,6 +2,7 @@ package se.mickelus.tetra.module;
 
 
 import com.google.common.collect.Multimap;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -259,6 +260,11 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     public Map<Enchantment, Integer> getEnchantments(ItemStack itemStack) {
+        return getEnchantmentHolders(itemStack).entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().value(), Map.Entry::getValue, Integer::max, LinkedHashMap::new));
+    }
+
+    public Map<Holder<Enchantment>, Integer> getEnchantmentHolders(ItemStack itemStack) {
         if (itemStack.getTagEnchantments().isEmpty()) {
             return Collections.emptyMap();
         }
@@ -268,10 +274,11 @@ public abstract class ItemModuleMajor extends ItemModule {
 
         if (mappings != null) {
             return itemStack.getTagEnchantments().entrySet().stream()
-                    .filter(entry -> entry.getKey().unwrapKey()
-                            .map(key -> getSlot().equals(mappings.getString(key.location().toString())))
+                    .filter(entry -> TetraEnchantmentHelper.getEnchantmentKey(entry.getKey())
+                            .map(Object::toString)
+                            .map(key -> getSlot().equals(mappings.getString(key)))
                             .orElse(false))
-                    .collect(Collectors.toMap(entry -> entry.getKey().value(), entry -> entry.getIntValue()));
+                    .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getIntValue(), Integer::max, LinkedHashMap::new));
         }
 
         return Collections.emptyMap();

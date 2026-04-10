@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -20,8 +21,8 @@ public class QuickslotInventory extends ToolbeltInventory {
 
     private final NonNullList<ItemStack> inventoryShadows;
 
-    public QuickslotInventory(ItemStack stack) {
-        super(inventoryKey, stack, maxSize, SlotType.quick);
+    public QuickslotInventory(ItemStack stack, HolderLookup.Provider registryAccess) {
+        super(inventoryKey, stack, maxSize, SlotType.quick, registryAccess);
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.quick);
 
@@ -42,7 +43,7 @@ public class QuickslotInventory extends ToolbeltInventory {
             int slot = item.getInt(slotKey);
 
             if (0 <= slot && slot < getContainerSize()) {
-                ItemStack shadowStack = ItemStackTagHelper.parseStack(item);
+                ItemStack shadowStack = ItemStackTagHelper.parseStack(registryAccess, item);
                 if (!shadowStack.isEmpty()) {
                     inventoryShadows.set(slot, shadowStack);
                 }
@@ -57,7 +58,7 @@ public class QuickslotInventory extends ToolbeltInventory {
         for (int i = 0; i < maxSize; i++) {
             ItemStack shadowStack = getShadowOfSlot(i);
             if (!shadowStack.isEmpty()) {
-                CompoundTag item = ItemStackTagHelper.saveStack(shadowStack);
+                CompoundTag item = ItemStackTagHelper.saveStack(shadowStack, registryAccess);
                 item.putInt(slotKey, i);
                 shadows.add(item);
             }

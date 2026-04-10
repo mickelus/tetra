@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
@@ -16,8 +17,8 @@ public class StorageInventory extends ToolbeltInventory {
     private static final String inventoryKey = "storageInventory";
     public static int maxSize = 36; // 24;
 
-    public StorageInventory(ItemStack stack) {
-        super(inventoryKey, stack, maxSize, SlotType.storage);
+    public StorageInventory(ItemStack stack, HolderLookup.Provider registryAccess) {
+        super(inventoryKey, stack, maxSize, SlotType.storage, registryAccess);
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.storage);
 

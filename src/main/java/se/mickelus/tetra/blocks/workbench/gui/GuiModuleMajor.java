@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
+import net.minecraft.core.Holder;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -184,7 +185,7 @@ public class GuiModuleMajor extends GuiModule {
 
         Map<String, Integer> currentEnchantments = module.getEnchantmentsPrimitive(itemStack);
         Map<String, Integer> previewEnchantments = module.getEnchantmentsPrimitive(previewStack);
-        Map<String, Enchantment> enchantments = getEnchantmentsByKey(module.getEnchantments(itemStack), module.getEnchantments(previewStack));
+        Map<String, Holder<Enchantment>> enchantments = getEnchantmentsByKey(module.getEnchantmentHolders(itemStack), module.getEnchantmentHolders(previewStack));
         getEnchantmentUnion(currentEnchantments.keySet(), previewEnchantments.keySet()).forEach(enchantment -> {
             if (!enchantments.containsKey(enchantment)) {
                 return;
@@ -218,14 +219,14 @@ public class GuiModuleMajor extends GuiModule {
         improvementGroup.forceLayout();
     }
 
-    private static Map<String, Enchantment> getEnchantmentsByKey(Map<Enchantment, Integer> currentEnchantments, Map<Enchantment, Integer> previewEnchantments) {
-        Map<String, Enchantment> result = new LinkedHashMap<>();
+    private static Map<String, Holder<Enchantment>> getEnchantmentsByKey(Map<Holder<Enchantment>, Integer> currentEnchantments, Map<Holder<Enchantment>, Integer> previewEnchantments) {
+        Map<String, Holder<Enchantment>> result = new LinkedHashMap<>();
         addEnchantmentsByKey(result, currentEnchantments);
         addEnchantmentsByKey(result, previewEnchantments);
         return result;
     }
 
-    private static void addEnchantmentsByKey(Map<String, Enchantment> result, Map<Enchantment, Integer> enchantments) {
+    private static void addEnchantmentsByKey(Map<String, Holder<Enchantment>> result, Map<Holder<Enchantment>, Integer> enchantments) {
         enchantments.keySet().forEach(enchantment ->
                 TetraEnchantmentHelper.getEnchantmentKey(enchantment)
                         .map(Object::toString)

@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -34,12 +35,14 @@ public class ToolbeltInventory implements Container {
     protected int maxSize = 0;
 
     protected Predicate<ItemStack> predicate = (itemStack -> true);
+    protected final HolderLookup.Provider registryAccess;
 
-    public ToolbeltInventory(String inventoryKey, ItemStack stack, int maxSize, SlotType inventoryType) {
+    public ToolbeltInventory(String inventoryKey, ItemStack stack, int maxSize, SlotType inventoryType, HolderLookup.Provider registryAccess) {
         this.inventoryKey = inventoryKey;
         toolbeltItemStack = stack;
 
         this.inventoryType = inventoryType;
+        this.registryAccess = registryAccess;
 
         this.maxSize = maxSize;
         inventoryContents = NonNullList.withSize(maxSize, ItemStack.EMPTY);
@@ -62,7 +65,7 @@ public class ToolbeltInventory implements Container {
             int slot = itemTag.getByte(slotKey) & 255;
 
             if (0 <= slot && slot < maxSize) {
-                ItemStack stack = ItemStackTagHelper.parseStack(itemTag);
+                ItemStack stack = ItemStackTagHelper.parseStack(registryAccess, itemTag);
                 if (!stack.isEmpty()) {
                     inventoryContents.set(slot, stack);
                 }
@@ -76,7 +79,7 @@ public class ToolbeltInventory implements Container {
         for (int i = 0; i < maxSize; i++) {
             ItemStack stack = getItem(i);
             if (!stack.isEmpty()) {
-                CompoundTag compound = ItemStackTagHelper.saveStack(stack);
+                CompoundTag compound = ItemStackTagHelper.saveStack(stack, registryAccess);
                 compound.putByte(slotKey, (byte) i);
                 items.add(compound);
             }

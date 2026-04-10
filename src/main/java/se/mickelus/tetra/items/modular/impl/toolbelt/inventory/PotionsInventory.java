@@ -1,5 +1,6 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
@@ -14,8 +15,8 @@ public class PotionsInventory extends ToolbeltInventory {
     private static final String inventoryKey = "potionsInventory";
     public static int maxSize = 10; // 9;
 
-    public PotionsInventory(ItemStack stack) {
-        super(inventoryKey, stack, maxSize, SlotType.potion);
+    public PotionsInventory(ItemStack stack, HolderLookup.Provider registryAccess) {
+        super(inventoryKey, stack, maxSize, SlotType.potion, registryAccess);
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.potion);
 

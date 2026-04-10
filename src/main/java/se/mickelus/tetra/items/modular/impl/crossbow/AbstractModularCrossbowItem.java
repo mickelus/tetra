@@ -72,7 +72,7 @@ public abstract class AbstractModularCrossbowItem extends ModularItem {
 
     public abstract float getProgress(ItemStack itemStack, @Nullable LivingEntity entity);
 
-    protected abstract ItemStack getFirstProjectile(ItemStack itemStack);
+    protected abstract ItemStack getFirstProjectile(ItemStack itemStack, @Nullable LivingEntity entity);
 
     private String getDrawVariant(ItemStack itemStack, @Nullable LivingEntity entity) {
         float progress = getProgress(itemStack, entity);
@@ -89,8 +89,8 @@ public abstract class AbstractModularCrossbowItem extends ModularItem {
         return "draw_2";
     }
 
-    private String getProjectileVariant(ItemStack itemStack) {
-        ItemStack projectileStack = getFirstProjectile(itemStack);
+    private String getProjectileVariant(ItemStack itemStack, @Nullable LivingEntity entity) {
+        ItemStack projectileStack = getFirstProjectile(itemStack, entity);
 
         if (projectileStack.getItem() instanceof FireworkRocketItem) {
             return "p1";
@@ -103,8 +103,8 @@ public abstract class AbstractModularCrossbowItem extends ModularItem {
         return "p0";
     }
 
-    private IModuleModel getProjectileModel(ItemStack itemStack) {
-        ItemStack projectileStack = getFirstProjectile(itemStack);
+    private IModuleModel getProjectileModel(ItemStack itemStack, @Nullable LivingEntity entity) {
+        ItemStack projectileStack = getFirstProjectile(itemStack, entity);
 
         if (projectileStack.getItem() instanceof FireworkRocketItem) {
             return fireworkModel;
@@ -119,7 +119,7 @@ public abstract class AbstractModularCrossbowItem extends ModularItem {
 
     @Override
     public String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
-        return super.getModelCacheKey(itemStack, entity) + ":" + getDrawVariant(itemStack, entity) + getProjectileVariant(itemStack);
+        return super.getModelCacheKey(itemStack, entity) + ":" + getDrawVariant(itemStack, entity) + getProjectileVariant(itemStack, entity);
     }
 
     @Override
@@ -139,7 +139,7 @@ public abstract class AbstractModularCrossbowItem extends ModularItem {
         if (isLoaded(itemStack)) {
             return ImmutableList.<IModuleModel>builder()
                     .addAll(models)
-                    .add(getProjectileModel(itemStack))
+                    .add(getProjectileModel(itemStack, entity))
                     .build();
         }
 

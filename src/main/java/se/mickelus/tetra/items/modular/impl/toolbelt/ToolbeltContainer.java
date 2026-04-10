@@ -26,10 +26,10 @@ public class ToolbeltContainer extends AbstractContainerMenu {
 
     public ToolbeltContainer(int windowId, Container playerInventory, ItemStack itemStackToolbelt, Player player) {
         super(type.get(), windowId);
-        this.quickslotInventory = new QuickslotInventory(itemStackToolbelt);
-        this.storageInventory = new StorageInventory(itemStackToolbelt);
-        this.potionsInventory = new PotionsInventory(itemStackToolbelt);
-        this.quiverInventory = new QuiverInventory(itemStackToolbelt);
+        this.quickslotInventory = new QuickslotInventory(itemStackToolbelt, player.registryAccess());
+        this.storageInventory = new StorageInventory(itemStackToolbelt, player.registryAccess());
+        this.potionsInventory = new PotionsInventory(itemStackToolbelt, player.registryAccess());
+        this.quiverInventory = new QuiverInventory(itemStackToolbelt, player.registryAccess());
 
         this.itemStackToolbelt = itemStackToolbelt;
 

@@ -448,7 +448,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityWit
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         if (compound.contains(stackKey, 10)) {
-            thrownStack = ItemStackTagHelper.parseStack(compound.getCompound(stackKey));
+            thrownStack = ItemStackTagHelper.parseStack(registryAccess(), compound.getCompound(stackKey));
         } else {
             thrownStack = ItemStack.EMPTY;
         }
@@ -465,7 +465,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityWit
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         if (!thrownStack.isEmpty()) {
-            compound.put(stackKey, ItemStackTagHelper.saveStack(thrownStack));
+            compound.put(stackKey, ItemStackTagHelper.saveStack(thrownStack, registryAccess()));
         }
         compound.putBoolean(dealtDamageKey, dealtDamage);
         compound.putInt(preferredSlotKey, preferredSlot);

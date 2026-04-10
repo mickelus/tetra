@@ -1,8 +1,7 @@
 package se.mickelus.tetra.util;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -16,8 +15,6 @@ import java.util.List;
 import java.util.UUID;
 
 public final class ItemStackTagHelper {
-    private static final RegistryAccess.Frozen registryAccess = RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
-
     private ItemStackTagHelper() {}
 
     public static boolean hasTag(ItemStack stack) {
@@ -69,14 +66,14 @@ public final class ItemStackTagHelper {
         return tag != null && tag.contains("id", Tag.TAG_STRING);
     }
 
-    public static ItemStack parseStack(CompoundTag tag) {
+    public static ItemStack parseStack(HolderLookup.Provider registryAccess, CompoundTag tag) {
         if (!isSerializedStack(tag)) {
             return ItemStack.EMPTY;
         }
         return ItemStack.parseOptional(registryAccess, tag);
     }
 
-    public static CompoundTag saveStack(ItemStack stack) {
+    public static CompoundTag saveStack(ItemStack stack, HolderLookup.Provider registryAccess) {
         if (stack == null || stack.isEmpty()) {
             return new CompoundTag();
         }

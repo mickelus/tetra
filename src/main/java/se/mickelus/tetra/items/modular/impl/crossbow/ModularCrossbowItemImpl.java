@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -20,6 +21,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -195,7 +197,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        List<ItemStack> list = getProjectiles(stack);
+        List<ItemStack> list = getProjectiles(stack, context.registries());
         if (isLoaded(stack) && !list.isEmpty()) {
             ItemStack itemstack = list.get(0);
             tooltip.add((Component.translatable("item.minecraft.crossbow.projectile")).append(" ").append(itemstack.getDisplayName()));
@@ -319,7 +321,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         if (entity instanceof Player player && !world.isClientSide) {
             ItemStack advancementCopy = itemStack.copy();
 
-            List<ItemStack> list = takeProjectiles(itemStack, 1);
+            List<ItemStack> list = takeProjectiles(itemStack, 1, world.registryAccess());
             if (!list.isEmpty()) {
                 int multishotEnchantLevel = EffectHelper.getEnchantmentLevel(Enchantments.MULTISHOT, itemStack) * 3;
                 int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot) + multishotEnchantLevel, 1);
@@ -494,7 +496,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         return new ListTag();
     }
 
-    private void writeProjectile(ItemStack crossbowStack, ItemStack projectileStack) {
+    private void writeProjectile(ItemStack crossbowStack, ItemStack projectileStack, HolderLookup.Provider registryAccess) {
         if (projectileStack.isEmpty()) {
             return;
         }
@@ -502,17 +504,25 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         CompoundTag crossbowTag = ItemStackTagHelper.getOrCreateTag(crossbowStack);
         ListTag list = getProjectilesNBT(crossbowTag);
 
-        CompoundTag projectileTag = ItemStackTagHelper.saveStack(projectileStack);
+        CompoundTag projectileTag = ItemStackTagHelper.saveStack(projectileStack, registryAccess);
         list.add(projectileTag);
 
         crossbowTag.put("ChargedProjectiles", list);
     }
 
     @Override
-    protected ItemStack getFirstProjectile(ItemStack itemStack) {
+    protected ItemStack getFirstProjectile(ItemStack itemStack, @Nullable LivingEntity entity) {
+        if (entity == null) {
+            return getFirstProjectileByItemId(itemStack);
+        }
+
+        return getFirstProjectile(itemStack, entity.registryAccess());
+    }
+
+    private ItemStack getFirstProjectile(ItemStack itemStack, HolderLookup.Provider registryAccess) {
         ListTag projectiles = getProjectilesNBT(itemStack);
         for (int i = 0; i < projectiles.size(); i++) {
-            ItemStack projectile = ItemStackTagHelper.parseStack(projectiles.getCompound(i));
+            ItemStack projectile = ItemStackTagHelper.parseStack(registryAccess, projectiles.getCompound(i));
             if (!projectile.isEmpty()) {
                 return projectile;
             }
@@ -521,13 +531,43 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         return ItemStack.EMPTY;
     }
 
-    private List<ItemStack> getProjectiles(ItemStack itemStack) {
+    private ItemStack getFirstProjectileByItemId(ItemStack itemStack) {
+        ListTag projectiles = getProjectilesNBT(itemStack);
+        for (int i = 0; i < projectiles.size(); i++) {
+            ItemStack projectile = getProjectileItemStack(projectiles.getCompound(i));
+            if (!projectile.isEmpty()) {
+                return projectile;
+            }
+        }
+
+        return ItemStack.EMPTY;
+    }
+
+    private ItemStack getProjectileItemStack(CompoundTag stackTag) {
+        if (!ItemStackTagHelper.isSerializedStack(stackTag)) {
+            return ItemStack.EMPTY;
+        }
+
+        ResourceLocation itemId = ResourceLocation.tryParse(stackTag.getString("id"));
+        if (itemId == null) {
+            return ItemStack.EMPTY;
+        }
+
+        Item item = BuiltInRegistries.ITEM.get(itemId);
+        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
+    }
+
+    private List<ItemStack> getProjectiles(ItemStack itemStack, @Nullable HolderLookup.Provider registryAccess) {
         List<ItemStack> result = Lists.newArrayList();
+        if (registryAccess == null) {
+            return result;
+        }
+
         ListTag projectileTags = getProjectilesNBT(itemStack);
 
         for (int i = 0; i < projectileTags.size(); ++i) {
             CompoundTag stackNbt = projectileTags.getCompound(i);
-            ItemStack projectile = ItemStackTagHelper.parseStack(stackNbt);
+            ItemStack projectile = ItemStackTagHelper.parseStack(registryAccess, stackNbt);
             if (!projectile.isEmpty()) {
                 result.add(projectile);
             }
@@ -536,7 +576,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         return result;
     }
 
-    private List<ItemStack> takeProjectiles(ItemStack itemStack, int count) {
+    private List<ItemStack> takeProjectiles(ItemStack itemStack, int count, HolderLookup.Provider registryAccess) {
         ListTag nbtList = getProjectilesNBT(itemStack);
         int size = Math.min(nbtList.size(), count);
         List<ItemStack> result = new ArrayList<>(size);
@@ -544,7 +584,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         for (int i = 0; i < size; ++i) {
             CompoundTag stackNbt = nbtList.getCompound(0);
             nbtList.remove(0);
-            ItemStack projectile = ItemStackTagHelper.parseStack(stackNbt);
+            ItemStack projectile = ItemStackTagHelper.parseStack(registryAccess, stackNbt);
             if (!projectile.isEmpty()) {
                 result.add(projectile);
             }
@@ -553,8 +593,8 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         return result;
     }
 
-    public boolean hasProjectiles(ItemStack stack, Item ammoItem) {
-        return getProjectiles(stack).stream().anyMatch(s -> s.getItem() == ammoItem);
+    public boolean hasProjectiles(ItemStack stack, Item ammoItem, HolderLookup.Provider registryAccess) {
+        return getProjectiles(stack, registryAccess).stream().anyMatch(s -> s.getItem() == ammoItem);
     }
 
     private SoundEvent getSoundEvent(float velocity) {
@@ -630,7 +670,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
                 itemstack = ammoStack.copy();
             }
 
-            writeProjectile(crossbowStack, itemstack);
+            writeProjectile(crossbowStack, itemstack, entity.registryAccess());
             return true;
         }
     }

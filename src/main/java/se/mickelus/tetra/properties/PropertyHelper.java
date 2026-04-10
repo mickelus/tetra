@@ -227,8 +227,8 @@ public class PropertyHelper {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> Math.max(
-                        getInventoryToolLevel(new QuickslotInventory(toolbeltStack), tool),
-                        getInventoryToolLevel(new StorageInventory(toolbeltStack), tool)))
+                        getInventoryToolLevel(new QuickslotInventory(toolbeltStack, player.registryAccess()), tool),
+                        getInventoryToolLevel(new StorageInventory(toolbeltStack, player.registryAccess()), tool)))
                 .orElse(0);
     }
 
@@ -236,8 +236,8 @@ public class PropertyHelper {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> (Set<ItemAbility>) Sets.union(
-                        getInventoryTools(new QuickslotInventory(toolbeltStack)),
-                        getInventoryTools(new StorageInventory(toolbeltStack))))
+                        getInventoryTools(new QuickslotInventory(toolbeltStack, player.registryAccess())),
+                        getInventoryTools(new StorageInventory(toolbeltStack, player.registryAccess()))))
                 .orElse(Collections.emptySet());
 
     }
@@ -246,8 +246,8 @@ public class PropertyHelper {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> Stream.of(
-                        getInventoryToolLevels(new QuickslotInventory(toolbeltStack)),
-                        getInventoryToolLevels(new StorageInventory(toolbeltStack))))
+                        getInventoryToolLevels(new QuickslotInventory(toolbeltStack, player.registryAccess())),
+                        getInventoryToolLevels(new StorageInventory(toolbeltStack, player.registryAccess()))))
                 .orElseGet(Stream::empty)
                 .map(Map::entrySet)
                 .flatMap(Collection::stream)
@@ -260,14 +260,14 @@ public class PropertyHelper {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> {
-                    QuickslotInventory quickslotInventory = new QuickslotInventory(toolbeltStack);
+                    QuickslotInventory quickslotInventory = new QuickslotInventory(toolbeltStack, player.registryAccess());
                     ItemStack result = consumeCraftToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
                         quickslotInventory.setChanged();
                         return result;
                     }
 
-                    StorageInventory storageInventory = new StorageInventory(toolbeltStack);
+                    StorageInventory storageInventory = new StorageInventory(toolbeltStack, player.registryAccess());
                     result = consumeCraftToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
                         storageInventory.setChanged();
@@ -284,14 +284,14 @@ public class PropertyHelper {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> {
-                    QuickslotInventory quickslotInventory = new QuickslotInventory(toolbeltStack);
+                    QuickslotInventory quickslotInventory = new QuickslotInventory(toolbeltStack, player.registryAccess());
                     ItemStack result = consumeActionToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
                         quickslotInventory.setChanged();
                         return result;
                     }
 
-                    StorageInventory storageInventory = new StorageInventory(toolbeltStack);
+                    StorageInventory storageInventory = new StorageInventory(toolbeltStack, player.registryAccess());
                     result = consumeActionToolInventory(quickslotInventory, player, targetStack, tool, level, consumeResources);
                     if (result != null) {
                         storageInventory.setChanged();
@@ -308,13 +308,13 @@ public class PropertyHelper {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(toolbeltStack -> {
-                    ItemStack itemStack = getInventoryProvidingItemStack(new QuickslotInventory(toolbeltStack), tool, level);
+                    ItemStack itemStack = getInventoryProvidingItemStack(new QuickslotInventory(toolbeltStack, player.registryAccess()), tool, level);
 
                     if (!itemStack.isEmpty()) {
                         return itemStack;
                     }
 
-                    return getInventoryProvidingItemStack(new StorageInventory(toolbeltStack), tool, level);
+                    return getInventoryProvidingItemStack(new StorageInventory(toolbeltStack, player.registryAccess()), tool, level);
                 })
                 .orElse(ItemStack.EMPTY);
     }

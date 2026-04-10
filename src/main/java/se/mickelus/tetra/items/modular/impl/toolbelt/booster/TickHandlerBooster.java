@@ -35,7 +35,7 @@ public class TickHandlerBooster {
 
             UtilBooster.consumeFuel(tag, charged);
         } else {
-            UtilBooster.rechargeFuel(tag, stack);
+            UtilBooster.rechargeFuel(tag, stack, player.registryAccess());
         }
 
         if (charged) {

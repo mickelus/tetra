@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
@@ -201,7 +202,7 @@ public class UtilBooster {
         tag.putInt(cooldownKey, cooldownTicks);
     }
 
-    public static void rechargeFuel(CompoundTag tag, ItemStack itemStack) {
+    public static void rechargeFuel(CompoundTag tag, ItemStack itemStack, HolderLookup.Provider registryAccess) {
         int fuel = tag.getInt(fuelKey);
         int buffer = tag.getInt(bufferKey);
         int cooldown = tag.getInt(cooldownKey);
@@ -212,13 +213,13 @@ public class UtilBooster {
                 tag.putInt(fuelKey, fuel + fuelRecharge);
                 tag.putInt(bufferKey, buffer - 1);
             } else {
-                refuelBuffer(tag, itemStack);
+                refuelBuffer(tag, itemStack, registryAccess);
             }
         }
     }
 
-    private static void refuelBuffer(CompoundTag tag, ItemStack itemStack) {
-        ToolbeltInventory inventory = new QuickslotInventory(itemStack);
+    private static void refuelBuffer(CompoundTag tag, ItemStack itemStack, HolderLookup.Provider registryAccess) {
+        ToolbeltInventory inventory = new QuickslotInventory(itemStack, registryAccess);
         int index = inventory.getFirstIndexForItem(Items.GUNPOWDER);
         if (index != -1) {
             inventory.removeItem(index, 1);
@@ -226,7 +227,7 @@ public class UtilBooster {
             return;
         }
 
-        inventory = new StorageInventory(itemStack);
+        inventory = new StorageInventory(itemStack, registryAccess);
         index = inventory.getFirstIndexForItem(Items.GUNPOWDER);
         if (index != -1) {
             inventory.removeItem(index, 1);
