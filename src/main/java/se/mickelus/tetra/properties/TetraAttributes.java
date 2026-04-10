@@ -6,7 +6,7 @@ import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import se.mickelus.tetra.compat.forge.registries.RegistryObject;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;

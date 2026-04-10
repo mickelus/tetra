@@ -1,4 +1,4 @@
-package net.minecraftforge.common.extensions;
+package se.mickelus.tetra.compat.forge.common.extensions;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;

@@ -1,4 +1,4 @@
-package net.minecraftforge.common.util;
+package se.mickelus.tetra.compat.forge.common.util;
 
 import java.util.Objects;
 import java.util.function.Supplier;

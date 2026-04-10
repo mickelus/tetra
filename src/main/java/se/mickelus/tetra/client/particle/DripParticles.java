@@ -11,7 +11,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.RegistryObject;
+import se.mickelus.tetra.compat.forge.registries.RegistryObject;
 
 public class DripParticles {
     public static RegistryObject<SimpleParticleType> fallingBlood;

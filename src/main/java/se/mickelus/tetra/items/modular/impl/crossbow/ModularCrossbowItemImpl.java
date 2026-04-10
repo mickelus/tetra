@@ -44,7 +44,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.common.NeoForge;
-import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import org.jetbrains.annotations.NotNull;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;

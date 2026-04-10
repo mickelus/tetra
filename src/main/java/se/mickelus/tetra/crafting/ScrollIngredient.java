@@ -7,7 +7,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
-import net.minecraftforge.registries.RegistryObject;
+import se.mickelus.tetra.compat.forge.registries.RegistryObject;
 import se.mickelus.tetra.blocks.scroll.ScrollData;
 import se.mickelus.tetra.blocks.scroll.ScrollItem;
 

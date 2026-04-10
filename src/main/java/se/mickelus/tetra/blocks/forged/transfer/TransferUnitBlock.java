@@ -32,7 +32,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
-import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraItemAbilities;

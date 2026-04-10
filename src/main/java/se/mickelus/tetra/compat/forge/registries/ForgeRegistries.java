@@ -1,4 +1,4 @@
-package net.minecraftforge.registries;
+package se.mickelus.tetra.compat.forge.registries;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -19,8 +19,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.registries.tags.ITag;
-import net.minecraftforge.registries.tags.ITagManager;
+import se.mickelus.tetra.compat.forge.registries.tags.ITag;
+import se.mickelus.tetra.compat.forge.registries.tags.ITagManager;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;

@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.registries.RegistryObject;
+import se.mickelus.tetra.compat.forge.registries.RegistryObject;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicBlock;
 import se.mickelus.tetra.blocks.multischematic.PrimaryMultiblockSchematicBlock;
 import se.mickelus.tetra.blocks.multischematic.RuinedMultiblockSchematicBlock;

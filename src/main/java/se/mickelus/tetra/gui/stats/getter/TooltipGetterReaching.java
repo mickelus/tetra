@@ -3,7 +3,7 @@ package se.mickelus.tetra.gui.stats.getter;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ForgeMod;
+import se.mickelus.tetra.compat.forge.common.ForgeMod;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.effect.ReachingEffect;
 

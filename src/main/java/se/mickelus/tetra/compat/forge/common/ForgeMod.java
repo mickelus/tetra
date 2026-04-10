@@ -1,4 +1,4 @@
-package net.minecraftforge.common;
+package se.mickelus.tetra.compat.forge.common;
 
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;

@@ -1,4 +1,4 @@
-package net.minecraftforge.registries;
+package se.mickelus.tetra.compat.forge.registries;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

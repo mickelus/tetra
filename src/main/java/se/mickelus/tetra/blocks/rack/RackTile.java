@@ -15,10 +15,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.tetra.compat.forge.common.capabilities.ForgeCapabilities;
+import se.mickelus.tetra.compat.forge.common.util.LazyOptional;
+import se.mickelus.tetra.compat.forge.items.ItemStackHandler;
+import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.ItemHandlerBlockEntity;
 
@@ -45,7 +45,7 @@ public class RackTile extends BlockEntity implements ItemHandlerBlockEntity {
     }
 
     @Nonnull
-    public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull se.mickelus.tetra.compat.forge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return handler.cast();
         }

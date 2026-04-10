@@ -11,10 +11,10 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.registries.RegistryObject;
+import se.mickelus.tetra.compat.forge.items.IItemHandler;
+import se.mickelus.tetra.compat.forge.items.SlotItemHandler;
+import se.mickelus.tetra.compat.forge.items.wrapper.InvWrapper;
+import se.mickelus.tetra.compat.forge.registries.RegistryObject;
 import se.mickelus.mutil.gui.ToggleableSlot;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 

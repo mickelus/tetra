@@ -1,4 +1,4 @@
-package net.minecraftforge.common;
+package se.mickelus.tetra.compat.forge.common;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

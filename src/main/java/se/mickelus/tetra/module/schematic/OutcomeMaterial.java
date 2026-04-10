@@ -13,7 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
+import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
 import se.mickelus.tetra.data.deserializer.ItemPredicateDeserializer;
 import se.mickelus.tetra.data.predicate.TetraItemPredicate;
 

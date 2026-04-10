@@ -1,6 +1,6 @@
-package net.minecraftforge.common.capabilities;
+package se.mickelus.tetra.compat.forge.common.capabilities;
 
-import net.minecraftforge.items.IItemHandler;
+import se.mickelus.tetra.compat.forge.items.IItemHandler;
 
 public final class ForgeCapabilities {
     public static final Capability<IItemHandler> ITEM_HANDLER = new Capability<>("item_handler");

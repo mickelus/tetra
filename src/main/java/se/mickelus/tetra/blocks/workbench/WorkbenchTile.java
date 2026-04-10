@@ -20,10 +20,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ItemAbility;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.RegistryObject;
+import se.mickelus.tetra.compat.forge.common.capabilities.ForgeCapabilities;
+import se.mickelus.tetra.compat.forge.common.util.LazyOptional;
+import se.mickelus.tetra.compat.forge.items.ItemStackHandler;
+import se.mickelus.tetra.compat.forge.registries.RegistryObject;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 import se.mickelus.mutil.network.PacketHandler;
@@ -136,7 +136,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider, ItemHand
     }
 
     @Nonnull
-    public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull se.mickelus.tetra.compat.forge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return handler.cast();
         }
@@ -144,7 +144,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider, ItemHand
     }
 
     @Override
-    public net.minecraftforge.items.IItemHandler getItemHandler(@Nullable Direction side) {
+    public se.mickelus.tetra.compat.forge.items.IItemHandler getItemHandler(@Nullable Direction side) {
         return handler.orElse(null);
     }
 

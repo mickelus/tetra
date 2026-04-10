@@ -28,7 +28,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.ItemAbility;
-import net.minecraftforge.forgespi.Environment;
+import se.mickelus.tetra.compat.forge.forgespi.Environment;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;

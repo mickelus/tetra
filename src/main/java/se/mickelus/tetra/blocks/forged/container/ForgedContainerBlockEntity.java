@@ -32,10 +32,10 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.RegistryObject;
+import se.mickelus.tetra.compat.forge.common.capabilities.ForgeCapabilities;
+import se.mickelus.tetra.compat.forge.common.util.LazyOptional;
+import se.mickelus.tetra.compat.forge.items.ItemStackHandler;
+import se.mickelus.tetra.compat.forge.registries.RegistryObject;
 import se.mickelus.mutil.util.ItemHandlerWrapper;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
@@ -112,7 +112,7 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
     }
 
     @Nonnull
-    public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull se.mickelus.tetra.compat.forge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
             ForgedContainerBlockEntity delegate = getOrDelegate();
             if (delegate != null) {
@@ -123,7 +123,7 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
     }
 
     @Override
-    public net.minecraftforge.items.IItemHandler getItemHandler(@Nullable Direction side) {
+    public se.mickelus.tetra.compat.forge.items.IItemHandler getItemHandler(@Nullable Direction side) {
         ForgedContainerBlockEntity delegate = getOrDelegate();
         return delegate != null ? delegate.handler.orElse(null) : null;
     }

@@ -135,7 +135,7 @@ public class EffectHelper {
             ServerPlayer serverPlayer = (ServerPlayer) breakingPlayer;
             GameType gameType = serverPlayer.gameMode.getGameModeForPlayer();
 
-            int breakEventResult = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, gameType, serverPlayer, pos);
+            int breakEventResult = se.mickelus.tetra.compat.forge.common.ForgeHooks.onBlockBreakEvent(world, gameType, serverPlayer, pos);
             if (breakEventResult == -1 || breakingPlayer.blockActionRestricted(world, pos, gameType)) {
                 return false;
             }

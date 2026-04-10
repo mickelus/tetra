@@ -6,7 +6,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.minecraftforge.common.TierSortingRegistry;
+import se.mickelus.tetra.compat.forge.common.TierSortingRegistry;
 import se.mickelus.mutil.util.JsonOptional;
 import se.mickelus.tetra.util.TierHelper;
 

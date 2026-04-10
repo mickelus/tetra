@@ -1,4 +1,4 @@
-package net.minecraftforge.common.capabilities;
+package se.mickelus.tetra.compat.forge.common.capabilities;
 
 public final class Capability<T> {
     private final String name;

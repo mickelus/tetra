@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.*;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
 import se.mickelus.tetra.blocks.forged.ForgedVentBlock;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicBlock;
 

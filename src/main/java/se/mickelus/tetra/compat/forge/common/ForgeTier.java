@@ -1,4 +1,4 @@
-package net.minecraftforge.common;
+package se.mickelus.tetra.compat.forge.common;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;

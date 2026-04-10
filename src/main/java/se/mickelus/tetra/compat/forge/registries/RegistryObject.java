@@ -1,4 +1,4 @@
-package net.minecraftforge.registries;
+package se.mickelus.tetra.compat.forge.registries;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

@@ -1,4 +1,4 @@
-package net.minecraftforge.registries.tags;
+package se.mickelus.tetra.compat.forge.registries.tags;
 
 import java.util.stream.Stream;
 

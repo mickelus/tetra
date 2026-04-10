@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ItemAbility;
-import net.minecraftforge.common.util.LazyOptional;
+import se.mickelus.tetra.compat.forge.common.util.LazyOptional;
 import se.mickelus.tetra.craftingeffect.CraftingEffect;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;

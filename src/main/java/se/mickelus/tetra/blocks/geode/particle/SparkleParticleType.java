@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.geode.particle;
 
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 
 public class SparkleParticleType {

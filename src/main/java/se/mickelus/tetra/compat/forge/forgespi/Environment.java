@@ -1,4 +1,4 @@
-package net.minecraftforge.forgespi;
+package se.mickelus.tetra.compat.forge.forgespi;
 
 import net.neoforged.fml.loading.FMLEnvironment;
 

@@ -1,6 +1,6 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
-import net.minecraftforge.registries.ObjectHolder;
+import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 
