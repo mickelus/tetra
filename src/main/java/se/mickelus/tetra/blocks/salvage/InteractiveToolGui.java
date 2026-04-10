@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.salvage;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.animation.Applier;
 import se.mickelus.mutil.gui.animation.KeyframeAnimation;
@@ -16,13 +16,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class InteractiveToolGui extends GuiElement {
     private final GuiTool toolIcon;
     private final KeyframeAnimation hide;
-    private final ToolAction toolAction;
+    private final ItemAbility toolAction;
     private final int toolLevel;
     private final Player player;
     private KeyframeAnimation show;
     private int currentSlot;
 
-    public InteractiveToolGui(int x, int y, ToolAction toolAction, int toolLevel, Player player) {
+    public InteractiveToolGui(int x, int y, ItemAbility toolAction, int toolLevel, Player player) {
         super(x, y, 16, 16);
         opacity = 0;
 

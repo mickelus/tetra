@@ -34,10 +34,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
-    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "block/scroll"));
+    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "block/scroll"));
     private static final int availableGlyphs = 16;
     private static final int availableMaterials = 3;
-    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, "block/scroll"), "main");
+    public static ModelLayerLocation layer = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "block/scroll"), "main");
     private final ModelPart[] rolledModel;
     private final ModelPart ribbonModel;
     private final ModelPart[] wallModel;
@@ -182,7 +182,13 @@ public class ScrollRenderer implements BlockEntityRenderer<ScrollTile> {
             float blue = FastColor.ARGB32.blue(scrolls[i].ribbon) / 255f;
 
             rolledModel[mat].render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
-            ribbonModel.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, red, green, blue, 1);
+            ribbonModel.render(
+                    matrixStack,
+                    vertexBuilder,
+                    combinedLight,
+                    combinedOverlay,
+                    FastColor.ARGB32.color(255, (int) (red * 255), (int) (green * 255), (int) (blue * 255))
+            );
 
             matrixStack.translate(0, 0, 0.25f); // 4px
 

@@ -42,8 +42,8 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements E
     }
 
     @Override
-    public void commonInit(PacketHandler packetHandler) {
-        packetHandler.registerPacket(CoreExtractorPistonUpdatePacket.class, CoreExtractorPistonUpdatePacket::new);
+    public void registerPackets(PacketHandler packetHandler) {
+        packetHandler.registerClientBoundPacket(CoreExtractorPistonUpdatePacket.class, CoreExtractorPistonUpdatePacket::new);
     }
 
     @Override

@@ -12,6 +12,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.decoration.ItemFrame;
@@ -63,7 +64,7 @@ public class ModuleDevCommand {
     }
 
     private static void plopFrame(Level world, BlockPos pos, ItemStack itemStack, String label) {
-        itemStack.setHoverName(Component.literal(label));
+        itemStack.set(DataComponents.CUSTOM_NAME, Component.literal(label));
         ItemFrame itemFrame = new ItemFrame(world, pos, Direction.SOUTH);
         itemFrame.setItem(itemStack);
         world.addFreshEntity(itemFrame);

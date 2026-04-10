@@ -3,9 +3,9 @@ package se.mickelus.tetra.module.schematic;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.MaterialMultiplier;
 
@@ -128,21 +128,21 @@ public interface UpgradeSchematic {
      * @param availableTools The tools that are available for use
      * @return
      */
-    boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolAction, Integer> availableTools);
+    boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ItemAbility, Integer> availableTools);
 
     boolean isIntegrityViolation(Player player, ItemStack itemStack, ItemStack[] materials, String slot);
 
     ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] materials, boolean consumeMaterials, String slot, Player player);
 
-    boolean checkTools(final ItemStack targetStack, final ItemStack[] materials, Map<ToolAction, Integer> availableTools);
+    boolean checkTools(final ItemStack targetStack, final ItemStack[] materials, Map<ItemAbility, Integer> availableTools);
 
-    Map<ToolAction, Integer> getRequiredToolLevels(final ItemStack targetStack, final ItemStack[] materials);
+    Map<ItemAbility, Integer> getRequiredToolLevels(final ItemStack targetStack, final ItemStack[] materials);
 
-    default Collection<ToolAction> getRequiredTools(final ItemStack targetStack, final ItemStack[] materials) {
+    default Collection<ItemAbility> getRequiredTools(final ItemStack targetStack, final ItemStack[] materials) {
         return getRequiredToolLevels(targetStack, materials).keySet();
     }
 
-    default int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ToolAction toolAction) {
+    default int getRequiredToolLevel(final ItemStack targetStack, final ItemStack[] materials, ItemAbility toolAction) {
         return getRequiredToolLevels(targetStack, materials).getOrDefault(toolAction, 0);
     }
 

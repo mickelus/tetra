@@ -2,17 +2,17 @@ package se.mickelus.tetra;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
+import se.mickelus.tetra.data.predicate.TetraItemPredicate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @ParametersAreNonnullByDefault
-public class LooseItemPredicate extends ItemPredicate {
+public class LooseItemPredicate implements TetraItemPredicate {
 
     private final String[] keys;
 
@@ -23,7 +23,6 @@ public class LooseItemPredicate extends ItemPredicate {
 
     }
 
-    @Override
     public boolean matches(ItemStack itemStack) {
         String target = Optional.of(itemStack.getItem())
                 .map(ForgeRegistries.ITEMS::getKey)

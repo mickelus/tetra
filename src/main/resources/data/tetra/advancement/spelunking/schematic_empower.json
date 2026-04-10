@@ -1,0 +1,46 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "minecraft:custom_data": {
+                    "id": "spelunking/schematic_empower",
+                    "sword/blade": "sword/unbound_stonecutter",
+                    "sword/unbound_stonecutter_material": "unbound_stonecutter/iron",
+                    "sword/hilt": "sword/basic_hilt",
+                    "sword/basic_hilt_material": "basic_hilt/spruce",
+                    "sword/pommel": "sword/decorative_pommel",
+                    "sword/decorative_pommel_material": "decorative_pommel/iron",
+                    "sword/blade:unbound_stonecutter/echo_shard": 0
+                }
+            },
+            "id": "tetra:modular_sword"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.schematic_empower.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.schematic_empower.description"
+        }
+    },
+    "parent": "tetra:spelunking/schematic_complete",
+    "criteria": {
+        "stonecutter": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "unbound_stonecutter/echo_shard"
+            }
+        },
+        "earthpiercer": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "unbound_earthpiercer/echo_shard"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "stonecutter",
+            "earthpiercer"
+        ]
+    ]
+}

@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.EffectHelper;
@@ -25,11 +25,12 @@ public class HowlingEffect {
 
     public static void trigger(ItemStack itemStack, LivingEntity player, int effectLevel) {
         int duration = Math.round(EffectHelper.getEffectEfficiency(itemStack, ItemEffect.howling) * 20);
-        int currentAmplifier = Optional.ofNullable(player.getEffect(HowlingPotionEffect.instance))
+        var effect = EffectHelper.effectHolder(HowlingPotionEffect.instance);
+        int currentAmplifier = Optional.ofNullable(player.getEffect(effect))
                 .map(MobEffectInstance::getAmplifier)
                 .orElse(-1);
 
-        player.addEffect(new MobEffectInstance(HowlingPotionEffect.instance, duration, Math.min(currentAmplifier + effectLevel, 11), false, false));
+        player.addEffect(new MobEffectInstance(effect, duration, Math.min(currentAmplifier + effectLevel, 11), false, false));
     }
 
     public static void deflectProjectile(ProjectileImpactEvent event, Projectile projectile, HitResult rayTraceResult) {
@@ -38,10 +39,10 @@ public class HowlingEffect {
                 .map(result -> (EntityHitResult) result)
                 .map(EntityHitResult::getEntity)
                 .flatMap(entity -> CastOptional.cast(entity, LivingEntity.class))
-                .filter(entity -> willDeflect(entity.getEffect(HowlingPotionEffect.instance), entity.getRandom()))
+                .filter(entity -> willDeflect(entity.getEffect(EffectHelper.effectHolder(HowlingPotionEffect.instance)), entity.getRandom()))
                 .ifPresent(entity -> {
                     Vec3 newDir;
-                    if (entity.getEffect(HowlingPotionEffect.instance).getAmplifier() * 0.02 < entity.getRandom().nextDouble()) {
+                    if (entity.getEffect(EffectHelper.effectHolder(HowlingPotionEffect.instance)).getAmplifier() * 0.02 < entity.getRandom().nextDouble()) {
                         Vec3 normal = entity.position().add(0, entity.getBbHeight() / 2, 0).subtract(projectile.position()).normalize();
                         newDir = projectile.getDeltaMovement().subtract(normal.scale(2 * projectile.getDeltaMovement().dot(normal)));
                     } else {

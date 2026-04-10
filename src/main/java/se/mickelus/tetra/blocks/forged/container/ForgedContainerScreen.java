@@ -6,9 +6,8 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiRect;
 import se.mickelus.mutil.gui.GuiTexture;
@@ -25,7 +24,7 @@ import java.util.stream.IntStream;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContainerMenu> {
-    private static final ResourceLocation containerTexture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/forged-container.png");
+    private static final ResourceLocation containerTexture = ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "textures/gui/forged-container.png");
 
     private final ForgedContainerBlockEntity tileEntity;
     private final ForgedContainerMenu container;
@@ -35,6 +34,7 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
     private final AnimationChain slotTransition;
 
     private final VerticalTabGroupGui compartmentButtons;
+    private boolean guiHandledMouseDown = false;
 
     public ForgedContainerScreen(ForgedContainerMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
@@ -72,24 +72,33 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
+        guiRoot.updateFocusState(this.leftPos, this.topPos, (int) mouseX, (int) mouseY);
+        guiHandledMouseDown = guiRoot.onMouseClick((int) mouseX, (int) mouseY, button);
+        if (guiHandledMouseDown) {
+            return true;
+        }
 
-        return guiRoot.onMouseClick((int) mouseX, (int) mouseY, button);
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        super.mouseReleased(mouseX, mouseY, button);
-
         guiRoot.onMouseRelease((int) mouseX, (int) mouseY, button);
+        if (guiHandledMouseDown) {
+            guiHandledMouseDown = false;
+            return true;
+        }
 
-        return true;
+        return super.mouseReleased(mouseX, mouseY, button);
     }
 
     @Override
     public boolean charTyped(char typecChar, int keyCode) {
-        compartmentButtons.keyTyped(typecChar);
-        return false;
+        if (compartmentButtons.keyTyped(typecChar)) {
+            return true;
+        }
+
+        return super.charTyped(typecChar, keyCode);
     }
 
     @Override
@@ -97,7 +106,8 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
         super.containerTick();
 
         int size = ForgedContainerBlockEntity.compartmentSize;
-        tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(itemHandler -> {
+        var itemHandler = tileEntity.getItemHandler(null);
+        if (itemHandler != null) {
             for (int i = 0; i < ForgedContainerBlockEntity.compartmentCount; i++) {
                 boolean hasContent = false;
                 for (int j = 0; j < size; j++) {
@@ -108,12 +118,12 @@ public class ForgedContainerScreen extends AbstractContainerScreen<ForgedContain
                 }
                 compartmentButtons.setHasContent(i, hasContent);
             }
-        });
+        }
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics, mouseX, mouseY, partialTick);
         super.render(graphics, mouseX, mouseY, partialTick);
         renderTooltip(graphics, mouseX, mouseY);
     }

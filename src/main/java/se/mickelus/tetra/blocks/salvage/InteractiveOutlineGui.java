@@ -13,7 +13,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class InteractiveOutlineGui extends GuiElement {
-    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/block-interaction.png");
+    private static final ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "textures/gui/block-interaction.png");
 
     private final BlockInteraction blockInteraction;
 

@@ -1,9 +1,9 @@
 {
-    "parent": "tetra:block/multi_schematic_base",
-    "textures": {
-        "back": "tetra:block/forged_schematic/back",
-        "front": "tetra:block/forged_schematic/stonecutter_2_0",
-        "particle": "tetra:block/forged_schematic/stonecutter_2_0",
-        "side": "tetra:block/forged_schematic/side"
-    }
+  "parent": "tetra:block/multi_schematic_base",
+  "textures": {
+    "back": "tetra:block/forged_schematic/back",
+    "front": "tetra:block/forged_schematic/stonecutter_2_0",
+    "particle": "tetra:block/forged_schematic/stonecutter_2_0",
+    "side": "tetra:block/forged_schematic/side"
+  }
 }

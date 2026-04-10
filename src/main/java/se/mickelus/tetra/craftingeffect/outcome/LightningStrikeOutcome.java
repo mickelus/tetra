@@ -8,16 +8,20 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 import java.util.Map;
 
 @ParametersAreNonnullByDefault
@@ -28,7 +32,7 @@ public class LightningStrikeOutcome implements CraftingEffectOutcome {
 
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
-            ItemStack[] preMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState,
+            ItemStack[] preMaterials, Map<ItemAbility, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState,
             boolean consumeResources, ItemStack[] postMaterials, float severity) {
 
         if (consumeResources && !world.isClientSide() && world.getRandom().nextFloat() < chance) {
@@ -36,7 +40,7 @@ public class LightningStrikeOutcome implements CraftingEffectOutcome {
             if (randomOriginDistance > 0) {
                 pos = pos.offset(getRandomOffset(world.getRandom(), randomOriginDistance));
             }
-            pos = serverLevel.findLightningTargetAround(pos);
+            pos = findLightningTargetAround(serverLevel, pos);
 
             if (delayTicks > 0) {
                 BlockPos finalPos = pos;
@@ -64,6 +68,17 @@ public class LightningStrikeOutcome implements CraftingEffectOutcome {
         lightning.moveTo(Vec3.atBottomCenterOf(pos));
         lightning.setCause(causingPlayer);
         serverLevel.addFreshEntity(lightning);
+    }
+
+    private static BlockPos findLightningTargetAround(ServerLevel serverLevel, BlockPos pos) {
+        BlockPos targetPos = serverLevel.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos);
+        AABB area = AABB.encapsulatingFullBlocks(targetPos, new BlockPos(targetPos.atY(serverLevel.getMaxBuildHeight()))).inflate(3.0);
+        List<LivingEntity> entities = serverLevel.getEntitiesOfClass(LivingEntity.class, area,
+                entity -> entity.isAlive() && serverLevel.canSeeSky(entity.blockPosition()));
+        if (!entities.isEmpty()) {
+            return entities.get(serverLevel.random.nextInt(entities.size())).blockPosition();
+        }
+        return targetPos.getY() == serverLevel.getMinBuildHeight() - 1 ? targetPos.above(2) : targetPos;
     }
 
     private static BlockPos getRandomOffset(RandomSource random, int randomOriginDistance) {

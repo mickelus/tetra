@@ -3,10 +3,10 @@ package se.mickelus.tetra.items.modular.impl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
@@ -25,8 +25,8 @@ public class BlockProgressOverlay implements IGuiOverlay {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (TickEvent.Phase.START == event.phase && mc.player != null) {
+    public void onClientTick(ClientTickEvent.Pre event) {
+        if (mc.player != null) {
             ItemStack activeStack = mc.player.getUseItem();
 
             gui.setProgress(

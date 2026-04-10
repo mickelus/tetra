@@ -55,9 +55,9 @@ public class VexingEffect {
                     vex.setLimitedLife(160);
                     vex.moveTo(entity.getX(), entity.getY() + 1, entity.getZ(), entity.getYRot(), 0.0F);
                     vex.setIsCharging(true);
-                    vex.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(origin), MobSpawnType.MOB_SUMMONED, null, null);
+                    vex.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(origin), MobSpawnType.MOB_SUMMONED, null);
                     vex.setBoundOrigin(origin);
-                    vex.addEffect(new MobEffectInstance(UnstablePowerMobEffect.instance, 1199, effectLevel - 1, false, false));
+                    vex.addEffect(new MobEffectInstance(EffectHelper.effectHolder(UnstablePowerMobEffect.instance), 1199, effectLevel - 1, false, false));
 
                     ((ServerLevelAccessor) level).addFreshEntityWithPassengers(vex);
                     vex.playAmbientSound();

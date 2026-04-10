@@ -73,7 +73,7 @@ public class HoloMaterialApplicable extends GuiElement {
                         } else if (mat.startsWith("!")) {
                             return I18n.get("tetra.material." + mat.substring(1));
                         }
-                        return Optional.ofNullable(ForgeRegistries.ITEMS.getValue(new ResourceLocation(mat)))
+                        return Optional.ofNullable(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(mat)))
                                 .map(Item::getDescription)
                                 .map(Component::getString)
                                 .orElse(mat);

@@ -9,10 +9,10 @@
                 "LifeTicks": 80,
                 "ActiveEffects": [
                     {
-                        "forge:id": "tetra:unstable_power",
-                        "ShowParticles": false,
-                        "Duration": 1799,
-                        "Amplifier": 1
+                        "id": "tetra:unstable_power",
+                        "show_particles": false,
+                        "duration": 1799,
+                        "amplifier": 1
                     }
                 ]
             },

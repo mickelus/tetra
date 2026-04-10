@@ -2,8 +2,8 @@ package se.mickelus.tetra;
 
 import com.google.common.collect.Queues;
 import net.minecraft.server.TickTask;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Iterator;
@@ -24,11 +24,7 @@ public class ClientScheduler {
     }
 
     @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END) {
-            return;
-        }
-
+    public static void onClientTick(ClientTickEvent.Post event) {
         for (Iterator<Task> it = queue.iterator(); it.hasNext(); ) {
             Task task = it.next();
             if (task.getTick() < counter) {

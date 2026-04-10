@@ -1,0 +1,89 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "minecraft:block_entity_data": {
+                    "data": [
+                        {
+                            "material": 0,
+                            "ribbon": "2bffee"
+                        }
+                    ]
+                }
+            },
+            "id": "tetra:scroll_rolled"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_efficiency.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_efficiency.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "hammer_efficiency": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "hammer_efficiency"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "axe_efficiency": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "axe_efficiency"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "cut_efficiency": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "cut_efficiency"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

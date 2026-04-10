@@ -7,11 +7,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiRoot;
 import se.mickelus.tetra.client.keymap.TetraKeyMappings;
@@ -47,8 +47,8 @@ public class SecondaryInteractionOverlay extends GuiRoot implements IGuiOverlay 
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (TickEvent.Phase.END == event.phase && (mc.level != null && mc.level.getGameTime() % 10 == 0)) {
+    public void onClientTick(ClientTickEvent.Post event) {
+        if (mc.level != null && mc.level.getGameTime() % 10 == 0) {
             updateCurrentInteraction(mc.hitResult.getType() == HitResult.Type.BLOCK ? ((BlockHitResult) mc.hitResult).getBlockPos() : null,
                     mc.hitResult.getType() == HitResult.Type.ENTITY ? ((EntityHitResult) mc.hitResult).getEntity() : null);
         }

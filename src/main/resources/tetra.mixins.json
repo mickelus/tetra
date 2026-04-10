@@ -1,19 +1,9 @@
 {
     "required": true,
     "package": "se.mickelus.tetra.mixin",
-    "compatibilityLevel": "JAVA_17",
+    "compatibilityLevel": "JAVA_21",
     "refmap": "tetra.refmap.json",
-    "mixins": [
-        "EnchantmentHelperMixin",
-        "GrindstoneContainerMixin",
-        "ItemStackMixin",
-        "LivingEntityMixin",
-        "PlayerEntityMixin",
-        "ServerPlayNetHandlerMixin"
-    ],
-    "client": [
-        "ItemInHandRendererMixin",
-        "PlayerRendererMixin"
-    ],
+    "mixins": [],
+    "client": [],
     "minVersion": "0.8"
 }

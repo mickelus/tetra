@@ -2,15 +2,10 @@ package se.mickelus.tetra.effect.potion;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.effect.gui.EffectUnRenderer;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class MiningSpeedPotionEffect extends MobEffect {
@@ -26,15 +21,9 @@ public class MiningSpeedPotionEffect extends MobEffect {
 
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (event.getEntity().hasEffect(instance)) {
-            event.setNewSpeed(event.getNewSpeed() * (1 + event.getEntity().getEffect(instance).getAmplifier() / 10f));
+        var effect = se.mickelus.tetra.effect.EffectHelper.effectHolder(instance);
+        if (event.getEntity().hasEffect(effect)) {
+            event.setNewSpeed(event.getNewSpeed() * (1 + event.getEntity().getEffect(effect).getAmplifier() / 10f));
         }
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<IClientMobEffectExtensions> consumer) {
-        super.initializeClient(consumer);
-        consumer.accept(EffectUnRenderer.INSTANCE);
     }
 }

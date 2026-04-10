@@ -1,0 +1,47 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "minecraft:block_entity_data": {
+                    "data": [
+                        {
+                            "material": 1,
+                            "ribbon": "bcb8b5"
+                        }
+                    ]
+                }
+            },
+            "id": "tetra:scroll_rolled"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_sturdy.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_sturdy.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "sword/sturdy_guard"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

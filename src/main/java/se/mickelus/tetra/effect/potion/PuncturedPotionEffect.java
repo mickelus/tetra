@@ -1,9 +1,8 @@
 package se.mickelus.tetra.effect.potion;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
@@ -13,13 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
-import se.mickelus.mutil.effect.EffectTooltipRenderer;
-
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class PuncturedPotionEffect extends MobEffect {
@@ -29,12 +22,13 @@ public class PuncturedPotionEffect extends MobEffect {
     public PuncturedPotionEffect() {
         super(MobEffectCategory.HARMFUL, 0x880000);
 
-        addAttributeModifier(Attributes.ARMOR, "69967662-e7e9-4671-8f48-81d0de9d2098", -0.05, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        addAttributeModifier(Attributes.ARMOR, ResourceLocation.fromNamespaceAndPath("tetra", "punctured_armor"), -0.05,
+                AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
         instance = this;
     }
 
-    public void applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.getCommandSenderWorld().isClientSide) {
             RandomSource rand = entity.getRandom();
             EquipmentSlot slot = EquipmentSlot.values()[2 + rand.nextInt(4)];
@@ -48,23 +42,11 @@ public class PuncturedPotionEffect extends MobEffect {
                         0, 0, 0, 0f);
             }
         }
+        return true;
     }
 
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return duration % 10 == 0;
-    }
-
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<IClientMobEffectExtensions> consumer) {
-        super.initializeClient(consumer);
-        consumer.accept(new EffectTooltipRenderer(effect -> {
-            int amp = effect.getAmplifier() + 1;
-            double armor = Minecraft.getInstance().player.getArmorValue();
-            double armorReduction = armor / (1 - amp * 0.1) - armor;
-            return I18n.get("effect.tetra.punctured.tooltip", String.format("%d", amp * 10), String.format("%.1f", armorReduction));
-        }));
     }
 }

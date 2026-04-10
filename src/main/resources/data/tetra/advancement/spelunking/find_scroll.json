@@ -1,0 +1,40 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "minecraft:block_entity_data": {
+                    "data": [
+                        {
+                            "material": 0,
+                            "ribbon": "ffffff"
+                        }
+                    ]
+                }
+            },
+            "id": "tetra:scroll_rolled"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll.description"
+        },
+        "show_toast": false,
+        "announce_to_chat": false
+    },
+    "parent": "tetra:spelunking/root",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

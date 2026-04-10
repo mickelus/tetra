@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.scroll;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -74,7 +75,6 @@ public class ScrollTile extends BlockEntity {
                 .toArray(CompoundTag[]::new);
     }
 
-    @Override
     public AABB getRenderBoundingBox() {
         return Shapes.block().bounds().move(worldPosition);
     }
@@ -86,21 +86,19 @@ public class ScrollTile extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         scrolls = ScrollData.read(compound);
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
-
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         ScrollData.write(scrolls, compound);
     }
 }

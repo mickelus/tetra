@@ -64,7 +64,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
         tooltip.add(Component.literal(" "));
         tooltip.add(Component.translatable("block.multiblock_hint.1x2x1")

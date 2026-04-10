@@ -1,35 +1,21 @@
 package se.mickelus.tetra.advancements;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import se.mickelus.mutil.util.JsonOptional;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Optional;
 
-
-public class BlockUseCriterion extends AbstractCriterionTriggerInstance {
-    public static final GenericTrigger<BlockUseCriterion> trigger = new GenericTrigger<>("tetra:block_use", BlockUseCriterion::deserialize);
-    private final PropertyMatcher before;
-    private final PropertyMatcher after;
-    private final ItemPredicate item;
-    private final Map<String, String> data;
-
-    public BlockUseCriterion(ContextAwarePredicate playerCondition, PropertyMatcher before, PropertyMatcher after, ItemPredicate item, Map<String, String> data) {
-        super(trigger.getId(), playerCondition);
-        this.before = before;
-        this.after = after;
-        this.item = item;
-        this.data = data;
-    }
+public class BlockUseCriterion {
+    public static final GenericTrigger<Instance> trigger = new GenericTrigger<>(Instance.CODEC);
 
     public static void trigger(ServerPlayer player, BlockState state, ItemStack usedItem, Map<String, String> data) {
         trigger.fulfillCriterion(player, criterion -> criterion.test(state, usedItem, data));
@@ -39,44 +25,36 @@ public class BlockUseCriterion extends AbstractCriterionTriggerInstance {
         trigger(player, state, usedItem, Collections.emptyMap());
     }
 
-    private static BlockUseCriterion deserialize(JsonObject json, ContextAwarePredicate entityPredicate, DeserializationContext conditionsParser) {
-        return new BlockUseCriterion(entityPredicate,
-                JsonOptional.field(json, "before")
-                        .map(PropertyMatcher::deserialize)
-                        .orElse(null),
-                JsonOptional.field(json, "after")
-                        .map(PropertyMatcher::deserialize)
-                        .orElse(null),
-                JsonOptional.field(json, "item")
-                        .map(ItemPredicate::fromJson)
-                        .orElse(null),
-                JsonOptional.field(json, "data")
-                        .map(JsonElement::getAsJsonObject)
-                        .map(JsonObject::entrySet)
-                        .map(Collection::stream)
-                        .orElseGet(Stream::empty)
-                        .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getAsString())));
-    }
+    public record Instance(
+            Optional<ContextAwarePredicate> player,
+            Optional<PropertyMatcher> before,
+            Optional<PropertyMatcher> after,
+            Optional<ItemPredicate> item,
+            Map<String, String> data
+    ) implements SimpleCriterionTrigger.SimpleInstance {
+        public static final Codec<Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ContextAwarePredicate.CODEC.optionalFieldOf("player").forGetter(Instance::player),
+                PropertyMatcher.CODEC.optionalFieldOf("before").forGetter(Instance::before),
+                PropertyMatcher.CODEC.optionalFieldOf("after").forGetter(Instance::after),
+                ItemPredicate.CODEC.optionalFieldOf("item").forGetter(Instance::item),
+                Codec.unboundedMap(Codec.STRING, Codec.STRING).optionalFieldOf("data", Map.of()).forGetter(Instance::data)
+        ).apply(instance, Instance::new));
 
-    public boolean test(BlockState state, ItemStack usedItem, Map<String, String> data) {
-        if (before != null && !before.test(state)) {
-            return false;
+        public boolean test(BlockState state, ItemStack usedItem, Map<String, String> data) {
+            if (before.isPresent() && !before.get().test(state)) {
+                return false;
+            }
+
+            if (after.isPresent() && !after.get().test(state)) {
+                return false;
+            }
+
+            if (item.isPresent() && !item.get().test(usedItem)) {
+                return false;
+            }
+
+            return this.data.entrySet().stream()
+                    .noneMatch(entry -> !data.containsKey(entry.getKey()) || !entry.getValue().equals(data.get(entry.getKey())));
         }
-
-        if (after != null && !after.test(state)) {
-            return false;
-        }
-
-        if (item != null && !item.matches(usedItem)) {
-            return false;
-        }
-
-        if (this.data != null) {
-            boolean hasUnmatched = this.data.entrySet().stream()
-                    .anyMatch(entry -> !data.containsKey(entry.getKey()) || !entry.getValue().equals(data.get(entry.getKey())));
-            return !hasUnmatched;
-        }
-
-        return true;
     }
 }

@@ -2,15 +2,23 @@ package se.mickelus.tetra.aspect;
 
 import com.google.common.collect.HashBiMap;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.neoforged.neoforge.common.CommonHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITagManager;
 import org.apache.commons.lang3.tuple.Pair;
@@ -20,43 +28,36 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static se.mickelus.tetra.util.ItemStackTagHelper.*;
 
 public class TetraEnchantmentHelper {
     private static final Map<ItemAspect, EnchantmentRules> aspectMap = HashBiMap.create();
+    private static final ThreadLocal<Set<ItemStack>> mappingItems =
+            ThreadLocal.withInitial(() -> Collections.newSetFromMap(new IdentityHashMap<>()));
 
     public static void init() {
-        aspectMap.put(ItemAspect.armor, new EnchantmentRules("additions/armor", "exclusions/armor", EnchantmentCategory.ARMOR));
-        aspectMap.put(ItemAspect.armorFeet, new EnchantmentRules("additions/armor_feet", "exclusions/armor_feet", EnchantmentCategory.ARMOR_FEET));
-        aspectMap.put(ItemAspect.armorLegs, new EnchantmentRules("additions/armor_legs", "exclusions/armor_legs", EnchantmentCategory.ARMOR_LEGS));
-        aspectMap.put(ItemAspect.armorChest, new EnchantmentRules("additions/armor_chest", "exclusions/armor_chest", EnchantmentCategory.ARMOR_CHEST));
-        aspectMap.put(ItemAspect.armorHead, new EnchantmentRules("additions/armor_head", "exclusions/armor_head", EnchantmentCategory.ARMOR_HEAD));
-        aspectMap.put(ItemAspect.edgedWeapon, new EnchantmentRules("additions/edged_weapon", "exclusions/edged_weapon", EnchantmentCategory.WEAPON,
-                fromName("SWORD_OR_AXE")));
-        aspectMap.put(ItemAspect.bluntWeapon, new EnchantmentRules("additions/blunt_weapon", "exclusions/blunt_weapon", EnchantmentCategory.WEAPON));
-        aspectMap.put(ItemAspect.pointyWeapon, new EnchantmentRules("additions/pointy_weapon", "exclusions/pointy_weapon", EnchantmentCategory.TRIDENT));
-        aspectMap.put(ItemAspect.throwable, new EnchantmentRules("additions/throwable", "exclusions/throwable", (EnchantmentCategory) null));
-        aspectMap.put(ItemAspect.blockBreaker, new EnchantmentRules("additions/block_breaker", "exclusions/block_breaker", EnchantmentCategory.DIGGER));
-        aspectMap.put(ItemAspect.fishingRod, new EnchantmentRules("additions/fishing_rod", "exclusions/fishing_rod", EnchantmentCategory.FISHING_ROD));
-        aspectMap.put(ItemAspect.breakable, new EnchantmentRules("additions/breakable", "exclusions/breakable", EnchantmentCategory.BREAKABLE));
-        aspectMap.put(ItemAspect.bow, new EnchantmentRules("additions/bow", "exclusions/bow", EnchantmentCategory.BOW));
-        aspectMap.put(ItemAspect.wearable, new EnchantmentRules("additions/wearable", "exclusions/wearable", EnchantmentCategory.WEARABLE));
-        aspectMap.put(ItemAspect.crossbow, new EnchantmentRules("additions/crossbow", "exclusions/crossbow", EnchantmentCategory.CROSSBOW));
-        aspectMap.put(ItemAspect.vanishable, new EnchantmentRules("additions/vanishable", "exclusions/vanishable", EnchantmentCategory.VANISHABLE));
-    }
-
-    private static EnchantmentCategory fromName(String enchantmentCategoryName) {
-        try {
-            return EnchantmentCategory.valueOf(enchantmentCategoryName);
-        } catch (IllegalArgumentException ignored) {
-        }
-        return null;
-    }
-
-    public static void registerMapping(ItemAspect aspect, @Nullable EnchantmentCategory category, String additions, String exclusions) {
-        registerMapping(aspect, new EnchantmentRules(additions, exclusions, category));
+        aspectMap.put(ItemAspect.armor, new EnchantmentRules(items(Items.LEATHER_BOOTS, Items.IRON_LEGGINGS, Items.IRON_CHESTPLATE, Items.IRON_HELMET), "additions/armor", "exclusions/armor"));
+        aspectMap.put(ItemAspect.armorFeet, new EnchantmentRules(items(Items.LEATHER_BOOTS), "additions/armor_feet", "exclusions/armor_feet"));
+        aspectMap.put(ItemAspect.armorLegs, new EnchantmentRules(items(Items.IRON_LEGGINGS), "additions/armor_legs", "exclusions/armor_legs"));
+        aspectMap.put(ItemAspect.armorChest, new EnchantmentRules(items(Items.IRON_CHESTPLATE), "additions/armor_chest", "exclusions/armor_chest"));
+        aspectMap.put(ItemAspect.armorHead, new EnchantmentRules(items(Items.IRON_HELMET), "additions/armor_head", "exclusions/armor_head"));
+        aspectMap.put(ItemAspect.edgedWeapon, new EnchantmentRules(items(Items.DIAMOND_SWORD, Items.DIAMOND_AXE), "additions/edged_weapon", "exclusions/edged_weapon"));
+        aspectMap.put(ItemAspect.bluntWeapon, new EnchantmentRules(items(Items.DIAMOND_AXE, Items.MACE), "additions/blunt_weapon", "exclusions/blunt_weapon"));
+        aspectMap.put(ItemAspect.pointyWeapon, new EnchantmentRules(items(Items.TRIDENT), "additions/pointy_weapon", "exclusions/pointy_weapon"));
+        aspectMap.put(ItemAspect.throwable, new EnchantmentRules(List.of(), "additions/throwable", "exclusions/throwable"));
+        aspectMap.put(ItemAspect.blockBreaker, new EnchantmentRules(items(Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE), "additions/block_breaker", "exclusions/block_breaker"));
+        aspectMap.put(ItemAspect.fishingRod, new EnchantmentRules(items(Items.FISHING_ROD), "additions/fishing_rod", "exclusions/fishing_rod"));
+        aspectMap.put(ItemAspect.breakable, new EnchantmentRules(items(Items.SHEARS), "additions/breakable", "exclusions/breakable"));
+        aspectMap.put(ItemAspect.bow, new EnchantmentRules(items(Items.BOW), "additions/bow", "exclusions/bow"));
+        aspectMap.put(ItemAspect.wearable, new EnchantmentRules(items(Items.ELYTRA, Items.IRON_HELMET), "additions/wearable", "exclusions/wearable"));
+        aspectMap.put(ItemAspect.crossbow, new EnchantmentRules(items(Items.CROSSBOW), "additions/crossbow", "exclusions/crossbow"));
+        aspectMap.put(ItemAspect.vanishable, new EnchantmentRules(items(Items.DIAMOND_SWORD), "additions/vanishable", "exclusions/vanishable"));
     }
 
     public static void registerMapping(ItemAspect aspect, EnchantmentRules rules) {
@@ -72,14 +73,29 @@ public class TetraEnchantmentHelper {
                 .anyMatch(entry -> aspectMap.get(entry.getKey()).isApplicable(enchantment));
     }
 
-    public static EnchantmentCategory[] getEnchantmentCategories(ItemAspect aspect) {
-        return aspectMap.get(aspect).categories;
+    public static void ensureMappings(ItemStack itemStack) {
+        if (!(itemStack.getItem() instanceof IModularItem)) {
+            return;
+        }
+
+        if (itemStack.getTagEnchantments().isEmpty()) {
+            removeTagKey(itemStack, "EnchantmentMapping");
+            return;
+        }
+
+        if (mappingItems.get().contains(itemStack)) {
+            return;
+        }
+
+        CompoundTag mappings = getTagElement(itemStack, "EnchantmentMapping");
+        if (mappings == null || mappings.getAllKeys().size() < itemStack.getTagEnchantments().size()) {
+            mapEnchantments(itemStack);
+        }
     }
 
     public static ItemStack removeAllEnchantments(ItemStack itemStack) {
-        itemStack.removeTagKey("Enchantments");
-        itemStack.removeTagKey("StoredEnchantments");
-        itemStack.removeTagKey("EnchantmentMapping");
+        EnchantmentHelper.setEnchantments(itemStack, ItemEnchantments.EMPTY);
+        removeTagKey(itemStack, "EnchantmentMapping");
 
         IModularItem.updateIdentifier(itemStack);
 
@@ -87,11 +103,10 @@ public class TetraEnchantmentHelper {
     }
 
     public static ItemStack transferReplacementEnchantments(ItemStack original, ItemStack replacementStack) {
-        Optional.ofNullable(original.getTag())
-                .map(tag -> tag.getList("Enchantments", Tag.TAG_COMPOUND))
-                .filter(enchantments -> enchantments.size() > 0)
+        Optional.of(original.getTagEnchantments())
+                .filter(enchantments -> !enchantments.isEmpty())
                 .ifPresent(enchantments -> {
-                    replacementStack.getOrCreateTag().put("Enchantments", enchantments.copy());
+                    EnchantmentHelper.setEnchantments(replacementStack, enchantments);
                     mapEnchantments(replacementStack);
                 });
 
@@ -99,51 +114,104 @@ public class TetraEnchantmentHelper {
     }
 
     public static void applyEnchantment(ItemStack itemStack, String slot, Enchantment enchantment, int level) {
+        applyEnchantment(itemStack, slot, getHolder(enchantment), level);
+    }
+
+    public static void applyEnchantment(ItemStack itemStack, String slot, Holder<Enchantment> enchantment, int level) {
         itemStack.enchant(enchantment, level);
         mapEnchantment(itemStack, slot, enchantment);
     }
 
     public static void mapEnchantment(ItemStack itemStack, String slot, Enchantment enchantment) {
-        CompoundTag map = itemStack.getOrCreateTagElement("EnchantmentMapping");
-        map.putString(ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString(), slot);
+        mapEnchantment(itemStack, slot, getHolder(enchantment));
+    }
+
+    public static void mapEnchantment(ItemStack itemStack, String slot, Holder<Enchantment> enchantment) {
+        CompoundTag tag = getOrCreateTag(itemStack);
+        CompoundTag map = tag.contains("EnchantmentMapping", Tag.TAG_COMPOUND)
+                ? tag.getCompound("EnchantmentMapping")
+                : new CompoundTag();
+        map.putString(requireEnchantmentKey(enchantment).toString(), slot);
+        tag.put("EnchantmentMapping", map);
     }
 
     public static void mapEnchantments(ItemStack itemStack) {
-        CompoundTag mappings = itemStack.getOrCreateTagElement("EnchantmentMapping");
-        Map<String, String> mapped = Optional.of(mappings)
-                .map(CompoundTag::getAllKeys)
-                .stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toMap(Function.identity(), mappings::getString));
+        if (itemStack.getTagEnchantments().isEmpty()) {
+            removeTagKey(itemStack, "EnchantmentMapping");
+            return;
+        }
 
-        Map<String, Integer> capacity = Arrays.stream(((IModularItem) itemStack.getItem()).getMajorModules(itemStack))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toMap(ItemModule::getSlot, module -> module.getMagicCapacity(itemStack)));
+        Set<ItemStack> inProgress = mappingItems.get();
+        if (!inProgress.add(itemStack)) {
+            return;
+        }
 
-        List<Pair<String, Integer>> unmapped = Optional.of(itemStack.getEnchantmentTags())
-                .stream()
-                .flatMap(Collection::stream)
-                .map(nbt -> ((CompoundTag) nbt))
-                .map(nbt -> Pair.of(nbt.getString("id"), nbt.getInt("lvl")))
-                .filter(pair -> !mapped.containsKey(pair.getKey()))
-                .collect(Collectors.toList());
+        try {
+            CompoundTag tag = getOrCreateTag(itemStack);
+            CompoundTag mappings = tag.contains("EnchantmentMapping", Tag.TAG_COMPOUND)
+                    ? tag.getCompound("EnchantmentMapping")
+                    : new CompoundTag();
+            Map<String, String> mapped = Optional.of(mappings)
+                    .map(CompoundTag::getAllKeys)
+                    .stream()
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toMap(Function.identity(), mappings::getString));
 
-        ItemModuleMajor[] modules = ((IModularItem) itemStack.getItem()).getMajorModules(itemStack);
-        unmapped.forEach(pair -> {
-            Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(pair.getKey()));
-            if (enchantment != null) {
-                Arrays.stream(modules)
-                        .filter(Objects::nonNull)
-                        .filter(module -> module.acceptsEnchantment(itemStack, enchantment, false))
-                        .map(ItemModule::getSlot)
-                        .max(Comparator.comparing(slot -> capacity.getOrDefault(slot, 0)))
-                        .ifPresent(slot -> {
-                            mapEnchantment(itemStack, slot, enchantment);
-                            int cost = getEnchantmentCapacityCost(enchantment, pair.getRight());
-                            capacity.merge(slot, cost, Integer::sum);
-                        });
+            ItemModuleMajor[] modules = ((IModularItem) itemStack.getItem()).getMajorModules(itemStack);
+            Map<String, Integer> capacity = Arrays.stream(modules)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toMap(
+                            ItemModule::getSlot,
+                            module -> module.getAvailableMagicCapacityForMapping(itemStack),
+                            Integer::max,
+                            LinkedHashMap::new));
+
+            itemStack.getTagEnchantments().entrySet().forEach(entry ->
+                    getEnchantmentKey(entry.getKey())
+                            .map(ResourceLocation::toString)
+                            .map(mapped::get)
+                            .ifPresent(slot -> {
+                                Enchantment enchantment = entry.getKey().value();
+                                if (enchantment != null) {
+                                    int cost = getEnchantmentCapacityCost(enchantment, entry.getIntValue());
+                                    capacity.merge(slot, cost, Integer::sum);
+                                }
+                            }));
+
+            itemStack.getTagEnchantments().entrySet().stream()
+                    .filter(entry -> {
+                        return getEnchantmentKey(entry.getKey())
+                                .map(ResourceLocation::toString)
+                                .map(key -> !mapped.containsKey(key))
+                                .orElse(false);
+                    })
+                    .forEach(entry -> {
+                        Holder<Enchantment> holder = entry.getKey();
+                        Enchantment enchantment = entry.getKey().value();
+                        if (enchantment != null) {
+                            Arrays.stream(modules)
+                                    .filter(Objects::nonNull)
+                                    .filter(module -> module.acceptsEnchantment(itemStack, enchantment, false))
+                                    .map(ItemModule::getSlot)
+                                    .max(Comparator.comparing(slot -> capacity.getOrDefault(slot, 0)))
+                                    .ifPresent(slot -> {
+                                        mapEnchantment(itemStack, slot, holder);
+                                        int cost = getEnchantmentCapacityCost(enchantment, entry.getIntValue());
+                                        capacity.merge(slot, cost, Integer::sum);
+                                    });
+                        }
+                    });
+            if (mappings.getAllKeys().isEmpty()) {
+                tag.remove("EnchantmentMapping");
+            } else {
+                tag.put("EnchantmentMapping", mappings);
             }
-        });
+        } finally {
+            inProgress.remove(itemStack);
+            if (inProgress.isEmpty()) {
+                mappingItems.remove();
+            }
+        }
     }
 
     @Nullable
@@ -153,7 +221,7 @@ public class TetraEnchantmentHelper {
 
     @Nullable
     public static Pair<Enchantment, Integer> getEnchantment(CompoundTag nbt) {
-        return Optional.ofNullable(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(nbt.getString("id"))))
+        return Optional.ofNullable(ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.parse(nbt.getString("id"))))
                 .map(enchantment -> Pair.of(enchantment, nbt.getInt("lvl")))
                 .orElse(null);
     }
@@ -163,35 +231,43 @@ public class TetraEnchantmentHelper {
     }
 
     public static void removeEnchantment(ItemStack itemStack, Enchantment enchantment) {
-        Optional.ofNullable(ForgeRegistries.ENCHANTMENTS.getKey(enchantment))
+        getEnchantmentKey(enchantment)
                 .ifPresent(enchantmentKey -> removeEnchantment(itemStack, enchantmentKey.toString()));
     }
 
     public static void removeEnchantment(ItemStack itemStack, String enchantment) {
-        Optional.ofNullable(itemStack.getTagElement("EnchantmentMapping"))
+        Optional.ofNullable(getTagElement(itemStack, "EnchantmentMapping"))
                 .ifPresent(map -> map.remove(enchantment));
-        Optional.ofNullable(itemStack.getTag())
-                .map(tag -> tag.getList("Enchantments", Tag.TAG_COMPOUND))
-                .ifPresent(enchantments -> enchantments.removeIf(nbt -> enchantment.equals(((CompoundTag) nbt).getString("id"))));
+        EnchantmentHelper.updateEnchantments(itemStack, mutable -> mutable.removeIf(holder -> {
+            return getEnchantmentKey(holder)
+                    .map(ResourceLocation::toString)
+                    .filter(enchantment::equals)
+                    .isPresent();
+        }));
     }
 
     public static void removeEnchantments(ItemStack itemStack, String slot) {
-        CompoundTag map = itemStack.getTagElement("EnchantmentMapping");
-        ListTag enchantments = Optional.ofNullable(itemStack.getTag())
-                .map(tag -> tag.getList("Enchantments", Tag.TAG_COMPOUND))
-                .orElse(null);
-
-        if (map != null && enchantments != null) {
+        CompoundTag map = getTagElement(itemStack, "EnchantmentMapping");
+        if (map != null) {
             Set<String> matchingEnchantments = map.getAllKeys().stream()
                     .filter(ench -> slot.equals(map.getString(ench)))
                     .collect(Collectors.toSet());
 
-            enchantments.removeIf(nbt -> matchingEnchantments.contains(((CompoundTag) nbt).getString("id")));
+            EnchantmentHelper.updateEnchantments(itemStack, mutable -> mutable.removeIf(holder -> {
+                return getEnchantmentKey(holder)
+                        .map(ResourceLocation::toString)
+                        .filter(matchingEnchantments::contains)
+                        .isPresent();
+            }));
             matchingEnchantments.forEach(map::remove);
         }
     }
 
     public static String getEnchantmentTooltip(Enchantment enchantment, int level, boolean clearFormatting) {
+        return getEnchantmentTooltip(getHolder(enchantment), level, clearFormatting);
+    }
+
+    public static String getEnchantmentTooltip(Holder<Enchantment> enchantment, int level, boolean clearFormatting) {
         if (clearFormatting) {
             return ChatFormatting.stripFormatting(getEnchantmentName(enchantment, level));
         }
@@ -200,36 +276,95 @@ public class TetraEnchantmentHelper {
     }
 
     public static String getEnchantmentName(Enchantment enchantment, int level) {
-        return enchantment.getFullname(level).getString();
+        return Enchantment.getFullname(getHolder(enchantment), level).getString();
+    }
+
+    public static String getEnchantmentName(Holder<Enchantment> enchantment, int level) {
+        return Enchantment.getFullname(enchantment, level).getString();
     }
 
     public static String getEnchantmentDescription(Enchantment enchantment) {
-        return Optional.of(enchantment.getDescriptionId() + ".desc")
+        return getEnchantmentKey(enchantment)
+                .map(key -> Util.makeDescriptionId("enchantment", key) + ".desc")
+                .filter(I18n::exists)
+                .map(I18n::get)
+                .orElse(null);
+    }
+
+    public static String getEnchantmentDescription(Holder<Enchantment> enchantment) {
+        return getEnchantmentKey(enchantment)
+                .map(key -> Util.makeDescriptionId("enchantment", key) + ".desc")
                 .filter(I18n::exists)
                 .map(I18n::get)
                 .orElse(null);
     }
 
     public static class EnchantmentRules {
-        EnchantmentCategory[] categories;
+        List<ItemStack> supportedItems;
         TagKey<Enchantment> exclusions;
         TagKey<Enchantment> additions;
 
-        public EnchantmentRules(String additions, String exclusions, EnchantmentCategory... categories) {
-            this.categories = Arrays.stream(categories)
-                    .filter(Objects::nonNull)
-                    .toArray(EnchantmentCategory[]::new);
-
+        public EnchantmentRules(List<ItemStack> supportedItems, String additions, String exclusions) {
+            this.supportedItems = supportedItems;
             ITagManager<Enchantment> tags = ForgeRegistries.ENCHANTMENTS.tags();
-            this.additions = tags.createTagKey(new ResourceLocation(TetraMod.MOD_ID, additions));
-            this.exclusions = tags.createTagKey(new ResourceLocation(TetraMod.MOD_ID, exclusions));
+            this.additions = tags.createTagKey(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, additions));
+            this.exclusions = tags.createTagKey(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, exclusions));
 
         }
 
         public boolean isApplicable(Enchantment enchantment) {
             ITagManager<Enchantment> tags = ForgeRegistries.ENCHANTMENTS.tags();
-            return ((Arrays.asList(categories).contains(enchantment.category))
-                    || tags.getTag(additions).contains(enchantment)) && !tags.getTag(exclusions).contains(enchantment);
+            boolean supported = supportedItems.stream().anyMatch(enchantment::isSupportedItem);
+            return (supported || tags.getTag(additions).contains(enchantment)) && !tags.getTag(exclusions).contains(enchantment);
         }
+    }
+
+    private static List<ItemStack> items(Item... items) {
+        return Arrays.stream(items).map(ItemStack::new).toList();
+    }
+
+    public static Holder<Enchantment> getHolder(Enchantment enchantment) {
+        ResourceLocation key = requireEnchantmentKey(enchantment);
+        return getRegistryLookup().getOrThrow(ResourceKey.create(Registries.ENCHANTMENT, key));
+    }
+
+    public static Stream<Holder.Reference<Enchantment>> getRegisteredEnchantments() {
+        return getRegistryLookup().listElements();
+    }
+
+    public static Optional<ResourceLocation> getEnchantmentKey(Enchantment enchantment) {
+        Optional<ResourceLocation> key = Optional.ofNullable(ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+        return key.isPresent() ? key : findEnchantmentKey(enchantment);
+    }
+
+    public static Optional<ResourceLocation> getEnchantmentKey(Holder<Enchantment> enchantment) {
+        Optional<ResourceLocation> key = enchantment.unwrapKey().map(ResourceKey::location);
+        return key.isPresent() ? key : getEnchantmentKey(enchantment.value());
+    }
+
+    private static Optional<ResourceLocation> findEnchantmentKey(Enchantment enchantment) {
+        HolderLookup.RegistryLookup<Enchantment> lookup = CommonHooks.resolveLookup(Registries.ENCHANTMENT);
+        if (lookup == null) {
+            return Optional.empty();
+        }
+
+        return lookup.listElements()
+                .filter(holder -> holder.value() == enchantment || holder.value().equals(enchantment))
+                .findFirst()
+                .map(holder -> holder.key().location());
+    }
+
+    private static ResourceLocation requireEnchantmentKey(Enchantment enchantment) {
+        return getEnchantmentKey(enchantment)
+                .orElseThrow(() -> new IllegalStateException("Unregistered enchantment: " + enchantment));
+    }
+
+    private static ResourceLocation requireEnchantmentKey(Holder<Enchantment> enchantment) {
+        return getEnchantmentKey(enchantment)
+                .orElseThrow(() -> new IllegalStateException("Unregistered enchantment: " + enchantment));
+    }
+
+    private static HolderLookup.RegistryLookup<Enchantment> getRegistryLookup() {
+        return Objects.requireNonNull(CommonHooks.resolveLookup(Registries.ENCHANTMENT), "Enchantment registry lookup unavailable");
     }
 }

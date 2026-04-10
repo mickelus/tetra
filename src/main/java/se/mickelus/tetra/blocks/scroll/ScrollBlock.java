@@ -6,7 +6,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -34,7 +36,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class ScrollBlock extends TetraBlock implements EntityBlock, ISchematicProviderBlock, ICraftingEffectProviderBlock {
-    public static final ResourceLocation scrollDynamicDropId = new ResourceLocation("tetra:scroll");
+    public static final ResourceLocation scrollDynamicDropId = ResourceLocation.parse("tetra:scroll");
     public static final SoundType sound = new SoundType(0.8F, 1.3F, SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN,
             SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN, SoundEvents.BOOK_PAGE_TURN);
     private final Arrangement arrangement;
@@ -73,16 +75,29 @@ public class ScrollBlock extends TetraBlock implements EntityBlock, ISchematicPr
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (arrangement == Arrangement.open) {
             BlockState offsetState = world.getBlockState(pos.below());
 
             if (offsetState.getBlock() instanceof AbstractWorkbenchBlock) {
-                return offsetState.use(world, player, hand, new BlockHitResult(Vec3.ZERO, Direction.UP, pos.below(), true));
+                return offsetState.useItemOn(stack, world, player, hand, new BlockHitResult(Vec3.ZERO, Direction.UP, pos.below(), true));
             }
         }
 
-        return super.use(state, world, pos, player, hand, hit);
+        return super.useItemOn(stack, state, world, pos, player, hand, hit);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (arrangement == Arrangement.open) {
+            BlockState offsetState = world.getBlockState(pos.below());
+
+            if (offsetState.getBlock() instanceof AbstractWorkbenchBlock) {
+                return offsetState.useWithoutItem(world, player, new BlockHitResult(Vec3.ZERO, Direction.UP, pos.below(), true));
+            }
+        }
+
+        return super.useWithoutItem(state, world, pos, player, hit);
     }
 
     @Override
@@ -130,7 +145,7 @@ public class ScrollBlock extends TetraBlock implements EntityBlock, ISchematicPr
                     Arrays.stream(tile.getItemTags())
                             .map(nbt -> {
                                 ItemStack itemStack = new ItemStack(ScrollItem.instance);
-                                itemStack.addTagElement("BlockEntityTag", nbt);
+                                BlockItem.setBlockEntityData(itemStack, ScrollTile.type, nbt);
                                 return itemStack;
                             })
                             .forEach(consumer)

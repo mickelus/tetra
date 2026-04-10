@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.rack;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -19,13 +20,14 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.ItemHandlerBlockEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class RackTile extends BlockEntity {
+public class RackTile extends BlockEntity implements ItemHandlerBlockEntity {
     public static final String unlocalizedName = "rack";
     public static final int inventorySize = 2;
     private static final String inventoryKey = "inv";
@@ -43,12 +45,16 @@ public class RackTile extends BlockEntity {
     }
 
     @Nonnull
-    @Override
     public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return handler.cast();
         }
-        return super.getCapability(cap, side);
+        return LazyOptional.empty();
+    }
+
+    @Override
+    public net.neoforged.neoforge.items.IItemHandler getItemHandler(@Nullable Direction side) {
+        return handler.orElse(null);
     }
 
     public void slotInteract(int slot, Player playerEntity, InteractionHand hand) {
@@ -70,7 +76,6 @@ public class RackTile extends BlockEntity {
         });
     }
 
-    @Override
     public AABB getRenderBoundingBox() {
         return Shapes.block().bounds().move(worldPosition);
     }
@@ -82,26 +87,28 @@ public class RackTile extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+        if (pkt.getTag() != null) {
+            loadWithComponents(pkt.getTag(), lookupProvider);
+        }
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
 
-        handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
+        handler.ifPresent(handler -> handler.deserializeNBT(registries, compound.getCompound(inventoryKey)));
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
 
-        handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
+        handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT(registries)));
     }
 }

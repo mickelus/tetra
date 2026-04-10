@@ -70,7 +70,7 @@ public class ItemUpgradeRegistry {
     }
 
     public ItemModule getModule(String key) {
-        return ModuleRegistry.instance.getModule(new ResourceLocation(TetraMod.MOD_ID, key));
+        return ModuleRegistry.instance.getModule(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, key));
     }
 
     public Collection<ItemModule> getAllModules() {

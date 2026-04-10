@@ -1,0 +1,47 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "minecraft:block_entity_data": {
+                    "data": [
+                        {
+                            "material": 1,
+                            "ribbon": "faf396"
+                        }
+                    ]
+                }
+            },
+            "id": "tetra:scroll_rolled"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_howling.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_howling.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "sword/howling"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "replace": false,
+    "values": [
+        "tetra:forged_pillar",
+        "tetra:forged_platform",
+        "tetra:forged_platform_slab",
+        "tetra:forged_wall",
+        "tetra:forged_vent",
+        "tetra:forged_crate",
+        "tetra:forged_container",
+        "tetra:hammer_base",
+        "tetra:hammer_head",
+        "tetra:forged_workbench",
+        "tetra:transfer_unit",
+        "tetra:core_extractor",
+        "tetra:extractor_piston",
+        "tetra:extractor_pipe"
+    ]
+}

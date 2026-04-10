@@ -10,9 +10,9 @@ import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraftforge.client.model.SeparateTransformsModel;
-import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
-import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
+import net.neoforged.neoforge.client.model.SeparateTransformsModel;
+import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
+import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -27,12 +27,12 @@ public class TetraSeparateTransformsModel implements IUnbakedGeometry<TetraSepar
     }
 
     @Override
-    public BakedModel bake(IGeometryBakingContext context, ModelBaker bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
+    public BakedModel bake(IGeometryBakingContext context, ModelBaker bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides) {
         return new SeparateTransformsModel.Baked(
                 context.useAmbientOcclusion(), context.isGui3d(), context.useBlockLight(),
                 spriteGetter.apply(context.getMaterial("particle")), overrides,
-                baseModel.bake(context, bakery, spriteGetter, modelState, overrides, modelLocation),
-                ImmutableMap.copyOf(Maps.transformValues(contextModels, value -> value.bake(context, bakery, spriteGetter, modelState, overrides, modelLocation)))
+                baseModel.bake(context, bakery, spriteGetter, modelState, overrides),
+                ImmutableMap.copyOf(Maps.transformValues(contextModels, value -> value.bake(context, bakery, spriteGetter, modelState, overrides)))
         );
     }
 }

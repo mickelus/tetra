@@ -1,0 +1,47 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "minecraft:block_entity_data": {
+                    "data": [
+                        {
+                            "material": 2,
+                            "ribbon": "8559b3"
+                        }
+                    ]
+                }
+            },
+            "id": "tetra:scroll_rolled"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_warforge.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_warforge.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "details": "warforge"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

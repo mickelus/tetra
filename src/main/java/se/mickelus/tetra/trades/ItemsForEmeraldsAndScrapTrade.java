@@ -5,11 +5,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ItemLike;
 import se.mickelus.tetra.items.forged.MetalScrapItem;
 
 import javax.annotation.Nullable;
+
+import java.util.Optional;
 
 class ItemsForEmeraldsAndScrapTrade implements VillagerTrades.ItemListing {
     private final ItemStack sellingItem;
@@ -34,7 +37,7 @@ class ItemsForEmeraldsAndScrapTrade implements VillagerTrades.ItemListing {
     @Nullable
     @Override
     public MerchantOffer getOffer(Entity trader, RandomSource rand) {
-        return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCount), new ItemStack(MetalScrapItem.instance.get(), this.scrapCount),
+        return new MerchantOffer(new ItemCost(Items.EMERALD, this.emeraldCount), Optional.of(new ItemCost(MetalScrapItem.instance.get(), this.scrapCount)),
                 new ItemStack(this.sellingItem.getItem(), this.sellingItemCount), this.maxUses, this.xpValue, this.priceMultiplier);
     }
 }

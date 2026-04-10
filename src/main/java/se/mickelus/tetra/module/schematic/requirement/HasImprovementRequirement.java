@@ -2,8 +2,8 @@ package se.mickelus.tetra.module.schematic.requirement;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.schematic.CraftingContext;

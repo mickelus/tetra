@@ -11,7 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
+import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -31,7 +32,7 @@ public class SpawnEffectCloudOutcome implements CraftingEffectOutcome {
 
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
-            ItemStack[] preMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState,
+            ItemStack[] preMaterials, Map<ItemAbility, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState,
             boolean consumeResources, ItemStack[] postMaterials, float severity) {
         if (consumeResources && !world.isClientSide() && world.getRandom().nextFloat() < chance) {
             Vec3 spawnPos = randomOriginDistance > 0
@@ -46,7 +47,7 @@ public class SpawnEffectCloudOutcome implements CraftingEffectOutcome {
             cloud.setWaitTime(waitTime);
             cloud.setRadiusPerTick(radiusChange);
 
-            MobEffectInstance effectInstance = new MobEffectInstance(effect, duration, amplifier, false, true);
+            MobEffectInstance effectInstance = new MobEffectInstance(EffectHelper.effectHolder(effect), duration, amplifier, false, true);
             cloud.addEffect(effectInstance);
 
             world.addFreshEntity(cloud);

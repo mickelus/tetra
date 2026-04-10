@@ -47,7 +47,7 @@ public class GlyphData {
     }
 
     public GlyphData(String texture, int textureX, int textureY) {
-        this(new ResourceLocation(TetraMod.MOD_ID, texture), textureX, textureY);
+        this(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, texture), textureX, textureY);
     }
 
     public GlyphData(ResourceLocation textureLocation, int textureX, int textureY, int tint) {

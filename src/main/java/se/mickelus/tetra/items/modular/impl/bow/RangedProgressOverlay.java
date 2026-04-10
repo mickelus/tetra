@@ -3,10 +3,10 @@ package se.mickelus.tetra.items.modular.impl.bow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
+import net.neoforged.bus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -22,8 +22,8 @@ public class RangedProgressOverlay implements IGuiOverlay {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (TickEvent.Phase.END == event.phase && mc.player != null) {
+    public void onClientTick(ClientTickEvent.Post event) {
+        if (mc.player != null) {
             ItemStack activeStack = mc.player.getUseItem();
 
             if (activeStack.getItem() instanceof ModularBowItem) {

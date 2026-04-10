@@ -1,11 +1,11 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiString;
 import se.mickelus.mutil.gui.GuiStringOutline;
 import se.mickelus.mutil.gui.GuiTexture;
-import se.mickelus.tetra.client.ToolActionIconStore;
+import se.mickelus.tetra.client.ItemAbilityIconStore;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.data.GlyphData;
 
@@ -18,11 +18,11 @@ public class GuiTool extends GuiElement {
     private final GuiString levelIndicator;
 
     protected GuiElement iconContainer;
-    protected ToolAction toolAction;
+    protected ItemAbility toolAction;
 
     private GlyphData fallback = new GlyphData(GuiTextures.toolActions, 240, 0);
 
-    public GuiTool(int x, int y, ToolAction toolAction) {
+    public GuiTool(int x, int y, ItemAbility toolAction) {
         super(x, y, width, 16);
         this.toolAction = toolAction;
 
@@ -45,11 +45,11 @@ public class GuiTool extends GuiElement {
 
     protected void updateIcon() {
         iconContainer.clearChildren();
-        GlyphData glyph = Optional.ofNullable(ToolActionIconStore.instance.getIcon(toolAction)).orElse(fallback);
+        GlyphData glyph = Optional.ofNullable(ItemAbilityIconStore.instance.getIcon(toolAction)).orElse(fallback);
         iconContainer.addChild(new GuiTexture(0, 0, 16, 16, glyph.textureX, glyph.textureY, glyph.textureLocation));
     }
 
-    public ToolAction getToolAction() {
+    public ItemAbility getItemAbility() {
         return toolAction;
     }
 }

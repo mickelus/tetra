@@ -6,6 +6,8 @@ import com.google.common.collect.Multimaps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -18,9 +20,11 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -30,6 +34,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -42,16 +47,16 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.TierSortingRegistry;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.effect.data.DataEffectsHandler;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
@@ -63,7 +68,7 @@ import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.util.TierHelper;
-import se.mickelus.tetra.util.ToolActionHelper;
+import se.mickelus.tetra.util.ItemAbilityHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -72,7 +77,7 @@ import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 public class ItemModularHandheld extends ModularItem {
-    public static final TagKey<Block> nailedTag = BlockTags.create(new ResourceLocation("tetra", "nailed"));
+    public static final TagKey<Block> nailedTag = BlockTags.create(ResourceLocation.fromNamespaceAndPath("tetra", "nailed"));
     // if the blocking level exceeds this value the item has an infinite blocking duration
     public static final int blockingDurationLimit = 16;
     static final ChargedAbilityEffect[] abilities = new ChargedAbilityEffect[] {
@@ -202,8 +207,9 @@ public class ItemModularHandheld extends ModularItem {
         if (!world.isClientSide) {
             int intuitLevel = getEffectLevel(itemStack, ItemEffect.intuit);
             if (intuitLevel > 0) {
-                int xp = state.getExpDrop(world, world.getRandom(), pos, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, itemStack),
-                        EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack));
+                ServerLevel serverLevel = (ServerLevel) world;
+                int xp = EnchantmentHelper.processBlockExperience(serverLevel, itemStack,
+                        state.getExpDrop(serverLevel, pos, world.getBlockEntity(pos), entity, itemStack));
                 if (xp > 0) {
                     tickHoningProgression(entity, itemStack, xp * intuitLevel);
                 }
@@ -276,25 +282,25 @@ public class ItemModularHandheld extends ModularItem {
         boolean canChannel = getUseDuration(itemStack) > 0;
         if (!canChannel || player.isCrouching()) {
             ToolData toolData = getToolData(itemStack);
-            Collection<ToolAction> tools = toolData.getValues().stream()
+            Collection<ItemAbility> tools = toolData.getValues().stream()
                     .filter(tool -> toolData.getLevel(tool) > 0)
-                    .sorted(player.isCrouching() ? Comparator.comparing(ToolAction::name).reversed() : Comparator.comparing(ToolAction::name))
+                    .sorted(player.isCrouching() ? Comparator.comparing(ItemAbility::name).reversed() : Comparator.comparing(ItemAbility::name))
                     .collect(Collectors.toList());
 
-            for (ToolAction tool : tools) {
+            for (ItemAbility tool : tools) {
                 BlockState block = blockState.getToolModifiedState(context, tool, false);
                 if (block != null) {
-                    if (ToolActions.AXE_STRIP.equals(tool)) {
+                    if (ItemAbilities.AXE_STRIP.equals(tool)) {
                         world.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    } else if (ToolActions.AXE_SCRAPE.equals(tool)) {
+                    } else if (ItemAbilities.AXE_SCRAPE.equals(tool)) {
                         world.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
                         world.levelEvent(player, 3005, pos, 0);
-                    } else if (ToolActions.AXE_WAX_OFF.equals(tool)) {
+                    } else if (ItemAbilities.AXE_WAX_OFF.equals(tool)) {
                         world.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
                         world.levelEvent(player, 3005, pos, 0);
-                    } else if (ToolActions.HOE_DIG.equals(tool)) {
+                    } else if (ItemAbilities.HOE_DIG.equals(tool)) {
                         world.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    } else if (ToolActions.SHOVEL_DIG.equals(tool)) {
+                    } else if (ItemAbilities.SHOVEL_DIG.equals(tool)) {
                         world.playSound(player, pos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
                     } else {
                         SoundEvent sound = blockState.getSoundType(world, pos, player).getHitSound();
@@ -311,7 +317,7 @@ public class ItemModularHandheld extends ModularItem {
                 }
             }
 
-            if (tools.contains(TetraToolActions.dowse)) {
+            if (tools.contains(TetraItemAbilities.dowse)) {
                 if (dowseBlock(player, world, blockState, pos)) {
                     applyDamage(blockDestroyDamage, itemStack, player);
                     applyUsageEffects(player, itemStack, 2);
@@ -438,28 +444,28 @@ public class ItemModularHandheld extends ModularItem {
      */
     public AbilityUseResult hitEntity(ItemStack itemStack, Player player, LivingEntity target, double damageMultiplier, double damageBonus,
             float knockbackBase, float knockbackMultiplier) {
-        float targetModifier = EnchantmentHelper.getDamageBonus(itemStack, target.getMobType());
+        DamageSource damageSource = player.damageSources().playerAttack(player);
         float critMultiplier = Optional.ofNullable(ForgeHooks.getCriticalHit(player, target, false, 1.5f))
-                .map(CriticalHitEvent::getDamageModifier)
+                .map(CriticalHitEvent::getDamageMultiplier)
                 .orElse(1f);
 
-        double damage = (1 + getAbilityBaseDamage(player, itemStack) + targetModifier) * critMultiplier * damageMultiplier + damageBonus;
+        float baseDamage = (float) ((1 + getAbilityBaseDamage(player, itemStack)) * critMultiplier * damageMultiplier + damageBonus);
+        float targetModifier = EffectHelper.getEnchantmentDamageBonus(itemStack, player, target, damageSource, baseDamage);
+        float damage = baseDamage + targetModifier;
 
-        boolean success = target.hurt(player.damageSources().playerAttack(player), (float) damage);
+        boolean success = target.hurt(damageSource, damage);
         if (success) {
-            // applies enchantment effects on both parties
-            EnchantmentHelper.doPostHurtEffects(target, player);
             EffectHelper.applyEnchantmentHitEffects(itemStack, target, player);
 
             // tetra item effects
             ItemEffectHandler.applyHitEffects(itemStack, target, player);
 
             // knocks back the target based on effect level + knockback enchantment level
-            float knockbackFactor = knockbackBase + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
+            float knockbackFactor = knockbackBase + EffectHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
             target.knockback(knockbackFactor * knockbackMultiplier,
                     player.getX() - target.getX(), player.getZ() - target.getZ());
 
-            if (targetModifier > 1) {
+            if (targetModifier > 0) {
                 player.magicCrit(target);
                 return AbilityUseResult.magicCrit;
             }
@@ -494,7 +500,7 @@ public class ItemModularHandheld extends ModularItem {
             // stuns the target if bash efficiency is > 0
             double stunDuration = getEffectEfficiency(itemStack, ItemEffect.bashing);
             if (stunDuration > 0) {
-                target.addEffect(new MobEffectInstance(StunPotionEffect.instance, (int) Math.round(stunDuration * 20), 0, false, false));
+                target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(StunPotionEffect.instance), (int) Math.round(stunDuration * 20), 0, false, false));
             }
 
             player.getCommandSenderWorld().playSound(player, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.PLAYERS, 1, 0.7f);
@@ -523,7 +529,7 @@ public class ItemModularHandheld extends ModularItem {
             world.addFreshEntity(projectileEntity);
 
             if (this instanceof ModularSingleHeadedItem) {
-                world.playSound(null, projectileEntity, SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);
+                world.playSound(null, projectileEntity, SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 1.0F, 1.0F);
             } else if (this instanceof ModularShieldItem) {
                 world.playSound(null, projectileEntity, SoundEvents.DISPENSER_LAUNCH, SoundSource.PLAYERS, 1.0F, 2F);
             } else {
@@ -548,18 +554,18 @@ public class ItemModularHandheld extends ModularItem {
         y = y * velocityMultiplier;
         z = z * velocityMultiplier;
         player.push(x, y, z);
-        player.startAutoSpinAttack(20);
+        player.startAutoSpinAttack(20, 8.0F, player.getUseItem());
         if (player.onGround()) {
             player.move(MoverType.SELF, new Vec3(0, 1.1999999, 0));
         }
 
         SoundEvent soundEvent;
         if (riptideLevel >= 3) {
-            soundEvent = SoundEvents.TRIDENT_RIPTIDE_3;
+            soundEvent = SoundEvents.TRIDENT_RIPTIDE_3.value();
         } else if (riptideLevel == 2) {
-            soundEvent = SoundEvents.TRIDENT_RIPTIDE_2;
+            soundEvent = SoundEvents.TRIDENT_RIPTIDE_2.value();
         } else {
-            soundEvent = SoundEvents.TRIDENT_RIPTIDE_1;
+            soundEvent = SoundEvents.TRIDENT_RIPTIDE_1.value();
         }
         player.level().playSound(null, player, soundEvent, SoundSource.PLAYERS, 1.0F, 1.0F);
 
@@ -618,7 +624,7 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         if (getEffectLevel(stack, ItemEffect.throwable) > 0
-                || EnchantmentHelper.getRiptide(stack) > 0) {
+                || EffectHelper.getEnchantmentLevel(Enchantments.RIPTIDE, stack) > 0) {
             return UseAnim.SPEAR;
         }
 
@@ -681,6 +687,10 @@ public class ItemModularHandheld extends ModularItem {
      * How long it takes to use this item (or how long it can be held at max)
      */
     @Override
+    public int getUseDuration(ItemStack itemStack, LivingEntity entity) {
+        return getUseDuration(itemStack);
+    }
+
     public int getUseDuration(ItemStack itemStack) {
         int blockingLevel = getEffectLevel(itemStack, ItemEffect.blocking);
         if (blockingLevel > 0) {
@@ -689,7 +699,7 @@ public class ItemModularHandheld extends ModularItem {
         }
 
         if (getEffectLevel(itemStack, ItemEffect.throwable) > 0
-                || EnchantmentHelper.getRiptide(itemStack) > 0
+                || EffectHelper.getEnchantmentLevel(Enchantments.RIPTIDE, itemStack) > 0
                 || Arrays.stream(abilities).anyMatch(ability -> ability.isAvailable(this, itemStack))) {
             return 72000;
         }
@@ -734,7 +744,7 @@ public class ItemModularHandheld extends ModularItem {
             double cooldownBase = getCooldownBase(itemStack);
             int blockingLevel = getEffectLevel(itemStack, ItemEffect.blocking);
             int throwingLevel = getEffectLevel(itemStack, ItemEffect.throwable);
-            int riptideLevel = EnchantmentHelper.getRiptide(itemStack);
+            int riptideLevel = EffectHelper.getEnchantmentLevel(Enchantments.RIPTIDE, itemStack);
 
             if (blockingLevel > 0) {
                 double blockingCooldown = getEffectEfficiency(itemStack, ItemEffect.blocking);
@@ -836,36 +846,31 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack itemStack) {
+    public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack itemStack) {
         if (isBroken(itemStack)) {
-            return AttributeHelper.emptyMap;
+            return ItemAttributeModifiers.EMPTY;
         }
 
-        if (slot == EquipmentSlot.MAINHAND) {
-            return getAttributeModifiersCached(itemStack).entries().stream()
-                    .filter(entry -> isMainhandAllowedAttribute(entry.getKey()))
-                    .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
-        }
-
-        if (slot == EquipmentSlot.OFFHAND) {
-            return getAttributeModifiersCached(itemStack).entries().stream()
-                    .filter(entry -> isOffhandAllowedAttribute(entry.getKey()))
-                    .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
-        }
-
-        return AttributeHelper.emptyMap;
+        ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+        getAttributeModifiersCached(itemStack).forEach((attribute, modifier) -> {
+            if (isMainhandAllowedAttribute(attribute)) {
+                EquipmentSlotGroup slotGroup = isOffhandAllowedAttribute(attribute) ? EquipmentSlotGroup.HAND : EquipmentSlotGroup.MAINHAND;
+                builder.add(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute), modifier, slotGroup);
+            }
+        });
+        return builder.build();
     }
 
     public double getAbilityBaseDamage(@Nullable LivingEntity entity, ItemStack itemStack) {
         if (entity != null) {
             AttributeInstance entityInstance = entity.getAttribute(Attributes.ATTACK_DAMAGE);
             if (entityInstance != null) {
-                return AttributeHelper.calculateValue(Attributes.ATTACK_DAMAGE, entityInstance.getModifiers(),
-                        getAttributeModifiersCached(itemStack).get(Attributes.ATTACK_DAMAGE));
+                return AttributeHelper.calculateValue(Attributes.ATTACK_DAMAGE.value(), entityInstance.getModifiers(),
+                        getAttributeModifiersCached(itemStack).get(Attributes.ATTACK_DAMAGE.value()));
             }
         }
         // +1 so that this equals the base damage of the item, including the players base attack damage
-        return getAttributeValue(itemStack, Attributes.ATTACK_DAMAGE) + 1;
+        return getAttributeValue(itemStack, Attributes.ATTACK_DAMAGE.value()) + 1;
     }
 
     @Override
@@ -874,8 +879,8 @@ public class ItemModularHandheld extends ModularItem {
 
         Optional.of(getCounterWeightBonus(itemStack))
                 .filter(bonus -> bonus > 0)
-                .map(bonus -> new AttributeModifier("counterweight", bonus, AttributeModifier.Operation.ADDITION))
-                .ifPresent(modifier -> result.put(Attributes.ATTACK_SPEED, modifier));
+                .map(bonus -> new AttributeModifier(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "counterweight"), bonus, AttributeModifier.Operation.ADD_VALUE))
+                .ifPresent(modifier -> result.put(Attributes.ATTACK_SPEED.value(), modifier));
 
         return result;
     }
@@ -898,10 +903,10 @@ public class ItemModularHandheld extends ModularItem {
      */
     public double getCooldownBase(ItemStack itemStack) {
         // base value for player attack speed is 4
-        return 1 / Math.max(0.1, getAttributeValue(itemStack, Attributes.ATTACK_SPEED, 4) + getCounterWeightBonus(itemStack));
+        return 1 / Math.max(0.1, getAttributeValue(itemStack, Attributes.ATTACK_SPEED.value(), 4) + getCounterWeightBonus(itemStack));
     }
 
-    public Set<ToolAction> getToolActions(ItemStack stack) {
+    public Set<ItemAbility> getItemAbilities(ItemStack stack) {
         if (!isBroken(stack)) {
             return getToolLevels(stack).entrySet().stream().filter(entry -> entry.getValue() > 0)
                     .map(Map.Entry::getKey)
@@ -911,18 +916,18 @@ public class ItemModularHandheld extends ModularItem {
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-        if (getToolActions(stack).contains(toolAction)) {
+    public boolean canPerformAction(ItemStack stack, ItemAbility toolAction) {
+        if (getItemAbilities(stack).contains(toolAction)) {
             return true;
         }
-        if (ToolActions.DEFAULT_SHIELD_ACTIONS.contains(toolAction) && isShield(stack)) {
+        if (ItemAbilities.DEFAULT_SHIELD_ACTIONS.contains(toolAction) && isShield(stack)) {
             return true;
         }
 
         return super.canPerformAction(stack, toolAction);
     }
 
-    public int getHarvestTier(ItemStack stack, ToolAction tool) {
+    public int getHarvestTier(ItemStack stack, ItemAbility tool) {
         if (!isBroken(stack)) {
             int toolTier = getToolLevel(stack, tool);
             if (toolTier > 0) {
@@ -938,7 +943,7 @@ public class ItemModularHandheld extends ModularItem {
             return true;
         }
 
-        return ToolActionHelper.getAppropriateTools(state).stream()
+        return ItemAbilityHelper.getAppropriateTools(state).stream()
                 .map(requiredTool -> getHarvestTier(stack, requiredTool))
                 .map(TierHelper::getTier)
                 .filter(Objects::nonNull)
@@ -948,8 +953,8 @@ public class ItemModularHandheld extends ModularItem {
     @Override
     public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
         if (!isBroken(itemStack)) {
-            float speed = (float) getAttackSpeedHarvestModifier(getAttributeValue(itemStack, Attributes.ATTACK_SPEED, 4));
-            Set<ToolAction> appropriateTools = ToolActionHelper.getAppropriateTools(blockState);
+            float speed = (float) getAttackSpeedHarvestModifier(getAttributeValue(itemStack, Attributes.ATTACK_SPEED.value(), 4));
+            Set<ItemAbility> appropriateTools = ItemAbilityHelper.getAppropriateTools(blockState);
 
             if (!appropriateTools.isEmpty()) {
                 speed *= (float) appropriateTools.stream()
@@ -957,19 +962,19 @@ public class ItemModularHandheld extends ModularItem {
                         .max()
                         .orElse(0f);
             } else {
-                speed *= getToolActions(itemStack).stream()
-                        .filter(toolAction -> ToolActionHelper.isEffectiveOn(toolAction, blockState))
+                speed *= getItemAbilities(itemStack).stream()
+                        .filter(toolAction -> ItemAbilityHelper.isEffectiveOn(toolAction, blockState))
                         .map(toolAction -> getToolEfficiency(itemStack, toolAction))
                         .max(Comparator.naturalOrder())
                         .orElse(0f);
             }
 
-            if (getToolLevel(itemStack, TetraToolActions.cut) > 0) {
-                if (blockState.is(ToolActionHelper.swordVeryEfficient)) {
+            if (getToolLevel(itemStack, TetraItemAbilities.cut) > 0) {
+                if (blockState.is(ItemAbilityHelper.swordVeryEfficient)) {
                     speed *= 10;
                 }
 
-                if (blockState.is(ToolActionHelper.swordInstamine)) {
+                if (blockState.is(ItemAbilityHelper.swordInstamine)) {
                     speed = 30;
                 }
             }
@@ -984,7 +989,7 @@ public class ItemModularHandheld extends ModularItem {
 
     @Override
     public ItemStack onCraftConsume(ItemStack providerStack, ItemStack targetStack, Player player,
-            ToolAction tool, int toolLevel, boolean consumeResources) {
+            ItemAbility tool, int toolLevel, boolean consumeResources) {
         if (consumeResources) {
             applyDamage(toolLevel, providerStack, player);
 
@@ -996,7 +1001,7 @@ public class ItemModularHandheld extends ModularItem {
 
     @Override
     public ItemStack onActionConsume(ItemStack providerStack, ItemStack targetStack, Player player,
-            ToolAction tool, int toolLevel, boolean consumeResources) {
+            ItemAbility tool, int toolLevel, boolean consumeResources) {
         if (consumeResources) {
             applyDamage(toolLevel, providerStack, player);
 

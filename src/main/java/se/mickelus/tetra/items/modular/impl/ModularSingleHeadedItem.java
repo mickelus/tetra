@@ -2,8 +2,8 @@ package se.mickelus.tetra.items.modular.impl;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.ConfigHandler;
@@ -35,6 +35,7 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
 
     public ModularSingleHeadedItem() {
         super(new Properties().stacksTo(1).fireResistant());
+        instance = this;
 
         entityHitDamage = 1;
 
@@ -43,7 +44,7 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
 
         requiredModules = new String[] { handleKey, headKey };
 
-        updateConfig(ConfigHandler.honeSingleBase.get(), ConfigHandler.honeSingleIntegrityMultiplier.get());
+        updateConfig(ConfigHandler.HONE_SINGLE_BASE_DEFAULT, ConfigHandler.HONE_SINGLE_INTEGRITY_MULTIPLIER_DEFAULT);
 
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
@@ -90,5 +91,4 @@ public class ModularSingleHeadedItem extends ItemModularHandheld {
         return minorOffsets;
     }
 }
-
 

@@ -43,7 +43,7 @@ public class SchematicRegistry {
     }
 
     public static UpgradeSchematic getSchematic(String key) {
-        return getSchematic(new ResourceLocation(TetraMod.MOD_ID, key));
+        return getSchematic(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, key));
     }
 
     public static Collection<UpgradeSchematic> getAllSchematics() {
@@ -93,7 +93,7 @@ public class SchematicRegistry {
      * @param schematic
      */
     public void registerSchematic(UpgradeSchematic schematic) {
-        dynamicSchematics.put(new ResourceLocation(TetraMod.MOD_ID, schematic.getKey()), schematic);
+        dynamicSchematics.put(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, schematic.getKey()), schematic);
     }
 
     private void setupSchematics(Map<ResourceLocation, SchematicDefinition> data) {
@@ -131,7 +131,7 @@ public class SchematicRegistry {
             ArrayList<Pair<ResourceLocation, ConfigSchematic>> result = new ArrayList<>(definition.slots.length);
             for (int i = 0; i < definition.slots.length; i++) {
                 try {
-                    ResourceLocation suffixedIdentifier = new ResourceLocation(
+                    ResourceLocation suffixedIdentifier = ResourceLocation.fromNamespaceAndPath(
                             identifier.getNamespace(), identifier.getPath() + definition.keySuffixes[i]);
 
                     result.add(new ImmutablePair<>(suffixedIdentifier,

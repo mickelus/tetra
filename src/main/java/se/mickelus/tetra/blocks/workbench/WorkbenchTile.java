@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.workbench;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -18,7 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
@@ -30,6 +31,7 @@ import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
+import se.mickelus.tetra.blocks.ItemHandlerBlockEntity;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.workbench.action.ConfigAction;
 import se.mickelus.tetra.blocks.workbench.action.RepairAction;
@@ -53,7 +55,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ParametersAreNonnullByDefault
-public class WorkbenchTile extends BlockEntity implements MenuProvider {
+public class WorkbenchTile extends BlockEntity implements MenuProvider, ItemHandlerBlockEntity {
     public static final String identifier = "workbench";
     public static final int inventorySlots = 4;
     public static final int maxMaterialSlots = inventorySlots - 1;
@@ -78,12 +80,14 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
         handler = LazyOptional.of(this::createHandler);
     }
 
-    public static void init(PacketHandler packetHandler) {
-        packetHandler.registerPacket(WorkbenchPacketUpdate.class, WorkbenchPacketUpdate::new);
-        packetHandler.registerPacket(WorkbenchPacketCraft.class, WorkbenchPacketCraft::new);
-        packetHandler.registerPacket(WorkbenchActionPacket.class, WorkbenchActionPacket::new);
-        packetHandler.registerPacket(WorkbenchPacketTweak.class, WorkbenchPacketTweak::new);
+    public static void registerPackets(PacketHandler packetHandler) {
+        packetHandler.registerServerBoundPacket(WorkbenchPacketUpdate.class, WorkbenchPacketUpdate::new);
+        packetHandler.registerServerBoundPacket(WorkbenchPacketCraft.class, WorkbenchPacketCraft::new);
+        packetHandler.registerServerBoundPacket(WorkbenchActionPacket.class, WorkbenchActionPacket::new);
+        packetHandler.registerServerBoundPacket(WorkbenchPacketTweak.class, WorkbenchPacketTweak::new);
+    }
 
+    public static void init() {
         DataManager.instance.actionData.onReload(() -> {
             WorkbenchAction[] configActions = DataManager.instance.actionData.getData().values().stream()
                     .flatMap(Arrays::stream).toArray(ConfigAction[]::new);
@@ -95,7 +99,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     /**
      * applies crafting tool effects in the following order: inventory, toolbelt, nearby blocks
      */
-    public static ItemStack consumeCraftingToolEffects(ItemStack upgradedStack, String slot, boolean isReplacing, ToolAction tool, int level,
+    public static ItemStack consumeCraftingToolEffects(ItemStack upgradedStack, String slot, boolean isReplacing, ItemAbility tool, int level,
             Player player, Level world, BlockPos pos, BlockState blockState, boolean consumeResources) {
         ItemStack providingStack = PropertyHelper.getPlayerProvidingItemStack(tool, level, player);
         if (!providingStack.isEmpty()) {
@@ -118,7 +122,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     }
 
     public static ItemStack applyCraftingBonusEffects(ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
-            ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ToolAction, Integer> tools, UpgradeSchematic schematic,
+            ItemStack[] preMaterials, ItemStack[] postMaterials, Map<ItemAbility, Integer> tools, UpgradeSchematic schematic,
             Level world, BlockPos pos, BlockState blockState, boolean consumeResources, float severity) {
         ItemStack result = upgradedStack.copy();
         ResourceLocation[] unlockedEffects = CastOptional.cast(blockState.getBlock(), AbstractWorkbenchBlock.class)
@@ -132,12 +136,16 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     }
 
     @Nonnull
-    @Override
     public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return handler.cast();
         }
-        return super.getCapability(cap, side);
+        return LazyOptional.empty();
+    }
+
+    @Override
+    public net.minecraftforge.items.IItemHandler getItemHandler(@Nullable Direction side) {
+        return handler.orElse(null);
     }
 
     @NotNull
@@ -370,7 +378,7 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
 
         BlockState blockState = getBlockState();
 
-        Map<ToolAction, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, getLevel(), getBlockPos(), blockState);
+        Map<ItemAbility, Integer> availableTools = PropertyHelper.getCombinedToolLevels(player, getLevel(), getBlockPos(), blockState);
 
         ItemStack[] materials = getMaterials();
         ItemStack[] materialsAltered = Arrays.stream(getMaterials()).map(ItemStack::copy).toArray(ItemStack[]::new);
@@ -387,13 +395,13 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
             double durabilityFactor = upgradedStack.isDamageableItem() ? upgradedStack.getDamageValue() * 1d / upgradedStack.getMaxDamage() : 0;
             double honingFactor = Mth.clamp(item.getHoningProgress(upgradedStack) * 1d / item.getHoningLimit(upgradedStack), 0, 1);
 
-            Map<ToolAction, Integer> tools = currentSchematic.getRequiredToolLevels(targetStack, materials);
+            Map<ItemAbility, Integer> tools = currentSchematic.getRequiredToolLevels(targetStack, materials);
 
             upgradedStack = currentSchematic.applyUpgrade(targetStack, materialsAltered, true, currentSlot, player);
 
             upgradedStack = applyCraftingBonusEffects(upgradedStack, currentSlot, willReplace, player, materials, materialsAltered, tools, currentSchematic, level, worldPosition, blockState, true, severity);
 
-            for (Map.Entry<ToolAction, Integer> entry : tools.entrySet()) {
+            for (Map.Entry<ItemAbility, Integer> entry : tools.entrySet()) {
                 upgradedStack = consumeCraftingToolEffects(upgradedStack, currentSlot, willReplace, entry.getKey(), entry.getValue(), player, level, worldPosition, blockState, true);
             }
 
@@ -487,20 +495,22 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+        if (pkt.getTag() != null) {
+            loadWithComponents(pkt.getTag(), lookupProvider);
+        }
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
 
-        handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
+        handler.ifPresent(handler -> handler.deserializeNBT(registries, compound.getCompound(inventoryKey)));
 
         String schematicKey = compound.getString(WorkbenchTile.schematicKey);
         currentSchematic = SchematicRegistry.getSchematic(schematicKey);
@@ -518,10 +528,10 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
 
-        handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
+        handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT(registries)));
 
         if (currentSchematic != null) {
             compound.putString(schematicKey, currentSchematic.getKey());

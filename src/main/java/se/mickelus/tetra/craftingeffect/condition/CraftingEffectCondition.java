@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -19,7 +19,7 @@ public interface CraftingEffectCondition {
     public static final CraftingEffectCondition any = (unlocks, upgradedStack, slot, isReplacing, player, materials, tools, schematic, world, pos, blockState) -> true;
     
     boolean test(ResourceLocation[] unlocks, ItemStack upgradedStack, String slot, boolean isReplacing, Player player, ItemStack[] materials,
-            Map<ToolAction, Integer> tools, UpgradeSchematic schematic, Level world, BlockPos pos, BlockState blockState);
+            Map<ItemAbility, Integer> tools, UpgradeSchematic schematic, Level world, BlockPos pos, BlockState blockState);
 
     class Deserializer implements JsonDeserializer<CraftingEffectCondition> {
         @Override

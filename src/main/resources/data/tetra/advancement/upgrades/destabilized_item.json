@@ -1,0 +1,45 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "minecraft:enchantments": {
+                    "minecraft:sharpness": 4
+                },
+                "minecraft:custom_data": {
+                    "sword/guard": "sword/sturdy_guard",
+                    "EnchantmentMapping": {
+                        "minecraft:sharpness": "sword/blade"
+                    },
+                    "sword/blade": "sword/basic_blade",
+                    "sword/basic_blade_material": "basic_blade/amethyst",
+                    "sword/pommel": "sword/decorative_pommel",
+                    "sword/sturdy_guard_material": "sturdy_guard/shulker_shell",
+                    "sword/basic_hilt_material": "basic_hilt/crimson",
+                    "sword/hilt": "sword/basic_hilt",
+                    "id": "upgrades/destabilized_item",
+                    "sword/blade:blade/hooked": 1,
+                    "sword/blade:blade/tempered": 1,
+                    "sword/decorative_pommel_material": "decorative_pommel/amethyst"
+                }
+            },
+            "id": "tetra:modular_sword"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.destabilized_item.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.destabilized_item.description"
+        }
+    },
+    "parent": "tetra:upgrades/enchant_item",
+    "criteria": {
+        "destabilize": {
+            "trigger": "tetra:destabilize"
+        }
+    },
+    "requirements": [
+        [
+            "destabilize"
+        ]
+    ]
+}

@@ -18,7 +18,7 @@ public class SoundEventDeserializer implements JsonDeserializer<SoundEvent> {
     @Override
     public SoundEvent deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         try {
-            return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(json.getAsString()));
+            return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse(json.getAsString()));
         } catch (JsonParseException e) {
             logger.debug("Failed to parse sound event: {}", json, e);
             return null;

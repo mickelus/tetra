@@ -1,8 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.action;
 
-
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.resources.ResourceLocation;
+import se.mickelus.tetra.data.predicate.TetraItemPredicate;
 import se.mickelus.tetra.module.data.ToolData;
 
 /**
@@ -23,7 +22,7 @@ public abstract class ConfigAction implements WorkbenchAction {
      * Defines if this action can be performed on a given itemstack, if the itemstack matches the predicate then
      * the action is allowed (if the tool requirements are met)
      */
-    public ItemPredicate requirement;
+    public TetraItemPredicate requirement;
 
     /**
      * Defines which tools are required for this action, a map where the tool is the key and the value is the required level.

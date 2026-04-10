@@ -13,9 +13,9 @@ public class FierySelfEffect {
             double fierySelfEfficiency = EffectHelper.getEffectEfficiency(itemStack, ItemEffect.fierySelf);
             if (fierySelfEfficiency > 0) {
                 BlockPos pos = entity.blockPosition();
-                float temperature = entity.level().getBiome(pos).value().getTemperature(pos);
+                float temperature = entity.level().getBiome(pos).value().getBaseTemperature();
                 if (entity.getRandom().nextDouble() < fierySelfEfficiency * temperature * multiplier) {
-                    entity.setSecondsOnFire(EffectHelper.getEffectLevel(itemStack, ItemEffect.fierySelf));
+                    entity.igniteForSeconds(EffectHelper.getEffectLevel(itemStack, ItemEffect.fierySelf));
                 }
             }
         }

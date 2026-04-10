@@ -1,0 +1,47 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "minecraft:custom_data": {
+                    "id": "upgrades/root",
+                    "double/head_left": "double/basic_hammer_left",
+                    "double/basic_hammer_left_material": "basic_hammer/oak",
+                    "double/head_right": "double/basic_hammer_right",
+                    "double/basic_hammer_right_material": "basic_hammer/oak",
+                    "double/handle": "double/basic_handle",
+                    "double/basic_handle_material": "basic_handle/stick"
+                }
+            },
+            "id": "tetra:modular_double"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.root.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.root.description"
+        },
+        "background": "tetra:textures/block/forged_platform.png"
+    },
+    "criteria": {
+        "hammer": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:modular_double"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "rewards": {
+        "recipes": [
+            "tetra:modular_toolbelt"
+        ],
+        "loot": [
+            "tetra:holosphere_reward"
+        ]
+    }
+}

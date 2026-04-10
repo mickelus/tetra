@@ -4,15 +4,16 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
@@ -20,7 +21,6 @@ import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicScrollPacket;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.client.particle.SpawnParticlesPacket;
-import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.crafting.GrindstoneMergeHandler;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.craftingeffect.condition.*;
@@ -63,12 +63,11 @@ import se.mickelus.tetra.module.schematic.requirement.*;
 import se.mickelus.tetra.properties.TetraAttributes;
 import se.mickelus.tetra.trades.TradeHandler;
 import se.mickelus.tetra.util.TierHelper;
-import se.mickelus.tetra.util.ToolActionHelper;
+import se.mickelus.tetra.util.ItemAbilityHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.CompletableFuture;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 @Mod(TetraMod.MOD_ID)
 
 @ParametersAreNonnullByDefault
@@ -79,30 +78,39 @@ public class TetraMod {
     public static TetraMod instance;
     public static PacketHandler packetHandler;
 
-    public TetraMod() {
-        TetraRegistries.init(FMLJavaModLoadingContext.get().getModEventBus());
+    public TetraMod(ModContainer modContainer) {
+        instance = this;
+
+        IEventBus modBus = modContainer.getEventBus();
+        if (modBus == null) {
+            throw new IllegalStateException("Tetra requires a mod event bus");
+        }
+
+        TetraRegistries.init(modBus);
         TetraEnchantmentHelper.init();
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientSetup::init);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            ClientSetup.init(modBus);
+        }
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(CuriosCompat::enqueueIMC);
+        modBus.addListener(this::setup);
+        modBus.addListener(this::registerPayloads);
+        modBus.addListener(this::onGatherData);
+        modBus.addListener(TetraRegistries::registerCapabilities);
+        TetraAttributes.registry.register(modBus);
+        modBus.addListener(TetraAttributes::onEntityAttributeModification);
 
-        TetraAttributes.registry.register(FMLJavaModLoadingContext.get().getModEventBus());
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(TetraAttributes::onEntityAttributeModification);
+        NeoForge.EVENT_BUS.addListener(this::registerCommands);
+        NeoForge.EVENT_BUS.register(new ItemEffectHandler());
+        NeoForge.EVENT_BUS.register(new TradeHandler());
+        NeoForge.EVENT_BUS.register(new DataManager());
+        NeoForge.EVENT_BUS.register(new VibrationDebuffer());
+        NeoForge.EVENT_BUS.register(GrindstoneMergeHandler.class);
+        NeoForge.EVENT_BUS.register(ServerScheduler.class);
 
-        MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new ItemEffectHandler());
-        MinecraftForge.EVENT_BUS.register(new TradeHandler());
-        MinecraftForge.EVENT_BUS.register(new DataManager());
-        MinecraftForge.EVENT_BUS.register(new VibrationDebuffer());
-        MinecraftForge.EVENT_BUS.register(GrindstoneMergeHandler.class);
-        MinecraftForge.EVENT_BUS.register(ServerScheduler.class);
-        MinecraftForge.EVENT_BUS.register(ClientScheduler.class);
-
-        ToolActionHelper.init();
+        ItemAbilityHelper.init();
         TierHelper.init();
 
-        ConfigHandler.setup();
+        ConfigHandler.setup(modContainer);
 
         ModuleModelRegistry.register(GridTextureModelData.TYPE.toString(), GridTextureModelData.class);
         ModuleModelRegistry.register(FilteredGridTextureModelData.TYPE.toString(), FilteredGridTextureModelData.class);
@@ -146,11 +154,11 @@ public class TetraMod {
         ItemUpgradeRegistry.instance.registerReplacementHook(TetraEnchantmentHelper::transferReplacementEnchantments);
 
         ModuleRegistry moduleRegistry = new ModuleRegistry();
-        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_module"), BasicModule::new);
-        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "multi_module"), MultiSlotModule::new);
-        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "basic_major_module"), BasicMajorModule::new);
-        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "multi_major_module"), MultiSlotMajorModule::new);
-        moduleRegistry.registerModuleType(new ResourceLocation(MOD_ID, "toolbelt_module"), ToolbeltModule::new);
+        moduleRegistry.registerModuleType(ResourceLocation.fromNamespaceAndPath(MOD_ID, "basic_module"), BasicModule::new);
+        moduleRegistry.registerModuleType(ResourceLocation.fromNamespaceAndPath(MOD_ID, "multi_module"), MultiSlotModule::new);
+        moduleRegistry.registerModuleType(ResourceLocation.fromNamespaceAndPath(MOD_ID, "basic_major_module"), BasicMajorModule::new);
+        moduleRegistry.registerModuleType(ResourceLocation.fromNamespaceAndPath(MOD_ID, "multi_major_module"), MultiSlotMajorModule::new);
+        moduleRegistry.registerModuleType(ResourceLocation.fromNamespaceAndPath(MOD_ID, "toolbelt_module"), ToolbeltModule::new);
 
         CraftingRequirementDeserializer.registerSupplier("tetra:and", AndRequirement.class);
         CraftingRequirementDeserializer.registerSupplier("tetra:or", OrRequirement.class);
@@ -227,8 +235,7 @@ public class TetraMod {
         packetHandler = new PacketHandler(MOD_ID, "main", "1");
     }
 
-    @SubscribeEvent
-    public static void onGatherData(final GatherDataEvent event) {
+    private void onGatherData(final GatherDataEvent event) {
         DataGenerator dataGenerator = event.getGenerator();
         DataGenerator gen = event.getGenerator();
         PackOutput packOutput = gen.getPackOutput();
@@ -237,7 +244,7 @@ public class TetraMod {
         if (event.includeServer()) {
             dataGenerator.addProvider(true, new TetraBlockStateProvider(packOutput, MOD_ID, event.getExistingFileHelper()));
             dataGenerator.addProvider(true, new TetraTagsProvider(packOutput, lookupProvider, MOD_ID, event.getExistingFileHelper()));
-            dataGenerator.addProvider(true, new TetraLootTableProvider(packOutput));
+            dataGenerator.addProvider(true, new TetraLootTableProvider(packOutput, lookupProvider));
         }
         if (event.includeClient()) {
             dataGenerator.addProvider(true, new StatBarProvider(packOutput));
@@ -245,29 +252,34 @@ public class TetraMod {
     }
 
     public void setup(FMLCommonSetupEvent event) {
-        packetHandler.registerPacket(HonePacket.class, HonePacket::new);
-        packetHandler.registerPacket(SettlePacket.class, SettlePacket::new);
-        packetHandler.registerPacket(UpdateDataPacket.class, UpdateDataPacket::new);
-        packetHandler.registerPacket(SecondaryAbilityPacket.class, SecondaryAbilityPacket::new);
-        packetHandler.registerPacket(ChargedAbilityPacket.class, ChargedAbilityPacket::new);
-        packetHandler.registerPacket(TruesweepPacket.class, TruesweepPacket::new);
-        packetHandler.registerPacket(HowlingPacket.class, HowlingPacket::new);
-        packetHandler.registerPacket(ProjectileMotionPacket.class, ProjectileMotionPacket::new);
-        packetHandler.registerPacket(AddRevengePacket.class, AddRevengePacket::new);
-        packetHandler.registerPacket(RemoveRevengePacket.class, RemoveRevengePacket::new);
-        packetHandler.registerPacket(LungeEchoPacket.class, LungeEchoPacket::new);
-        packetHandler.registerPacket(MultiblockSchematicScrollPacket.class, MultiblockSchematicScrollPacket::new);
-        packetHandler.registerPacket(SecondaryInteractionPacket.class, SecondaryInteractionPacket::new);
-        packetHandler.registerPacket(SpawnParticlesPacket.class, SpawnParticlesPacket::new);
-
-        WorkbenchTile.init(packetHandler);
+        WorkbenchTile.init();
 
         SchematicRegistry.instance.registerSchematic(new CleanseSchematic());
         SchematicRegistry.instance.registerSchematic(new RemoveSchematic());
     }
 
-    @SubscribeEvent
-    public void registerCommands(RegisterCommandsEvent event) {
+    private void registerPayloads(RegisterPayloadHandlersEvent event) {
+        packetHandler.registerClientBoundPacket(HonePacket.class, HonePacket::new);
+        packetHandler.registerClientBoundPacket(SettlePacket.class, SettlePacket::new);
+        packetHandler.registerClientBoundPacket(UpdateDataPacket.class, UpdateDataPacket::new);
+        packetHandler.registerServerBoundPacket(SecondaryAbilityPacket.class, SecondaryAbilityPacket::new);
+        packetHandler.registerServerBoundPacket(ChargedAbilityPacket.class, ChargedAbilityPacket::new);
+        packetHandler.registerServerBoundPacket(TruesweepPacket.class, TruesweepPacket::new);
+        packetHandler.registerServerBoundPacket(HowlingPacket.class, HowlingPacket::new);
+        packetHandler.registerClientBoundPacket(ProjectileMotionPacket.class, ProjectileMotionPacket::new);
+        packetHandler.registerClientBoundPacket(AddRevengePacket.class, AddRevengePacket::new);
+        packetHandler.registerClientBoundPacket(RemoveRevengePacket.class, RemoveRevengePacket::new);
+        packetHandler.registerServerBoundPacket(LungeEchoPacket.class, LungeEchoPacket::new);
+        packetHandler.registerServerBoundPacket(MultiblockSchematicScrollPacket.class, MultiblockSchematicScrollPacket::new);
+        packetHandler.registerServerBoundPacket(SecondaryInteractionPacket.class, SecondaryInteractionPacket::new);
+        packetHandler.registerClientBoundPacket(SpawnParticlesPacket.class, SpawnParticlesPacket::new);
+
+        WorkbenchTile.registerPackets(packetHandler);
+        TetraRegistries.registerPackets(packetHandler);
+        packetHandler.registerPayloads(event);
+    }
+
+    private void registerCommands(RegisterCommandsEvent event) {
         ModuleDevCommand.register(event.getDispatcher(), event.getBuildContext());
         TetraCommand.register(event.getDispatcher(), event.getBuildContext());
     }

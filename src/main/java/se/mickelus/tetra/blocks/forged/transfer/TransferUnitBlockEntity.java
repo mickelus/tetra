@@ -1,8 +1,10 @@
 package se.mickelus.tetra.blocks.forged.transfer;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -35,10 +37,10 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
         cell = ItemStack.EMPTY;
     }
 
-    public static void writeCell(CompoundTag compound, ItemStack cell) {
+    public static void writeCell(CompoundTag compound, HolderLookup.Provider registries, ItemStack cell) {
         if (!cell.isEmpty()) {
             CompoundTag cellNBT = new CompoundTag();
-            cell.save(cellNBT);
+            cell.save(registries, cellNBT);
             compound.put("cell", cellNBT);
         }
     }
@@ -255,21 +257,22 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
 
-        if (compound.contains("cell")) {
-            cell = ItemStack.of(compound.getCompound("cell"));
+        if (compound.contains("cell", Tag.TAG_COMPOUND) && compound.getCompound("cell").contains("id", Tag.TAG_STRING)) {
+            ItemStack loadedCell = ItemStack.parseOptional(registries, compound.getCompound("cell"));
+            cell = loadedCell.isEmpty() ? ItemStack.EMPTY : loadedCell;
         } else {
             cell = ItemStack.EMPTY;
         }
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
 
-        writeCell(compound, cell);
+        writeCell(compound, registries, cell);
     }
 
     @Nullable
@@ -279,12 +282,14 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
-        super.onDataPacket(net, packet);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider lookupProvider) {
+        if (packet.getTag() != null) {
+            loadWithComponents(packet.getTag(), lookupProvider);
+        }
     }
 }

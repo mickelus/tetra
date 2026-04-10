@@ -10,7 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ScrollPageButtonGui extends GuiClickable {
-    static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/pamphlet.png");
+    static final ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "textures/gui/pamphlet.png");
     GuiTexture regularTexture;
     GuiTexture hoverTexture;
 

@@ -7,8 +7,8 @@ import com.google.gson.JsonParseException;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.JsonOptional;
 import se.mickelus.tetra.module.ItemModule;
@@ -89,7 +89,7 @@ public class ModuleRequirement implements CraftingRequirement {
             return ItemModule.getModuleName(moduleKey);
         }
 
-        return Optional.ofNullable(ModuleRegistry.instance.getModule(new ResourceLocation("tetra", moduleKey)))
+        return Optional.ofNullable(ModuleRegistry.instance.getModule(ResourceLocation.fromNamespaceAndPath("tetra", moduleKey)))
                 .map(module -> ItemModule.getModuleName(module.getUnlocalizedName()))
                 .orElse(moduleKey);
     }

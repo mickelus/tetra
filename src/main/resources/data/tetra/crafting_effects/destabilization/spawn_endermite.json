@@ -9,10 +9,10 @@
                 "Lifetime": 1200,
                 "ActiveEffects": [
                     {
-                        "forge:id": "tetra:unstable_power",
-                        "ShowParticles": false,
-                        "Duration": 1499,
-                        "Amplifier": 0
+                        "id": "tetra:unstable_power",
+                        "show_particles": false,
+                        "duration": 1499,
+                        "amplifier": 0
                     }
                 ]
             },

@@ -35,7 +35,7 @@ public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock im
         super(properties, schematic, ruinedRef, pryTable, x, y, height, width);
         this.registerDefaultState(this.stateDefinition.any().setValue(facingProp, Direction.EAST).setValue(complete, false));
 
-        this.schematics = new ResourceLocation[] { new ResourceLocation(TetraMod.MOD_ID, schematic) };
+        this.schematics = new ResourceLocation[] { ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, schematic) };
     }
 
     @Override

@@ -1,9 +1,8 @@
 package se.mickelus.tetra.client.particle;
 
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import se.mickelus.mutil.network.AbstractPacket;
 
@@ -38,13 +37,8 @@ public class SpawnParticlesPacket extends AbstractPacket {
     public SpawnParticlesPacket() {
     }
 
-    private <T extends ParticleOptions> T readParticle(FriendlyByteBuf buffer, ParticleType<T> particleType) {
-        return particleType.getDeserializer().fromNetwork(particleType, buffer);
-    }
-
     @Override
     public void toBytes(FriendlyByteBuf buffer) {
-        buffer.writeId(BuiltInRegistries.PARTICLE_TYPE, particle.getType());
         buffer.writeDouble(x);
         buffer.writeDouble(y);
         buffer.writeDouble(z);
@@ -53,12 +47,11 @@ public class SpawnParticlesPacket extends AbstractPacket {
         buffer.writeFloat(dz);
         buffer.writeBoolean(randomizeVelocity);
         buffer.writeInt(count);
-        particle.writeToNetwork(buffer);
+        net.minecraft.core.particles.ParticleTypes.STREAM_CODEC.encode((RegistryFriendlyByteBuf) buffer, particle);
     }
 
     @Override
     public void fromBytes(FriendlyByteBuf buffer) {
-        ParticleType<?> particleType = buffer.readById(BuiltInRegistries.PARTICLE_TYPE);
         x = buffer.readDouble();
         y = buffer.readDouble();
         z = buffer.readDouble();
@@ -67,7 +60,7 @@ public class SpawnParticlesPacket extends AbstractPacket {
         dz = buffer.readFloat();
         randomizeVelocity = buffer.readBoolean();
         count = buffer.readInt();
-        particle = readParticle(buffer, particleType);
+        particle = net.minecraft.core.particles.ParticleTypes.STREAM_CODEC.decode((RegistryFriendlyByteBuf) buffer);
     }
 
     @Override

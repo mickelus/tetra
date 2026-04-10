@@ -3,10 +3,10 @@ package se.mickelus.tetra.blocks.workbench.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
@@ -97,9 +97,9 @@ public class GuiActionButton extends GuiElement {
         iconClickable.addChild(new GuiTexture(0, 0, 29, 29, 97, 0, GuiTextures.workbench));
         addChild(iconClickable);
 
-        ToolAction requiredTool = action.getRequiredToolActions(targetStack).stream()
+        ItemAbility requiredTool = action.getRequiredItemAbilities(targetStack).stream()
                 .findFirst()
-                .orElse(TetraToolActions.hammer);
+                .orElse(TetraItemAbilities.hammer);
         toolIndicator = new ToolRequirementGui(6, 7, requiredTool);
         iconClickable.addChild(toolIndicator);
     }
@@ -111,8 +111,8 @@ public class GuiActionButton extends GuiElement {
         borderBottom.setColor(color);
     }
 
-    public void update(Map<ToolAction, Integer> availableTools) {
-        Map<ToolAction, Integer> requiredTools = action.getRequiredTools(targetStack);
+    public void update(Map<ItemAbility, Integer> availableTools) {
+        Map<ItemAbility, Integer> requiredTools = action.getRequiredTools(targetStack);
         if (!requiredTools.isEmpty()) {
             toolIndicator.setTooltipVisibility(true);
             requiredTools.entrySet().stream()

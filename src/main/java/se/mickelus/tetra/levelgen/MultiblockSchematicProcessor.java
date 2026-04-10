@@ -1,6 +1,6 @@
 package se.mickelus.tetra.levelgen;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.LevelReader;
@@ -23,7 +23,7 @@ import java.util.stream.IntStream;
 @ParametersAreNonnullByDefault
 public class MultiblockSchematicProcessor extends StructureProcessor {
     public static final MultiblockSchematicProcessor INSTANCE = new MultiblockSchematicProcessor();
-    public static final Codec<MultiblockSchematicProcessor> codec = Codec.unit(() -> MultiblockSchematicProcessor.INSTANCE);
+    public static final MapCodec<MultiblockSchematicProcessor> codec = MapCodec.unit(MultiblockSchematicProcessor.INSTANCE);
     public static RegistryObject<StructureProcessorType<?>> type;
 
     public MultiblockSchematicProcessor() {

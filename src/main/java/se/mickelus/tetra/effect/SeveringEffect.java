@@ -19,12 +19,13 @@ public class SeveringEffect {
     public static void perform(ItemStack itemStack, int effectLevel, LivingEntity attacker, LivingEntity target) {
         if (attacker.getRandom().nextFloat() < effectLevel / 100f) {
             int stackCap = (int) EffectHelper.getEffectEfficiency(itemStack, ItemEffect.severing) - 1;
+            var effect = EffectHelper.effectHolder(SeveredPotionEffect.instance);
 
-            int currentAmplifier = Optional.ofNullable(target.getEffect(SeveredPotionEffect.instance))
+            int currentAmplifier = Optional.ofNullable(target.getEffect(effect))
                     .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
 
-            target.addEffect(new MobEffectInstance(SeveredPotionEffect.instance, 1200, Math.min(currentAmplifier + 1, stackCap), false, false));
+            target.addEffect(new MobEffectInstance(effect, 1200, Math.min(currentAmplifier + 1, stackCap), false, false));
 
             if (!target.level().isClientSide) {
                 RandomSource rand = target.getRandom();

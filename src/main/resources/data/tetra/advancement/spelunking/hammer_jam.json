@@ -1,0 +1,27 @@
+{
+    "display": {
+        "icon": {
+            "id": "tetra:hammer_base"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.hammer_jam.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.hammer_jam.description"
+        }
+    },
+    "parent": "tetra:spelunking/hammer_craft",
+    "criteria": {
+        "fuel": {
+            "trigger": "tetra:block_use",
+            "conditions": {
+                "after": {
+                    "block": "tetra:hammer_head"
+                },
+                "data": {
+                    "jammed": "true"
+                }
+            }
+        }
+    }
+}

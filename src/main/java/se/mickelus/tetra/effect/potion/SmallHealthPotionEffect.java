@@ -1,17 +1,12 @@
 package se.mickelus.tetra.effect.potion;
 
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
-import se.mickelus.mutil.effect.EffectTooltipRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 public class SmallHealthPotionEffect extends MobEffect {
@@ -21,16 +16,9 @@ public class SmallHealthPotionEffect extends MobEffect {
     public SmallHealthPotionEffect() {
         super(MobEffectCategory.BENEFICIAL, 0xbb4444);
 
-        addAttributeModifier(Attributes.MAX_HEALTH, "c89b4203-0804-4607-b320-f6b8daf2d272", 1, AttributeModifier.Operation.ADDITION);
+        addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.fromNamespaceAndPath("tetra", "small_health_max_health"), 1,
+                AttributeModifier.Operation.ADD_VALUE);
 
         instance = this;
     }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<IClientMobEffectExtensions> consumer) {
-        super.initializeClient(consumer);
-        consumer.accept(new EffectTooltipRenderer(effect -> I18n.get("effect.tetra.small_health.tooltip", effect.getAmplifier() + 1)));
-    }
-
 }

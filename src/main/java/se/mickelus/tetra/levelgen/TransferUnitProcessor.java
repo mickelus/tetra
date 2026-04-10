@@ -1,6 +1,6 @@
 package se.mickelus.tetra.levelgen;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class TransferUnitProcessor extends StructureProcessor {
     public static final TransferUnitProcessor INSTANCE = new TransferUnitProcessor();
-    public static final Codec<TransferUnitProcessor> codec = Codec.unit(() -> TransferUnitProcessor.INSTANCE);
+    public static final MapCodec<TransferUnitProcessor> codec = MapCodec.unit(TransferUnitProcessor.INSTANCE);
     public static RegistryObject<StructureProcessorType<?>> type;
 
     public TransferUnitProcessor() {
@@ -48,9 +48,9 @@ public class TransferUnitProcessor extends StructureProcessor {
 
                 cellState = charge > 0 ? 2 : 1;
 
-                TransferUnitBlockEntity.writeCell(newCompound, itemStack);
+                TransferUnitBlockEntity.writeCell(newCompound, world.registryAccess(), itemStack);
             } else if (random.nextFloat() < 0.2) {
-                TransferUnitBlockEntity.writeCell(newCompound, new ItemStack(ThermalCellItem.instance.get()));
+                TransferUnitBlockEntity.writeCell(newCompound, world.registryAccess(), new ItemStack(ThermalCellItem.instance.get()));
                 cellState = 1;
             }
 

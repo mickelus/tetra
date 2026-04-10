@@ -4,9 +4,7 @@ import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -15,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -32,25 +31,25 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
+import net.neoforged.neoforge.event.EventHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.items.modular.impl.ModularSingleHeadedItem;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
-import se.mickelus.tetra.util.ToolActionHelper;
+import se.mickelus.tetra.util.ItemAbilityHelper;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Comparator;
 
 @ParametersAreNonnullByDefault
-public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
+public class ThrownModularItemEntity extends AbstractArrow implements IEntityWithComplexSpawn {
     public static final String unlocalizedName = "thrown_modular_item";
     public static final String stackKey = "stack";
     public static final String dealtDamageKey = "dealtDamage";
@@ -75,9 +74,9 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     }
 
     public ThrownModularItemEntity(Level worldIn, Player thrower, ItemStack thrownStackIn) {
-        super(type, thrower, worldIn);
+        super(type, thrower, worldIn, thrownStackIn.copy(), null);
         thrownStack = thrownStackIn.copy();
-        entityData.set(LOYALTY_LEVEL, (byte) EnchantmentHelper.getLoyalty(thrownStackIn));
+        entityData.set(LOYALTY_LEVEL, getLoyaltyFromItem(thrownStackIn));
 
         preferredSlot = thrower.getUsedItemHand() == InteractionHand.MAIN_HAND
                 ? thrower.getInventory().selected
@@ -85,7 +84,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
 
         CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class).ifPresent(item -> {
             double critModifier = CritEffect.rollMultiplier(thrower.getRandom(), item, thrownStack);
-            setPierceLevel((byte) Math.round(getEffectLevel(ItemEffect.piercing) * critModifier));
+            this.setPierceLevel((byte) Math.round(getEffectLevel(ItemEffect.piercing) * critModifier));
 
             if (critModifier != 1d && level() instanceof ServerLevel serverLevel) {
                 Vec3 pos = thrower.getEyePosition(0).add(thrower.getLookAngle());
@@ -94,28 +93,18 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
             }
         });
 
-        if (thrownStack.getItem() instanceof ModularSingleHeadedItem) {
-            setSoundEvent(SoundEvents.TRIDENT_HIT_GROUND);
-        } else if (thrownStack.getItem() instanceof ModularShieldItem) {
-            setSoundEvent(SoundEvents.PLAYER_ATTACK_KNOCKBACK);
-        } else {
-            setSoundEvent(SoundEvents.PLAYER_ATTACK_WEAK);
-        }
+        updateSoundEvent();
     }
 
     @OnlyIn(Dist.CLIENT)
     public ThrownModularItemEntity(Level worldIn, double x, double y, double z) {
-        super(type, x, y, z, worldIn);
-    }
-
-    public ThrownModularItemEntity(PlayMessages.SpawnEntity packet, Level worldIn) {
-        super(type, worldIn);
+        super(type, x, y, z, worldIn, new ItemStack(Items.TRIDENT), null);
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        entityData.define(LOYALTY_LEVEL, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(LOYALTY_LEVEL, (byte) 0);
     }
 
     /**
@@ -192,6 +181,16 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         return thrownStack.copy();
     }
 
+    @Override
+    public ItemStack getWeaponItem() {
+        return thrownStack;
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return new ItemStack(Items.TRIDENT);
+    }
+
     public ItemStack getThrownStack() {
         return thrownStack.copy();
     }
@@ -213,7 +212,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
             BlockState blockState = level().getBlockState(pos);
 
             ItemModularHandheld item = CastOptional.cast(thrownStack.getItem(), ItemModularHandheld.class).orElse(null);
-            if (ToolActionHelper.isEffectiveOn(thrownStack, blockState) && shooter instanceof Player player && item != null) {
+            if (ItemAbilityHelper.isEffectiveOn(thrownStack, blockState) && shooter instanceof Player player && item != null) {
                 double destroySpeed = item.getDestroySpeed(thrownStack, blockState);
 
                 if (destroySpeed > 1
@@ -267,7 +266,7 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         HitResult rayTraceResult = level().clip(new ClipContext(position, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 
         if (rayTraceResult.getType() == HitResult.Type.BLOCK
-                && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
+                && !EventHooks.onProjectileImpact(this, rayTraceResult)) {
             onHit(rayTraceResult);
         }
     }
@@ -330,14 +329,16 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
 
             double critModifier = CritEffect.rollMultiplier(targetLivingEntity.getRandom(), item, thrownStack);
             double damage = abilityDamage * item.getEffectEfficiency(thrownStack, ItemEffect.throwable);
-
-            damage += EnchantmentHelper.getDamageBonus(thrownStack, targetLivingEntity.getMobType());
+            if (level() instanceof ServerLevel serverLevel) {
+                damage = EnchantmentHelper.modifyDamage(serverLevel, thrownStack, targetLivingEntity, damagesource, (float) damage);
+            }
             damage *= critModifier;
 
             if (target.hurt(damagesource, (float) damage)) {
                 if (shooter instanceof LivingEntity livingShooter) {
-                    EnchantmentHelper.doPostHurtEffects(targetLivingEntity, shooter);
-                    EffectHelper.applyEnchantmentHitEffects(getPickupItem(), targetLivingEntity, livingShooter);
+                    if (level() instanceof ServerLevel serverLevel) {
+                        EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, targetLivingEntity, damagesource, thrownStack);
+                    }
                     ItemEffectHandler.applyHitEffects(thrownStack, targetLivingEntity, livingShooter);
 
                     item.tickProgression(livingShooter, thrownStack, 1);
@@ -354,14 +355,14 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
         }
 
         float f1 = 1.0F;
-        if (!level().isClientSide && level().isThundering() && EnchantmentHelper.hasChanneling(thrownStack)) {
+        if (!level().isClientSide && level().isThundering() && EffectHelper.getEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.CHANNELING, thrownStack) > 0) {
             BlockPos blockpos = target.blockPosition();
             if (level().canSeeSky(blockpos)) {
                 LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level());
                 lightning.moveTo(Vec3.atBottomCenterOf(blockpos));
                 lightning.setCause(shooter instanceof ServerPlayer ? (ServerPlayer) shooter : null);
                 this.level().addFreshEntity(lightning);
-                soundevent = SoundEvents.TRIDENT_THUNDER;
+                soundevent = SoundEvents.TRIDENT_THUNDER.value();
                 f1 = 5.0F;
             }
         }
@@ -447,27 +448,25 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         if (compound.contains(stackKey, 10)) {
-            thrownStack = ItemStack.of(compound.getCompound(stackKey));
+            thrownStack = ItemStackTagHelper.parseStack(compound.getCompound(stackKey));
+        } else {
+            thrownStack = ItemStack.EMPTY;
         }
 
         dealtDamage = compound.getBoolean(dealtDamageKey);
         preferredSlot = compound.contains(preferredSlotKey) ? compound.getInt(preferredSlotKey) : -1;
 
-        entityData.set(LOYALTY_LEVEL, (byte) EnchantmentHelper.getLoyalty(thrownStack));
-
-        if (thrownStack.getItem() instanceof ModularSingleHeadedItem) {
-            setSoundEvent(SoundEvents.TRIDENT_HIT_GROUND);
-        } else if (thrownStack.getItem() instanceof ModularShieldItem) {
-            setSoundEvent(SoundEvents.PLAYER_ATTACK_KNOCKBACK);
-        } else {
-            setSoundEvent(SoundEvents.PLAYER_ATTACK_WEAK);
-        }
+        setPickupItemStack(thrownStack);
+        entityData.set(LOYALTY_LEVEL, getLoyaltyFromItem(thrownStack));
+        updateSoundEvent();
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.put(stackKey, thrownStack.save(new CompoundTag()));
+        if (!thrownStack.isEmpty()) {
+            compound.put(stackKey, ItemStackTagHelper.saveStack(thrownStack));
+        }
         compound.putBoolean(dealtDamageKey, dealtDamage);
         compound.putInt(preferredSlotKey, preferredSlot);
     }
@@ -495,17 +494,30 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityAdd
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
+        ItemStack.OPTIONAL_STREAM_CODEC.encode(buffer, thrownStack);
     }
 
     @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
-        buffer.writeItem(thrownStack);
+    public void readSpawnData(RegistryFriendlyByteBuf buffer) {
+        thrownStack = ItemStack.OPTIONAL_STREAM_CODEC.decode(buffer);
+        setPickupItemStack(thrownStack);
+        updateSoundEvent();
     }
 
-    @Override
-    public void readSpawnData(FriendlyByteBuf buffer) {
-        thrownStack = buffer.readItem();
+    private void updateSoundEvent() {
+        if (thrownStack.getItem() instanceof ModularSingleHeadedItem) {
+            setSoundEvent(SoundEvents.TRIDENT_HIT_GROUND);
+        } else if (thrownStack.getItem() instanceof ModularShieldItem) {
+            setSoundEvent(SoundEvents.PLAYER_ATTACK_KNOCKBACK);
+        } else {
+            setSoundEvent(SoundEvents.PLAYER_ATTACK_WEAK);
+        }
+    }
+
+    private byte getLoyaltyFromItem(ItemStack stack) {
+        return level() instanceof ServerLevel serverLevel
+                ? (byte) Mth.clamp(EnchantmentHelper.getTridentReturnToOwnerAcceleration(serverLevel, stack, this), 0, 127)
+                : 0;
     }
 }

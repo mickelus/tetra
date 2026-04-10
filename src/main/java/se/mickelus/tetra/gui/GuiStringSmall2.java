@@ -32,7 +32,7 @@ public class GuiStringSmall2 extends GuiString {
 
     public void setString(String string) {
         if (string != null) {
-            textComponent = Component.literal(string.toUpperCase()).withStyle(Style.EMPTY.withFont(new ResourceLocation("tetra", "ascii_small")));
+            textComponent = Component.literal(string.toUpperCase()).withStyle(Style.EMPTY.withFont(ResourceLocation.fromNamespaceAndPath("tetra", "ascii_small")));
             this.width = this.fontRenderer.width(textComponent);
             if (this.fixedWidth) {
                 textComponent = (MutableComponent) fontRenderer.substrByWidth(textComponent, width);

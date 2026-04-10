@@ -1,7 +1,6 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -11,12 +10,13 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -28,13 +28,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.ItemAbility;
 import net.minecraftforge.registries.ObjectHolder;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
@@ -61,10 +61,10 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
 
     public static final String qualityImprovementKey = "quality";
     public static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new TileBlockInteraction<>(TetraToolActions.pry, 1, Direction.EAST, 5, 11, 10, 12,
+            new TileBlockInteraction<>(TetraItemAbilities.pry, 1, Direction.EAST, 5, 11, 10, 12,
                     HammerBaseBlockEntity.class, tile -> tile.getEffect(true) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, true)),
-            new TileBlockInteraction<>(TetraToolActions.pry, 1, Direction.WEST, 5, 11, 10, 12,
+            new TileBlockInteraction<>(TetraItemAbilities.pry, 1, Direction.WEST, 5, 11, 10, 12,
                     HammerBaseBlockEntity.class, tile -> tile.getEffect(false) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, false))
     };
@@ -73,6 +73,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
 
     public HammerBaseBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
+        instance = this;
     }
 
     public static boolean removeModule(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace, boolean isA) {
@@ -99,19 +100,13 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
         builder.add(facingProp);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void clientInit() {
-        BlockEntityRenderers.register(HammerBaseBlockEntity.type.get(), HammerBaseRenderer::new);
-    }
-
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
-    public void appendHoverText(final ItemStack stack, @Nullable final BlockGetter world, final List<Component> tooltip, final TooltipFlag advanced) {
+    public void appendHoverText(final ItemStack stack, final Item.TooltipContext context, final List<Component> tooltip, final TooltipFlag advanced) {
         tooltip.add(locationTooltip);
         tooltip.add(Component.literal(" "));
         tooltip.add(Component.translatable("block.multiblock_hint.1x2x1")
@@ -136,7 +131,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     }
 
     public ItemStack applyCraftEffects(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
-            Player player, ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
+            Player player, ItemAbility requiredTool, int requiredLevel, boolean consumeResources) {
         if (consumeResources) {
             consumeFuel(world, pos);
         }
@@ -158,7 +153,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     }
 
     public ItemStack applyActionEffects(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
-            ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
+            ItemAbility requiredTool, int requiredLevel, boolean consumeResources) {
         if (consumeResources) {
             consumeFuel(world, pos);
         }
@@ -181,8 +176,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
                 .orElseGet(Collections::emptyMap);
     }
 
-    @Override
-    public InteractionResult use(final BlockState blockState, final Level world, final BlockPos pos, final Player player, final InteractionHand hand,
+    private InteractionResult useInternal(final BlockState blockState, final Level world, final BlockPos pos, final Player player, final InteractionHand hand,
             final BlockHitResult rayTraceResult) {
         Direction blockFacing = blockState.getValue(facingProp);
         HammerBaseBlockEntity te = TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class).orElse(null);
@@ -247,6 +241,22 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     }
 
     @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState blockState, Level world, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult rayTraceResult) {
+        return switch (useInternal(blockState, world, pos, player, hand, rayTraceResult)) {
+            case SUCCESS, CONSUME -> ItemInteractionResult.sidedSuccess(world.isClientSide);
+            case CONSUME_PARTIAL -> ItemInteractionResult.CONSUME_PARTIAL;
+            case FAIL -> ItemInteractionResult.FAIL;
+            default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState blockState, Level world, BlockPos pos, Player player, BlockHitResult rayTraceResult) {
+        return useInternal(blockState, world, pos, player, InteractionHand.MAIN_HAND, rayTraceResult);
+    }
+
+    @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!equals(newState.getBlock())) {
             TileEntityOptional.from(world, pos, HammerBaseBlockEntity.class)
@@ -269,7 +279,7 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, final BlockState state, final Direction face, final Collection<ToolAction> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, final BlockState state, final Direction face, final Collection<ItemAbility> tools) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.getValue(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);

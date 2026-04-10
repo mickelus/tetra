@@ -22,7 +22,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.ImprovementData;
@@ -218,10 +217,10 @@ public class TetraCommand {
         ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             if (item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
-                Map<Enchantment, Integer> enchantments = module.getEnchantments(itemStack);
+                int enchantmentCount = module.getEnchantmentsPrimitive(itemStack).size();
                 module.removeEnchantments(itemStack);
                 IModularItem.updateIdentifier(itemStack);
-                context.getSource().sendSuccess(() -> Component.literal("Cleared " + enchantments.size() + " enchantments from slot '" + slot + "' in item ")
+                context.getSource().sendSuccess(() -> Component.literal("Cleared " + enchantmentCount + " enchantments from slot '" + slot + "' in item ")
                         .append(itemStack.getDisplayName()), true);
                 player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
             } else {
@@ -239,7 +238,7 @@ public class TetraCommand {
         ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             if (item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
-                String enchantmentId = ForgeRegistries.ENCHANTMENTS.getKey(enchantment.get()).toString();
+                String enchantmentId = getEnchantmentId(enchantment);
                 TetraEnchantmentHelper.removeEnchantment(itemStack, enchantmentId);
                 IModularItem.updateIdentifier(itemStack);
                 context.getSource().sendSuccess(() -> Component.literal("Removed enchantment '" + enchantmentId + "' from item ")
@@ -260,12 +259,10 @@ public class TetraCommand {
         ItemStack itemStack = getItemStackOrReplacement(player);
         if (itemStack.getItem() instanceof IModularItem item) {
             if (item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
-                Enchantment enchantment = enchantmentHolder.get();
-
-                String enchantmentId = ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString();
-                int currentLevel = itemStack.getItem().getEnchantmentLevel(itemStack, enchantment);
+                String enchantmentId = getEnchantmentId(enchantmentHolder);
+                int currentLevel = itemStack.getItem().getEnchantmentLevel(itemStack, enchantmentHolder);
                 TetraEnchantmentHelper.removeEnchantment(itemStack, enchantmentId);
-                TetraEnchantmentHelper.applyEnchantment(itemStack, module.getSlot(), enchantment, level);
+                TetraEnchantmentHelper.applyEnchantment(itemStack, module.getSlot(), enchantmentHolder, level);
                 IModularItem.updateIdentifier(itemStack);
 
                 if (currentLevel > 0) {
@@ -389,11 +386,7 @@ public class TetraCommand {
             ItemStack itemStack = getItemStackOrReplacement(player);
             if (itemStack.getItem() instanceof IModularItem item
                     && item.getModuleFromSlot(itemStack, slot) instanceof ItemModuleMajor module) {
-                List<String> suggestions = module.getEnchantments(itemStack).keySet().stream()
-                        .map(ForgeRegistries.ENCHANTMENTS::getKey)
-                        .filter(Objects::nonNull)
-                        .map(ResourceLocation::toString)
-                        .toList();
+                List<String> suggestions = module.getEnchantmentsPrimitive(itemStack).keySet().stream().toList();
                 return SharedSuggestionProvider.suggest(suggestions, builder);
             }
         }
@@ -402,7 +395,7 @@ public class TetraCommand {
 
     private static CompletableFuture<Suggestions> getEnchantmentLevelSuggestion(final CommandContext<CommandSourceStack> context, final SuggestionsBuilder builder) throws CommandSyntaxException {
         Holder<Enchantment> enchantment = ResourceArgument.getEnchantment(context, "enchantment");
-        List<String> suggestions = IntStream.rangeClosed(enchantment.get().getMinLevel(), enchantment.get().getMaxLevel())
+        List<String> suggestions = IntStream.rangeClosed(enchantment.value().getMinLevel(), enchantment.value().getMaxLevel())
                 .mapToObj(String::valueOf)
                 .toList();
         return SharedSuggestionProvider.suggest(suggestions, builder);
@@ -417,5 +410,11 @@ public class TetraCommand {
             }
         }
         return itemStack;
+    }
+
+    private static String getEnchantmentId(Holder<Enchantment> enchantment) {
+        return TetraEnchantmentHelper.getEnchantmentKey(enchantment)
+                .map(ResourceLocation::toString)
+                .orElseGet(enchantment::getRegisteredName);
     }
 }

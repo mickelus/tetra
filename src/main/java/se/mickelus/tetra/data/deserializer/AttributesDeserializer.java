@@ -11,24 +11,31 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
+import java.util.Map;
 
 @ParametersAreNonnullByDefault
 public class AttributesDeserializer implements JsonDeserializer<Multimap<Attribute, AttributeModifier>> {
     public static final TypeToken<Multimap<Attribute, AttributeModifier>> typeToken = new TypeToken<Multimap<Attribute, AttributeModifier>>() {
     };
+    private static final Map<String, ResourceLocation> legacyAttributeIds = Map.of(
+            "forge:reach_distance", ResourceLocation.withDefaultNamespace("player.block_interaction_range"),
+            "forge:block_reach", ResourceLocation.withDefaultNamespace("player.block_interaction_range"),
+            "forge:attack_range", ResourceLocation.withDefaultNamespace("player.entity_interaction_range"),
+            "forge:entity_reach", ResourceLocation.withDefaultNamespace("player.entity_interaction_range"));
 
     private static AttributeModifier.Operation getOperation(String key) {
         if (key.startsWith("**")) {
-            return AttributeModifier.Operation.MULTIPLY_TOTAL;
+            return AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL;
         } else if (key.startsWith("*")) {
-            return AttributeModifier.Operation.MULTIPLY_BASE;
+            return AttributeModifier.Operation.ADD_MULTIPLIED_BASE;
         }
 
-        return AttributeModifier.Operation.ADDITION;
+        return AttributeModifier.Operation.ADD_VALUE;
     }
 
     private static Attribute getAttribute(String key) {
-        ResourceLocation rl = new ResourceLocation(key.replace("*", ""));
+        String resolvedKey = key.replace("*", "");
+        ResourceLocation rl = legacyAttributeIds.getOrDefault(resolvedKey, ResourceLocation.parse(resolvedKey));
 
         return ForgeRegistries.ATTRIBUTES.getValue(rl);
     }
@@ -41,7 +48,7 @@ public class AttributesDeserializer implements JsonDeserializer<Multimap<Attribu
         jsonObject.entrySet().forEach(entry -> {
             Attribute attribute = getAttribute(entry.getKey());
             if (attribute != null) {
-                result.put(attribute, new AttributeModifier("module_data", entry.getValue().getAsDouble(), getOperation(entry.getKey())));
+                result.put(attribute, new AttributeModifier(ResourceLocation.fromNamespaceAndPath("tetra", "module_data"), entry.getValue().getAsDouble(), getOperation(entry.getKey())));
             }
         });
 

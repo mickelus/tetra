@@ -18,6 +18,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -124,7 +125,7 @@ public class UtilBooster {
                     cp.connection.send(new ServerboundPlayerInputPacket(cp.xxa, cp.zza, cp.input.jumping, cp.input.shiftKeyDown));
                 });
 
-                CompoundTag tag = itemStack.getOrCreateTag();
+                CompoundTag tag = ItemStackTagHelper.getOrCreateTag(itemStack);
 
                 if (UtilBooster.hasFuel(tag, false)) {
                     UtilBooster.consumeFuel(tag, false);

@@ -1,0 +1,33 @@
+{
+    "display": {
+        "icon": {
+            "id": "minecraft:filled_map"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_ruins_map.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_ruins_map.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "minecraft:filled_map"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "tetra.advancement_marker": "tetra:forged_ruins"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

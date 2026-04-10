@@ -17,7 +17,7 @@ public class MobEffectDeserializer implements JsonDeserializer<MobEffect> {
     public MobEffect deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         String string = json.getAsString();
         if (string != null) {
-            ResourceLocation resourceLocation = new ResourceLocation(string);
+            ResourceLocation resourceLocation = ResourceLocation.parse(string);
             if (ForgeRegistries.MOB_EFFECTS.containsKey(resourceLocation)) {
                 return ForgeRegistries.MOB_EFFECTS.getValue(resourceLocation);
             }

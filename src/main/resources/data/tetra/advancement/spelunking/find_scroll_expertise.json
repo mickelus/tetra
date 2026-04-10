@@ -1,0 +1,215 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "minecraft:block_entity_data": {
+                    "data": [
+                        {
+                            "material": 0,
+                            "ribbon": "ff6666"
+                        }
+                    ]
+                }
+            },
+            "id": "tetra:scroll_rolled"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_expertise.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_expertise.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll_efficiency",
+    "criteria": {
+        "gem_expertise": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "gem_expertise"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "metal_expertise": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "metal_expertise"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "wood_expertise": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "wood_expertise"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "stone_expertise": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "stone_expertise"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "fibre_expertise": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "fibre_expertise"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "skin_expertise": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "skin_expertise"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "bone_expertise": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "bone_expertise"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "fabric_expertise": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "fabric_expertise"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "scale_expertise": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "minecraft:custom_data": {
+                                "data": [
+                                    {
+                                        "key": "scale_expertise"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

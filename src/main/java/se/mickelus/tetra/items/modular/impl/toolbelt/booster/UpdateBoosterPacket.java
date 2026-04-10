@@ -5,6 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.network.AbstractPacket;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -43,7 +44,7 @@ public class UpdateBoosterPacket extends AbstractPacket {
         ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
 
         if (!itemStack.isEmpty() && UtilBooster.canBoost(itemStack)) {
-            UtilBooster.setActive(itemStack.getTag(), active, charged);
+            UtilBooster.setActive(ItemStackTagHelper.getOrCreateTag(itemStack), active, charged);
 
             // UtilToolbelt.updateBauble(player);
         }

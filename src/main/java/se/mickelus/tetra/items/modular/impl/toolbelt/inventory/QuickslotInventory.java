@@ -7,6 +7,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -28,7 +29,7 @@ public class QuickslotInventory extends ToolbeltInventory {
 
         predicate = getPredicate("quickslot");
 
-        readFromNBT(stack.getOrCreateTag());
+        readFromNBT(ItemStackTagHelper.getOrCreateTag(stack));
     }
 
     @Override
@@ -41,7 +42,10 @@ public class QuickslotInventory extends ToolbeltInventory {
             int slot = item.getInt(slotKey);
 
             if (0 <= slot && slot < getContainerSize()) {
-                inventoryShadows.set(slot, ItemStack.of(item));
+                ItemStack shadowStack = ItemStackTagHelper.parseStack(item);
+                if (!shadowStack.isEmpty()) {
+                    inventoryShadows.set(slot, shadowStack);
+                }
             }
         }
     }
@@ -51,10 +55,12 @@ public class QuickslotInventory extends ToolbeltInventory {
         ListTag shadows = new ListTag();
 
         for (int i = 0; i < maxSize; i++) {
-            CompoundTag item = new CompoundTag();
-            item.putInt(slotKey, i);
-            getShadowOfSlot(i).save(item);
-            shadows.add(item);
+            ItemStack shadowStack = getShadowOfSlot(i);
+            if (!shadowStack.isEmpty()) {
+                CompoundTag item = ItemStackTagHelper.saveStack(shadowStack);
+                item.putInt(slotKey, i);
+                shadows.add(item);
+            }
         }
         tagcompound.put(shadowsKey, shadows);
     }
@@ -77,7 +83,7 @@ public class QuickslotInventory extends ToolbeltInventory {
             }
         }
 
-        writeToNBT(toolbeltItemStack.getOrCreateTag());
+        writeToNBT(ItemStackTagHelper.getOrCreateTag(toolbeltItemStack));
     }
 
     private int getShadowIndex(ItemStack itemStack) {
@@ -98,7 +104,7 @@ public class QuickslotInventory extends ToolbeltInventory {
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getContainerSize(); i++) {
             ItemStack storedStack = getItem(i);
-            if (ItemStack.isSameItemSameTags(itemStack, storedStack)
+            if (ItemStack.isSameItemSameComponents(itemStack, storedStack)
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());

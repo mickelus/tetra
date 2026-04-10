@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.workbench.action;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.SchematicRegistry;
@@ -36,17 +36,17 @@ public class RepairAction implements WorkbenchAction {
     }
 
     @Override
-    public Collection<ToolAction> getRequiredToolActions(ItemStack itemStack) {
+    public Collection<ItemAbility> getRequiredItemAbilities(ItemStack itemStack) {
         return Collections.emptySet();
     }
 
     @Override
-    public int getRequiredToolLevel(ItemStack itemStack, ToolAction toolAction) {
+    public int getRequiredToolLevel(ItemStack itemStack, ItemAbility toolAction) {
         return 0;
     }
 
     @Override
-    public Map<ToolAction, Integer> getRequiredTools(ItemStack itemStack) {
+    public Map<ItemAbility, Integer> getRequiredTools(ItemStack itemStack) {
         return Collections.emptyMap();
     }
 

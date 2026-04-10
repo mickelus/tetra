@@ -1,6 +1,7 @@
 package se.mickelus.tetra.module.improvement;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.network.AbstractPacket;
@@ -21,12 +22,12 @@ public class HonePacket extends AbstractPacket {
 
     @Override
     public void toBytes(FriendlyByteBuf buffer) {
-        buffer.writeItem(itemStack);
+        ItemStack.STREAM_CODEC.encode((RegistryFriendlyByteBuf) buffer, itemStack);
     }
 
     @Override
     public void fromBytes(FriendlyByteBuf buffer) {
-        itemStack = buffer.readItem();
+        itemStack = ItemStack.STREAM_CODEC.decode((RegistryFriendlyByteBuf) buffer);
     }
 
     @Override

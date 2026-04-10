@@ -4,6 +4,7 @@ import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
@@ -22,7 +23,7 @@ public class StorageInventory extends ToolbeltInventory {
 
         predicate = getPredicate("storage");
 
-        readFromNBT(stack.getOrCreateTag());
+        readFromNBT(ItemStackTagHelper.getOrCreateTag(stack));
     }
 
     public static int getColumns(int slotCount) {
@@ -46,7 +47,7 @@ public class StorageInventory extends ToolbeltInventory {
         for (int i = 0; i < getContainerSize(); i++) {
             ItemStack storedStack = getItem(i);
             if (effects.get(i).contains(ItemEffect.quickAccess)
-                    && ItemStack.isSameItemSameTags(itemStack, storedStack)
+                    && ItemStack.isSameItemSameComponents(itemStack, storedStack)
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());

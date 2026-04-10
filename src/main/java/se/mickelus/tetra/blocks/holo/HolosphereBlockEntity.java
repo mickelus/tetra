@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -36,19 +37,21 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static se.mickelus.tetra.util.ItemStackTagHelper.setTag;
+
 public class HolosphereBlockEntity extends BlockEntity {
     public static final int maxRange = 8;
     public static RegistryObject<BlockEntityType<HolosphereBlockEntity>> type;
     private List<ScanResult> scanResults;
     private long scanModeTimestamp = 0;
 
-    private CompoundTag itemTag;
+    private CompoundTag itemTag = new CompoundTag();
 
     // should not be null but players can use commands to get to that state
     private LazyOptional<Boolean> canScan = LazyOptional.of(() -> this.itemTag != null ? this.itemTag : new CompoundTag())
             .lazyMap(tag -> {
                 ItemStack itemStack = new ItemStack(ModularHolosphereItem.instance);
-                itemStack.setTag(tag);
+                setTag(itemStack, tag);
                 return Optional.ofNullable(ModularHolosphereItem.instance.getEffectData(itemStack))
                         .map(effects -> effects.getLevel(ItemEffect.percussionScanner) > 0)
                         .orElse(false);
@@ -59,7 +62,6 @@ public class HolosphereBlockEntity extends BlockEntity {
         scanResults = new ArrayList<>();
     }
 
-    @Override
     public AABB getRenderBoundingBox() {
         return Shapes.block().bounds().inflate(1, 0.5, 1).move(worldPosition);
     }
@@ -122,7 +124,7 @@ public class HolosphereBlockEntity extends BlockEntity {
                     int height = serverLevel.getChunk(pos.x, pos.z, ChunkStatus.SURFACE).getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.x, pos.z);
 
                     BlockPos centerPos = pos.getMiddleBlockPosition(height);
-                    float temperature = level.getBiome(centerPos).value().getTemperature(centerPos);
+                    float temperature = level.getBiome(centerPos).value().getBaseTemperature();
                     List<String> structures =
                             Arrays.stream(getScannableStructures())
                                     .filter(id -> ScanHelper.hasStructure(id, serverLevel, pos)).toList();
@@ -152,16 +154,25 @@ public class HolosphereBlockEntity extends BlockEntity {
 
     public ItemStack getItemStack() {
         ItemStack itemStack = new ItemStack(ModularHolosphereItem.instance);
-        itemStack.setTag(this.getItemTag());
+        setTag(itemStack, this.getItemTag());
         return itemStack;
     }
 
     public CompoundTag getItemTag() {
-        return itemTag;
+        return itemTag == null ? new CompoundTag() : itemTag.copy();
     }
 
     public void setItemTag(CompoundTag tag) {
-        this.itemTag = tag;
+        this.itemTag = tag == null ? new CompoundTag() : tag.copy();
+        this.canScan.invalidate();
+        this.canScan = LazyOptional.of(() -> this.itemTag != null ? this.itemTag.copy() : new CompoundTag())
+                .lazyMap(itemTag -> {
+                    ItemStack itemStack = new ItemStack(ModularHolosphereItem.instance);
+                    setTag(itemStack, itemTag);
+                    return Optional.ofNullable(ModularHolosphereItem.instance.getEffectData(itemStack))
+                            .map(effects -> effects.getLevel(ItemEffect.percussionScanner) > 0)
+                            .orElse(false);
+                });
     }
 
     @Nullable
@@ -171,20 +182,22 @@ public class HolosphereBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+        if (pkt.getTag() != null) {
+            loadWithComponents(pkt.getTag(), lookupProvider);
+        }
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
 
-        itemTag = compound.getCompound("item");
+        setItemTag(compound.contains("item", Tag.TAG_COMPOUND) ? compound.getCompound("item") : new CompoundTag());
 
         scanModeTimestamp = compound.getLong("timestamp");
 
@@ -198,10 +211,10 @@ public class HolosphereBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
 
-        compound.put("item", itemTag);
+        compound.put("item", itemTag == null ? new CompoundTag() : itemTag.copy());
 
         compound.putLong("timestamp", scanModeTimestamp);
 

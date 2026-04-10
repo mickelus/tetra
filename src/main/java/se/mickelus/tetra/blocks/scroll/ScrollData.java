@@ -6,10 +6,13 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +27,7 @@ import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 public class ScrollData {
-    private static final Codec<ScrollData> codec = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<ScrollData> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.STRING.fieldOf("key").forGetter(i -> i.key),
             Codec.STRING.optionalFieldOf("details").forGetter(i -> Optional.ofNullable(i.details)),
             Codec.BOOL.fieldOf("intricate").forGetter(i -> i.isIntricate),
@@ -34,6 +37,7 @@ public class ScrollData {
             ResourceLocation.CODEC.listOf().optionalFieldOf("schematics", Collections.emptyList()).forGetter(i -> i.schematics),
             ResourceLocation.CODEC.listOf().optionalFieldOf("effects", Collections.emptyList()).forGetter(i -> i.craftingEffects)
     ).apply(instance, ScrollData::new));
+    public static final Codec<ScrollData> CODEC = MAP_CODEC.codec();
     public String key;
     public String details;
     public boolean isIntricate;
@@ -66,7 +70,8 @@ public class ScrollData {
     }
 
     public static int readMaterialFast(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTagElement("BlockEntityTag"))
+        return Optional.ofNullable(itemStack.get(DataComponents.BLOCK_ENTITY_DATA))
+                .map(CustomData::copyTag)
                 .map(tag -> tag.getList("data", Tag.TAG_COMPOUND))
                 .filter(list -> list.size() > 0)
                 .map(list -> list.getCompound(0))
@@ -75,7 +80,8 @@ public class ScrollData {
     }
 
     public static int readRibbonFast(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTagElement("BlockEntityTag"))
+        return Optional.ofNullable(itemStack.get(DataComponents.BLOCK_ENTITY_DATA))
+                .map(CustomData::copyTag)
                 .map(tag -> tag.getList("data", Tag.TAG_COMPOUND))
                 .filter(list -> list.size() > 0)
                 .map(list -> list.getCompound(0))
@@ -85,7 +91,8 @@ public class ScrollData {
     }
 
     public static ScrollData read(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTagElement("BlockEntityTag"))
+        return Optional.ofNullable(itemStack.get(DataComponents.BLOCK_ENTITY_DATA))
+                .map(CustomData::copyTag)
                 .map(ScrollData::read)
                 .filter(data -> data.length > 0)
                 .map(data -> data[0])
@@ -94,7 +101,7 @@ public class ScrollData {
 
     public static ScrollData[] read(CompoundTag tag) {
         return tag.getList("data", Tag.TAG_COMPOUND).stream()
-                .map(nbt -> ScrollData.codec.decode(NbtOps.INSTANCE, nbt))
+                .map(nbt -> ScrollData.CODEC.decode(NbtOps.INSTANCE, nbt))
                 .map(DataResult::result)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -104,7 +111,7 @@ public class ScrollData {
 
     public static CompoundTag write(ScrollData[] data, CompoundTag tag) {
         ListTag list = Arrays.stream(data)
-                .map(scroll -> ScrollData.codec.encodeStart(NbtOps.INSTANCE, scroll))
+                .map(scroll -> ScrollData.CODEC.encodeStart(NbtOps.INSTANCE, scroll))
                 .map(DataResult::result)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -114,18 +121,21 @@ public class ScrollData {
     }
 
     public static ScrollData read(JsonObject json) {
-        return Optional.of(ScrollData.codec.decode(JsonOps.INSTANCE, json))
+        return Optional.of(ScrollData.CODEC.decode(JsonOps.INSTANCE, json))
                 .flatMap(DataResult::result)
                 .map(Pair::getFirst)
                 .orElse(null);
     }
 
     public void write(ItemStack itemStack) {
-        itemStack.addTagElement("BlockEntityTag", ScrollData.write(new ScrollData[]{this}, new CompoundTag()));
+        CompoundTag tag = ScrollData.write(new ScrollData[]{this}, new CompoundTag());
+        CustomData data = CustomData.of(tag);
+        itemStack.set(DataComponents.BLOCK_ENTITY_DATA, data);
+        itemStack.set(DataComponents.CUSTOM_DATA, data);
     }
 
     public JsonElement write(JsonObject json) {
-        return Optional.of(ScrollData.codec.encode(this, JsonOps.INSTANCE, json))
+        return Optional.of(ScrollData.CODEC.encode(this, JsonOps.INSTANCE, json))
                 .flatMap(DataResult::result)
                 .orElse(null);
     }

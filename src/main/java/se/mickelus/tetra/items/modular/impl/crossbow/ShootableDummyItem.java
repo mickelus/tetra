@@ -1,9 +1,12 @@
 package se.mickelus.tetra.items.modular.impl.crossbow;
 
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Predicate;
 
@@ -29,11 +32,16 @@ public class ShootableDummyItem extends ProjectileWeaponItem {
      */
     @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
-        return ARROW_ONLY;
+        return ammoPredicate;
     }
 
     @Override
     public int getDefaultProjectileRange() {
         return 8;
+    }
+
+    @Override
+    protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index, float velocity, float inaccuracy, float angle,
+            @Nullable LivingEntity target) {
     }
 }

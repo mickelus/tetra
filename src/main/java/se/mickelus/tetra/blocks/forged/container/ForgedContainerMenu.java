@@ -10,9 +10,8 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -38,7 +37,8 @@ public class ForgedContainerMenu extends AbstractContainerMenu {
         this.tile = tile;
 
         // material inventory
-        tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+        var handler = tile.getItemHandler(null);
+        if (handler != null) {
             compartmentSlots = new ToggleableSlot[ForgedContainerBlockEntity.compartmentCount][];
             for (int i = 0; i < compartmentSlots.length; i++) {
                 compartmentSlots[i] = new ToggleableSlot[ForgedContainerBlockEntity.compartmentSize];
@@ -52,7 +52,7 @@ public class ForgedContainerMenu extends AbstractContainerMenu {
                     }
                 }
             }
-        });
+        }
 
         IItemHandler playerInventoryHandler = new InvWrapper(playerInventory);
 
@@ -88,9 +88,8 @@ public class ForgedContainerMenu extends AbstractContainerMenu {
     }
 
     private int getSlots() {
-        return tile.getCapability(ForgeCapabilities.ITEM_HANDLER)
-                .map(IItemHandler::getSlots)
-                .orElse(0);
+        IItemHandler handler = tile.getItemHandler(null);
+        return handler != null ? handler.getSlots() : 0;
     }
 
     /**

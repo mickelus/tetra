@@ -1,6 +1,6 @@
 package se.mickelus.tetra.levelgen;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -19,7 +19,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class ForgedCrateProcessor extends StructureProcessor {
     public static final ForgedCrateProcessor INSTANCE = new ForgedCrateProcessor();
-    public static final Codec<ForgedCrateProcessor> codec = Codec.unit(() -> ForgedCrateProcessor.INSTANCE);
+    public static final MapCodec<ForgedCrateProcessor> codec = MapCodec.unit(ForgedCrateProcessor.INSTANCE);
     public static RegistryObject<StructureProcessorType<?>> type;
 
     public ForgedCrateProcessor() {

@@ -4,11 +4,11 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.items.modular.IModularItem;
@@ -85,7 +85,7 @@ public class RemoveSchematic extends BaseSchematic {
     }
 
     @Override
-    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolAction, Integer> availableTools) {
+    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ItemAbility, Integer> availableTools) {
         return !isIntegrityViolation(player, itemStack, materials, slot)
                 && checkTools(itemStack, materials, availableTools);
     }
@@ -131,8 +131,8 @@ public class RemoveSchematic extends BaseSchematic {
     }
 
     @Override
-    public Map<ToolAction, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
-        return Collections.singletonMap(TetraToolActions.hammer, 1);
+    public Map<ItemAbility, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
+        return Collections.singletonMap(TetraItemAbilities.hammer, 1);
     }
 
     @Override

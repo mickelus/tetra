@@ -8,6 +8,7 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -29,17 +30,17 @@ public class DynamicModularItem extends ItemModularHandheld {
     }
 
     public static String getArchetypeKey(ItemStack itemStack) {
-        return getArchetypeKey(itemStack.getTag());
+        return getArchetypeKey(ItemStackTagHelper.getTag(itemStack));
     }
 
     public static void setArchetypeKey(ItemStack itemStack, String key) {
-        itemStack.getOrCreateTag().putString(typeKey, key);
+        ItemStackTagHelper.getOrCreateTag(itemStack).putString(typeKey, key);
     }
 
     protected Optional<ArchetypeDefinition> getDefinition(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTag())
+        return Optional.ofNullable(ItemStackTagHelper.getTag(itemStack))
                 .map(DynamicModularItem::getArchetypeKey)
-                .map(key -> new ResourceLocation(TetraMod.MOD_ID, key))
+                .map(key -> ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, key))
                 .map(rl -> DataManager.instance.archetypeData.getData(rl));
     }
 

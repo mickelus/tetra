@@ -36,7 +36,7 @@ import static net.minecraft.world.level.material.Fluids.WATER;
 @ParametersAreNonnullByDefault
 public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements SimpleWaterloggedBlock {
     public static final String identifier = "forged_workbench";
-    public static final ResourceLocation unlockId = new ResourceLocation(TetraMod.MOD_ID, identifier);
+    public static final ResourceLocation unlockId = ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, identifier);
     public static final EnumProperty<Direction.Axis> axis = BlockStateProperties.HORIZONTAL_AXIS;
     private static final VoxelShape zShape = Shapes.or(
             box(1, 0, 3, 15, 2, 13),
@@ -54,7 +54,7 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements Simp
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag advanced) {
+    public void appendHoverText(ItemStack itemStack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 

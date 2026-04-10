@@ -1,7 +1,7 @@
 package se.mickelus.tetra.gui.stats.sorting;
 
-import net.minecraftforge.common.ToolActions;
-import se.mickelus.tetra.TetraToolActions;
+import net.neoforged.neoforge.common.ItemAbilities;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.gui.stats.GuiStats;
 import se.mickelus.tetra.gui.stats.getter.StatFormat;
 import se.mickelus.tetra.gui.stats.getter.StatGetterIntegrity;
@@ -31,20 +31,20 @@ public class StatSorters {
                 new BasicStatSorter(GuiStats.abilityCooldownGetter, "tetra.stats.ability_speed", StatFormat.oneDecimal),
                 new BasicStatSorter(GuiStats.armorGetter, "tetra.stats.armor", StatFormat.oneDecimal),
                 new BasicStatSorter(GuiStats.toughnessGetter, "tetra.stats.toughness", StatFormat.oneDecimal),
-                new BasicStatSorter(new StatGetterToolLevel(TetraToolActions.hammer), "tetra.tool.hammer_dig", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-                new BasicStatSorter(new StatGetterToolEfficiency(TetraToolActions.hammer), "tetra.tool.hammer_dig", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
-                new BasicStatSorter(new StatGetterToolLevel(ToolActions.AXE_DIG), "tetra.tool.axe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-                new BasicStatSorter(new StatGetterToolEfficiency(ToolActions.AXE_DIG), "tetra.tool.axe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
-                new BasicStatSorter(new StatGetterToolLevel(ToolActions.PICKAXE_DIG), "tetra.tool.pickaxe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-                new BasicStatSorter(new StatGetterToolEfficiency(ToolActions.PICKAXE_DIG), "tetra.tool.pickaxe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
-                new BasicStatSorter(new StatGetterToolLevel(ToolActions.SHOVEL_DIG), "tetra.tool.shovel_dig", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-                new BasicStatSorter(new StatGetterToolEfficiency(ToolActions.SHOVEL_DIG), "tetra.tool.shovel_dig", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
-                new BasicStatSorter(new StatGetterToolLevel(TetraToolActions.cut), "tetra.tool.cut", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-                new BasicStatSorter(new StatGetterToolEfficiency(TetraToolActions.cut), "tetra.tool.cut", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
-                new BasicStatSorter(new StatGetterToolLevel(TetraToolActions.pry), "tetra.tool.pry", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-                new BasicStatSorter(new StatGetterToolEfficiency(TetraToolActions.pry), "tetra.tool.pry", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
-                new BasicStatSorter(new StatGetterToolLevel(ToolActions.HOE_DIG), "tetra.tool.hoe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
-                new BasicStatSorter(new StatGetterToolEfficiency(ToolActions.HOE_DIG), "tetra.tool.hoe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
+                new BasicStatSorter(new StatGetterToolLevel(TetraItemAbilities.hammer), "tetra.tool.hammer_dig", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+                new BasicStatSorter(new StatGetterToolEfficiency(TetraItemAbilities.hammer), "tetra.tool.hammer_dig", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
+                new BasicStatSorter(new StatGetterToolLevel(ItemAbilities.AXE_DIG), "tetra.tool.axe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+                new BasicStatSorter(new StatGetterToolEfficiency(ItemAbilities.AXE_DIG), "tetra.tool.axe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
+                new BasicStatSorter(new StatGetterToolLevel(ItemAbilities.PICKAXE_DIG), "tetra.tool.pickaxe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+                new BasicStatSorter(new StatGetterToolEfficiency(ItemAbilities.PICKAXE_DIG), "tetra.tool.pickaxe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
+                new BasicStatSorter(new StatGetterToolLevel(ItemAbilities.SHOVEL_DIG), "tetra.tool.shovel_dig", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+                new BasicStatSorter(new StatGetterToolEfficiency(ItemAbilities.SHOVEL_DIG), "tetra.tool.shovel_dig", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
+                new BasicStatSorter(new StatGetterToolLevel(TetraItemAbilities.cut), "tetra.tool.cut", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+                new BasicStatSorter(new StatGetterToolEfficiency(TetraItemAbilities.cut), "tetra.tool.cut", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
+                new BasicStatSorter(new StatGetterToolLevel(TetraItemAbilities.pry), "tetra.tool.pry", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+                new BasicStatSorter(new StatGetterToolEfficiency(TetraItemAbilities.pry), "tetra.tool.pry", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
+                new BasicStatSorter(new StatGetterToolLevel(ItemAbilities.HOE_DIG), "tetra.tool.hoe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.level_suffix"),
+                new BasicStatSorter(new StatGetterToolEfficiency(ItemAbilities.HOE_DIG), "tetra.tool.hoe_dig", StatFormat.noDecimal).setSuffix("tetra.stats.efficiency_suffix"),
                 new BasicStatSorter(GuiStats.reachGetter, "tetra.stats.reach", StatFormat.oneDecimal),
                 new BasicStatSorter(GuiStats.attackRangeGetter, "tetra.attack_range.reach", StatFormat.oneDecimal),
                 new BasicStatSorter(GuiStats.blockingReflectGetter, "tetra.stats.blocking_reflect", StatFormat.oneDecimal),

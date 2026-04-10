@@ -7,12 +7,13 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -23,20 +24,24 @@ import java.util.function.Consumer;
 public class SweepingStrikeParticle extends TextureSheetParticle {
     @OnlyIn(Dist.CLIENT)
     ParticleRenderType renderType = new ParticleRenderType() {
-        public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
+        @Override
+        public BufferBuilder begin(Tesselator tesselator, TextureManager textureManager) {
             RenderSystem.disableCull(); // needs custom render type for this
             RenderSystem.disableBlend();
             RenderSystem.depthMask(true);
+            RenderSystem.setShader(GameRenderer::getParticleShader);
             RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
-            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
+            return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
         }
 
-        public void end(Tesselator tesselator) {
-            tesselator.end();
-        }
-
+        @Override
         public String toString() {
             return "PARTICLE_SHEET_LIT";
+        }
+
+        @Override
+        public boolean isTranslucent() {
+            return false;
         }
     };
 
@@ -113,7 +118,10 @@ public class SweepingStrikeParticle extends TextureSheetParticle {
     }
 
     private void makeCornerVertex(VertexConsumer consumer, Vector3f pos, float u, float v, int light) {
-        consumer.vertex(pos.x(), pos.y(), pos.z()).uv(u, v).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(light).endVertex();
+        consumer.addVertex(pos.x(), pos.y(), pos.z())
+                .setUv(u, v)
+                .setColor(this.rCol, this.gCol, this.bCol, this.alpha)
+                .setLight(light);
     }
 
     @Override

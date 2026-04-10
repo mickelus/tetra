@@ -2,7 +2,7 @@ package se.mickelus.tetra.effect;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
 
 public class ApplyUsageEffectsEvent extends Event {
     private LivingEntity usingEntity;

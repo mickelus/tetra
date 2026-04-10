@@ -1,12 +1,14 @@
 package se.mickelus.tetra.blocks.multischematic;
 
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -25,17 +27,17 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.registries.DeferredRegister;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ClientScheduler;
-import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.effect.EffectHelper;
@@ -45,6 +47,7 @@ import java.util.stream.Stream;
 
 public class MultiblockSchematicBlock extends HorizontalDirectionalBlock implements IInteractiveBlock {
     public static final DirectionProperty facingProp = BlockStateProperties.HORIZONTAL_FACING;
+    private final MapCodec<MultiblockSchematicBlock> codec = MapCodec.unit(this);
     public final int x;
     public final int y;
     public final int height;
@@ -53,7 +56,7 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
     protected String schematic;
     protected ResourceLocation pryTable;
     protected BlockInteraction[] pryAction = new BlockInteraction[] {
-            new BlockInteraction(TetraToolActions.pry, 1, Direction.EAST, 6, 10, 7, 10,
+            new BlockInteraction(TetraItemAbilities.pry, 1, Direction.EAST, 6, 10, 7, 10,
                     BlockStatePredicate.ANY,
                     this::pryBlock)
     };
@@ -70,6 +73,11 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
         this.width = width;
 
         this.registerDefaultState(this.stateDefinition.any().setValue(facingProp, Direction.EAST));
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return codec;
     }
 
     @Override
@@ -118,17 +126,38 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
         }
     }
 
-    @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    private InteractionResult useInternal(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (pryTable != null) {
             return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
         }
-        return super.use(state, world, pos, player, hand, hit);
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult hit) {
+        if (pryTable != null) {
+            return switch (useInternal(state, world, pos, player, hand, hit)) {
+                case SUCCESS, CONSUME -> ItemInteractionResult.sidedSuccess(world.isClientSide);
+                case CONSUME_PARTIAL -> ItemInteractionResult.CONSUME_PARTIAL;
+                case FAIL -> ItemInteractionResult.FAIL;
+                default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            };
+        }
+        return super.useItemOn(stack, state, world, pos, player, hand, hit);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (pryTable != null) {
+            return useInternal(state, world, pos, player, InteractionHand.MAIN_HAND, hit);
+        }
+        return super.useWithoutItem(state, world, pos, player, hit);
     }
 
     @Override
     public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face,
-            Collection<ToolAction> tools) {
+            Collection<ItemAbility> tools) {
         if (pryTable != null && face.getOpposite().equals(blockState.getValue(facingProp))) {
             return pryAction;
         }
@@ -218,14 +247,15 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
                     int y = j;
 
                     String ruinedId = String.format(ruinedFormat, identifier, x, y);
-                    ResourceLocation brokenPryTable = new ResourceLocation("tetra", pryTablePrefix + ruinedId);
-                    RegistryObject<RuinedMultiblockSchematicBlock> ruinedRef = blocks.register(ruinedId, () -> new RuinedMultiblockSchematicBlock(ruinedProperties, brokenPryTable));
+                    ResourceLocation brokenPryTable = ResourceLocation.fromNamespaceAndPath("tetra", pryTablePrefix + ruinedId);
+                    RegistryObject<RuinedMultiblockSchematicBlock> ruinedRef = RegistryObject.of(
+                            blocks.register(ruinedId, () -> new RuinedMultiblockSchematicBlock(ruinedProperties, brokenPryTable)));
 
                     String id = String.format(format, identifier, x, y);
-                    ResourceLocation pryTable = new ResourceLocation("tetra", pryTablePrefix + id);
+                    ResourceLocation pryTable = ResourceLocation.fromNamespaceAndPath("tetra", pryTablePrefix + id);
                     RegistryObject<MultiblockSchematicBlock> ref = x == width / 2 && y == height / 2
-                            ? blocks.register(id, () -> new PrimaryMultiblockSchematicBlock(properties, identifier, ruinedRef, pryTable, x, y, height, width))
-                            : blocks.register(id, () -> new MultiblockSchematicBlock(properties, identifier, ruinedRef, pryTable, x, y, height, width));
+                            ? RegistryObject.of(blocks.register(id, () -> new PrimaryMultiblockSchematicBlock(properties, identifier, ruinedRef, pryTable, x, y, height, width)))
+                            : RegistryObject.of(blocks.register(id, () -> new MultiblockSchematicBlock(properties, identifier, ruinedRef, pryTable, x, y, height, width)));
 
 
                     items.register(id, () -> {

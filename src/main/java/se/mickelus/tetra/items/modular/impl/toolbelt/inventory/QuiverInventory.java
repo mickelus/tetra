@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class QuiverInventory extends ToolbeltInventory {
 
         predicate = getPredicate("quiver");
 
-        readFromNBT(stack.getOrCreateTag());
+        readFromNBT(ItemStackTagHelper.getOrCreateTag(stack));
     }
 
     // todo 1.20 verify: toolbelt quiver inventories aggregate stacks in quick access
@@ -37,7 +38,7 @@ public class QuiverInventory extends ToolbeltInventory {
         for (ItemStack itemStack : inventoryContents) {
             boolean found = false;
             for (ItemStack aggregatedStack : aggregatedStacks) {
-                if (ItemStack.isSameItemSameTags(itemStack, aggregatedStack)) {
+                if (ItemStack.isSameItemSameComponents(itemStack, aggregatedStack)) {
                     found = true;
                     aggregatedStack.grow(itemStack.getCount());
                     break;
@@ -53,7 +54,7 @@ public class QuiverInventory extends ToolbeltInventory {
 
     public int getFirstIndexForStack(ItemStack itemStack) {
         for (int i = 0; i < inventoryContents.size(); i++) {
-            if (ItemStack.isSameItemSameTags(itemStack, inventoryContents.get(i))) {
+            if (ItemStack.isSameItemSameComponents(itemStack, inventoryContents.get(i))) {
                 return i;
             }
         }

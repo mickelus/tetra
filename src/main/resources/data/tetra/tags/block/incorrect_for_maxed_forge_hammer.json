@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+        "#minecraft:incorrect_for_diamond_tool"
+    ],
+    "remove": [
+        "#tetra:needs_forge_hammer_tool"
+    ]
+}

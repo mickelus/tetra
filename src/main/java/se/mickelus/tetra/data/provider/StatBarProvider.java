@@ -30,7 +30,7 @@ public class StatBarProvider implements DataProvider {
     @Override
     public CompletableFuture<?> run(CachedOutput cache) {
         return CompletableFuture.allOf(bars.entrySet().stream()
-                .map(template -> DataProvider.saveStable(cache, toJson(template.getValue()), pathProvider.json(new ResourceLocation(template.getKey()))))
+                .map(template -> DataProvider.saveStable(cache, toJson(template.getValue()), pathProvider.json(ResourceLocation.parse(template.getKey()))))
                 .toArray(CompletableFuture[]::new));
     }
 
@@ -46,5 +46,4 @@ public class StatBarProvider implements DataProvider {
     record StatBarTemplate(String name, String texture, String color, String overlay) {
     }
 }
-
 

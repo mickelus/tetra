@@ -4,14 +4,22 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraftforge.registries.ForgeRegistries;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.ModularItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,11 +28,19 @@ public class AttributeHelper {
 
     public static final Multimap<Attribute, AttributeModifier> emptyMap = ImmutableMultimap.of();
 
-    private static final Map<String, UUID> attributeIdMap = new HashMap<>();
+    private static final Map<String, ResourceLocation> attributeIdMap = new HashMap<>();
 
     static {
-        attributeIdMap.put(getAttributeKey(Attributes.ATTACK_DAMAGE, AttributeModifier.Operation.ADDITION), ModularItem.attackDamageModifier);
-        attributeIdMap.put(getAttributeKey(Attributes.ATTACK_SPEED, AttributeModifier.Operation.ADDITION), ModularItem.attackSpeedModifier);
+        attributeIdMap.put(getAttributeKey(Attributes.ATTACK_DAMAGE.value(), AttributeModifier.Operation.ADD_VALUE),
+                ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "attack_damage"));
+        attributeIdMap.put(getAttributeKey(Attributes.ATTACK_SPEED.value(), AttributeModifier.Operation.ADD_VALUE),
+                ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "attack_speed"));
+    }
+
+    public static Holder<Attribute> getHolder(Attribute attribute) {
+        ResourceLocation key = Objects.requireNonNull(ForgeRegistries.ATTRIBUTES.getKey(attribute), "Unregistered attribute: " + attribute);
+        Holder.Reference<Attribute> holder = BuiltInRegistries.ATTRIBUTE.getHolder(ResourceKey.create(Registries.ATTRIBUTE, key)).orElse(null);
+        return holder != null ? holder : BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute);
     }
 
     /**
@@ -99,7 +115,7 @@ public class AttributeHelper {
 
     public static Collection<AttributeModifier> retainMax(Collection<AttributeModifier> modifiers) {
         return modifiers.stream()
-                .collect(Collectors.groupingBy(AttributeModifier::getOperation, Collectors.maxBy(Comparator.comparing(AttributeModifier::getAmount))))
+                .collect(Collectors.groupingBy(AttributeModifier::operation, Collectors.maxBy(Comparator.comparing(AttributeModifier::amount))))
                 .values()
                 .stream()
                 .map(Optional::get)
@@ -117,11 +133,11 @@ public class AttributeHelper {
         return Stream.of(
                         Optional.of(getAdditionAmount(modifiers))
                                 .filter(amount -> amount != 0)
-                                .map(amount -> new AttributeModifier("tetra.stats.addition", amount, AttributeModifier.Operation.ADDITION)),
+                                .map(amount -> new AttributeModifier(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "stats/addition"), amount, AttributeModifier.Operation.ADD_VALUE)),
                         Optional.of(getMultiplyAmount(modifiers))
                                 .map(amount -> amount - 1) // vanilla expects the multiplier to be 0 based
                                 .filter(amount -> amount != 0)
-                                .map(amount -> new AttributeModifier("tetra.stats.multiply", amount, AttributeModifier.Operation.MULTIPLY_TOTAL)))
+                                .map(amount -> new AttributeModifier(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "stats/multiply"), amount, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
@@ -144,22 +160,22 @@ public class AttributeHelper {
 
     public static double getAdditionAmount(Collection<AttributeModifier> modifiers) {
         double base = modifiers.stream()
-                .filter(modifier -> modifier.getOperation().equals(AttributeModifier.Operation.ADDITION))
-                .mapToDouble(AttributeModifier::getAmount)
+                .filter(modifier -> modifier.operation().equals(AttributeModifier.Operation.ADD_VALUE))
+                .mapToDouble(AttributeModifier::amount)
                 .sum();
 
         return base
                 + modifiers.stream()
-                .filter(modifier -> modifier.getOperation().equals(AttributeModifier.Operation.MULTIPLY_BASE))
-                .mapToDouble(AttributeModifier::getAmount)
+                .filter(modifier -> modifier.operation().equals(AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
+                .mapToDouble(AttributeModifier::amount)
                 .map(amount -> amount * Math.abs(base))
                 .sum();
     }
 
     public static double getMultiplyAmount(Collection<AttributeModifier> modifiers) {
         return modifiers.stream()
-                .filter(modifier -> modifier.getOperation().equals(AttributeModifier.Operation.MULTIPLY_TOTAL))
-                .mapToDouble(AttributeModifier::getAmount)
+                .filter(modifier -> modifier.operation().equals(AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL))
+                .mapToDouble(AttributeModifier::amount)
                 .map(amount -> amount + 1)
                 .reduce(1, (a, b) -> a * b);
     }
@@ -176,7 +192,7 @@ public class AttributeHelper {
     }
 
     public static AttributeModifier multiplyModifier(AttributeModifier modifier, double multiplier) {
-        return new AttributeModifier(modifier.getId(), modifier.getName(), modifier.getAmount() * multiplier, modifier.getOperation());
+        return new AttributeModifier(modifier.id(), modifier.amount() * multiplier, modifier.operation());
     }
 
     public static Multimap<Attribute, AttributeModifier> collapseRound(Multimap<Attribute, AttributeModifier> modifiers) {
@@ -201,11 +217,11 @@ public class AttributeHelper {
     }
 
     private static float getRounding(Attribute attribute, AttributeModifier mod) {
-        if (mod.getOperation() != AttributeModifier.Operation.ADDITION) {
+        if (mod.operation() != AttributeModifier.Operation.ADD_VALUE) {
             return 0.01f;
-        } else if (Attributes.ATTACK_DAMAGE.equals(attribute)
-                || Attributes.ARMOR.equals(attribute)
-                || Attributes.ARMOR_TOUGHNESS.equals(attribute)
+        } else if (Attributes.ATTACK_DAMAGE.value().equals(attribute)
+                || Attributes.ARMOR.value().equals(attribute)
+                || Attributes.ARMOR_TOUGHNESS.value().equals(attribute)
                 || TetraAttributes.drawStrength.get().equals(attribute)
                 || TetraAttributes.abilityDamage.get().equals(attribute)) {
             return 0.5f;
@@ -215,19 +231,21 @@ public class AttributeHelper {
 
     private static AttributeModifier round(Attribute attribute, AttributeModifier mod) {
         double rounding = getRounding(attribute, mod);
-        return new AttributeModifier(mod.getId(), mod.getName(), Math.round(mod.getAmount() / rounding) * rounding, mod.getOperation());
+        return new AttributeModifier(mod.id(), Math.round(mod.amount() / rounding) * rounding, mod.operation());
     }
 
     public static String getAttributeKey(Attribute attribute, AttributeModifier.Operation operation) {
         return attribute.getDescriptionId() + operation.ordinal();
     }
 
-    private static UUID getAttributeId(Attribute attribute, AttributeModifier.Operation operation) {
-        return attributeIdMap.computeIfAbsent(getAttributeKey(attribute, operation), k -> Mth.createInsecureUUID());
+    private static ResourceLocation getAttributeId(Attribute attribute, AttributeModifier.Operation operation) {
+        return attributeIdMap.computeIfAbsent(getAttributeKey(attribute, operation),
+                k -> ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID,
+                        "attribute/" + attribute.getDescriptionId().replace(':', '_').replace('.', '_') + "/" + operation.getSerializedName()));
     }
 
     public static AttributeModifier fixIdentifiers(Attribute attribute, AttributeModifier modifier) {
-        return new AttributeModifier(getAttributeId(attribute, modifier.getOperation()), modifier.getName(), modifier.getAmount(), modifier.getOperation());
+        return new AttributeModifier(getAttributeId(attribute, modifier.operation()), modifier.amount(), modifier.operation());
     }
 
     public static Multimap<Attribute, AttributeModifier> fixIdentifiers(Multimap<Attribute, AttributeModifier> modifiers) {
@@ -245,20 +263,20 @@ public class AttributeHelper {
     public static double calculateValue(Attribute attribute, Collection<AttributeModifier>... modifiers) {
         double sum = Arrays.stream(modifiers)
                 .flatMap(Collection::stream)
-                .filter(modifier -> modifier.getOperation() == AttributeModifier.Operation.ADDITION)
-                .mapToDouble(AttributeModifier::getAmount)
+                .filter(modifier -> modifier.operation() == AttributeModifier.Operation.ADD_VALUE)
+                .mapToDouble(AttributeModifier::amount)
                 .sum() + attribute.getDefaultValue();
 
         double additiveMultiplier = Arrays.stream(modifiers)
                 .flatMap(Collection::stream)
-                .filter(modifier -> modifier.getOperation() == AttributeModifier.Operation.MULTIPLY_BASE)
-                .mapToDouble(AttributeModifier::getAmount)
+                .filter(modifier -> modifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .mapToDouble(AttributeModifier::amount)
                 .sum() + 1;
 
         double multiplicativeMultiplier = Arrays.stream(modifiers)
                 .flatMap(Collection::stream)
-                .filter(modifier -> modifier.getOperation() == AttributeModifier.Operation.MULTIPLY_TOTAL)
-                .mapToDouble(modifier -> modifier.getAmount() + 1)
+                .filter(modifier -> modifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+                .mapToDouble(modifier -> modifier.amount() + 1)
                 .reduce(1, (a, b) -> a * b);
 
         return attribute.sanitizeValue(sum * additiveMultiplier * multiplicativeMultiplier);

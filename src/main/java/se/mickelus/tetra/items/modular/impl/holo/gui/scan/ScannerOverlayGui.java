@@ -22,12 +22,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiRoot;
 import se.mickelus.tetra.ConfigHandler;
@@ -41,7 +41,7 @@ import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
-    public static final TagKey<Block> tag = BlockTags.create(new ResourceLocation("tetra", "scannable"));
+    public static final TagKey<Block> tag = BlockTags.create(ResourceLocation.fromNamespaceAndPath("tetra", "scannable"));
     private static final int snoozeLength = 6000; // 5 min
     public static ScannerOverlayGui instance;
     private final ScannerBarGui scanner;
@@ -71,7 +71,7 @@ public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
         sound = new ScannerSound(mc);
 
         if (ConfigHandler.development.get()) {
-            MinecraftForge.EVENT_BUS.register(new ScannerDebugRenderer(this));
+            NeoForge.EVENT_BUS.register(new ScannerDebugRenderer(this));
         }
 
         instance = this;
@@ -159,11 +159,11 @@ public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
+    public void onClientTick(ClientTickEvent.Pre event) {
         Level world = mc.level;
         Player player = mc.player;
 
-        if (world == null || player == null || TickEvent.Phase.START != event.phase) {
+        if (world == null || player == null) {
             return;
         }
 

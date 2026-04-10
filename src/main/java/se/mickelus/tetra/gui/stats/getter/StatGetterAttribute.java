@@ -1,5 +1,6 @@
 package se.mickelus.tetra.gui.stats.getter;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 public class StatGetterAttribute implements IStatGetter {
+    private final Holder<Attribute> attributeHolder;
     private final Attribute attribute;
 
     private boolean ignoreBase = false;
@@ -21,8 +23,19 @@ public class StatGetterAttribute implements IStatGetter {
 
     private double offset = 0;
 
+    public StatGetterAttribute(Holder<Attribute> attribute) {
+        this.attributeHolder = attribute;
+        this.attribute = attribute.value();
+    }
+
     public StatGetterAttribute(Attribute attribute) {
-        this.attribute = attribute;
+        this(AttributeHelper.getHolder(attribute));
+    }
+
+    public StatGetterAttribute(Holder<Attribute> attribute, boolean ignoreBase) {
+        this(attribute);
+
+        this.ignoreBase = ignoreBase;
     }
 
     public StatGetterAttribute(Attribute attribute, boolean ignoreBase) {
@@ -31,21 +44,29 @@ public class StatGetterAttribute implements IStatGetter {
         this.ignoreBase = ignoreBase;
     }
 
-    public StatGetterAttribute(Attribute attribute, boolean ignoreBase, boolean ignoreBonuses) {
+    public StatGetterAttribute(Holder<Attribute> attribute, boolean ignoreBase, boolean ignoreBonuses) {
         this(attribute);
 
         this.ignoreBase = ignoreBase;
         this.ignoreBonuses = ignoreBonuses;
     }
 
-    public StatGetterAttribute(Attribute attribute, boolean ignoreBase, boolean ignoreBonuses, double offset) {
+    public StatGetterAttribute(Attribute attribute, boolean ignoreBase, boolean ignoreBonuses) {
+        this(AttributeHelper.getHolder(attribute), ignoreBase, ignoreBonuses);
+    }
+
+    public StatGetterAttribute(Holder<Attribute> attribute, boolean ignoreBase, boolean ignoreBonuses, double offset) {
         this(attribute, ignoreBase, ignoreBonuses);
         this.offset = offset;
     }
 
+    public StatGetterAttribute(Attribute attribute, boolean ignoreBase, boolean ignoreBonuses, double offset) {
+        this(AttributeHelper.getHolder(attribute), ignoreBase, ignoreBonuses, offset);
+    }
+
     @Override
     public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
-        double baseValue = ignoreBase ? 0 : Optional.ofNullable(player.getAttribute(attribute))
+        double baseValue = ignoreBase ? 0 : Optional.ofNullable(player.getAttribute(attributeHolder))
                 .map(AttributeInstance::getBaseValue)
                 .orElse(0d) + offset;
         return getValue(player, currentStack) != baseValue || getValue(player, previewStack) != baseValue;
@@ -53,7 +74,7 @@ public class StatGetterAttribute implements IStatGetter {
 
     @Override
     public double getValue(Player player, ItemStack itemStack) {
-        double baseValue = ignoreBase ? 0 : Optional.ofNullable(player.getAttribute(attribute))
+        double baseValue = ignoreBase ? 0 : Optional.ofNullable(player.getAttribute(attributeHolder))
                 .map(AttributeInstance::getBaseValue)
                 .orElse(0d);
         return CastOptional.cast(itemStack.getItem(), IModularItem.class)

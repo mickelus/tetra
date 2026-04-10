@@ -19,15 +19,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ObjectHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.blocks.workbench.BasicWorkbenchBlock;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ChargedAbilityEffect;
@@ -66,6 +66,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
     public ModularDoubleHeadedItem() {
         super(new Item.Properties().stacksTo(1).fireResistant());
+        instance = this;
 
         entityHitDamage = 2;
 
@@ -74,7 +75,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
 
         requiredModules = new String[] { handleKey, headLeftKey, headRightKey };
 
-        updateConfig(ConfigHandler.honedoubleBase.get(), ConfigHandler.honedoubleIntegrityMultiplier.get());
+        updateConfig(ConfigHandler.HONE_DOUBLE_BASE_DEFAULT, ConfigHandler.HONE_DOUBLE_INTEGRITY_MULTIPLIER_DEFAULT);
 
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
@@ -136,7 +137,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         if (player != null
                 && !player.isCrouching()
                 && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
-                && getToolLevel(player.getItemInHand(hand), TetraToolActions.hammer) > 0) {
+                && getToolLevel(player.getItemInHand(hand), TetraItemAbilities.hammer) > 0) {
             return BasicWorkbenchBlock.upgradeWorkbench(player, world, pos, hand, context.getClickedFace());
         }
         return super.onItemUseFirst(stack, context);
@@ -175,7 +176,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
                 .map(Multimap::entries)
                 .flatMap(Collection::stream)
                 .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
-        moduleAttributes = AttributeHelper.retainMax(moduleAttributes, Attributes.ATTACK_DAMAGE);
+        moduleAttributes = AttributeHelper.retainMax(moduleAttributes, Attributes.ATTACK_DAMAGE.value());
 
         moduleAttributes = getAllModules(itemStack).stream()
                 .filter(itemModule -> !(headLeftKey.equals(itemModule.getSlot()) || headRightKey.equals(itemModule.getSlot())))
@@ -242,5 +243,3 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         return null;
     }
 }
-
-

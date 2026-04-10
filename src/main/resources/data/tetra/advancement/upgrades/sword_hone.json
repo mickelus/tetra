@@ -1,0 +1,57 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "minecraft:custom_data": {
+                    "id": "upgrades/sword_hone",
+                    "sword/blade": "sword/machete",
+                    "sword/machete_material": "machete/diorite",
+                    "sword/hilt": "sword/basic_hilt",
+                    "sword/basic_hilt_material": "basic_hilt/stick"
+                }
+            },
+            "id": "tetra:modular_sword"
+        },
+        "title": {
+            "translate": "tetra.advancements.upgrades.sword_hone.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.upgrades.sword_hone.description"
+        }
+    },
+    "parent": "tetra:upgrades/sword_upgrade",
+    "criteria": {
+        "blade_hone/damage": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade_hone/damage"
+            }
+        },
+        "blade_hone/speed": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "blade_hone/speed"
+            }
+        },
+        "hilt_hone/damage": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "hilt_hone/damage"
+            }
+        },
+        "hilt_hone/speed": {
+            "trigger": "tetra:craft_improvement",
+            "conditions": {
+                "improvement": "hilt_hone/speed"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "blade_hone/damage",
+            "blade_hone/speed",
+            "hilt_hone/damage",
+            "hilt_hone/speed"
+        ]
+    ]
+}

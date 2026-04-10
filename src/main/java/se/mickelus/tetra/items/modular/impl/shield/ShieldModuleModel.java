@@ -76,12 +76,12 @@ public class ShieldModuleModel implements IModuleModel {
     }
 
     protected static ResourceLocation appendString(ResourceLocation resourceLocation, String string) {
-        return new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath() + string);
+        return ResourceLocation.fromNamespaceAndPath(resourceLocation.getNamespace(), resourceLocation.getPath() + string);
     }
 
     public ShieldModuleModel withSlotSuffix(String suffix) {
         ShieldModuleModel copy = copy();
-        copy.texture = new ResourceLocation(texture.getNamespace(), texture.getPath() + suffix);
+        copy.texture = ResourceLocation.fromNamespaceAndPath(texture.getNamespace(), texture.getPath() + suffix);
         return copy;
     }
 

@@ -4,10 +4,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiRoot;
 import se.mickelus.mutil.gui.GuiString;
@@ -32,9 +32,8 @@ public class MultiblockSchematicGui extends GuiRoot implements IGuiOverlay {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (TickEvent.Phase.END == event.phase
-                && mc.player != null
+    public void onClientTick(ClientTickEvent.Post event) {
+        if (mc.player != null
                 && mc.level != null
                 && (mc.level.getGameTime() % 10 == 0 || selected != mc.player.getInventory().selected)) {
             this.selected = mc.player.getInventory().selected;

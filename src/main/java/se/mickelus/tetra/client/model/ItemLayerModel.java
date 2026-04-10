@@ -14,14 +14,14 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.ForgeRenderTypes;
-import net.minecraftforge.client.RenderTypeGroup;
-import net.minecraftforge.client.model.CompositeModel;
-import net.minecraftforge.client.model.IQuadTransformer;
-import net.minecraftforge.client.model.SimpleModelState;
-import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
-import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
-import net.minecraftforge.client.model.geometry.UnbakedGeometryHelper;
+import net.neoforged.neoforge.client.NeoForgeRenderTypes;
+import net.neoforged.neoforge.client.RenderTypeGroup;
+import net.neoforged.neoforge.client.model.CompositeModel;
+import net.neoforged.neoforge.client.model.IQuadTransformer;
+import net.neoforged.neoforge.client.model.SimpleModelState;
+import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
+import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
+import net.neoforged.neoforge.client.model.geometry.UnbakedGeometryHelper;
 
 import java.util.List;
 import java.util.function.Function;
@@ -39,7 +39,7 @@ public class ItemLayerModel implements IUnbakedGeometry<ItemLayerModel> {
 
     @Override
     public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState,
-            ItemOverrides overrides, ResourceLocation modelLocation) {
+            ItemOverrides overrides) {
         TextureAtlasSprite particle = spriteGetter.apply(context.hasMaterial("particle")
                 ? context.getMaterial("particle")
                 : textures.size() > 0
@@ -54,9 +54,9 @@ public class ItemLayerModel implements IUnbakedGeometry<ItemLayerModel> {
         CompositeModel.Baked.Builder builder = CompositeModel.Baked.builder(context, particle, overrides, context.getTransforms());
         for (int i = 0; i < textures.size(); i++) {
             TextureAtlasSprite sprite = spriteGetter.apply(textures.get(i));
-            List<BlockElement> unbaked = UnbakedGeometryHelper.createUnbakedItemElements(i, sprite.contents());
+            List<BlockElement> unbaked = UnbakedGeometryHelper.createUnbakedItemElements(i, sprite);
 
-            List<BakedQuad> quads = UnbakedGeometryHelper.bakeElements(unbaked, $ -> sprite, modelState, modelLocation);
+            List<BakedQuad> quads = UnbakedGeometryHelper.bakeElements(unbaked, $ -> sprite, modelState);
 
             if (layerTransformers.containsKey(i)) {
                 layerTransformers.get(i).forEach(transformer -> transformer.processInPlace(quads));
@@ -65,11 +65,10 @@ public class ItemLayerModel implements IUnbakedGeometry<ItemLayerModel> {
             ResourceLocation renderTypeName = renderTypeNames.get(i);
             RenderTypeGroup renderTypes = renderTypeName != null
                     ? context.getRenderType(renderTypeName)
-                    : new RenderTypeGroup(RenderType.solid(), ForgeRenderTypes.ITEM_UNSORTED_TRANSLUCENT.get());
+                    : new RenderTypeGroup(RenderType.solid(), NeoForgeRenderTypes.ITEM_UNSORTED_TRANSLUCENT.get());
             builder.addQuads(renderTypes, quads);
         }
 
         return builder.build();
     }
 }
-

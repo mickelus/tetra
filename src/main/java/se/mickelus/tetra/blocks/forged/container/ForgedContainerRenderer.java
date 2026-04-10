@@ -17,8 +17,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -26,9 +26,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContainerBlockEntity> {
-    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "block/forged_container/forged_container"));
+    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS,
+            ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "block/forged_container/forged_container"));
     private static final float openDuration = 300;
-    public static ModelLayerLocation layer = new ModelLayerLocation(new ResourceLocation(TetraMod.MOD_ID, ForgedContainerBlock.identifier), "main");
+    public static ModelLayerLocation layer = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, ForgedContainerBlock.identifier), "main");
     public ModelPart lid;
     public ModelPart base;
     public ModelPart[] locks;

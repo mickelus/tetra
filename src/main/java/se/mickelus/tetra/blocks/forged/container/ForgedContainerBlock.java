@@ -1,12 +1,11 @@
 package se.mickelus.tetra.blocks.forged.container;
 
-
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -26,14 +25,14 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.ItemAbility;
+import se.mickelus.tetra.compat.neoforge.network.NetworkHooks;
 import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
@@ -58,25 +57,25 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     public static final BooleanProperty anyLockedProp = BooleanProperty.create("locked_any");
     public static final BooleanProperty openProp = BooleanProperty.create("open");
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.SOUTH, 5, 7, 2, 5,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.SOUTH, 5, 7, 2, 5,
                     new PropertyMatcher().where(locked1Prop, equalTo(true)).where(flippedProp, equalTo(false)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 0, hand)),
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.SOUTH, 11, 13, 2, 5,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.SOUTH, 11, 13, 2, 5,
                     new PropertyMatcher().where(locked2Prop, equalTo(true)).where(flippedProp, equalTo(false)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 1, hand)),
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.SOUTH, 17, 19, 2, 5,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.SOUTH, 17, 19, 2, 5,
                     new PropertyMatcher().where(locked1Prop, equalTo(true)).where(flippedProp, equalTo(true)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 2, hand)),
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.SOUTH, 23, 25, 2, 5,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.SOUTH, 23, 25, 2, 5,
                     new PropertyMatcher().where(locked2Prop, equalTo(true)).where(flippedProp, equalTo(true)),
                     (world, pos, blockState, player, hand, hitFace) -> breakLock(world, pos, player, 3, hand)),
-            new BlockInteraction(TetraToolActions.pry, 1, Direction.SOUTH, 1, 15, 3, 4,
+            new BlockInteraction(TetraItemAbilities.pry, 1, Direction.SOUTH, 1, 15, 3, 4,
                     new PropertyMatcher()
                             .where(anyLockedProp, equalTo(false))
                             .where(openProp, equalTo(false))
                             .where(flippedProp, equalTo(false)),
                     ForgedContainerBlock::open),
-            new BlockInteraction(TetraToolActions.pry, 1, Direction.SOUTH, 15, 28, 3, 4,
+            new BlockInteraction(TetraItemAbilities.pry, 1, Direction.SOUTH, 15, 28, 3, 4,
                     new PropertyMatcher()
                             .where(anyLockedProp, equalTo(false))
                             .where(openProp, equalTo(false))
@@ -126,28 +125,26 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        MenuScreens.register(ForgedContainerMenu.type.get(), ForgedContainerScreen::new);
     }
 
     @Override
-    public void commonInit(PacketHandler packetHandler) {
-        packetHandler.registerPacket(ChangeCompartmentPacket.class, ChangeCompartmentPacket::new);
+    public void registerPackets(PacketHandler packetHandler) {
+        packetHandler.registerServerBoundPacket(ChangeCompartmentPacket.class, ChangeCompartmentPacket::new);
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ToolAction> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ItemAbility> tools) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.getValue(facingProp), face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
-    @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    private InteractionResult useInternal(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         InteractionResult didInteract = BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
 
         if (didInteract != InteractionResult.SUCCESS) {
@@ -165,6 +162,22 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
         }
 
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult hit) {
+        return switch (useInternal(state, world, pos, player, hand, hit)) {
+            case SUCCESS, CONSUME -> ItemInteractionResult.sidedSuccess(world.isClientSide);
+            case CONSUME_PARTIAL -> ItemInteractionResult.CONSUME_PARTIAL;
+            case FAIL -> ItemInteractionResult.FAIL;
+            default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        return useInternal(state, world, pos, player, InteractionHand.MAIN_HAND, hit);
     }
 
     @Override

@@ -6,7 +6,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -149,8 +149,8 @@ public class HoloMaterialTranslationGui extends GuiElement {
     private void extractAttributes(Multimap<Attribute, AttributeModifier> attributes, List<String> result) {
         if (attributes != null) {
             attributes.entries().stream()
-                    .map(entry -> getStatLine(entry.getKey().getDescriptionId(), (int) entry.getValue().getAmount(),
-                            entry.getValue().getOperation() != AttributeModifier.Operation.ADDITION ? "tetra.attribute.multiplier" : null))
+                    .map(entry -> getStatLine(entry.getKey().getDescriptionId(), (int) entry.getValue().amount(),
+                            entry.getValue().operation() != AttributeModifier.Operation.ADD_VALUE ? "tetra.attribute.multiplier" : null))
                     .filter(Objects::nonNull)
                     .map(line -> "  " + line)
                     .forEach(result::add);
@@ -208,7 +208,7 @@ public class HoloMaterialTranslationGui extends GuiElement {
     }
 
 
-    private String extractToolLevel(ToolAction tool, ToolData toolData) {
+    private String extractToolLevel(ItemAbility tool, ToolData toolData) {
         int level = toolData.getLevel(tool);
         if (level != 0) {
             return getStatLine("tetra.tool." + tool.name(), level, "tetra.stats.tier_suffix");
@@ -217,7 +217,7 @@ public class HoloMaterialTranslationGui extends GuiElement {
         return null;
     }
 
-    private String extractToolEfficiency(ToolAction tool, ToolData toolData) {
+    private String extractToolEfficiency(ItemAbility tool, ToolData toolData) {
         int efficiency = (int) toolData.getEfficiency(tool);
         if (efficiency != 0) {
             return getStatLine("tetra.tool." + tool.name(), efficiency, "tetra.stats.efficiency_suffix");

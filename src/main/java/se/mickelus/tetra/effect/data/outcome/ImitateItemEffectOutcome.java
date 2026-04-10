@@ -1,6 +1,7 @@
 package se.mickelus.tetra.effect.data.outcome;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -49,16 +50,27 @@ public class ImitateItemEffectOutcome extends ItemEffectOutcome {
 
     private boolean swing(ItemEffectContext context) {
         if (user.getEntity(context) instanceof LivingEntity livingEntity) {
-            return context.getUsedItemStack().onEntitySwing(livingEntity);
+            return context.getUsedItemStack().onEntitySwing(livingEntity, resolveSwingHand(livingEntity, context.getUsedItemStack()));
         }
         return false;
+    }
+
+    private static InteractionHand resolveSwingHand(LivingEntity entity, ItemStack stack) {
+        if (ItemStack.isSameItemSameComponents(entity.getItemInHand(InteractionHand.MAIN_HAND), stack)) {
+            return InteractionHand.MAIN_HAND;
+        }
+        if (ItemStack.isSameItemSameComponents(entity.getItemInHand(InteractionHand.OFF_HAND), stack)) {
+            return InteractionHand.OFF_HAND;
+        }
+        return InteractionHand.MAIN_HAND;
     }
 
     private boolean breakBlockStart(ItemEffectContext context) {
         if (user.getEntity(context) instanceof Player player) {
             BlockPos targetPos = targetPosition.getBlockPos(context);
             if (targetPos != null) {
-                return itemStack.onBlockStartBreak(targetPos, player);
+                // The old pre-break stack hook was removed in 1.21.x.
+                return false;
             }
         }
         return false;

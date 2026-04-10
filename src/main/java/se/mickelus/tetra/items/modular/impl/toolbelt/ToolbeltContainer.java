@@ -7,8 +7,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.gui.DisabledSlot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
@@ -127,7 +127,7 @@ public class ToolbeltContainer extends AbstractContainerMenu {
             Slot slot = this.slots.get(i);
             if (slot.mayPlace(incomingStack)) {
                 ItemStack slotStack = slot.getItem();
-                if (ItemStack.isSameItemSameTags(slotStack, incomingStack)) {
+                if (ItemStack.isSameItemSameComponents(slotStack, incomingStack)) {
                     if (slotStack.getCount() + incomingStack.getCount() < slot.getMaxStackSize(slotStack)) {
                         slotStack.grow(incomingStack.getCount());
                         incomingStack.setCount(0);

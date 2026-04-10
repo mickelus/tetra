@@ -1,13 +1,14 @@
 package se.mickelus.tetra.items.modular.impl.shield;
 
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BannerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.ToolAction;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.ImprovementCraftCriterion;
@@ -22,8 +23,6 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
-
 @ParametersAreNonnullByDefault
 public class ApplyBannerSchematic implements UpgradeSchematic {
     private static final String localizationPrefix = TetraMod.MOD_ID + "/schematic/";
@@ -99,7 +98,7 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolAction, Integer> availableTools) {
+    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ItemAbility, Integer> availableTools) {
         return isMaterialsValid(itemStack, slot, materials);
     }
 
@@ -122,13 +121,9 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
                     .ifPresent(module -> {
                         if (module.acceptsImprovementLevel(ModularShieldItem.bannerImprovementKey, 0)) {
                             module.addImprovement(upgradedStack, ModularShieldItem.bannerImprovementKey, 0);
-
-                            CompoundTag bannerTag = Optional.ofNullable(bannerStack.getTagElement("BlockEntityTag"))
-                                    .map(CompoundTag::copy)
-                                    .orElse(new CompoundTag());
-
-                            bannerTag.putInt("Base", ((BannerItem) bannerStack.getItem()).getColor().getId());
-                            upgradedStack.addTagElement("BlockEntityTag", bannerTag.copy());
+                            upgradedStack.set(DataComponents.BASE_COLOR, ((BannerItem) bannerStack.getItem()).getColor());
+                            upgradedStack.set(DataComponents.BANNER_PATTERNS,
+                                    bannerStack.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY));
 
                             if (consumeMaterials) {
                                 materials[0].shrink(1);
@@ -147,12 +142,12 @@ public class ApplyBannerSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean checkTools(ItemStack targetStack, ItemStack[] materials, Map<ToolAction, Integer> availableTools) {
+    public boolean checkTools(ItemStack targetStack, ItemStack[] materials, Map<ItemAbility, Integer> availableTools) {
         return true;
     }
 
     @Override
-    public Map<ToolAction, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
+    public Map<ItemAbility, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
         return Collections.emptyMap();
     }
 

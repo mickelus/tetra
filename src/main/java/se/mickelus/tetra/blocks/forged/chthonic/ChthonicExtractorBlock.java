@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,14 +32,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.registries.DeferredRegister;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ObjectHolder;
-import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.FeatureFlag;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraBlock;
@@ -64,13 +65,13 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
             Block.box(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D),
             Block.box(6.0D, 15.0D, 6.0D, 10.0D, 16.0D, 10.0D));
     static final BlockInteraction[] interactions = new BlockInteraction[] {
-            new BlockInteraction(TetraToolActions.hammer, 4, Direction.UP, 0, 4, 0, 4,
+            new BlockInteraction(TetraItemAbilities.hammer, 4, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand)),
-            new BlockInteraction(TetraToolActions.hammer, 5, Direction.UP, 0, 4, 0, 4,
+            new BlockInteraction(TetraItemAbilities.hammer, 5, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand)),
-            new BlockInteraction(TetraToolActions.hammer, 6, Direction.UP, 0, 4, 0, 4,
+            new BlockInteraction(TetraItemAbilities.hammer, 6, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand)),
-            new BlockInteraction(TetraToolActions.hammer, 7, Direction.UP, 0, 4, 0, 4,
+            new BlockInteraction(TetraItemAbilities.hammer, 7, Direction.UP, 0, 4, 0, 4,
                     PropertyMatcher.any, (world, pos, blockState, player, hand, hitFace) -> hit(world, pos, player, hand))
     };
     @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
@@ -92,7 +93,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
             int amount = Optional.ofNullable(playerEntity)
                     .map(player -> player.getItemInHand(hand))
                     .filter(itemStack -> itemStack.getItem() instanceof IToolProvider)
-                    .map(itemStack -> ((IToolProvider) itemStack.getItem()).getToolEfficiency(itemStack, TetraToolActions.hammer))
+                    .map(itemStack -> ((IToolProvider) itemStack.getItem()).getToolEfficiency(itemStack, TetraItemAbilities.hammer))
                     .map(Math::round)
                     .orElse(4);
 
@@ -110,13 +111,19 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
                 .orElseGet(() -> FracturedBedrockBlock.canPierce(world, pos.below()) ? 0 : -1);
     }
 
-    public static RegistryObject<BlockItem> registerItems(DeferredRegister<Item> registry) {
-        registry.register(usedIdentifier, () -> new BlockItem(instance, new Item.Properties().durability(maxDamage)));
-        return registry.register(identifier, () -> new BlockItem(instance, new Item.Properties().stacksTo(64)));
+    public static DeferredHolder<Item, BlockItem> registerItems(DeferredRegister<Item> registry) {
+        registry.register(usedIdentifier, () -> {
+            usedItem = new BlockItem(instance, new Item.Properties().durability(maxDamage));
+            return (BlockItem) usedItem;
+        });
+        return registry.register(identifier, () -> {
+            item = new BlockItem(instance, new Item.Properties().stacksTo(64));
+            return (BlockItem) item;
+        });
     }
 
     @Override
-    public void appendHoverText(final ItemStack stack, @Nullable final BlockGetter world, final List<Component> tooltip, final TooltipFlag advanced) {
+    public void appendHoverText(final ItemStack stack, final Item.TooltipContext context, final List<Component> tooltip, final TooltipFlag advanced) {
         tooltip.add(Component.translatable(description).withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.literal(" "));
 
@@ -137,7 +144,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
                 .ifPresent(tile -> tile.setDamage(stack.getDamageValue()));
     }
 
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         TileEntityOptional.from(world, pos, ChthonicExtractorTile.class)
                 .ifPresent(tile -> {
                     ItemStack itemStack = getItemStack(tile);
@@ -147,13 +154,13 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
                     world.addFreshEntity(itemEntity);
                 });
 
-        super.playerWillDestroy(world, pos, state, player);
+        return super.playerWillDestroy(world, pos, state, player);
     }
 
     @Override
     public List<ItemStack> getDrops(BlockState blockState, LootParams.Builder lootParams) {
         if (lootParams.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof ChthonicExtractorTile tile) {
-            lootParams = lootParams.withDynamicDrop(new ResourceLocation("tetra:cthtonic_drop"),
+            lootParams = lootParams.withDynamicDrop(ResourceLocation.parse("tetra:cthtonic_drop"),
                     consumer -> consumer.accept(getItemStack(tile)));
         }
 
@@ -176,7 +183,7 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ToolAction> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState blockState, Direction face, Collection<ItemAbility> tools) {
         int tier = getTier(world, pos);
 
         // todo: this could be less hacky
@@ -187,9 +194,24 @@ public class ChthonicExtractorBlock extends TetraBlock implements IInteractiveBl
         return new BlockInteraction[0];
     }
 
-    @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    private InteractionResult useInternal(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult hit) {
+        return switch (useInternal(state, world, pos, player, hand, hit)) {
+            case SUCCESS, CONSUME -> ItemInteractionResult.sidedSuccess(world.isClientSide);
+            case CONSUME_PARTIAL -> ItemInteractionResult.CONSUME_PARTIAL;
+            case FAIL -> ItemInteractionResult.FAIL;
+            default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        return useInternal(state, world, pos, player, InteractionHand.MAIN_HAND, hit);
     }
 
     @Nullable

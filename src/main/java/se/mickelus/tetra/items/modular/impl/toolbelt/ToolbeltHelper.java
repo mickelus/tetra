@@ -10,12 +10,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
-import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -115,6 +113,30 @@ public class ToolbeltHelper {
         return new StorageInventory(toolbeltStack).storeItemInInventory(itemStack);
     }
 
+    public static boolean loadQuickAccessAmmoFromQuiver(Player player, InteractionHand weaponHand, int count) {
+        InteractionHand ammoHand = weaponHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+        if (!player.getItemInHand(ammoHand).isEmpty()) {
+            return false;
+        }
+
+        ItemStack toolbeltStack = findToolbelt(player);
+        if (toolbeltStack.isEmpty()) {
+            return false;
+        }
+
+        QuiverInventory inventory = new QuiverInventory(toolbeltStack);
+        List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getItem(i).isEmpty()) {
+                player.setItemInHand(ammoHand, inventory.getItem(i).split(count));
+                inventory.setChanged();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Attempts to find the first itemstack containing a toolbelt in the given players inventory.
      *
@@ -122,14 +144,14 @@ public class ToolbeltHelper {
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
     public static ItemStack findToolbelt(Player player) {
-        if (CuriosCompat.isLoaded) {
-            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance.get(), player);
-            if (maybeToolbelt.isPresent()) {
-                return maybeToolbelt.get().right;
-            }
-            if (ConfigHandler.toolbeltCurioOnly.get()) {
-                return ItemStack.EMPTY;
-            }
+        Optional<ItemStack> equippedToolbelt = CuriosApi.getCuriosInventory(player)
+                .flatMap(handler -> handler.findFirstCurio(ModularToolbeltItem.instance.get()))
+                .map(slotResult -> slotResult.stack());
+        if (equippedToolbelt.isPresent()) {
+            return equippedToolbelt.get();
+        }
+        if (ConfigHandler.toolbeltCurioOnly.get()) {
+            return ItemStack.EMPTY;
         }
         Inventory inventoryPlayer = player.getInventory();
         for (int i = 0; i < inventoryPlayer.items.size(); ++i) {

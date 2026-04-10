@@ -1,6 +1,6 @@
 package se.mickelus.tetra.levelgen;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -20,7 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class ForgedContainerProcessor extends StructureProcessor {
     public static final ForgedContainerProcessor INSTANCE = new ForgedContainerProcessor();
-    public static final Codec<ForgedContainerProcessor> codec = Codec.unit(() -> ForgedContainerProcessor.INSTANCE);
+    public static final MapCodec<ForgedContainerProcessor> codec = MapCodec.unit(ForgedContainerProcessor.INSTANCE);
     public static RegistryObject<StructureProcessorType<?>> type;
 
     public ForgedContainerProcessor() {

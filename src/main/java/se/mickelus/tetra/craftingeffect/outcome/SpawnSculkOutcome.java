@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.tetra.effect.SculkTaintEffect;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
@@ -30,7 +30,7 @@ public class SpawnSculkOutcome implements CraftingEffectOutcome {
 
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
-            ItemStack[] preMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos origin, BlockState blockState,
+            ItemStack[] preMaterials, Map<ItemAbility, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos origin, BlockState blockState,
             boolean consumeResources, ItemStack[] postMaterials, float craftingSeverity) {
         if (consumeResources && !world.isClientSide() && world.random.nextDouble() < chance) {
             if (catalystSource) {

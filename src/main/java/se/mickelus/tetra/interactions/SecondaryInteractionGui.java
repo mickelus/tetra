@@ -1,7 +1,7 @@
 package se.mickelus.tetra.interactions;
 
 import net.minecraft.client.KeyMapping;
-import net.minecraftforge.client.settings.KeyModifier;
+import net.neoforged.neoforge.client.settings.KeyModifier;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.animation.Applier;
 import se.mickelus.mutil.gui.animation.KeyframeAnimation;

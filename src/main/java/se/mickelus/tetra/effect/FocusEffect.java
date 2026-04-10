@@ -7,8 +7,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
@@ -21,18 +21,18 @@ public class FocusEffect {
             .expireAfterWrite(30, TimeUnit.SECONDS)
             .build();
 
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.player.level().getGameTime() % 2 == 0) {
-            if (hasApplicableItem(event.player) && event.player.isCrouching()) {
-                Player player = event.player;
+    public static void onPlayerTick(PlayerTickEvent.Pre event) {
+        if (event.getEntity().level().getGameTime() % 2 == 0) {
+            if (hasApplicableItem(event.getEntity()) && event.getEntity().isCrouching()) {
+                Player player = event.getEntity();
                 int id = getIdentifier(player);
                 Integer duration = cache.getIfPresent(id);
-                boolean isDrawing = isDrawing(event.player);
+                boolean isDrawing = isDrawing(event.getEntity());
                 int change = isDrawing ? 1 : 2;
                 cache.put(id, duration != null ? duration + change : change);
 
                 if (!player.level().isClientSide) {
-                    int respiration = EnchantmentHelper.getRespiration(player);
+                    int respiration = EffectHelper.getEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.RESPIRATION, player);
                     int amount = isDrawing ? 6 : 2;
                     int reduction = 0;
                     if (respiration > 0) {
@@ -54,13 +54,13 @@ public class FocusEffect {
                 }
 
             } else {
-                cache.invalidate(getIdentifier(event.player));
+                cache.invalidate(getIdentifier(event.getEntity()));
             }
         }
     }
 
-    public static void onLivingDamage(LivingDamageEvent event) {
-        if (event.getAmount() > 0
+    public static void onLivingDamage(LivingDamageEvent.Pre event) {
+        if (event.getNewDamage() > 0
                 && !event.getSource().is(DamageTypes.DROWN)
                 && event.getEntity() instanceof Player player) {
             cache.invalidate(getIdentifier(player));

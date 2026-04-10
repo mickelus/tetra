@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -11,12 +12,11 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITag;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
@@ -46,11 +46,11 @@ public class ToolbeltInventory implements Container {
     }
 
     protected static Predicate<ItemStack> getPredicate(String inventory) {
-        TagKey<Item> acceptKey = ItemTags.create(new ResourceLocation(TetraMod.MOD_ID, "toolbelt/" + inventory + "_accept"));
-        TagKey<Item> rejectKey = ItemTags.create(new ResourceLocation(TetraMod.MOD_ID, "toolbelt/" + inventory + "_reject"));
-        ITag<Item> acceptTag = ForgeRegistries.ITEMS.tags().getTag(acceptKey);
+        TagKey<Item> acceptKey = ItemTags.create(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "toolbelt/" + inventory + "_accept"));
+        TagKey<Item> rejectKey = ItemTags.create(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "toolbelt/" + inventory + "_reject"));
+        var acceptTag = BuiltInRegistries.ITEM.getOrCreateTag(acceptKey);
 
-        return (itemStack -> (acceptTag.isEmpty() || itemStack.is(acceptKey)) && !itemStack.is(rejectKey));
+        return (itemStack -> (acceptTag.size() == 0 || itemStack.is(acceptKey)) && !itemStack.is(rejectKey));
     }
 
 
@@ -62,7 +62,10 @@ public class ToolbeltInventory implements Container {
             int slot = itemTag.getByte(slotKey) & 255;
 
             if (0 <= slot && slot < maxSize) {
-                inventoryContents.set(slot, ItemStack.of(itemTag));
+                ItemStack stack = ItemStackTagHelper.parseStack(itemTag);
+                if (!stack.isEmpty()) {
+                    inventoryContents.set(slot, stack);
+                }
             }
         }
     }
@@ -71,9 +74,9 @@ public class ToolbeltInventory implements Container {
         ListTag items = new ListTag();
 
         for (int i = 0; i < maxSize; i++) {
-            if (getItem(i) != null) {
-                CompoundTag compound = new CompoundTag();
-                getItem(i).save(compound);
+            ItemStack stack = getItem(i);
+            if (!stack.isEmpty()) {
+                CompoundTag compound = ItemStackTagHelper.saveStack(stack);
                 compound.putByte(slotKey, (byte) i);
                 items.add(compound);
             }
@@ -149,7 +152,7 @@ public class ToolbeltInventory implements Container {
             }
         }
 
-        writeToNBT(toolbeltItemStack.getOrCreateTag());
+        writeToNBT(ItemStackTagHelper.getOrCreateTag(toolbeltItemStack));
     }
 
     @Override
@@ -208,7 +211,7 @@ public class ToolbeltInventory implements Container {
         // attempt to merge the itemstack with itemstacks in the toolbelt
         for (int i = 0; i < getContainerSize(); i++) {
             ItemStack storedStack = getItem(i);
-            if (ItemStack.isSameItemSameTags(itemStack, storedStack)
+            if (ItemStack.isSameItemSameComponents(itemStack, storedStack)
                     && storedStack.getCount() < storedStack.getMaxStackSize()) {
 
                 int moveCount = Math.min(itemStack.getCount(), storedStack.getMaxStackSize() - storedStack.getCount());

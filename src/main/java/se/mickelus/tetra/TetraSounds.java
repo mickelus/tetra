@@ -7,12 +7,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class TetraSounds {
-    public static final SoundEvent scannerLoop = SoundEvent.createVariableRangeEvent(new ResourceLocation(TetraMod.MOD_ID, "scanner"));
-    public static final SoundEvent scanMiss = SoundEvent.createVariableRangeEvent(new ResourceLocation(TetraMod.MOD_ID, "scan_miss"));
-    public static final SoundEvent scanHit = SoundEvent.createVariableRangeEvent(new ResourceLocation(TetraMod.MOD_ID, "scan_hit"));
-    public static final SoundEvent honeGain = SoundEvent.createVariableRangeEvent(new ResourceLocation(TetraMod.MOD_ID, "hone_gain"));
-    public static final SoundEvent settle = SoundEvent.createVariableRangeEvent(new ResourceLocation(TetraMod.MOD_ID, "settle"));
-    public static final SoundEvent arcane_fire_1 = SoundEvent.createVariableRangeEvent(new ResourceLocation(TetraMod.MOD_ID, "arcane_fire_1"));
-    public static final SoundEvent arcane_fire_2 = SoundEvent.createVariableRangeEvent(new ResourceLocation(TetraMod.MOD_ID, "arcane_fire_2"));
-    public static final SoundEvent destabilize = SoundEvent.createVariableRangeEvent(new ResourceLocation(TetraMod.MOD_ID, "destabilize"));
+    public static final SoundEvent scannerLoop = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "scanner"));
+    public static final SoundEvent scanMiss = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "scan_miss"));
+    public static final SoundEvent scanHit = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "scan_hit"));
+    public static final SoundEvent honeGain = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "hone_gain"));
+    public static final SoundEvent settle = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "settle"));
+    public static final SoundEvent arcane_fire_1 = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "arcane_fire_1"));
+    public static final SoundEvent arcane_fire_2 = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "arcane_fire_2"));
+    public static final SoundEvent destabilize = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "destabilize"));
 }

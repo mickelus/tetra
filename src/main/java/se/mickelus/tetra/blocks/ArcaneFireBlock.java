@@ -1,5 +1,6 @@
 package se.mickelus.tetra.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustColorTransitionOptions;
@@ -42,6 +43,7 @@ public class ArcaneFireBlock extends BaseFireBlock {
     public static final String identifier = "arcane_fire";
     public static final IntegerProperty ageProperty = BlockStateProperties.AGE_15;
     public static RegistryObject<ArcaneFireBlock> instance;
+    private final MapCodec<ArcaneFireBlock> codec = MapCodec.unit(this);
 
     public ArcaneFireBlock() {
         super(BlockBehaviour.Properties.of()
@@ -55,6 +57,11 @@ public class ArcaneFireBlock extends BaseFireBlock {
                 .pushReaction(PushReaction.DESTROY), 0);
 
         registerDefaultState(stateDefinition.any().setValue(ageProperty, 0));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseFireBlock> codec() {
+        return codec;
     }
 
     public static void spawnDelayed(ServerLevel level, BlockPos blockPos, Vec3 origin) {

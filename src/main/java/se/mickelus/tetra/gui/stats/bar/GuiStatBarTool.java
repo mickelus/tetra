@@ -4,7 +4,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.gui.GuiAlignment;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.blocks.workbench.gui.GuiTool;
@@ -24,15 +24,15 @@ public class GuiStatBarTool extends GuiStatBar {
 
     private final boolean efficiencyVisibility;
 
-    public GuiStatBarTool(int x, int y, int width, ToolAction toolAction) {
+    public GuiStatBarTool(int x, int y, int width, ItemAbility toolAction) {
         this(x, y, width, toolAction, false, true);
     }
 
-    public GuiStatBarTool(int x, int y, int width, ToolAction toolAction, boolean efficiencyVisibility, boolean includeSpeedModifier) {
+    public GuiStatBarTool(int x, int y, int width, ItemAbility toolAction, boolean efficiencyVisibility, boolean includeSpeedModifier) {
         super(x, y, width, null, 0, efficiencyMax, false,
                 includeSpeedModifier ? new StatGetterToolCompoundEfficiency(new StatGetterToolEfficiency(toolAction),
-                        new StatGetterAttribute(Attributes.ATTACK_SPEED), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1))
-                        : new StatGetterAdd(new StatGetterToolEfficiency(toolAction), new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1)),
+                        new StatGetterAttribute(Attributes.ATTACK_SPEED), new StatGetterEnchantmentLevel(Enchantments.EFFICIENCY, 1))
+                        : new StatGetterAdd(new StatGetterToolEfficiency(toolAction), new StatGetterEnchantmentLevel(Enchantments.EFFICIENCY, 1)),
                 LabelGetterBasic.decimalLabel, new TooltipGetterTool(toolAction, includeSpeedModifier));
 
         this.efficiencyVisibility = efficiencyVisibility;
@@ -46,7 +46,7 @@ public class GuiStatBarTool extends GuiStatBar {
 
         IStatGetter extractionGetter = new StatGetterEffectLevel(ItemEffect.extraction, 4.5);
         IStatGetter unboundExtractionGetter = new StatGetterEffectLevel(ItemEffect.unboundExtraction, 1);
-        IStatGetter enchantmentGetter = new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1);
+        IStatGetter enchantmentGetter = new StatGetterEnchantmentLevel(Enchantments.EFFICIENCY, 1);
         IStatGetter actionGetter = new StatGetterStriking(toolAction);
         IStatGetter sweepingGetter = new StatGetterEffectLevel(ItemEffect.sweepingStrike, 1);
         IStatGetter truesweepGetter = new StatGetterEffectLevel(ItemEffect.truesweep, 1);

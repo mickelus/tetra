@@ -4,6 +4,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.data.ItemEffectContext;
 import se.mickelus.tetra.effect.data.condition.FixedItemEffectCondition;
 import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
@@ -27,15 +28,16 @@ public class ApplyEffectItemEffectOutcome extends ItemEffectOutcome {
     public boolean perform(ItemEffectContext context) {
         LivingEntity entity = CastOptional.cast(this.entity.getEntity(context), LivingEntity.class).orElse(null);
         if (entity != null) {
+            var effectHolder = EffectHelper.effectHolder(effect);
             int duration = this.duration.getIntegerValue(context);
             int amplifier = this.amplifier.getIntegerValue(context);
-            int targetDuration = stackDurationCap != null && entity.hasEffect(effect)
-                    ? Math.min(duration + entity.getEffect(effect).getDuration(), stackDurationCap.getIntegerValue(context))
+            int targetDuration = stackDurationCap != null && entity.hasEffect(effectHolder)
+                    ? Math.min(duration + entity.getEffect(effectHolder).getDuration(), stackDurationCap.getIntegerValue(context))
                     : duration;
-            int targetAmplifier = stackAmplifierCap != null && entity.hasEffect(effect)
-                    ? Math.min(amplifier + entity.getEffect(effect).getAmplifier(), stackAmplifierCap.getIntegerValue(context))
+            int targetAmplifier = stackAmplifierCap != null && entity.hasEffect(effectHolder)
+                    ? Math.min(amplifier + entity.getEffect(effectHolder).getAmplifier(), stackAmplifierCap.getIntegerValue(context))
                     : amplifier;
-            return entity.addEffect(new MobEffectInstance(effect, targetDuration, targetAmplifier,
+            return entity.addEffect(new MobEffectInstance(effectHolder, targetDuration, targetAmplifier,
                             ambient.test(context), visible.test(context), showIcon.test(context)),
                     source != null ? source.getEntity(context) : null);
         }

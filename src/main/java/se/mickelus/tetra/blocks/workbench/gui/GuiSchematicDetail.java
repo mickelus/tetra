@@ -8,7 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.mutil.gui.animation.AnimationChain;
 import se.mickelus.mutil.gui.animation.Applier;
@@ -99,7 +99,7 @@ public class GuiSchematicDetail extends GuiElement {
                 new KeyframeAnimation(120, flashOverlay).applyTo(new Applier.Opacity(0)));
     }
 
-    public void update(Level level, BlockPos pos, WorkbenchTile blockEntity, UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, Map<ToolAction, Integer> availableTools,
+    public void update(Level level, BlockPos pos, WorkbenchTile blockEntity, UpgradeSchematic schematic, ItemStack itemStack, String slot, ItemStack[] materials, Map<ItemAbility, Integer> availableTools,
             Player player) {
         this.schematic = schematic;
 
@@ -146,7 +146,7 @@ public class GuiSchematicDetail extends GuiElement {
         int numMaterialSlots = schematic.getNumMaterialSlots();
         for (int i = 0; i < WorkbenchTile.maxMaterialSlots; i++) {
             slots[i].update(schematic, player, level, pos, blockEntity, itemStack, slot, materials);
-            slots[i].setX(136 + WorkbenchContainer.getSlotOffsetY(i, numMaterialSlots));
+            slots[i].setX(WorkbenchContainer.getMaterialSlotGuiX(i, numMaterialSlots));
         }
         toolRequirementList.update(schematic, itemStack, slot, materials, availableTools);
         emptySlotsIndicator.setVisible(numMaterialSlots == 0);
@@ -175,12 +175,12 @@ public class GuiSchematicDetail extends GuiElement {
         }
     }
 
-    public void updateAvailableTools(Map<ToolAction, Integer> availableTools) {
+    public void updateAvailableTools(Map<ItemAbility, Integer> availableTools) {
         toolRequirementList.updateAvailableTools(availableTools);
     }
 
     public void updateButton(UpgradeSchematic schematic, Player player, ItemStack itemStack, ItemStack previewStack, ItemStack[] materials, String slot,
-            Map<ToolAction, Integer> availableTools) {
+            Map<ItemAbility, Integer> availableTools) {
         craftButton.update(schematic, player, itemStack, previewStack, materials, slot, availableTools);
     }
 

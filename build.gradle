@@ -3,12 +3,11 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 plugins {
+    id 'java-library'
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle' version '[6.0.18,6.2)'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-    id 'org.spongepowered.mixin' version '0.7.+'
+    id 'net.neoforged.gradle.userdev' version '7.1.21'
 }
 
 if (System.getenv('VERSION') != null) {
@@ -22,58 +21,40 @@ base {
     archivesName = mod_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    mappings channel: mapping_channel, version: mapping_version
-    copyIdeResources = true
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         configureEach {
             workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            systemProperty 'forge.logging.console.level', 'debug'
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         }
 
         client {
-            property 'forge.enabledGameTestNamespaces', mod_id
-            arg "-mixin.config=tetra.mixins.json"
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            argument "-mixin.config=tetra.mixins.json"
         }
 
         server {
-            property 'forge.enabledGameTestNamespaces', mod_id
-            args '--nogui'
-            arg "-mixin.config=tetra.mixins.json"
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            argument '--nogui'
+            argument "-mixin.config=tetra.mixins.json"
         }
 
         gameTestServer {
-            property 'forge.enabledGameTestNamespaces', mod_id
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         }
 
         data {
             workingDirectory project.file('run-data')
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            arguments.addAll '--mod', mod_id, '--all',
+                    '--output', file('src/generated/resources/').getAbsolutePath(),
+                    '--existing', file('src/main/resources/').getAbsolutePath()
         }
     }
-}
-
-mixin {
-    add sourceSets.main, "tetra.refmap.json"
-
-    debug.verbose = true
-    debug.export = true
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
@@ -87,18 +68,19 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.neoforged:forge:${minecraft_version}-${forge_version}"
-    implementation fg.deobf("se.mickelus.mutil:mutil:${mutil_version}")
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+    implementation "net.neoforged:neoforge:${neo_version}"
+    implementation "se.mickelus.mutil:mutil:${mutil_version}"
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
+    compileOnly 'org.spongepowered:mixin:0.8.5'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
 }
 
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
-            forge_version       : forge_version, forge_version_range: forge_version_range,
+            neo_version         : neo_version,
             mutil_version       : mutil_version, mutil_version_range: mutil_version_range,
             curios_version      : curios_version, curios_version_range: curios_version_range,
             loader_version_range: loader_version_range,
@@ -107,7 +89,7 @@ tasks.named('processResources', ProcessResources).configure {
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
         expand replaceProperties + [project: project]
     }
 }
@@ -125,22 +107,20 @@ tasks.named('jar', Jar).configure {
                 "MixinConfigs"            : mod_id + ".mixins.json"
         ])
     }
-
-    finalizedBy 'reobfJar'
 }
 
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
             groupId project.group
-            artifactId project.archivesBaseName
+            artifactId project.base.archivesName.get()
             version project.version
             artifact jar
         }
     }
     repositories {
         maven {
-            url = uri("file://${System.getenv("local_maven")}")
+            url = System.getenv("local_maven") != null ? uri("file://${System.getenv("local_maven")}") : layout.buildDirectory.dir("repo")
         }
     }
 }

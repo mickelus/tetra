@@ -3,7 +3,7 @@ package se.mickelus.tetra.gui.stats.bar;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.stats.getter.StatGetterEffectLevel;
@@ -19,7 +19,7 @@ public class StrikingStatIndicatorGui extends GuiStatIndicator {
     GuiStatIndicator sweeping;
     GuiStatIndicator current;
 
-    public StrikingStatIndicatorGui(ToolAction toolAction) {
+    public StrikingStatIndicatorGui(ItemAbility toolAction) {
         super(0, 0, "", 0, null, null);
 
         striking = new GuiStatIndicator(0, 0, "tetra.stats.tool.striking", 0,

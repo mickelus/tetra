@@ -3,11 +3,12 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -22,12 +23,12 @@ public class OverlayBooster implements IGuiOverlay {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (TickEvent.Phase.END == event.phase && mc.player != null) {
+    public void onClientTick(ClientTickEvent.Post event) {
+        if (mc.player != null) {
             float fuelPercent = 0;
             ItemStack itemStack = ToolbeltHelper.findToolbelt(mc.player);
             if (UtilBooster.canBoost(itemStack)) {
-                fuelPercent = UtilBooster.getFuelPercent(itemStack.getTag());
+                fuelPercent = UtilBooster.getFuelPercent(ItemStackTagHelper.getOrCreateTag(itemStack));
             }
 
             gui.setFuel(fuelPercent);

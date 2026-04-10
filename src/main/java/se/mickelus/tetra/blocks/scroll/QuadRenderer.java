@@ -102,8 +102,12 @@ public class QuadRenderer {
         for (Vertex vertex : vertexPositions) {
             Vector4f pos = new Vector4f(vertex.pos.x() / 16.0F, vertex.pos.y() / 16.0F, vertex.pos.z() / 16.0F, 1.0F);
             matrix.transform(pos);
-            buffer.vertex(pos.x(), pos.y(), pos.z(), red, green, blue, alpha, vertex.u, vertex.v, packedOverlay,
-                    packedLight, originX, originY, originZ);
+            buffer.addVertex(pos.x(), pos.y(), pos.z())
+                    .setColor(red, green, blue, alpha)
+                    .setUv(vertex.u, vertex.v)
+                    .setOverlay(packedOverlay)
+                    .setLight(packedLight)
+                    .setNormal(originX, originY, originZ);
         }
         matrixStack.popPose();
     }

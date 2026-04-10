@@ -1,6 +1,6 @@
 package se.mickelus.tetra.levelgen;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -22,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class ForgedHammerProcessor extends StructureProcessor {
     public static final ForgedHammerProcessor INSTANCE = new ForgedHammerProcessor();
-    public static final Codec<ForgedHammerProcessor> codec = Codec.unit(() -> ForgedHammerProcessor.INSTANCE);
+    public static final MapCodec<ForgedHammerProcessor> codec = MapCodec.unit(ForgedHammerProcessor.INSTANCE);
     public static RegistryObject<StructureProcessorType<?>> type;
 
     public ForgedHammerProcessor() {
@@ -50,7 +50,7 @@ public class ForgedHammerProcessor extends StructureProcessor {
                 ThermalCellItem.recharge(cell2, charge2);
             }
 
-            HammerBaseBlockEntity.writeCells(newCompound, cell1, cell2);
+            HammerBaseBlockEntity.writeCells(newCompound, world.registryAccess(), cell1, cell2);
 
             HammerEffect module = HammerEffect.efficient;
             if (random.nextFloat() < 0.1) {

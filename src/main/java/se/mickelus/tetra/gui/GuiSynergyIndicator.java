@@ -143,8 +143,8 @@ public class GuiSynergyIndicator extends GuiElement {
 
         if (data.attributes != null) {
             data.attributes.forEach((attribute, modifier) -> {
-                double amount = modifier.getAmount();
-                if (modifier.getOperation() == AttributeModifier.Operation.ADDITION) {
+                double amount = modifier.amount();
+                if (modifier.operation() == AttributeModifier.Operation.ADD_VALUE) {
                     result.add(getValueDouble(amount, 0) + I18n.get(attribute.getDescriptionId()));
                 } else {
                     result.add(getValueMultiplier(amount + 1) + I18n.get(attribute.getDescriptionId()));

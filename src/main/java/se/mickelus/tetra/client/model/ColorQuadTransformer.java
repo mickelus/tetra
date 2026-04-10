@@ -1,7 +1,7 @@
 package se.mickelus.tetra.client.model;
 
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraftforge.client.model.IQuadTransformer;
+import net.neoforged.neoforge.client.model.IQuadTransformer;
 
 public class ColorQuadTransformer implements IQuadTransformer {
     int color;

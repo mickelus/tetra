@@ -3,11 +3,13 @@ package se.mickelus.tetra.blocks.forged.hammer;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -27,7 +29,7 @@ import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraRegistries;
-import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
@@ -68,14 +70,14 @@ public class HammerBaseBlockEntity extends BlockEntity {
         }
     }
 
-    public static void writeCells(CompoundTag compound, ItemStack... cells) {
+    public static void writeCells(CompoundTag compound, HolderLookup.Provider registries, ItemStack... cells) {
         ListTag nbttaglist = new ListTag();
         for (int i = 0; i < cells.length; i++) {
-            if (cells[i] != null) {
+            ItemStack cell = cells[i];
+            if (cell != null && !cell.isEmpty()) {
                 CompoundTag nbttagcompound = new CompoundTag();
-
+                cell.save(registries, nbttagcompound);
                 nbttagcompound.putByte(indexKey, (byte) i);
-                cells[i].save(nbttagcompound);
 
                 nbttaglist.add(nbttagcompound);
             }
@@ -273,11 +275,11 @@ public class HammerBaseBlockEntity extends BlockEntity {
     }
 
     public boolean hasCellInSlot(int index) {
-        return index >= 0 && index < slots.length && slots[index] != null;
+        return index >= 0 && index < slots.length && slots[index] != null && !slots[index].isEmpty();
     }
 
     public int getCellFuel(int index) {
-        if (index >= 0 && index < slots.length && slots[index] != null) {
+        if (hasCellInSlot(index)) {
             if (slots[index].getItem() instanceof ThermalCellItem) {
                 ThermalCellItem item = (ThermalCellItem) slots[index].getItem();
                 return item.getCharge(slots[index]);
@@ -288,7 +290,7 @@ public class HammerBaseBlockEntity extends BlockEntity {
     }
 
     public ItemStack removeCellFromSlot(int index) {
-        if (index >= 0 && index < slots.length && slots[index] != null) {
+        if (hasCellInSlot(index)) {
             ItemStack itemStack = slots[index];
             slots[index] = null;
 
@@ -301,7 +303,7 @@ public class HammerBaseBlockEntity extends BlockEntity {
     }
 
     public ItemStack getStackInSlot(int index) {
-        if (index >= 0 && index < slots.length && slots[index] != null) {
+        if (hasCellInSlot(index)) {
             return slots[index];
         }
         return ItemStack.EMPTY;
@@ -309,8 +311,8 @@ public class HammerBaseBlockEntity extends BlockEntity {
 
     public boolean putCellInSlot(ItemStack itemStack, int index) {
         if (itemStack.getItem() instanceof ThermalCellItem
-                && index >= 0 && index < slots.length && slots[index] == null) {
-            slots[index] = itemStack;
+                && index >= 0 && index < slots.length && !hasCellInSlot(index)) {
+            slots[index] = itemStack.copy();
 
             sync();
 
@@ -340,18 +342,20 @@ public class HammerBaseBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+        if (pkt.getTag() != null) {
+            this.loadWithComponents(pkt.getTag(), lookupProvider);
+        }
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
 
         slots = new ItemStack[2];
         if (compound.contains(slotsKey)) {
@@ -361,8 +365,9 @@ public class HammerBaseBlockEntity extends BlockEntity {
                 CompoundTag itemCompound = tagList.getCompound(i);
                 int slot = itemCompound.getByte(indexKey) & 255;
 
-                if (slot < this.slots.length) {
-                    this.slots[slot] = ItemStack.of(itemCompound);
+                if (slot < this.slots.length && itemCompound.contains("id", Tag.TAG_STRING)) {
+                    ItemStack stack = ItemStack.parseOptional(registries, itemCompound);
+                    this.slots[slot] = stack.isEmpty() ? null : stack;
                 }
             }
         }
@@ -392,10 +397,10 @@ public class HammerBaseBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
 
-        writeCells(compound, slots);
+        writeCells(compound, registries, slots);
 
         writeModules(compound, moduleA, moduleB);
 
@@ -414,10 +419,10 @@ public class HammerBaseBlockEntity extends BlockEntity {
             }
 
             CastOptional.cast(targetState.getBlock(), IInteractiveBlock.class)
-                    .map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(TetraToolActions.hammer)))
+                    .map(block -> block.getPotentialInteractions(level, targetPos, targetState, Direction.UP, Collections.singletonList(TetraItemAbilities.hammer)))
                     .stream()
                     .flatMap(Arrays::stream)
-                    .filter(interaction -> TetraToolActions.hammer.equals(interaction.requiredTool))
+                    .filter(interaction -> TetraItemAbilities.hammer.equals(interaction.requiredTool))
                     .filter(interaction -> getHammerLevel() >= interaction.requiredLevel)
                     .findFirst()
                     .ifPresent(interaction -> {

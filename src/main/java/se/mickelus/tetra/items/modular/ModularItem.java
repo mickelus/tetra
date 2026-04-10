@@ -3,6 +3,7 @@ package se.mickelus.tetra.items.modular;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Multimap;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,13 +12,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.TetraItem;
@@ -36,8 +35,6 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public abstract class ModularItem extends TetraItem implements IModularItem, IToolProvider {
-    public static final UUID attackDamageModifier = Item.BASE_ATTACK_DAMAGE_UUID;
-    public static final UUID attackSpeedModifier = Item.BASE_ATTACK_SPEED_UUID;
     private static final Logger logger = LogManager.getLogger();
     private final Cache<String, Multimap<Attribute, AttributeModifier>> attributeCache = CacheBuilder.newBuilder()
             .maximumSize(1000)
@@ -173,14 +170,8 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.addAll(getTooltip(stack, world, flag));
-    }
-
-    @Override
-    @NotNull
-    public Rarity getRarity(@NotNull ItemStack itemStack) {
-        return Optional.ofNullable(getPropertiesCached(itemStack)).map(props -> props.rarity).orElse(super.getRarity(itemStack));
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.addAll(getTooltip(stack, context.level(), flag));
     }
 
     @Override
@@ -197,8 +188,9 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     }
 
     @Override
-    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-        return damageItemImpl(stack, amount, entity, onBroken);
+    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<Item> onBroken) {
+        return damageItemImpl(stack, amount, entity, ignored -> {
+        });
     }
 
     @Override
@@ -249,8 +241,13 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     }
 
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack itemStack, Enchantment enchantment) {
-        return acceptsEnchantment(itemStack, enchantment, true);
+    public boolean isPrimaryItemFor(ItemStack itemStack, Holder<Enchantment> enchantment) {
+        return acceptsEnchantment(itemStack, enchantment.value(), true);
+    }
+
+    @Override
+    public boolean supportsEnchantment(ItemStack itemStack, Holder<Enchantment> enchantment) {
+        return acceptsEnchantment(itemStack, enchantment.value(), false);
     }
 
     @Override

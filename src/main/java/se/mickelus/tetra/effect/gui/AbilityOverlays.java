@@ -3,10 +3,10 @@ package se.mickelus.tetra.effect.gui;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
+import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiRoot;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -39,8 +39,8 @@ public class AbilityOverlays extends GuiRoot implements IGuiOverlay {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (TickEvent.Phase.START == event.phase && mc.player != null) {
+    public void onClientTick(ClientTickEvent.Pre event) {
+        if (mc.player != null) {
             chargeBar.update(mc.player);
             comboPoints.update(mc.player);
             revengeIndicator.update(mc.player, mc.hitResult);

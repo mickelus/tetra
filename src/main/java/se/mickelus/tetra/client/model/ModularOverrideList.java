@@ -19,13 +19,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.model.QuadTransformers;
-import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
+import net.neoforged.neoforge.client.model.QuadTransformers;
+import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.model.GridTextureModelData;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -73,7 +74,7 @@ public class ModularOverrideList extends ItemOverrides {
     @Nullable
     @Override
     public BakedModel resolve(BakedModel originalModel, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int renderId) {
-        CompoundTag baseTag = stack.getTag();
+        CompoundTag baseTag = ItemStackTagHelper.getTag(stack);
         BakedModel result = originalModel;
 
         if (baseTag != null && !baseTag.isEmpty()) {
@@ -112,10 +113,10 @@ public class ModularOverrideList extends ItemOverrides {
             var perspectiveModels = contexts.stream()
                     .collect(Collectors.toUnmodifiableMap(p -> p, p -> createLayerModel(filterModels(models, p))));
             var transformsModel = new TetraSeparateTransformsModel(model, perspectiveModels);
-            return transformsModel.bake(contextWrapper, baker, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
+            return transformsModel.bake(contextWrapper, baker, spriteGetter, modelState, ItemOverrides.EMPTY);
         }
 
-        return model.bake(contextWrapper, baker, spriteGetter, modelState, ItemOverrides.EMPTY, modelLocation);
+        return model.bake(contextWrapper, baker, spriteGetter, modelState, ItemOverrides.EMPTY);
     }
 
     protected ItemLayerModel createLayerModel(List<GridTextureModelData> models) {

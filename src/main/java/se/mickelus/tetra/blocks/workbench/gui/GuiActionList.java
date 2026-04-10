@@ -2,7 +2,7 @@ package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.gui.GuiAlignment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.animation.Applier;
@@ -48,7 +48,7 @@ public class GuiActionList extends GuiElement {
         }
     }
 
-    public void updateTools(Map<ToolAction, Integer> availableTools) {
+    public void updateTools(Map<ItemAbility, Integer> availableTools) {
         Arrays.stream(actionButtons).forEach(button -> button.update(availableTools));
     }
 

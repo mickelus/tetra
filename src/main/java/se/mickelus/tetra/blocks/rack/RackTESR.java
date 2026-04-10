@@ -13,9 +13,8 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import se.mickelus.tetra.items.modular.impl.ModularBladedItem;
 import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItemImpl;
 import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
@@ -34,7 +33,8 @@ public class RackTESR implements BlockEntityRenderer<RackTile> {
 
     @Override
     public void render(RackTile tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+        var handler = tile.getItemHandler(null);
+        if (handler != null) {
             Direction direction = tile.getBlockState().getValue(RackBlock.facingProp);
             Direction itemDirection = direction.getCounterClockWise();
 
@@ -52,7 +52,7 @@ public class RackTESR implements BlockEntityRenderer<RackTile> {
                 }
             }
             matrixStack.popPose();
-        });
+        }
     }
 
     private void renderItemStack(RackTile tile, ItemStack itemStack, PoseStack matrixStack, MultiBufferSource buffer,
