@@ -832,7 +832,9 @@ public class ItemModularHandheld extends ModularItem {
         return !attribute.equals(TetraAttributes.abilityDamage.get())
                 && !attribute.equals(TetraAttributes.abilityCooldown.get())
                 && !attribute.equals(Attributes.ARMOR)
-                && !attribute.equals(Attributes.ARMOR_TOUGHNESS);
+                && !attribute.equals(Attributes.ARMOR_TOUGHNESS)
+                && !attribute.equals(Attributes.ATTACK_DAMAGE)
+                && !attribute.equals(Attributes.ATTACK_SPEED);
     }
 
     @Override
