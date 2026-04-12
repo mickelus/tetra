@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
     -   name: 💡 Feature request
-        url: https://github.com/mickelus/tetra/discussions/new?category=feature-request
+        url: https://github.com/mickelus/tetra/discussions/new?category=feature-requests
         about: Start off a feature request in the discussions section
     -   name: 💬 Mickelus' discord
         url: https://discord.gg/MyjK4Fx
