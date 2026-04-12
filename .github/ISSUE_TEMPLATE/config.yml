@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 💬 Mickelus' discord
-    url: https://discord.gg/MyjK4Fx
-    about: Ask for help or chat about tetra with others over on discord
+    -   name: 💡 Feature request
+        url: https://github.com/mickelus/tetra/discussions/new?category=feature-request
+        about: Start off a feature request in the discussions section
+    -   name: 💬 Mickelus' discord
+        url: https://discord.gg/MyjK4Fx
+        about: Ask for help or chat about tetra with others over on discord
