@@ -6,6 +6,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
+import se.mickelus.tetra.compat.bettercombat.BetterCombatCompat;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.module.data.EffectData;
@@ -208,6 +210,16 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
     @Override
     public void onCraftedBy(ItemStack itemStack, Level world, Player player) {
         IModularItem.updateIdentifier(itemStack);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack itemStack, Level world, Entity entity, int slot, boolean isSelected) {
+        if (!world.isClientSide && entity instanceof LivingEntity livingEntity
+                && (isSelected || livingEntity.getMainHandItem() == itemStack || livingEntity.getOffhandItem() == itemStack)) {
+            BetterCombatCompat.sync(itemStack);
+        }
+
+        super.inventoryTick(itemStack, world, entity, slot, isSelected);
     }
 
     /**
