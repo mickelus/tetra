@@ -19,7 +19,6 @@ import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.ConfigHandler;
-import se.mickelus.tetra.compat.bettercombat.BetterCombatCompat;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.items.TetraItem;
 import se.mickelus.tetra.module.data.EffectData;
@@ -214,11 +213,6 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     @Override
     public void inventoryTick(ItemStack itemStack, Level world, Entity entity, int slot, boolean isSelected) {
-        if (!world.isClientSide && entity instanceof LivingEntity livingEntity
-                && (isSelected || livingEntity.getMainHandItem() == itemStack || livingEntity.getOffhandItem() == itemStack)) {
-            BetterCombatCompat.sync(itemStack);
-        }
-
         super.inventoryTick(itemStack, world, entity, slot, isSelected);
     }
 

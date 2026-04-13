@@ -29,7 +29,6 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.fml.loading.FMLEnvironment;
-import se.mickelus.tetra.compat.bettercombat.BetterCombatCompat;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
@@ -98,7 +97,6 @@ public interface IModularItem {
 
     static void updateIdentifier(ItemStack itemStack) {
         updateIdentifier(getOrCreateTag(itemStack));
-        BetterCombatCompat.sync(itemStack);
     }
 
     static void updateIdentifier(CompoundTag nbt) {
