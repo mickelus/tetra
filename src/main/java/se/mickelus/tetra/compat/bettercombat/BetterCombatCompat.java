@@ -135,7 +135,7 @@ public final class BetterCombatCompat {
             return swordPreset;
         }
 
-        return switch (blade.getKey()) {
+        return switch (getModuleId(blade)) {
             case "sword/short_blade", "sword/throwing_knife" -> daggerPreset;
             case "sword/machete" -> cutlassPreset;
             default -> swordPreset;
@@ -148,7 +148,7 @@ public final class BetterCombatCompat {
             return null;
         }
 
-        return switch (head.getKey()) {
+        return switch (getModuleId(head)) {
             case "single/spearhead" -> spearPreset;
             case "single/trident" -> tridentPreset;
             case "single/earthpiercer", "single/unbound_earthpiercer" -> pickaxePreset;
@@ -175,13 +175,16 @@ public final class BetterCombatCompat {
             return null;
         }
 
-        return switch (module.getKey()) {
+        return switch (getModuleId(module)) {
             case "double/basic_hammer" -> hammerPreset;
             case "double/basic_axe" -> doubleAxePreset;
-            case "double/basic_pickaxe" -> pickaxePreset;
             case "double/sickle" -> sicklePreset;
             case "double/claw" -> clawPreset;
             default -> null;
         };
+    }
+
+    private static String getModuleId(ItemModule module) {
+        return module.getUnlocalizedName();
     }
 }
