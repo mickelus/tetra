@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraRegistries;
@@ -49,7 +49,7 @@ public class HammerBaseBlockEntity extends BlockEntity {
     private static final String slotsKey = "slots";
     private static final String indexKey = "slot";
     private static final String redstoneKey = "rs";
-    public static RegistryObject<BlockEntityType<HammerBaseBlockEntity>> type;
+    public static Supplier<BlockEntityType<HammerBaseBlockEntity>> type;
     private HammerEffect moduleA;
     private HammerEffect moduleB;
     private ItemStack[] slots;

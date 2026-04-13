@@ -14,6 +14,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -114,6 +115,11 @@ public class EffectHelper {
         return 0;
     }
 
+    public static float getCriticalHitMultiplier(Player player, Entity target, boolean vanillaCritical, float damageModifier) {
+        var event = CommonHooks.fireCriticalHit(player, target, vanillaCritical, damageModifier);
+        return event.isCriticalHit() ? event.getDamageMultiplier() : 1f;
+    }
+
     /**
      * Break a block in the world, as a player.
      * Based on how players break blocks in vanilla {@link net.minecraft.server.management.PlayerInteractionManager#tryHarvestBlock}, but allows
@@ -135,8 +141,8 @@ public class EffectHelper {
             ServerPlayer serverPlayer = (ServerPlayer) breakingPlayer;
             GameType gameType = serverPlayer.gameMode.getGameModeForPlayer();
 
-            int breakEventResult = se.mickelus.tetra.compat.forge.common.ForgeHooks.onBlockBreakEvent(world, gameType, serverPlayer, pos);
-            if (breakEventResult == -1 || breakingPlayer.blockActionRestricted(world, pos, gameType)) {
+            var breakEvent = CommonHooks.fireBlockBreak(world, gameType, serverPlayer, pos, world.getBlockState(pos));
+            if (breakEvent.isCanceled() || breakingPlayer.blockActionRestricted(world, pos, gameType)) {
                 return false;
             }
 

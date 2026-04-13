@@ -13,7 +13,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.ModularItem;
 
@@ -38,7 +37,7 @@ public class AttributeHelper {
     }
 
     public static Holder<Attribute> getHolder(Attribute attribute) {
-        ResourceLocation key = Objects.requireNonNull(ForgeRegistries.ATTRIBUTES.getKey(attribute), "Unregistered attribute: " + attribute);
+        ResourceLocation key = Objects.requireNonNull(BuiltInRegistries.ATTRIBUTE.getKey(attribute), "Unregistered attribute: " + attribute);
         Holder.Reference<Attribute> holder = BuiltInRegistries.ATTRIBUTE.getHolder(ResourceKey.create(Registries.ATTRIBUTE, key)).orElse(null);
         return holder != null ? holder : BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute);
     }

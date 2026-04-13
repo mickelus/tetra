@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import org.joml.Vector3f;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
@@ -30,7 +30,7 @@ public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock im
 
     protected final ResourceLocation[] schematics;
 
-    public PrimaryMultiblockSchematicBlock(Properties properties, String schematic, RegistryObject<RuinedMultiblockSchematicBlock> ruinedRef,
+    public PrimaryMultiblockSchematicBlock(Properties properties, String schematic, Supplier<RuinedMultiblockSchematicBlock> ruinedRef,
             ResourceLocation pryTable, int x, int y, int height, int width) {
         super(properties, schematic, ruinedRef, pryTable, x, y, height, width);
         this.registerDefaultState(this.stateDefinition.any().setValue(facingProp, Direction.EAST).setValue(complete, false));

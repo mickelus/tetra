@@ -1,17 +1,17 @@
 package se.mickelus.tetra.items.modular.impl.bow;
 
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
 import net.neoforged.bus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class RangedProgressOverlay implements IGuiOverlay {
+public class RangedProgressOverlay implements LayeredDraw.Layer {
     private final Minecraft mc;
     private final GuiRangedProgress gui;
 
@@ -38,7 +38,7 @@ public class RangedProgressOverlay implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics graphics, DeltaTracker deltaTracker) {
         this.gui.draw(graphics);
     }
 }

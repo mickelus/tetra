@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.ItemAbility;
-import se.mickelus.tetra.compat.neoforge.network.NetworkHooks;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.blocks.ICraftingEffectProviderBlock;
 import se.mickelus.tetra.blocks.ISchematicProviderBlock;
@@ -46,7 +45,7 @@ public abstract class AbstractWorkbenchBlock extends TetraBlock implements IInte
 
         if (!world.isClientSide) {
             TileEntityOptional.from(world, pos, WorkbenchTile.class)
-                    .ifPresent(te -> NetworkHooks.openScreen((ServerPlayer) player, te, pos));
+                    .ifPresent(te -> ((ServerPlayer) player).openMenu(te, pos));
         }
 
         return InteractionResult.SUCCESS;

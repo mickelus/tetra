@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.blocks.IHeatTransfer;
@@ -28,7 +28,7 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfer {
     private static final int baseAmount = 8;
-    public static RegistryObject<BlockEntityType<TransferUnitBlockEntity>> type;
+    public static Supplier<BlockEntityType<TransferUnitBlockEntity>> type;
     private ItemStack cell;
     private float efficiency = 1;
 

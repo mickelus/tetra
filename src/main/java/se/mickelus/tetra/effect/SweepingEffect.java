@@ -11,9 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import se.mickelus.tetra.compat.forge.common.ForgeHooks;
-import se.mickelus.tetra.compat.forge.common.ForgeMod;
-import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 
@@ -125,8 +122,7 @@ public class SweepingEffect {
     private static void causeTruesweepDamage(DamageSource damageSource, float baseDamage, ItemStack itemStack, LivingEntity attacker, LivingEntity target) {
         float targetModifier = EffectHelper.getEnchantmentDamageBonus(itemStack, attacker, target, damageSource, baseDamage);
         float critMultiplier = CastOptional.cast(attacker, Player.class)
-                .map(player -> ForgeHooks.getCriticalHit(player, target, false, 1.5f))
-                .map(CriticalHitEvent::getDamageMultiplier)
+                .map(player -> EffectHelper.getCriticalHitMultiplier(player, target, false, 1.5f))
                 .orElse(1f);
 
         target.hurt(damageSource, (baseDamage + targetModifier) * critMultiplier);

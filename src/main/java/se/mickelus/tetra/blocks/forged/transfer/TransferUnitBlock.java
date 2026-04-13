@@ -32,7 +32,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraItemAbilities;
@@ -76,7 +75,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     private static final VoxelShape westShape = box(0, 0, 1, 13, 12, 15);
     private static final VoxelShape southShape = box(1, 0, 3, 15, 12, 16);
 
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static TransferUnitBlock instance;
 
     public TransferUnitBlock() {

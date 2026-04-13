@@ -11,7 +11,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.neoforged.neoforge.common.ItemAbility;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.properties.IToolProvider;
 
@@ -21,7 +21,7 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 public class FortuneBonusCondition implements LootItemCondition {
     public static final String identifier = "random_chance_with_fortune";
-    public static RegistryObject<LootItemConditionType> type;
+    public static Supplier<LootItemConditionType> type;
     public static final MapCodec<FortuneBonusCondition> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.FLOAT.fieldOf("chance").forGetter(condition -> condition.chance),
             Codec.FLOAT.fieldOf("fortuneMultiplier").forGetter(condition -> condition.fortuneMultiplier),

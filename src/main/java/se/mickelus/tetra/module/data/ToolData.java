@@ -3,8 +3,8 @@ package se.mickelus.tetra.module.data;
 import com.google.gson.*;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
-import se.mickelus.tetra.compat.forge.common.TierSortingRegistry;
 import net.neoforged.neoforge.common.ItemAbility;
+import se.mickelus.tetra.tools.HarvestTierRegistry;
 import se.mickelus.tetra.util.TierHelper;
 
 import java.lang.reflect.Type;
@@ -119,7 +119,7 @@ public class ToolData extends TierData<ItemAbility> {
                 return element.getAsFloat();
             }
 
-            return Optional.ofNullable(TierSortingRegistry.byName(ResourceLocation.parse(element.getAsString())))
+            return Optional.ofNullable(HarvestTierRegistry.byName(ResourceLocation.parse(element.getAsString())))
                     .map(TierHelper::getIndex)
                     .map(index -> index + 1)
                     .orElse(0);

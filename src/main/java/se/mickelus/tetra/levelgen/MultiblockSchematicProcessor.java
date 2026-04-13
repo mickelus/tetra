@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicBlock;
 import se.mickelus.tetra.blocks.multischematic.PrimaryMultiblockSchematicBlock;
 import se.mickelus.tetra.blocks.multischematic.RuinedMultiblockSchematicBlock;
@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 public class MultiblockSchematicProcessor extends StructureProcessor {
     public static final MultiblockSchematicProcessor INSTANCE = new MultiblockSchematicProcessor();
     public static final MapCodec<MultiblockSchematicProcessor> codec = MapCodec.unit(MultiblockSchematicProcessor.INSTANCE);
-    public static RegistryObject<StructureProcessorType<?>> type;
+    public static Supplier<StructureProcessorType<?>> type;
 
     public MultiblockSchematicProcessor() {
     }

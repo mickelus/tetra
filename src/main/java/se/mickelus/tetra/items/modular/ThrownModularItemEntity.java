@@ -35,7 +35,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.event.EventHooks;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.*;
@@ -55,7 +54,6 @@ public class ThrownModularItemEntity extends AbstractArrow implements IEntityWit
     public static final String dealtDamageKey = "dealtDamage";
     public static final String preferredSlotKey = "preferredSlot";
     private static final EntityDataAccessor<Byte> LOYALTY_LEVEL = SynchedEntityData.defineId(ThrownModularItemEntity.class, EntityDataSerializers.BYTE);
-    @ObjectHolder(registryName = "entity_type", value = TetraMod.MOD_ID + ":" + unlocalizedName)
     public static EntityType<ThrownModularItemEntity> type;
     public static int preferUnavailable = -3;
     public static int preferOffhand = -2;

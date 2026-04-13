@@ -21,7 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
@@ -61,7 +60,6 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-13, -1, 3, 19, -13, 19);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(6, 1);
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularDoubleHeadedItem instance;
 
     public ModularDoubleHeadedItem() {

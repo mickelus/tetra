@@ -26,13 +26,12 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.common.ForgeTier;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.SimpleTier;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import se.mickelus.tetra.compat.forge.common.TierSortingRegistry;
 import net.neoforged.neoforge.common.crafting.IngredientType;
-import se.mickelus.tetra.compat.forge.common.extensions.IForgeMenuType;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -42,7 +41,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
 import se.mickelus.tetra.advancements.*;
 import se.mickelus.tetra.blocks.ArcaneFireBlock;
 import se.mickelus.tetra.blocks.InitializableBlock;
@@ -103,6 +101,7 @@ import se.mickelus.tetra.levelgen.*;
 import se.mickelus.tetra.loot.FortuneBonusCondition;
 import se.mickelus.tetra.loot.ReplaceTableModifier;
 import se.mickelus.tetra.loot.ScrollDataFunction;
+import se.mickelus.tetra.tools.HarvestTierRegistry;
 import se.mickelus.mutil.network.PacketHandler;
 
 import java.util.HashMap;
@@ -137,8 +136,8 @@ public class TetraRegistries {
     public static final DeferredRegister<CreativeModeTab> creativeTabs = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TetraMod.MOD_ID);
 
     public static final TagKey<Block> forgeHammerIncorrectTag = BlockTags.create(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "incorrect_for_maxed_forge_hammer"));
-    public static final Tier forgeHammerTier = TierSortingRegistry.registerTier(
-            new ForgeTier(5, 0, 0, 0, 0, forgeHammerIncorrectTag, () -> Ingredient.EMPTY),
+    public static final Tier forgeHammerTier = HarvestTierRegistry.register(
+            new SimpleTier(forgeHammerIncorrectTag, 0, 0, 0, 0, () -> Ingredient.EMPTY),
             ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "maxed_forge_hammer"),
             List.of(Tiers.NETHERITE),
             List.of()
@@ -149,37 +148,37 @@ public class TetraRegistries {
     }
 
     private static Item.Properties itemProperties;
-    private static RegistryObject<CreativeModeTab> defaultCreativeTabs;
-    private static RegistryObject<BasicWorkbenchBlock> basicWorkbench;
-    private static RegistryObject<SeepingBedrockBlock> seepingBedrock;
-    private static RegistryObject<RackBlock> rack;
+    private static DeferredHolder<CreativeModeTab, CreativeModeTab> defaultCreativeTabs;
+    private static DeferredHolder<Block, BasicWorkbenchBlock> basicWorkbench;
+    private static DeferredHolder<Block, SeepingBedrockBlock> seepingBedrock;
+    private static DeferredHolder<Block, RackBlock> rack;
     private static DeferredHolder<Item, BlockItem> chthonicExtractorItem;
-    private static RegistryObject<FracturedBedrockBlock> fracturedBedrock;
-    private static RegistryObject<ForgedWallBlock> forgedWall;
-    private static RegistryObject<ForgedPillarBlock> forgedPillar;
-    private static RegistryObject<ForgedPlatformBlock> forgedPlatform;
-    private static RegistryObject<ForgedPlatformSlabBlock> forgedPlatformSlab;
-    private static RegistryObject<ForgedVentBlock> forgedVent;
-    private static RegistryObject<HammerBaseBlock> forgeHammer;
-    private static RegistryObject<ForgedWorkbenchBlock> forgedWorkbench;
-    private static RegistryObject<ForgedCrateBlock> forgedCrate;
-    private static RegistryObject<TransferUnitBlock> transferUnit;
-    private static RegistryObject<BoltItem> bolt;
-    private static RegistryObject<DragonSinewItem> dragonSinew;
-    private static RegistryObject<StonecutterItem> stonecutter;
-    private static RegistryObject<EarthpiercerItem> earthpiercer;
-    private static RegistryObject<ModularHolosphereItem> modularHolosphere;
-    private static RegistryObject<PlanarStabilizerItem> planarStabilizer;
-    private static RegistryObject<InsulatedPlateItem> insulatedPlate;
-    private static RegistryObject<QuickLatchItem> quickLatch;
-    private static RegistryObject<MeshItem> mesh;
-    private static RegistryObject<BeamItem> beam;
-    private static RegistryObject<PristineDiamondItem> pristineDiamond;
-    private static RegistryObject<PristineEmeraldItem> pristineEmerald;
-    private static RegistryObject<PristineLapisItem> pristineLapis;
-    private static RegistryObject<PristineAmethystItem> pristineAmethyst;
-    private static RegistryObject<PristineQuartzItem> pristineQuartz;
-    private static RegistryObject<GeodeItem> geode;
+    private static DeferredHolder<Block, FracturedBedrockBlock> fracturedBedrock;
+    private static DeferredHolder<Block, ForgedWallBlock> forgedWall;
+    private static DeferredHolder<Block, ForgedPillarBlock> forgedPillar;
+    private static DeferredHolder<Block, ForgedPlatformBlock> forgedPlatform;
+    private static DeferredHolder<Block, ForgedPlatformSlabBlock> forgedPlatformSlab;
+    private static DeferredHolder<Block, ForgedVentBlock> forgedVent;
+    private static DeferredHolder<Block, HammerBaseBlock> forgeHammer;
+    private static DeferredHolder<Block, ForgedWorkbenchBlock> forgedWorkbench;
+    private static DeferredHolder<Block, ForgedCrateBlock> forgedCrate;
+    private static DeferredHolder<Block, TransferUnitBlock> transferUnit;
+    private static DeferredHolder<Item, BoltItem> bolt;
+    private static DeferredHolder<Item, DragonSinewItem> dragonSinew;
+    private static DeferredHolder<Item, StonecutterItem> stonecutter;
+    private static DeferredHolder<Item, EarthpiercerItem> earthpiercer;
+    private static DeferredHolder<Item, ModularHolosphereItem> modularHolosphere;
+    private static DeferredHolder<Item, PlanarStabilizerItem> planarStabilizer;
+    private static DeferredHolder<Item, InsulatedPlateItem> insulatedPlate;
+    private static DeferredHolder<Item, QuickLatchItem> quickLatch;
+    private static DeferredHolder<Item, MeshItem> mesh;
+    private static DeferredHolder<Item, BeamItem> beam;
+    private static DeferredHolder<Item, PristineDiamondItem> pristineDiamond;
+    private static DeferredHolder<Item, PristineEmeraldItem> pristineEmerald;
+    private static DeferredHolder<Item, PristineLapisItem> pristineLapis;
+    private static DeferredHolder<Item, PristineAmethystItem> pristineAmethyst;
+    private static DeferredHolder<Item, PristineQuartzItem> pristineQuartz;
+    private static DeferredHolder<Item, GeodeItem> geode;
 
     public static void init(IEventBus bus) {
         bus.register(TetraRegistries.class);
@@ -233,11 +232,11 @@ public class TetraRegistries {
         ArcaneFireBlock.instance = register(blocks, ArcaneFireBlock.identifier, ArcaneFireBlock::new);
 
         // scrolls
-        RegistryObject<RolledScrollBlock> rolledScroll = register(blocks, RolledScrollBlock.identifier, RolledScrollBlock::new,
+        var rolledScroll = register(blocks, RolledScrollBlock.identifier, RolledScrollBlock::new,
                 value -> RolledScrollBlock.instance = value);
-        RegistryObject<WallScrollBlock> wallScroll = register(blocks, WallScrollBlock.identifier, WallScrollBlock::new,
+        var wallScroll = register(blocks, WallScrollBlock.identifier, WallScrollBlock::new,
                 value -> WallScrollBlock.instance = value);
-        RegistryObject<OpenScrollBlock> openScroll = register(blocks, OpenScrollBlock.identifier, OpenScrollBlock::new,
+        var openScroll = register(blocks, OpenScrollBlock.identifier, OpenScrollBlock::new,
                 value -> OpenScrollBlock.instance = value);
 
         // base ruins
@@ -257,8 +256,9 @@ public class TetraRegistries {
         registerBlockItem(forgeHammer);
         forgedWorkbench = register(blocks, ForgedWorkbenchBlock.identifier, ForgedWorkbenchBlock::new);
         registerBlockItem(forgedWorkbench);
-        ForgedContainerBlock.instance = register(blocks, ForgedContainerBlock.identifier, ForgedContainerBlock::new);
-        registerBlockItem(ForgedContainerBlock.instance);
+        var forgedContainer = register(blocks, ForgedContainerBlock.identifier, ForgedContainerBlock::new);
+        ForgedContainerBlock.instance = forgedContainer;
+        registerBlockItem(forgedContainer);
         forgedCrate = register(blocks, ForgedCrateBlock.identifier, ForgedCrateBlock::new);
         registerBlockItem(forgedCrate);
         transferUnit = register(blocks, TransferUnitBlock.identifier, TransferUnitBlock::new,
@@ -266,7 +266,7 @@ public class TetraRegistries {
         registerBlockItem(transferUnit);
 
         // chthonic extractor
-        RegistryObject<ChthonicExtractorBlock> chthonicExtractor = register(blocks, ChthonicExtractorBlock.identifier, ChthonicExtractorBlock::new,
+        var chthonicExtractor = register(blocks, ChthonicExtractorBlock.identifier, ChthonicExtractorBlock::new,
                 value -> ChthonicExtractorBlock.instance = value);
         chthonicExtractorItem = ChthonicExtractorBlock.registerItems(items);
         fracturedBedrock = register(blocks, FracturedBedrockBlock.identifier, FracturedBedrockBlock::new,
@@ -274,8 +274,9 @@ public class TetraRegistries {
         register(blocks, DepletedBedrockBlock.identifier, DepletedBedrockBlock::new, value -> DepletedBedrockBlock.instance = value);
 
         // thermal extractor
-        CoreExtractorBaseBlock.instance = register(blocks, CoreExtractorBaseBlock.identifier, CoreExtractorBaseBlock::new);
-        registerBlockItem(CoreExtractorBaseBlock.instance);
+        var coreExtractorBase = register(blocks, CoreExtractorBaseBlock.identifier, CoreExtractorBaseBlock::new);
+        CoreExtractorBaseBlock.instance = coreExtractorBase;
+        registerBlockItem(coreExtractorBase);
         CoreExtractorPistonBlock.instance = register(blocks, CoreExtractorPistonBlock.identifier, CoreExtractorPistonBlock::new);
         registerBlockItem(register(blocks, CoreExtractorPipeBlock.identifier, CoreExtractorPipeBlock::new,
                 value -> CoreExtractorPipeBlock.instance = value));
@@ -304,7 +305,7 @@ public class TetraRegistries {
         items.register(ModularBladedItem.identifier, ModularBladedItem::new);
         items.register(ModularDoubleHeadedItem.identifier, ModularDoubleHeadedItem::new);
         items.register(ModularBowItem.identifier, ModularBowItem::new);
-        RegistryObject<Item> shootableDummy = register(items, ShootableDummyItem.identifier, ShootableDummyItem::new);
+        var shootableDummy = register(items, ShootableDummyItem.identifier, ShootableDummyItem::new);
         items.register(ModularCrossbowItemImpl.identifier, () -> new ModularCrossbowItemImpl(shootableDummy.get()));
         items.register(ModularSingleHeadedItem.identifier, ModularSingleHeadedItem::new);
         items.register(ModularShieldItem.identifier, ModularShieldItem::new);
@@ -417,15 +418,15 @@ public class TetraRegistries {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // toolbelt
         ToolbeltContainer.type = register(containers, ModularToolbeltItem.identifier,
-                () -> IForgeMenuType.create(((windowId, inv, data) -> ToolbeltContainer.create(windowId, inv))));
+                () -> IMenuTypeExtension.create((windowId, inv, data) -> ToolbeltContainer.create(windowId, inv)));
 
         // workbench
         WorkbenchContainer.containerType = register(containers, WorkbenchTile.identifier,
-                () -> IForgeMenuType.create(((windowId, inv, data) -> WorkbenchContainer.create(windowId, data.readBlockPos(), inv))));
+                () -> IMenuTypeExtension.create((windowId, inv, data) -> WorkbenchContainer.create(windowId, data.readBlockPos(), inv)));
 
         // forged container
         ForgedContainerMenu.type = register(containers, ForgedContainerBlock.identifier,
-                () -> IForgeMenuType.create(((windowId, inv, data) -> ForgedContainerMenu.create(windowId, data.readBlockPos(), inv))));
+                () -> IMenuTypeExtension.create((windowId, inv, data) -> ForgedContainerMenu.create(windowId, data.readBlockPos(), inv)));
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -475,11 +476,11 @@ public class TetraRegistries {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // STRUCTURE PROCESSORS
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ForgedHammerProcessor.type = registerStructureProcessor("hammer", () -> ForgedHammerProcessor.codec);
-        ForgedCrateProcessor.type = registerStructureProcessor("crate", () -> ForgedCrateProcessor.codec);
-        ForgedContainerProcessor.type = registerStructureProcessor("container", () -> ForgedContainerProcessor.codec);
-        TransferUnitProcessor.type = registerStructureProcessor("transfer_unit", () -> TransferUnitProcessor.codec);
-        MultiblockSchematicProcessor.type = registerStructureProcessor("multiblock_schematic", () -> MultiblockSchematicProcessor.codec);
+        ForgedHammerProcessor.type = registerStructureProcessor("hammer", () -> ForgedHammerProcessor.codec)::get;
+        ForgedCrateProcessor.type = registerStructureProcessor("crate", () -> ForgedCrateProcessor.codec)::get;
+        ForgedContainerProcessor.type = registerStructureProcessor("container", () -> ForgedContainerProcessor.codec)::get;
+        TransferUnitProcessor.type = registerStructureProcessor("transfer_unit", () -> TransferUnitProcessor.codec)::get;
+        MultiblockSchematicProcessor.type = registerStructureProcessor("multiblock_schematic", () -> MultiblockSchematicProcessor.codec)::get;
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ITEM SUB PREDICATES
@@ -493,12 +494,12 @@ public class TetraRegistries {
         ItemAbilityIngredient.type = register(ingredientTypes, "tool_action", () -> new IngredientType<>(ItemAbilityIngredient.CODEC, ItemAbilityIngredient.STREAM_CODEC));
     }
 
-    public static <B extends Block> RegistryObject<Item> registerBlockItem(RegistryObject<B> block) {
+    public static <B extends Block> DeferredHolder<Item, BlockItem> registerBlockItem(DeferredHolder<Block, B> block) {
         return register(items, block.getId().getPath(), () -> new BlockItem(block.get(), itemProperties));
     }
 
-    public static <P extends StructureProcessor> RegistryObject<StructureProcessorType<?>> registerStructureProcessor(String id,
-            StructureProcessorType<P> type) {
+    public static <P extends StructureProcessor> DeferredHolder<StructureProcessorType<?>, StructureProcessorType<P>> registerStructureProcessor(
+            String id, StructureProcessorType<P> type) {
         return register(structureProcessors, id, () -> type);
     }
 
@@ -616,13 +617,13 @@ public class TetraRegistries {
         };
     }
 
-    private static <R, T extends R> RegistryObject<T> register(DeferredRegister<R> registry, String id, Supplier<T> supplier) {
-        return RegistryObject.of(registry.register(id, supplier));
+    private static <R, T extends R> DeferredHolder<R, T> register(DeferredRegister<R> registry, String id, Supplier<T> supplier) {
+        return registry.register(id, supplier);
     }
 
-    private static <R, T extends R> RegistryObject<T> register(DeferredRegister<R> registry, String id, Supplier<T> supplier,
+    private static <R, T extends R> DeferredHolder<R, T> register(DeferredRegister<R> registry, String id, Supplier<T> supplier,
             Consumer<? super T> assignment) {
-        return RegistryObject.of(registry.register(id, assigning(supplier, assignment)));
+        return registry.register(id, assigning(supplier, assignment));
     }
 
     private static void validateTierOrdering() {
@@ -637,8 +638,8 @@ public class TetraRegistries {
         );
 
         Map<ResourceLocation, Integer> indexes = new HashMap<>();
-        List<ResourceLocation> resolvedOrder = TierSortingRegistry.getSortedTiers().stream()
-                .map(TierSortingRegistry::getName)
+        List<ResourceLocation> resolvedOrder = HarvestTierRegistry.ordered().stream()
+                .map(HarvestTierRegistry::nameOf)
                 .toList();
 
         for (int i = 0; i < resolvedOrder.size(); i++) {

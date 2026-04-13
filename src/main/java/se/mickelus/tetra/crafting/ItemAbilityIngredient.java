@@ -10,13 +10,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.module.schematic.requirement.IntegerPredicate;
 
@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class ItemAbilityIngredient implements ICustomIngredient {
-    public static RegistryObject<IngredientType<ItemAbilityIngredient>> type;
+    public static Supplier<IngredientType<ItemAbilityIngredient>> type;
     private static final Codec<IntegerPredicate> TIER_CODEC = Codec.PASSTHROUGH.xmap(
             dynamic -> {
                 JsonElement json = dynamic.convert(JsonOps.INSTANCE).getValue();
@@ -59,7 +59,7 @@ public class ItemAbilityIngredient implements ICustomIngredient {
 
     @Override
     public Stream<ItemStack> getItems() {
-        return ForgeRegistries.ITEMS.getValues().stream()
+        return BuiltInRegistries.ITEM.stream()
                 .map(Item::getDefaultInstance)
                 .filter(this::test);
     }

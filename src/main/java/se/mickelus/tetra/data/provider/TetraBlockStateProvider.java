@@ -1,5 +1,6 @@
 package se.mickelus.tetra.data.provider;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -8,11 +9,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.*;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
 import se.mickelus.tetra.blocks.forged.ForgedVentBlock;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicBlock;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Objects;
 
 import static se.mickelus.tetra.TetraMod.MOD_ID;
 
@@ -108,7 +110,7 @@ public class TetraBlockStateProvider extends BlockStateProvider {
         String id = String.format(MultiblockSchematicBlock.Builder.format, identifier, h, v);
         ResourceLocation rl = ResourceLocation.fromNamespaceAndPath("tetra", id);
         ResourceLocation front = ResourceLocation.fromNamespaceAndPath("tetra", modelPrefix + id);
-        Block block = ForgeRegistries.BLOCKS.getValue(rl);
+        Block block = Objects.requireNonNull(RegistryHelper.get(BuiltInRegistries.BLOCK, rl), "Unknown block: " + rl);
         ModelFile model = getSchematicModel(id, front,
                 ResourceLocation.fromNamespaceAndPath("tetra", modelPrefix + "side"),
                 ResourceLocation.fromNamespaceAndPath("tetra", modelPrefix + "back"));

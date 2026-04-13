@@ -17,7 +17,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.holo.HolosphereBlock;
@@ -46,7 +45,6 @@ public class ModularHolosphereItem extends ModularItem {
     public static final String identifier = "holo";
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 0, -14, 18, 4, 0, 4, 18);
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularHolosphereItem instance;
 
     public ModularHolosphereItem() {

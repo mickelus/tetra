@@ -9,6 +9,7 @@ import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
@@ -46,9 +47,7 @@ public class PropertyMatcher implements Predicate<BlockState> {
                 String blockString = jsonObject.get("block").getAsString();
                 if (blockString != null) {
                     ResourceLocation resourceLocation = ResourceLocation.parse(blockString);
-                    if (ForgeRegistries.BLOCKS.containsKey(resourceLocation)) {
-                        result.block = ForgeRegistries.BLOCKS.getValue(resourceLocation);
-                    }
+                    result.block = RegistryHelper.get(BuiltInRegistries.BLOCK, resourceLocation);
                 }
             }
 
@@ -84,9 +83,7 @@ public class PropertyMatcher implements Predicate<BlockState> {
             String blockString = json.getAsString();
             if (blockString != null) {
                 ResourceLocation resourceLocation = ResourceLocation.parse(blockString);
-                if (ForgeRegistries.BLOCKS.containsKey(resourceLocation)) {
-                    result.block = ForgeRegistries.BLOCKS.getValue(resourceLocation);
-                }
+                result.block = RegistryHelper.get(BuiltInRegistries.BLOCK, resourceLocation);
             }
         }
 

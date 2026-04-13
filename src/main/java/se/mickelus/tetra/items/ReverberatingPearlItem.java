@@ -16,8 +16,6 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class ReverberatingPearlItem extends TetraItem {
     private static final String unlocalizedName = "reverberating_pearl";
-//    @ObjectHolder(TetraMod.MOD_ID + ":" + unlocalizedName)
-//    public static ReverberatingPearlItem instance;
 
     public ReverberatingPearlItem() {
         super(new Properties());

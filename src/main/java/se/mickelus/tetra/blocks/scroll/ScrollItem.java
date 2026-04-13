@@ -27,8 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.forgespi.Environment;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
+import net.neoforged.fml.loading.FMLEnvironment;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
@@ -45,7 +44,6 @@ import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 public class ScrollItem extends BlockItem implements InitializableItem {
     public static final String identifier = "scroll_rolled";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ScrollItem instance;
 
 
@@ -158,7 +156,7 @@ public class ScrollItem extends BlockItem implements InitializableItem {
     public Component getName(ItemStack stack) {
         String key = ScrollData.read(stack).key;
         // sometimes called on the server, need to check before calling I18n
-        if (!Environment.get().getDist().isDedicatedServer()) {
+        if (!FMLEnvironment.dist.isDedicatedServer()) {
             String prefixKey = "item.tetra.scroll." + key + ".prefix";
             if (I18n.exists(prefixKey)) {
                 return Component.translatable("item.tetra.scroll." + key + ".prefix")

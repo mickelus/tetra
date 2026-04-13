@@ -32,7 +32,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import org.joml.Vector3f;
 import se.mickelus.mutil.util.ItemHandlerWrapper;
 import se.mickelus.mutil.util.TileEntityOptional;
@@ -57,7 +56,6 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
             Direction.SOUTH, Block.box(0.0, 11.0, 0.0, 16.0, 14.0, 2.0),
             Direction.WEST, Block.box(14.0, 11.0, 0.0, 16.0, 14.0, 16.0),
             Direction.EAST, Block.box(0.0, 11.0, 0.0, 2.0, 14.0, 16.0)));
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static RackBlock instance;
 
 

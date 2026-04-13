@@ -31,7 +31,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.ItemAbility;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraItemAbilities;
@@ -68,7 +67,6 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
                     HammerBaseBlockEntity.class, tile -> tile.getEffect(false) != null,
                     (world, pos, blockState, player, hand, hitFace) -> removeModule(world, pos, blockState, player, hand, hitFace, false))
     };
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static HammerBaseBlock instance;
 
     public HammerBaseBlock() {

@@ -1,6 +1,7 @@
 package se.mickelus.tetra;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -13,7 +14,6 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import se.mickelus.mutil.effect.EffectTooltipRenderer;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
 import se.mickelus.tetra.blocks.forged.chthonic.ExtractorProjectileEntity;
 import se.mickelus.tetra.blocks.forged.chthonic.ExtractorProjectileRenderer;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlockEntity;
@@ -237,7 +237,7 @@ public class ClientSetup {
         registerOverlay(event, "multiblock_schematic", new MultiblockSchematicGui(mc));
     }
 
-    private static void registerOverlay(RegisterGuiLayersEvent event, String id, IGuiOverlay overlay) {
+    private static void registerOverlay(RegisterGuiLayersEvent event, String id, LayeredDraw.Layer overlay) {
         event.registerBelowAll(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, id), overlay);
         NeoForge.EVENT_BUS.register(overlay);
     }

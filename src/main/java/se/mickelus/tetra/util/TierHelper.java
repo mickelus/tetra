@@ -2,8 +2,8 @@ package se.mickelus.tetra.util;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Tier;
-import se.mickelus.tetra.compat.forge.common.TierSortingRegistry;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.tools.HarvestTierRegistry;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -25,8 +25,8 @@ public class TierHelper {
                 .distinct()
                 .collect(Collectors.toList());
 
-        tiers = TierSortingRegistry.getSortedTiers().stream()
-                .filter(tier -> relevant.contains(TierSortingRegistry.getName(tier)))
+        tiers = HarvestTierRegistry.ordered().stream()
+                .filter(tier -> relevant.contains(HarvestTierRegistry.nameOf(tier)))
                 .collect(Collectors.toList());
     }
 
@@ -36,7 +36,7 @@ public class TierHelper {
 
     @Nullable
     public static Tier getTier(int index) {
-        if (index > -1) {
+        if (index > -1 && !tiers.isEmpty()) {
             return tiers.get(Math.min(index, tiers.size() - 1));
         }
         return null;

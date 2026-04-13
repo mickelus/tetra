@@ -14,7 +14,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
@@ -27,7 +26,6 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class QuickLatchItem extends TetraItem {
     public static final String identifier = "quick_latch";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static QuickLatchItem instance;
 
     public QuickLatchItem() {

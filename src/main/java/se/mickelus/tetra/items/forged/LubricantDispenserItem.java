@@ -7,7 +7,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.items.TetraItem;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class LubricantDispenserItem extends TetraItem {
     public static final String identifier = "lubricant_dispenser";
-    public static RegistryObject<LubricantDispenserItem> instance;
+    public static Supplier<LubricantDispenserItem> instance;
 
     public LubricantDispenserItem() {
         super(new Properties());

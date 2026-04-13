@@ -28,8 +28,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.fml.loading.FMLEnvironment;
 import se.mickelus.tetra.compat.bettercombat.BetterCombatCompat;
-import se.mickelus.tetra.compat.forge.forgespi.Environment;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
@@ -946,7 +946,7 @@ public interface IModularItem {
 
     default String getItemName(ItemStack itemStack) {
         // todo: since getItemStackDisplayName is called on the server we cannot use the I18n service
-        if (Environment.get().getDist().isDedicatedServer()) {
+        if (FMLEnvironment.dist.isDedicatedServer()) {
             return "";
         }
 

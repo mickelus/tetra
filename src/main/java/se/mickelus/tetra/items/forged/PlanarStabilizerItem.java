@@ -7,7 +7,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.items.TetraItem;
@@ -19,7 +18,6 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class PlanarStabilizerItem extends TetraItem {
     public static final String identifier = "planar_stabilizer";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static PlanarStabilizerItem instance;
 
     public PlanarStabilizerItem() {

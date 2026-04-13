@@ -33,7 +33,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.event.EventHooks;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
@@ -46,7 +45,6 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityW
     public static final String unlocalizedName = "extractor_projectile";
     public static final String damageKey = "dmg";
     public static final String heatKey = "heat";
-    @ObjectHolder(registryName = "entity_type", value = TetraMod.MOD_ID + ":" + unlocalizedName)
     public static EntityType<ExtractorProjectileEntity> type;
     private int damage;
     private int heat;

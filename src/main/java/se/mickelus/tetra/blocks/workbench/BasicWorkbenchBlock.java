@@ -16,7 +16,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 
@@ -27,7 +26,6 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
     public static final String identifier = "basic_workbench";
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static AbstractWorkbenchBlock instance;
 
     public BasicWorkbenchBlock() {

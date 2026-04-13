@@ -1,11 +1,12 @@
 package se.mickelus.tetra.data.predicate;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -22,7 +23,7 @@ public class SimpleItemPredicate implements TetraItemPredicate {
     public SimpleItemPredicate(Collection<ResourceLocation> itemIds, @Nullable ResourceLocation tagId) {
         this.items = new HashSet<>();
         itemIds.stream()
-                .map(ForgeRegistries.ITEMS::getValue)
+                .map(itemId -> RegistryHelper.get(BuiltInRegistries.ITEM, itemId))
                 .filter(item -> item != null)
                 .forEach(items::add);
         this.tag = tagId != null ? ItemTags.create(tagId) : null;

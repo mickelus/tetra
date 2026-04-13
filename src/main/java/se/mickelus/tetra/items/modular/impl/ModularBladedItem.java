@@ -6,7 +6,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -31,7 +30,6 @@ public class ModularBladedItem extends ItemModularHandheld {
 
     public static final String identifier = "modular_sword";
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularBladedItem instance;
 
     public ModularBladedItem() {

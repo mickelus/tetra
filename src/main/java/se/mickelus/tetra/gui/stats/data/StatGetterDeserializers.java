@@ -2,14 +2,15 @@ package se.mickelus.tetra.gui.stats.data;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.stats.getter.*;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -59,7 +60,7 @@ public class StatGetterDeserializers {
 
     public static IStatGetter attributeGetter(JsonElement json) {
         AttributeData data = StatRegistry.gson.fromJson(json, AttributeData.class);
-        Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse(data.attribute));
+        Attribute attribute = RegistryHelper.get(BuiltInRegistries.ATTRIBUTE, ResourceLocation.parse(data.attribute));
         if (attribute == null) {
             throw new JsonParseException("Failed to parse attribute stat getter, unknown attribute: " + data.attribute);
         }
@@ -75,7 +76,7 @@ public class StatGetterDeserializers {
 
     public static IStatGetter attributeMultiplierGetter(JsonElement json) {
         AttributeMultiplierData data = StatRegistry.gson.fromJson(json, AttributeMultiplierData.class);
-        Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse(data.attribute));
+        Attribute attribute = RegistryHelper.get(BuiltInRegistries.ATTRIBUTE, ResourceLocation.parse(data.attribute));
         if (attribute == null) {
             throw new JsonParseException("Failed to parse attribute multiplier stat getter, unknown attribute: " + data.attribute);
         }
@@ -88,7 +89,7 @@ public class StatGetterDeserializers {
 
     public static IStatGetter attributeAdditionGetter(JsonElement json) {
         AttributeAdditionData data = StatRegistry.gson.fromJson(json, AttributeAdditionData.class);
-        Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse(data.attribute));
+        Attribute attribute = RegistryHelper.get(BuiltInRegistries.ATTRIBUTE, ResourceLocation.parse(data.attribute));
         if (attribute == null) {
             throw new JsonParseException("Failed to parse attribute addition stat getter, unknown attribute: " + data.attribute);
         }
@@ -136,7 +137,10 @@ public class StatGetterDeserializers {
 
     public static IStatGetter isItemGetter(JsonElement json) {
         IsItemData data = StatRegistry.gson.fromJson(json, IsItemData.class);
-        List<Item> items = Arrays.stream(data.items).map(ForgeRegistries.ITEMS::getValue).filter(Objects::nonNull).toList();
+        List<Item> items = Arrays.stream(data.items)
+                .map(item -> RegistryHelper.get(BuiltInRegistries.ITEM, item))
+                .filter(Objects::nonNull)
+                .toList();
         return new StatGetterIsItem(items, data.inverted);
     }
 

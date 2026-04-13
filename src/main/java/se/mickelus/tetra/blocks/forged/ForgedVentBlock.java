@@ -27,7 +27,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.blocks.PropertyMatcher;
@@ -86,7 +85,6 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
                     new PropertyMatcher().where(propBroken, equalTo(true)),
                     ForgedVentBlock::breakBeam),
     };
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static ForgedVentBlock instance;
 
     public ForgedVentBlock() {

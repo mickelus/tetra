@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
@@ -22,7 +21,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class FracturedBedrockBlock extends TetraBlock implements EntityBlock {
     public static final String identifier = "fractured_bedrock";
 
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static FracturedBedrockBlock instance;
 
     public FracturedBedrockBlock() {

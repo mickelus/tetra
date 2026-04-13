@@ -28,8 +28,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.ItemAbility;
-import se.mickelus.tetra.compat.neoforge.network.NetworkHooks;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraItemAbilities;
@@ -90,7 +89,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     private static final VoxelShape shapeZ2Open = box(1, 0, 1, 15, 9, 31);
     private static final VoxelShape shapeX1Open = box(-15, 0, 1, 15, 9, 15);
     private static final VoxelShape shapeX2Open = box(1, 0, 1, 31, 9, 15);
-    public static RegistryObject<ForgedContainerBlock> instance;
+    public static Supplier<ForgedContainerBlock> instance;
 
     public ForgedContainerBlock() {
         super(ForgedBlockCommon.propertiesSolid);
@@ -153,7 +152,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
                         .ifPresent(te -> {
                             ForgedContainerBlockEntity delegate = te.getOrDelegate();
                             if (delegate.isOpen()) {
-                                NetworkHooks.openScreen((ServerPlayer) player, delegate, delegate.getBlockPos());
+                                ((ServerPlayer) player).openMenu(delegate, delegate.getBlockPos());
                             }
                         });
             }

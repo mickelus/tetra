@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
@@ -22,7 +21,6 @@ import java.util.Map;
 @ParametersAreNonnullByDefault
 public class RolledScrollBlock extends ScrollBlock {
     public static final String identifier = "scroll_rolled";
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static ScrollBlock instance;
 
     private final VoxelShape[] baseShapes = new VoxelShape[] {

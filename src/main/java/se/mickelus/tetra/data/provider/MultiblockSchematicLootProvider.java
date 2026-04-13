@@ -1,6 +1,7 @@
 package se.mickelus.tetra.data.provider;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
@@ -18,11 +19,12 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
 import se.mickelus.tetra.blocks.multischematic.MultiblockSchematicBlock;
 import se.mickelus.tetra.items.forged.MetalScrapItem;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class MultiblockSchematicLootProvider extends BlockLootSubProvider {
@@ -70,13 +72,13 @@ public class MultiblockSchematicLootProvider extends BlockLootSubProvider {
         ResourceLocation rl = ResourceLocation.fromNamespaceAndPath("tetra", identifier);
         return LootTable.lootTable().withPool(LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1))
-                .add(LootItem.lootTableItem(ForgeRegistries.BLOCKS.getValue(rl))));
+                .add(LootItem.lootTableItem(Objects.requireNonNull(RegistryHelper.get(BuiltInRegistries.BLOCK, rl), "Unknown block: " + rl))));
     }
 
     private LootTable.Builder getMultiBlockSchematicDropTable(String identifier, HolderLookup.RegistryLookup<Enchantment> enchantments) {
         ResourceLocation rl = ResourceLocation.fromNamespaceAndPath("tetra", identifier);
 
-        return createSilkTouchDispatchTable(ForgeRegistries.BLOCKS.getValue(rl),
+        return createSilkTouchDispatchTable(Objects.requireNonNull(RegistryHelper.get(BuiltInRegistries.BLOCK, rl), "Unknown block: " + rl),
                 LootItem.lootTableItem(MetalScrapItem.instance.get())
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4)))
                         .apply(ApplyBonusCount.addUniformBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE))));

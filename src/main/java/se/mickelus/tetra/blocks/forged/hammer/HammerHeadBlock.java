@@ -28,7 +28,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
@@ -58,7 +57,6 @@ public class HammerHeadBlock extends TetraWaterloggedBlock implements IInteracti
                     HammerHeadBlockEntity.class, HammerHeadBlockEntity::isJammed,
                     (world, pos, blockState, player, hand, hitFace) -> unjam(world, pos, player))
     };
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static HammerHeadBlock instance;
 
     public HammerHeadBlock() {

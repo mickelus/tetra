@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.mutil.gui.DisabledSlot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 
@@ -17,7 +17,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ToolbeltContainer extends AbstractContainerMenu {
-    public static RegistryObject<MenuType<ToolbeltContainer>> type;
+    public static Supplier<MenuType<ToolbeltContainer>> type;
     private final ItemStack itemStackToolbelt;
     private final QuickslotInventory quickslotInventory;
     private final StorageInventory storageInventory;

@@ -36,7 +36,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.EventHooks;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
@@ -75,7 +74,6 @@ public class ModularBowItem extends ModularItem {
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, 21, -11, -3);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
     public static final int maxUseDuration = 37000;
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularBowItem instance;
     protected GridTextureModelData arrowModel0 = new GridTextureModelData(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
     protected GridTextureModelData arrowModel1 = new GridTextureModelData(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "item/module/bow/arrow_1"));

@@ -32,7 +32,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import se.mickelus.mutil.util.RotationHelper;
@@ -52,7 +52,7 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
     public final int y;
     public final int height;
     public final int width;
-    public final RegistryObject<RuinedMultiblockSchematicBlock> ruinedRef;
+    public final Supplier<RuinedMultiblockSchematicBlock> ruinedRef;
     protected String schematic;
     protected ResourceLocation pryTable;
     protected BlockInteraction[] pryAction = new BlockInteraction[] {
@@ -61,7 +61,7 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
                     this::pryBlock)
     };
 
-    public MultiblockSchematicBlock(Properties properties, String schematic, RegistryObject<RuinedMultiblockSchematicBlock> ruinedRef,
+    public MultiblockSchematicBlock(Properties properties, String schematic, Supplier<RuinedMultiblockSchematicBlock> ruinedRef,
             @Nullable ResourceLocation pryTable, int x, int y, int height, int width) {
         super(properties);
         this.schematic = schematic;
@@ -248,14 +248,14 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
 
                     String ruinedId = String.format(ruinedFormat, identifier, x, y);
                     ResourceLocation brokenPryTable = ResourceLocation.fromNamespaceAndPath("tetra", pryTablePrefix + ruinedId);
-                    RegistryObject<RuinedMultiblockSchematicBlock> ruinedRef = RegistryObject.of(
-                            blocks.register(ruinedId, () -> new RuinedMultiblockSchematicBlock(ruinedProperties, brokenPryTable)));
+                    Supplier<RuinedMultiblockSchematicBlock> ruinedRef =
+                            blocks.register(ruinedId, () -> new RuinedMultiblockSchematicBlock(ruinedProperties, brokenPryTable));
 
                     String id = String.format(format, identifier, x, y);
                     ResourceLocation pryTable = ResourceLocation.fromNamespaceAndPath("tetra", pryTablePrefix + id);
-                    RegistryObject<MultiblockSchematicBlock> ref = x == width / 2 && y == height / 2
-                            ? RegistryObject.of(blocks.register(id, () -> new PrimaryMultiblockSchematicBlock(properties, identifier, ruinedRef, pryTable, x, y, height, width)))
-                            : RegistryObject.of(blocks.register(id, () -> new MultiblockSchematicBlock(properties, identifier, ruinedRef, pryTable, x, y, height, width)));
+                    Supplier<MultiblockSchematicBlock> ref = x == width / 2 && y == height / 2
+                            ? blocks.register(id, () -> new PrimaryMultiblockSchematicBlock(properties, identifier, ruinedRef, pryTable, x, y, height, width))
+                            : blocks.register(id, () -> new MultiblockSchematicBlock(properties, identifier, ruinedRef, pryTable, x, y, height, width));
 
 
                     items.register(id, () -> {

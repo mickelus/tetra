@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.geode.particle.SparkleParticleType;
@@ -24,7 +23,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class GeodeBlock extends TetraBlock {
     public static final String identifier = "block_geode";
 
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static GeodeBlock instance;
 
     public GeodeBlock() {

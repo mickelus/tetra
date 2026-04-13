@@ -1,13 +1,15 @@
-package se.mickelus.tetra.compat.forge.common;
+package se.mickelus.tetra.tools;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.state.BlockState;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -16,12 +18,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public final class TierSortingRegistry {
-    private static final List<Tier> sortedTiers = new ArrayList<>();
+public final class HarvestTierRegistry {
+    private static final Logger logger = LogManager.getLogger();
+    private static final List<Tier> orderedTiers = new ArrayList<>();
     private static final Map<Tier, TierEntry> entriesByTier = new IdentityHashMap<>();
     private static final Map<ResourceLocation, Tier> tiersByName = new LinkedHashMap<>();
+    private static final Set<ResourceLocation> unknownTierWarnings = ConcurrentHashMap.newKeySet();
     private static int nextOrder;
 
     static {
@@ -33,20 +38,20 @@ public final class TierSortingRegistry {
         registerVanilla(Tiers.NETHERITE, "netherite", List.of(Tiers.DIAMOND), List.of());
     }
 
-    private TierSortingRegistry() {}
+    private HarvestTierRegistry() {}
 
     private static void registerVanilla(Tier tier, String path, List<Tier> after, List<Tier> before) {
         registerInternal(tier, ResourceLocation.withDefaultNamespace(path), after, before);
     }
 
-    public static Tier registerTier(Tier tier, ResourceLocation name, List<Tier> after, List<Tier> before) {
+    public static Tier register(Tier tier, ResourceLocation name, List<Tier> after, List<Tier> before) {
         Objects.requireNonNull(tier, "tier");
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(after, "after");
         Objects.requireNonNull(before, "before");
 
         if (entriesByTier.containsKey(tier)) {
-            ResourceLocation existingName = getName(tier);
+            ResourceLocation existingName = nameOf(tier);
             if (!name.equals(existingName)) {
                 throw new IllegalStateException("Tier " + tier + " is already registered as " + existingName + ", not " + name);
             }
@@ -68,7 +73,7 @@ public final class TierSortingRegistry {
 
         entriesByTier.put(tier, new TierEntry(name, List.copyOf(after), List.copyOf(before), nextOrder++));
         tiersByName.put(name, tier);
-        rebuildSortedTiers();
+        rebuildOrderedTiers();
     }
 
     private static void validateDependencies(ResourceLocation name, List<Tier> dependencies, String direction) {
@@ -79,7 +84,7 @@ public final class TierSortingRegistry {
         }
     }
 
-    private static void rebuildSortedTiers() {
+    private static void rebuildOrderedTiers() {
         Map<Tier, Set<Tier>> edges = new IdentityHashMap<>();
         Map<Tier, Integer> indegree = new IdentityHashMap<>();
 
@@ -129,8 +134,8 @@ public final class TierSortingRegistry {
             throw new IllegalStateException("Cyclic tier dependencies detected: " + cycle);
         }
 
-        sortedTiers.clear();
-        sortedTiers.addAll(resolved);
+        orderedTiers.clear();
+        orderedTiers.addAll(resolved);
     }
 
     private static void addEdge(Map<Tier, Set<Tier>> edges, Map<Tier, Integer> indegree, Tier source, Tier target) {
@@ -139,15 +144,25 @@ public final class TierSortingRegistry {
         }
     }
 
-    public static Tier byName(ResourceLocation name) {
-        return tiersByName.get(name);
+    @Nullable
+    public static Tier byName(@Nullable ResourceLocation name) {
+        if (name == null) {
+            return null;
+        }
+
+        Tier tier = tiersByName.get(name);
+        if (tier == null && unknownTierWarnings.add(name)) {
+            logger.warn("Unknown harvest tier '{}', falling back to level 0", name);
+        }
+        return tier;
     }
 
-    public static List<Tier> getSortedTiers() {
-        return List.copyOf(sortedTiers);
+    public static List<Tier> ordered() {
+        return List.copyOf(orderedTiers);
     }
 
-    public static ResourceLocation getName(Tier tier) {
+    @Nullable
+    public static ResourceLocation nameOf(Tier tier) {
         TierEntry entry = entriesByTier.get(tier);
         return entry != null ? entry.name() : null;
     }

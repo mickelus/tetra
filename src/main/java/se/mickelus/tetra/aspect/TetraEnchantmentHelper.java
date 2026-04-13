@@ -19,13 +19,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.neoforged.neoforge.common.CommonHooks;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
-import se.mickelus.tetra.compat.forge.registries.tags.ITagManager;
 import org.apache.commons.lang3.tuple.Pair;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -221,7 +220,7 @@ public class TetraEnchantmentHelper {
 
     @Nullable
     public static Pair<Enchantment, Integer> getEnchantment(CompoundTag nbt) {
-        return Optional.ofNullable(ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.parse(nbt.getString("id"))))
+        return Optional.ofNullable(RegistryHelper.get(Registries.ENCHANTMENT, ResourceLocation.parse(nbt.getString("id"))))
                 .map(enchantment -> Pair.of(enchantment, nbt.getInt("lvl")))
                 .orElse(null);
     }
@@ -306,16 +305,15 @@ public class TetraEnchantmentHelper {
 
         public EnchantmentRules(List<ItemStack> supportedItems, String additions, String exclusions) {
             this.supportedItems = supportedItems;
-            ITagManager<Enchantment> tags = ForgeRegistries.ENCHANTMENTS.tags();
-            this.additions = tags.createTagKey(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, additions));
-            this.exclusions = tags.createTagKey(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, exclusions));
+            this.additions = RegistryHelper.tag(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, additions));
+            this.exclusions = RegistryHelper.tag(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, exclusions));
 
         }
 
         public boolean isApplicable(Enchantment enchantment) {
-            ITagManager<Enchantment> tags = ForgeRegistries.ENCHANTMENTS.tags();
             boolean supported = supportedItems.stream().anyMatch(enchantment::isSupportedItem);
-            return (supported || tags.getTag(additions).contains(enchantment)) && !tags.getTag(exclusions).contains(enchantment);
+            return (supported || RegistryHelper.tagContains(Registries.ENCHANTMENT, additions, enchantment))
+                    && !RegistryHelper.tagContains(Registries.ENCHANTMENT, exclusions, enchantment);
         }
     }
 
@@ -333,25 +331,12 @@ public class TetraEnchantmentHelper {
     }
 
     public static Optional<ResourceLocation> getEnchantmentKey(Enchantment enchantment) {
-        Optional<ResourceLocation> key = Optional.ofNullable(ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-        return key.isPresent() ? key : findEnchantmentKey(enchantment);
+        return RegistryHelper.key(Registries.ENCHANTMENT, enchantment);
     }
 
     public static Optional<ResourceLocation> getEnchantmentKey(Holder<Enchantment> enchantment) {
         Optional<ResourceLocation> key = enchantment.unwrapKey().map(ResourceKey::location);
         return key.isPresent() ? key : getEnchantmentKey(enchantment.value());
-    }
-
-    private static Optional<ResourceLocation> findEnchantmentKey(Enchantment enchantment) {
-        HolderLookup.RegistryLookup<Enchantment> lookup = CommonHooks.resolveLookup(Registries.ENCHANTMENT);
-        if (lookup == null) {
-            return Optional.empty();
-        }
-
-        return lookup.listElements()
-                .filter(holder -> holder.value() == enchantment || holder.value().equals(enchantment))
-                .findFirst()
-                .map(holder -> holder.key().location());
     }
 
     private static ResourceLocation requireEnchantmentKey(Enchantment enchantment) {

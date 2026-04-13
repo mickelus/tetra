@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
@@ -35,7 +35,7 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements E
     public static final BooleanProperty hackProp = BooleanProperty.create("hack");
     public static final VoxelShape boundingBox = box(5, 0, 5, 11, 16, 11);
 
-    public static RegistryObject<CoreExtractorPistonBlock> instance;
+    public static Supplier<CoreExtractorPistonBlock> instance;
 
     public CoreExtractorPistonBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);

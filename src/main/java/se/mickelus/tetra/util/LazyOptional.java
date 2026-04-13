@@ -1,4 +1,4 @@
-package se.mickelus.tetra.compat.forge.common.util;
+package se.mickelus.tetra.util;
 
 import java.util.Objects;
 import java.util.Optional;

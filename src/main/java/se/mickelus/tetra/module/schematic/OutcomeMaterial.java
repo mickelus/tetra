@@ -2,6 +2,7 @@ package se.mickelus.tetra.module.schematic;
 
 import com.google.gson.*;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
@@ -13,9 +14,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
 import se.mickelus.tetra.data.deserializer.ItemPredicateDeserializer;
 import se.mickelus.tetra.data.predicate.TetraItemPredicate;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -61,9 +62,7 @@ public class OutcomeMaterial {
         } else if (itemStacks != null) {
             return itemStacks.stream().map(ItemStack::getHoverName).toArray(Component[]::new);
         } else if (tagLocation != null) {
-            return ForgeRegistries.ITEMS.tags()
-                    .getTag(tagLocation)
-                    .stream()
+            return RegistryHelper.streamTag(BuiltInRegistries.ITEM, tagLocation)
                     .map(item -> item.getName(item.getDefaultInstance()))
                     .toArray(Component[]::new);
         }
@@ -77,9 +76,7 @@ public class OutcomeMaterial {
         } else if (itemStacks != null && !itemStacks.isEmpty()) {
             return itemStacks.toArray(ItemStack[]::new);
         } else if (tagLocation != null) {
-            return ForgeRegistries.ITEMS.tags()
-                    .getTag(tagLocation)
-                    .stream()
+            return RegistryHelper.streamTag(BuiltInRegistries.ITEM, tagLocation)
                     .map(Item::getDefaultInstance)
                     .map(this::setCount)
                     .toArray(ItemStack[]::new);
@@ -122,7 +119,7 @@ public class OutcomeMaterial {
                         material.itemStacks = StreamSupport.stream(GsonHelper.getAsJsonArray(jsonObject, "items", emptyArray).spliterator(), false)
                                 .map(jsonElement -> GsonHelper.convertToString(jsonElement, "item"))
                                 .map(ResourceLocation::parse)
-                                .map(ForgeRegistries.ITEMS::getValue)
+                                .map(itemId -> RegistryHelper.get(BuiltInRegistries.ITEM, itemId))
                                 .filter(Objects::nonNull)
                                 .map(item -> new ItemStack(item, material.count))
                                 .collect(Collectors.toList());

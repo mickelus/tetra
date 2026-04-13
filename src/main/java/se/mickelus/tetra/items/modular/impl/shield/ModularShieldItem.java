@@ -19,8 +19,6 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import se.mickelus.tetra.compat.forge.common.util.NonNullLazy;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
@@ -33,6 +31,7 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.RepairSchematic;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
+import se.mickelus.tetra.util.NonNullLazy;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -47,7 +46,6 @@ public class ModularShieldItem extends ItemModularHandheld {
 
     public static final String bannerImprovementKey = "shield/banner";
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularShieldItem instance;
 
     public ModularShieldItem() {

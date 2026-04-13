@@ -6,7 +6,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.items.TetraItem;
@@ -18,7 +17,6 @@ import java.util.List;
 public class PristineEmeraldItem extends TetraItem {
     public static final String identifier = "pristine_emerald";
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static PristineEmeraldItem instance;
 
     public PristineEmeraldItem() {

@@ -49,11 +49,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.common.ForgeHooks;
-import se.mickelus.tetra.compat.forge.common.TierSortingRegistry;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraItemAbilities;
@@ -67,6 +64,7 @@ import se.mickelus.tetra.items.modular.impl.shield.ModularShieldItem;
 import se.mickelus.tetra.module.data.ToolData;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
+import se.mickelus.tetra.tools.HarvestTierRegistry;
 import se.mickelus.tetra.util.TierHelper;
 import se.mickelus.tetra.util.ItemAbilityHelper;
 
@@ -445,9 +443,7 @@ public class ItemModularHandheld extends ModularItem {
     public AbilityUseResult hitEntity(ItemStack itemStack, Player player, LivingEntity target, double damageMultiplier, double damageBonus,
             float knockbackBase, float knockbackMultiplier) {
         DamageSource damageSource = player.damageSources().playerAttack(player);
-        float critMultiplier = Optional.ofNullable(ForgeHooks.getCriticalHit(player, target, false, 1.5f))
-                .map(CriticalHitEvent::getDamageMultiplier)
-                .orElse(1f);
+        float critMultiplier = EffectHelper.getCriticalHitMultiplier(player, target, false, 1.5f);
 
         float baseDamage = (float) ((1 + getAbilityBaseDamage(player, itemStack)) * critMultiplier * damageMultiplier + damageBonus);
         float targetModifier = EffectHelper.getEnchantmentDamageBonus(itemStack, player, target, damageSource, baseDamage);
@@ -947,7 +943,7 @@ public class ItemModularHandheld extends ModularItem {
                 .map(requiredTool -> getHarvestTier(stack, requiredTool))
                 .map(TierHelper::getTier)
                 .filter(Objects::nonNull)
-                .anyMatch(tier -> TierSortingRegistry.isCorrectTierForDrops(tier, state));
+                .anyMatch(tier -> HarvestTierRegistry.isCorrectTierForDrops(tier, state));
     }
 
     @Override

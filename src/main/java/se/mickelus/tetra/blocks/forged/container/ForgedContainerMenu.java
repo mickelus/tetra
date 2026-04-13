@@ -12,10 +12,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.items.IItemHandler;
-import se.mickelus.tetra.compat.forge.items.SlotItemHandler;
-import se.mickelus.tetra.compat.forge.items.wrapper.InvWrapper;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import java.util.function.Supplier;
 import se.mickelus.mutil.gui.ToggleableSlot;
 import se.mickelus.tetra.TetraMod;
 
@@ -25,7 +24,7 @@ import java.util.Arrays;
 
 @ParametersAreNonnullByDefault
 public class ForgedContainerMenu extends AbstractContainerMenu {
-    public static RegistryObject<MenuType<ForgedContainerMenu>> type;
+    public static Supplier<MenuType<ForgedContainerMenu>> type;
 
     private final ForgedContainerBlockEntity tile;
 
@@ -54,7 +53,7 @@ public class ForgedContainerMenu extends AbstractContainerMenu {
             }
         }
 
-        IItemHandler playerInventoryHandler = new InvWrapper(playerInventory);
+        IItemHandler playerInventoryHandler = new net.neoforged.neoforge.items.wrapper.InvWrapper(playerInventory);
 
         // player inventory
         for (int i = 0; i < 3; i++) {

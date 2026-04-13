@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 
@@ -20,7 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class CoreExtractorPistonBlockEntity extends BlockEntity {
     static final long activationDuration = 105;
     private static final int fillAmount = 40;
-    public static RegistryObject<BlockEntityType<CoreExtractorPistonBlockEntity>> type;
+    public static Supplier<BlockEntityType<CoreExtractorPistonBlockEntity>> type;
     private long endTime = Long.MAX_VALUE;
 
     public CoreExtractorPistonBlockEntity(BlockPos blockPos, BlockState blockState) {

@@ -1,18 +1,18 @@
 package se.mickelus.tetra.effect.howling;
 
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
 import net.neoforged.bus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 
 @ParametersAreNonnullByDefault
-public class HowlingOverlay implements IGuiOverlay {
+public class HowlingOverlay implements LayeredDraw.Layer {
     private final Minecraft mc;
 
     private final HowlingProgressGui gui;
@@ -34,7 +34,7 @@ public class HowlingOverlay implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics graphics, DeltaTracker deltaTracker) {
         this.gui.draw(graphics);
     }
 }

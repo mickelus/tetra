@@ -8,7 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.tetra.items.TetraItem;
 
 import javax.annotation.Nullable;
@@ -21,7 +21,7 @@ import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 public class ThermalCellItem extends TetraItem {
     public static final int maxCharge = 128;
     public static final String identifier = "thermal_cell";
-    public static RegistryObject<ThermalCellItem> instance;
+    public static Supplier<ThermalCellItem> instance;
     private final String chargedPropKey = "tetra:charged";
 
     public ThermalCellItem() {

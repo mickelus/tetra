@@ -42,7 +42,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.util.CastOptional;
@@ -68,7 +67,6 @@ public class FracturedBedrockTile extends BlockEntity {
             ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "extractor/tier3")),
             ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "extractor/tier4"))
     };
-    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + FracturedBedrockBlock.identifier)
     public static BlockEntityType<FracturedBedrockTile> type;
     private final float spawnRatio = 0.5f;
     private final int spawnYLimit = 4;

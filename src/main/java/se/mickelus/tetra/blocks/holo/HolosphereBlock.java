@@ -26,7 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.TetraItemAbilities;
@@ -46,7 +46,7 @@ import static se.mickelus.tetra.util.ItemStackTagHelper.hasTag;
 public class HolosphereBlock extends TetraWaterloggedBlock implements EntityBlock {
     public static final String identifier = "holosphere";
     private static final VoxelShape shape = Block.box(5.5, 0, 5.5, 10.5, 5, 10.5);
-    public static RegistryObject<HolosphereBlock> instance;
+    public static Supplier<HolosphereBlock> instance;
 
     public HolosphereBlock() {
         super(BlockBehaviour.Properties.of()

@@ -10,7 +10,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
@@ -25,7 +24,6 @@ public class CoreExtractorBaseBlockEntity extends BlockEntity implements IHeatTr
     private static final String chargeKey = "charge";
     private static final int maxCharge = 128;
     private static final int drainAmount = 4;
-    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.identifier)
     public static BlockEntityType<CoreExtractorBaseBlockEntity> type;
     private boolean isSending = false;
     private int currentCharge = 0;

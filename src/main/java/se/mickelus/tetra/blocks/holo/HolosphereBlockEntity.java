@@ -25,23 +25,23 @@ import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
-import se.mickelus.tetra.compat.forge.common.util.LazyOptional;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraSounds;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.impl.holo.ModularHolosphereItem;
+import se.mickelus.tetra.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static se.mickelus.tetra.util.ItemStackTagHelper.setTag;
 
 public class HolosphereBlockEntity extends BlockEntity {
     public static final int maxRange = 8;
-    public static RegistryObject<BlockEntityType<HolosphereBlockEntity>> type;
+    public static Supplier<BlockEntityType<HolosphereBlockEntity>> type;
     private List<ScanResult> scanResults;
     private long scanModeTimestamp = 0;
 

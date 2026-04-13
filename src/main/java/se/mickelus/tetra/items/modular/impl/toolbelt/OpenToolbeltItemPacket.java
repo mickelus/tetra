@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.tetra.compat.neoforge.network.NetworkHooks;
 import se.mickelus.mutil.network.AbstractPacket;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -28,7 +27,7 @@ public class OpenToolbeltItemPacket extends AbstractPacket {
     public void handle(Player player) {
         ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
         if (!itemStack.isEmpty()) {
-            NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) itemStack.getItem());
+            ((ServerPlayer) player).openMenu((MenuProvider) itemStack.getItem());
         }
     }
 }

@@ -10,7 +10,6 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +19,7 @@ import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.ReplacementDefinition;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
@@ -51,11 +51,11 @@ public class ReplacementDeserializer implements JsonDeserializer<ReplacementDefi
             throw new JsonSyntaxException("Failed to parse replacement data due to faulty predicate", e);
         }
 
-        ResourceLocation resourcelocation = ResourceLocation.parse(GsonHelper.getAsString(jsonObject, "item"));
-        if (!ForgeRegistries.ITEMS.containsKey(resourcelocation)) {
+        ResourceLocation resourceLocation = ResourceLocation.parse(GsonHelper.getAsString(jsonObject, "item"));
+        Item item = RegistryHelper.get(BuiltInRegistries.ITEM, resourceLocation);
+        if (item == null) {
             throw new JsonSyntaxException("Failed to parse replacement data, missing (or faulty) item in " + jsonObject.getAsString());
         }
-        Item item = ForgeRegistries.ITEMS.getValue(resourcelocation);
         replacement.itemStack = new ItemStack(item);
 
         if (item instanceof IModularItem) {

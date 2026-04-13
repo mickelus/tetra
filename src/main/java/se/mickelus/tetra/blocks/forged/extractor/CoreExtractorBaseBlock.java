@@ -22,7 +22,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
@@ -48,7 +48,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeZ, largeCoverShapeZ, BooleanOp.OR), capShape, shaftShape);
     private static final VoxelShape combinedShapeX
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeX, largeCoverShapeX, BooleanOp.OR), capShape, shaftShape);
-    public static RegistryObject<CoreExtractorBaseBlock> instance;
+    public static Supplier<CoreExtractorBaseBlock> instance;
 
     public CoreExtractorBaseBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);

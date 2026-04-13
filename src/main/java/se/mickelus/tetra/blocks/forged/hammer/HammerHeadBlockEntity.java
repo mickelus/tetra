@@ -7,7 +7,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -15,7 +15,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class HammerHeadBlockEntity extends BlockEntity {
     private static final String jamKey = "jam";
-    public static RegistryObject<BlockEntityType<HammerHeadBlockEntity>> type;
+    public static Supplier<BlockEntityType<HammerHeadBlockEntity>> type;
     private long activationTime = -1;
     private long unjamTime = -1;
     private boolean jammed;

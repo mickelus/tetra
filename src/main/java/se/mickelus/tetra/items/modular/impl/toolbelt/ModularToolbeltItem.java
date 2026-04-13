@@ -16,8 +16,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForge;
-import se.mickelus.tetra.compat.neoforge.network.NetworkHooks;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.effect.ItemEffect;
@@ -51,7 +50,7 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 18, 4, 0, 4, 18);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-13, 0);
 
-    public static RegistryObject<ModularToolbeltItem> instance;
+    public static Supplier<ModularToolbeltItem> instance;
 
     public ModularToolbeltItem() {
         super(new Properties()
@@ -108,7 +107,7 @@ public class ModularToolbeltItem extends ModularItem implements MenuProvider {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide) {
-            NetworkHooks.openScreen((ServerPlayer) player, this);
+            ((ServerPlayer) player).openMenu(this);
         }
 
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));

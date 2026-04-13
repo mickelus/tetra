@@ -1,11 +1,11 @@
 package se.mickelus.tetra.items.modular.impl;
 
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
 import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -13,7 +13,7 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class BlockProgressOverlay implements IGuiOverlay {
+public class BlockProgressOverlay implements LayeredDraw.Layer {
     private final Minecraft mc;
 
     private final GuiBlockProgress gui;
@@ -37,7 +37,7 @@ public class BlockProgressOverlay implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         this.gui.draw(guiGraphics);
     }
 }

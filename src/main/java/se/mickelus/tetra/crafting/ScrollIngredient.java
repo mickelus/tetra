@@ -7,7 +7,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.tetra.blocks.scroll.ScrollData;
 import se.mickelus.tetra.blocks.scroll.ScrollItem;
 
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class ScrollIngredient implements ICustomIngredient {
-    public static RegistryObject<IngredientType<ScrollIngredient>> type;
+    public static Supplier<IngredientType<ScrollIngredient>> type;
     public static final MapCodec<ScrollIngredient> CODEC = ScrollData.MAP_CODEC.xmap(ScrollIngredient::new, ingredient -> ingredient.data);
     public static final StreamCodec<RegistryFriendlyByteBuf, ScrollIngredient> STREAM_CODEC =
             ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());

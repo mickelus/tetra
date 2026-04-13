@@ -1,12 +1,12 @@
 package se.mickelus.tetra.blocks.multischematic;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
 import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiRoot;
@@ -18,7 +18,7 @@ import java.util.StringJoiner;
 import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
-public class MultiblockSchematicGui extends GuiRoot implements IGuiOverlay {
+public class MultiblockSchematicGui extends GuiRoot implements LayeredDraw.Layer {
     private final GuiVerticalLayoutGroup element;
     private int selected = -1;
 
@@ -63,7 +63,7 @@ public class MultiblockSchematicGui extends GuiRoot implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics graphics, DeltaTracker deltaTracker) {
         this.draw(graphics);
     }
 }

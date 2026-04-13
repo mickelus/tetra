@@ -1,8 +1,10 @@
 package se.mickelus.tetra.items.modular.impl.holo.gui.scan;
 
 import com.mojang.blaze3d.platform.Window;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
@@ -23,8 +25,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -40,7 +40,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
-public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
+public class ScannerOverlayGui extends GuiRoot implements LayeredDraw.Layer {
     public static final TagKey<Block> tag = BlockTags.create(ResourceLocation.fromNamespaceAndPath("tetra", "scannable"));
     private static final int snoozeLength = 6000; // 5 min
     public static ScannerOverlayGui instance;
@@ -250,7 +250,7 @@ public class ScannerOverlayGui extends GuiRoot implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (isVisible()) {
             Window window = mc.getWindow();
             width = window.getGuiScaledWidth();

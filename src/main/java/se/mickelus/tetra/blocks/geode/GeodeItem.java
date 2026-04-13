@@ -5,7 +5,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.TetraItem;
 
@@ -16,7 +15,6 @@ import java.util.List;
 public class GeodeItem extends TetraItem {
     public static final String identifier = "geode";
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static GeodeItem instance;
 
     public GeodeItem() {

@@ -1,18 +1,18 @@
 package se.mickelus.tetra.effect.gui;
 
 import com.mojang.blaze3d.platform.Window;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
 import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiRoot;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class AbilityOverlays extends GuiRoot implements IGuiOverlay {
+public class AbilityOverlays extends GuiRoot implements LayeredDraw.Layer {
     public static AbilityOverlays instance;
 
     private final ChargeBarGui chargeBar;
@@ -49,7 +49,7 @@ public class AbilityOverlays extends GuiRoot implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (isVisible()) {
             Window window = mc.getWindow();
             int width = window.getGuiScaledWidth();

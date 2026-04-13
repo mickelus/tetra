@@ -1,7 +1,9 @@
 package se.mickelus.tetra.interactions;
 
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.BlockHitResult;
@@ -9,14 +11,12 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.ForgeGui;
-import se.mickelus.tetra.compat.neoforge.client.gui.overlay.IGuiOverlay;
 import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiRoot;
 import se.mickelus.tetra.client.keymap.TetraKeyMappings;
 
-public class SecondaryInteractionOverlay extends GuiRoot implements IGuiOverlay {
+public class SecondaryInteractionOverlay extends GuiRoot implements LayeredDraw.Layer {
     SecondaryInteraction currentInteraction;
     SecondaryInteractionGui currentDisplay;
     boolean wasKeyDown = false;
@@ -42,7 +42,7 @@ public class SecondaryInteractionOverlay extends GuiRoot implements IGuiOverlay 
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         this.draw(guiGraphics);
     }
 

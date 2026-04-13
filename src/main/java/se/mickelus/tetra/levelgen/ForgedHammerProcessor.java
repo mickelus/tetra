@@ -10,7 +10,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlockEntity;
 import se.mickelus.tetra.blocks.forged.hammer.HammerEffect;
@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class ForgedHammerProcessor extends StructureProcessor {
     public static final ForgedHammerProcessor INSTANCE = new ForgedHammerProcessor();
     public static final MapCodec<ForgedHammerProcessor> codec = MapCodec.unit(ForgedHammerProcessor.INSTANCE);
-    public static RegistryObject<StructureProcessorType<?>> type;
+    public static Supplier<StructureProcessorType<?>> type;
 
     public ForgedHammerProcessor() {
     }

@@ -27,7 +27,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 import org.joml.Vector3f;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraMod;
@@ -42,7 +42,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class ArcaneFireBlock extends BaseFireBlock {
     public static final String identifier = "arcane_fire";
     public static final IntegerProperty ageProperty = BlockStateProperties.AGE_15;
-    public static RegistryObject<ArcaneFireBlock> instance;
+    public static Supplier<ArcaneFireBlock> instance;
     private final MapCodec<ArcaneFireBlock> codec = MapCodec.unit(this);
 
     public ArcaneFireBlock() {

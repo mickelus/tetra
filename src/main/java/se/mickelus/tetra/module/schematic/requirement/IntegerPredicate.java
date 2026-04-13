@@ -6,8 +6,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import se.mickelus.tetra.compat.forge.common.TierSortingRegistry;
 import se.mickelus.mutil.util.JsonOptional;
+import se.mickelus.tetra.tools.HarvestTierRegistry;
 import se.mickelus.tetra.util.TierHelper;
 
 import javax.annotation.Nullable;
@@ -104,7 +104,7 @@ public class IntegerPredicate implements Predicate<Integer> {
                 return element.getAsInt();
             }
 
-            return Optional.ofNullable(TierSortingRegistry.byName(ResourceLocation.parse(element.getAsString())))
+            return Optional.ofNullable(HarvestTierRegistry.byName(ResourceLocation.parse(element.getAsString())))
                     .map(TierHelper::getIndex)
                     .map(index -> index + 1)
                     .orElse(0);

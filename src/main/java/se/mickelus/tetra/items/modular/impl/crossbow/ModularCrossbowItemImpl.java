@@ -44,7 +44,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.common.NeoForge;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import org.jetbrains.annotations.NotNull;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
@@ -74,7 +73,6 @@ import java.util.function.Function;
 public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
     public static final double velocityFactor = 1 / 8d;
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularCrossbowItemImpl instance;
     public static double multishotDefaultSpread = 10;
     // used to pick projectiles from the player inventory

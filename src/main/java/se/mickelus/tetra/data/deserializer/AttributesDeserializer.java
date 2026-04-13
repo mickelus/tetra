@@ -4,10 +4,11 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import se.mickelus.tetra.compat.forge.registries.ForgeRegistries;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
@@ -37,7 +38,7 @@ public class AttributesDeserializer implements JsonDeserializer<Multimap<Attribu
         String resolvedKey = key.replace("*", "");
         ResourceLocation rl = legacyAttributeIds.getOrDefault(resolvedKey, ResourceLocation.parse(resolvedKey));
 
-        return ForgeRegistries.ATTRIBUTES.getValue(rl);
+        return RegistryHelper.get(BuiltInRegistries.ATTRIBUTE, rl);
     }
 
     @Override

@@ -8,14 +8,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import se.mickelus.tetra.compat.forge.registries.RegistryObject;
+import java.util.function.Supplier;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ChthonicExtractorTile extends BlockEntity {
     private static final String damageKey = "dmg";
-    public static RegistryObject<BlockEntityType<ChthonicExtractorTile>> type;
+    public static Supplier<BlockEntityType<ChthonicExtractorTile>> type;
     private int damage = 0;
 
     public ChthonicExtractorTile(BlockPos p_155268_, BlockState p_155269_) {

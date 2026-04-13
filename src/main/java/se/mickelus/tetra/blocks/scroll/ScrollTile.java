@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
-import se.mickelus.tetra.compat.forge.registries.ObjectHolder;
 import org.apache.commons.lang3.ArrayUtils;
 import se.mickelus.tetra.TetraMod;
 
@@ -23,7 +22,6 @@ import java.util.Collection;
 @ParametersAreNonnullByDefault
 public class ScrollTile extends BlockEntity {
     public static final String identifier = "scroll";
-    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + identifier)
     public static BlockEntityType<ScrollTile> type;
 
     private ScrollData[] scrolls = new ScrollData[0];
