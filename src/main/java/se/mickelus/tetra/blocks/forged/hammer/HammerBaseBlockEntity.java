@@ -75,8 +75,7 @@ public class HammerBaseBlockEntity extends BlockEntity {
         for (int i = 0; i < cells.length; i++) {
             ItemStack cell = cells[i];
             if (cell != null && !cell.isEmpty()) {
-                CompoundTag nbttagcompound = new CompoundTag();
-                cell.save(registries, nbttagcompound);
+                CompoundTag nbttagcompound = (CompoundTag) cell.save(registries, new CompoundTag());
                 nbttagcompound.putByte(indexKey, (byte) i);
 
                 nbttaglist.add(nbttagcompound);
@@ -365,7 +364,7 @@ public class HammerBaseBlockEntity extends BlockEntity {
                 CompoundTag itemCompound = tagList.getCompound(i);
                 int slot = itemCompound.getByte(indexKey) & 255;
 
-                if (slot < this.slots.length && itemCompound.contains("id", Tag.TAG_STRING)) {
+                if (slot < this.slots.length) {
                     ItemStack stack = ItemStack.parseOptional(registries, itemCompound);
                     this.slots[slot] = stack.isEmpty() ? null : stack;
                 }

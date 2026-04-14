@@ -188,30 +188,31 @@ public class HammerBaseBlock extends TetraBlock implements IInteractiveBlock, En
         if (blockFacing.getAxis().equals(facing.getAxis())) {
             int slotIndex = blockFacing.equals(facing) ? 0 : 1;
             if (te.hasCellInSlot(slotIndex)) {
-                ItemStack cell = te.removeCellFromSlot(slotIndex);
-                if (player.getInventory().add(cell)) {
-                    player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
-                } else {
-                    popResource(world, pos.relative(facing), cell);
-                }
+                if (!world.isClientSide) {
+                    ItemStack cell = te.removeCellFromSlot(slotIndex);
+                    if (player.getInventory().add(cell)) {
+                        player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
+                    } else {
+                        popResource(world, pos.relative(facing), cell);
+                    }
 
-                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.6f);
-
-                if (!player.level().isClientSide) {
                     BlockUseCriterion.trigger((ServerPlayer) player, world.getBlockState(pos), ItemStack.EMPTY, getAdvancementData(world, pos));
+                    world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.6f);
                 }
 
                 return InteractionResult.sidedSuccess(player.level().isClientSide);
             } else if (heldStack.getItem() instanceof ThermalCellItem) {
-                te.putCellInSlot(heldStack, slotIndex);
-                player.setItemInHand(hand, ItemStack.EMPTY);
-                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.5f);
-
-                if (!player.level().isClientSide) {
-                    BlockUseCriterion.trigger((ServerPlayer) player, world.getBlockState(pos), heldStack, getAdvancementData(world, pos));
+                if (world.isClientSide) {
+                    return InteractionResult.SUCCESS;
                 }
 
-                return InteractionResult.sidedSuccess(player.level().isClientSide);
+                if (te.putCellInSlot(heldStack, slotIndex)) {
+                    player.setItemInHand(hand, ItemStack.EMPTY);
+                    BlockUseCriterion.trigger((ServerPlayer) player, world.getBlockState(pos), heldStack, getAdvancementData(world, pos));
+                    world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.5f);
+
+                    return InteractionResult.CONSUME;
+                }
             }
         } else {
             boolean isA = Rotation.CLOCKWISE_90.rotate(blockFacing).equals(facing);

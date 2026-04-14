@@ -44,7 +44,7 @@ public class TransferUnitProcessor extends StructureProcessor {
             if (random.nextFloat() < 0.1) {
                 int charge = random.nextInt(ThermalCellItem.maxCharge);
                 ItemStack itemStack = new ItemStack(ThermalCellItem.instance.get());
-                ThermalCellItem.recharge(itemStack, charge);
+                ThermalCellItem.drainCharge(itemStack, ThermalCellItem.maxCharge - charge);
 
                 cellState = charge > 0 ? 2 : 1;
 

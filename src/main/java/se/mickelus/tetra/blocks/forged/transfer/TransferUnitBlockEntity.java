@@ -39,8 +39,7 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
 
     public static void writeCell(CompoundTag compound, HolderLookup.Provider registries, ItemStack cell) {
         if (!cell.isEmpty()) {
-            CompoundTag cellNBT = new CompoundTag();
-            cell.save(registries, cellNBT);
+            CompoundTag cellNBT = (CompoundTag) cell.save(registries, new CompoundTag());
             compound.put("cell", cellNBT);
         }
     }
@@ -260,7 +259,7 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
     protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.loadAdditional(compound, registries);
 
-        if (compound.contains("cell", Tag.TAG_COMPOUND) && compound.getCompound("cell").contains("id", Tag.TAG_STRING)) {
+        if (compound.contains("cell", Tag.TAG_COMPOUND)) {
             ItemStack loadedCell = ItemStack.parseOptional(registries, compound.getCompound("cell"));
             cell = loadedCell.isEmpty() ? ItemStack.EMPTY : loadedCell;
         } else {

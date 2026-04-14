@@ -191,33 +191,33 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
 
         if (hit.getDirection().equals(Direction.UP)) {
             if (tile.hasCell()) { // remove cell
-                ItemStack cell = tile.removeCell();
-                if (player.getInventory().add(cell)) {
-                    player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
-                } else {
-                    popResource(world, pos.above(), cell);
-                }
+                if (!world.isClientSide) {
+                    ItemStack cell = tile.removeCell();
+                    if (player.getInventory().add(cell)) {
+                        player.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
+                    } else {
+                        popResource(world, pos.above(), cell);
+                    }
 
-                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.6f);
-
-                world.sendBlockUpdated(pos, state, state, 3);
-
-                if (!player.level().isClientSide) {
+                    world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.6f);
+                    world.sendBlockUpdated(pos, state, state, 3);
                     BlockUseCriterion.trigger((ServerPlayer) player, state, ItemStack.EMPTY);
                 }
 
-                return InteractionResult.SUCCESS;
+                return InteractionResult.sidedSuccess(world.isClientSide);
             } else if (heldStack.getItem() instanceof ThermalCellItem) { // put cell
-                tile.putCell(heldStack);
-                player.setItemInHand(hand, ItemStack.EMPTY);
-                world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.5f);
-                world.sendBlockUpdated(pos, state, state, 3);
-
-                if (!player.level().isClientSide) {
-                    BlockUseCriterion.trigger((ServerPlayer) player, state, ItemStack.EMPTY);
+                if (world.isClientSide) {
+                    return InteractionResult.SUCCESS;
                 }
 
-                return InteractionResult.SUCCESS;
+                if (tile.putCell(heldStack)) {
+                    player.setItemInHand(hand, ItemStack.EMPTY);
+                    world.playSound(player, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.PLAYERS, 0.5f, 0.5f);
+                    world.sendBlockUpdated(pos, state, state, 3);
+                    BlockUseCriterion.trigger((ServerPlayer) player, state, ItemStack.EMPTY);
+
+                    return InteractionResult.CONSUME;
+                }
             }
         } else if (blockFacing.equals(hit.getDirection().getOpposite()) // attach plate
                 && heldStack.getItem() instanceof InsulatedPlateItem

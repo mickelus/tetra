@@ -42,12 +42,12 @@ public class ForgedHammerProcessor extends StructureProcessor {
 
             int charge1 = random.nextInt(ThermalCellItem.maxCharge);
             if (cell1 != null) {
-                ThermalCellItem.recharge(cell1, charge1);
+                ThermalCellItem.drainCharge(cell1, ThermalCellItem.maxCharge - charge1);
             }
 
             int charge2 = ThermalCellItem.maxCharge - random.nextInt(Math.max(charge1, 1));
             if (cell2 != null) {
-                ThermalCellItem.recharge(cell2, charge2);
+                ThermalCellItem.drainCharge(cell2, ThermalCellItem.maxCharge - charge2);
             }
 
             HammerBaseBlockEntity.writeCells(newCompound, world.registryAccess(), cell1, cell2);
