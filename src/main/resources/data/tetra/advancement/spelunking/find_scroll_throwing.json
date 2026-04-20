@@ -2,12 +2,19 @@
     "display": {
         "icon": {
             "components": {
-                "minecraft:block_entity_data": {
-                    "data": [
-                        {
-                            "material": 1,
-                            "ribbon": "b8ced9"
-                        }
+                "tetra:scroll_data": {
+                    "key": "sword/throwing_knife",
+                    "intricate": false,
+                    "material": 1,
+                    "ribbon": "b8ced9",
+                    "glyphs": [
+                        4,
+                        1,
+                        0,
+                        5
+                    ],
+                    "schematics": [
+                        "tetra:sword/throwing_knife"
                     ]
                 }
             },
@@ -31,12 +38,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "sword/throwing_knife"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "sword/throwing_knife"
                             }
                         }
                     }

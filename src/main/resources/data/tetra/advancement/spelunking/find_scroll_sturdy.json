@@ -2,12 +2,19 @@
     "display": {
         "icon": {
             "components": {
-                "minecraft:block_entity_data": {
-                    "data": [
-                        {
-                            "material": 1,
-                            "ribbon": "bcb8b5"
-                        }
+                "tetra:scroll_data": {
+                    "key": "sword/sturdy_guard",
+                    "intricate": false,
+                    "material": 1,
+                    "ribbon": "bcb8b5",
+                    "glyphs": [
+                        3,
+                        2,
+                        2,
+                        1
+                    ],
+                    "schematics": [
+                        "tetra:sword/sturdy_guard"
                     ]
                 }
             },
@@ -31,12 +38,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "sword/sturdy_guard"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "sword/sturdy_guard"
                             }
                         }
                     }

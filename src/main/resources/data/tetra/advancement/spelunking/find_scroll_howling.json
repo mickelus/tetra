@@ -2,12 +2,19 @@
     "display": {
         "icon": {
             "components": {
-                "minecraft:block_entity_data": {
-                    "data": [
-                        {
-                            "material": 1,
-                            "ribbon": "faf396"
-                        }
+                "tetra:scroll_data": {
+                    "key": "sword/howling",
+                    "intricate": false,
+                    "material": 1,
+                    "ribbon": "faf396",
+                    "glyphs": [
+                        8,
+                        9,
+                        10,
+                        5
+                    ],
+                    "schematics": [
+                        "tetra:sword/howling"
                     ]
                 }
             },
@@ -31,12 +38,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "sword/howling"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "sword/howling"
                             }
                         }
                     }

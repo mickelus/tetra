@@ -4,9 +4,6 @@
     {
       "type": "tetra:scroll",
       "key": "hone/gild_2",
-      "schematics": [
-        ""
-      ],
       "intricate": true,
       "material": 2,
       "ribbon": "d4b057"
@@ -14,9 +11,6 @@
     {
       "type": "tetra:scroll",
       "key": "hone/gild_2",
-      "schematics": [
-        ""
-      ],
       "intricate": true,
       "material": 2,
       "ribbon": "d4b057"
@@ -26,28 +20,22 @@
     "id": "tetra:scroll_rolled",
     "count": 1,
     "components": {
-      "minecraft:custom_data": {
-        "BlockEntityTag": {
-          "data": [
-            {
-              "key": "hone/gild_3",
-              "schematics": [
-                "tetra:hone/gild_1",
-                "tetra:hone/gild_2",
-                "tetra:hone/gild_3"
-              ],
-              "intricate": true,
-              "material": 2,
-              "ribbon": "deb243",
-              "glyphs": [
-                13,
-                14,
-                14,
-                15
-              ]
-            }
-          ]
-        }
+      "tetra:scroll_data": {
+        "key": "hone/gild_3",
+        "schematics": [
+          "tetra:hone/gild_1",
+          "tetra:hone/gild_2",
+          "tetra:hone/gild_3"
+        ],
+        "intricate": true,
+        "material": 2,
+        "ribbon": "deb243",
+        "glyphs": [
+          13,
+          14,
+          14,
+          15
+        ]
       }
     }
   }

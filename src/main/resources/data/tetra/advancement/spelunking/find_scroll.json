@@ -1,16 +1,6 @@
 {
     "display": {
         "icon": {
-            "components": {
-                "minecraft:block_entity_data": {
-                    "data": [
-                        {
-                            "material": 0,
-                            "ribbon": "ffffff"
-                        }
-                    ]
-                }
-            },
             "id": "tetra:scroll_rolled"
         },
         "title": {

@@ -2,12 +2,19 @@
     "display": {
         "icon": {
             "components": {
-                "minecraft:block_entity_data": {
-                    "data": [
-                        {
-                            "material": 2,
-                            "ribbon": "c9ae69"
-                        }
+                "tetra:scroll_data": {
+                    "key": "hone/gild_1",
+                    "intricate": true,
+                    "material": 2,
+                    "ribbon": "c9ae69",
+                    "glyphs": [
+                        15,
+                        14,
+                        15,
+                        15
+                    ],
+                    "schematics": [
+                        "tetra:hone/gild_1"
                     ]
                 }
             },
@@ -31,12 +38,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "hone/gild_1"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "hone/gild_1"
                             }
                         }
                     }

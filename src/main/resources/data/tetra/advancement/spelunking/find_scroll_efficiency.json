@@ -2,13 +2,11 @@
     "display": {
         "icon": {
             "components": {
-                "minecraft:block_entity_data": {
-                    "data": [
-                        {
-                            "material": 0,
-                            "ribbon": "2bffee"
-                        }
-                    ]
+                "tetra:scroll_data": {
+                    "key": "hammer_efficiency",
+                    "intricate": false,
+                    "material": 0,
+                    "ribbon": "ff6666"
                 }
             },
             "id": "tetra:scroll_rolled"
@@ -31,12 +29,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "hammer_efficiency"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "hammer_efficiency"
                             }
                         }
                     }
@@ -52,12 +46,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "axe_efficiency"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "axe_efficiency"
                             }
                         }
                     }
@@ -73,12 +63,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "cut_efficiency"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "cut_efficiency"
                             }
                         }
                     }

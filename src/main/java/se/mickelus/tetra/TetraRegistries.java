@@ -3,6 +3,7 @@ package se.mickelus.tetra;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.critereon.ItemSubPredicate;
 import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -119,6 +120,7 @@ public class TetraRegistries {
     public static final DeferredRegister<EntityType<?>> entities = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, TetraMod.MOD_ID);
     public static final DeferredRegister<ParticleType<?>> particles = DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, TetraMod.MOD_ID);
     public static final DeferredRegister<MobEffect> effects = DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, TetraMod.MOD_ID);
+    public static final DeferredRegister.DataComponents dataComponents = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, TetraMod.MOD_ID);
     public static final DeferredRegister<ItemSubPredicate.Type<?>> itemSubPredicates = DeferredRegister.create(Registries.ITEM_SUB_PREDICATE_TYPE, TetraMod.MOD_ID);
     public static final DeferredRegister<IngredientType<?>> ingredientTypes = DeferredRegister.create(NeoForgeRegistries.Keys.INGREDIENT_TYPES, TetraMod.MOD_ID);
     public static final DeferredRegister<CriterionTrigger<?>> triggerTypes = DeferredRegister.create(Registries.TRIGGER_TYPE, TetraMod.MOD_ID);
@@ -179,6 +181,7 @@ public class TetraRegistries {
     private static DeferredHolder<Item, PristineAmethystItem> pristineAmethyst;
     private static DeferredHolder<Item, PristineQuartzItem> pristineQuartz;
     private static DeferredHolder<Item, GeodeItem> geode;
+    public static Supplier<DataComponentType<ScrollData>> scrollData;
 
     public static void init(IEventBus bus) {
         bus.register(TetraRegistries.class);
@@ -190,6 +193,7 @@ public class TetraRegistries {
         particles.register(bus);
         containers.register(bus);
         effects.register(bus);
+        dataComponents.register(bus);
         itemSubPredicates.register(bus);
         ingredientTypes.register(bus);
         triggerTypes.register(bus);
@@ -485,7 +489,11 @@ public class TetraRegistries {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ITEM SUB PREDICATES
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        scrollData = dataComponents.registerComponentType("scroll_data", builder -> builder
+                .persistent(ScrollData.CODEC)
+                .networkSynchronized(ScrollData.STREAM_CODEC));
         itemSubPredicates.register("modular_item", () -> ItemPredicateModular.TYPE);
+        itemSubPredicates.register("scroll_data", () -> ScrollDataPredicate.TYPE);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // INGREDIENT TYPES

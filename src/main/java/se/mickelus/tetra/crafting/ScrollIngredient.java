@@ -62,18 +62,11 @@ public class ScrollIngredient implements ICustomIngredient {
             return false;
         }
 
-        return Objects.equals(data.key, ingredient.data.key)
-                && Objects.equals(data.details, ingredient.data.details)
-                && data.isIntricate == ingredient.data.isIntricate
-                && data.material == ingredient.data.material
-                && data.ribbon == ingredient.data.ribbon
-                && Objects.equals(data.glyphs, ingredient.data.glyphs)
-                && Objects.equals(data.schematics, ingredient.data.schematics)
-                && Objects.equals(data.craftingEffects, ingredient.data.craftingEffects);
+        return Objects.equals(data, ingredient.data);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(data.key, data.details, data.isIntricate, data.material, data.ribbon, data.glyphs, data.schematics, data.craftingEffects);
+        return Objects.hash(data);
     }
 }

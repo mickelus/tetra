@@ -266,6 +266,10 @@ public class ScrollItem extends BlockItem implements InitializableItem {
             return InteractionResult.sidedSuccess(world.isClientSide);
         }
 
+        if (ScrollData.readOptional(itemStack).isEmpty()) {
+            return InteractionResult.FAIL;
+        }
+
         // add scroll to an existing stack of rolled up scrolls
         if (RolledScrollBlock.instance.equals(block)) {
             boolean success = TileEntityOptional.from(world, pos, ScrollTile.class)

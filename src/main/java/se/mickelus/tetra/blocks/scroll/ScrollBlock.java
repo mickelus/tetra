@@ -8,7 +8,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -142,18 +141,23 @@ public class ScrollBlock extends TetraBlock implements EntityBlock, ISchematicPr
         BlockEntity blockentity = lootParams.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (blockentity instanceof ScrollTile tile) {
             lootParams.withDynamicDrop(scrollDynamicDropId, (consumer) ->
-                    Arrays.stream(tile.getItemTags())
-                            .map(nbt -> {
-                                ItemStack itemStack = new ItemStack(ScrollItem.instance);
-                                BlockItem.setBlockEntityData(itemStack, ScrollTile.type, nbt);
-                                return itemStack;
-                            })
+                            Arrays.stream(tile.getScrolls())
+                            .map(ScrollData::createItemStack)
                             .forEach(consumer)
             );
 
         }
 
         return super.getDrops(blockState, lootParams);
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
+        return TileEntityOptional.from(world, pos, ScrollTile.class)
+                .filter(tile -> tile.getScrolls().length == 1)
+                .map(ScrollTile::getScrolls)
+                .map(scrolls -> scrolls[0].createItemStack())
+                .orElseGet(() -> super.getCloneItemStack(world, pos, state));
     }
 
     @Nullable

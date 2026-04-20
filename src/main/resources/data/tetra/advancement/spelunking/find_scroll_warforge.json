@@ -2,12 +2,20 @@
     "display": {
         "icon": {
             "components": {
-                "minecraft:block_entity_data": {
-                    "data": [
-                        {
-                            "material": 2,
-                            "ribbon": "8559b3"
-                        }
+                "tetra:scroll_data": {
+                    "key": "warforge/adze",
+                    "details": "warforge",
+                    "intricate": false,
+                    "material": 2,
+                    "ribbon": "8559b3",
+                    "glyphs": [
+                        6,
+                        7,
+                        11,
+                        7
+                    ],
+                    "schematics": [
+                        "tetra:warforge/adze"
                     ]
                 }
             },
@@ -31,12 +39,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "details": "warforge"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "details": "warforge"
                             }
                         }
                     }

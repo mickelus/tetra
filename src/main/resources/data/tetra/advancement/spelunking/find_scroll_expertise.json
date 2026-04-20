@@ -2,13 +2,11 @@
     "display": {
         "icon": {
             "components": {
-                "minecraft:block_entity_data": {
-                    "data": [
-                        {
-                            "material": 0,
-                            "ribbon": "ff6666"
-                        }
-                    ]
+                "tetra:scroll_data": {
+                    "key": "gem_expertise",
+                    "intricate": false,
+                    "material": 0,
+                    "ribbon": "2bffee"
                 }
             },
             "id": "tetra:scroll_rolled"
@@ -31,12 +29,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "gem_expertise"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "gem_expertise"
                             }
                         }
                     }
@@ -52,12 +46,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "metal_expertise"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "metal_expertise"
                             }
                         }
                     }
@@ -73,12 +63,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "wood_expertise"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "wood_expertise"
                             }
                         }
                     }
@@ -94,12 +80,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "stone_expertise"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "stone_expertise"
                             }
                         }
                     }
@@ -115,12 +97,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "fibre_expertise"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "fibre_expertise"
                             }
                         }
                     }
@@ -136,12 +114,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "skin_expertise"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "skin_expertise"
                             }
                         }
                     }
@@ -157,12 +131,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "bone_expertise"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "bone_expertise"
                             }
                         }
                     }
@@ -178,12 +148,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "fabric_expertise"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "fabric_expertise"
                             }
                         }
                     }
@@ -199,12 +165,8 @@
                             "tetra:scroll_rolled"
                         ],
                         "predicates": {
-                            "minecraft:custom_data": {
-                                "data": [
-                                    {
-                                        "key": "scale_expertise"
-                                    }
-                                ]
+                            "tetra:scroll_data": {
+                                "key": "scale_expertise"
                             }
                         }
                     }

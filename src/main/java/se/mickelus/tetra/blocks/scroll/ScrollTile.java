@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.scroll;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -12,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
 import org.apache.commons.lang3.ArrayUtils;
-import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.TetraRegistries;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -35,12 +36,17 @@ public class ScrollTile extends BlockEntity {
     }
 
     public boolean addScroll(ItemStack itemStack) {
-        if (scrolls.length < 6) {
-            scrolls = ArrayUtils.add(scrolls, ScrollData.read(itemStack));
-            setChanged();
-            return true;
+        if (scrolls.length >= 6) {
+            return false;
         }
-        return false;
+
+        return ScrollData.readOptional(itemStack)
+                .map(data -> {
+                    scrolls = ArrayUtils.add(scrolls, data);
+                    setChanged();
+                    return true;
+                })
+                .orElse(false);
     }
 
     public ResourceLocation[] getSchematics() {
@@ -64,13 +70,6 @@ public class ScrollTile extends BlockEntity {
     public boolean isIntricate() {
         return !Arrays.stream(scrolls)
                 .anyMatch(data -> !data.isIntricate);
-    }
-
-    public CompoundTag[] getItemTags() {
-        return Arrays.stream(scrolls)
-                .map(data -> new ScrollData[]{data})
-                .map(data -> ScrollData.write(data, new CompoundTag()))
-                .toArray(CompoundTag[]::new);
     }
 
     public AABB getRenderBoundingBox() {
@@ -98,5 +97,28 @@ public class ScrollTile extends BlockEntity {
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.saveAdditional(compound, registries);
         ScrollData.write(scrolls, compound);
+    }
+
+    @Override
+    protected void applyImplicitComponents(BlockEntity.DataComponentInput componentInput) {
+        super.applyImplicitComponents(componentInput);
+        ScrollData data = componentInput.get(TetraRegistries.scrollData.get());
+        if (data != null) {
+            scrolls = new ScrollData[]{data};
+        }
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+        if (scrolls.length == 1) {
+            components.set(TetraRegistries.scrollData.get(), scrolls[0]);
+        }
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag tag) {
+        super.removeComponentsFromTag(tag);
+        tag.remove("data");
     }
 }

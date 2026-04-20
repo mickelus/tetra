@@ -9,19 +9,23 @@ import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import se.mickelus.tetra.TetraRegistries;
 import se.mickelus.mutil.util.HexCodec;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -38,65 +42,53 @@ public class ScrollData {
             ResourceLocation.CODEC.listOf().optionalFieldOf("effects", Collections.emptyList()).forGetter(i -> i.craftingEffects)
     ).apply(instance, ScrollData::new));
     public static final Codec<ScrollData> CODEC = MAP_CODEC.codec();
-    public String key;
-    public String details;
-    public boolean isIntricate;
-    public int material = 0;
-    public int ribbon = 0xffffff;
-    public List<Integer> glyphs = Collections.emptyList();
-    public List<ResourceLocation> schematics = Collections.emptyList();
-    public List<ResourceLocation> craftingEffects = Collections.emptyList();
+    public static final StreamCodec<RegistryFriendlyByteBuf, ScrollData> STREAM_CODEC = ByteBufCodecs.fromCodecWithRegistries(CODEC);
+    public final String key;
+    public final String details;
+    public final boolean isIntricate;
+    public final int material;
+    public final int ribbon;
+    public final List<Integer> glyphs;
+    public final List<ResourceLocation> schematics;
+    public final List<ResourceLocation> craftingEffects;
 
     public ScrollData() {
-        key = "unknown";
+        this("unknown", Optional.empty(), false, 0, 0xffffff, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
     }
 
     public ScrollData(String name, Optional<String> details, boolean isIntricate, int material, int ribbon, List<Integer> glyphs, List<ResourceLocation> schematics, List<ResourceLocation> craftingEffects) {
         this.key = name;
         this.details = details.orElse(null);
         this.isIntricate = isIntricate;
-
         this.material = material;
         this.ribbon = ribbon;
-        this.glyphs = glyphs;
-
-        if (!schematics.isEmpty()) {
-            this.schematics = schematics;
-        }
-
-        if (!craftingEffects.isEmpty()) {
-            this.craftingEffects = craftingEffects;
-        }
+        this.glyphs = List.copyOf(glyphs);
+        this.schematics = List.copyOf(schematics);
+        this.craftingEffects = List.copyOf(craftingEffects);
     }
 
     public static int readMaterialFast(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.get(DataComponents.BLOCK_ENTITY_DATA))
-                .map(CustomData::copyTag)
-                .map(tag -> tag.getList("data", Tag.TAG_COMPOUND))
-                .filter(list -> list.size() > 0)
-                .map(list -> list.getCompound(0))
-                .map(tag -> tag.getInt("material"))
+        return readOptional(itemStack)
+                .map(data -> data.material)
                 .orElse(0);
     }
 
     public static int readRibbonFast(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.get(DataComponents.BLOCK_ENTITY_DATA))
-                .map(CustomData::copyTag)
-                .map(tag -> tag.getList("data", Tag.TAG_COMPOUND))
-                .filter(list -> list.size() > 0)
-                .map(list -> list.getCompound(0))
-                .map(tag -> tag.getString("ribbon"))
-                .map(hex -> (int) Long.parseLong(hex, 16))
+        return readOptional(itemStack)
+                .map(data -> data.ribbon)
                 .orElse(0);
     }
 
     public static ScrollData read(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.get(DataComponents.BLOCK_ENTITY_DATA))
-                .map(CustomData::copyTag)
-                .map(ScrollData::read)
-                .filter(data -> data.length > 0)
-                .map(data -> data[0])
+        return readOptional(itemStack)
                 .orElseGet(ScrollData::new);
+    }
+
+    public static Optional<ScrollData> readOptional(ItemStack itemStack) {
+        if (TetraRegistries.scrollData == null) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(itemStack.get(TetraRegistries.scrollData.get()));
     }
 
     public static ScrollData[] read(CompoundTag tag) {
@@ -128,15 +120,43 @@ public class ScrollData {
     }
 
     public void write(ItemStack itemStack) {
-        CompoundTag tag = ScrollData.write(new ScrollData[]{this}, new CompoundTag());
-        CustomData data = CustomData.of(tag);
-        itemStack.set(DataComponents.BLOCK_ENTITY_DATA, data);
-        itemStack.set(DataComponents.CUSTOM_DATA, data);
+        itemStack.remove(DataComponents.CUSTOM_DATA);
+        itemStack.remove(DataComponents.BLOCK_ENTITY_DATA);
+        itemStack.set(TetraRegistries.scrollData.get(), this);
     }
 
     public JsonElement write(JsonObject json) {
         return Optional.of(ScrollData.CODEC.encode(this, JsonOps.INSTANCE, json))
                 .flatMap(DataResult::result)
                 .orElse(null);
+    }
+
+    public ItemStack createItemStack() {
+        ItemStack itemStack = new ItemStack(ScrollItem.instance);
+        write(itemStack);
+        return itemStack;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof ScrollData data)) {
+            return false;
+        }
+        return isIntricate == data.isIntricate
+                && material == data.material
+                && ribbon == data.ribbon
+                && Objects.equals(key, data.key)
+                && Objects.equals(details, data.details)
+                && Objects.equals(glyphs, data.glyphs)
+                && Objects.equals(schematics, data.schematics)
+                && Objects.equals(craftingEffects, data.craftingEffects);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, details, isIntricate, material, ribbon, glyphs, schematics, craftingEffects);
     }
 }

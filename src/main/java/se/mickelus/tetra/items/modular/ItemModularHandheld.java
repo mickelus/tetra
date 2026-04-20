@@ -35,6 +35,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -855,6 +856,60 @@ public class ItemModularHandheld extends ModularItem {
             }
         });
         return builder.build();
+    }
+
+    public @Nullable Tool getDefaultToolComponent(ItemStack itemStack) {
+        if (isBroken(itemStack)) {
+            return null;
+        }
+
+        List<Tool.Rule> rules = new ArrayList<>();
+        Map<TagKey<Block>, Float> miningRules = new LinkedHashMap<>();
+
+        addMiningRule(miningRules, itemStack, ItemAbilities.AXE_DIG, ItemAbilityHelper.appropriateTools.get(ItemAbilities.AXE_DIG));
+        addMiningRule(miningRules, itemStack, ItemAbilities.PICKAXE_DIG, ItemAbilityHelper.appropriateTools.get(ItemAbilities.PICKAXE_DIG));
+        addMiningRule(miningRules, itemStack, ItemAbilities.SHOVEL_DIG, ItemAbilityHelper.appropriateTools.get(ItemAbilities.SHOVEL_DIG));
+        addMiningRule(miningRules, itemStack, ItemAbilities.HOE_DIG, ItemAbilityHelper.appropriateTools.get(ItemAbilities.HOE_DIG));
+        addMiningRule(miningRules, itemStack, ItemAbilities.HOE_DIG, ItemAbilityHelper.hoeExtraTag);
+        addMiningRule(miningRules, itemStack, TetraItemAbilities.hammer, ItemAbilityHelper.hammerMineable);
+
+        miningRules.entrySet().stream()
+                .sorted(Map.Entry.<TagKey<Block>, Float>comparingByValue().reversed())
+                .map(entry -> Tool.Rule.minesAndDrops(entry.getKey(), entry.getValue()))
+                .forEach(rules::add);
+
+        addSwordRule(rules, itemStack);
+
+        if (rules.isEmpty()) {
+            return null;
+        }
+
+        return new Tool(List.copyOf(rules), 1.0F, getBlockDestroyDamage());
+    }
+
+    private void addMiningRule(Map<TagKey<Block>, Float> miningRules, ItemStack itemStack, ItemAbility toolAction, @Nullable TagKey<Block> blockTag) {
+        if (blockTag == null || getToolLevel(itemStack, toolAction) <= 0) {
+            return;
+        }
+
+        miningRules.merge(blockTag, getToolMiningSpeed(itemStack, toolAction), Math::max);
+    }
+
+    private void addSwordRule(List<Tool.Rule> rules, ItemStack itemStack) {
+        if (getToolLevel(itemStack, TetraItemAbilities.cut) <= 0) {
+            return;
+        }
+
+        float baseSpeed = getToolMiningSpeed(itemStack, TetraItemAbilities.cut);
+        rules.add(Tool.Rule.overrideSpeed(BlockTags.SWORD_EFFICIENT, baseSpeed));
+        rules.add(Tool.Rule.overrideSpeed(ItemAbilityHelper.swordVeryEfficient, baseSpeed * 10));
+        rules.add(Tool.Rule.overrideSpeed(ItemAbilityHelper.swordInstamine, 30));
+    }
+
+    private float getToolMiningSpeed(ItemStack itemStack, ItemAbility toolAction) {
+        float miningSpeed = (float) (getAttackSpeedHarvestModifier(getAttributeValue(itemStack, Attributes.ATTACK_SPEED.value(), 4))
+                * getToolEfficiency(itemStack, toolAction));
+        return Math.max(1, miningSpeed);
     }
 
     public double getAbilityBaseDamage(@Nullable LivingEntity entity, ItemStack itemStack) {
