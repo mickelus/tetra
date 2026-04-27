@@ -475,8 +475,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
     }
 
     public void setLoaded(ItemStack stack, boolean chargedIn) {
-        CompoundTag compoundnbt = ItemStackTagHelper.getOrCreateTag(stack);
-        compoundnbt.putBoolean("Charged", chargedIn);
+        ItemStackTagHelper.mutate(stack, tag -> tag.putBoolean("Charged", chargedIn));
     }
 
     private ListTag getProjectilesNBT(ItemStack itemStack) {
@@ -499,13 +498,12 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
             return;
         }
 
-        CompoundTag crossbowTag = ItemStackTagHelper.getOrCreateTag(crossbowStack);
-        ListTag list = getProjectilesNBT(crossbowTag);
-
         CompoundTag projectileTag = ItemStackTagHelper.saveStack(projectileStack, registryAccess);
-        list.add(projectileTag);
-
-        crossbowTag.put("ChargedProjectiles", list);
+        ItemStackTagHelper.mutate(crossbowStack, crossbowTag -> {
+            ListTag list = getProjectilesNBT(crossbowTag);
+            list.add(projectileTag);
+            crossbowTag.put("ChargedProjectiles", list);
+        });
     }
 
     @Override

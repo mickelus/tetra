@@ -16,7 +16,7 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
 
-import static se.mickelus.tetra.util.ItemStackTagHelper.getOrCreateTag;
+import static se.mickelus.tetra.util.ItemStackTagHelper.mutate;
 
 @ParametersAreNonnullByDefault
 public class ApplyNbtOutcome implements CraftingEffectOutcome {
@@ -29,8 +29,7 @@ public class ApplyNbtOutcome implements CraftingEffectOutcome {
             Map<ItemAbility, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
             ItemStack[] postMaterials, float severity) {
         if (nbt != null) {
-            CompoundTag tag = getOrCreateTag(upgradedStack);
-            writeObject(nbt, tag);
+            mutate(upgradedStack, tag -> writeObject(nbt, tag));
             return true;
         }
         return false;

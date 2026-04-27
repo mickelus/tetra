@@ -82,10 +82,10 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public void addModule(ItemStack targetStack, String variantKey, Player player) {
-        CompoundTag tag = getOrCreateTag(targetStack);
-
-        tag.putString(slotTagKey, moduleKey);
-        tag.putString(this.variantTagKey, variantKey);
+        mutate(targetStack, tag -> {
+            tag.putString(slotTagKey, moduleKey);
+            tag.putString(this.variantTagKey, variantKey);
+        });
     }
 
     public final ItemStack[] removeModule(ItemStack targetStack) {
@@ -93,10 +93,10 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public ItemStack[] removeModule(ItemStack targetStack, boolean upgrade) {
-        CompoundTag tag = getOrCreateTag(targetStack);
-
-        tag.remove(slotTagKey);
-        tag.remove(variantTagKey);
+        mutate(targetStack, tag -> {
+            tag.remove(slotTagKey);
+            tag.remove(variantTagKey);
+        });
 
         return new ItemStack[0];
     }
@@ -331,7 +331,7 @@ public abstract class ItemModule implements IToolProvider {
     }
 
     public void setTweakStep(ItemStack itemStack, String tweakKey, int step) {
-        getOrCreateTag(itemStack).putInt(slotTagKey + "_tweak:" + tweakKey, step);
+        mutate(itemStack, tag -> tag.putInt(slotTagKey + "_tweak:" + tweakKey, step));
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack itemStack) {

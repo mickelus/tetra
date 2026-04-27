@@ -34,7 +34,7 @@ public class DynamicModularItem extends ItemModularHandheld {
     }
 
     public static void setArchetypeKey(ItemStack itemStack, String key) {
-        ItemStackTagHelper.getOrCreateTag(itemStack).putString(typeKey, key);
+        ItemStackTagHelper.mutate(itemStack, tag -> tag.putString(typeKey, key));
     }
 
     protected Optional<ArchetypeDefinition> getDefinition(ItemStack itemStack) {

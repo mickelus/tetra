@@ -52,7 +52,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     public static void removeImprovement(ItemStack itemStack, String slot, String improvement) {
         if (hasTag(itemStack)) {
-            getTag(itemStack).remove(slot + ":" + improvement);
+            mutate(itemStack, tag -> tag.remove(slot + ":" + improvement));
         }
     }
 
@@ -62,23 +62,23 @@ public abstract class ItemModuleMajor extends ItemModule {
             return;
         }
 
-        CompoundTag tag = getOrCreateTag(itemStack);
         int settleLevel = getImprovementLevel(itemStack, settleImprovement);
 
         if (settleLevel < settleMaxCount && (getImprovementLevel(itemStack, arrestedImprovement) == -1)) {
-            int settleProgress = getSettleProgress(itemStack);
+            int settleProgress = getSettleProgress(itemStack) - multiplier;
 
-            settleProgress -= multiplier;
-            tag.putInt(settleProgressKey, settleProgress);
-            if (settleProgress <= 0) {
-                addImprovement(itemStack, settleImprovement, settleLevel == -1 ? 1 : settleLevel + 1);
-                tag.remove(settleProgressKey);
+            mutate(itemStack, tag -> {
+                tag.putInt(settleProgressKey, settleProgress);
+                if (settleProgress <= 0) {
+                    addImprovement(itemStack, settleImprovement, settleLevel == -1 ? 1 : settleLevel + 1);
+                    tag.remove(settleProgressKey);
 
-                if (entity instanceof ServerPlayer) {
-                    TetraMod.packetHandler.sendTo(new SettlePacket(itemStack, getSlot()), (ServerPlayer) entity);
-                    IModularItem.updateIdentifier(tag);
+                    if (entity instanceof ServerPlayer) {
+                        TetraMod.packetHandler.sendTo(new SettlePacket(itemStack, getSlot()), (ServerPlayer) entity);
+                        IModularItem.updateIdentifier(tag);
+                    }
                 }
-            }
+            });
         }
     }
 
@@ -196,7 +196,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     public void addImprovement(ItemStack itemStack, String improvementKey, int level) {
         removeCollidingImprovements(itemStack, improvementKey, level);
-        getOrCreateTag(itemStack).putInt(slotTagKey + ":" + improvementKey, level);
+        mutate(itemStack, tag -> tag.putInt(slotTagKey + ":" + improvementKey, level));
     }
 
     public void removeCollidingImprovements(ItemStack itemStack, String improvementKey, int level) {

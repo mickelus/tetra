@@ -155,7 +155,7 @@ public class ToolbeltInventory implements Container {
             }
         }
 
-        writeToNBT(ItemStackTagHelper.getOrCreateTag(toolbeltItemStack));
+        ItemStackTagHelper.mutate(toolbeltItemStack, this::writeToNBT);
     }
 
     @Override

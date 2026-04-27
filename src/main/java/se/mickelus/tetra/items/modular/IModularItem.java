@@ -96,7 +96,7 @@ public interface IModularItem {
     String honeCountKey = "honing_count";
 
     static void updateIdentifier(ItemStack itemStack) {
-        updateIdentifier(getOrCreateTag(itemStack));
+        mutate(itemStack, IModularItem::updateIdentifier);
         ModularItemComponentHelper.sync(itemStack);
     }
 
@@ -115,15 +115,17 @@ public interface IModularItem {
      * @param moduleVariant
      */
     static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariantKey, String moduleVariant) {
-        CompoundTag tag = getOrCreateTag(itemStack);
-        tag.putString(slot, module);
-        tag.putString(moduleVariantKey, moduleVariant);
+        mutate(itemStack, tag -> {
+            tag.putString(slot, module);
+            tag.putString(moduleVariantKey, moduleVariant);
+        });
     }
 
     static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariant) {
-        CompoundTag tag = getOrCreateTag(itemStack);
-        tag.putString(slot, module);
-        tag.putString(module + "_material", moduleVariant);
+        mutate(itemStack, tag -> {
+            tag.putString(slot, module);
+            tag.putString(module + "_material", moduleVariant);
+        });
     }
 
     static int getIntegrityGain(ItemStack itemStack) {
@@ -153,13 +155,14 @@ public interface IModularItem {
     }
 
     static void removeHoneable(ItemStack itemStack) {
-        CompoundTag tag = getTag(itemStack);
-
-        if (tag != null) {
+        if (!hasTag(itemStack)) {
+            return;
+        }
+        mutate(itemStack, tag -> {
             tag.remove(honeAvailableKey);
             tag.remove(honeProgressKey);
             tag.putInt(honeCountKey, tag.getInt(honeCountKey) + 1);
-        }
+        });
     }
 
     static String getImprovementName(String key, int level, ItemStack itemStack) {
@@ -365,28 +368,24 @@ public interface IModularItem {
             return;
         }
 
-        // todo: store this in a separate data structure?
-        CompoundTag tag = getOrCreateTag(itemStack);
-        if (!isHoneable(itemStack)) {
-            int honingProgress;
-            if (tag.contains(honeProgressKey)) {
-                honingProgress = tag.getInt(honeProgressKey);
-            } else {
-                honingProgress = getHoningLimit(itemStack);
-            }
+        if (isHoneable(itemStack)) {
+            return;
+        }
 
+        // todo: store this in a separate data structure?
+        mutate(itemStack, tag -> {
+            int honingProgress = tag.contains(honeProgressKey) ? tag.getInt(honeProgressKey) : getHoningLimit(itemStack);
             honingProgress -= multiplier;
             tag.putInt(honeProgressKey, honingProgress);
 
-            if (honingProgress <= 0 && !isHoneable(itemStack)) {
+            if (honingProgress <= 0 && !tag.getBoolean(honeAvailableKey)) {
                 tag.putBoolean(honeAvailableKey, true);
 
                 if (entity instanceof ServerPlayer serverPlayer) {
                     TetraMod.packetHandler.sendTo(new HonePacket(itemStack), serverPlayer);
                 }
             }
-        }
-
+        });
     }
 
     default int getHoningProgress(ItemStack itemStack) {
@@ -397,13 +396,14 @@ public interface IModularItem {
     }
 
     default void setHoningProgress(ItemStack itemStack, int progress) {
-        CompoundTag tag = getOrCreateTag(itemStack);
-        tag.putInt(honeProgressKey, progress);
-        if (progress <= 0) {
-            tag.putBoolean(honeAvailableKey, true);
-        } else {
-            tag.remove(honeAvailableKey);
-        }
+        mutate(itemStack, tag -> {
+            tag.putInt(honeProgressKey, progress);
+            if (progress <= 0) {
+                tag.putBoolean(honeAvailableKey, true);
+            } else {
+                tag.remove(honeAvailableKey);
+            }
+        });
     }
 
     default int getHoningLimit(ItemStack itemStack) {
@@ -722,8 +722,7 @@ public interface IModularItem {
     }
 
     default void incrementRepairCount(ItemStack itemStack) {
-        CompoundTag tag = getOrCreateTag(itemStack);
-        tag.putInt(repairCountKey, tag.getInt(repairCountKey) + 1);
+        mutate(itemStack, tag -> tag.putInt(repairCountKey, tag.getInt(repairCountKey) + 1));
     }
 
     default void repair(ItemStack itemStack) {
@@ -1081,9 +1080,8 @@ public interface IModularItem {
             itemStack.setDamageValue(itemStack.getMaxDamage());
         }
 
-        CompoundTag nbt = getOrCreateTag(itemStack);
         // this stops the tooltip renderer from showing enchantments
-        nbt.putInt("HideFlags", 1);
+        mutate(itemStack, nbt -> nbt.putInt("HideFlags", 1));
 
         updateIdentifier(itemStack);
     }

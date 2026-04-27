@@ -84,7 +84,7 @@ public class QuickslotInventory extends ToolbeltInventory {
             }
         }
 
-        writeToNBT(ItemStackTagHelper.getOrCreateTag(toolbeltItemStack));
+        ItemStackTagHelper.mutate(toolbeltItemStack, this::writeToNBT);
     }
 
     private int getShadowIndex(ItemStack itemStack) {

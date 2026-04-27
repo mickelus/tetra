@@ -20,7 +20,7 @@ import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 
 import javax.annotation.Nullable;
 
-import static se.mickelus.tetra.util.ItemStackTagHelper.getOrCreateTag;
+import static se.mickelus.tetra.util.ItemStackTagHelper.mutate;
 
 public class TreasureMapForEmeralds implements VillagerTrades.ItemListing {
     private final int emeraldCost;
@@ -48,7 +48,7 @@ public class TreasureMapForEmeralds implements VillagerTrades.ItemListing {
                 MapItem.renderBiomePreviewMap(serverLevel, itemstack);
                 MapItemSavedData.addTargetDecoration(itemstack, blockpos, "+", this.destinationType);
                 itemstack.set(DataComponents.CUSTOM_NAME, Component.translatable(this.displayName));
-                getOrCreateTag(itemstack).putString("tetra.advancement_marker", destination.location().toString());
+                mutate(itemstack, tag -> tag.putString("tetra.advancement_marker", destination.location().toString()));
 
                 return new MerchantOffer(new ItemCost(Items.EMERALD, this.emeraldCost), itemstack, this.maxUses, this.villagerXp, 0.2F);
             }

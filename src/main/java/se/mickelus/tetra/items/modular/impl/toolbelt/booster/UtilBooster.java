@@ -126,33 +126,32 @@ public class UtilBooster {
                     cp.connection.send(new ServerboundPlayerInputPacket(cp.xxa, cp.zza, cp.input.jumping, cp.input.shiftKeyDown));
                 });
 
-                CompoundTag tag = ItemStackTagHelper.getOrCreateTag(itemStack);
+                ItemStackTagHelper.mutate(itemStack, tag -> {
+                    if (UtilBooster.hasFuel(tag, false)) {
+                        UtilBooster.consumeFuel(tag, false);
 
-                if (UtilBooster.hasFuel(tag, false)) {
-                    UtilBooster.consumeFuel(tag, false);
+                        player.moveRelative(0.05f, new Vec3(player.xxa, player.yya, player.zza));
 
-                    player.moveRelative(0.05f, new Vec3(player.xxa, player.yya, player.zza));
+                        if (player.level().isClientSide) {
+                            Vec3 direction = getAbsoluteMotion(-player.xxa, -player.zza, player.getYRot());
+                            for (int i = 0; i < 8; i++) {
+                                player.getCommandSenderWorld().addParticle(ParticleTypes.SMOKE,
+                                        player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
+                                        Math.random() * (0.2 * direction.x + 0.07) - 0.05,
+                                        Math.random() * 0.1 - 0.05,
+                                        Math.random() * (0.2 * direction.z + 0.07) - 0.05);
+                            }
 
-                    if (player.level().isClientSide) {
-                        Vec3 direction = getAbsoluteMotion(-player.xxa, -player.zza, player.getYRot());
-                        for (int i = 0; i < 8; i++) {
-                            player.getCommandSenderWorld().addParticle(ParticleTypes.SMOKE,
-                                    player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
-                                    Math.random() * (0.2 * direction.x + 0.07) - 0.05,
-                                    Math.random() * 0.1 - 0.05,
-                                    Math.random() * (0.2 * direction.z + 0.07) - 0.05);
-                        }
-
-                        if (Math.random() > 0.3) {
-                            player.getCommandSenderWorld().addParticle(ParticleTypes.FLAME,
-                                    player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
-                                    Math.random() * (0.2 * direction.x + 0.07) - 0.05,
-                                    Math.random() * 0.1 - 0.05,
-                                    Math.random() * (0.2 * direction.z + 0.07) - 0.05);
+                            if (Math.random() > 0.3) {
+                                player.getCommandSenderWorld().addParticle(ParticleTypes.FLAME,
+                                        player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
+                                        Math.random() * (0.2 * direction.x + 0.07) - 0.05,
+                                        Math.random() * 0.1 - 0.05,
+                                        Math.random() * (0.2 * direction.z + 0.07) - 0.05);
+                            }
                         }
                     }
-
-                }
+                });
             }
         }
     }

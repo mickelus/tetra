@@ -24,22 +24,23 @@ public class TickHandlerBooster {
     }
 
     public void tickItem(Player player, ItemStack stack, int level) {
-        CompoundTag tag = ItemStackTagHelper.getOrCreateTag(stack);
-        boolean charged = tag.getBoolean(UtilBooster.chargedKey);
-        if (!player.isInWater() && player.getVehicle() == null && UtilBooster.isActive(tag) && UtilBooster.hasFuel(tag, charged)) {
-            if (charged) {
-                UtilBooster.boostPlayerCharged(player, tag, level);
+        ItemStackTagHelper.mutate(stack, tag -> {
+            boolean charged = tag.getBoolean(UtilBooster.chargedKey);
+            if (!player.isInWater() && player.getVehicle() == null && UtilBooster.isActive(tag) && UtilBooster.hasFuel(tag, charged)) {
+                if (charged) {
+                    UtilBooster.boostPlayerCharged(player, tag, level);
+                } else {
+                    UtilBooster.boostPlayer(player, tag, level);
+                }
+
+                UtilBooster.consumeFuel(tag, charged);
             } else {
-                UtilBooster.boostPlayer(player, tag, level);
+                UtilBooster.rechargeFuel(tag, stack, player.registryAccess());
             }
 
-            UtilBooster.consumeFuel(tag, charged);
-        } else {
-            UtilBooster.rechargeFuel(tag, stack, player.registryAccess());
-        }
-
-        if (charged) {
-            tag.putBoolean(UtilBooster.chargedKey, false);
-        }
+            if (charged) {
+                tag.putBoolean(UtilBooster.chargedKey, false);
+            }
+        });
     }
 }
