@@ -14,10 +14,15 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Type;
 import java.util.Map;
 
+// Cross-version compat: this Gson deserializer mirrors upstream 1.20. Do not migrate to Codec /
+// MapCodec — rewriting forks the codebase from upstream Tetra.
 @ParametersAreNonnullByDefault
 public class AttributesDeserializer implements JsonDeserializer<Multimap<Attribute, AttributeModifier>> {
     public static final TypeToken<Multimap<Attribute, AttributeModifier>> typeToken = new TypeToken<Multimap<Attribute, AttributeModifier>>() {
     };
+    // legacyAttributeIds: Forge-namespaced 1.20 attribute IDs that we translate into 1.21 vanilla IDs
+    // at JSON parse time. Keep the map in sync with upstream 1.20 — JSON authored against 1.20 still
+    // uses these forge: keys, and rewriting to vanilla namespaces would diverge from upstream.
     private static final Map<String, ResourceLocation> legacyAttributeIds = Map.of(
             "forge:reach_distance", ResourceLocation.withDefaultNamespace("player.block_interaction_range"),
             "forge:block_reach", ResourceLocation.withDefaultNamespace("player.block_interaction_range"),

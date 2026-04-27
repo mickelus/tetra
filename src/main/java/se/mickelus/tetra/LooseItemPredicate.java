@@ -11,6 +11,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
+// Cross-version compat: TetraItemPredicate (and siblings MaterialItemPredicate, EffectItemPredicate,
+// SimpleItemPredicate) match the upstream 1.20 predicate shape. Do not fold onto vanilla
+// ItemSubPredicate — rewriting forks the codebase from upstream Tetra.
 @ParametersAreNonnullByDefault
 public class LooseItemPredicate implements TetraItemPredicate {
 

@@ -117,6 +117,8 @@ public class TetraMod {
         ModuleModelRegistry.register("tetra:shield", ShieldModuleModel.class);
 
         new CraftingEffectRegistry();
+        // Cross-version compat: this string-keyed class dispatch mirrors upstream 1.20. Do not migrate
+        // to typed Codec / MapCodec registries — rewriting forks the codebase from upstream Tetra.
         CraftingEffectRegistry.registerConditionType("tetra:or", OrCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:and", AndCondition.class);
         CraftingEffectRegistry.registerConditionType("tetra:not", NotCondition.class);

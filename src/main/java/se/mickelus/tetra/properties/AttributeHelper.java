@@ -22,6 +22,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+// Cross-version compat: this shape matches upstream 1.20. Do not migrate to typed DataComponentType /
+// Codec / ItemSubPredicate / ItemAttributeModifiers — rewriting forks the codebase from upstream Tetra.
 @ParametersAreNonnullByDefault
 public class AttributeHelper {
 

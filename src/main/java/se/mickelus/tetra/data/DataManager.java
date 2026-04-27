@@ -78,6 +78,8 @@ import java.util.Map;
 public class DataManager implements DataDistributor {
 
     // todo: use the same naming for all deserializers?
+    // Cross-version compat: these Gson type adapters mirror upstream 1.20. Do not migrate to
+    // Codec / MapCodec — rewriting forks the codebase from upstream Tetra.
     public static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(ToolData.class, new ToolData.Deserializer())
             .registerTypeAdapter(AspectData.class, new AspectData.Deserializer())
