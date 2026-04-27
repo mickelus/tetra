@@ -3,7 +3,6 @@ package se.mickelus.tetra.items.modular;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.Tool;
-import se.mickelus.tetra.compat.bettercombat.BetterCombatCompat;
 
 import java.util.Objects;
 
@@ -17,7 +16,6 @@ public final class ModularItemComponentHelper {
         }
 
         syncToolComponent(itemStack);
-        BetterCombatCompat.sync(itemStack);
     }
 
     private static void syncToolComponent(ItemStack itemStack) {
