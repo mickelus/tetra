@@ -14,8 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
+import net.neoforged.neoforge.common.Tags;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 
@@ -40,7 +40,7 @@ public class BasicWorkbenchBlock extends AbstractWorkbenchBlock {
             return InteractionResult.FAIL;
         }
 
-        if (world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)) {
+        if (world.getBlockState(pos).is(Tags.Blocks.PLAYER_WORKSTATIONS_CRAFTING_TABLES)) {
 
             world.playSound(player, pos, SoundEvents.WOOD_PLACE, SoundSource.BLOCKS, 1.0F, 0.5F);
 
