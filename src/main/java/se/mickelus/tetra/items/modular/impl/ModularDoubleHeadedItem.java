@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.Tags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.mutil.network.PacketHandler;
@@ -134,7 +135,7 @@ public class ModularDoubleHeadedItem extends ItemModularHandheld {
         InteractionHand hand = context.getHand();
         if (player != null
                 && !player.isCrouching()
-                && world.getBlockState(pos).getBlock().equals(Blocks.CRAFTING_TABLE)
+                && world.getBlockState(pos).is(Tags.Blocks.PLAYER_WORKSTATIONS_CRAFTING_TABLES)
                 && getToolLevel(player.getItemInHand(hand), TetraItemAbilities.hammer) > 0) {
             return BasicWorkbenchBlock.upgradeWorkbench(player, world, pos, hand, context.getClickedFace());
         }
