@@ -6,7 +6,10 @@
         "spacing": 14,
         "exclusion_zone": {
             "chunk_count": 8,
-            "other_set": "minecraft:ancient_cities"
+            "other_set": [
+                "minecraft:ancient_cities",
+                "minecraft:strongholds"
+            ]
         }
     },
     "structures": [
