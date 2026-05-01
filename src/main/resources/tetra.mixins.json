@@ -7,6 +7,10 @@
         "GrindstoneContainerMixin",
         "ItemStackMixin"
     ],
-    "client": [],
-    "minVersion": "0.8"
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "overwrites": {
+        "requireAnnotations": true
+    }
 }
