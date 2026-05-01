@@ -19,7 +19,7 @@
         "default"
     ],
     "material": {
-        "tag": "forge:string",
+        "tag": "c:strings",
         "count": 2
     },
     "requiredTools": {

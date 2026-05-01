@@ -71,7 +71,7 @@
         },
         {
             "material": {
-                "tag": "forge:obsidian"
+                "tag": "c:obsidians"
             },
             "requiredTools": {
                 "hammer_dig": "minecraft:netherite"

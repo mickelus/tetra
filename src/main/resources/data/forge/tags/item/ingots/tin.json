@@ -1,9 +1,0 @@
-{
-    "replace": false,
-    "values": [
-        {
-            "id": "#c:ingots/tin",
-            "required": false
-        }
-    ]
-}

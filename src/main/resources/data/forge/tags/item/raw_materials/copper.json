@@ -1,9 +1,0 @@
-{
-    "replace": false,
-    "values": [
-        {
-            "id": "#c:raw_materials/copper",
-            "required": false
-        }
-    ]
-}

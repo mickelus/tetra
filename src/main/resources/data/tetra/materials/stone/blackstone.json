@@ -20,7 +20,7 @@
         "default"
     ],
     "material": {
-        "tag": "forge:blackstone"
+        "tag": "tetra:blackstones"
     },
     "requiredTools": {
         "hammer_dig": "minecraft:stone"

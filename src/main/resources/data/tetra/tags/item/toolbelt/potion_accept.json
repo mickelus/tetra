@@ -5,6 +5,6 @@
         "minecraft:lingering_potion",
         "minecraft:splash_potion",
         "minecraft:glass_bottle",
-        "#forge:potion"
+        "#c:potions"
     ]
 }

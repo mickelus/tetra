@@ -50,17 +50,17 @@
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:ores/nickel",
+                            "name": "c:ores/nickel",
                             "expand": true
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:ores/osmium",
+                            "name": "c:ores/osmium",
                             "expand": true
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:ores/silver",
+                            "name": "c:ores/silver",
                             "expand": true
                         }
                     ]
@@ -82,17 +82,17 @@
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:ores/tin",
+                            "name": "c:ores/tin",
                             "expand": true
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:ores/lead",
+                            "name": "c:ores/lead",
                             "expand": true
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:ores/aluminum",
+                            "name": "c:ores/aluminum",
                             "expand": true
                         },
                         {

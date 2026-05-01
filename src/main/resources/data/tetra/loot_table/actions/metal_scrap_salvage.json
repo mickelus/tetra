@@ -108,7 +108,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/copper",
+                    "name": "c:nuggets/copper",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -131,7 +131,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:ingots/bronze",
+                    "name": "c:ingots/bronze",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -151,7 +151,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/bronze",
+                    "name": "c:nuggets/bronze",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -174,7 +174,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:ingots/steel",
+                    "name": "c:ingots/steel",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -194,7 +194,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/steel",
+                    "name": "c:nuggets/steel",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -217,7 +217,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:ingots/electrum",
+                    "name": "c:ingots/electrum",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -237,7 +237,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/electrum",
+                    "name": "c:nuggets/electrum",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -260,7 +260,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:ingots/nickel",
+                    "name": "c:ingots/nickel",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -280,7 +280,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/nickel",
+                    "name": "c:nuggets/nickel",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -303,7 +303,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:ingots/silver",
+                    "name": "c:ingots/silver",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -323,7 +323,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/silver",
+                    "name": "c:nuggets/silver",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -346,7 +346,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:ingots/lead",
+                    "name": "c:ingots/lead",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -366,7 +366,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/lead",
+                    "name": "c:nuggets/lead",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -389,7 +389,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:ingots/aluminum",
+                    "name": "c:ingots/aluminum",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -409,7 +409,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/aluminum",
+                    "name": "c:nuggets/aluminum",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -432,7 +432,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:ingots/tin",
+                    "name": "c:ingots/tin",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -452,7 +452,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/tin",
+                    "name": "c:nuggets/tin",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -475,7 +475,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:ingots/osmium",
+                    "name": "c:ingots/osmium",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -495,7 +495,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/osmium",
+                    "name": "c:nuggets/osmium",
                     "expand": true,
                     "weight": 10,
                     "functions": [
