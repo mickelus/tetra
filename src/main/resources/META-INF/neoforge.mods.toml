@@ -35,7 +35,7 @@ side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="curios"
-mandatory=true
+mandatory=false
 versionRange="${curios_version_range}"
 ordering="NONE"
 side="BOTH"
