@@ -16,8 +16,9 @@ public class GenericTrigger<T extends SimpleCriterionTrigger.SimpleInstance> ext
         this.codec = codec;
     }
 
+    @NotNull
     @Override
-    public @NotNull Codec<T> codec() {
+    public Codec<T> codec() {
         return codec;
     }
 

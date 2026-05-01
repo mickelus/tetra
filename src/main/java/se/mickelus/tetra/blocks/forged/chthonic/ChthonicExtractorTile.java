@@ -8,9 +8,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import java.util.function.Supplier;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class ChthonicExtractorTile extends BlockEntity {
@@ -36,7 +36,7 @@ public class ChthonicExtractorTile extends BlockEntity {
 
         if (newDamage < ChthonicExtractorBlock.maxDamage) {
             setDamage(newDamage);
-        } else {
+        } else if (level != null) {
             level.levelEvent(null, 2001, getBlockPos(), Block.getId(level.getBlockState(getBlockPos())));
             level.setBlock(getBlockPos(), Blocks.AIR.defaultBlockState(), 2);
         }

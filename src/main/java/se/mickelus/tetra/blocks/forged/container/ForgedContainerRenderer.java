@@ -14,9 +14,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import se.mickelus.tetra.TetraMod;
@@ -26,7 +26,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContainerBlockEntity> {
-    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS,
+    public static final Material material = new Material(InventoryMenu.BLOCK_ATLAS,
             ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "block/forged_container/forged_container"));
     private static final float openDuration = 300;
     public static ModelLayerLocation layer = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, ForgedContainerBlock.identifier), "main");
@@ -91,15 +91,15 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
 
             VertexConsumer vertexBuilder = material.buffer(renderTypeBuffer, RenderType::entitySolid);
 
-            renderLid(tile, partialTicks, matrixStack, vertexBuilder, combinedLight, combinedOverlay);
-            renderLocks(tile, partialTicks, matrixStack, vertexBuilder, combinedLight, combinedOverlay);
+            renderLid(tile, matrixStack, vertexBuilder, combinedLight, combinedOverlay);
+            renderLocks(tile, matrixStack, vertexBuilder, combinedLight, combinedOverlay);
             base.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay);
 
             matrixStack.popPose();
         }
     }
 
-    private void renderLid(ForgedContainerBlockEntity tile, float partialTicks, PoseStack matrixStack, VertexConsumer vertexBuilder,
+    private void renderLid(ForgedContainerBlockEntity tile, PoseStack matrixStack, VertexConsumer vertexBuilder,
             int combinedLight, int combinedOverlay) {
         if (tile.isOpen()) {
             float progress = Math.min(1, (System.currentTimeMillis() - tile.openTime) / openDuration);
@@ -115,7 +115,7 @@ public class ForgedContainerRenderer implements BlockEntityRenderer<ForgedContai
         }
     }
 
-    private void renderLocks(ForgedContainerBlockEntity tile, float partialTicks, PoseStack matrixStack, VertexConsumer vertexBuilder,
+    private void renderLocks(ForgedContainerBlockEntity tile, PoseStack matrixStack, VertexConsumer vertexBuilder,
             int combinedLight, int combinedOverlay) {
         Boolean[] locked = tile.isLocked();
         for (int i = 0; i < locks.length; i++) {
