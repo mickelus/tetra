@@ -1,7 +1,6 @@
 {
     "pack": {
         "description": "tetra resources",
-        "pack_format": 34,
-        "supported_formats": [34, 48]
+        "pack_format": 34
     }
 }
