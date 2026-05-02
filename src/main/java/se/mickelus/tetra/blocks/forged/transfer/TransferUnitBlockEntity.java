@@ -15,15 +15,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import java.util.function.Supplier;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.blocks.IHeatTransfer;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfer {
@@ -111,7 +112,7 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
     @Override
     public int getCharge() {
         return CastOptional.cast(cell.getItem(), ThermalCellItem.class)
-                .map(item -> item.getCharge(cell))
+                .map(item -> ThermalCellItem.getCharge(cell))
                 .orElse(0);
     }
 
@@ -134,9 +135,9 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
     public int drain(int amount) {
         return CastOptional.cast(cell.getItem(), ThermalCellItem.class)
                 .map(item -> {
-                    int drained = item.drainCharge(cell, amount);
+                    int drained = ThermalCellItem.drainCharge(cell, amount);
 
-                    if (item.getCharge(cell) == 0) {
+                    if (ThermalCellItem.getCharge(cell) == 0) {
                         TransferUnitBlock.updateCellProp(level, worldPosition, hasCell(), 0);
                         runDrainedEffects();
                     }
@@ -150,11 +151,11 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
     public int fill(int amount) {
         return CastOptional.cast(cell.getItem(), ThermalCellItem.class)
                 .map(item -> {
-                    int initialCharge = item.getCharge(cell);
+                    int initialCharge = ThermalCellItem.getCharge(cell);
 
-                    int overfill = item.recharge(cell, amount);
+                    int overfill = ThermalCellItem.recharge(cell, amount);
 
-                    if (item.getCharge(cell) == ThermalCellItem.maxCharge) {
+                    if (ThermalCellItem.getCharge(cell) == ThermalCellItem.maxCharge) {
                         runFilledEffects();
                     }
 
@@ -280,6 +281,7 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
+    @NotNull
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return saveWithoutMetadata(registries);
@@ -287,8 +289,6 @@ public class TransferUnitBlockEntity extends BlockEntity implements IHeatTransfe
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider lookupProvider) {
-        if (packet.getTag() != null) {
-            loadWithComponents(packet.getTag(), lookupProvider);
-        }
+        loadWithComponents(packet.getTag(), lookupProvider);
     }
 }

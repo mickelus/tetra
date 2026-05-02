@@ -6,8 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiRoot;
 import se.mickelus.mutil.gui.GuiString;
@@ -52,8 +52,8 @@ public class MultiblockSchematicGui extends GuiRoot implements LayeredDraw.Layer
                     StringJoiner part = new StringJoiner(" ");
                     for (int x = 0; x < block.width; x++) {
                         part.add(x == block.x && y == block.y
-                                ? ChatFormatting.WHITE + "\u25c6"
-                                : ChatFormatting.GRAY + "\u25c7");
+                                ? ChatFormatting.WHITE + "◆"
+                                : ChatFormatting.GRAY + "◇");
                     }
                     element.addChild(new GuiString(0, 0, part.toString()));
                 }
