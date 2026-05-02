@@ -3,9 +3,9 @@ package se.mickelus.tetra.aspect;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -20,14 +20,13 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.neoforged.neoforge.common.CommonHooks;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.util.RegistryHelper;
 
-import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -172,34 +171,28 @@ public class TetraEnchantmentHelper {
                                 .map(mapped::get)
                                 .ifPresent(slot -> {
                                     Enchantment enchantment = entry.getKey().value();
-                                    if (enchantment != null) {
-                                        int cost = getEnchantmentCapacityCost(enchantment, entry.getIntValue());
-                                        capacity.merge(slot, cost, Integer::sum);
-                                    }
+                                    int cost = getEnchantmentCapacityCost(enchantment, entry.getIntValue());
+                                    capacity.merge(slot, cost, Integer::sum);
                                 }));
 
                 itemStack.getTagEnchantments().entrySet().stream()
-                        .filter(entry -> {
-                            return getEnchantmentKey(entry.getKey())
-                                    .map(ResourceLocation::toString)
-                                    .map(key -> !mapped.containsKey(key))
-                                    .orElse(false);
-                        })
+                        .filter(entry -> getEnchantmentKey(entry.getKey())
+                                .map(ResourceLocation::toString)
+                                .map(key -> !mapped.containsKey(key))
+                                .orElse(false))
                         .forEach(entry -> {
                             Holder<Enchantment> holder = entry.getKey();
                             Enchantment enchantment = entry.getKey().value();
-                            if (enchantment != null) {
-                                Arrays.stream(modules)
-                                        .filter(Objects::nonNull)
-                                        .filter(module -> module.acceptsEnchantment(itemStack, enchantment, false))
-                                        .map(ItemModule::getSlot)
-                                        .max(Comparator.comparing(slot -> capacity.getOrDefault(slot, 0)))
-                                        .ifPresent(slot -> {
-                                            mapEnchantment(itemStack, slot, holder);
-                                            int cost = getEnchantmentCapacityCost(enchantment, entry.getIntValue());
-                                            capacity.merge(slot, cost, Integer::sum);
-                                        });
-                            }
+                            Arrays.stream(modules)
+                                    .filter(Objects::nonNull)
+                                    .filter(module -> module.acceptsEnchantment(itemStack, enchantment, false))
+                                    .map(ItemModule::getSlot)
+                                    .max(Comparator.comparing(slot -> capacity.getOrDefault(slot, 0)))
+                                    .ifPresent(slot -> {
+                                        mapEnchantment(itemStack, slot, holder);
+                                        int cost = getEnchantmentCapacityCost(enchantment, entry.getIntValue());
+                                        capacity.merge(slot, cost, Integer::sum);
+                                    });
                         });
                 if (mappings.getAllKeys().isEmpty()) {
                     tag.remove("EnchantmentMapping");
@@ -242,12 +235,10 @@ public class TetraEnchantmentHelper {
                 tag.getCompound("EnchantmentMapping").remove(enchantment);
             }
         });
-        EnchantmentHelper.updateEnchantments(itemStack, mutable -> mutable.removeIf(holder -> {
-            return getEnchantmentKey(holder)
-                    .map(ResourceLocation::toString)
-                    .filter(enchantment::equals)
-                    .isPresent();
-        }));
+        EnchantmentHelper.updateEnchantments(itemStack, mutable -> mutable.removeIf(holder -> getEnchantmentKey(holder)
+                .map(ResourceLocation::toString)
+                .filter(enchantment::equals)
+                .isPresent()));
     }
 
     public static void removeEnchantments(ItemStack itemStack, String slot) {
@@ -259,12 +250,10 @@ public class TetraEnchantmentHelper {
                 .filter(ench -> slot.equals(map.getString(ench)))
                 .collect(Collectors.toSet());
 
-        EnchantmentHelper.updateEnchantments(itemStack, mutable -> mutable.removeIf(holder -> {
-            return getEnchantmentKey(holder)
-                    .map(ResourceLocation::toString)
-                    .filter(matchingEnchantments::contains)
-                    .isPresent();
-        }));
+        EnchantmentHelper.updateEnchantments(itemStack, mutable -> mutable.removeIf(holder -> getEnchantmentKey(holder)
+                .map(ResourceLocation::toString)
+                .filter(matchingEnchantments::contains)
+                .isPresent()));
         mutate(itemStack, tag -> {
             if (tag.contains("EnchantmentMapping", Tag.TAG_COMPOUND)) {
                 CompoundTag liveMap = tag.getCompound("EnchantmentMapping");
@@ -322,7 +311,8 @@ public class TetraEnchantmentHelper {
         }
 
         public boolean isApplicable(Enchantment enchantment) {
-            boolean supported = supportedItems.stream().anyMatch(enchantment::isSupportedItem);
+            Holder<Enchantment> holder = getHolder(enchantment);
+            boolean supported = supportedItems.stream().anyMatch(stack -> stack.supportsEnchantment(holder));
             return (supported || RegistryHelper.tagContains(Registries.ENCHANTMENT, additions, enchantment))
                     && !RegistryHelper.tagContains(Registries.ENCHANTMENT, exclusions, enchantment);
         }
