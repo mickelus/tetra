@@ -254,18 +254,29 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityW
      */
     @Override
     public void playerTouch(Player player) {
-        if (!level().isClientSide && inGround && shakeTime <= 0 && isAlive()) {
-            if (player.getInventory().add(getPickupItem())) {
-                player.take(this, 1);
+        if (inGround) {
+            super.playerTouch(player);
+
+            // this should mean that it has been picked up
+            if (!isAlive()) {
                 ignitePlayer(player);
-                discard();
             }
         }
     }
 
     @Override
     public boolean isPickable() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public boolean isAttackable() {
+        return true;
+    }
+
+    @Override
+    public float getPickRadius(){
+        return 0.0f;
     }
 
     // pretty much the same as a regular pickup but attempts to place it in the offhand first
