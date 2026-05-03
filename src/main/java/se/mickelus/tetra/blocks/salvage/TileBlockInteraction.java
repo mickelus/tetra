@@ -28,7 +28,7 @@ public class TileBlockInteraction<T extends BlockEntity> extends BlockInteractio
     @Override
     public boolean applicableForBlock(Level world, BlockPos pos, BlockState blockState) {
         return TileEntityOptional.from(world, pos, tileEntityClass)
-                .map(predicate::apply)
+                .map(predicate)
                 .orElse(false);
     }
 }
