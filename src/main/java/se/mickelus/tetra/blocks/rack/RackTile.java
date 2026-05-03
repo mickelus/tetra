@@ -17,7 +17,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.blocks.ItemHandlerBlockEntity;
 
@@ -72,7 +71,6 @@ public class RackTile extends BlockEntity implements ItemHandlerBlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    @NotNull
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return saveWithoutMetadata(registries);

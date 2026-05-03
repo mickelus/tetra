@@ -3,7 +3,6 @@ package se.mickelus.tetra.advancements;
 import com.mojang.serialization.Codec;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Predicate;
@@ -16,7 +15,6 @@ public class GenericTrigger<T extends SimpleCriterionTrigger.SimpleInstance> ext
         this.codec = codec;
     }
 
-    @NotNull
     @Override
     public Codec<T> codec() {
         return codec;

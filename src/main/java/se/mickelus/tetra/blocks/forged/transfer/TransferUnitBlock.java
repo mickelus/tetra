@@ -33,7 +33,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraItemAbilities;
@@ -236,7 +235,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, hit);
     }
 
-    @NotNull
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
             BlockHitResult hit) {
@@ -248,7 +246,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         };
     }
 
-    @NotNull
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
         return useInternal(state, world, pos, player, InteractionHand.MAIN_HAND, hit);
@@ -276,7 +273,6 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         }
     }
 
-    @NotNull
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(facingProp);
@@ -309,13 +305,11 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
-    @NotNull
     @Override
     public BlockState rotate(final BlockState state, final Rotation rotation) {
         return state.setValue(facingProp, rotation.rotate(state.getValue(facingProp)));
     }
 
-    @NotNull
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return rotate(state, mirror.getRotation(state.getValue(facingProp)));
