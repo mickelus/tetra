@@ -9,8 +9,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,16 +31,16 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.CastOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraItemAbilities;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.InitializableBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.properties.IToolProvider;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.List;
@@ -122,7 +122,7 @@ public class ForgedCrateBlock extends FallingBlock implements InitializableBlock
             world.setBlockAndUpdate(pos, blockState.setValue(propIntegrity, integrity - progress));
         } else {
             boolean didBreak = EffectHelper.breakBlock(world, player, itemStack, pos, blockState, false, false);
-            if (didBreak && world instanceof ServerLevel) {
+            if (didBreak && world instanceof ServerLevel && hand != null) {
                 BlockInteraction.getLoot(interactionLootTable, player, hand, (ServerLevel) world, blockState)
                         .forEach(lootStack -> popResource(world, pos, lootStack));
             }
@@ -180,7 +180,9 @@ public class ForgedCrateBlock extends FallingBlock implements InitializableBlock
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return super.getStateForPlacement(context)
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+        return state
                 .setValue(propFacing, context.getHorizontalDirection())
                 .setValue(propStacked, equals(context.getLevel().getBlockState(context.getClickedPos().below()).getBlock()))
                 .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == WATER);
@@ -216,6 +218,6 @@ public class ForgedCrateBlock extends FallingBlock implements InitializableBlock
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(propFacing)));
+        return rotate(state, mirror.getRotation(state.getValue(propFacing)));
     }
 }

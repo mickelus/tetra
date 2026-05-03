@@ -14,13 +14,14 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import java.util.function.Supplier;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.gui.ToggleableSlot;
 import se.mickelus.tetra.TetraMod;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class ForgedContainerMenu extends AbstractContainerMenu {
@@ -53,7 +54,7 @@ public class ForgedContainerMenu extends AbstractContainerMenu {
             }
         }
 
-        IItemHandler playerInventoryHandler = new net.neoforged.neoforge.items.wrapper.InvWrapper(playerInventory);
+        IItemHandler playerInventoryHandler = new InvWrapper(playerInventory);
 
         // player inventory
         for (int i = 0; i < 3; i++) {
@@ -99,7 +100,7 @@ public class ForgedContainerMenu extends AbstractContainerMenu {
         ItemStack resultStack = ItemStack.EMPTY;
 
         Slot slot = slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
 
             resultStack = slotStack.copy();

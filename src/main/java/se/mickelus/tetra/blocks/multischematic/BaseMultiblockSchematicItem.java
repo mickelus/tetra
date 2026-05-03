@@ -34,8 +34,8 @@ public class BaseMultiblockSchematicItem extends BlockItem {
             StringJoiner part = new StringJoiner(" ");
             for (int x = 0; x < schematicBlock.width; x++) {
                 part.add(x == schematicBlock.x && y == schematicBlock.y
-                        ? ChatFormatting.WHITE + "\u25c6"
-                        : ChatFormatting.GRAY + "\u25c7");
+                        ? ChatFormatting.WHITE + "◆"
+                        : ChatFormatting.GRAY + "◇");
             }
             tooltip.add(Component.literal(part.toString()));
         }

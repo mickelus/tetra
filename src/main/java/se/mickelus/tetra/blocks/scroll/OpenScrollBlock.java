@@ -10,7 +10,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import se.mickelus.mutil.util.RotationHelper;
-import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -22,7 +21,6 @@ public class OpenScrollBlock extends ScrollBlock {
     public OpenScrollBlock() {
         super(Arrangement.open);
     }
-
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {

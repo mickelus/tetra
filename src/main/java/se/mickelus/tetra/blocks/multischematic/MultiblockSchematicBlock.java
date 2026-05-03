@@ -8,8 +8,8 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -29,10 +29,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import java.util.function.Supplier;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import se.mickelus.mutil.util.RotationHelper;
@@ -43,6 +42,7 @@ import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.effect.EffectHelper;
 
 import java.util.Collection;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class MultiblockSchematicBlock extends HorizontalDirectionalBlock implements IInteractiveBlock {
@@ -88,8 +88,9 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return super.getStateForPlacement(context)
-                .setValue(facingProp, context.getHorizontalDirection().getOpposite());
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+        return state.setValue(facingProp, context.getHorizontalDirection().getOpposite());
     }
 
 
@@ -209,18 +210,18 @@ public class MultiblockSchematicBlock extends HorizontalDirectionalBlock impleme
         level.addParticle(particle, pos.x, pos.y, pos.z, 0, 0, 0);
     }
 
-    record Part(BlockPos basePos, BlockPos worldPos, BlockState blockState) {
+    public record Part(BlockPos basePos, BlockPos worldPos, BlockState blockState) {
     }
 
     public static class Builder {
         public static final String format = "%s_%d_%d";
         public static final String ruinedFormat = "%s_ruined_%d_%d";
         public static final String pryTablePrefix = "actions/forged_schematic/";
-        private String identifier;
-        private int height;
-        private int width;
+        private final String identifier;
+        private final int height;
+        private final int width;
 
-        private Properties properties;
+        private final Properties properties;
         private Properties ruinedProperties;
 
         public Builder(String identifier, int width, int height, Properties properties) {

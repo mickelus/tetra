@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -21,10 +22,10 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
@@ -54,7 +55,7 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements Simp
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
@@ -101,20 +102,14 @@ public class ForgedWorkbenchBlock extends AbstractWorkbenchBlock implements Simp
 
     @Override
     public BlockState rotate(final BlockState blockState, final Rotation rotation) {
-        switch (rotation) {
-            case COUNTERCLOCKWISE_90:
-            case CLOCKWISE_90:
-                switch ((Direction.Axis) blockState.getValue(axis)) {
-                    case Z:
-                        return blockState.setValue(axis, Direction.Axis.X);
-                    case X:
-                        return blockState.setValue(axis, Direction.Axis.Z);
-                    default:
-                        return blockState;
-                }
-            default:
-                return blockState;
-        }
+        return switch (rotation) {
+            case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> switch (blockState.getValue(axis)) {
+                case Z -> blockState.setValue(axis, Direction.Axis.X);
+                case X -> blockState.setValue(axis, Direction.Axis.Z);
+                default -> blockState;
+            };
+            default -> blockState;
+        };
     }
 
     @Override
