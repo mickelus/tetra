@@ -266,19 +266,13 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
      */
     @Override
     public void playerTouch(Player player) {
-        if (inGround) {
-            super.playerTouch(player);
-
-            // this should mean that it has been picked up
-            if (!isAlive()) {
+        if (!level().isClientSide && inGround && shakeTime <= 0 && isAlive()) {
+            if (player.getInventory().add(getPickupItem())) {
+                player.take(this, 1);
                 ignitePlayer(player);
+                discard();
             }
         }
-    }
-
-    @Override
-    public boolean isPickable() {
-        return true;
     }
 
     // pretty much the same as a regular pickup but attempts to place it in the offhand first
@@ -314,7 +308,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     }
 
     private void ignitePlayer(Player player) {
-        if (!isAlive() && heat > 10) {
+        if (heat > 10) {
             player.setSecondsOnFire(3 + heat / 20);
         }
     }
