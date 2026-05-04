@@ -13,8 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
@@ -59,10 +57,6 @@ public class RackTile extends BlockEntity implements ItemHandlerBlockEntity {
                 playerEntity.drop(extractedStack, false);
             }
         }
-    }
-
-    public AABB getRenderBoundingBox() {
-        return Shapes.block().bounds().move(worldPosition);
     }
 
     @Nullable

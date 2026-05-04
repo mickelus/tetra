@@ -3,9 +3,9 @@ package se.mickelus.tetra.blocks.workbench.action;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Map;
 

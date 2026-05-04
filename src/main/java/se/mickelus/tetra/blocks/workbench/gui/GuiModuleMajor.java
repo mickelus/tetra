@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.core.Holder;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import se.mickelus.mutil.gui.*;
@@ -16,11 +16,7 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ImprovementData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
