@@ -62,7 +62,7 @@ public class TetraEnchantmentHelper {
         aspectMap.put(aspect, rules);
     }
 
-    public static boolean isApplicableForAspects(Enchantment enchantment, boolean fromTable, Map<ItemAspect, Integer> aspects) {
+    public static boolean isApplicableForAspects(Holder<Enchantment> enchantment, boolean fromTable, Map<ItemAspect, Integer> aspects) {
         int requiredLevel = fromTable ? 2 : 1;
 
         return aspects.entrySet().stream()
@@ -185,7 +185,7 @@ public class TetraEnchantmentHelper {
                             Enchantment enchantment = entry.getKey().value();
                             Arrays.stream(modules)
                                     .filter(Objects::nonNull)
-                                    .filter(module -> module.acceptsEnchantment(itemStack, enchantment, false))
+                                    .filter(module -> module.acceptsEnchantment(itemStack, holder, false))
                                     .map(ItemModule::getSlot)
                                     .max(Comparator.comparing(slot -> capacity.getOrDefault(slot, 0)))
                                     .ifPresent(slot -> {
@@ -310,11 +310,9 @@ public class TetraEnchantmentHelper {
 
         }
 
-        public boolean isApplicable(Enchantment enchantment) {
-            Holder<Enchantment> holder = getHolder(enchantment);
-            boolean supported = supportedItems.stream().anyMatch(stack -> stack.supportsEnchantment(holder));
-            return (supported || RegistryHelper.tagContains(Registries.ENCHANTMENT, additions, enchantment))
-                    && !RegistryHelper.tagContains(Registries.ENCHANTMENT, exclusions, enchantment);
+        public boolean isApplicable(Holder<Enchantment> enchantment) {
+            boolean supported = supportedItems.stream().anyMatch(stack -> enchantment.value().isPrimaryItem(stack));
+            return (supported || enchantment.is(additions)) && !enchantment.is(exclusions);
         }
     }
 

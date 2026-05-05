@@ -219,7 +219,7 @@ public abstract class ItemModuleMajor extends ItemModule {
         TetraEnchantmentHelper.removeEnchantments(itemStack, getSlot());
     }
 
-    public boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment, boolean fromTable) {
+    public boolean acceptsEnchantment(ItemStack itemStack, Holder<Enchantment> enchantment, boolean fromTable) {
         return Optional.ofNullable(getAspects(itemStack))
                 .map(AspectData::getLevelMap)
                 .filter(aspects -> TetraEnchantmentHelper.isApplicableForAspects(enchantment, fromTable, aspects))

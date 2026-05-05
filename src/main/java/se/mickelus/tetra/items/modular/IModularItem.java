@@ -6,6 +6,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -357,7 +358,7 @@ public interface IModularItem {
         }
 
         tickHoningProgression(entity, itemStack, multiplier);
-        
+
         Arrays.stream(getMajorModules(itemStack))
                 .filter(Objects::nonNull)
                 .forEach(module -> module.tickProgression(entity, itemStack, multiplier));
@@ -1086,7 +1087,7 @@ public interface IModularItem {
         updateIdentifier(itemStack);
     }
 
-    default boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment, boolean fromTable) {
+    default boolean acceptsEnchantment(ItemStack itemStack, Holder<Enchantment> enchantment, boolean fromTable) {
         return Arrays.stream(getMajorModules(itemStack))
                 .filter(Objects::nonNull)
                 .anyMatch(module -> module.acceptsEnchantment(itemStack, enchantment, fromTable));

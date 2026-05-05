@@ -19,14 +19,14 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import java.util.List;
 
 public class SchemaSlotGui extends GuiElement {
-    private GuiString label;
-    private GuiString quantity;
-    private GuiItemRolling placeholder;
-    private GuiElement placeholderBorder;
-    private GuiTexture border;
+    private final GuiString label;
+    private final GuiString quantity;
+    private final GuiItemRolling placeholder;
+    private final GuiElement placeholderBorder;
+    private final GuiTexture border;
 
-    private HoloMaterialTranslationGui materialTranslation;
-    private HoloMaterialApplicable applicableMaterials;
+    private final HoloMaterialTranslationGui materialTranslation;
+    private final HoloMaterialApplicable applicableMaterials;
 
     private final int index;
 

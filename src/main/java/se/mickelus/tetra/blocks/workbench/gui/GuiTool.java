@@ -20,7 +20,7 @@ public class GuiTool extends GuiElement {
     protected GuiElement iconContainer;
     protected ItemAbility toolAction;
 
-    private GlyphData fallback = new GlyphData(GuiTextures.toolActions, 240, 0);
+    private final GlyphData fallback = new GlyphData(GuiTextures.toolActions, 240, 0);
 
     public GuiTool(int x, int y, ItemAbility toolAction) {
         super(x, y, width, 16);

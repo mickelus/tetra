@@ -37,7 +37,8 @@ public class ApplyEnchantmentOutcome implements CraftingEffectOutcome {
             AtomicBoolean success = new AtomicBoolean(false);
             enchantments.entrySet().stream()
                     .filter(entry -> acceptsEnchantment(upgradedStack, module,
-                            EnchantmentHelper.getEnchantmentsForCrafting(upgradedStack).keySet(), entry.getKey(), entry.getValue()))
+                            EnchantmentHelper.getEnchantmentsForCrafting(upgradedStack).keySet(),
+                            TetraEnchantmentHelper.getHolder(entry.getKey()), entry.getValue()))
                     .forEach(entry -> {
                         int level = entry.getValue();
                         Holder<Enchantment> enchantmentHolder = TetraEnchantmentHelper.getHolder(entry.getKey());
@@ -59,11 +60,11 @@ public class ApplyEnchantmentOutcome implements CraftingEffectOutcome {
         return currentLevel > 0 && level >= currentLevel && currentLevel < enchantment.getMaxLevel();
     }
 
-    protected boolean acceptsEnchantment(ItemStack itemStack, ItemModuleMajor module, Collection<Holder<Enchantment>> currentEnchantments, Enchantment enchantment,
+    protected boolean acceptsEnchantment(ItemStack itemStack, ItemModuleMajor module, Collection<Holder<Enchantment>> currentEnchantments, Holder<Enchantment> enchantment,
             int level) {
         return (module.acceptsEnchantment(itemStack, enchantment, false) || force)
-                && (stacksEnchantment(itemStack, module, enchantment, level)
-                || EnchantmentHelper.isEnchantmentCompatible(currentEnchantments, TetraEnchantmentHelper.getHolder(enchantment)));
+                && (stacksEnchantment(itemStack, module, enchantment.value(), level)
+                || EnchantmentHelper.isEnchantmentCompatible(currentEnchantments, enchantment));
     }
 
     private int getModuleEnchantmentLevel(ItemStack itemStack, ItemModuleMajor module, Enchantment enchantment) {

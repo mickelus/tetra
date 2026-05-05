@@ -22,9 +22,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import java.util.function.Supplier;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
@@ -46,11 +46,11 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.properties.PropertyHelper;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class WorkbenchTile extends BlockEntity implements MenuProvider, ItemHandlerBlockEntity {

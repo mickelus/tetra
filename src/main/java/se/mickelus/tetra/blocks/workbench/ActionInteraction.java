@@ -8,12 +8,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.InteractionOutcome;
 import se.mickelus.tetra.blocks.workbench.action.WorkbenchAction;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Map;
@@ -35,10 +35,10 @@ public class ActionInteraction extends BlockInteraction {
         ItemStack targetStack = tile.getTargetItemStack();
         return Arrays.stream(tile.getAvailableActions(null))
                 .filter(WorkbenchAction::allowInWorldInteraction)
-                .filter(action -> action.getRequiredTools(targetStack).entrySet().size() == 1)
+                .filter(action -> action.getRequiredTools(targetStack).size() == 1)
                 .findFirst()
                 .map(action -> {
-                    Map.Entry<ItemAbility, Integer> requirementPair = action.getRequiredTools(targetStack).entrySet().stream().findFirst().get();
+                    Map.Entry<ItemAbility, Integer> requirementPair = action.getRequiredTools(targetStack).entrySet().stream().findFirst().orElseThrow();
                     return new ActionInteraction(requirementPair.getKey(), requirementPair.getValue(), action.getKey());
                 })
                 .orElse(null);

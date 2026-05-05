@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 public class GuiModuleMajor extends GuiModule {
     private GuiStringSmall slotString;
 
-    private GuiHorizontalLayoutGroup improvementGroup;
+    private final GuiHorizontalLayoutGroup improvementGroup;
 
     public GuiModuleMajor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack,
             String slotKey, String slotName,
@@ -37,7 +37,7 @@ public class GuiModuleMajor extends GuiModule {
 
         this.height = 17;
 
-        improvementGroup = new GuiHorizontalLayoutGroup(GuiAttachment.topRight.equals(attachmentPoint) ? -17 : 19, "".equals(slotName) ? 12 : 13, 3, 1);
+        improvementGroup = new GuiHorizontalLayoutGroup(GuiAttachment.topRight.equals(attachmentPoint) ? -17 : 19, slotName.isEmpty() ? 12 : 13, 3, 1);
         improvementGroup.setAttachment(attachmentPoint);
         addChild(improvementGroup);
 
@@ -70,7 +70,7 @@ public class GuiModuleMajor extends GuiModule {
             addChild(tweakingIndicator);
         }
 
-        moduleString = new GuiString(19, "".equals(slotName) ? 4 : 5, "");
+        moduleString = new GuiString(19, slotName.isEmpty() ? 4 : 5, "");
         if (moduleName != null) {
             moduleString.setString(moduleName);
         } else {
