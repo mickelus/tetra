@@ -19,6 +19,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.properties.PropertyHelper;
 
@@ -61,7 +62,7 @@ public class ConfigActionImpl extends ConfigAction {
     }
 
     @Override
-    public void perform(Player player, ItemStack targetStack, WorkbenchTile workbench) {
+    public void perform(@Nullable Player player, ItemStack targetStack, WorkbenchTile workbench) {
         if (player != null && !player.level().isClientSide) {
             ServerLevel world = (ServerLevel) player.level();
             ResourceKey<LootTable> lootTableKey = ResourceKey.create(Registries.LOOT_TABLE, lootTable);

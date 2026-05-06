@@ -4,18 +4,35 @@ import groovy.json.JsonSlurper
 
 plugins {
     id 'java-library'
-    id 'eclipse'
-    id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.1.21'
+    id 'net.neoforged.moddev' version '2.0.141'
+    id 'idea'
 }
 
 if (System.getenv('VERSION') != null) {
     mod_version = System.getenv('VERSION')
 }
 
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
 version = "${minecraft_version}-${mod_version}"
 group = mod_group_id
+
+sourceSets.main.resources {
+    srcDir('src/generated/resources')
+
+    // Exclude common development only resources from finalized outputs
+    exclude("**/*.bbmodel") // BlockBench project files
+    exclude("src/generated/**/.cache") // datagen cache files
+}
+
+repositories {
+    mavenLocal()
+    maven { url = "https://maven.theillusivec4.top/" }
+    maven { url = 'https://maven.blamejared.com/' }
+}
 
 base {
     archivesName = mod_id
@@ -23,108 +40,127 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
-minecraft {
-    accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+neoForge {
+    // Specify the version of NeoForge to use.
+    version = project.neo_version
 
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    // This line is optional. Access Transformers are automatically detected
+    // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
     runs {
-        configureEach {
-            workingDirectory project.file('run')
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            systemProperty 'forge.logging.console.level', 'debug'
-            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
-        }
-
         client {
-            argument "-mixin.config=tetra.mixins.json"
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         server {
-            argument '--nogui'
-            argument "-mixin.config=tetra.mixins.json"
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         gameTestServer {
-            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+            type = "gameTestServer"
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         data {
-            workingDirectory project.file('run-data')
-            arguments.addAll '--mod', mod_id, '--all',
-                    '--output', file('src/generated/resources/').getAbsolutePath(),
-                    '--existing', file('src/main/resources/').getAbsolutePath()
+            data()
+
+            // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
+            // gameDirectory = project.file('run-data')
+
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
         }
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-repositories {
-    mavenLocal()
-    maven {
-        url = "https://maven.theillusivec4.top/"
-    }
-    maven { url = 'https://maven.blamejared.com/' }
+// Sets up a dependency configuration called 'localRuntime'.
+// This configuration should be used instead of 'runtimeOnly' to declare
+// a dependency that will be present for runtime testing but that is
+// "optional", meaning it will not be pulled by dependents of this mod.
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
     implementation "se.mickelus.mutil:mutil:${mutil_version}"
-    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
-
-    compileOnly 'org.spongepowered:mixin:0.8.5'
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
+    runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 }
 
-tasks.named('processResources', ProcessResources).configure {
+// This block of code expands all declared replace properties in the specified resource targets.
+// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
-            minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
-            neo_version         : neo_version, neo_version_range: neo_version_range,
-            mutil_version       : mutil_version, mutil_version_range: mutil_version_range,
-            curios_version      : curios_version, curios_version_range: curios_version_range,
-            loader_version_range: loader_version_range,
-            mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-            mod_authors         : mod_authors, mod_description: mod_description,
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description,
+            mutil_version          : mutil_version,
+            mutil_version_range    : mutil_version_range,
+            curios_version         : curios_version,
+            curios_version_range   : curios_version_range,
     ]
     inputs.properties replaceProperties
-
-    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
-        expand replaceProperties + [project: project]
-    }
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
 }
-
-tasks.named('jar', Jar).configure {
-    manifest {
-        attributes([
-                'Specification-Title'     : mod_id,
-                'Specification-Vendor'    : mod_authors,
-                'Specification-Version'   : '1', // We are version 1 of ourselves
-                'Implementation-Title'    : project.name,
-                'Implementation-Version'  : project.jar.archiveVersion,
-                'Implementation-Vendor'   : mod_authors,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : mod_id + ".mixins.json"
-        ])
-    }
-}
+// Include the output of "generateModMetadata" as an input directory for the build
+// this works with both building through Gradle and the IDE.
+sourceSets.main.resources.srcDir generateModMetadata
+// To avoid having to run "generateModMetadata" manually, make it run on every project reload
+neoForge.ideSyncTask generateModMetadata
 
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
-            groupId project.group
-            artifactId project.base.archivesName.get()
-            version project.version
-            artifact jar
+            from components.java
         }
     }
     repositories {
         maven {
-            url = System.getenv("local_maven") != null ? uri("file://${System.getenv("local_maven")}") : layout.buildDirectory.dir("repo")
+            url = uri("file://${System.getenv("local_maven")}")
         }
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }
 
 processResources {
@@ -141,7 +177,7 @@ processResources {
                 def oldLength = file.length()
                 try {
                     file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-                } catch (JsonException e) {
+                } catch (JsonException ignored) {
                     throw new JsonException("Failed to parse json in " + file.path)
                 }
                 file.text = JsonOutput.toJson(new JsonSlurper().parse(file))

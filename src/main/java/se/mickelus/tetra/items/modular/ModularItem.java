@@ -259,12 +259,12 @@ public abstract class ModularItem extends TetraItem implements IModularItem, ITo
 
     @Override
     public boolean isPrimaryItemFor(ItemStack itemStack, Holder<Enchantment> enchantment) {
-        return acceptsEnchantment(itemStack, enchantment.value(), true);
+        return acceptsEnchantment(itemStack, enchantment, true);
     }
 
     @Override
     public boolean supportsEnchantment(ItemStack itemStack, Holder<Enchantment> enchantment) {
-        return acceptsEnchantment(itemStack, enchantment.value(), false);
+        return acceptsEnchantment(itemStack, enchantment, false);
     }
 
     @Override

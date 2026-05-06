@@ -3,10 +3,9 @@ package se.mickelus.tetra.blocks.forged.container;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -24,11 +23,10 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.ItemAbility;
-import java.util.function.Supplier;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraItemAbilities;
@@ -38,11 +36,11 @@ import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static com.google.common.base.Predicates.equalTo;
 
@@ -121,11 +119,6 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
         return true;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void clientInit() {
-    }
-
     @Override
     public void registerPackets(PacketHandler packetHandler) {
         packetHandler.registerServerBoundPacket(ChangeCompartmentPacket.class, ChangeCompartmentPacket::new);
@@ -152,7 +145,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
                         .ifPresent(te -> {
                             ForgedContainerBlockEntity delegate = te.getOrDelegate();
                             if (delegate.isOpen()) {
-                                ((ServerPlayer) player).openMenu(delegate, delegate.getBlockPos());
+                                player.openMenu(delegate, delegate.getBlockPos());
                             }
                         });
             }
@@ -195,58 +188,15 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(facingProp);
         boolean flipped = state.getValue(flippedProp);
+        boolean open = state.getValue(openProp);
 
-        if (state.getValue(openProp)) {
-            if (flipped) {
-                switch (facing) {
-                    case NORTH:
-                        return shapeX1Open;
-                    case EAST:
-                        return shapeZ1Open;
-                    case SOUTH:
-                        return shapeX2Open;
-                    case WEST:
-                        return shapeZ2Open;
-                }
-            } else {
-                switch (facing) {
-                    case NORTH:
-                        return shapeX2Open;
-                    case EAST:
-                        return shapeZ2Open;
-                    case SOUTH:
-                        return shapeX1Open;
-                    case WEST:
-                        return shapeZ1Open;
-                }
-            }
-        } else {
-            if (flipped) {
-                switch (facing) {
-                    case NORTH:
-                        return shapeX1;
-                    case EAST:
-                        return shapeZ1;
-                    case SOUTH:
-                        return shapeX2;
-                    case WEST:
-                        return shapeZ2;
-                }
-            } else {
-                switch (facing) {
-                    case NORTH:
-                        return shapeX2;
-                    case EAST:
-                        return shapeZ2;
-                    case SOUTH:
-                        return shapeX1;
-                    case WEST:
-                        return shapeZ1;
-                }
-            }
-        }
-
-        return null;
+        return switch (facing) {
+            case NORTH -> flipped ? (open ? shapeX1Open : shapeX1) : (open ? shapeX2Open : shapeX2);
+            case EAST -> flipped ? (open ? shapeZ1Open : shapeZ1) : (open ? shapeZ2Open : shapeZ2);
+            case SOUTH -> flipped ? (open ? shapeX2Open : shapeX2) : (open ? shapeX1Open : shapeX1);
+            case WEST -> flipped ? (open ? shapeZ2Open : shapeZ2) : (open ? shapeZ1Open : shapeZ1);
+            default -> Shapes.block();
+        };
     }
 
     @Override
@@ -310,7 +260,7 @@ public class ForgedContainerBlock extends TetraWaterloggedBlock implements IInte
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(facingProp)));
+        return rotate(state, mirror.getRotation(state.getValue(facingProp)));
     }
 
     @Nullable

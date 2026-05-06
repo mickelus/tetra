@@ -9,6 +9,7 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
+import java.util.Objects;
 
 @ParametersAreNonnullByDefault
 public class WorkbenchPacketUpdate extends AbstractPacket {
@@ -39,11 +40,7 @@ public class WorkbenchPacketUpdate extends AbstractPacket {
                 writeString("", buffer);
             }
 
-            if (selectedSlot != null) {
-                writeString(selectedSlot, buffer);
-            } else {
-                writeString("", buffer);
-            }
+            writeString(Objects.requireNonNullElse(selectedSlot, ""), buffer);
         } catch (IOException exception) {
             System.err.println("An error occurred when writing schematic name to packet buffer");
         }

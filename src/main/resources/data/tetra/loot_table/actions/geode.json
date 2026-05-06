@@ -64,7 +64,7 @@
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:raw_materials/tin",
+                            "name": "c:raw_materials/tin",
                             "expand": true,
                             "functions": [
                                 {
@@ -83,7 +83,7 @@
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:raw_materials/lead",
+                            "name": "c:raw_materials/lead",
                             "expand": true,
                             "functions": [
                                 {
@@ -102,7 +102,7 @@
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:raw_materials/osmium",
+                            "name": "c:raw_materials/osmium",
                             "expand": true,
                             "functions": [
                                 {
@@ -121,7 +121,7 @@
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:raw_materials/nickel",
+                            "name": "c:raw_materials/nickel",
                             "expand": true,
                             "functions": [
                                 {
@@ -140,7 +140,7 @@
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:raw_materials/aluminum",
+                            "name": "c:raw_materials/aluminum",
                             "expand": true,
                             "functions": [
                                 {
@@ -159,7 +159,7 @@
                         },
                         {
                             "type": "minecraft:tag",
-                            "name": "forge:raw_materials/silver",
+                            "name": "c:raw_materials/silver",
                             "expand": true,
                             "functions": [
                                 {

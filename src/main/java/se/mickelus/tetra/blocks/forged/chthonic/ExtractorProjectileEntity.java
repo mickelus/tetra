@@ -36,7 +36,6 @@ import net.neoforged.neoforge.event.EventHooks;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
-import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -237,6 +236,11 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityW
     @Override
     protected void onHitEntity(EntityHitResult rayTraceResult) {
         super.onHitEntity(rayTraceResult);
+        Entity entity = rayTraceResult.getEntity();
+        if (entity instanceof LivingEntity livingEntity) {
+            Vec3 knockbackDir = getDeltaMovement().normalize();
+            livingEntity.knockback(3, -knockbackDir.x, -knockbackDir.z);
+        }
         setDeltaMovement(getDeltaMovement().normalize().scale(-0.1));
     }
 
@@ -263,6 +267,16 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityW
     @Override
     public boolean isPickable() {
         return true;
+    }
+
+    @Override
+    public boolean isAttackable() {
+        return true;
+    }
+
+    @Override
+    public float getPickRadius(){
+        return 0.0f;
     }
 
     // pretty much the same as a regular pickup but attempts to place it in the offhand first
@@ -298,8 +312,8 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityW
     }
 
     private void ignitePlayer(Player player) {
-        if (!isAlive() && heat > 10) {
-            player.igniteForSeconds(3 + heat / 20);
+        if (heat > 10) {
+            player.igniteForSeconds(3 + heat / 20f);
         }
     }
 

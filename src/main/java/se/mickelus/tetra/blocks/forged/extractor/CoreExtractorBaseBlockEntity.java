@@ -10,11 +10,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 
@@ -220,9 +219,7 @@ public class CoreExtractorBaseBlockEntity extends BlockEntity implements IHeatTr
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider lookupProvider) {
-        if (packet.getTag() != null) {
-            this.loadWithComponents(packet.getTag(), lookupProvider);
-        }
+        this.loadWithComponents(packet.getTag(), lookupProvider);
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {

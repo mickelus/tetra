@@ -28,7 +28,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/copper",
+                    "name": "c:nuggets/copper",
                     "expand": true,
                     "weight": 10,
                     "functions": [
@@ -51,7 +51,7 @@
                 },
                 {
                     "type": "minecraft:tag",
-                    "name": "forge:nuggets/bronze",
+                    "name": "c:nuggets/bronze",
                     "expand": true,
                     "weight": 6,
                     "functions": [

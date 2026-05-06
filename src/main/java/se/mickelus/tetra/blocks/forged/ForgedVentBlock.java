@@ -8,8 +8,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -27,14 +27,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
-import se.mickelus.tetra.TetraMod;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.TetraItemAbilities;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
@@ -91,7 +91,7 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
         super(ForgedBlockCommon.propertiesNotSolid);
     }
 
-    private static boolean breakBolt(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction hitFace) {
+    private static boolean breakBolt(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace) {
         world.setBlock(pos, world.getBlockState(pos).setValue(propBroken, true), 2);
 
         if (!world.isClientSide) {

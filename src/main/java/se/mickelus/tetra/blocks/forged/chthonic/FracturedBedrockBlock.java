@@ -9,12 +9,11 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.extractor.SeepingBedrockBlock;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -37,11 +36,10 @@ public class FracturedBedrockBlock extends TetraBlock implements EntityBlock {
         FracturedBedrockTile tile = TileEntityOptional.from(world, pos, FracturedBedrockTile.class).orElse(null);
 
         if (tile == null && canPierce(world, pos)) {
-            BlockState blockState = world.getBlockState(pos);
             world.setBlock(pos, instance.defaultBlockState(), 2);
             tile = TileEntityOptional.from(world, pos, FracturedBedrockTile.class).orElse(null);
 
-            if (!world.isClientSide) {
+            if (!world.isClientSide && tile != null) {
                 tile.updateLuck();
             }
         }

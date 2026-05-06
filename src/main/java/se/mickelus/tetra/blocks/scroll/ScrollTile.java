@@ -1,8 +1,8 @@
 package se.mickelus.tetra.blocks.scroll;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -10,12 +10,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.Shapes;
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.TetraRegistries;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
@@ -68,12 +66,8 @@ public class ScrollTile extends BlockEntity {
     }
 
     public boolean isIntricate() {
-        return !Arrays.stream(scrolls)
-                .anyMatch(data -> !data.isIntricate);
-    }
-
-    public AABB getRenderBoundingBox() {
-        return Shapes.block().bounds().move(worldPosition);
+        return Arrays.stream(scrolls)
+                .allMatch(data -> data.isIntricate);
     }
 
     @Nullable

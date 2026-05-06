@@ -6,8 +6,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -61,8 +61,9 @@ public class RuinedMultiblockSchematicBlock extends HorizontalDirectionalBlock i
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return super.getStateForPlacement(context)
-                .setValue(facingProp, context.getHorizontalDirection().getOpposite());
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+        return state.setValue(facingProp, context.getHorizontalDirection().getOpposite());
     }
 
     private InteractionResult useInternal(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {

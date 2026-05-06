@@ -107,7 +107,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
     protected boolean acceptsEnchantment(ItemStack itemStack, ItemModuleMajor module, Set<Holder<Enchantment>> currentEnchantments,
             Holder<Enchantment> enchantment, int level) {
-        return module.acceptsEnchantment(itemStack, enchantment.value(), false)
+        return module.acceptsEnchantment(itemStack, enchantment, false)
                 && (stacksEnchantment(itemStack, module, enchantment, level)
                 || EnchantmentHelper.isEnchantmentCompatible(currentEnchantments, enchantment));
     }
@@ -220,7 +220,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
         if (module != null) {
             ToolData emptyTools = new ToolData();
             return TetraEnchantmentHelper.getRegisteredEnchantments()
-                    .filter(enchantment -> module.acceptsEnchantment(targetStack, enchantment.value(), false))
+                    .filter(enchantment -> module.acceptsEnchantment(targetStack, enchantment, false))
                     .flatMap(enchantment -> IntStream.range(enchantment.value().getMinLevel(), enchantment.value().getMaxLevel() + 1)
                             .mapToObj(level -> {
                                 ItemStack enchantedStack = targetStack.copy();

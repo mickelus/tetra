@@ -10,8 +10,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -30,11 +30,13 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.TetraItemAbilities;
+import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
@@ -44,7 +46,6 @@ import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 import se.mickelus.tetra.items.cell.ThermalCellItem;
 import se.mickelus.tetra.items.forged.InsulatedPlateItem;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
@@ -87,7 +88,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
                 .setValue(transferProp, EnumTransferState.none));
     }
 
-    public static boolean removePlate(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction hitFace) {
+    public static boolean removePlate(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace) {
         if (!world.isClientSide) {
             if (player != null) {
                 BlockInteraction.dropLoot(plateLootTable, player, hand, (ServerLevel) world, blockState);
@@ -102,11 +103,9 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
         return true;
     }
 
-    public static boolean attachPlate(Level world, BlockPos pos, BlockState blockState, Player player) {
+    public static void attachPlate(Level world, BlockPos pos, BlockState blockState, Player player) {
         world.playSound(player, pos, SoundEvents.METAL_PLACE, SoundSource.PLAYERS, 0.5f, 1);
         world.setBlock(pos, blockState.setValue(plateProp, true), 3);
-
-        return true;
     }
 
     public static boolean reconfigure(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace) {
@@ -278,18 +277,13 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(facingProp);
 
-        switch (facing) {
-            case NORTH:
-                return northShape;
-            case EAST:
-                return eastShape;
-            case SOUTH:
-                return southShape;
-            case WEST:
-                return westShape;
-            default:
-                return null;
-        }
+        return switch (facing) {
+            case NORTH -> northShape;
+            case EAST -> eastShape;
+            case SOUTH -> southShape;
+            case WEST -> westShape;
+            default -> Shapes.block();
+        };
     }
 
     @Override
@@ -301,15 +295,15 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return super.getStateForPlacement(context)
-                .setValue(facingProp, context.getHorizontalDirection());
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+        return state.setValue(facingProp, context.getHorizontalDirection());
     }
 
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
-
 
     @Override
     public BlockState rotate(final BlockState state, final Rotation rotation) {
@@ -318,7 +312,7 @@ public class TransferUnitBlock extends TetraWaterloggedBlock implements IInterac
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(facingProp)));
+        return rotate(state, mirror.getRotation(state.getValue(facingProp)));
     }
 
     @Nullable

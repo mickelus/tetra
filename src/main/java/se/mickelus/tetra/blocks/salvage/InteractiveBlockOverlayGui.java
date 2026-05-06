@@ -23,8 +23,7 @@ public class InteractiveBlockOverlayGui extends GuiRootHud {
     }
 
     public void update(Level world, BlockPos pos, BlockState blockState, Direction face, Player player, boolean transition) {
-        if (blockState.getBlock() instanceof IInteractiveBlock) {
-            IInteractiveBlock block = (IInteractiveBlock) blockState.getBlock();
+        if (blockState.getBlock() instanceof IInteractiveBlock block) {
 
             BlockInteraction[] interactions = block.getPotentialInteractions(world, pos, blockState, face, PropertyHelper.getPlayerTools(player));
 

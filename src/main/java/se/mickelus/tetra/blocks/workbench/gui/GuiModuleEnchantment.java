@@ -18,11 +18,11 @@ public class GuiModuleEnchantment extends GuiElement {
 
     private final List<Component> tooltipLines;
 
-    private Runnable hoverHandler;
-    private Runnable blurHandler;
+    private final Runnable hoverHandler;
+    private final Runnable blurHandler;
 
-    private int color;
-    private GuiTexture texture;
+    private final int color;
+    private final GuiTexture texture;
 
     public GuiModuleEnchantment(int x, int y, Holder<Enchantment> enchantment, int level, int color, Runnable hoverHandler, Runnable blurHandler) {
         super(x, y, 5, 4);

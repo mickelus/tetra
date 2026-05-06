@@ -22,9 +22,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import java.util.function.Supplier;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
@@ -46,11 +46,11 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.properties.PropertyHelper;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class WorkbenchTile extends BlockEntity implements MenuProvider, ItemHandlerBlockEntity {
@@ -70,6 +70,8 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider, ItemHand
     private UpgradeSchematic currentSchematic;
     private String currentSlot;
     private ActionInteraction interaction;
+    private ItemStack cachedSlot0 = ItemStack.EMPTY;
+    private ItemStack cachedTargetStack = ItemStack.EMPTY;
 
     public WorkbenchTile(BlockPos p_155268_, BlockState p_155269_) {
         super(type.get(), p_155268_, p_155269_);
@@ -154,6 +156,8 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider, ItemHand
 
                 if (slot == 0) {
                     interaction = ActionInteraction.create(WorkbenchTile.this);
+                    cachedSlot0 = ItemStack.EMPTY;
+                    cachedTargetStack = ItemStack.EMPTY;
                 }
 
                 setChanged();
@@ -321,12 +325,13 @@ public class WorkbenchTile extends BlockEntity implements MenuProvider, ItemHand
     public ItemStack getTargetItemStack() {
         ItemStack stack = handler.getStackInSlot(0);
 
-        ItemStack placeholder = ItemUpgradeRegistry.instance.getReplacement(stack);
-        if (!placeholder.isEmpty()) {
-            return placeholder;
+        if (!ItemStack.matches(stack, cachedSlot0)) {
+            cachedSlot0 = stack.copy();
+            ItemStack placeholder = ItemUpgradeRegistry.instance.getReplacement(stack);
+            cachedTargetStack = placeholder.isEmpty() ? stack : placeholder;
         }
 
-        return stack;
+        return cachedTargetStack;
     }
 
     public boolean isTargetPlaceholder() {

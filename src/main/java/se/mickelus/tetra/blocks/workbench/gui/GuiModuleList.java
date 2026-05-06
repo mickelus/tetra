@@ -33,9 +33,7 @@ public class GuiModuleList extends GuiElement {
 
     public void update(ItemStack itemStack, ItemStack previewStack, String focusSlot) {
         clearChildren();
-        if (!itemStack.isEmpty() && itemStack.getItem() instanceof IModularItem) {
-            IModularItem item = (IModularItem) itemStack.getItem();
-
+        if (!itemStack.isEmpty() && itemStack.getItem() instanceof IModularItem item) {
             updateMajorModules(item, itemStack, previewStack);
             updateMinorModules(item, itemStack, previewStack);
 
@@ -45,12 +43,12 @@ public class GuiModuleList extends GuiElement {
 
     public void showAnimation() {
         Random rand = new Random();
-        for (int i = 0; i < majorModuleElements.length; i++) {
-            majorModuleElements[i].showAnimation(rand.nextInt(minorModuleElements.length + majorModuleElements.length));
+        for (GuiModuleMajor majorModuleElement : majorModuleElements) {
+            majorModuleElement.showAnimation(rand.nextInt(minorModuleElements.length + majorModuleElements.length));
         }
 
-        for (int i = 0; i < minorModuleElements.length; i++) {
-            minorModuleElements[i].showAnimation(rand.nextInt(minorModuleElements.length + majorModuleElements.length));
+        for (GuiModule minorModuleElement : minorModuleElements) {
+            minorModuleElement.showAnimation(rand.nextInt(minorModuleElements.length + majorModuleElements.length));
         }
     }
 

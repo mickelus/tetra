@@ -11,8 +11,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -32,10 +32,10 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import se.mickelus.mutil.util.ItemHandlerWrapper;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
 import se.mickelus.tetra.blocks.IToolProviderBlock;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
@@ -43,7 +43,6 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.properties.IToolProvider;
 import se.mickelus.tetra.properties.PropertyHelper;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
@@ -66,17 +65,13 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
     }
 
     private static double getHitX(Direction facing, AABB boundingBox, double hitX, double hitY, double hitZ) {
-        switch (facing) {
-            case NORTH:
-                return boundingBox.maxX - hitX;
-            case SOUTH:
-                return hitX - boundingBox.minX;
-            case WEST:
-                return hitZ - boundingBox.minZ;
-            case EAST:
-                return boundingBox.maxZ - hitZ;
-        }
-        return 0;
+        return switch (facing) {
+            case NORTH -> boundingBox.maxX - hitX;
+            case SOUTH -> hitX - boundingBox.minX;
+            case WEST -> hitZ - boundingBox.minZ;
+            case EAST -> boundingBox.maxZ - hitZ;
+            default -> 0;
+        };
     }
 
     @Override
@@ -161,7 +156,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.getRotation(state.getValue(facingProp)));
+        return rotate(state, mirrorIn.getRotation(state.getValue(facingProp)));
     }
 
 
@@ -208,7 +203,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
                 .map(tile -> tile.getItemHandler(null))
                 .map(ItemHandlerWrapper::new);
 
-        if (optional.isPresent() && player != null) {
+        if (optional.isPresent()) {
             Container inventory = optional.orElse(null);
             ItemStack providerStack = PropertyHelper.getInventoryProvidingItemStack(inventory, requiredTool, requiredLevel);
 
@@ -232,7 +227,7 @@ public class RackBlock extends TetraWaterloggedBlock implements EntityBlock, ITo
                 .map(tile -> tile.getItemHandler(null))
                 .map(ItemHandlerWrapper::new);
 
-        if (optional.isPresent() && player != null) {
+        if (optional.isPresent()) {
             Container inventory = optional.orElse(null);
             ItemStack providerStack = PropertyHelper.getInventoryProvidingItemStack(inventory, requiredTool, requiredLevel);
 

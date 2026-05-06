@@ -129,7 +129,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     protected void clearProgression(ItemStack itemStack) {
         if (hasTag(itemStack)) {
-            getTag(itemStack).remove(String.format(settleProgressKey, getSlot()));
+            mutate(itemStack, tag -> tag.remove(settleProgressKey));
         }
     }
 
@@ -219,7 +219,7 @@ public abstract class ItemModuleMajor extends ItemModule {
         TetraEnchantmentHelper.removeEnchantments(itemStack, getSlot());
     }
 
-    public boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment, boolean fromTable) {
+    public boolean acceptsEnchantment(ItemStack itemStack, Holder<Enchantment> enchantment, boolean fromTable) {
         return Optional.ofNullable(getAspects(itemStack))
                 .map(AspectData::getLevelMap)
                 .filter(aspects -> TetraEnchantmentHelper.isApplicableForAspects(enchantment, fromTable, aspects))
@@ -326,10 +326,9 @@ public abstract class ItemModuleMajor extends ItemModule {
         ItemStack[] salvage = super.removeModule(targetStack, upgrade);
 
         if (!upgrade && hasTag(targetStack)) {
-            CompoundTag tag = getTag(targetStack);
-            Arrays.stream(improvements)
+            mutate(targetStack, tag -> Arrays.stream(improvements)
                     .map(improvement -> slotTagKey + ":" + improvement.key)
-                    .forEach(tag::remove);
+                    .forEach(tag::remove));
 
             clearProgression(targetStack);
         }

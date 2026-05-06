@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
-import net.minecraft.core.Holder;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import se.mickelus.mutil.gui.*;
@@ -16,11 +16,7 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ImprovementData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -30,7 +26,7 @@ import java.util.stream.Stream;
 public class GuiModuleMajor extends GuiModule {
     private GuiStringSmall slotString;
 
-    private GuiHorizontalLayoutGroup improvementGroup;
+    private final GuiHorizontalLayoutGroup improvementGroup;
 
     public GuiModuleMajor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack,
             String slotKey, String slotName,
@@ -41,7 +37,7 @@ public class GuiModuleMajor extends GuiModule {
 
         this.height = 17;
 
-        improvementGroup = new GuiHorizontalLayoutGroup(GuiAttachment.topRight.equals(attachmentPoint) ? -17 : 19, "".equals(slotName) ? 12 : 13, 3, 1);
+        improvementGroup = new GuiHorizontalLayoutGroup(GuiAttachment.topRight.equals(attachmentPoint) ? -17 : 19, slotName.isEmpty() ? 12 : 13, 3, 1);
         improvementGroup.setAttachment(attachmentPoint);
         addChild(improvementGroup);
 
@@ -74,7 +70,7 @@ public class GuiModuleMajor extends GuiModule {
             addChild(tweakingIndicator);
         }
 
-        moduleString = new GuiString(19, "".equals(slotName) ? 4 : 5, "");
+        moduleString = new GuiString(19, slotName.isEmpty() ? 4 : 5, "");
         if (moduleName != null) {
             moduleString.setString(moduleName);
         } else {

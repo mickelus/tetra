@@ -12,7 +12,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumMap;
@@ -23,18 +22,6 @@ public class RolledScrollBlock extends ScrollBlock {
     public static final String identifier = "scroll_rolled";
     public static ScrollBlock instance;
 
-    private final VoxelShape[] baseShapes = new VoxelShape[] {
-            Block.box(6.0, 0.0, 1.0, 9.0, 3.0, 15.0),
-            Block.box(4.0, 0.0, 1.0, 11.0, 3.0, 15.0),
-            Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-            Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-                    Block.box(8.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
-            Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-                    Block.box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
-            Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
-                    Block.box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0),
-                    Block.box(6.0, 6.0, 1.0, 9.0, 9.0, 15.0))
-    };
     private final Map<Direction, VoxelShape[]> shapes;
 
     public RolledScrollBlock() {
@@ -44,6 +31,18 @@ public class RolledScrollBlock extends ScrollBlock {
         for (int i = 0; i < 4; i++) {
             Direction direction = Direction.from2DDataValue(i);
 
+            VoxelShape[] baseShapes = new VoxelShape[]{
+                    Block.box(6.0, 0.0, 1.0, 9.0, 3.0, 15.0),
+                    Block.box(4.0, 0.0, 1.0, 11.0, 3.0, 15.0),
+                    Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+                    Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+                            Block.box(8.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
+                    Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+                            Block.box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0)),
+                    Shapes.or(Block.box(2.0, 0.0, 1.0, 13.0, 3.0, 15.0),
+                            Block.box(4.0, 3.0, 1.0, 11.0, 6.0, 15.0),
+                            Block.box(6.0, 6.0, 1.0, 9.0, 9.0, 15.0))
+            };
             VoxelShape[] result = new VoxelShape[baseShapes.length];
             for (int j = 0; j < result.length; j++) {
                 result[j] = RotationHelper.rotateDirection(baseShapes[j], direction);
@@ -52,7 +51,6 @@ public class RolledScrollBlock extends ScrollBlock {
             shapes.put(direction, result);
         }
     }
-
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {

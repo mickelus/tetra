@@ -12,7 +12,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class QuadRenderer {
-    public final Vertex[] vertexPositions;
+    final Vertex[] vertexPositions;
     public final Vector3f normal;
 
     public QuadRenderer(float x, float y, float z, float w, float h, float u, float v, float texWidth, float texHeight, boolean mirror, Direction direction) {
@@ -112,19 +112,9 @@ public class QuadRenderer {
         matrixStack.popPose();
     }
 
-    static class Vertex {
-        final Vector3f pos;
-        final float u;
-        final float v;
-
-        public Vertex(float x, float y, float z, float texU, float texV) {
-            this(new Vector3f(x, y, z), texU, texV);
-        }
-
-        public Vertex(Vector3f pos, float u, float v) {
-            this.pos = pos;
-            this.u = u;
-            this.v = v;
-        }
+     record Vertex(Vector3f pos, float u, float v) {
+            public Vertex(float x, float y, float z, float texU, float texV) {
+                this(new Vector3f(x, y, z), texU, texV);
+            }
     }
 }

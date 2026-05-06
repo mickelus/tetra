@@ -13,13 +13,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.Shapes;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import se.mickelus.tetra.TetraMod;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.blocks.ItemHandlerBlockEntity;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -40,7 +38,7 @@ public class RackTile extends BlockEntity implements ItemHandlerBlockEntity {
     }
 
     @Override
-    public net.neoforged.neoforge.items.IItemHandler getItemHandler(@Nullable Direction side) {
+    public IItemHandler getItemHandler(@Nullable Direction side) {
         return handler;
     }
 
@@ -61,10 +59,6 @@ public class RackTile extends BlockEntity implements ItemHandlerBlockEntity {
         }
     }
 
-    public AABB getRenderBoundingBox() {
-        return Shapes.block().bounds().move(worldPosition);
-    }
-
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
@@ -78,9 +72,7 @@ public class RackTile extends BlockEntity implements ItemHandlerBlockEntity {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
-        if (pkt.getTag() != null) {
-            loadWithComponents(pkt.getTag(), lookupProvider);
-        }
+        loadWithComponents(pkt.getTag(), lookupProvider);
     }
 
     @Override

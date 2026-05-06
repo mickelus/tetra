@@ -12,30 +12,33 @@ displayName="${mod_name}"
 authors="${mod_authors}"
 description='''${mod_description}'''
 
+[[mixins]]
+config="${mod_id}.mixins.json"
+
 [[dependencies.${mod_id}]]
 modId="neoforge"
-mandatory=true
+type="required"
 versionRange="${neo_version_range}"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="minecraft"
-mandatory=true
+type="required"
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="mutil"
-mandatory=true
+type="required"
 versionRange="${mutil_version_range}"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="curios"
-mandatory=true
+type="optional"
 versionRange="${curios_version_range}"
 ordering="NONE"
 side="BOTH"

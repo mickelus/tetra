@@ -57,7 +57,7 @@ public class RackTESR implements BlockEntityRenderer<RackTile> {
 
     private void renderItemStack(RackTile tile, ItemStack itemStack, PoseStack matrixStack, MultiBufferSource buffer,
             int combinedLight, int combinedOverlay) {
-        if (itemStack != null && !itemStack.isEmpty()) {
+        if (!itemStack.isEmpty()) {
             int renderId = (int) tile.getBlockPos().asLong();
 
             BakedModel model = itemRenderer.getModel(itemStack, tile.getLevel(), null, combinedLight);

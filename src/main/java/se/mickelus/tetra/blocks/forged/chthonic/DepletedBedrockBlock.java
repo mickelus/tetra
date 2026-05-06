@@ -1,6 +1,5 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.TetraBlock;
 
 import javax.annotation.ParametersAreNonnullByDefault;

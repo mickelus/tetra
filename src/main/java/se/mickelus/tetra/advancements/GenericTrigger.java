@@ -20,6 +20,12 @@ public class GenericTrigger<T extends SimpleCriterionTrigger.SimpleInstance> ext
         return codec;
     }
 
+    /**
+     * Fulfills all criterion instances that pass the validation predicate.
+     *
+     * @param player              The player that the criterion is to be fulfilled for
+     * @param validationPredicate A predicate used to check which criterion will be fulfilled
+     */
     public void fulfillCriterion(ServerPlayer player, Predicate<T> validationPredicate) {
         trigger(player, validationPredicate);
     }

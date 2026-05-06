@@ -26,6 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.advancements.BlockInteractionCriterion;
@@ -34,14 +35,12 @@ import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.properties.PropertyHelper;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class BlockInteraction {
@@ -107,8 +106,7 @@ public class BlockInteraction {
                 rayTrace.getLocation().z - pos.getZ());
 
         BlockInteraction possibleInteraction = CastOptional.cast(blockState.getBlock(), IInteractiveBlock.class)
-                .map(block -> block.getPotentialInteractions(world, pos, blockState, rayTrace.getDirection(), availableTools))
-                .map(Arrays::stream).orElseGet(Stream::empty)
+                .map(block -> block.getPotentialInteractions(world, pos, blockState, rayTrace.getDirection(), availableTools)).stream().flatMap(Arrays::stream)
                 .filter(interaction -> interaction.isWithinBounds(hitU, hitV))
                 .filter(interaction -> PropertyHelper.getItemToolLevel(heldStack, interaction.requiredTool) >= interaction.requiredLevel)
                 .findFirst()
@@ -132,9 +130,7 @@ public class BlockInteraction {
             possibleInteraction.applyOutcome(world, pos, blockState, player, hand, rayTrace.getDirection());
 
             if (availableTools.contains(possibleInteraction.requiredTool) && heldStack.isDamageableItem()) {
-                if (heldStack.getItem() instanceof IModularItem) {
-                    IModularItem item = (IModularItem) heldStack.getItem();
-
+                if (heldStack.getItem() instanceof IModularItem item) {
                     item.applyDamage(2, heldStack, player);
                     if (possibleInteraction.applyUsageEffects) {
                         item.applyUsageEffects(player, heldStack, possibleInteraction.requiredLevel * 2);
@@ -176,8 +172,7 @@ public class BlockInteraction {
         double hitV = getHitV(hitFace, boundingBox, hitX, hitY, hitZ);
 
         return CastOptional.cast(blockState.getBlock(), IInteractiveBlock.class)
-                .map(block -> block.getPotentialInteractions(player.level(), pos, blockState, hitFace, PropertyHelper.getPlayerTools(player)))
-                .map(Arrays::stream).orElseGet(Stream::empty)
+                .map(block -> block.getPotentialInteractions(player.level(), pos, blockState, hitFace, PropertyHelper.getPlayerTools(player))).stream().flatMap(Arrays::stream)
                 .filter(interaction -> interaction.isWithinBounds(hitU * 16, hitV * 16))
                 .findFirst()
                 .orElse(null);
@@ -194,21 +189,12 @@ public class BlockInteraction {
      * @return
      */
     private static double getHitU(Direction facing, AABB boundingBox, double hitX, double hitY, double hitZ) {
-        switch (facing) {
-            case DOWN:
-                return boundingBox.maxX - hitX;
-            case UP:
-                return boundingBox.maxX - hitX;
-            case NORTH:
-                return boundingBox.maxX - hitX;
-            case SOUTH:
-                return hitX - boundingBox.minX;
-            case WEST:
-                return hitZ - boundingBox.minZ;
-            case EAST:
-                return boundingBox.maxZ - hitZ;
-        }
-        return 0;
+        return switch (facing) {
+            case DOWN, UP, NORTH -> boundingBox.maxX - hitX;
+            case SOUTH -> hitX - boundingBox.minX;
+            case WEST -> hitZ - boundingBox.minZ;
+            case EAST -> boundingBox.maxZ - hitZ;
+        };
     }
 
     /**
@@ -222,21 +208,10 @@ public class BlockInteraction {
      * @return
      */
     private static double getHitV(Direction facing, AABB boundingBox, double hitX, double hitY, double hitZ) {
-        switch (facing) {
-            case DOWN:
-                return boundingBox.maxZ - hitZ;
-            case UP:
-                return boundingBox.maxZ - hitZ;
-            case NORTH:
-                return boundingBox.maxY - hitY;
-            case SOUTH:
-                return boundingBox.maxY - hitY;
-            case WEST:
-                return boundingBox.maxY - hitY;
-            case EAST:
-                return boundingBox.maxY - hitY;
-        }
-        return 0;
+        return switch (facing) {
+            case DOWN, UP -> boundingBox.maxZ - hitZ;
+            case NORTH, SOUTH, WEST, EAST -> boundingBox.maxY - hitY;
+        };
     }
 
     public static List<ItemStack> getLoot(ResourceLocation lootTable, Player player, InteractionHand hand, ServerLevel world,
@@ -268,6 +243,7 @@ public class BlockInteraction {
 
     public static void dropLoot(ResourceLocation lootTable, @Nullable Player player, @Nullable InteractionHand hand, ServerLevel world,
             BlockState blockState) {
+        if (player == null || hand == null) return;
         getLoot(lootTable, player, hand, world, blockState).forEach(itemStack -> {
             if (!player.getInventory().add(itemStack)) {
                 player.drop(itemStack, false);
@@ -276,9 +252,7 @@ public class BlockInteraction {
     }
 
     public static void dropLoot(ResourceLocation lootTable, ServerLevel world, BlockPos pos, BlockState blockState) {
-        getLoot(lootTable, world, pos, blockState).forEach(itemStack -> {
-            Block.popResource(world, pos, itemStack);
-        });
+        getLoot(lootTable, world, pos, blockState).forEach(itemStack -> Block.popResource(world, pos, itemStack));
     }
 
     public boolean applicableForBlock(Level world, BlockPos pos, BlockState blockState) {

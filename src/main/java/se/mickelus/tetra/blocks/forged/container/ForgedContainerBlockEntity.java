@@ -34,18 +34,18 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import java.util.function.Supplier;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.ItemHandlerWrapper;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.ItemHandlerBlockEntity;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvider, ItemHandlerBlockEntity {
@@ -257,9 +257,7 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
-        if (pkt.getTag() != null) {
-            loadWithComponents(pkt.getTag(), lookupProvider);
-        }
+        loadWithComponents(pkt.getTag(), lookupProvider);
     }
 
     @Override

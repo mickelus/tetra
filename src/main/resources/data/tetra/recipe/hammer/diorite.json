@@ -10,7 +10,7 @@
       "item": "minecraft:diorite"
     },
     "/": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     }
   },
   "result": {
