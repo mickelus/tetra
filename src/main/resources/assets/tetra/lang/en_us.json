@@ -2617,7 +2617,7 @@
   "tetra.holo.craft.modular_single": "Singles",
   "tetra.holo.craft.modular_bow": "Bows",
   "tetra.holo.craft.modular_shield": "Shields",
-  "tetra.holo.craft.modular_crossbow": "CrossBows",
+  "tetra.holo.craft.modular_crossbow": "Crossbows",
   "tetra.stats.speed": "Speed",
   "tetra.stats.speed_normalized": "Speed",
   "tetra.stats.speed_normalized.tooltip": "Changes attack speed by §e%s"
