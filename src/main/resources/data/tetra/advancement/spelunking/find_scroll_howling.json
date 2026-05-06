@@ -1,0 +1,50 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "tetra:scroll_data": {
+                    "key": "sword/howling",
+                    "intricate": false,
+                    "material": 1,
+                    "ribbon": "faf396",
+                    "glyphs": [
+                        8,
+                        9,
+                        10,
+                        5
+                    ],
+                    "schematics": [
+                        "tetra:sword/howling"
+                    ]
+                }
+            },
+            "id": "tetra:scroll_rolled"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_howling.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_howling.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "tetra:scroll_data": {
+                                "key": "sword/howling"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

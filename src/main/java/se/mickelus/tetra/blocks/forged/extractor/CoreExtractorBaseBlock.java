@@ -22,14 +22,14 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 import static net.minecraft.world.level.material.Fluids.WATER;
@@ -48,7 +48,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeZ, largeCoverShapeZ, BooleanOp.OR), capShape, shaftShape);
     private static final VoxelShape combinedShapeX
             = Shapes.or(Shapes.joinUnoptimized(smallCoverShapeX, largeCoverShapeX, BooleanOp.OR), capShape, shaftShape);
-    public static RegistryObject<CoreExtractorBaseBlock> instance;
+    public static Supplier<CoreExtractorBaseBlock> instance;
 
     public CoreExtractorBaseBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
@@ -64,7 +64,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
         tooltip.add(Component.literal(" "));
         tooltip.add(Component.translatable("block.multiblock_hint.1x2x1")
@@ -120,7 +120,7 @@ public class CoreExtractorBaseBlock extends TetraWaterloggedBlock implements Ent
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(facingProp)));
+        return rotate(state, mirror.getRotation(state.getValue(facingProp)));
     }
 
     @Nullable

@@ -4,7 +4,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 
 class ItemsForEmeraldsTrade implements VillagerTrades.ItemListing {
@@ -32,6 +32,6 @@ class ItemsForEmeraldsTrade implements VillagerTrades.ItemListing {
     public MerchantOffer getOffer(Entity trader, RandomSource rand) {
         ItemStack itemCopy = sellingItem.copy();
         itemCopy.setCount(sellingItemCount);
-        return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCount), itemCopy, this.maxUses, this.xpValue, this.priceMultiplier);
+        return new MerchantOffer(new ItemCost(net.minecraft.world.item.Items.EMERALD, this.emeraldCount), itemCopy, this.maxUses, this.xpValue, this.priceMultiplier);
     }
 }

@@ -1,6 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.enchantment.Enchantment;
 import se.mickelus.mutil.gui.GuiElement;
@@ -17,13 +18,13 @@ public class GuiModuleEnchantment extends GuiElement {
 
     private final List<Component> tooltipLines;
 
-    private Runnable hoverHandler;
-    private Runnable blurHandler;
+    private final Runnable hoverHandler;
+    private final Runnable blurHandler;
 
-    private int color;
-    private GuiTexture texture;
+    private final int color;
+    private final GuiTexture texture;
 
-    public GuiModuleEnchantment(int x, int y, Enchantment enchantment, int level, int color, Runnable hoverHandler, Runnable blurHandler) {
+    public GuiModuleEnchantment(int x, int y, Holder<Enchantment> enchantment, int level, int color, Runnable hoverHandler, Runnable blurHandler) {
         super(x, y, 5, 4);
 
         this.color = color;

@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.RegistryObject;
 import org.joml.Vector3f;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
@@ -25,17 +24,19 @@ import se.mickelus.tetra.advancements.BlockUseCriterion;
 import se.mickelus.tetra.blocks.ICraftingEffectProviderBlock;
 import se.mickelus.tetra.blocks.ISchematicProviderBlock;
 
+import java.util.function.Supplier;
+
 public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock implements ISchematicProviderBlock, ICraftingEffectProviderBlock {
     public static final BooleanProperty complete = BooleanProperty.create("complete");
 
     protected final ResourceLocation[] schematics;
 
-    public PrimaryMultiblockSchematicBlock(Properties properties, String schematic, RegistryObject<RuinedMultiblockSchematicBlock> ruinedRef,
+    public PrimaryMultiblockSchematicBlock(Properties properties, String schematic, Supplier<RuinedMultiblockSchematicBlock> ruinedRef,
             ResourceLocation pryTable, int x, int y, int height, int width) {
         super(properties, schematic, ruinedRef, pryTable, x, y, height, width);
         this.registerDefaultState(this.stateDefinition.any().setValue(facingProp, Direction.EAST).setValue(complete, false));
 
-        this.schematics = new ResourceLocation[] { new ResourceLocation(TetraMod.MOD_ID, schematic) };
+        this.schematics = new ResourceLocation[] { ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, schematic) };
     }
 
     @Override
@@ -68,7 +69,7 @@ public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock im
         boolean isComplete = getSchematicParts(blockState, level, worldPos)
                 .filter(part -> part.blockState().getBlock() instanceof MultiblockSchematicBlock)
                 .filter(part -> isCorrectPart(part.basePos(), (MultiblockSchematicBlock) part.blockState().getBlock()))
-                .count() == width * height;
+                .count() == (long) width * height;
         level.setBlock(worldPos, blockState.setValue(complete, isComplete), Block.UPDATE_ALL);
 
         if (isComplete) {
@@ -87,26 +88,26 @@ public class PrimaryMultiblockSchematicBlock extends MultiblockSchematicBlock im
                 .add(face.scale(0.52))
                 .add(dir.scale(-0.5));
 
-        for (float x = 0; x < width; x += 0.333333333) {
+        for (float x = 0; x < width; x += 0.333333333f) {
             Vec3 pPos = origin.add(dir.scale(x)).add(0, Math.sin(System.currentTimeMillis() + 5 + y * 2.3) * 0.1, 0);
 //            Vec3 pPos = origin.add(dir.scale(x));
             spawnParticle(level, pPos, getDelay(pPos, placeVec));
         }
 
-        for (float x = 0; x < width; x += 0.333333333) {
+        for (float x = 0; x < width; x += 0.333333333f) {
             Vec3 pPos = origin.add(dir.scale(x)).add(0, height + Math.sin(System.currentTimeMillis() + 2 + y * 2.56) * 0.1, 0);
 //            Vec3 pPos = origin.add(dir.scale(x)).add(0, height, 0);
             spawnParticle(level, pPos, getDelay(pPos, placeVec));
         }
 
-        for (float y = 0; y < height; y += 0.333333333) {
+        for (float y = 0; y < height; y += 0.333333333f) {
             Vec3 pPos = origin.add(0, y, 0).add(dir.scale(Math.sin(System.currentTimeMillis() + 2 + y * 2.56) * 0.1));
 //            Vec3 pPos = origin.add(0, y, 0);
 
             spawnParticle(level, pPos, getDelay(pPos, placeVec));
         }
 
-        for (float y = 0; y < height; y += 0.333333333) {
+        for (float y = 0; y < height; y += 0.333333333f) {
             Vec3 pPos = origin.add(0, y, 0).add(dir.scale(width + Math.sin(System.currentTimeMillis() + 5 + y * 2.3) * 0.1));
 //            Vec3 pPos = origin.add(0, y, 0).add(dir.scale(width));
             spawnParticle(level, pPos, getDelay(pPos, placeVec));

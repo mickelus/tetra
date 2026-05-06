@@ -22,7 +22,8 @@ public class RavenousEffect {
             }
 
             if (effectProbability > 0 && player.getFoodData().getFoodLevel() == 0) {
-                MobEffectInstance currentExhaustedInstance = player.getEffect(ExhaustedPotionEffect.instance);
+                var effect = EffectHelper.effectHolder(ExhaustedPotionEffect.instance);
+                MobEffectInstance currentExhaustedInstance = player.getEffect(effect);
                 int currentAmplifier = Optional.ofNullable(currentExhaustedInstance)
                         .map(MobEffectInstance::getAmplifier)
                         .orElse(-1);
@@ -31,7 +32,7 @@ public class RavenousEffect {
                         .map(MobEffectInstance::getDuration)
                         .map(currentDuration -> currentDuration + exhaustionStackDuration)
                         .orElse(exhaustionInitialDuration);
-                player.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, duration, currentAmplifier + 1, false, false, true));
+                player.addEffect(new MobEffectInstance(effect, duration, currentAmplifier + 1, false, false, true));
             }
         }
     }

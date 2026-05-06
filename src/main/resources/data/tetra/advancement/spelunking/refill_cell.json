@@ -1,0 +1,29 @@
+{
+    "display": {
+        "icon": {
+            "id": "tetra:thermal_cell"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.refill_cell.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.refill_cell.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_cell",
+    "criteria": {
+        "refill_cell": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:thermal_cell"
+                        ],
+                        "durability": 128
+                    }
+                ]
+            }
+        }
+    }
+}

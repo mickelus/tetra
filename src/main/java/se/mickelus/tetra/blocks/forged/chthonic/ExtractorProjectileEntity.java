@@ -5,9 +5,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -30,26 +29,21 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ObjectHolder;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
+import net.neoforged.neoforge.event.EventHooks;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
-import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class ExtractorProjectileEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
+public class ExtractorProjectileEntity extends AbstractArrow implements IEntityWithComplexSpawn {
     public static final String unlocalizedName = "extractor_projectile";
     public static final String damageKey = "dmg";
     public static final String heatKey = "heat";
-    @ObjectHolder(registryName = "entity_type", value = TetraMod.MOD_ID + ":" + unlocalizedName)
     public static EntityType<ExtractorProjectileEntity> type;
     private int damage;
     private int heat;
@@ -57,42 +51,34 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     private boolean extinguishing = false;
 
     public ExtractorProjectileEntity(Level world, LivingEntity shooter, ItemStack itemStack) {
-        super(type, shooter, world);
+        super(type, shooter, world, itemStack.copy(), null);
 
         damage = itemStack.getDamageValue();
 
-        setSoundEvent(SoundEvents.NETHERITE_BLOCK_HIT);
-        setBaseDamage(0.5);
-        setKnockback(3);
-        setPierceLevel(Byte.MAX_VALUE);
+        initDefaults();
     }
 
     public ExtractorProjectileEntity(EntityType<? extends ExtractorProjectileEntity> type, Level worldIn) {
         super(type, worldIn);
-        setBaseDamage(0.5);
-        setKnockback(3);
-        setPierceLevel(Byte.MAX_VALUE);
+        initDefaults();
     }
 
 
     @OnlyIn(Dist.CLIENT)
     public ExtractorProjectileEntity(Level worldIn, double x, double y, double z) {
-        super(type, x, y, z, worldIn);
-        setBaseDamage(0.5);
-        setKnockback(3);
-        setPierceLevel(Byte.MAX_VALUE);
+        super(type, x, y, z, worldIn, new ItemStack(ChthonicExtractorBlock.item), null);
+        initDefaults();
     }
 
-    public ExtractorProjectileEntity(PlayMessages.SpawnEntity packet, Level worldIn) {
-        super(type, worldIn);
+    private void initDefaults() {
+        setSoundEvent(SoundEvents.NETHERITE_BLOCK_HIT);
         setBaseDamage(0.5);
-        setKnockback(3);
-        setPierceLevel(Byte.MAX_VALUE);
+        pickup = Pickup.ALLOWED;
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
     }
 
     @Override
@@ -125,7 +111,7 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
                 new ClipContext(position, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 
         if (rayTraceResult.getType() == HitResult.Type.BLOCK
-                && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
+                && !EventHooks.onProjectileImpact(this, rayTraceResult)) {
             onHit(rayTraceResult);
         }
     }
@@ -152,7 +138,6 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     }
 
     private boolean breakBlock(Level world, BlockPos pos, ServerPlayer shooter) {
-        ServerLevel serverWorld = (ServerLevel) world;
         GameType gameType = shooter.gameMode.getGameModeForPlayer();
         BlockState blockState = world.getBlockState(pos);
 
@@ -162,21 +147,19 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
                 && isAlive()
                 && !shooter.blockActionRestricted(world, pos, gameType)
                 && blockState.is(FracturedBedrockTile.extractorBreakable)
-                && blockState.getBlock().onDestroyedByPlayer(blockState, world, pos, shooter, true, world.getFluidState(pos))
-                && ForgeHooks.onBlockBreakEvent(world, gameType, shooter, pos) != -1) {
+                && !net.neoforged.neoforge.common.CommonHooks.fireBlockBreak(world, gameType, shooter, pos, blockState).isCanceled()) {
 
-            blockState.getBlock().playerDestroy(world, shooter, pos, blockState, tileEntity, ItemStack.EMPTY);
-            blockState.getBlock().destroy(world, pos, blockState);
-            world.levelEvent(null, 2001, pos, Block.getId(blockState));
-            damage++;
-            heat += 10;
-
-            // custom exp drop check since player is not holding an item that can harvest the block
-            int exp = blockState.getExpDrop(world, world.getRandom(), pos, 0, 0);
-            if (exp > 0) {
-                blockState.getBlock().popExperience(serverWorld, pos, exp);
+            BlockState destroyedState = blockState.getBlock().playerWillDestroy(world, pos, blockState, shooter);
+            boolean removed = destroyedState.getBlock().onDestroyedByPlayer(destroyedState, world, pos, shooter, true, world.getFluidState(pos));
+            if (!removed) {
+                return false;
             }
 
+            destroyedState.getBlock().playerDestroy(world, shooter, pos, destroyedState, tileEntity, ItemStack.EMPTY);
+            destroyedState.getBlock().destroy(world, pos, destroyedState);
+            world.levelEvent(null, 2001, pos, Block.getId(destroyedState));
+            damage++;
+            heat += 10;
 
             if (damage > ChthonicExtractorBlock.maxDamage) {
                 destroyExtractor();
@@ -253,6 +236,11 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     @Override
     protected void onHitEntity(EntityHitResult rayTraceResult) {
         super.onHitEntity(rayTraceResult);
+        Entity entity = rayTraceResult.getEntity();
+        if (entity instanceof LivingEntity livingEntity) {
+            Vec3 knockbackDir = getDeltaMovement().normalize();
+            livingEntity.knockback(3, -knockbackDir.x, -knockbackDir.z);
+        }
         setDeltaMovement(getDeltaMovement().normalize().scale(-0.1));
     }
 
@@ -279,6 +267,16 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     @Override
     public boolean isPickable() {
         return true;
+    }
+
+    @Override
+    public boolean isAttackable() {
+        return true;
+    }
+
+    @Override
+    public float getPickRadius(){
+        return 0.0f;
     }
 
     // pretty much the same as a regular pickup but attempts to place it in the offhand first
@@ -314,8 +312,8 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     }
 
     private void ignitePlayer(Player player) {
-        if (!isAlive() && heat > 10) {
-            player.setSecondsOnFire(3 + heat / 20);
+        if (heat > 10) {
+            player.igniteForSeconds(3 + heat / 20f);
         }
     }
 
@@ -325,12 +323,6 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
         if (this.pickup != Pickup.ALLOWED) {
             super.tickDespawn();
         }
-    }
-
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
@@ -350,13 +342,18 @@ public class ExtractorProjectileEntity extends AbstractArrow implements IEntityA
     }
 
     @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
+    protected ItemStack getDefaultPickupItem() {
+        return new ItemStack(ChthonicExtractorBlock.item);
+    }
+
+    @Override
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
         buffer.writeInt(damage);
         buffer.writeInt(heat);
     }
 
     @Override
-    public void readSpawnData(FriendlyByteBuf buffer) {
+    public void readSpawnData(RegistryFriendlyByteBuf buffer) {
         damage = buffer.readInt();
         heat = buffer.readInt();
     }

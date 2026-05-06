@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -18,26 +18,26 @@ public interface IToolProviderBlock {
         return false;
     }
 
-    default Collection<ToolAction> getTools(Level world, BlockPos pos, BlockState blockState) {
+    default Collection<ItemAbility> getTools(Level world, BlockPos pos, BlockState blockState) {
         return Collections.emptyList();
     }
 
-    default int getToolLevel(Level world, BlockPos pos, BlockState blockState, ToolAction toolAction) {
+    default int getToolLevel(Level world, BlockPos pos, BlockState blockState, ItemAbility toolAction) {
         return -1;
     }
 
-    default Map<ToolAction, Integer> getToolLevels(Level world, BlockPos pos, BlockState blockState) {
+    default Map<ItemAbility, Integer> getToolLevels(Level world, BlockPos pos, BlockState blockState) {
         return getTools(world, pos, blockState).stream()
                 .collect(Collectors.toMap(Function.identity(), toolAction -> getToolLevel(world, pos, blockState, toolAction)));
     }
 
     default ItemStack onCraftConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, String slot, boolean isReplacing,
-            Player player, ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
+            Player player, ItemAbility requiredTool, int requiredLevel, boolean consumeResources) {
         return null;
     }
 
     default ItemStack onActionConsumeTool(Level world, BlockPos pos, BlockState blockState, ItemStack targetStack, Player player,
-            ToolAction requiredTool, int requiredLevel, boolean consumeResources) {
+            ItemAbility requiredTool, int requiredLevel, boolean consumeResources) {
         return null;
     }
 }

@@ -2,25 +2,41 @@ package se.mickelus.tetra.items.modular;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.critereon.ItemSubPredicate;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.mutil.util.CastOptional;
+import se.mickelus.tetra.data.predicate.TetraItemPredicate;
 import se.mickelus.tetra.module.ItemModule;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
-public class ItemPredicateModular extends ItemPredicate {
+public class ItemPredicateModular implements TetraItemPredicate, ItemSubPredicate {
+    public static final Codec<ItemPredicateModular> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.STRING.listOf().listOf().optionalFieldOf("modules", List.of()).forGetter(predicate -> Arrays.stream(predicate.modules)
+                    .map(Arrays::asList)
+                    .collect(Collectors.toList())),
+            Codec.unboundedMap(Codec.STRING, Codec.STRING).optionalFieldOf("variants", Map.of()).forGetter(predicate -> predicate.variants),
+            Codec.unboundedMap(Codec.STRING, Codec.INT).optionalFieldOf("improvements", Map.of()).forGetter(predicate -> predicate.improvements)
+    ).apply(instance, ItemPredicateModular::new));
+    public static final ItemSubPredicate.Type<ItemPredicateModular> TYPE = new ItemSubPredicate.Type<>(CODEC);
 
     private final Map<String, String> variants = new HashMap<>();
     private final Map<String, Integer> improvements = new HashMap<>();
     private String[][] modules = new String[0][0];
 
-    public ItemPredicateModular(String[][] modules) {
-        this.modules = modules;
+    public ItemPredicateModular(List<List<String>> modules, Map<String, String> variants, Map<String, Integer> improvements) {
+        this.modules = modules.stream()
+                .map(module -> module.toArray(String[]::new))
+                .toArray(String[][]::new);
+        this.variants.putAll(variants);
+        this.improvements.putAll(improvements);
     }
 
     public ItemPredicateModular(JsonObject jsonObject) {
@@ -185,7 +201,6 @@ public class ItemPredicateModular extends ItemPredicate {
                 });
     }
 
-    @Override
     public boolean matches(ItemStack itemStack) {
         return test(itemStack, null);
     }

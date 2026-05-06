@@ -1,13 +1,14 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
 import se.mickelus.mutil.gui.*;
 import se.mickelus.mutil.gui.animation.Applier;
 import se.mickelus.mutil.gui.animation.KeyframeAnimation;
 import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.gui.GuiTextures;
 import se.mickelus.tetra.module.ItemModuleMajor;
@@ -15,10 +16,7 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ImprovementData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -28,7 +26,7 @@ import java.util.stream.Stream;
 public class GuiModuleMajor extends GuiModule {
     private GuiStringSmall slotString;
 
-    private GuiHorizontalLayoutGroup improvementGroup;
+    private final GuiHorizontalLayoutGroup improvementGroup;
 
     public GuiModuleMajor(int x, int y, GuiAttachment attachmentPoint, ItemStack itemStack, ItemStack previewStack,
             String slotKey, String slotName,
@@ -39,7 +37,7 @@ public class GuiModuleMajor extends GuiModule {
 
         this.height = 17;
 
-        improvementGroup = new GuiHorizontalLayoutGroup(GuiAttachment.topRight.equals(attachmentPoint) ? -17 : 19, "".equals(slotName) ? 12 : 13, 3, 1);
+        improvementGroup = new GuiHorizontalLayoutGroup(GuiAttachment.topRight.equals(attachmentPoint) ? -17 : 19, slotName.isEmpty() ? 12 : 13, 3, 1);
         improvementGroup.setAttachment(attachmentPoint);
         addChild(improvementGroup);
 
@@ -55,7 +53,7 @@ public class GuiModuleMajor extends GuiModule {
                 .toArray(String[]::new);
     }
 
-    public static List<Enchantment> getEnchantmentUnion(Set<Enchantment> enchantments, Set<Enchantment> previewEnchantments) {
+    public static List<String> getEnchantmentUnion(Set<String> enchantments, Set<String> previewEnchantments) {
         return Stream.concat(enchantments.stream(), previewEnchantments.stream())
                 .distinct()
                 .collect(Collectors.toList());
@@ -72,7 +70,7 @@ public class GuiModuleMajor extends GuiModule {
             addChild(tweakingIndicator);
         }
 
-        moduleString = new GuiString(19, "".equals(slotName) ? 4 : 5, "");
+        moduleString = new GuiString(19, slotName.isEmpty() ? 4 : 5, "");
         if (moduleName != null) {
             moduleString.setString(moduleName);
         } else {
@@ -181,9 +179,14 @@ public class GuiModuleMajor extends GuiModule {
             improvementGroup.addChild(improvement);
         }
 
-        Map<Enchantment, Integer> currentEnchantments = module.getEnchantments(itemStack);
-        Map<Enchantment, Integer> previewEnchantments = module.getEnchantments(previewStack);
+        Map<String, Integer> currentEnchantments = module.getEnchantmentsPrimitive(itemStack);
+        Map<String, Integer> previewEnchantments = module.getEnchantmentsPrimitive(previewStack);
+        Map<String, Holder<Enchantment>> enchantments = getEnchantmentsByKey(module.getEnchantmentHolders(itemStack), module.getEnchantmentHolders(previewStack));
         getEnchantmentUnion(currentEnchantments.keySet(), previewEnchantments.keySet()).forEach(enchantment -> {
+            if (!enchantments.containsKey(enchantment)) {
+                return;
+            }
+
             int color;
 
             int currentLevel = currentEnchantments.getOrDefault(enchantment, 0);
@@ -199,8 +202,8 @@ public class GuiModuleMajor extends GuiModule {
                 color = GuiColors.normal;
             }
 
-            String enchantmentKey = "enchantment:" + ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString();
-            improvementGroup.addChild(new GuiModuleEnchantment(0, 0, enchantment, previewLevel, color,
+            String enchantmentKey = "enchantment:" + enchantment;
+            improvementGroup.addChild(new GuiModuleEnchantment(0, 0, enchantments.get(enchantment), previewLevel, color,
                     () -> hoverHandler.accept(slotKey, enchantmentKey),
                     () -> {
                         if (hasFocus()) {
@@ -210,6 +213,20 @@ public class GuiModuleMajor extends GuiModule {
         });
 
         improvementGroup.forceLayout();
+    }
+
+    private static Map<String, Holder<Enchantment>> getEnchantmentsByKey(Map<Holder<Enchantment>, Integer> currentEnchantments, Map<Holder<Enchantment>, Integer> previewEnchantments) {
+        Map<String, Holder<Enchantment>> result = new LinkedHashMap<>();
+        addEnchantmentsByKey(result, currentEnchantments);
+        addEnchantmentsByKey(result, previewEnchantments);
+        return result;
+    }
+
+    private static void addEnchantmentsByKey(Map<String, Holder<Enchantment>> result, Map<Holder<Enchantment>, Integer> enchantments) {
+        enchantments.keySet().forEach(enchantment ->
+                TetraEnchantmentHelper.getEnchantmentKey(enchantment)
+                        .map(Object::toString)
+                        .ifPresent(key -> result.putIfAbsent(key, enchantment)));
     }
 
     protected void setColor(int color) {

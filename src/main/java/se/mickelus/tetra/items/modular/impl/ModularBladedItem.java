@@ -4,9 +4,8 @@ import com.google.common.collect.Lists;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ObjectHolder;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
@@ -31,11 +30,11 @@ public class ModularBladedItem extends ItemModularHandheld {
 
     public static final String identifier = "modular_sword";
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularBladedItem instance;
 
     public ModularBladedItem() {
         super(new Item.Properties().stacksTo(1).fireResistant());
+        instance = this;
 
         blockDestroyDamage = 2;
 
@@ -44,7 +43,7 @@ public class ModularBladedItem extends ItemModularHandheld {
 
         requiredModules = new String[] { bladeKey, hiltKey };
 
-        updateConfig(ConfigHandler.honeSwordBase.get(), ConfigHandler.honeSwordIntegrityMultiplier.get());
+        updateConfig(ConfigHandler.HONE_SWORD_BASE_DEFAULT, ConfigHandler.HONE_SWORD_INTEGRITY_MULTIPLIER_DEFAULT);
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
     }

@@ -9,8 +9,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.model.data.ModelData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -42,6 +43,6 @@ public class HammerHeadRenderer implements BlockEntityRenderer<HammerHeadBlockEn
         matrixStack.translate(0, offset, 0);
 
         blockRenderer.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()),
-                HammerHeadBlock.instance.defaultBlockState(), model, 1f, 1f, 1f, combinedLight, combinedOverlay);
+                HammerHeadBlock.instance.defaultBlockState(), model, 1f, 1f, 1f, combinedLight, combinedOverlay, ModelData.EMPTY, Sheets.solidBlockSheet());
     }
 }

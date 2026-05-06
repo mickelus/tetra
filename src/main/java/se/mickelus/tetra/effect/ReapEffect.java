@@ -151,7 +151,8 @@ public class ReapEffect extends ChargedAbilityEffect {
 
         if (momentumEfficiency > 0 && kills.get() > 0) {
             int stunDuration = (int) (momentumEfficiency * kills.get() * 20);
-            momentumTargets.forEach(entity -> entity.addEffect(new MobEffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false)));
+            momentumTargets.forEach(entity -> entity.addEffect(new MobEffectInstance(
+                    EffectHelper.effectHolder(StunPotionEffect.instance), stunDuration, 0, false, false)));
         }
     }
 
@@ -162,7 +163,7 @@ public class ReapEffect extends ChargedAbilityEffect {
             if (hand == InteractionHand.OFF_HAND) {
                 if (hits > 0) {
                     int duration = defensiveLevel * (1 + kills * 2);
-                    attacker.addEffect(new MobEffectInstance(SteeledPotionEffect.instance, duration, hits - 1, false, true));
+                    attacker.addEffect(new MobEffectInstance(EffectHelper.effectHolder(SteeledPotionEffect.instance), duration, hits - 1, false, true));
                 }
             } else if (kills > 0) {
                 int duration = (int) (item.getEffectEfficiency(itemStack, ItemEffect.abilityDefensive) * 20);
@@ -177,7 +178,7 @@ public class ReapEffect extends ChargedAbilityEffect {
 
                 duration *= 1 + getOverchargeBonus(item, itemStack, chargedTicks) * item.getEffectEfficiency(itemStack, ItemEffect.abilityOvercharge);
 
-                attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, (int) duration, kills - 1, false, true));
+                attacker.addEffect(new MobEffectInstance(EffectHelper.effectHolder(SmallStrengthPotionEffect.instance), (int) duration, kills - 1, false, true));
             }
 
             int speedLevel = item.getEffectLevel(itemStack, ItemEffect.abilitySpeed);
@@ -188,7 +189,7 @@ public class ReapEffect extends ChargedAbilityEffect {
 
             int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
             if (momentumLevel > 0) {
-                attacker.addEffect(new MobEffectInstance(UnwaveringPotionEffect.instance, momentumLevel * kills * 20,
+                attacker.addEffect(new MobEffectInstance(EffectHelper.effectHolder(UnwaveringPotionEffect.instance), momentumLevel * kills * 20,
                         0, false, true));
             }
 
@@ -206,34 +207,34 @@ public class ReapEffect extends ChargedAbilityEffect {
                 double duration = 20 * 20;
                 duration += item.getEffectEfficiency(itemStack, ItemEffect.abilityRevenge) * revengeKills * 20;
 
-                attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, (int) duration, kills - 1, false, true));
+                attacker.addEffect(new MobEffectInstance(EffectHelper.effectHolder(SmallStrengthPotionEffect.instance), (int) duration, kills - 1, false, true));
             }
 
             int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
             if (exhilarationLevel > 0) {
-                int currentAmplifier = Optional.ofNullable(attacker.getEffect(SmallAbsorbPotionEffect.instance))
+                int currentAmplifier = Optional.ofNullable(attacker.getEffect(EffectHelper.effectHolder(SmallAbsorbPotionEffect.instance)))
                         .map(MobEffectInstance::getAmplifier)
                         .orElse(-1);
                 int amp = Math.max(currentAmplifier, kills - 1);
-                attacker.addEffect(new MobEffectInstance(SmallAbsorbPotionEffect.instance, 30 * 20, amp, false, true));
+                attacker.addEffect(new MobEffectInstance(EffectHelper.effectHolder(SmallAbsorbPotionEffect.instance), 30 * 20, amp, false, true));
             }
 
             int echoLevel = item.getEffectLevel(itemStack, ItemEffect.abilityEcho);
             if (echoLevel > 0) {
-                int amp = Optional.ofNullable(attacker.getEffect(SmallStrengthPotionEffect.instance))
+                int amp = Optional.ofNullable(attacker.getEffect(EffectHelper.effectHolder(SmallStrengthPotionEffect.instance)))
                         .map(MobEffectInstance::getAmplifier)
                         .orElse(-1);
                 amp = Math.min(echoLevel, amp + kills);
-                attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, 30 * 20, amp, false, true));
+                attacker.addEffect(new MobEffectInstance(EffectHelper.effectHolder(SmallStrengthPotionEffect.instance), 30 * 20, amp, false, true));
             }
         }
 
         int overextendLevel = item.getEffectLevel(itemStack, ItemEffect.abilityOverextend);
         if (overextendLevel > 0) {
             if (kills > 0) {
-                attacker.addEffect(new MobEffectInstance(SmallHealthPotionEffect.instance, 45 * 20, kills - 1, false, true));
+                attacker.addEffect(new MobEffectInstance(EffectHelper.effectHolder(SmallHealthPotionEffect.instance), 45 * 20, kills - 1, false, true));
             } else if (!attacker.getFoodData().needsFood()) {
-                attacker.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, 20 * 20, 4, false, true));
+                attacker.addEffect(new MobEffectInstance(EffectHelper.effectHolder(ExhaustedPotionEffect.instance), 20 * 20, 4, false, true));
                 attacker.causeFoodExhaustion(12);
             }
         }

@@ -1,0 +1,50 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "tetra:scroll_data": {
+                    "key": "sword/throwing_knife",
+                    "intricate": false,
+                    "material": 1,
+                    "ribbon": "b8ced9",
+                    "glyphs": [
+                        4,
+                        1,
+                        0,
+                        5
+                    ],
+                    "schematics": [
+                        "tetra:sword/throwing_knife"
+                    ]
+                }
+            },
+            "id": "tetra:scroll_rolled"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_throwing.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_throwing.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "tetra:scroll_data": {
+                                "key": "sword/throwing_knife"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.blocks.workbench.gui;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.impl.GuiHorizontalLayoutGroup;
@@ -15,14 +15,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 @ParametersAreNonnullByDefault
 public class ToolRequirementListGui extends GuiElement {
 
-    private Map<ToolAction, Integer> requiredTools = Collections.emptyMap();
+    private Map<ItemAbility, Integer> requiredTools = Collections.emptyMap();
 
     public ToolRequirementListGui(int x, int y) {
         super(x, y, 0, 0);
         setAttachmentPoint(GuiAttachment.topCenter);
     }
 
-    public void update(UpgradeSchematic schematic, ItemStack targetStack, String slot, ItemStack[] materials, Map<ToolAction, Integer> availableTools) {
+    public void update(UpgradeSchematic schematic, ItemStack targetStack, String slot, ItemStack[] materials, Map<ItemAbility, Integer> availableTools) {
         boolean hasValidMaterials = schematic.isMaterialsValid(targetStack, slot, materials);
         setVisible(hasValidMaterials);
 
@@ -46,10 +46,10 @@ public class ToolRequirementListGui extends GuiElement {
         }
     }
 
-    public void updateAvailableTools(Map<ToolAction, Integer> availableTools) {
+    public void updateAvailableTools(Map<ItemAbility, Integer> availableTools) {
         getChildren(ToolRequirementGui.class).forEach(indicator ->
                 indicator.updateRequirement(
-                        requiredTools.getOrDefault(indicator.getToolAction(), 0),
-                        availableTools.getOrDefault(indicator.getToolAction(), 0)));
+                        requiredTools.getOrDefault(indicator.getItemAbility(), 0),
+                        availableTools.getOrDefault(indicator.getItemAbility(), 0)));
     }
 }

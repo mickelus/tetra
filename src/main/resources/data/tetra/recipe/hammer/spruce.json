@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    " /#",
+    "/  "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:spruce_planks"
+    },
+    "/": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "result": {
+    "id": "tetra:modular_double",
+    "components": {
+      "minecraft:custom_data": {
+        "id": "40f0dd62-4904-4846-9585-dcce1b5f32ab",
+        "double/head_left": "double/basic_hammer_left",
+        "double/basic_hammer_left_material": "basic_hammer/spruce",
+        "double/head_right": "double/basic_hammer_right",
+        "double/basic_hammer_right_material": "basic_hammer/spruce",
+        "double/handle": "double/basic_handle",
+        "double/basic_handle_material": "basic_handle/stick"
+      }
+    }
+  }
+}

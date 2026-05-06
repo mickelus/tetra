@@ -10,8 +10,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
 import se.mickelus.mutil.util.TileEntityOptional;
 
 import javax.annotation.Nullable;
@@ -26,9 +24,8 @@ public class TetraBlock extends Block implements InitializableBlock {
 
     public static void dropBlockInventory(Block thisBlock, Level world, BlockPos pos, BlockState newState) {
         if (!thisBlock.equals(newState.getBlock())) {
-            TileEntityOptional.from(world, pos, BlockEntity.class)
-                    .map(te -> te.getCapability(ForgeCapabilities.ITEM_HANDLER))
-                    .orElse(LazyOptional.empty())
+            TileEntityOptional.from(world, pos, ItemHandlerBlockEntity.class)
+                    .map(te -> te.getItemHandler(null))
                     .ifPresent(cap -> {
                         for (int i = 0; i < cap.getSlots(); i++) {
                             ItemStack itemStack = cap.getStackInSlot(i);
@@ -38,7 +35,8 @@ public class TetraBlock extends Block implements InitializableBlock {
                         }
                     });
 
-            TileEntityOptional.from(world, pos, BlockEntity.class).ifPresent(BlockEntity::setRemoved);
+            TileEntityOptional.from(world, pos, net.minecraft.world.level.block.entity.BlockEntity.class)
+                    .ifPresent(net.minecraft.world.level.block.entity.BlockEntity::setRemoved);
         }
     }
 

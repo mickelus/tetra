@@ -1,19 +1,19 @@
 package se.mickelus.tetra.items.modular.impl;
 
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class BlockProgressOverlay implements IGuiOverlay {
+public class BlockProgressOverlay implements LayeredDraw.Layer {
     private final Minecraft mc;
 
     private final GuiBlockProgress gui;
@@ -25,8 +25,8 @@ public class BlockProgressOverlay implements IGuiOverlay {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (TickEvent.Phase.START == event.phase && mc.player != null) {
+    public void onClientTick(ClientTickEvent.Pre event) {
+        if (mc.player != null) {
             ItemStack activeStack = mc.player.getUseItem();
 
             gui.setProgress(
@@ -37,7 +37,7 @@ public class BlockProgressOverlay implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         this.gui.draw(guiGraphics);
     }
 }

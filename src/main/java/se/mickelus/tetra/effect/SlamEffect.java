@@ -64,11 +64,11 @@ public class SlamEffect extends ChargedAbilityEffect {
                     double velocity = momentumEfficiency;
                     velocity *= 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
                     target.push(0, velocity, 0);
-                    target.addEffect(new MobEffectInstance(StunPotionEffect.instance, 40, 0, false, false));
+                    target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(StunPotionEffect.instance), 40, 0, false, false));
                 }
 
                 if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
-                    target.addEffect(new MobEffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
+                    target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(StunPotionEffect.instance), revengeLevel, 0, false, false));
                     RevengeTracker.removeEnemySynced((ServerPlayer) attacker, target);
                 }
             }
@@ -155,7 +155,7 @@ public class SlamEffect extends ChargedAbilityEffect {
 
         if (result != AbilityUseResult.fail) {
             if (stunDuration > 0) {
-                target.addEffect(new MobEffectInstance(StunPotionEffect.instance, stunDuration, 0, false, false));
+                target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(StunPotionEffect.instance), stunDuration, 0, false, false));
             }
 
             if (momentumEfficiency > 0) {
@@ -165,7 +165,7 @@ public class SlamEffect extends ChargedAbilityEffect {
             }
 
             if (revengeLevel > 0 && RevengeTracker.canRevenge(attacker, target)) {
-                target.addEffect(new MobEffectInstance(StunPotionEffect.instance, revengeLevel, 0, false, false));
+                target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(StunPotionEffect.instance), revengeLevel, 0, false, false));
             }
 
             double exhilarationEfficiency = item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration);
@@ -193,7 +193,7 @@ public class SlamEffect extends ChargedAbilityEffect {
                 double distance = Math.min(20, origin.distanceTo(target.position()));
                 int amplifier = (int) (distance * multiplier) - 1;
                 if (amplifier >= 0) {
-                    attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, 200, amplifier, false, true));
+                    attacker.addEffect(new MobEffectInstance(EffectHelper.effectHolder(SmallStrengthPotionEffect.instance), 200, amplifier, false, true));
                 }
             } else if (target.level().getGameTime() < timeLimit) {
                 knockbackExhilaration(attacker, origin, target, timeLimit, multiplier);

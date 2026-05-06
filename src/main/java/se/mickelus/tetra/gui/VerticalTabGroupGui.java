@@ -65,12 +65,15 @@ public class VerticalTabGroupGui extends GuiElement {
         buttons[index].setHasContent(hasContent);
     }
 
-    public void keyTyped(char typedChar) {
+    public boolean keyTyped(char typedChar) {
         for (int i = 0; i < buttons.length; i++) {
             if (i < keybindings.length && keybindings[i] == typedChar) {
                 setActive(i);
                 clickHandler.accept(i);
+                return true;
             }
         }
+
+        return false;
     }
 }

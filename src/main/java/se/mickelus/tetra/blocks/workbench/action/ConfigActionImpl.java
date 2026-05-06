@@ -4,6 +4,8 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -16,7 +18,8 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 import se.mickelus.tetra.properties.PropertyHelper;
 
@@ -44,25 +47,26 @@ public class ConfigActionImpl extends ConfigAction {
     }
 
     @Override
-    public Collection<ToolAction> getRequiredToolActions(ItemStack itemStack) {
+    public Collection<ItemAbility> getRequiredItemAbilities(ItemStack itemStack) {
         return requiredTools.getValues();
     }
 
     @Override
-    public int getRequiredToolLevel(ItemStack itemStack, ToolAction toolAction) {
+    public int getRequiredToolLevel(ItemStack itemStack, ItemAbility toolAction) {
         return requiredTools.getLevel(toolAction);
     }
 
     @Override
-    public Map<ToolAction, Integer> getRequiredTools(ItemStack itemStack) {
+    public Map<ItemAbility, Integer> getRequiredTools(ItemStack itemStack) {
         return requiredTools.getLevelMap();
     }
 
     @Override
-    public void perform(Player player, ItemStack targetStack, WorkbenchTile workbench) {
+    public void perform(@Nullable Player player, ItemStack targetStack, WorkbenchTile workbench) {
         if (player != null && !player.level().isClientSide) {
             ServerLevel world = (ServerLevel) player.level();
-            LootTable table = world.getServer().getLootData().getLootTable(lootTable);
+            ResourceKey<LootTable> lootTableKey = ResourceKey.create(Registries.LOOT_TABLE, lootTable);
+            LootTable table = world.getServer().reloadableRegistries().getLootTable(lootTableKey);
             ItemStack toolStack = requiredTools.getLevelMap().entrySet().stream()
                     .min(Map.Entry.comparingByValue())
                     .map(entry -> {
@@ -105,7 +109,7 @@ public class ConfigActionImpl extends ConfigAction {
             workbench.setChanged();
         } else if (!workbench.getLevel().isClientSide) {
             ServerLevel world = (ServerLevel) workbench.getLevel();
-            LootTable table = world.getServer().getLootData().getLootTable(lootTable);
+            LootTable table = world.getServer().reloadableRegistries().getLootTable(ResourceKey.create(Registries.LOOT_TABLE, lootTable));
 
             LootParams context = new LootParams.Builder(world)
                     .withParameter(LootContextParams.ORIGIN, Vec3.upFromBottomCenterOf(workbench.getBlockPos(), 1.1f))

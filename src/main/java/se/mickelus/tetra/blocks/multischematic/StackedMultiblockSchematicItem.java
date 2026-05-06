@@ -1,14 +1,14 @@
 package se.mickelus.tetra.blocks.multischematic;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class StackedMultiblockSchematicItem extends BaseMultiblockSchematicItem {
@@ -21,7 +21,7 @@ public class StackedMultiblockSchematicItem extends BaseMultiblockSchematicItem 
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.addAll(getTooltip());
     }
 

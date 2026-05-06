@@ -52,7 +52,7 @@ public class StatIndicatorStore implements ResourceManagerReloadListener {
     }
 
     private static ResourceLocation trimResourceLocation(ResourceLocation resourceLocation) {
-        return new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath().substring(16));
+        return ResourceLocation.fromNamespaceAndPath(resourceLocation.getNamespace(), resourceLocation.getPath().substring(16));
     }
 
     @Nullable

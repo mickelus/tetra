@@ -2,22 +2,20 @@ package se.mickelus.tetra.blocks.forged.extractor;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraftforge.registries.ObjectHolder;
-import se.mickelus.tetra.TetraMod;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.blocks.TetraBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
@@ -27,7 +25,6 @@ public class SeepingBedrockBlock extends TetraBlock {
 
     public static final String identifier = "seeping_bedrock";
 
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static SeepingBedrockBlock instance;
 
     public SeepingBedrockBlock() {
@@ -45,7 +42,7 @@ public class SeepingBedrockBlock extends TetraBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 
@@ -57,6 +54,6 @@ public class SeepingBedrockBlock extends TetraBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(activeProp, context.getPlayer().isCrouching() ? 0 : 1);
+        return defaultBlockState().setValue(activeProp, (context.getPlayer() != null && context.getPlayer().isCrouching()) ? 0 : 1);
     }
 }

@@ -85,7 +85,7 @@ public class PryEffect {
 
         int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
         if (exhilarationLevel > 0) {
-            int amp = Optional.ofNullable(target.getEffect(PriedPotionEffect.instance))
+            int amp = Optional.ofNullable(target.getEffect(EffectHelper.effectHolder(PriedPotionEffect.instance)))
                     .map(MobEffectInstance::getAmplifier)
                     .orElse(-1) + 1;
             if (amp > 0) {
@@ -96,7 +96,8 @@ public class PryEffect {
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
-            int currentAmplifier = Optional.ofNullable(target.getEffect(PriedPotionEffect.instance))
+            var priedEffect = EffectHelper.effectHolder(PriedPotionEffect.instance);
+            int currentAmplifier = Optional.ofNullable(target.getEffect(priedEffect))
                     .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
 
@@ -121,7 +122,7 @@ public class PryEffect {
                 amplifier++;
             }
 
-            target.addEffect(new MobEffectInstance(PriedPotionEffect.instance, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),
+            target.addEffect(new MobEffectInstance(priedEffect, (int) (item.getEffectEfficiency(itemStack, ItemEffect.pry) * 20),
                     currentAmplifier + amplifier, false, false));
 
             if (!target.getCommandSenderWorld().isClientSide) {
@@ -131,7 +132,7 @@ public class PryEffect {
             int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
             if (momentumLevel > 0 && currentAmplifier > -1) {
                 int duration = momentumLevel * (currentAmplifier + 1);
-                target.addEffect(new MobEffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(StunPotionEffect.instance), duration, 0, false, false));
             }
         }
 

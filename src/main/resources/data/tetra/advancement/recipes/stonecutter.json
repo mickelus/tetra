@@ -1,0 +1,22 @@
+{
+    "parent": "tetra:recipes/root",
+    "rewards": {
+        "recipes": [
+            "tetra:stonecutter"
+        ]
+    },
+    "criteria": {
+        "criteria": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:stonecutter"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

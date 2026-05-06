@@ -2,8 +2,7 @@ package se.mickelus.tetra.gui.stats;
 
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbilities;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBar;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBarBlockingDuration;
@@ -23,7 +22,7 @@ import static se.mickelus.tetra.gui.stats.StatsHelper.*;
 @ParametersAreNonnullByDefault
 public class GuiStats {
 
-    public static final IStatGetter powerGetter = new StatGetterEnchantmentLevel(Enchantments.POWER_ARROWS, 0.5, 0.5);
+    public static final IStatGetter powerGetter = new StatGetterEnchantmentLevel(Enchantments.POWER, 0.5, 0.5);
     public static final IStatGetter drawStrengthGetter = sum(new StatGetterAttribute(TetraAttributes.drawStrength.get()), powerGetter);
     public static final GuiStatBar drawStrength = new GuiStatBar(0, 0, barLength, "tetra.stats.draw_strength",
             0, 40, false, drawStrengthGetter, LabelGetterBasic.singleDecimalLabel,
@@ -61,12 +60,12 @@ public class GuiStats {
             -16, 16, false, true, true,
             abilityCooldownGetter, LabelGetterBasic.decimalLabelInverted,
             new TooltipGetterDecimal("tetra.stats.ability_speed_normalized.tooltip", abilityCooldownGetter));
-    public static final IStatGetter reachGetter = new StatGetterAttribute(ForgeMod.BLOCK_REACH.get(), true);
+    public static final IStatGetter reachGetter = new StatGetterAttribute(Attributes.BLOCK_INTERACTION_RANGE, true);
     public static final GuiStatBar reach = new GuiStatBar(0, 0, barLength, "tetra.stats.reach",
             -10, 10, false, true, false, reachGetter, LabelGetterBasic.singleDecimalLabel,
             new TooltipGetterDecimalSingle("tetra.stats.reach.tooltip", reachGetter));
 
-    public static final IStatGetter attackRangeGetter = new StatGetterAttribute(ForgeMod.ENTITY_REACH.get(), true);
+    public static final IStatGetter attackRangeGetter = new StatGetterAttribute(Attributes.ENTITY_INTERACTION_RANGE, true);
     public static final GuiStatBar attackRange = new GuiStatBar(0, 0, barLength, "tetra.stats.attack_range",
             -10, 10, false, true, false, attackRangeGetter, LabelGetterBasic.singleDecimalLabel,
             new TooltipGetterDecimalSingle("tetra.stats.attack_range.tooltip", attackRangeGetter));
@@ -188,7 +187,7 @@ public class GuiStats {
     public static final GuiStatBar knockback = new GuiStatBar(0, 0, barLength, "tetra.stats.knockback",
             0, 10, false, knockbackGetter, LabelGetterBasic.decimalLabel,
             new TooltipGetterDecimal("tetra.stats.knockback.tooltip", knockbackGetter));
-    public static final IStatGetter lootingGetter = new StatGetterEnchantmentLevel(Enchantments.MOB_LOOTING, 1);
+    public static final IStatGetter lootingGetter = new StatGetterEnchantmentLevel(Enchantments.LOOTING, 1);
     public static final GuiStatBar looting = new GuiStatBar(0, 0, barLength, "tetra.stats.looting",
             0, 20, false, lootingGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.looting.tooltip", lootingGetter));
@@ -214,24 +213,24 @@ public class GuiStats {
             new TooltipGetterInteger("tetra.stats.mending.tooltip", mendingGetter));
     public static final IStatGetter silkTouchGetter = new StatGetterEnchantmentLevel(Enchantments.SILK_TOUCH, 1);
     public static final IStatGetter replantGetter = new StatGetterAnd(silkTouchGetter, new StatGetterEffectLevel(ItemEffect.sweepingStrike, 1),
-            new StatGetterToolLevel(ToolActions.HOE_DIG));
+            new StatGetterToolLevel(ItemAbilities.HOE_DIG));
     public static final GuiStatBar silkTouch = new GuiStatBar(0, 0, barLength, "tetra.stats.silkTouch",
             0, 1, false, silkTouchGetter, LabelGetterBasic.noLabel,
             new TooltipGetterDecimal("tetra.stats.silkTouch.tooltip", silkTouchGetter))
             .setIndicators(new GuiStatIndicator(0, 0, "tetra.stats.replanting", 23, replantGetter, new TooltipGetterNone("tetra.stats.replanting.tooltip")));
-    public static final IStatGetter fortuneGetter = new StatGetterEnchantmentLevel(Enchantments.BLOCK_FORTUNE, 1);
+    public static final IStatGetter fortuneGetter = new StatGetterEnchantmentLevel(Enchantments.FORTUNE, 1);
     public static final GuiStatBar fortune = new GuiStatBar(0, 0, barLength, "tetra.stats.fortune",
             0, 20, false, fortuneGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.fortune.tooltip", fortuneGetter));
-    public static final IStatGetter infinityGetter = new StatGetterEnchantmentLevel(Enchantments.INFINITY_ARROWS, 1);
+    public static final IStatGetter infinityGetter = new StatGetterEnchantmentLevel(Enchantments.INFINITY, 1);
     public static final GuiStatBar infinity = new GuiStatBar(0, 0, barLength, "tetra.stats.infinity",
             0, 1, false, infinityGetter, LabelGetterBasic.noLabel,
             new TooltipGetterInteger("tetra.stats.infinity.tooltip", infinityGetter));
-    public static final IStatGetter flameGetter = new StatGetterEnchantmentLevel(Enchantments.FLAMING_ARROWS, 4);
+    public static final IStatGetter flameGetter = new StatGetterEnchantmentLevel(Enchantments.FLAME, 4);
     public static final GuiStatBar flame = new GuiStatBar(0, 0, barLength, "tetra.stats.flame",
             0, 2, false, flameGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.flame.tooltip", flameGetter));
-    public static final IStatGetter punchGetter = new StatGetterEnchantmentLevel(Enchantments.PUNCH_ARROWS, 1);
+    public static final IStatGetter punchGetter = new StatGetterEnchantmentLevel(Enchantments.PUNCH, 1);
     public static final GuiStatBar punch = new GuiStatBar(0, 0, barLength, "tetra.stats.punch",
             0, 4, false, punchGetter, LabelGetterBasic.integerLabel,
             new TooltipGetterInteger("tetra.stats.punch.tooltip", punchGetter));

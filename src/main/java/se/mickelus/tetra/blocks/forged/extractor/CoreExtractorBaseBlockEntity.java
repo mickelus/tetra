@@ -2,6 +2,7 @@ package se.mickelus.tetra.blocks.forged.extractor;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -9,12 +10,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ObjectHolder;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.TileEntityOptional;
-import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.IHeatTransfer;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 
@@ -24,7 +23,6 @@ public class CoreExtractorBaseBlockEntity extends BlockEntity implements IHeatTr
     private static final String chargeKey = "charge";
     private static final int maxCharge = 128;
     private static final int drainAmount = 4;
-    @ObjectHolder(registryName = "block_entity_type", value = TetraMod.MOD_ID + ":" + CoreExtractorBaseBlock.identifier)
     public static BlockEntityType<CoreExtractorBaseBlockEntity> type;
     private boolean isSending = false;
     private int currentCharge = 0;
@@ -192,8 +190,8 @@ public class CoreExtractorBaseBlockEntity extends BlockEntity implements IHeatTr
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
 
         if (compound.contains(chargeKey)) {
             currentCharge = compound.getInt(chargeKey);
@@ -203,8 +201,8 @@ public class CoreExtractorBaseBlockEntity extends BlockEntity implements IHeatTr
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt(chargeKey, currentCharge);
     }
 
@@ -215,16 +213,13 @@ public class CoreExtractorBaseBlockEntity extends BlockEntity implements IHeatTr
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
-        this.load(packet.getTag());
-//        BlockState state = getBlockState();
-
-//        world.notifyBlockUpdate(pos, state, state,3);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider lookupProvider) {
+        this.loadWithComponents(packet.getTag(), lookupProvider);
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {

@@ -1,10 +1,17 @@
 package se.mickelus.tetra.items.modular.impl.crossbow;
 
 import com.google.common.collect.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -13,9 +20,13 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -25,13 +36,14 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.registries.ObjectHolder;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
@@ -39,12 +51,15 @@ import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.forged.chthonic.ChthonicExtractorBlock;
 import se.mickelus.tetra.blocks.forged.chthonic.ExtractorProjectileEntity;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.event.ModularLooseProjectilesEvent;
 import se.mickelus.tetra.event.ModularProjectileSpawnEvent;
 import se.mickelus.tetra.items.modular.impl.bow.ProjectileMotionPacket;
+import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.properties.AttributeHelper;
 import se.mickelus.tetra.properties.TetraAttributes;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -58,7 +73,6 @@ import java.util.function.Function;
 public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
     public static final double velocityFactor = 1 / 8d;
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularCrossbowItemImpl instance;
     public static double multishotDefaultSpread = 10;
     // used to pick projectiles from the player inventory
@@ -69,6 +83,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
 
     public ModularCrossbowItemImpl(@NotNull Item shootableDummy) {
         super(new Properties().stacksTo(1).fireResistant());
+        instance = this;
 
         this.shootableDummy = new ItemStack(shootableDummy);
     }
@@ -101,18 +116,92 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         // todo: add item model property for transform overrides here, update overridelist and look at shield for props, or perhaps there's an arm
         //  rendering hook?
 
-        MinecraftForge.EVENT_BUS.register(new CrossbowOverlay(Minecraft.getInstance()));
+        NeoForge.EVENT_BUS.register(new CrossbowOverlay(Minecraft.getInstance()));
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        List<ItemStack> list = getProjectiles(stack);
+    public IClientItemExtensions createClientExtensions() {
+        return new IClientItemExtensions() {
+            @Override
+            public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
+                if (entityLiving instanceof AbstractClientPlayer player
+                        && !player.isUsingItem()
+                        && !player.swinging
+                        && ModularCrossbowItemImpl.this.equals(itemStack.getItem())
+                        && isLoaded(itemStack)) {
+                    return HumanoidModel.ArmPose.CROSSBOW_HOLD;
+                }
+
+                return null;
+            }
+
+            @Override
+            public boolean applyForgeHandTransform(
+                    PoseStack poseStack,
+                    LocalPlayer player,
+                    HumanoidArm arm,
+                    ItemStack itemInHand,
+                    float partialTick,
+                    float equipProcess,
+                    float swingProcess
+            ) {
+                if (!ModularCrossbowItemImpl.this.equals(itemInHand.getItem())) {
+                    return false;
+                }
+
+                InteractionHand hand = arm == player.getMainArm() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
+                boolean isMainHand = hand == InteractionHand.MAIN_HAND;
+                boolean isCharged = CrossbowItem.isCharged(itemInHand);
+                boolean rightArm = arm == HumanoidArm.RIGHT;
+                int direction = rightArm ? 1 : -1;
+
+                if (player.isUsingItem() && player.getUseItemRemainingTicks() > 0 && player.getUsedItemHand() == hand) {
+                    poseStack.translate(direction * 0.56F, -0.52F + equipProcess * -0.6F, -0.72F);
+                    poseStack.translate(direction * -0.4785682F, -0.094387F, 0.05731531F);
+                    poseStack.mulPose(Axis.XP.rotationDegrees(-11.935F));
+                    poseStack.mulPose(Axis.YP.rotationDegrees(direction * 65.3F));
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(direction * -9.785F));
+
+                    float useTime = itemInHand.getUseDuration(player) - (player.getUseItemRemainingTicks() - partialTick + 1.0F);
+                    float progress = useTime / getReloadDuration(itemInHand);
+                    if (progress > 1.0F) {
+                        progress = 1.0F;
+                    }
+
+                    if (progress > 0.1F) {
+                        float sway = Mth.sin((useTime - 0.1F) * 1.3F);
+                        float swayScale = progress - 0.1F;
+                        float offset = sway * swayScale;
+                        poseStack.translate(0.0F, offset * 0.004F, 0.0F);
+                    }
+
+                    poseStack.translate(0.0F, 0.0F, progress * 0.04F);
+                    poseStack.scale(1.0F, 1.0F, 1.0F + progress * 0.2F);
+                    poseStack.mulPose(Axis.YN.rotationDegrees(direction * 45.0F));
+                    return true;
+                }
+
+                if (isCharged && swingProcess < 0.001F && isMainHand) {
+                    poseStack.translate(direction * -0.641864F, 0.0F, 0.0F);
+                    poseStack.mulPose(Axis.YP.rotationDegrees(direction * 10.0F));
+                    return true;
+                }
+
+                return false;
+            }
+        };
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+        List<ItemStack> list = getProjectiles(stack, context.registries());
         if (isLoaded(stack) && !list.isEmpty()) {
             ItemStack itemstack = list.get(0);
             tooltip.add((Component.translatable("item.minecraft.crossbow.projectile")).append(" ").append(itemstack.getDisplayName()));
             if (flagIn.isAdvanced() && itemstack.getItem() == Items.FIREWORK_ROCKET) {
                 List<Component> list1 = Lists.newArrayList();
-                Items.FIREWORK_ROCKET.appendHoverText(itemstack, worldIn, list1, flagIn);
+                Items.FIREWORK_ROCKET.appendHoverText(itemstack, context, list1, flagIn);
                 if (!list1.isEmpty()) {
                     for (int i = 0; i < list1.size(); ++i) {
                         list1.set(i, (Component.literal("  ")).append(list1.get(i)).withStyle(ChatFormatting.GRAY));
@@ -123,7 +212,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
             }
         }
 
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        super.appendHoverText(stack, context, tooltip, flagIn);
 
         if (Screen.hasShiftDown()) {
             tooltip.add(Component.literal(" "));
@@ -133,22 +222,19 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack itemStack) {
+    public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack itemStack) {
         if (isBroken(itemStack)) {
-            return AttributeHelper.emptyMap;
+            return ItemAttributeModifiers.EMPTY;
         }
 
-        if (slot == EquipmentSlot.MAINHAND) {
-            return getAttributeModifiersCached(itemStack);
-        }
-
-        if (slot == EquipmentSlot.OFFHAND) {
-            return getAttributeModifiersCached(itemStack).entries().stream()
-                    .filter(entry -> !(entry.getKey().equals(Attributes.ATTACK_DAMAGE) || entry.getKey().equals(Attributes.ATTACK_DAMAGE)))
-                    .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
-        }
-
-        return AttributeHelper.emptyMap;
+        ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+        getAttributeModifiersCached(itemStack).forEach((attribute, modifier) -> {
+            EquipmentSlotGroup slotGroup = attribute.equals(Attributes.ATTACK_DAMAGE.value()) || attribute.equals(Attributes.ATTACK_SPEED.value())
+                    ? EquipmentSlotGroup.MAINHAND
+                    : EquipmentSlotGroup.HAND;
+            builder.add(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute), modifier, slotGroup);
+        });
+        return builder.build();
     }
 
     /**
@@ -182,8 +268,6 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-        // todo: crossbows don't fire the nock event when loading arrows so needs some way to load ammo from quiver
-//        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
         ItemStack itemstack = player.getItemInHand(hand);
 
         if (isBroken(itemstack)) {
@@ -194,7 +278,13 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
             fireProjectiles(itemstack, world, player);
             setLoaded(itemstack, false);
             return InteractionResultHolder.consume(itemstack);
-        } else if (!findAmmo(player).isEmpty()) {
+        }
+
+        if (findAmmo(player).isEmpty()) {
+            ToolbeltHelper.loadQuickAccessAmmoFromQuiver(player, hand, Math.max(getEffectLevel(itemstack, ItemEffect.ammoCapacity), 1));
+        }
+
+        if (!findAmmo(player).isEmpty()) {
             if (!isLoaded(itemstack)) {
                 this.isLoadingStart = false;
                 this.isLoadingMiddle = false;
@@ -229,9 +319,9 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         if (entity instanceof Player player && !world.isClientSide) {
             ItemStack advancementCopy = itemStack.copy();
 
-            List<ItemStack> list = takeProjectiles(itemStack, 1);
+            List<ItemStack> list = takeProjectiles(itemStack, 1, world.registryAccess());
             if (!list.isEmpty()) {
-                int multishotEnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, itemStack) * 3;
+                int multishotEnchantLevel = EffectHelper.getEnchantmentLevel(Enchantments.MULTISHOT, itemStack) * 3;
                 int count = Math.max(getEffectLevel(itemStack, ItemEffect.multishot) + multishotEnchantLevel, 1);
                 double strength = getAttributeValue(itemStack, TetraAttributes.drawStrength.get());
                 float velocityBonus = getEffectLevel(itemStack, ItemEffect.velocity) / 100f;
@@ -252,7 +342,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
                         count,
                         player.getXRot(),
                         player.getYRot());
-                MinecraftForge.EVENT_BUS.post(looseProjectilesEvent);
+                NeoForge.EVENT_BUS.post(looseProjectilesEvent);
 
                 count = looseProjectilesEvent.getCount();
                 spread = looseProjectilesEvent.getMultishotSpread();
@@ -271,7 +361,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
                 }
 
                 // todo: needs to apply 3 points of damage if it's firework
-                itemStack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
+                itemStack.hurtAndBreak(1, player, player.getOffhandItem() == itemStack ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
                 applyUsageEffects(entity, itemStack, 1);
 
                 world.playSound(null, player.getX(), player.getY(), player.getZ(),
@@ -306,9 +396,8 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         } else {
             ArrowItem ammoItem = CastOptional.cast(ammoStack.getItem(), ArrowItem.class).orElse((ArrowItem) Items.ARROW);
 
-            AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player);
+            AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player, getProjectileWeapon(crossbowStack));
             projectile.setSoundEvent(SoundEvents.CROSSBOW_HIT);
-            projectile.setShotFromCrossbow(true);
             projectile.setCritArrow(true);
 
             // the damage modifier is based on fully drawn damage, vanilla bows deal 3 times base damage + 0-4 crit damage
@@ -320,7 +409,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
             }
 
             int piercingLevel =
-                    getEffectLevel(crossbowStack, ItemEffect.piercing) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING,
+                    getEffectLevel(crossbowStack, ItemEffect.piercing) + EffectHelper.getEnchantmentLevel(Enchantments.PIERCING,
                             crossbowStack);
             if (piercingLevel > 0) {
                 projectile.setPierceLevel((byte) piercingLevel);
@@ -335,7 +424,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
             }
             spawnProjectile(player, world, projectile, projectileVelocity * 3.15F, pitch, yaw);
             ModularProjectileSpawnEvent event = new ModularProjectileSpawnEvent(crossbowStack, ammoStack, player, projectile, world, 1);
-            MinecraftForge.EVENT_BUS.post(event);
+            NeoForge.EVENT_BUS.post(event);
         }
     }
 
@@ -349,9 +438,15 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         }
     }
 
+    private ItemStack getProjectileWeapon(ItemStack crossbowStack) {
+        ItemStack weaponStack = Items.CROSSBOW.getDefaultInstance();
+        EnchantmentHelper.setEnchantments(weaponStack, EnchantmentHelper.getEnchantmentsForCrafting(crossbowStack));
+        return weaponStack;
+    }
+
     public int getReloadDuration(ItemStack itemStack) {
         return Math.max((int) (20 * (getAttributeValue(itemStack, TetraAttributes.drawSpeed.get())
-                - EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
+                - EffectHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
     }
 
     /**
@@ -375,18 +470,18 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
 
     @Override
     public boolean isLoaded(ItemStack stack) {
-        CompoundTag compoundnbt = stack.getTag();
+        CompoundTag compoundnbt = ItemStackTagHelper.getTag(stack);
         return compoundnbt != null && compoundnbt.getBoolean("Charged");
     }
 
     public void setLoaded(ItemStack stack, boolean chargedIn) {
-        CompoundTag compoundnbt = stack.getOrCreateTag();
-        compoundnbt.putBoolean("Charged", chargedIn);
+        ItemStackTagHelper.mutate(stack, tag -> tag.putBoolean("Charged", chargedIn));
     }
 
     private ListTag getProjectilesNBT(ItemStack itemStack) {
-        if (itemStack.hasTag()) {
-            return getProjectilesNBT(itemStack.getTag());
+        CompoundTag tag = ItemStackTagHelper.getTag(itemStack);
+        if (tag != null) {
+            return getProjectilesNBT(tag);
         }
         return new ListTag();
     }
@@ -398,40 +493,86 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         return new ListTag();
     }
 
-    private void writeProjectile(ItemStack crossbowStack, ItemStack projectileStack) {
-        CompoundTag crossbowTag = crossbowStack.getOrCreateTag();
-        ListTag list = getProjectilesNBT(crossbowTag);
+    private void writeProjectile(ItemStack crossbowStack, ItemStack projectileStack, HolderLookup.Provider registryAccess) {
+        if (projectileStack.isEmpty()) {
+            return;
+        }
 
-        CompoundTag projectileTag = new CompoundTag();
-        projectileStack.save(projectileTag);
-        list.add(projectileTag);
-
-        crossbowTag.put("ChargedProjectiles", list);
+        CompoundTag projectileTag = ItemStackTagHelper.saveStack(projectileStack, registryAccess);
+        ItemStackTagHelper.mutate(crossbowStack, crossbowTag -> {
+            ListTag list = getProjectilesNBT(crossbowTag);
+            list.add(projectileTag);
+            crossbowTag.put("ChargedProjectiles", list);
+        });
     }
 
     @Override
-    protected ItemStack getFirstProjectile(ItemStack itemStack) {
+    protected ItemStack getFirstProjectile(ItemStack itemStack, @Nullable LivingEntity entity) {
+        if (entity == null) {
+            return getFirstProjectileByItemId(itemStack);
+        }
+
+        return getFirstProjectile(itemStack, entity.registryAccess());
+    }
+
+    private ItemStack getFirstProjectile(ItemStack itemStack, HolderLookup.Provider registryAccess) {
         ListTag projectiles = getProjectilesNBT(itemStack);
-        if (projectiles.size() > 0) {
-            return ItemStack.of(projectiles.getCompound(0));
+        for (int i = 0; i < projectiles.size(); i++) {
+            ItemStack projectile = ItemStackTagHelper.parseStack(registryAccess, projectiles.getCompound(i));
+            if (!projectile.isEmpty()) {
+                return projectile;
+            }
         }
 
         return ItemStack.EMPTY;
     }
 
-    private List<ItemStack> getProjectiles(ItemStack itemStack) {
+    private ItemStack getFirstProjectileByItemId(ItemStack itemStack) {
+        ListTag projectiles = getProjectilesNBT(itemStack);
+        for (int i = 0; i < projectiles.size(); i++) {
+            ItemStack projectile = getProjectileItemStack(projectiles.getCompound(i));
+            if (!projectile.isEmpty()) {
+                return projectile;
+            }
+        }
+
+        return ItemStack.EMPTY;
+    }
+
+    private ItemStack getProjectileItemStack(CompoundTag stackTag) {
+        if (!ItemStackTagHelper.isSerializedStack(stackTag)) {
+            return ItemStack.EMPTY;
+        }
+
+        ResourceLocation itemId = ResourceLocation.tryParse(stackTag.getString("id"));
+        if (itemId == null) {
+            return ItemStack.EMPTY;
+        }
+
+        Item item = BuiltInRegistries.ITEM.get(itemId);
+        return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
+    }
+
+    private List<ItemStack> getProjectiles(ItemStack itemStack, @Nullable HolderLookup.Provider registryAccess) {
         List<ItemStack> result = Lists.newArrayList();
+        if (registryAccess == null) {
+            return result;
+        }
+
         ListTag projectileTags = getProjectilesNBT(itemStack);
 
         for (int i = 0; i < projectileTags.size(); ++i) {
             CompoundTag stackNbt = projectileTags.getCompound(i);
-            result.add(ItemStack.of(stackNbt));
+            ItemStack projectile = ItemStackTagHelper.parseStack(registryAccess, stackNbt);
+            if (!projectile.isEmpty()) {
+                result.add(projectile);
+            }
         }
 
         return result;
     }
 
-    private List<ItemStack> takeProjectiles(ItemStack itemStack, int count) {
+    private List<ItemStack> takeProjectiles(ItemStack itemStack, int count, HolderLookup.Provider registryAccess) {
         ListTag nbtList = getProjectilesNBT(itemStack);
         int size = Math.min(nbtList.size(), count);
         List<ItemStack> result = new ArrayList<>(size);
@@ -439,31 +580,38 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
         for (int i = 0; i < size; ++i) {
             CompoundTag stackNbt = nbtList.getCompound(0);
             nbtList.remove(0);
-            result.add(ItemStack.of(stackNbt));
+            ItemStack projectile = ItemStackTagHelper.parseStack(registryAccess, stackNbt);
+            if (!projectile.isEmpty()) {
+                result.add(projectile);
+            }
         }
 
         return result;
     }
 
-    public boolean hasProjectiles(ItemStack stack, Item ammoItem) {
-        return getProjectiles(stack).stream().anyMatch(s -> s.getItem() == ammoItem);
+    public boolean hasProjectiles(ItemStack stack, Item ammoItem, HolderLookup.Provider registryAccess) {
+        return getProjectiles(stack, registryAccess).stream().anyMatch(s -> s.getItem() == ammoItem);
     }
 
     private SoundEvent getSoundEvent(float velocity) {
         if (velocity < 7) {
-            return SoundEvents.CROSSBOW_QUICK_CHARGE_3;
+            return SoundEvents.CROSSBOW_QUICK_CHARGE_3.value();
         } else if (velocity < 15) {
-            return SoundEvents.CROSSBOW_QUICK_CHARGE_2;
+            return SoundEvents.CROSSBOW_QUICK_CHARGE_2.value();
         } else if (velocity < 22) {
-            return SoundEvents.CROSSBOW_QUICK_CHARGE_1;
+            return SoundEvents.CROSSBOW_QUICK_CHARGE_1.value();
         }
 
-        return SoundEvents.CROSSBOW_LOADING_START;
+        return SoundEvents.CROSSBOW_LOADING_START.value();
+    }
+
+    public int getUseDuration(ItemStack itemStack) {
+        return 37000;
     }
 
     @Override
-    public int getUseDuration(ItemStack itemStack) {
-        return 37000;
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
+        return getUseDuration(stack);
     }
 
     /**
@@ -475,11 +623,6 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
 
     @Override
     public boolean useOnRelease(ItemStack stack) {
-        return true;
-    }
-
-    @Override
-    public boolean canBeDepleted() {
         return true;
     }
 
@@ -523,7 +666,7 @@ public class ModularCrossbowItemImpl extends AbstractModularCrossbowItem {
                 itemstack = ammoStack.copy();
             }
 
-            writeProjectile(crossbowStack, itemstack);
+            writeProjectile(crossbowStack, itemstack, entity.registryAccess());
             return true;
         }
     }

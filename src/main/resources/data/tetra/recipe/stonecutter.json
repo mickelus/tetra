@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tetra:stonecutter"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "result": {
+    "id": "tetra:modular_sword",
+    "components": {
+      "minecraft:custom_data": {
+        "id": "5fc9fae8-6c21-4cb0-a465-f039ee94c800",
+        "sword/blade": "sword/stonecutter",
+        "sword/stonecutter_material": "stonecutter/stonecutter",
+        "sword/hilt": "sword/basic_hilt",
+        "sword/basic_hilt_material": "basic_hilt/stick"
+      }
+    }
+  }
+}

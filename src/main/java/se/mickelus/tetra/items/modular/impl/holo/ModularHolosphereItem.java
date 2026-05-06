@@ -9,14 +9,14 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ObjectHolder;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.blocks.holo.HolosphereBlock;
@@ -45,7 +45,6 @@ public class ModularHolosphereItem extends ModularItem {
     public static final String identifier = "holo";
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(-14, 0, -14, 18, 4, 0, 4, 18);
 
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularHolosphereItem instance;
 
     public ModularHolosphereItem() {
@@ -114,7 +113,7 @@ public class ModularHolosphereItem extends ModularItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.add(Component.translatable("item.tetra.holo.tooltip1").withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.literal(" "));
 
@@ -128,7 +127,7 @@ public class ModularHolosphereItem extends ModularItem {
 
         tooltip.add(Component.translatable("item.tetra.holo.tooltip2"));
 
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        super.appendHoverText(stack, tooltipContext, tooltip, flagIn);
     }
 
     @Override

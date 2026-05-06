@@ -16,7 +16,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class HoneToast implements Toast {
-    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toasts.png");
+    private static final ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "textures/gui/toasts.png");
     private final ItemStack itemStack;
     private boolean hasPlayedSound = false;
 

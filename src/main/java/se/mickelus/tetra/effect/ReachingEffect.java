@@ -2,8 +2,8 @@ package se.mickelus.tetra.effect;
 
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import java.util.Optional;
@@ -26,13 +26,13 @@ public class ReachingEffect {
         }
     }
 
-    public static void onLivingDamage(LivingDamageEvent event, int level, float efficiency) {
+    public static void onLivingDamage(LivingDamageEvent.Pre event, int level, float efficiency) {
         double distance = event.getSource().getEntity().distanceToSqr(event.getEntity());
         float multiplier = event.getSource().is(DamageTypeTags.IS_PROJECTILE)
                 ? efficiency
                 : 1;
         if (distance > 1) {
-            event.setAmount(event.getAmount() * getMultiplier(level, distance, multiplier));
+            event.setNewDamage(event.getNewDamage() * getMultiplier(level, distance, multiplier));
         }
     }
 

@@ -2,7 +2,6 @@ package se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -98,17 +97,12 @@ public class QuiverItemGui extends GuiElement {
     }
 
     private void drawItemStack(GuiGraphics graphics, ItemStack itemStack, int x, int y) {
-        PoseStack renderSystemStack = RenderSystem.getModelViewStack();
-        renderSystemStack.pushPose();
         RenderSystem.enableDepthTest();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        // Lighting.turnBackOn();
 
         graphics.renderItem(itemStack, x, y);
         graphics.renderItemDecorations(fontRenderer, itemStack, x, y, "");
-        //  Lighting.turnOff();
         RenderSystem.disableDepthTest();
-        renderSystemStack.popPose();
     }
 
 

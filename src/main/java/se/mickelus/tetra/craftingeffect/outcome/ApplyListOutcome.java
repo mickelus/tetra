@@ -7,12 +7,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.util.LazyOptional;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.tetra.craftingeffect.CraftingEffect;
 import se.mickelus.tetra.craftingeffect.CraftingEffectRegistry;
 import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
+import se.mickelus.tetra.util.LazyOptional;
 import se.mickelus.tetra.util.StreamHelper;
 
 import javax.annotation.Nullable;
@@ -44,7 +44,7 @@ public class ApplyListOutcome implements CraftingEffectOutcome {
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
             ItemStack[] preMaterials,
-            Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
+            Map<ItemAbility, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState, boolean consumeResources,
             ItemStack[] postMaterials, float severity) {
         Collector<EffectPair, ?, List<EffectPair>> collector = random
                 ? StreamHelper.toShuffledList()

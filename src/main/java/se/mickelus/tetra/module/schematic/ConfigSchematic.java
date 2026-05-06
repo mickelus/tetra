@@ -5,9 +5,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.Filter;
 import se.mickelus.tetra.ConfigHandler;
@@ -241,7 +241,7 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public Map<ToolAction, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
+    public Map<ItemAbility, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
         if (definition.materialSlotCount > 0) {
             return IntStream.range(0, materials.length)
                     .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))
@@ -258,7 +258,7 @@ public class ConfigSchematic extends BaseSchematic {
     }
 
     @Override
-    public int getRequiredToolLevel(ItemStack targetStack, ItemStack[] materials, ToolAction toolAction) {
+    public int getRequiredToolLevel(ItemStack targetStack, ItemStack[] materials, ItemAbility toolAction) {
         if (definition.materialSlotCount > 0) {
             return IntStream.range(0, materials.length)
                     .mapToObj(index -> getOutcomeFromMaterial(materials[index], index))

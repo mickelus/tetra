@@ -1,6 +1,8 @@
 package se.mickelus.tetra.module.schematic;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -8,8 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.FeatureFlag;
 import se.mickelus.tetra.TetraMod;
@@ -22,7 +23,6 @@ import se.mickelus.tetra.module.data.GlyphData;
 import se.mickelus.tetra.module.data.ToolData;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -93,24 +93,20 @@ public class BookEnchantSchematic implements UpgradeSchematic {
                 .flatMap(mod -> CastOptional.cast(mod, ItemModuleMajor.class))
                 .orElse(null);
 
-        Map<Enchantment, Integer> currentEnchantments = EnchantmentHelper.getEnchantments(itemStack);
+        Set<Holder<Enchantment>> currentEnchantmentHolders = EnchantmentHelper.getEnchantmentsForCrafting(itemStack).keySet();
 
         return module != null && materialStack.getItem() instanceof EnchantedBookItem
-                && EnchantmentHelper.getEnchantments(materialStack).entrySet().stream()
-                .anyMatch(entry -> acceptsEnchantment(itemStack, module, currentEnchantments.keySet(), entry.getKey(), entry.getValue()));
+                && EnchantmentHelper.getEnchantmentsForCrafting(materialStack).entrySet().stream()
+                .anyMatch(entry -> acceptsEnchantment(itemStack, module, currentEnchantmentHolders, entry.getKey(), entry.getIntValue()));
     }
 
-    protected boolean stacksEnchantment(ItemStack itemStack, ItemModuleMajor module, Enchantment enchantment, int level) {
-        Map<Enchantment, Integer> moduleEnchantments = module.getEnchantments(itemStack);
-        if (moduleEnchantments.containsKey(enchantment)) {
-            int currentLevel = moduleEnchantments.get(enchantment);
-            return level >= currentLevel && currentLevel < enchantment.getMaxLevel();
-        }
-        return false;
+    protected boolean stacksEnchantment(ItemStack itemStack, ItemModuleMajor module, Holder<Enchantment> enchantment, int level) {
+        int currentLevel = getModuleEnchantmentLevel(itemStack, module, enchantment);
+        return currentLevel > 0 && level >= currentLevel && currentLevel < enchantment.value().getMaxLevel();
     }
 
-    protected boolean acceptsEnchantment(ItemStack itemStack, ItemModuleMajor module, Set<Enchantment> currentEnchantments, Enchantment enchantment,
-            int level) {
+    protected boolean acceptsEnchantment(ItemStack itemStack, ItemModuleMajor module, Set<Holder<Enchantment>> currentEnchantments,
+            Holder<Enchantment> enchantment, int level) {
         return module.acceptsEnchantment(itemStack, enchantment, false)
                 && (stacksEnchantment(itemStack, module, enchantment, level)
                 || EnchantmentHelper.isEnchantmentCompatible(currentEnchantments, enchantment));
@@ -135,7 +131,7 @@ public class BookEnchantSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ToolAction, Integer> availableTools) {
+    public boolean canApplyUpgrade(Player player, ItemStack itemStack, ItemStack[] materials, String slot, Map<ItemAbility, Integer> availableTools) {
         return isMaterialsValid(itemStack, slot, materials)
                 && (player.isCreative() || player.experienceLevel >= getExperienceCost(itemStack, materials, slot));
     }
@@ -157,22 +153,20 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
 
         if (module != null) {
-            Map<Enchantment, Integer> currentEnchantments = EnchantmentHelper.getEnchantments(itemStack);
-            EnchantmentHelper.getEnchantments(materials[0]).entrySet().stream()
-                    .filter(entry -> acceptsEnchantment(itemStack, module, currentEnchantments.keySet(), entry.getKey(), entry.getValue()))
+            Set<Holder<Enchantment>> currentEnchantmentHolders = EnchantmentHelper.getEnchantmentsForCrafting(itemStack).keySet();
+            EnchantmentHelper.getEnchantmentsForCrafting(materials[0]).entrySet().stream()
+                    .filter(entry -> acceptsEnchantment(itemStack, module, currentEnchantmentHolders, entry.getKey(), entry.getIntValue()))
                     .forEach(entry -> {
-                        int level = entry.getValue();
-                        if (stacksEnchantment(upgradedStack, module, entry.getKey(), level)) {
-                            level = Math.max(currentEnchantments.get(entry.getKey()) + 1, level);
-                            currentEnchantments.put(entry.getKey(), level);
-                            EnchantmentHelper.setEnchantments(currentEnchantments, upgradedStack);
-                        } else {
-                            TetraEnchantmentHelper.applyEnchantment(upgradedStack, module.getSlot(), entry.getKey(), level);
+                        Holder<Enchantment> enchantment = entry.getKey();
+                        int level = entry.getIntValue();
+                        if (stacksEnchantment(upgradedStack, module, enchantment, level)) {
+                            level = Math.max(getModuleEnchantmentLevel(upgradedStack, module, enchantment) + 1, level);
                         }
+                        TetraEnchantmentHelper.applyEnchantment(upgradedStack, module.getSlot(), enchantment, level);
 
                         if (consumeMaterials && player instanceof ServerPlayer) {
                             ImprovementCraftCriterion.trigger((ServerPlayer) player, itemStack, upgradedStack, getKey(), slot,
-                                    "enchantment:" + ForgeRegistries.ENCHANTMENTS.getKey(entry.getKey()).toString(), level, null, -1);
+                                    "enchantment:" + getEnchantmentKey(enchantment), level, null, -1);
                         }
                     });
 
@@ -185,12 +179,12 @@ public class BookEnchantSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean checkTools(ItemStack targetStack, ItemStack[] materials, Map<ToolAction, Integer> availableTools) {
+    public boolean checkTools(ItemStack targetStack, ItemStack[] materials, Map<ItemAbility, Integer> availableTools) {
         return true;
     }
 
     @Override
-    public Map<ToolAction, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
+    public Map<ItemAbility, Integer> getRequiredToolLevels(ItemStack targetStack, ItemStack[] materials) {
         return Collections.emptyMap();
     }
 
@@ -199,11 +193,10 @@ public class BookEnchantSchematic implements UpgradeSchematic {
         return CastOptional.cast(targetStack.getItem(), IModularItem.class)
                 .map(item -> item.getModuleFromSlot(targetStack, slot))
                 .flatMap(module -> CastOptional.cast(module, ItemModuleMajor.class))
-                .map(module -> EnchantmentHelper.getEnchantments(materials[0]))
-                .map(Map::values)
+                .map(module -> EnchantmentHelper.getEnchantmentsForCrafting(materials[0]))
                 .stream()
-                .flatMap(Collection::stream)
-                .mapToInt(lvl -> lvl)
+                .flatMap(enchantments -> enchantments.entrySet().stream())
+                .mapToInt(entry -> entry.getIntValue())
                 .sum();
     }
 
@@ -226,17 +219,18 @@ public class BookEnchantSchematic implements UpgradeSchematic {
 
         if (module != null) {
             ToolData emptyTools = new ToolData();
-            return ForgeRegistries.ENCHANTMENTS.getValues().stream()
+            return TetraEnchantmentHelper.getRegisteredEnchantments()
                     .filter(enchantment -> module.acceptsEnchantment(targetStack, enchantment, false))
-                    .flatMap(enchantment -> IntStream.range(enchantment.getMinLevel(), enchantment.getMaxLevel() + 1)
+                    .flatMap(enchantment -> IntStream.range(enchantment.value().getMinLevel(), enchantment.value().getMaxLevel() + 1)
                             .mapToObj(level -> {
                                 ItemStack enchantedStack = targetStack.copy();
-                                EnchantmentHelper.getEnchantments(enchantedStack).keySet().stream()
-                                        .filter(currentEnchantment -> !enchantment.isCompatibleWith(currentEnchantment))
+                                EnchantmentHelper.getEnchantmentsForCrafting(enchantedStack).keySet().stream()
+                                        .filter(currentEnchantment -> !Enchantment.areCompatible(enchantment, currentEnchantment))
+                                        .map(this::getEnchantmentKey)
                                         .forEach(currentEnchantment -> TetraEnchantmentHelper.removeEnchantment(enchantedStack, currentEnchantment));
 
                                 TetraEnchantmentHelper.applyEnchantment(enchantedStack, module.getSlot(), enchantment, level);
-                                return new OutcomePreviewEnchantment(ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString(),
+                                return new OutcomePreviewEnchantment(getEnchantmentKey(enchantment),
                                         TetraEnchantmentHelper.getEnchantmentName(enchantment, level), "misc", level, glyph, enchantedStack,
                                         SchematicType.improvement, emptyTools, new ItemStack[0]);
                             }))
@@ -244,5 +238,15 @@ public class BookEnchantSchematic implements UpgradeSchematic {
         }
 
         return new OutcomePreview[0];
+    }
+
+    private int getModuleEnchantmentLevel(ItemStack itemStack, ItemModuleMajor module, Holder<Enchantment> enchantment) {
+        return module.getEnchantmentsPrimitive(itemStack).getOrDefault(getEnchantmentKey(enchantment), 0);
+    }
+
+    private String getEnchantmentKey(Holder<Enchantment> enchantment) {
+        return TetraEnchantmentHelper.getEnchantmentKey(enchantment)
+                .map(ResourceLocation::toString)
+                .orElseGet(enchantment::getRegisteredName);
     }
 }

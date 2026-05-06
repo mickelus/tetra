@@ -7,7 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.TetraMod;
@@ -52,7 +52,7 @@ public class RevengeTracker {
                 .orElse(false);
     }
 
-    public static void onAttackEntity(LivingAttackEvent event) {
+    public static void onAttackEntity(LivingIncomingDamageEvent event) {
         Entity entity = event.getEntity();
         if (!event.getEntity().getCommandSenderWorld().isClientSide() && EntityType.PLAYER.equals(entity.getType())) {
             Entity enemy = event.getSource().getEntity();

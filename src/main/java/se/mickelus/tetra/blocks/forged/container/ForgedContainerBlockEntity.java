@@ -3,11 +3,14 @@ package se.mickelus.tetra.blocks.forged.container;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,39 +32,40 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.util.ItemHandlerWrapper;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
+import se.mickelus.tetra.blocks.ItemHandlerBlockEntity;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
-public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvider {
+public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvider, ItemHandlerBlockEntity {
     private static final String inventoryKey = "inv";
-    private static final ResourceLocation lockLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/lock_break");
-    private static final ResourceLocation containerLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/container_content");
-    public static RegistryObject<BlockEntityType<ForgedContainerBlockEntity>> type;
+    private static final ResourceLocation lockLootTable = ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "forged/lock_break");
+    private static final ResourceKey<LootTable> containerLootTable = ResourceKey.create(
+            Registries.LOOT_TABLE,
+            ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "forged/container_content"));
+    public static Supplier<BlockEntityType<ForgedContainerBlockEntity>> type;
     public static int lockIntegrityMax = 4;
     public static int lockCount = 4;
     public static int lidIntegrityMax = 5;
     public static int compartmentCount = 3;
     public static int compartmentSize = 54;
     private final int[] lockIntegrity;
-    private final LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(compartmentSize * compartmentCount) {
+    private final ItemStackHandler handler = new ItemStackHandler(compartmentSize * compartmentCount) {
         protected void onContentsChanged(int slot) {
             setChanged();
         }
-    });
+    };
     public long openTime = -1;
     private int lidIntegrity = 0;
 
@@ -105,16 +109,10 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
         return this;
     }
 
-    @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            ForgedContainerBlockEntity delegate = getOrDelegate();
-            if (delegate != null) {
-                return delegate.handler.cast();
-            }
-        }
-        return super.getCapability(cap, side);
+    public IItemHandler getItemHandler(@Nullable Direction side) {
+        ForgedContainerBlockEntity delegate = getOrDelegate();
+        return delegate != null ? delegate.handler : null;
     }
 
     public void open(@Nullable Player player) {
@@ -143,19 +141,17 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
     }
 
     private void populateInventory(ServerLevel serverWorld, @Nullable ServerPlayer player) {
-        handler.ifPresent(handler -> {
-            LootTable lootTable = serverWorld.getServer().getLootData().getLootTable(containerLootTable);
-            LootParams.Builder builder = new LootParams.Builder(serverWorld)
-                    .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition));
+        LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(containerLootTable);
+        LootParams.Builder builder = new LootParams.Builder(serverWorld)
+                .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition));
 
-            if (player != null) {
-                CriteriaTriggers.GENERATE_LOOT.trigger(player, containerLootTable);
-                builder = builder.withParameter(LootContextParams.THIS_ENTITY, player)
-                        .withLuck(player.getLuck());
-            }
+        if (player != null) {
+            CriteriaTriggers.GENERATE_LOOT.trigger(player, containerLootTable);
+            builder = builder.withParameter(LootContextParams.THIS_ENTITY, player)
+                    .withLuck(player.getLuck());
+        }
 
-            lootTable.fill(new ItemHandlerWrapper(handler), builder.create(LootContextParamSets.CHEST), getBlockState().getSeed(getBlockPos()));
-        });
+        lootTable.fill(new ItemHandlerWrapper(handler), builder.create(LootContextParamSets.CHEST), getBlockState().getSeed(getBlockPos()));
     }
 
     private void causeOpeningEffects(ServerLevel worldServer) {
@@ -255,20 +251,20 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+        loadWithComponents(pkt.getTag(), lookupProvider);
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
 
-        handler.ifPresent(handler -> handler.deserializeNBT(compound.getCompound(inventoryKey)));
+        handler.deserializeNBT(registries, compound.getCompound(inventoryKey));
 
         for (int i = 0; i < lockIntegrity.length; i++) {
             lockIntegrity[i] = compound.getInt("lock_integrity" + i);
@@ -278,10 +274,10 @@ public class ForgedContainerBlockEntity extends BlockEntity implements MenuProvi
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
 
-        handler.ifPresent(handler -> compound.put(inventoryKey, handler.serializeNBT()));
+        compound.put(inventoryKey, handler.serializeNBT(registries));
 
         writeLockData(compound, lockIntegrity);
         writeLidData(compound, lidIntegrity);

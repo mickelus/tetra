@@ -2,7 +2,7 @@ package se.mickelus.tetra.module.data;
 
 import com.google.gson.JsonObject;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -35,7 +35,9 @@ public class EnchantmentMapping {
 
     public JsonObject toJson() {
         JsonObject result = new JsonObject();
-        result.addProperty("enchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment).getPath());
+        result.addProperty("enchantment", TetraEnchantmentHelper.getEnchantmentKey(enchantment)
+                .orElseThrow(() -> new IllegalStateException("Unregistered enchantment: " + enchantment))
+                .getPath());
         result.addProperty("improvement", improvement);
 
         if (!extract) {

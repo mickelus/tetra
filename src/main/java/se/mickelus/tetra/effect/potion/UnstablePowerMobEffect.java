@@ -18,11 +18,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import se.mickelus.mutil.effect.EffectTooltipRenderer;
 import se.mickelus.tetra.blocks.ArcaneFireBlock;
 import se.mickelus.tetra.client.particle.Particles;
@@ -31,8 +30,6 @@ import se.mickelus.tetra.util.StringHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-import java.util.function.Consumer;
-
 @ParametersAreNonnullByDefault
 public class UnstablePowerMobEffect extends MobEffect {
     public static final String identifier = "unstable_power";
@@ -48,10 +45,10 @@ public class UnstablePowerMobEffect extends MobEffect {
     }
 
     @Override
-    public void applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.level().isClientSide()) {
             if (entity.level().getGameTime() % 10 == 0) {
-                MobEffectInstance current = entity.getEffect(instance);
+                MobEffectInstance current = entity.getEffect(se.mickelus.tetra.effect.EffectHelper.effectHolder(instance));
                 if (current != null) {
                     splinterAmplifier(current, entity);
                     splinterDuration(current, entity);
@@ -61,6 +58,7 @@ public class UnstablePowerMobEffect extends MobEffect {
                 Particles.addSputteringPower((ServerLevel) entity.level(), entity.getX(), entity.getY(0.5), entity.getZ(), entity);
             }
         }
+        return true;
     }
 
     private void splinterAmplifier(MobEffectInstance current, LivingEntity entity) {
@@ -100,12 +98,13 @@ public class UnstablePowerMobEffect extends MobEffect {
     }
 
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return true;
     }
 
     public static void addOrUpdate(LivingEntity entity, int duration, int amplifier) {
-        MobEffectInstance current = entity.getEffect(instance);
+        var effect = se.mickelus.tetra.effect.EffectHelper.effectHolder(instance);
+        MobEffectInstance current = entity.getEffect(effect);
         int currentAmplifier = Optional.ofNullable(current)
                 .map(MobEffectInstance::getAmplifier)
                 .orElse(0);
@@ -117,29 +116,32 @@ public class UnstablePowerMobEffect extends MobEffect {
         int updatedDuration = currentDuration + duration;
 
         if (updatedDuration < currentDuration || updatedAmplifier < currentAmplifier) {
-            entity.removeEffect(instance);
+            entity.removeEffect(effect);
         }
 
         if (updatedDuration > 0 && updatedAmplifier >= 0) {
-            entity.addEffect(new MobEffectInstance(instance, updatedDuration, updatedAmplifier, false, false, true));
+            entity.addEffect(new MobEffectInstance(effect, updatedDuration, updatedAmplifier, false, false, true));
         }
     }
 
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (event.getEntity().hasEffect(instance)) {
-            event.setNewSpeed(event.getNewSpeed() * (1 + bonusMultiplier + event.getEntity().getEffect(instance).getAmplifier() * bonusMultiplier));
+        var effect = se.mickelus.tetra.effect.EffectHelper.effectHolder(instance);
+        if (event.getEntity().hasEffect(effect)) {
+            event.setNewSpeed(event.getNewSpeed() * (1 + bonusMultiplier + event.getEntity().getEffect(effect).getAmplifier() * bonusMultiplier));
         }
     }
 
-    public static void onLivingDamage(LivingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity livingEntity && livingEntity.hasEffect(instance)) {
-            event.setAmount(event.getAmount() * (1 + bonusMultiplier + livingEntity.getEffect(instance).getAmplifier() * bonusMultiplier));
+    public static void onLivingDamage(LivingDamageEvent.Pre event) {
+        var effect = se.mickelus.tetra.effect.EffectHelper.effectHolder(instance);
+        if (event.getSource().getEntity() instanceof LivingEntity livingEntity && livingEntity.hasEffect(effect)) {
+            event.setNewDamage(event.getNewDamage() * (1 + bonusMultiplier + livingEntity.getEffect(effect).getAmplifier() * bonusMultiplier));
         }
     }
 
     public static void onLivingDeath(Entity killedEntity, Entity killer) {
         if (killedEntity instanceof LivingEntity livingKilledEntity) {
-            MobEffectInstance effectInstance = livingKilledEntity.getEffect(instance);
+            var effect = se.mickelus.tetra.effect.EffectHelper.effectHolder(instance);
+            MobEffectInstance effectInstance = livingKilledEntity.getEffect(effect);
             if (effectInstance != null && killer instanceof LivingEntity livingKiller) {
                 UnstablePowerMobEffect.addOrUpdate(livingKiller, effectInstance.getDuration(), effectInstance.getAmplifier());
             }
@@ -147,14 +149,7 @@ public class UnstablePowerMobEffect extends MobEffect {
         }
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<IClientMobEffectExtensions> consumer) {
-        super.initializeClient(consumer);
-        consumer.accept(new ClientRenderer());
-    }
-
-    static class ClientRenderer extends EffectTooltipRenderer {
+    public static class ClientRenderer extends EffectTooltipRenderer {
         private static final int fullBarColor = 0x88ffb584;
         private static final int shadowBarColor = 0x55ff8e9b;
         int maxDuration = 0;
@@ -170,10 +165,11 @@ public class UnstablePowerMobEffect extends MobEffect {
         @Override
         public boolean renderGuiIcon(MobEffectInstance instance, Gui gui, GuiGraphics guiGraphics, int x, int y, float z, float alpha) {
             Player player = Minecraft.getInstance().player;
-            int duration = Optional.ofNullable(player.getEffect(UnstablePowerMobEffect.instance))
+            var effect = se.mickelus.tetra.effect.EffectHelper.effectHolder(UnstablePowerMobEffect.instance);
+            int duration = Optional.ofNullable(player.getEffect(effect))
                     .map(MobEffectInstance::getDuration)
                     .orElse(0);
-            int amplifier = Optional.ofNullable(player.getEffect(UnstablePowerMobEffect.instance))
+            int amplifier = Optional.ofNullable(player.getEffect(effect))
                     .map(MobEffectInstance::getAmplifier)
                     .orElse(0);
             if (duration > maxDuration || duration == 0) {
@@ -199,14 +195,14 @@ public class UnstablePowerMobEffect extends MobEffect {
             renderBar(guiGraphics, x, y, Math.min(ratio, laggedRatio), fullBarColor);
             renderBar(guiGraphics, x, y, Math.max(ratio, laggedRatio), shadowBarColor);
 
-            renderIcon(guiGraphics, x, y, duration);
+            renderIcon(guiGraphics, x, y, duration, effect);
 
             renderAmplifierLabel(guiGraphics, x, y, amplifier);
 
             return true;
         }
 
-        private static void renderIcon(GuiGraphics guiGraphics, int x, int y, int duration) {
+        private static void renderIcon(GuiGraphics guiGraphics, int x, int y, int duration, net.minecraft.core.Holder<MobEffect> effect) {
             float iconAlpha = 1;
             if (duration < 200) {
                 int l = 10 - duration / 20;
@@ -215,7 +211,7 @@ public class UnstablePowerMobEffect extends MobEffect {
                                 0.0F, 0.25F);
             }
             RenderSystem.enableBlend();
-            TextureAtlasSprite textureatlassprite = Minecraft.getInstance().getMobEffectTextures().get(UnstablePowerMobEffect.instance);
+            TextureAtlasSprite textureatlassprite = Minecraft.getInstance().getMobEffectTextures().get(effect);
             guiGraphics.setColor(1f, 1f, 1f, iconAlpha);
             guiGraphics.blit(x + 3, y + 3, 0, 18, 18, textureatlassprite);
             guiGraphics.setColor(1f, 1f, 1f, 1f);

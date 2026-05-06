@@ -3,16 +3,25 @@ package se.mickelus.tetra.effect;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.protocol.game.ClientboundLevelEventPacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantedItemInUse;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameType;
@@ -22,8 +31,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import se.mickelus.tetra.items.modular.IModularItem;
 
@@ -32,6 +42,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.Objects;
 
 @ParametersAreNonnullByDefault
 public class EffectHelper {
@@ -79,6 +90,36 @@ public class EffectHelper {
         return item.getEffectEfficiency(itemStack, effect);
     }
 
+    public static Holder<MobEffect> effectHolder(MobEffect effect) {
+        return BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect);
+    }
+
+    public static Holder<Enchantment> enchantmentHolder(ResourceKey<Enchantment> enchantment) {
+        return Objects.requireNonNull(CommonHooks.resolveLookup(Registries.ENCHANTMENT), "Enchantment registry lookup unavailable")
+                .getOrThrow(enchantment);
+    }
+
+    public static int getEnchantmentLevel(ResourceKey<Enchantment> enchantment, ItemStack itemStack) {
+        return EnchantmentHelper.getItemEnchantmentLevel(enchantmentHolder(enchantment), itemStack);
+    }
+
+    public static int getEnchantmentLevel(ResourceKey<Enchantment> enchantment, LivingEntity entity) {
+        return EnchantmentHelper.getEnchantmentLevel(enchantmentHolder(enchantment), entity);
+    }
+
+    public static float getEnchantmentDamageBonus(ItemStack itemStack, LivingEntity attacker, net.minecraft.world.entity.Entity target,
+            net.minecraft.world.damagesource.DamageSource damageSource, float baseDamage) {
+        if (attacker.level() instanceof ServerLevel serverLevel) {
+            return EnchantmentHelper.modifyDamage(serverLevel, itemStack, target, damageSource, baseDamage) - baseDamage;
+        }
+        return 0;
+    }
+
+    public static float getCriticalHitMultiplier(Player player, Entity target, boolean vanillaCritical, float damageModifier) {
+        var event = CommonHooks.fireCriticalHit(player, target, vanillaCritical, damageModifier);
+        return event.isCriticalHit() ? event.getDamageMultiplier() : 1f;
+    }
+
     /**
      * Break a block in the world, as a player.
      * Based on how players break blocks in vanilla {@link net.minecraft.server.management.PlayerInteractionManager#tryHarvestBlock}, but allows
@@ -100,45 +141,35 @@ public class EffectHelper {
             ServerPlayer serverPlayer = (ServerPlayer) breakingPlayer;
             GameType gameType = serverPlayer.gameMode.getGameModeForPlayer();
 
-            int exp = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, gameType, serverPlayer, pos);
-
-            BlockEntity tileEntity = world.getBlockEntity(pos);
-
-            if (exp != -1) {
-                boolean canRemove = !toolStack.onBlockStartBreak(pos, breakingPlayer)
-                        && !breakingPlayer.blockActionRestricted(world, pos, gameType)
-                        && (!harvest || blockState.canHarvestBlock(world, pos, breakingPlayer))
-                        && blockState.getBlock().onDestroyedByPlayer(blockState, world, pos, breakingPlayer, harvest, world.getFluidState(pos));
-
-                if (canRemove) {
-                    blockState.getBlock().destroy(world, pos, blockState);
-
-                    if (tryReplant) {
-                        breakAndReplant(serverWorld, pos, blockState, breakingPlayer, toolStack, harvest);
-                    } else if (harvest) {
-                        blockState.getBlock().playerDestroy(world, breakingPlayer, pos, blockState, tileEntity, toolStack);
-                    }
-
-                    if (harvest && exp > 0) {
-                        blockState.getBlock().popExperience(serverWorld, pos, exp);
-                    }
-
-                    if (harvest) {
-                        blockState.spawnAfterBreak(serverWorld, pos, toolStack, false);
-                    }
-                }
-                return canRemove;
+            var breakEvent = CommonHooks.fireBlockBreak(world, gameType, serverPlayer, pos, world.getBlockState(pos));
+            if (breakEvent.isCanceled() || breakingPlayer.blockActionRestricted(world, pos, gameType)) {
+                return false;
             }
 
-            return false;
+            BlockEntity tileEntity = world.getBlockEntity(pos);
+            BlockState destroyedState = blockState.getBlock().playerWillDestroy(world, pos, blockState, breakingPlayer);
+            boolean canHarvest = !harvest || destroyedState.canHarvestBlock(world, pos, breakingPlayer);
+            boolean canRemove = canHarvest
+                    && destroyedState.getBlock().onDestroyedByPlayer(destroyedState, world, pos, breakingPlayer, harvest, world.getFluidState(pos));
+
+            if (canRemove) {
+                destroyedState.getBlock().destroy(world, pos, destroyedState);
+
+                if (tryReplant) {
+                    breakAndReplant(serverWorld, pos, destroyedState, breakingPlayer, toolStack, harvest);
+                } else if (harvest) {
+                    destroyedState.getBlock().playerDestroy(world, breakingPlayer, pos, destroyedState, tileEntity, toolStack);
+                }
+            }
+            return canRemove;
         } else {
             return blockState.getBlock().onDestroyedByPlayer(blockState, world, pos, breakingPlayer, harvest,
                     world.getFluidState(pos));
         }
     }
 
-    public static boolean tryReplant(ItemStack itemStack, ToolAction toolAction) {
-        return toolAction == ToolActions.HOE_DIG && EnchantmentHelper.hasSilkTouch(itemStack);
+    public static boolean tryReplant(ItemStack itemStack, ItemAbility toolAction) {
+        return toolAction == ItemAbilities.HOE_DIG && getEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) > 0;
     }
 
     private static boolean breakAndReplant(ServerLevel serverLevel, BlockPos pos, BlockState blockState, Player entity, ItemStack itemStack, boolean doDrops) {
@@ -181,18 +212,26 @@ public class EffectHelper {
      * @param attacker
      */
     public static void applyEnchantmentHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
-        EnchantmentHelper.getEnchantments(itemStack).forEach((enchantment, level) -> enchantment.doPostAttack(attacker, target, level));
+        if (attacker.level() instanceof ServerLevel serverLevel) {
+            var damageSource = attacker instanceof Player player
+                    ? attacker.damageSources().playerAttack(player)
+                    : attacker.damageSources().mobAttack(attacker);
 
-        if (attacker != null) {
-            for (ItemStack equipment : attacker.getAllSlots()) {
-                EnchantmentHelper.getEnchantments(equipment).forEach((enchantment, level) -> enchantment.doPostAttack(attacker, target, level));
+            EnchantmentHelper.runIterationOnEquipment(target, (enchantment, level, enchantedItem) ->
+                    enchantment.value().doPostAttack(serverLevel, level, enchantedItem, net.minecraft.world.item.enchantment.EnchantmentTarget.VICTIM,
+                            target, damageSource));
+
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
+                ItemStack equipment = attacker.getItemBySlot(slot);
+                EnchantmentHelper.runIterationOnItem(equipment, slot, attacker, (enchantment, level, enchantedItem) ->
+                        enchantment.value().doPostAttack(serverLevel, level, enchantedItem,
+                                net.minecraft.world.item.enchantment.EnchantmentTarget.ATTACKER, target, damageSource));
             }
         }
 
-        // fire aspect has to be applied separately :o
-        int fireAspectLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, itemStack);
+        int fireAspectLevel = getEnchantmentLevel(Enchantments.FIRE_ASPECT, itemStack);
         if (fireAspectLevel > 0) {
-            target.setSecondsOnFire(fireAspectLevel * 4);
+            target.igniteForSeconds(fireAspectLevel * 4);
         }
     }
 
@@ -209,8 +248,7 @@ public class EffectHelper {
     public static float getModifiedEfficiency(Player player, ItemStack itemStack, float base, @Nullable BlockState blockState, @Nullable BlockPos pos) {
         float result = base;
         if (result > 1) {
-            int efficiencyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, itemStack);
-            result += efficiencyLevel * efficiencyLevel + 1;
+            result += (float) player.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MINING_EFFICIENCY);
         }
 
         if (MobEffectUtil.hasDigSpeed(player)) {
@@ -234,8 +272,10 @@ public class EffectHelper {
             }
         }
 
-        if (player.isEyeInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
-            result /= 5.0F;
+        result *= (float) player.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.BLOCK_BREAK_SPEED);
+
+        if (player.isEyeInFluid(FluidTags.WATER)) {
+            result *= (float) player.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.SUBMERGED_MINING_SPEED);
         }
 
         if (!player.onGround()) {
@@ -243,7 +283,7 @@ public class EffectHelper {
         }
 
         if (blockState != null) {
-            result = net.minecraftforge.event.ForgeEventFactory.getBreakSpeed(player, blockState, result, pos);
+            result = net.neoforged.neoforge.event.EventHooks.getBreakSpeed(player, blockState, result, pos);
         }
 
         return result;

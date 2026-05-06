@@ -1,20 +1,21 @@
 package se.mickelus.tetra.blocks.forged.chthonic;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class ChthonicExtractorTile extends BlockEntity {
     private static final String damageKey = "dmg";
-    public static RegistryObject<BlockEntityType<ChthonicExtractorTile>> type;
+    public static Supplier<BlockEntityType<ChthonicExtractorTile>> type;
     private int damage = 0;
 
     public ChthonicExtractorTile(BlockPos p_155268_, BlockState p_155269_) {
@@ -35,15 +36,15 @@ public class ChthonicExtractorTile extends BlockEntity {
 
         if (newDamage < ChthonicExtractorBlock.maxDamage) {
             setDamage(newDamage);
-        } else {
+        } else if (level != null) {
             level.levelEvent(null, 2001, getBlockPos(), Block.getId(level.getBlockState(getBlockPos())));
             level.setBlock(getBlockPos(), Blocks.AIR.defaultBlockState(), 2);
         }
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
 
         if (compound.contains(damageKey)) {
             damage = compound.getInt(damageKey);
@@ -51,8 +52,8 @@ public class ChthonicExtractorTile extends BlockEntity {
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt(damageKey, damage);
     }
 }

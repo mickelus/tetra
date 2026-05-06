@@ -24,13 +24,14 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.effect.AbilityUseResult;
 import se.mickelus.tetra.effect.ChargedAbilityEffect;
 import se.mickelus.tetra.effect.ComboPoints;
+import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.effect.potion.ExhaustedPotionEffect;
 import se.mickelus.tetra.effect.potion.StunPotionEffect;
@@ -70,7 +71,7 @@ public class LungeEffect extends ChargedAbilityEffect {
                 activeCache.invalidate(getIdentifier(player));
 
                 if (data.exhaustDuration > 0) {
-                    player.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, (int) (data.exhaustDuration * 20), 4, false, true));
+                    player.addEffect(new MobEffectInstance(EffectHelper.effectHolder(ExhaustedPotionEffect.instance), (int) (data.exhaustDuration * 20), 4, false, true));
                 }
             }
         }
@@ -112,7 +113,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             if (result != AbilityUseResult.fail) {
                 if (momentumLevel > 0) {
                     int duration = 10 + (int) (Math.min(momentumLevel, player.fallDistance) * item.getEffectEfficiency(itemStack, ItemEffect.abilityMomentum) * 20);
-                    target.addEffect(new MobEffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                    target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(StunPotionEffect.instance), duration, 0, false, false));
                     spawnMomentumParticles(target, bonusDamage);
                 }
             }
@@ -232,7 +233,7 @@ public class LungeEffect extends ChargedAbilityEffect {
             @Nullable LivingEntity target, @Nullable BlockPos targetPos, @Nullable Vec3 hitVec, int chargedTicks) {
         if (attacker.onGround()) {
             float damageMultiplierOffset = 0;
-            float strength = 1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
+            float strength = 1 + EffectHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
             Vec3 lookVector = attacker.getLookAngle();
             double verticalVelocityFactor = 0.8;
             float hitCooldown = 0.7f;

@@ -7,7 +7,7 @@ import se.mickelus.mutil.gui.SimpleColor;
 import se.mickelus.tetra.module.Priority;
 
 public class FilteredGridTextureModelData extends GridTextureModelData {
-    public static final ResourceLocation TYPE = new ResourceLocation("tetra", "filtered_grid_texture");
+    public static final ResourceLocation TYPE = ResourceLocation.fromNamespaceAndPath("tetra", "filtered_grid_texture");
     private String filter;
 
     public FilteredGridTextureModelData() {

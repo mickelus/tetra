@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.math.Transformation;
 import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -22,11 +21,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.TagsUpdatedEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.TagsUpdatedEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Quaternionf;
@@ -47,6 +46,7 @@ import se.mickelus.tetra.craftingeffect.CraftingEffect;
 import se.mickelus.tetra.craftingeffect.condition.CraftingEffectCondition;
 import se.mickelus.tetra.craftingeffect.outcome.CraftingEffectOutcome;
 import se.mickelus.tetra.data.deserializer.*;
+import se.mickelus.tetra.data.predicate.TetraItemPredicate;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.effect.data.ItemEffectTrigger;
 import se.mickelus.tetra.effect.data.condition.ItemEffectCondition;
@@ -78,6 +78,8 @@ import java.util.Map;
 public class DataManager implements DataDistributor {
 
     // todo: use the same naming for all deserializers?
+    // Cross-version compat: these Gson type adapters mirror upstream 1.20. Do not migrate to
+    // Codec / MapCodec — rewriting forks the codebase from upstream Tetra.
     public static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(ToolData.class, new ToolData.Deserializer())
             .registerTypeAdapter(AspectData.class, new AspectData.Deserializer())
@@ -90,7 +92,7 @@ public class DataManager implements DataDistributor {
             .registerTypeAdapter(FilteredGridTextureModelData.class, new FilteredGridTextureModelDeserializer())
             .registerTypeAdapter(ShieldModuleModel.class, new ShieldModuleModelDeserializer())
             .registerTypeAdapter(Priority.class, new Priority.Deserializer())
-            .registerTypeAdapter(ItemPredicate.class, new ItemPredicateDeserializer())
+            .registerTypeAdapter(TetraItemPredicate.class, new ItemPredicateDeserializer())
             .registerTypeAdapter(PropertyMatcher.class, new PropertyMatcherDeserializer())
             .registerTypeAdapter(MaterialData.class, new MaterialData.Deserializer())
             .registerTypeAdapter(OutcomeMaterial.class, new OutcomeMaterial.Deserializer())

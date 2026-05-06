@@ -20,14 +20,14 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.forged.ForgedBlockCommon;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements EntityBlock {
@@ -35,15 +35,15 @@ public class CoreExtractorPistonBlock extends TetraWaterloggedBlock implements E
     public static final BooleanProperty hackProp = BooleanProperty.create("hack");
     public static final VoxelShape boundingBox = box(5, 0, 5, 11, 16, 11);
 
-    public static RegistryObject<CoreExtractorPistonBlock> instance;
+    public static Supplier<CoreExtractorPistonBlock> instance;
 
     public CoreExtractorPistonBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
     }
 
     @Override
-    public void commonInit(PacketHandler packetHandler) {
-        packetHandler.registerPacket(CoreExtractorPistonUpdatePacket.class, CoreExtractorPistonUpdatePacket::new);
+    public void registerPackets(PacketHandler packetHandler) {
+        packetHandler.registerClientBoundPacket(CoreExtractorPistonUpdatePacket.class, CoreExtractorPistonUpdatePacket::new);
     }
 
     @Override

@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 public class SettleToast implements Toast {
-    private static final ResourceLocation texture = new ResourceLocation(TetraMod.MOD_ID, "textures/gui/toasts.png");
+    private static final ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "textures/gui/toasts.png");
     private final ItemStack itemStack;
     private final String moduleName;
     private final GuiModuleGlyph glyph;

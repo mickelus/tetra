@@ -9,15 +9,15 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import java.util.function.Supplier;
 
 public class DripParticles {
-    public static RegistryObject<SimpleParticleType> fallingBlood;
-    public static RegistryObject<SimpleParticleType> landingBlood;
-    public static RegistryObject<SimpleParticleType> fallingSlime;
-    public static RegistryObject<SimpleParticleType> landingSlime;
+    public static Supplier<SimpleParticleType> fallingBlood;
+    public static Supplier<SimpleParticleType> landingBlood;
+    public static Supplier<SimpleParticleType> fallingSlime;
+    public static Supplier<SimpleParticleType> landingSlime;
 
     @OnlyIn(Dist.CLIENT)
     public static class FallingBloodProvider implements ParticleProvider<SimpleParticleType> {

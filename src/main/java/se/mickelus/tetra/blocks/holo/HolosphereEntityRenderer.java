@@ -31,7 +31,8 @@ import se.mickelus.tetra.gui.GuiColors;
 import se.mickelus.tetra.util.Lherper;
 
 public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereBlockEntity> {
-    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(TetraMod.MOD_ID, "block/holosphere_hud"));
+    public static final Material material = new Material(TextureAtlas.LOCATION_BLOCKS,
+            ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "block/holosphere_hud"));
     private final BlockEntityRenderDispatcher dispatcher;
     private final Font font;
 
@@ -186,7 +187,6 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
 
 //        Quaternion quaternion = camera.rotation();
         PoseStack.Pose pose = poseStack.last();
-        Matrix3f normal = pose.normal();
         Matrix4f matrix4f = pose.pose();
 
         Vector3f[] matrix = new Vector3f[] {
@@ -204,14 +204,14 @@ public class HolosphereEntityRenderer implements BlockEntityRenderer<HolosphereB
             vector3f.add(x, y, z);
         }
 
-        consumer.vertex(matrix4f, matrix[0].x(), matrix[0].y(), matrix[0].z()).color(r, g, b, a).uv(u / spriteWidth, (v + height) / spriteHeight)
-                .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-        consumer.vertex(matrix4f, matrix[1].x(), matrix[1].y(), matrix[1].z()).color(r, g, b, a).uv(u / spriteWidth, v / spriteHeight)
-                .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-        consumer.vertex(matrix4f, matrix[2].x(), matrix[2].y(), matrix[2].z()).color(r, g, b, a).uv((u + width) / spriteWidth, v / spriteHeight)
-                .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-        consumer.vertex(matrix4f, matrix[3].x(), matrix[3].y(), matrix[3].z()).color(r, g, b, a).uv((u + width) / spriteWidth, (v + height) / spriteHeight)
-                .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
+        consumer.addVertex(matrix4f, matrix[0].x(), matrix[0].y(), matrix[0].z()).setColor(r, g, b, a).setUv(u / spriteWidth, (v + height) / spriteHeight)
+                .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(0, 1, 0);
+        consumer.addVertex(matrix4f, matrix[1].x(), matrix[1].y(), matrix[1].z()).setColor(r, g, b, a).setUv(u / spriteWidth, v / spriteHeight)
+                .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(0, 1, 0);
+        consumer.addVertex(matrix4f, matrix[2].x(), matrix[2].y(), matrix[2].z()).setColor(r, g, b, a).setUv((u + width) / spriteWidth, v / spriteHeight)
+                .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(0, 1, 0);
+        consumer.addVertex(matrix4f, matrix[3].x(), matrix[3].y(), matrix[3].z()).setColor(r, g, b, a).setUv((u + width) / spriteWidth, (v + height) / spriteHeight)
+                .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(0, 1, 0);
     }
 
     private int getLightColor(Level level, BlockPos pos) {

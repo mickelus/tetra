@@ -6,7 +6,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -23,7 +23,7 @@ public class TooltipGetterTool implements ITooltipGetter {
     private final boolean includeSpeedModifier;
 
 
-    public TooltipGetterTool(ToolAction tool, boolean includeSpeedModifier) {
+    public TooltipGetterTool(ItemAbility tool, boolean includeSpeedModifier) {
         localizationKey = "tetra.stats." + tool.name() + ".tooltip";
 
         this.includeSpeedModifier = includeSpeedModifier;
@@ -31,7 +31,7 @@ public class TooltipGetterTool implements ITooltipGetter {
         levelGetter = new StatGetterToolLevel(tool);
         baseEfficiencyGetter = new StatGetterToolEfficiency(tool);
         attackSpeedGetter = new StatGetterAttribute(Attributes.ATTACK_SPEED);
-        enchantmentGetter = new StatGetterEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, 1);
+        enchantmentGetter = new StatGetterEnchantmentLevel(Enchantments.EFFICIENCY, 1);
 
         if (includeSpeedModifier) {
             totalEfficiencyGetter = new StatGetterToolCompoundEfficiency(baseEfficiencyGetter, attackSpeedGetter, enchantmentGetter);

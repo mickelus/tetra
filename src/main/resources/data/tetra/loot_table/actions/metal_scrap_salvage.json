@@ -1,0 +1,522 @@
+{
+    "pools": [
+        {
+            "name": "forged/metal_scrap_salvage",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:iron_nugget",
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:iron_ingot",
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:gold_nugget",
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:gold_ingot",
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:copper_ingot",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:nuggets/copper",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:ingots/bronze",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:nuggets/bronze",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:ingots/steel",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:nuggets/steel",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:ingots/electrum",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:nuggets/electrum",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:ingots/nickel",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:nuggets/nickel",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:ingots/silver",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:nuggets/silver",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:ingots/lead",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:nuggets/lead",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:ingots/aluminum",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:nuggets/aluminum",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:ingots/tin",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:nuggets/tin",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:ingots/osmium",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "c:nuggets/osmium",
+                    "expand": true,
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "minecraft:apply_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "formula": "uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 2
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

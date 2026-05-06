@@ -19,8 +19,8 @@ public class FilteredGridTextureModelDeserializer implements JsonDeserializer<Fi
     public FilteredGridTextureModelData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         return new FilteredGridTextureModelData(
-                new ResourceLocation(GsonHelper.getAsString(jsonObject, "type")),
-                new ResourceLocation(GsonHelper.getAsString(jsonObject, "location")),
+                ResourceLocation.parse(GsonHelper.getAsString(jsonObject, "type")),
+                ResourceLocation.parse(GsonHelper.getAsString(jsonObject, "location")),
                 jsonObject.has("renderType") ? ResourceLocationDeserializer.deserialize(jsonObject.get("renderType")) : null,
                 jsonObject.has("transform") ? context.deserialize(jsonObject.getAsJsonObject("transform"), Transformation.class) : null,
                 jsonObject.has("emission") ? jsonObject.get("emission").getAsInt() : null,

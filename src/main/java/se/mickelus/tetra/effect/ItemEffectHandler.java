@@ -6,7 +6,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -16,7 +18,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,19 +28,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityTeleportEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.*;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.*;
+import net.neoforged.neoforge.event.level.BlockDropsEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.data.DataEffectsHandler;
 import se.mickelus.tetra.effect.howling.HowlingEffect;
@@ -55,13 +55,11 @@ import se.mickelus.tetra.items.modular.ItemModularHandheld;
 import se.mickelus.tetra.items.modular.ThrownModularItemEntity;
 import se.mickelus.tetra.items.modular.impl.bow.ModularBowItem;
 import se.mickelus.tetra.items.modular.impl.crossbow.ModularCrossbowItemImpl;
+import se.mickelus.tetra.items.modular.impl.toolbelt.suspend.SuspendPotionEffect;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
-import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuiverInventory;
 import se.mickelus.tetra.properties.PropertyHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -80,8 +78,8 @@ public class ItemEffectHandler {
     public static void applyHitEffects(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
         int bleedingLevel = getEffectLevel(itemStack, ItemEffect.bleeding);
         if (bleedingLevel > 0) {
-            if (!MobType.UNDEAD.equals(target.getMobType()) && attacker.getRandom().nextFloat() < 0.3f) {
-                target.addEffect(new MobEffectInstance(BleedingPotionEffect.instance, 40, bleedingLevel, false, false));
+            if (!target.getType().is(EntityTypeTags.UNDEAD) && attacker.getRandom().nextFloat() < 0.3f) {
+                target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(BleedingPotionEffect.instance), 40, bleedingLevel, false, false));
                 BleedingPotionEffect.spawnParticles(target, 8);
             }
         }
@@ -94,7 +92,7 @@ public class ItemEffectHandler {
         // todo: only trigger if target is standing on stone/earth/sand/gravel
         int earthbindLevel = getEffectLevel(itemStack, ItemEffect.earthbind);
         if (earthbindLevel > 0 && attacker.getRandom().nextFloat() < Math.max(0.1, 0.5 * (1 - target.getY() / 128))) {
-            target.addEffect(new MobEffectInstance(EarthboundPotionEffect.instance, earthbindLevel * 20, 0, false, true));
+            target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(EarthboundPotionEffect.instance), earthbindLevel * 20, 0, false, true));
 
             if (target.level() instanceof ServerLevel serverLevel) {
                 BlockState blockState = serverLevel.getBlockState(BlockPos.containing(target.getX(), target.getY() - 1, target.getZ()));
@@ -112,7 +110,7 @@ public class ItemEffectHandler {
         DataEffectsHandler.applyOnHitEffects(itemStack, target, attacker);
 
         ApplyHitTargetEffectsEvent event = new ApplyHitTargetEffectsEvent(attacker, target, itemStack);
-        MinecraftForge.EVENT_BUS.post(event);
+        NeoForge.EVENT_BUS.post(event);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -136,16 +134,16 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
-    public void onBreakBlock(BlockEvent.BreakEvent event) {
-        Optional.ofNullable(event.getPlayer())
+    public void onBreakBlock(BlockDropsEvent event) {
+        CastOptional.cast(event.getBreaker(), Player.class)
                 .map(entity -> Stream.of(entity.getMainHandItem(), entity.getOffhandItem()))
                 .orElseGet(Stream::empty)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
                 .forEach(itemStack -> {
-                    int satiatingXpDrain = SatiatingEffect.perform(itemStack, event.getPlayer(), event.getExpToDrop());
+                    int satiatingXpDrain = SatiatingEffect.perform(itemStack, (Player) event.getBreaker(), event.getDroppedExperience());
                     if (satiatingXpDrain > 0) {
-                        event.setExpToDrop(event.getExpToDrop() - satiatingXpDrain);
+                        event.setDroppedExperience(event.getDroppedExperience() - satiatingXpDrain);
                     }
                 });
     }
@@ -158,8 +156,8 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
-    public void onLivingAttack(LivingAttackEvent event) {
-        if (!event.getSource().is(DamageTypeTags.BYPASSES_ARMOR) && event.getEntity().isBlocking()) {
+    public void onLivingShieldBlock(LivingShieldBlockEvent event) {
+        if (!event.getDamageSource().is(DamageTypeTags.BYPASSES_ARMOR) && event.getBlocked()) {
             Optional.ofNullable(event.getEntity())
                     .map(LivingEntity::getUseItem)
                     .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
@@ -167,10 +165,10 @@ public class ItemEffectHandler {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
                         LivingEntity blocker = event.getEntity();
                         if (UseAnim.BLOCK.equals(itemStack.getUseAnimation())) {
-                            item.applyUsageEffects(blocker, itemStack, Mth.ceil(event.getAmount() / 2f));
+                            item.applyUsageEffects(blocker, itemStack, Mth.ceil(event.getBlockedDamage() / 2f));
                         }
 
-                        if (event.getSource().getDirectEntity() instanceof LivingEntity attacker) {
+                        if (event.getDamageSource().getDirectEntity() instanceof LivingEntity attacker) {
                             if (item.getEffectLevel(itemStack, ItemEffect.blockingReflect) > attacker.getRandom().nextFloat() * 100) {
                                 attacker.hurt(event.getEntity().damageSources().thorns(event.getEntity()),
                                         (float) (item.getAbilityBaseDamage(event.getEntity(), itemStack) * item.getEffectEfficiency(itemStack,
@@ -178,14 +176,26 @@ public class ItemEffectHandler {
                                 applyHitEffects(itemStack, attacker, blocker);
                                 EffectHelper.applyEnchantmentHitEffects(itemStack, attacker, blocker);
 
-                                float knockbackFactor = 0.5f + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
+                                float knockbackFactor = 0.5f + EffectHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack);
                                 attacker.knockback(knockbackFactor * 0.5f,
                                         blocker.getX() - attacker.getX(), blocker.getZ() - attacker.getZ());
                             }
                         }
                     });
-        }
 
+            Optional.ofNullable(event.getEntity())
+                    .filter(Player.class::isInstance)
+                    .map(Player.class::cast)
+                    .map(Player::getUseItem)
+                    .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
+                    .filter(itemStack -> UseAnim.BLOCK.equals(itemStack.getUseAnimation()))
+                    .filter(itemStack -> event.getDamageSource().getDirectEntity() instanceof LivingEntity attacker && attacker.canDisableShield())
+                    .ifPresent(itemStack -> ((ItemModularHandheld) itemStack.getItem()).onShieldDisabled((Player) event.getEntity(), itemStack));
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
         if ("arrow".equals(event.getSource().getMsgId())) {
             CastOptional.cast(event.getSource().getEntity(), LivingEntity.class)
                     .map(shooter -> Stream.of(shooter.getMainHandItem(), shooter.getOffhandItem()))
@@ -204,7 +214,7 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
-    public void onLivingHurt(LivingHurtEvent event) {
+    public void onLivingHurt(LivingIncomingDamageEvent event) {
         Optional.ofNullable(event.getSource().getEntity())
                 .filter(entity -> entity instanceof LivingEntity)
                 .map(entity -> (LivingEntity) entity)
@@ -236,9 +246,10 @@ public class ItemEffectHandler {
                     .filter(itemStack -> itemStack.getItem() instanceof ItemModularHandheld)
                     .forEach(itemStack -> {
                         ItemModularHandheld item = (ItemModularHandheld) itemStack.getItem();
-                        if (item.getAttributeValue(itemStack, Attributes.ARMOR) > 0 || item.getAttributeValue(itemStack,
-                                Attributes.ARMOR_TOUGHNESS) > 0) {
-                            int reducedAmount = (int) Math.ceil(event.getAmount() - CombatRules.getDamageAfterAbsorb(event.getAmount(),
+                        if (item.getAttributeValue(itemStack, Attributes.ARMOR.value()) > 0 || item.getAttributeValue(itemStack,
+                                Attributes.ARMOR_TOUGHNESS.value()) > 0) {
+                            int reducedAmount = (int) Math.ceil(event.getAmount() - CombatRules.getDamageAfterAbsorb(event.getEntity(), event.getAmount(),
+                                    event.getSource(),
                                     (float) event.getEntity().getArmorValue(),
                                     (float) event.getEntity().getAttribute(Attributes.ARMOR_TOUGHNESS).getValue()));
                             item.applyUsageEffects(event.getEntity(), itemStack, reducedAmount);
@@ -249,7 +260,7 @@ public class ItemEffectHandler {
     }
 
     @SubscribeEvent
-    public void onLivingDamage(LivingDamageEvent event) {
+    public void onLivingDamage(LivingDamageEvent.Pre event) {
         Optional.ofNullable(event.getSource().getEntity())
                 .filter(entity -> entity instanceof Player)
                 .map(entity -> (LivingEntity) entity)
@@ -316,15 +327,31 @@ public class ItemEffectHandler {
 
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
-        Optional.ofNullable(event.getEntity().getEffect(EarthboundPotionEffect.instance))
+        Optional.ofNullable(event.getEntity().getEffect(EffectHelper.effectHolder(EarthboundPotionEffect.instance)))
                 .ifPresent(effect -> event.getEntity().setDeltaMovement(event.getEntity().getDeltaMovement().multiply(1, 0.5, 1)));
     }
 
     @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (TickEvent.Phase.START == event.phase) {
-            LungeEffect.onPlayerTick(event.player);
-            FocusEffect.onPlayerTick(event);
+    public void onPlayerTick(PlayerTickEvent.Pre event) {
+        LungeEffect.onPlayerTick(event.getEntity());
+        FocusEffect.onPlayerTick(event);
+        SatiatingEffect.onPlayerTickPre(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public void onPlayerTick(PlayerTickEvent.Post event) {
+        SatiatingEffect.onPlayerTickPost(event.getEntity());
+
+        if (event.getEntity() instanceof ServerPlayer player && player.hasEffect(EffectHelper.effectHolder(SuspendPotionEffect.instance))) {
+            player.connection.clientIsFloating = false;
+            player.connection.aboveGroundTickCount = 0;
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingBreathe(LivingBreatheEvent event) {
+        if (event.getEntity().isCrouching() && FocusEffect.hasApplicableItem(event.getEntity())) {
+            event.setRefillAirAmount(0);
         }
     }
 
@@ -345,8 +372,8 @@ public class ItemEffectHandler {
                         LivingEntity attacker = event.getEntity();
                         LivingEntity target = (LivingEntity) event.getTarget();
                         if (180 - Math.abs(Math.abs(attacker.yHeadRot - target.yHeadRot) % 360 - 180) < 60) {
-                            event.setDamageModifier(Math.max(1.25f + 0.25f * backstabLevel, event.getDamageModifier()));
-                            event.setResult(Event.Result.ALLOW);
+                            event.setDamageMultiplier(Math.max(1.25f + 0.25f * backstabLevel, event.getDamageMultiplier()));
+                            event.setCriticalHit(true);
                         }
                     }
 
@@ -463,27 +490,15 @@ public class ItemEffectHandler {
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onArrowNock(ArrowNockEvent event) {
         Player player = event.getEntity();
-        if (!event.hasAmmo() && player.getItemInHand(InteractionHand.OFF_HAND).isEmpty()) {
-            ItemStack itemStack = ToolbeltHelper.findToolbelt(player);
-            if (!itemStack.isEmpty()) {
-                QuiverInventory inventory = new QuiverInventory(itemStack);
-                List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
-                int count = CastOptional.cast(event.getBow().getItem(), IModularItem.class)
-                        .map(item -> getEffectLevel(event.getBow(), ItemEffect.multishot))
-                        .filter(level -> level > 0)
-                        .orElse(1);
+        if (!event.hasAmmo()) {
+            int count = CastOptional.cast(event.getBow().getItem(), IModularItem.class)
+                    .map(item -> getEffectLevel(event.getBow(), ItemEffect.multishot))
+                    .filter(level -> level > 0)
+                    .orElse(1);
 
-                for (int i = 0; i < inventory.getContainerSize(); i++) {
-                    if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getItem(i).isEmpty()) {
-
-                        player.setItemInHand(InteractionHand.OFF_HAND, inventory.getItem(i).split(count));
-                        player.startUsingItem(event.getHand());
-                        inventory.setChanged();
-
-                        event.setAction(new InteractionResultHolder<>(InteractionResult.SUCCESS, event.getBow()));
-                        return;
-                    }
-                }
+            if (ToolbeltHelper.loadQuickAccessAmmoFromQuiver(player, event.getHand(), count)) {
+                player.startUsingItem(event.getHand());
+                event.setAction(new InteractionResultHolder<>(InteractionResult.SUCCESS, event.getBow()));
             }
         }
     }

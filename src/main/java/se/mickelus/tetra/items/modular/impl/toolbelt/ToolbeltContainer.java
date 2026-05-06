@@ -7,9 +7,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import java.util.function.Supplier;
 import se.mickelus.mutil.gui.DisabledSlot;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.*;
 
@@ -17,7 +17,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ToolbeltContainer extends AbstractContainerMenu {
-    public static RegistryObject<MenuType<ToolbeltContainer>> type;
+    public static Supplier<MenuType<ToolbeltContainer>> type;
     private final ItemStack itemStackToolbelt;
     private final QuickslotInventory quickslotInventory;
     private final StorageInventory storageInventory;
@@ -26,10 +26,10 @@ public class ToolbeltContainer extends AbstractContainerMenu {
 
     public ToolbeltContainer(int windowId, Container playerInventory, ItemStack itemStackToolbelt, Player player) {
         super(type.get(), windowId);
-        this.quickslotInventory = new QuickslotInventory(itemStackToolbelt);
-        this.storageInventory = new StorageInventory(itemStackToolbelt);
-        this.potionsInventory = new PotionsInventory(itemStackToolbelt);
-        this.quiverInventory = new QuiverInventory(itemStackToolbelt);
+        this.quickslotInventory = new QuickslotInventory(itemStackToolbelt, player.registryAccess());
+        this.storageInventory = new StorageInventory(itemStackToolbelt, player.registryAccess());
+        this.potionsInventory = new PotionsInventory(itemStackToolbelt, player.registryAccess());
+        this.quiverInventory = new QuiverInventory(itemStackToolbelt, player.registryAccess());
 
         this.itemStackToolbelt = itemStackToolbelt;
 
@@ -127,7 +127,7 @@ public class ToolbeltContainer extends AbstractContainerMenu {
             Slot slot = this.slots.get(i);
             if (slot.mayPlace(incomingStack)) {
                 ItemStack slotStack = slot.getItem();
-                if (ItemStack.isSameItemSameTags(slotStack, incomingStack)) {
+                if (ItemStack.isSameItemSameComponents(slotStack, incomingStack)) {
                     if (slotStack.getCount() + incomingStack.getCount() < slot.getMaxStackSize(slotStack)) {
                         slotStack.grow(incomingStack.getCount());
                         incomingStack.setCount(0);

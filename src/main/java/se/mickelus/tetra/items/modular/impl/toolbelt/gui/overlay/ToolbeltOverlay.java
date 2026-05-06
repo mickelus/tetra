@@ -1,18 +1,18 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.gui.overlay;
 
 import com.mojang.blaze3d.platform.Window;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiRoot;
 import se.mickelus.tetra.TetraMod;
@@ -30,7 +30,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltSlotType;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class ToolbeltOverlay extends GuiRoot implements IGuiOverlay {
+public class ToolbeltOverlay extends GuiRoot implements LayeredDraw.Layer {
 
     private final QuickslotGroupGui quickslotGroup;
     private final PotionGroupGui potionGroup;
@@ -88,7 +88,7 @@ public class ToolbeltOverlay extends GuiRoot implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics graphics, DeltaTracker deltaTracker) {
         if (!TetraKeyMappings.accessBinding.isDown() && isActive) {
             hideView();
         }
@@ -145,9 +145,9 @@ public class ToolbeltOverlay extends GuiRoot implements IGuiOverlay {
 
         ItemStack toolbeltStack = ToolbeltHelper.findToolbelt(mc.player);
         if (!toolbeltStack.isEmpty()) {
-            quickslotGroup.setInventory(new QuickslotInventory(toolbeltStack));
-            potionGroup.setInventory(new PotionsInventory(toolbeltStack));
-            quiverGroup.setInventory(new QuiverInventory(toolbeltStack));
+            quickslotGroup.setInventory(new QuickslotInventory(toolbeltStack, mc.player.registryAccess()));
+            potionGroup.setInventory(new PotionsInventory(toolbeltStack, mc.player.registryAccess()));
+            quiverGroup.setInventory(new QuiverInventory(toolbeltStack, mc.player.registryAccess()));
 
             canShow = true;
         } else {

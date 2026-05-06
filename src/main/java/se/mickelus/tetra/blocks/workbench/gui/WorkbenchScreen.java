@@ -12,9 +12,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiTexture;
@@ -54,6 +54,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
     private ItemStack currentPreview = ItemStack.EMPTY;
     private UpgradeSchematic currentSchematic = null;
     private boolean hadItem = false;
+    private boolean guiHandledMouseDown = false;
 
     private boolean isDirty = false;
 
@@ -123,7 +124,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
 
     @Override
     public void render(GuiGraphics graphics, final int mouseX, final int mouseY, final float partialTicks) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics, mouseX, mouseY, partialTicks);
         super.render(graphics, mouseX, mouseY, partialTicks);
         renderTooltip(graphics, mouseX, mouseY);
     }
@@ -156,33 +157,51 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
+        if (isNonTargetSlotUnderMouse()) {
+            return super.mouseClicked(mouseX, mouseY, button);
+        }
 
-        return defaultGui.onMouseClick((int) mouseX, (int) mouseY, button);
+        defaultGui.updateFocusState(this.leftPos, this.topPos, (int) mouseX, (int) mouseY);
+        guiHandledMouseDown = defaultGui.onMouseClick((int) mouseX, (int) mouseY, button);
+        if (guiHandledMouseDown) {
+            return true;
+        }
+
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        super.mouseReleased(mouseX, mouseY, button);
+        if (guiHandledMouseDown) {
+            defaultGui.onMouseRelease((int) mouseX, (int) mouseY, button);
+            guiHandledMouseDown = false;
+            return true;
+        }
+
+        if (isNonTargetSlotUnderMouse()) {
+            return super.mouseReleased(mouseX, mouseY, button);
+        }
 
         defaultGui.onMouseRelease((int) mouseX, (int) mouseY, button);
-
-        return true;
+        return super.mouseReleased(mouseX, mouseY, button);
     }
 
     @Override
     public boolean charTyped(char typecChar, int keyCode) {
-        slotDetail.keyTyped(typecChar);
-        return false;
-    }
-
-    @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double distance) {
-        if (defaultGui.onMouseScroll(mouseX, mouseY, distance)) {
+        if (slotDetail.keyTyped(typecChar)) {
             return true;
         }
 
-        return super.mouseScrolled(mouseX, mouseY, distance);
+        return super.charTyped(typecChar, keyCode);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        if (defaultGui.onMouseScroll(mouseX, mouseY, scrollY)) {
+            return true;
+        }
+
+        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 
     private void selectSlot(String slotKey) {
@@ -194,6 +213,11 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
             slotDetail.onTileEntityChange(viewingPlayer, tileEntity, tileEntity.getTargetItemStack(), selectedSlot, tileEntity.getCurrentSchematic());
         }
         slotDetail.setVisible(selectedSlot != null);
+    }
+
+    private boolean isNonTargetSlotUnderMouse() {
+        Slot hoveredSlot = getSlotUnderMouse();
+        return hoveredSlot != null && menu.slots.indexOf(hoveredSlot) > 0;
     }
 
     private void deselectSchematic() {
@@ -323,7 +347,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
             isDirty = false;
         } else if (world != null && world.getGameTime() % 20 == 0) {
             BlockPos pos = tileEntity.getBlockPos();
-            Map<ToolAction, Integer> availableTools = PropertyHelper.getCombinedToolLevels(viewingPlayer, world, pos, world.getBlockState(pos));
+            Map<ItemAbility, Integer> availableTools = PropertyHelper.getCombinedToolLevels(viewingPlayer, world, pos, world.getBlockState(pos));
 
             if (tileEntity.getCurrentSchematic() != null && slotDetail.isVisible()) {
                 slotDetail.update(viewingPlayer, tileEntity, availableTools);
@@ -396,8 +420,8 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchContainer>
                 TetraEnchantmentHelper.removeEnchantments(result, slot);
             }
 
-            Map<ToolAction, Integer> tools = schematic.getRequiredToolLevels(targetStack, materials);
-            for (Map.Entry<ToolAction, Integer> entry : tools.entrySet()) {
+            Map<ItemAbility, Integer> tools = schematic.getRequiredToolLevels(targetStack, materials);
+            for (Map.Entry<ItemAbility, Integer> entry : tools.entrySet()) {
                 result = WorkbenchTile.consumeCraftingToolEffects(result, slot, willReplace, entry.getKey(), entry.getValue(), viewingPlayer,
                         tileEntity.getLevel(), tileEntity.getBlockPos(), tileEntity.getBlockState(), false);
             }

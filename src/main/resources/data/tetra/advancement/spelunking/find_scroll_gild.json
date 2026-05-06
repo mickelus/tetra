@@ -1,0 +1,50 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "tetra:scroll_data": {
+                    "key": "hone/gild_1",
+                    "intricate": true,
+                    "material": 2,
+                    "ribbon": "c9ae69",
+                    "glyphs": [
+                        15,
+                        14,
+                        15,
+                        15
+                    ],
+                    "schematics": [
+                        "tetra:hone/gild_1"
+                    ]
+                }
+            },
+            "id": "tetra:scroll_rolled"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_gild.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_gild.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "tetra:scroll_data": {
+                                "key": "hone/gild_1"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

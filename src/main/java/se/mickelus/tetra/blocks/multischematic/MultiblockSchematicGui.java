@@ -1,13 +1,13 @@
 package se.mickelus.tetra.blocks.multischematic;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiRoot;
 import se.mickelus.mutil.gui.GuiString;
@@ -18,7 +18,7 @@ import java.util.StringJoiner;
 import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
-public class MultiblockSchematicGui extends GuiRoot implements IGuiOverlay {
+public class MultiblockSchematicGui extends GuiRoot implements LayeredDraw.Layer {
     private final GuiVerticalLayoutGroup element;
     private int selected = -1;
 
@@ -32,9 +32,8 @@ public class MultiblockSchematicGui extends GuiRoot implements IGuiOverlay {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (TickEvent.Phase.END == event.phase
-                && mc.player != null
+    public void onClientTick(ClientTickEvent.Post event) {
+        if (mc.player != null
                 && mc.level != null
                 && (mc.level.getGameTime() % 10 == 0 || selected != mc.player.getInventory().selected)) {
             this.selected = mc.player.getInventory().selected;
@@ -53,8 +52,8 @@ public class MultiblockSchematicGui extends GuiRoot implements IGuiOverlay {
                     StringJoiner part = new StringJoiner(" ");
                     for (int x = 0; x < block.width; x++) {
                         part.add(x == block.x && y == block.y
-                                ? ChatFormatting.WHITE + "\u25c6"
-                                : ChatFormatting.GRAY + "\u25c7");
+                                ? ChatFormatting.WHITE + "◆"
+                                : ChatFormatting.GRAY + "◇");
                     }
                     element.addChild(new GuiString(0, 0, part.toString()));
                 }
@@ -64,7 +63,7 @@ public class MultiblockSchematicGui extends GuiRoot implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics graphics, DeltaTracker deltaTracker) {
         this.draw(graphics);
     }
 }

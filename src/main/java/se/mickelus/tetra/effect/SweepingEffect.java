@@ -8,13 +8,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 
@@ -24,7 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class SweepingEffect {
 
     public static int getSweepingLevel(ItemStack itemStack) {
-        return EffectHelper.getEffectLevel(itemStack, ItemEffect.sweeping) + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SWEEPING_EDGE, itemStack);
+        return EffectHelper.getEffectLevel(itemStack, ItemEffect.sweeping) + EffectHelper.getEnchantmentLevel(Enchantments.SWEEPING_EDGE, itemStack);
     }
 
     /**
@@ -38,9 +34,9 @@ public class SweepingEffect {
     public static void sweepAttack(ItemStack itemStack, LivingEntity target, LivingEntity attacker, int sweepingLevel) {
         boolean trueSweep = EffectHelper.getEffectLevel(itemStack, ItemEffect.truesweep) > 0;
         float damage = (float) Math.max(attacker.getAttributeValue(Attributes.ATTACK_DAMAGE) * (sweepingLevel * 0.125f), 1);
-        float knockback = trueSweep ? (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) + 1) * 0.5f : 0.5f;
+        float knockback = trueSweep ? (EffectHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) + 1) * 0.5f : 0.5f;
         double range = 1 + EffectHelper.getEffectEfficiency(itemStack, ItemEffect.sweeping);
-        double reach = attacker.getAttributeValue(ForgeMod.ENTITY_REACH.get());
+        double reach = attacker.getAttributeValue(Attributes.ENTITY_INTERACTION_RANGE);
 
         // range values set up to mimic vanilla behaviour
         attacker.level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(range, 0.25d, range)).stream()
@@ -87,7 +83,7 @@ public class SweepingEffect {
     public static void truesweep(ItemStack itemStack, LivingEntity attacker, boolean triggerVfx) {
         int sweepingLevel = getSweepingLevel(itemStack);
         float damage = (float) Math.max(attacker.getAttributeValue(Attributes.ATTACK_DAMAGE) * (sweepingLevel * 0.125f), 1);
-        float knockback = 0.5f + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
+        float knockback = 0.5f + EffectHelper.getEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) * 0.5f;
         double range = 2 + EffectHelper.getEffectEfficiency(itemStack, ItemEffect.sweeping);
 
         Vec3 target = Vec3.directionFromRotation(attacker.getXRot(), attacker.getYRot())
@@ -124,10 +120,9 @@ public class SweepingEffect {
     }
 
     private static void causeTruesweepDamage(DamageSource damageSource, float baseDamage, ItemStack itemStack, LivingEntity attacker, LivingEntity target) {
-        float targetModifier = EnchantmentHelper.getDamageBonus(itemStack, target.getMobType());
+        float targetModifier = EffectHelper.getEnchantmentDamageBonus(itemStack, attacker, target, damageSource, baseDamage);
         float critMultiplier = CastOptional.cast(attacker, Player.class)
-                .map(player -> ForgeHooks.getCriticalHit(player, target, false, 1.5f))
-                .map(CriticalHitEvent::getDamageModifier)
+                .map(player -> EffectHelper.getCriticalHitMultiplier(player, target, false, 1.5f))
                 .orElse(1f);
 
         target.hurt(damageSource, (baseDamage + targetModifier) * critMultiplier);

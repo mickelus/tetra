@@ -2,7 +2,7 @@ package se.mickelus.tetra.gui.stats.data;
 
 import com.google.gson.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.crafting.conditions.ICondition;
+import net.neoforged.neoforge.common.conditions.ICondition;
 import se.mickelus.mutil.data.deserializer.ResourceLocationDeserializer;
 import se.mickelus.mutil.util.JsonOptional;
 import se.mickelus.tetra.data.deserializer.ConditionDeserializer;

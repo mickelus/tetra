@@ -1,41 +1,45 @@
 package se.mickelus.tetra.crafting;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import net.minecraft.network.FriendlyByteBuf;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.IIngredientSerializer;
+import net.neoforged.neoforge.common.crafting.ICustomIngredient;
+import net.neoforged.neoforge.common.crafting.IngredientType;
+import java.util.function.Supplier;
 import se.mickelus.tetra.blocks.scroll.ScrollData;
 import se.mickelus.tetra.blocks.scroll.ScrollItem;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
-public class ScrollIngredient extends Ingredient {
-    private final ItemStack itemStack;
+public class ScrollIngredient implements ICustomIngredient {
+    public static Supplier<IngredientType<ScrollIngredient>> type;
+    public static final MapCodec<ScrollIngredient> CODEC = ScrollData.MAP_CODEC.xmap(ScrollIngredient::new, ingredient -> ingredient.data);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ScrollIngredient> STREAM_CODEC =
+            ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());
 
     private final ScrollData data;
 
-    protected ScrollIngredient(ItemStack itemStack, ScrollData data) {
-        super(Stream.of(new Ingredient.ItemValue(itemStack)));
-        this.itemStack = itemStack;
-
+    public ScrollIngredient(ScrollData data) {
         this.data = data;
     }
 
     @Override
-    public boolean test(@Nullable ItemStack input) {
-        if (input == null || input.getItem() != ScrollItem.instance) {
-            return false;
-        }
+    public boolean test(ItemStack input) {
+        return !input.isEmpty()
+                && input.getItem() == ScrollItem.instance
+                && data.key.equals(ScrollData.read(input).key);
+    }
 
-        ScrollData inputData = ScrollData.read(input);
-
-        return data.key.equals(inputData.key);
+    @Override
+    public Stream<ItemStack> getItems() {
+        ItemStack itemStack = new ItemStack(ScrollItem.instance);
+        data.write(itemStack);
+        return Stream.of(itemStack);
     }
 
     @Override
@@ -44,43 +48,25 @@ public class ScrollIngredient extends Ingredient {
     }
 
     @Override
-    public IIngredientSerializer<? extends Ingredient> getSerializer() {
-        return Serializer.instance;
+    public IngredientType<?> getType() {
+        return type.get();
     }
 
     @Override
-    public JsonElement toJson() {
-        JsonObject json = new JsonObject();
-        json.addProperty("type", CraftingHelper.getID(getSerializer()).toString());
-        data.write(json);
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
 
-        return json;
+        if (!(other instanceof ScrollIngredient ingredient)) {
+            return false;
+        }
+
+        return Objects.equals(data, ingredient.data);
     }
 
-    /**
-     * Read/write directly to json to make it easier to write in recipe jsons
-     */
-    public static class Serializer implements IIngredientSerializer<ScrollIngredient> {
-        public static final ScrollIngredient.Serializer instance = new ScrollIngredient.Serializer();
-
-        @Override
-        public ScrollIngredient parse(JsonObject json) {
-            ScrollData data = ScrollData.read(json);
-            ItemStack itemStack = new ItemStack(ScrollItem.instance);
-            data.write(itemStack);
-
-            return new ScrollIngredient(itemStack, data);
-        }
-
-        @Override
-        public ScrollIngredient parse(FriendlyByteBuf buffer) {
-            ItemStack itemStack = buffer.readItem();
-            return new ScrollIngredient(itemStack, ScrollData.read(itemStack));
-        }
-
-        @Override
-        public void write(FriendlyByteBuf buffer, ScrollIngredient ingredient) {
-            buffer.writeItem(ingredient.itemStack);
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(data);
     }
 }

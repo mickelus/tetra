@@ -3,8 +3,13 @@ package se.mickelus.tetra.blocks;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.Dynamic;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -13,7 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraftforge.registries.ForgeRegistries;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
@@ -22,30 +27,34 @@ import java.util.function.Predicate;
 
 @ParametersAreNonnullByDefault
 public class PropertyMatcher implements Predicate<BlockState> {
+    public static final Codec<PropertyMatcher> CODEC = Codec.PASSTHROUGH.xmap(
+            dynamic -> deserialize(dynamic.convert(JsonOps.INSTANCE).getValue()),
+            matcher -> new Dynamic<>(JsonOps.INSTANCE, matcher.serialized)
+    );
     public static final PropertyMatcher any = new PropertyMatcher();
     private final Map<Property<?>, Predicate<?>> propertyPredicates = Maps.newHashMap();
     private Block block = null;
     private TagKey<Block> tag = null;
+    private JsonElement serialized = JsonNull.INSTANCE;
 
     public static PropertyMatcher deserialize(JsonElement json) {
         PropertyMatcher result = new PropertyMatcher();
+        result.serialized = json.deepCopy();
         if (json.isJsonObject()) {
             JsonObject jsonObject = GsonHelper.convertToJsonObject(json, "propertyMatcher");
 
             if (jsonObject.has("block")) {
                 String blockString = jsonObject.get("block").getAsString();
                 if (blockString != null) {
-                    ResourceLocation resourceLocation = new ResourceLocation(blockString);
-                    if (ForgeRegistries.BLOCKS.containsKey(resourceLocation)) {
-                        result.block = ForgeRegistries.BLOCKS.getValue(resourceLocation);
-                    }
+                    ResourceLocation resourceLocation = ResourceLocation.parse(blockString);
+                    result.block = RegistryHelper.get(BuiltInRegistries.BLOCK, resourceLocation);
                 }
             }
 
             if (jsonObject.has("tag")) {
                 String tagString = jsonObject.get("tag").getAsString();
                 if (tagString != null) {
-                    result.tag = BlockTags.create(new ResourceLocation(tagString));
+                    result.tag = BlockTags.create(ResourceLocation.parse(tagString));
                 }
             }
 
@@ -73,10 +82,8 @@ public class PropertyMatcher implements Predicate<BlockState> {
         } else {
             String blockString = json.getAsString();
             if (blockString != null) {
-                ResourceLocation resourceLocation = new ResourceLocation(blockString);
-                if (ForgeRegistries.BLOCKS.containsKey(resourceLocation)) {
-                    result.block = ForgeRegistries.BLOCKS.getValue(resourceLocation);
-                }
+                ResourceLocation resourceLocation = ResourceLocation.parse(blockString);
+                result.block = RegistryHelper.get(BuiltInRegistries.BLOCK, resourceLocation);
             }
         }
 

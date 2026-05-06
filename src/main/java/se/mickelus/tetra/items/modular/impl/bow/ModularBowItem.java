@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -14,6 +15,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -25,19 +27,21 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.registries.ObjectHolder;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.EventHooks;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.data.DataManager;
+import se.mickelus.tetra.effect.EffectHelper;
 import se.mickelus.tetra.effect.FocusEffect;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.event.ModularLooseProjectilesEvent;
@@ -70,15 +74,15 @@ public class ModularBowItem extends ModularItem {
     private static final GuiModuleOffsets majorOffsets = new GuiModuleOffsets(1, 21, -11, -3);
     private static final GuiModuleOffsets minorOffsets = new GuiModuleOffsets(-14, 23);
     public static final int maxUseDuration = 37000;
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ModularBowItem instance;
-    protected GridTextureModelData arrowModel0 = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
-    protected GridTextureModelData arrowModel1 = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_1"));
-    protected GridTextureModelData arrowModel2 = new GridTextureModelData(new ResourceLocation(TetraMod.MOD_ID, "item/module/bow/arrow_2"));
+    protected GridTextureModelData arrowModel0 = new GridTextureModelData(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "item/module/bow/arrow_0"));
+    protected GridTextureModelData arrowModel1 = new GridTextureModelData(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "item/module/bow/arrow_1"));
+    protected GridTextureModelData arrowModel2 = new GridTextureModelData(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "item/module/bow/arrow_2"));
     protected ItemStack vanillaBow;
 
     public ModularBowItem() {
         super(new Properties().stacksTo(1).fireResistant());
+        instance = this;
 
         majorModuleKeys = new String[] { stringKey, staveKey };
         minorModuleKeys = new String[] { riserKey };
@@ -87,7 +91,7 @@ public class ModularBowItem extends ModularItem {
 
         vanillaBow = new ItemStack(Items.BOW);
 
-        updateConfig(ConfigHandler.honeBowBase.get(), ConfigHandler.honeBowIntegrityMultiplier.get());
+        updateConfig(ConfigHandler.HONE_BOW_BASE_DEFAULT, ConfigHandler.HONE_BOW_INTEGRITY_MULTIPLIER_DEFAULT);
 
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, identifier));
     }
@@ -129,7 +133,7 @@ public class ModularBowItem extends ModularItem {
     @Override
     public void clientInit() {
         super.clientInit();
-        MinecraftForge.EVENT_BUS.register(new RangedFOVTransformer());
+        NeoForge.EVENT_BUS.register(new RangedFOVTransformer());
     }
 
     private boolean isMainhandAllowedAttribute(Attribute attribute) {
@@ -144,24 +148,19 @@ public class ModularBowItem extends ModularItem {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack itemStack) {
+    public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack itemStack) {
         if (isBroken(itemStack)) {
-            return AttributeHelper.emptyMap;
+            return ItemAttributeModifiers.EMPTY;
         }
 
-        if (slot == EquipmentSlot.MAINHAND) {
-            return getAttributeModifiersCached(itemStack).entries().stream()
-                    .filter(entry -> isMainhandAllowedAttribute(entry.getKey()))
-                    .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
-        }
-
-        if (slot == EquipmentSlot.OFFHAND) {
-            return getAttributeModifiersCached(itemStack).entries().stream()
-                    .filter(entry -> isOffhandAllowedAttribute(entry.getKey()))
-                    .collect(Multimaps.toMultimap(Map.Entry::getKey, Map.Entry::getValue, ArrayListMultimap::create));
-        }
-
-        return AttributeHelper.emptyMap;
+        ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+        getAttributeModifiersCached(itemStack).forEach((attribute, modifier) -> {
+            if (isMainhandAllowedAttribute(attribute)) {
+                EquipmentSlotGroup slotGroup = isOffhandAllowedAttribute(attribute) ? EquipmentSlotGroup.HAND : EquipmentSlotGroup.MAINHAND;
+                builder.add(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute), modifier, slotGroup);
+            }
+        });
+        return builder.build();
     }
 
     /**
@@ -202,7 +201,7 @@ public class ModularBowItem extends ModularItem {
 
             // multiply by 20 to align progress with vanilla bow (fully drawn at 1sec/20ticks)
             int drawProgress = Math.round(getProgress(itemStack, entity) * 20);
-            drawProgress = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(itemStack, world, player, drawProgress,
+            drawProgress = EventHooks.onArrowLoose(itemStack, world, player, drawProgress,
                     !ammoStack.isEmpty() || playerInfinite);
 
             if (drawProgress < 0) {
@@ -230,7 +229,7 @@ public class ModularBowItem extends ModularItem {
                         Mth.clamp(getEffectLevel(itemStack, ItemEffect.multishot), 1, infiniteAmmo ? 64 : ammoStack.getCount()),
                         player.getXRot(),
                         player.getYRot());
-                MinecraftForge.EVENT_BUS.post(looseProjectilesEvent);
+                NeoForge.EVENT_BUS.post(looseProjectilesEvent);
 
                 ammoStack = looseProjectilesEvent.getAmmoStack();
                 ImmutableList<Function<AbstractArrow, AbstractArrow>> projectileRemappers = looseProjectilesEvent.getProjectileRemappers();
@@ -247,17 +246,14 @@ public class ModularBowItem extends ModularItem {
 
                 if (projectileVelocity > 0.1f) {
                     if (!world.isClientSide) {
-                        int powerLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.POWER_ARROWS, itemStack);
-                        int punchLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PUNCH_ARROWS, itemStack);
-                        int flameLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.FLAMING_ARROWS, itemStack);
                         int piercingLevel = getEffectLevel(itemStack, ItemEffect.piercing)
-                                + EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PIERCING, itemStack);
+                                + EffectHelper.getEnchantmentLevel(Enchantments.PIERCING, itemStack);
 
                         for (int i = 0; i < count; i++) {
                             double yaw = baseYaw - multishotSpread * (count - 1) / 2f + multishotSpread * i;
                             fireProjectile(itemStack, world, (ArrowItem) ammoStack.getItem(), ammoStack, projectileRemappers, player,
-                                    (float) basePitch, (float) yaw, projectileVelocity, accuracy, drawProgress, strength, powerLevel, punchLevel,
-                                    flameLevel, piercingLevel, hasSuspend, infiniteAmmo);
+                                    (float) basePitch, (float) yaw, projectileVelocity, accuracy, drawProgress, strength, piercingLevel,
+                                    hasSuspend, infiniteAmmo);
                         }
 
 
@@ -297,7 +293,7 @@ public class ModularBowItem extends ModularItem {
     }
 
     private double getDrawStrength(LivingEntity entity, ItemStack itemStack) {
-        AttributeInstance instance = entity.getAttribute(TetraAttributes.drawStrength.get());
+        AttributeInstance instance = entity.getAttribute(AttributeHelper.getHolder(TetraAttributes.drawStrength.get()));
         if (instance != null) {
             return AttributeHelper.calculateValue(TetraAttributes.drawStrength.get(),
                     instance.getModifiers(),
@@ -307,7 +303,7 @@ public class ModularBowItem extends ModularItem {
     }
 
     private double getDrawSpeed(LivingEntity entity, ItemStack itemStack) {
-        AttributeInstance instance = entity.getAttribute(TetraAttributes.drawSpeed.get());
+        AttributeInstance instance = entity.getAttribute(AttributeHelper.getHolder(TetraAttributes.drawSpeed.get()));
         if (instance != null) {
             return AttributeHelper.calculateValue(TetraAttributes.drawSpeed.get(),
                     instance.getModifiers(),
@@ -318,9 +314,9 @@ public class ModularBowItem extends ModularItem {
 
     public static void fireProjectile(ItemStack itemStack, Level world, ArrowItem ammoItem, ItemStack ammoStack,
             ImmutableList<Function<AbstractArrow, AbstractArrow>> projectileRemappers, Player player,
-            float basePitch, float yaw, float projectileVelocity, float accuracy, int drawProgress, double strength, int powerLevel, int punchLevel,
-            int flameLevel, int piercingLevel, boolean hasSuspend, boolean infiniteAmmo) {
-        AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player);
+            float basePitch, float yaw, float projectileVelocity, float accuracy, int drawProgress, double strength, int piercingLevel,
+            boolean hasSuspend, boolean infiniteAmmo) {
+        AbstractArrow projectile = ammoItem.createArrow(world, ammoStack, player, itemStack);
         for (Function<AbstractArrow, AbstractArrow> remapper : projectileRemappers) {
             projectile = remapper.apply(projectile);
         }
@@ -333,21 +329,9 @@ public class ModularBowItem extends ModularItem {
         // the damage modifier is based on fully drawn damage, vanilla bows deal 3 times base damage + 0-4 crit damage
         projectile.setBaseDamage(projectile.getBaseDamage() - 2 + strength / 3);
 
-        if (powerLevel > 0) {
-            projectile.setBaseDamage(projectile.getBaseDamage() + powerLevel * 0.5D + 0.5D);
-        }
-
         // velocity multiplies arrow damage for vanilla projectiles, need to reduce damage if velocity > 1
         if (projectileVelocity > 1) {
             projectile.setBaseDamage(projectile.getBaseDamage() / projectileVelocity);
-        }
-
-        if (punchLevel > 0) {
-            projectile.setKnockback(punchLevel);
-        }
-
-        if (flameLevel > 0) {
-            projectile.setSecondsOnFire(100);
         }
 
         if (piercingLevel > 0) {
@@ -376,7 +360,7 @@ public class ModularBowItem extends ModularItem {
 
         world.addFreshEntity(projectile);
         ModularProjectileSpawnEvent event = new ModularProjectileSpawnEvent(itemStack, ammoStack, player, projectile, world, drawProgress);
-        MinecraftForge.EVENT_BUS.post(event);
+        NeoForge.EVENT_BUS.post(event);
 
         // vanilla velocity sync breaks when velocity is >3.9 on any axis
         if (projectileVelocity * 3 > 4) {
@@ -386,7 +370,7 @@ public class ModularBowItem extends ModularItem {
 
     private boolean isInfinite(Player player, ItemStack bowStack, ItemStack ammoStack) {
         return player.getAbilities().instabuild
-                || (ammoStack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) > 0)
+                || (ammoStack.isEmpty() && EffectHelper.getEnchantmentLevel(Enchantments.INFINITY, bowStack) > 0)
                 || CastOptional.cast(ammoStack.getItem(), ArrowItem.class)
                 .map(item -> item.isInfinite(ammoStack, bowStack, player))
                 .orElse(false);
@@ -394,7 +378,7 @@ public class ModularBowItem extends ModularItem {
 
     public int getDrawDuration(LivingEntity entity, ItemStack itemStack) {
         return Math.max((int) (20 * (getDrawSpeed(entity, itemStack)
-                - EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
+                - EffectHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, itemStack) * 0.2)), 1);
     }
 
     /**
@@ -440,9 +424,13 @@ public class ModularBowItem extends ModularItem {
         return usedTicks > getOverbowedLimit(itemStack) + getDrawDuration(entity, itemStack);
     }
 
-    @Override
     public int getUseDuration(ItemStack pStack) {
         return maxUseDuration;
+    }
+
+    @Override
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
+        return getUseDuration(stack);
     }
 
     /**
@@ -450,11 +438,6 @@ public class ModularBowItem extends ModularItem {
      */
     public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.BOW;
-    }
-
-    @Override
-    public boolean canBeDepleted() {
-        return true;
     }
 
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
@@ -465,10 +448,10 @@ public class ModularBowItem extends ModularItem {
             return InteractionResultHolder.pass(bowStack);
         }
 
-        InteractionResultHolder<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(bowStack, world, player, hand, hasAmmo);
+        InteractionResultHolder<ItemStack> ret = EventHooks.onArrowNock(bowStack, world, player, hand, hasAmmo);
         if (ret != null) return ret;
 
-        if (!hasAmmo && !player.getAbilities().instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) <= 0) {
+        if (!hasAmmo && !player.getAbilities().instabuild && EffectHelper.getEnchantmentLevel(Enchantments.INFINITY, bowStack) <= 0) {
             return InteractionResultHolder.fail(bowStack);
         } else {
             player.startUsingItem(hand);

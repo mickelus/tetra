@@ -73,7 +73,8 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
         if (result != AbilityUseResult.fail) {
             int overchargeBonus = canOvercharge(item, itemStack) ? getOverchargeBonus(item, itemStack, chargedTicks) : 0;
-            boolean isPunctured = target.getEffect(PuncturedPotionEffect.instance) != null;
+            var puncturedEffect = EffectHelper.effectHolder(PuncturedPotionEffect.instance);
+            boolean isPunctured = target.getEffect(puncturedEffect) != null;
             boolean reversal = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge) > 0 && armor > attacker.getArmorValue();
 
             if (armor < 6 || isPunctured || reversal) {
@@ -98,7 +99,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
                     duration += exhilarationLevel;
                 }
 
-                target.addEffect(new MobEffectInstance(BleedingPotionEffect.instance, duration, 1, false, false));
+                target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(BleedingPotionEffect.instance), duration, 1, false, false));
                 BleedingPotionEffect.spawnParticles(target, 8);
             }
 
@@ -115,7 +116,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
                     amplifier += overextendLevel;
                 }
 
-                target.addEffect(new MobEffectInstance(PuncturedPotionEffect.instance, duration, amplifier, false, false));
+                target.addEffect(new MobEffectInstance(puncturedEffect, duration, amplifier, false, false));
             }
 
             if (!isPunctured) {
@@ -141,7 +142,7 @@ public class PunctureEffect extends ChargedAbilityEffect {
 
         float knockbackMultiplier = 0.3f;
 
-        boolean isPunctured = target.getEffect(PuncturedPotionEffect.instance) != null;
+        boolean isPunctured = target.getEffect(EffectHelper.effectHolder(PuncturedPotionEffect.instance)) != null;
         if (armor < 6 || isPunctured) {
             knockbackMultiplier += 0.6f;
         }

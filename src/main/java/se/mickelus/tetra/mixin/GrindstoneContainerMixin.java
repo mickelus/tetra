@@ -9,14 +9,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.items.modular.IModularItem;
 
+// Cross-version compat: matches upstream 1.20's GrindstoneContainerMixin. The vanilla method was
+// renamed from removeNonCurses(ItemStack, int, int) to removeNonCursesFrom(ItemStack) in 1.21,
+// but the role (build the disenchanted result stack) is unchanged.
 @Mixin(GrindstoneMenu.class)
 public class GrindstoneContainerMixin {
 
-    @Inject(at = @At("HEAD"), method = "removeNonCurses", cancellable = true)
-    private void removeEnchantments(ItemStack itemStack, int damage, int count, CallbackInfoReturnable<ItemStack> callback) {
+    @Inject(at = @At("HEAD"), method = "removeNonCursesFrom", cancellable = true)
+    private void removeEnchantments(ItemStack itemStack, CallbackInfoReturnable<ItemStack> callback) {
         if (itemStack.getItem() instanceof IModularItem) {
             ItemStack result = TetraEnchantmentHelper.removeAllEnchantments(itemStack.copy());
-
             callback.setReturnValue(result);
             callback.cancel();
         }

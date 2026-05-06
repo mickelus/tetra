@@ -12,7 +12,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class QuadRenderer {
-    public final Vertex[] vertexPositions;
+    final Vertex[] vertexPositions;
     public final Vector3f normal;
 
     public QuadRenderer(float x, float y, float z, float w, float h, float u, float v, float texWidth, float texHeight, boolean mirror, Direction direction) {
@@ -102,25 +102,19 @@ public class QuadRenderer {
         for (Vertex vertex : vertexPositions) {
             Vector4f pos = new Vector4f(vertex.pos.x() / 16.0F, vertex.pos.y() / 16.0F, vertex.pos.z() / 16.0F, 1.0F);
             matrix.transform(pos);
-            buffer.vertex(pos.x(), pos.y(), pos.z(), red, green, blue, alpha, vertex.u, vertex.v, packedOverlay,
-                    packedLight, originX, originY, originZ);
+            buffer.addVertex(pos.x(), pos.y(), pos.z())
+                    .setColor(red, green, blue, alpha)
+                    .setUv(vertex.u, vertex.v)
+                    .setOverlay(packedOverlay)
+                    .setLight(packedLight)
+                    .setNormal(originX, originY, originZ);
         }
         matrixStack.popPose();
     }
 
-    static class Vertex {
-        final Vector3f pos;
-        final float u;
-        final float v;
-
-        public Vertex(float x, float y, float z, float texU, float texV) {
-            this(new Vector3f(x, y, z), texU, texV);
-        }
-
-        public Vertex(Vector3f pos, float u, float v) {
-            this.pos = pos;
-            this.u = u;
-            this.v = v;
-        }
+     record Vertex(Vector3f pos, float u, float v) {
+            public Vertex(float x, float y, float z, float texU, float texV) {
+                this(new Vector3f(x, y, z), texU, texV);
+            }
     }
 }

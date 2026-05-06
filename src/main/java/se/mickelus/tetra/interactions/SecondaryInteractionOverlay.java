@@ -1,22 +1,22 @@
 package se.mickelus.tetra.interactions;
 
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiRoot;
 import se.mickelus.tetra.client.keymap.TetraKeyMappings;
 
-public class SecondaryInteractionOverlay extends GuiRoot implements IGuiOverlay {
+public class SecondaryInteractionOverlay extends GuiRoot implements LayeredDraw.Layer {
     SecondaryInteraction currentInteraction;
     SecondaryInteractionGui currentDisplay;
     boolean wasKeyDown = false;
@@ -42,13 +42,13 @@ public class SecondaryInteractionOverlay extends GuiRoot implements IGuiOverlay 
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         this.draw(guiGraphics);
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (TickEvent.Phase.END == event.phase && (mc.level != null && mc.level.getGameTime() % 10 == 0)) {
+    public void onClientTick(ClientTickEvent.Post event) {
+        if (mc.level != null && mc.level.getGameTime() % 10 == 0) {
             updateCurrentInteraction(mc.hitResult.getType() == HitResult.Type.BLOCK ? ((BlockHitResult) mc.hitResult).getBlockPos() : null,
                     mc.hitResult.getType() == HitResult.Type.ENTITY ? ((EntityHitResult) mc.hitResult).getEntity() : null);
         }

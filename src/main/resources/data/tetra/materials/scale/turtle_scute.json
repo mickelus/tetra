@@ -21,7 +21,7 @@
         "default"
     ],
     "material": {
-        "items": [ "minecraft:scute" ]
+        "items": [ "minecraft:turtle_scute" ]
     },
     "requiredTools": {
         "cut": "minecraft:gold"

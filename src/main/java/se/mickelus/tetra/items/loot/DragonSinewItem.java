@@ -3,20 +3,13 @@ package se.mickelus.tetra.items.loot;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.entries.LootTableReference;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.LootTableLoadEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import se.mickelus.tetra.TetraMod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import se.mickelus.tetra.items.TetraItem;
 
 import javax.annotation.Nullable;
@@ -28,18 +21,14 @@ public class DragonSinewItem extends TetraItem {
     public static final String identifier = "dragon_sinew";
     static final Component tooltip = Component.translatable("item.tetra." + identifier + ".description")
             .withStyle(ChatFormatting.GRAY);
-    private static final ResourceLocation dragonLootTable = new ResourceLocation("entities/ender_dragon");
-    private static final ResourceLocation sinewLootTable = new ResourceLocation(TetraMod.MOD_ID, "entities/ender_dragon_extended");
 
     public DragonSinewItem() {
         super(new Properties());
-
-        MinecraftForge.EVENT_BUS.register(new LootTableHandler());
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack itemStack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(DragonSinewItem.tooltip);
     }
 
@@ -64,16 +53,5 @@ public class DragonSinewItem extends TetraItem {
                     entity.level().getRandom().nextFloat() * 0.02f - 0.01f, -0.01f - entity.level().getRandom().nextFloat() * 0.01f, entity.level().getRandom().nextFloat() * 0.02f - 0.01f);
         }
         return false;
-    }
-
-    public static class LootTableHandler {
-        @SubscribeEvent
-        public void onLootTableLoad(final LootTableLoadEvent event) {
-            if (event.getName().equals(dragonLootTable)) {
-                event.getTable().addPool(LootPool.lootPool()
-                        .name(TetraMod.MOD_ID + ":" + identifier)
-                        .add(LootTableReference.lootTableReference(sinewLootTable)).build());
-            }
-        }
     }
 }

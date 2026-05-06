@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -25,16 +26,15 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.registries.ObjectHolder;
+import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.Nullable;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.TetraMod;
-import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.blocks.PropertyMatcher;
 import se.mickelus.tetra.blocks.TetraWaterloggedBlock;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collection;
@@ -49,50 +49,49 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
     public static final BooleanProperty propX = BooleanProperty.create("x");
     public static final BooleanProperty propBroken = BooleanProperty.create("broken");
     public static final String identifier = "forged_vent";
-    private static final ResourceLocation boltLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/bolt_break");
-    private static final ResourceLocation ventLootTable = new ResourceLocation(TetraMod.MOD_ID, "forged/vent_break");
+    private static final ResourceLocation boltLootTable = ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "forged/bolt_break");
+    private static final ResourceLocation ventLootTable = ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "forged/vent_break");
     public static final BlockInteraction[] interactions = new BlockInteraction[]{
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.EAST, 1, 4, 12, 15,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.EAST, 1, 4, 12, 15,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(0)),
                     ForgedVentBlock::breakBolt),
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.EAST, 1, 4, 1, 4,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.EAST, 1, 4, 1, 4,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(1)),
                     ForgedVentBlock::breakBolt),
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.EAST, 12, 15, 12, 15,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.EAST, 12, 15, 12, 15,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(2)),
                     ForgedVentBlock::breakBolt),
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.EAST, 12, 15, 1, 4,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.EAST, 12, 15, 1, 4,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(3)),
                     ForgedVentBlock::breakBolt),
 
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.WEST, 12, 15, 12, 15,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.WEST, 12, 15, 12, 15,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(0)),
                     ForgedVentBlock::breakBolt),
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.WEST, 12, 15, 1, 4,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.WEST, 12, 15, 1, 4,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(1)),
                     ForgedVentBlock::breakBolt),
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.WEST, 1, 4, 12, 15,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.WEST, 1, 4, 12, 15,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(2)),
                     ForgedVentBlock::breakBolt),
-            new BlockInteraction(TetraToolActions.hammer, 3, Direction.WEST, 1, 4, 1, 4,
+            new BlockInteraction(TetraItemAbilities.hammer, 3, Direction.WEST, 1, 4, 1, 4,
                     new PropertyMatcher().where(propBroken, equalTo(false)).where(propRotation, equalTo(3)),
                     ForgedVentBlock::breakBolt),
 
-            new BlockInteraction(TetraToolActions.pry, 1, Direction.EAST, 7, 11, 8, 12,
+            new BlockInteraction(TetraItemAbilities.pry, 1, Direction.EAST, 7, 11, 8, 12,
                     new PropertyMatcher().where(propBroken, equalTo(true)),
                     ForgedVentBlock::breakBeam),
-            new BlockInteraction(TetraToolActions.pry, 1, Direction.WEST, 7, 11, 8, 12,
+            new BlockInteraction(TetraItemAbilities.pry, 1, Direction.WEST, 7, 11, 8, 12,
                     new PropertyMatcher().where(propBroken, equalTo(true)),
                     ForgedVentBlock::breakBeam),
     };
-    @ObjectHolder(registryName = "block", value = TetraMod.MOD_ID + ":" + identifier)
     public static ForgedVentBlock instance;
 
     public ForgedVentBlock() {
         super(ForgedBlockCommon.propertiesNotSolid);
     }
 
-    private static boolean breakBolt(Level world, BlockPos pos, BlockState blockState, Player player, InteractionHand hand, Direction hitFace) {
+    private static boolean breakBolt(Level world, BlockPos pos, BlockState blockState, @Nullable Player player, @Nullable InteractionHand hand, Direction hitFace) {
         world.setBlock(pos, world.getBlockState(pos).setValue(propBroken, true), 2);
 
         if (!world.isClientSide) {
@@ -162,19 +161,34 @@ public class ForgedVentBlock extends TetraWaterloggedBlock implements IInteracti
     }
 
     @Override
-    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ToolAction> tools) {
+    public BlockInteraction[] getPotentialInteractions(Level world, BlockPos pos, BlockState state, Direction face, Collection<ItemAbility> tools) {
         return Arrays.stream(interactions)
                 .filter(interaction -> interaction.isPotentialInteraction(world, pos, state, state.getValue(propX) ? Direction.EAST : Direction.SOUTH, face, tools))
                 .toArray(BlockInteraction[]::new);
     }
 
-    @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTrace) {
+    private InteractionResult useInternal(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTrace) {
         return BlockInteraction.attemptInteraction(world, state, pos, player, hand, rayTrace);
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag advanced) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult rayTrace) {
+        return switch (useInternal(state, world, pos, player, hand, rayTrace)) {
+            case SUCCESS, CONSUME -> ItemInteractionResult.sidedSuccess(world.isClientSide);
+            case CONSUME_PARTIAL -> ItemInteractionResult.CONSUME_PARTIAL;
+            case FAIL -> ItemInteractionResult.FAIL;
+            default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult rayTrace) {
+        return useInternal(state, world, pos, player, InteractionHand.MAIN_HAND, rayTrace);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
         tooltip.add(ForgedBlockCommon.locationTooltip);
     }
 

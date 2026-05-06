@@ -62,7 +62,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
     private AbilityUseResult regularExecute(Player attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target, int chargedTicks) {
         long harmfulCount = target.getActiveEffects().stream()
-                .filter(effect -> effect.getEffect().getCategory() == MobEffectCategory.HARMFUL)
+                .filter(effect -> effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL)
                 .mapToInt(MobEffectInstance::getAmplifier)
                 .map(amp -> amp + 1)
                 .sum();
@@ -115,7 +115,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
             int momentumLevel = item.getEffectLevel(itemStack, ItemEffect.abilityMomentum);
             if (momentumLevel > 0) {
                 int duration = (int) (momentumLevel * damageMultiplier * 20);
-                target.addEffect(new MobEffectInstance(StunPotionEffect.instance, duration, 0, false, false));
+                target.addEffect(new MobEffectInstance(EffectHelper.effectHolder(StunPotionEffect.instance), duration, 0, false, false));
             }
 
             int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
@@ -125,7 +125,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
                 int duration = (int) (Math.min(200, item.getEffectEfficiency(itemStack, ItemEffect.abilityExhilaration) * maxHealth) * 20);
 
                 if (amplifier >= 0 && duration > 0) {
-                    attacker.addEffect(new MobEffectInstance(SmallStrengthPotionEffect.instance, duration, amplifier, false, true));
+                    attacker.addEffect(new MobEffectInstance(EffectHelper.effectHolder(SmallStrengthPotionEffect.instance), duration, amplifier, false, true));
                 }
             }
         }
@@ -136,7 +136,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
     private void echoExecute(Player attacker, ItemModularHandheld item, ItemStack itemStack, LivingEntity target) {
         EchoHelper.echo(attacker, 100, () -> {
             long harmfulCount = target.getActiveEffects().stream()
-                    .filter(effect -> effect.getEffect().getCategory() == MobEffectCategory.HARMFUL)
+                    .filter(effect -> effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL)
                     .mapToInt(MobEffectInstance::getAmplifier)
                     .map(amp -> amp + 1)
                     .sum();
@@ -170,13 +170,14 @@ public class ExecuteEffect extends ChargedAbilityEffect {
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.2f, 0.2f);
 
         if (result != AbilityUseResult.fail) {
-            int amp = Optional.ofNullable(target.getEffect(SeveredPotionEffect.instance))
+            var severed = EffectHelper.effectHolder(SeveredPotionEffect.instance);
+            int amp = Optional.ofNullable(target.getEffect(severed))
                     .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
             amp += targetFullHealth ? 2 : 1;
             amp = Math.min(amp, 2);
 
-            target.addEffect(new MobEffectInstance(SeveredPotionEffect.instance, 1200, amp, false, false));
+            target.addEffect(new MobEffectInstance(severed, 1200, amp, false, false));
         }
 
         return result;
@@ -184,7 +185,7 @@ public class ExecuteEffect extends ChargedAbilityEffect {
 
     private double getRevengeMultiplier(Player player, ItemModularHandheld item, ItemStack itemStack) {
         int revengeLevel = item.getEffectLevel(itemStack, ItemEffect.abilityRevenge);
-        if (revengeLevel > 0 && (player.getActiveEffects().stream().anyMatch(effect -> effect.getEffect().getCategory() == MobEffectCategory.HARMFUL)
+        if (revengeLevel > 0 && (player.getActiveEffects().stream().anyMatch(effect -> effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL)
                 || player.isOnFire() || player.isFreezing())) {
             return 1 + revengeLevel / 100d;
         }

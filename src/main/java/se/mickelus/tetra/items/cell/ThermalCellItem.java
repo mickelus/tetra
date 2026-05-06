@@ -4,10 +4,11 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.tetra.items.TetraItem;
 
 import javax.annotation.Nullable;
@@ -20,7 +21,7 @@ import static se.mickelus.tetra.blocks.forged.ForgedBlockCommon.locationTooltip;
 public class ThermalCellItem extends TetraItem {
     public static final int maxCharge = 128;
     public static final String identifier = "thermal_cell";
-    public static RegistryObject<ThermalCellItem> instance;
+    public static Supplier<ThermalCellItem> instance;
     private final String chargedPropKey = "tetra:charged";
 
     public ThermalCellItem() {
@@ -58,11 +59,11 @@ public class ThermalCellItem extends TetraItem {
 
     @Override
     public void clientInit() {
-        ItemProperties.register(this, new ResourceLocation(chargedPropKey), (itemStack, world, livingEntity, i) -> getCharge(itemStack) > 0 ? 1 : 0);
+        ItemProperties.register(this, ResourceLocation.parse(chargedPropKey), (itemStack, world, livingEntity, i) -> getCharge(itemStack) > 0 ? 1 : 0);
     }
 
     @Override
-    public void appendHoverText(final ItemStack stack, @Nullable final Level world, final List<Component> tooltip, final TooltipFlag advanced) {
+    public void appendHoverText(final ItemStack stack, final Item.TooltipContext context, final List<Component> tooltip, final TooltipFlag advanced) {
         int charge = getCharge(stack);
 
         MutableComponent chargeLine;
@@ -83,7 +84,7 @@ public class ThermalCellItem extends TetraItem {
     }
 
     // todo: change these for metered upgrade
-    public boolean showDurabilityBar(ItemStack stack) {
+    public boolean isBarVisible(ItemStack stack) {
         return false;
     }
 

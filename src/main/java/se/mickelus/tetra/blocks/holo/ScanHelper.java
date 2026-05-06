@@ -14,10 +14,11 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureCheckResult;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 
 import java.util.Optional;
 import java.util.Set;
@@ -31,26 +32,27 @@ public class ScanHelper {
         return !hasStructure(holders, level, level.structureManager(), false, chunkPos).isEmpty();
     }
 
-    private static Set<Holder<Structure>> hasStructure(HolderSet.ListBacked<Structure> holders, LevelReader level, StructureManager structureManager,
+    private static Set<Holder<Structure>> hasStructure(HolderSet.ListBacked<Structure> holders, ServerLevel level, StructureManager structureManager,
             boolean skipGenerated, ChunkPos chunkPos) {
         return holders.stream()
                 .filter(holder -> hasStructure(holder, level, structureManager, skipGenerated, chunkPos))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    private static boolean hasStructure(Holder<Structure> holder, LevelReader level, StructureManager structureManager,
+    private static boolean hasStructure(Holder<Structure> holder, ServerLevel level, StructureManager structureManager,
             boolean skipGenerated, ChunkPos chunkPos) {
-        // need to use ChunkGenerator.getPlacementsForStructure to dig up vertical position for start here
-        StructureCheckResult result = structureManager.checkStructurePresence(chunkPos, holder.value(), skipGenerated);
-        if (result != StructureCheckResult.START_NOT_PRESENT) {
-            if (!skipGenerated && result == StructureCheckResult.START_PRESENT) {
-                return true;
-            }
+        for (StructurePlacement placement : level.getChunkSource().getGeneratorState().getPlacementsForStructure(holder)) {
+            StructureCheckResult result = structureManager.checkStructurePresence(chunkPos, holder.value(), placement, skipGenerated);
+            if (result != StructureCheckResult.START_NOT_PRESENT) {
+                if (!skipGenerated && result == StructureCheckResult.START_PRESENT) {
+                    return true;
+                }
 
-            ChunkAccess chunk = level.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.STRUCTURE_STARTS);
-            StructureStart structurestart = structureManager.getStartForStructure(SectionPos.bottomOf(chunk), holder.value(), chunk);
-            if (structurestart != null && structurestart.isValid()/* && (!skipGenerated || tryAddReference(structureManager, structurestart))*/) {
-                return true;
+                ChunkAccess chunk = level.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.STRUCTURE_STARTS);
+                StructureStart structurestart = structureManager.getStartForStructure(SectionPos.bottomOf(chunk), holder.value(), chunk);
+                if (structurestart != null && structurestart.isValid()) {
+                    return true;
+                }
             }
         }
 
@@ -59,9 +61,9 @@ public class ScanHelper {
 
     private static Either<ResourceKey<Structure>, TagKey<Structure>> getKey(String identifier) {
         if (identifier.startsWith("#")) {
-            return Either.right(TagKey.create(Registries.STRUCTURE, new ResourceLocation(identifier.substring(1))));
+            return Either.right(TagKey.create(Registries.STRUCTURE, ResourceLocation.parse(identifier.substring(1))));
         }
-        return Either.left(ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(identifier)));
+        return Either.left(ResourceKey.create(Registries.STRUCTURE, ResourceLocation.parse(identifier)));
     }
 
     private static Optional<? extends HolderSet.ListBacked<Structure>> getHolders(Either<ResourceKey<Structure>, TagKey<Structure>> key, Registry<Structure> registry) {

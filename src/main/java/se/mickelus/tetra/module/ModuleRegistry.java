@@ -76,7 +76,7 @@ public class ModuleRegistry {
                 dataCopy.slots = new String[] {moduleData.slots[i]};
                 dataCopy.slotSuffixes = new String[] {moduleData.slotSuffixes[i]};
 
-                ResourceLocation suffixedIdentifier = new ResourceLocation(
+                ResourceLocation suffixedIdentifier = ResourceLocation.fromNamespaceAndPath(
                         entry.getKey().getNamespace(),
                         entry.getKey().getPath() + moduleData.slotSuffixes[i]);
 

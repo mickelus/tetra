@@ -18,6 +18,6 @@ public class ItemTagKeyDeserializer implements JsonDeserializer<TagKey<Item>> {
 
     @Override
     public TagKey<Item> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return ItemTags.create(new ResourceLocation(json.getAsString()));
+        return ItemTags.create(ResourceLocation.parse(json.getAsString()));
     }
 }

@@ -9,22 +9,28 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import se.mickelus.mutil.gui.ToggleableSlot;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class WorkbenchContainer extends AbstractContainerMenu {
-    public static RegistryObject<MenuType<WorkbenchContainer>> containerType;
+    public static Supplier<MenuType<WorkbenchContainer>> containerType;
+
+    private static final int slotDetailX = 48;
+    private static final int slotDetailY = 102;
+    private static final int schematicMaterialBaseX = 136;
+    private static final int schematicMaterialBaseY = 5;
+    private static final int schematicMaterialItemOffsetX = 10;
+    private static final int schematicMaterialItemOffsetY = 1;
+
     private final WorkbenchTile workbench;
 
     private ToggleableSlot[] materialSlots = new ToggleableSlot[0];
@@ -34,17 +40,18 @@ public class WorkbenchContainer extends AbstractContainerMenu {
         this.workbench = workbench;
 
         // material inventory
-        workbench.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+        var handler = workbench.getItemHandler(null);
+        if (handler != null) {
             addSlot(new SlotItemHandler(handler, 0, 152, 58));
 
             materialSlots = new ToggleableSlot[3];
             for (int i = 0; i < materialSlots.length; i++) {
-                materialSlots[i] = new ToggleableSlot(handler, i + 1, 167 + 28 * i, 108);
+                materialSlots[i] = new ToggleableSlot(handler, i + 1, getMaterialSlotX(i, materialSlots.length), getMaterialSlotY());
                 addSlot(materialSlots[i]);
             }
-        });
+        }
 
-        IItemHandler playerInventoryHandler = new InvWrapper(playerInventory);
+        IItemHandler playerInventoryHandler = new net.neoforged.neoforge.items.wrapper.InvWrapper(playerInventory);
 
         // player inventory
         for (int x = 0; x < 9; x++) {
@@ -66,9 +73,8 @@ public class WorkbenchContainer extends AbstractContainerMenu {
     }
 
     private int getSlots() {
-        return workbench.getCapability(ForgeCapabilities.ITEM_HANDLER)
-                .map(IItemHandler::getSlots)
-                .orElse(0);
+        IItemHandler handler = workbench.getItemHandler(null);
+        return handler != null ? handler.getSlots() : 0;
     }
 
     @Override
@@ -121,12 +127,24 @@ public class WorkbenchContainer extends AbstractContainerMenu {
                 .orElse(0);
 
         for (int i = 0; i < materialSlots.length; i++) {
+            materialSlots[i].setPosition(getMaterialSlotX(i, numMaterialSlots), getMaterialSlotY());
             materialSlots[i].toggle(i < numMaterialSlots);
-            materialSlots[i].x = 194 + getSlotOffsetY(i, numMaterialSlots);
         }
     }
 
-    public static int getSlotOffsetY(int index, int numMaterialSlots) {
+    public static int getMaterialSlotGuiX(int index, int numMaterialSlots) {
+        return schematicMaterialBaseX + getMaterialSlotOffsetX(index, numMaterialSlots);
+    }
+
+    public static int getMaterialSlotX(int index, int numMaterialSlots) {
+        return slotDetailX + getMaterialSlotGuiX(index, numMaterialSlots) + schematicMaterialItemOffsetX;
+    }
+
+    public static int getMaterialSlotY() {
+        return slotDetailY + schematicMaterialBaseY + schematicMaterialItemOffsetY;
+    }
+
+    public static int getMaterialSlotOffsetX(int index, int numMaterialSlots) {
         if (numMaterialSlots == 2) {
             return 11 + 32 * index;
         }

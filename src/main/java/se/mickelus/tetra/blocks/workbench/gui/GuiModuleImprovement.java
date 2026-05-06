@@ -20,8 +20,8 @@ public class GuiModuleImprovement extends GuiElement {
     private final Runnable hoverHandler;
     private final Runnable blurHandler;
 
-    private int color;
-    private GuiTexture texture;
+    private final int color;
+    private final GuiTexture texture;
 
     public GuiModuleImprovement(int x, int y, String improvement, int level, int color, ItemStack itemStack, Runnable hoverHandler,
             Runnable blurHandler) {

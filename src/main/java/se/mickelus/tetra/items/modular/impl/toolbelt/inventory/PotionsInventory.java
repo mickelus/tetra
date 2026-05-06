@@ -1,9 +1,11 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.inventory;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.items.modular.impl.toolbelt.ModularToolbeltItem;
 import se.mickelus.tetra.items.modular.impl.toolbelt.SlotType;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -13,14 +15,14 @@ public class PotionsInventory extends ToolbeltInventory {
     private static final String inventoryKey = "potionsInventory";
     public static int maxSize = 10; // 9;
 
-    public PotionsInventory(ItemStack stack) {
-        super(inventoryKey, stack, maxSize, SlotType.potion);
+    public PotionsInventory(ItemStack stack, HolderLookup.Provider registryAccess) {
+        super(inventoryKey, stack, maxSize, SlotType.potion, registryAccess);
         ModularToolbeltItem item = (ModularToolbeltItem) stack.getItem();
         numSlots = item.getNumSlots(stack, SlotType.potion);
 
         predicate = getPredicate("potion");
 
-        readFromNBT(stack.getOrCreateTag());
+        readFromNBT(ItemStackTagHelper.getOrCreateTag(stack));
     }
 
     @Override
@@ -38,7 +40,7 @@ public class PotionsInventory extends ToolbeltInventory {
         // attempt to merge the itemstack with itemstacks in the inventory
         for (int i = 0; i < getContainerSize(); i++) {
             ItemStack storedStack = getItem(i);
-            if (ItemStack.isSameItemSameTags(storedStack, itemStack)
+            if (ItemStack.isSameItemSameComponents(storedStack, itemStack)
                     && storedStack.getCount() < 64) {
 
                 int moveCount = Math.min(itemStack.getCount(), 64 - storedStack.getCount());

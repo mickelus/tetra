@@ -16,6 +16,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -24,11 +25,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.forgespi.Environment;
-import net.minecraftforge.registries.ObjectHolder;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.loading.FMLEnvironment;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.network.PacketHandler;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
@@ -37,7 +37,6 @@ import se.mickelus.tetra.blocks.scroll.gui.ScrollScreen;
 import se.mickelus.tetra.blocks.workbench.AbstractWorkbenchBlock;
 import se.mickelus.tetra.items.InitializableItem;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,7 +44,6 @@ import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 public class ScrollItem extends BlockItem implements InitializableItem {
     public static final String identifier = "scroll_rolled";
-    @ObjectHolder(registryName = "item", value = TetraMod.MOD_ID + ":" + identifier)
     public static ScrollItem instance;
 
 
@@ -67,8 +65,6 @@ public class ScrollItem extends BlockItem implements InitializableItem {
 
     public ScrollItem(Block block) {
         super(block, new Properties().stacksTo(1));
-
-        MinecraftForge.EVENT_BUS.register(new ScrollDrops());
     }
 
     @Override
@@ -94,8 +90,7 @@ public class ScrollItem extends BlockItem implements InitializableItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void clientInit() {
-        Minecraft.getInstance().getItemColors().register(new ScrollItemColor(), instance);
-        ItemProperties.register(instance, new ResourceLocation(TetraMod.MOD_ID, "scroll_mat"),
+        ItemProperties.register(instance, ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "scroll_mat"),
                 (itemStack, world, livingEntity, i) -> ScrollData.readMaterialFast(itemStack));
     }
 
@@ -137,7 +132,7 @@ public class ScrollItem extends BlockItem implements InitializableItem {
 
     private ItemStack setupSchematic(String key, String details, String[] schematics, boolean isIntricate, int material, int tint, Integer... glyphs) {
         ScrollData data = new ScrollData(key, Optional.ofNullable(details), isIntricate, material, tint, Arrays.asList(glyphs),
-                Arrays.stream(schematics).map(s -> new ResourceLocation(TetraMod.MOD_ID, s))
+                Arrays.stream(schematics).map(s -> ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, s))
                         .collect(Collectors.toList()),
                 Collections.emptyList());
 
@@ -149,7 +144,7 @@ public class ScrollItem extends BlockItem implements InitializableItem {
 
     private ItemStack setupTreatise(String key, boolean isIntricate, int material, int tint, Integer... glyphs) {
         ScrollData data = new ScrollData(key, Optional.empty(), isIntricate, material, tint, Arrays.asList(glyphs), Collections.emptyList(),
-                ImmutableList.of(new ResourceLocation(TetraMod.MOD_ID, key)));
+                ImmutableList.of(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, key)));
 
         ItemStack itemStack = new ItemStack(this);
         data.write(itemStack);
@@ -161,7 +156,7 @@ public class ScrollItem extends BlockItem implements InitializableItem {
     public Component getName(ItemStack stack) {
         String key = ScrollData.read(stack).key;
         // sometimes called on the server, need to check before calling I18n
-        if (!Environment.get().getDist().isDedicatedServer()) {
+        if (!FMLEnvironment.dist.isDedicatedServer()) {
             String prefixKey = "item.tetra.scroll." + key + ".prefix";
             if (I18n.exists(prefixKey)) {
                 return Component.translatable("item.tetra.scroll." + key + ".prefix")
@@ -174,7 +169,7 @@ public class ScrollItem extends BlockItem implements InitializableItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         ScrollData data = ScrollData.read(itemStack);
         StringJoiner attributes = new StringJoiner(" ");
 
@@ -269,6 +264,10 @@ public class ScrollItem extends BlockItem implements InitializableItem {
 
         if (!(block instanceof AbstractWorkbenchBlock) && player != null && player.isCrouching() && openScroll(itemStack, world.isClientSide)) {
             return InteractionResult.sidedSuccess(world.isClientSide);
+        }
+
+        if (ScrollData.readOptional(itemStack).isEmpty()) {
+            return InteractionResult.FAIL;
         }
 
         // add scroll to an existing stack of rolled up scrolls

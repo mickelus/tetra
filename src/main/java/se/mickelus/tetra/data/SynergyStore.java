@@ -23,7 +23,7 @@ public class SynergyStore extends DataStore<SynergyData[]> {
      * @return An array of synergy data
      */
     public SynergyData[] getOrdered(String path) {
-        SynergyData[] data = getDataIn(new ResourceLocation(TetraMod.MOD_ID, path)).stream()
+        SynergyData[] data = getDataIn(ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, path)).stream()
                 .flatMap(Arrays::stream)
                 .toArray(SynergyData[]::new);
         for (SynergyData entry : data) {

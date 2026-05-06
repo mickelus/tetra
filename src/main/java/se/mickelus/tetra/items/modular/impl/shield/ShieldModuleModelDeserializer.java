@@ -15,9 +15,9 @@ public class ShieldModuleModelDeserializer implements JsonDeserializer<ShieldMod
     public ShieldModuleModel deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         return new ShieldModuleModel(
-                new ResourceLocation(GsonHelper.getAsString(jsonObject, "type")),
-                new ResourceLocation(GsonHelper.getAsString(jsonObject, "model")),
-                new ResourceLocation(GsonHelper.getAsString(jsonObject, "texture")),
+                ResourceLocation.parse(GsonHelper.getAsString(jsonObject, "type")),
+                ResourceLocation.parse(GsonHelper.getAsString(jsonObject, "model")),
+                ResourceLocation.parse(GsonHelper.getAsString(jsonObject, "texture")),
                 jsonObject.has("tint") ? SimpleColorDeserializer.deserialize(jsonObject.get("tint")) : new SimpleColor(0xffffffff),
                 jsonObject.has("overlayTint") ? SimpleColorDeserializer.deserialize(jsonObject.get("overlayTint")) : new SimpleColor(0xffffffff),
                 jsonObject.has("renderLayer") ? context.deserialize(jsonObject.get("renderLayer"), Priority.class) : Priority.BASE

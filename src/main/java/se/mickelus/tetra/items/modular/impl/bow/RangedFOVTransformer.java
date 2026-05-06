@@ -2,9 +2,9 @@ package se.mickelus.tetra.items.modular.impl.bow;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.ComputeFovModifierEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;

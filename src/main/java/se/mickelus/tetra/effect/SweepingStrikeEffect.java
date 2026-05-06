@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -18,15 +19,14 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import org.apache.commons.lang3.tuple.Pair;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.client.particle.SweepingStrikeParticleOption;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.util.ToolActionHelper;
+import se.mickelus.tetra.util.ItemAbilityHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -64,7 +64,7 @@ public class SweepingStrikeEffect {
                 .map(Pair::getRight)
                 .findFirst()
                 .ifPresent(tool -> {
-                    double lookDistance = Optional.ofNullable(player.getAttribute(ForgeMod.BLOCK_REACH.get()))
+                    double lookDistance = Optional.ofNullable(player.getAttribute(Attributes.BLOCK_INTERACTION_RANGE))
                             .map(AttributeInstance::getValue)
                             .orElse(4.5d);
                     BlockPos origin = BlockPos.containing(player.getEyePosition().add(player.getViewVector(0).scale(lookDistance)));
@@ -72,7 +72,7 @@ public class SweepingStrikeEffect {
                 });
     }
 
-    public static void causeEffect(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos origin, ToolAction tool) {
+    public static void causeEffect(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos origin, ItemAbility tool) {
         if (world.isClientSide) {
             return;
         }
@@ -127,7 +127,7 @@ public class SweepingStrikeEffect {
      * @param tool           the type of tool used to break the center block, the tool required to break nearby blocks has to
      *                       match this
      */
-    public static List<Pair<Integer, BlockPos>> breakBlocksAround(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos originPos, ToolAction tool, boolean alternate) {
+    public static List<Pair<Integer, BlockPos>> breakBlocksAround(Level world, Player breakingPlayer, ItemStack toolStack, BlockPos originPos, ItemAbility tool, boolean alternate) {
         if (world.isClientSide) {
             return Collections.emptyList();
         }
@@ -194,9 +194,9 @@ public class SweepingStrikeEffect {
             float blockHardness = blockState.getDestroySpeed(world, worldPos);
 
             // make sure that only blocks which require the same tool are broken
-            if (ToolActionHelper.isEffectiveOn(tool, blockState) && blockHardness >= 0 && (!tryReplant || isFullyGrown(blockState))) {
+            if (ItemAbilityHelper.isEffectiveOn(tool, blockState) && blockHardness >= 0 && (!tryReplant || isFullyGrown(blockState))) {
                 // check that the tool level is high enough and break the block
-                if (ToolActionHelper.playerCanDestroyBlock(breakingPlayer, blockState, worldPos, toolStack, tool)) {
+                if (ItemAbilityHelper.playerCanDestroyBlock(breakingPlayer, blockState, worldPos, toolStack, tool)) {
                     var reachingFactor = getReachingFactor(playerPosition, worldPos, reachingLevel, reachingEfficiency);
                     // min 0.5 drain to make blocks like grass still "consume" some efficiency
                     efficiency -= Math.max(0.5, blockHardness / reachingFactor + (Math.abs(pos.getX()) + Math.abs(pos.getZ())) * 0.05);

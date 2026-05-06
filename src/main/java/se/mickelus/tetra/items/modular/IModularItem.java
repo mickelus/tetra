@@ -6,26 +6,30 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.forgespi.Environment;
+import net.minecraft.util.RandomSource;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.fml.loading.FMLEnvironment;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
@@ -35,6 +39,7 @@ import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.TetraMod;
 import se.mickelus.tetra.Tooltips;
+import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.client.override.ImprovementOverride;
 import se.mickelus.tetra.effect.*;
 import se.mickelus.tetra.effect.data.DataEffectsHandler;
@@ -60,6 +65,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static se.mickelus.tetra.util.ItemStackTagHelper.*;
 
 public interface IModularItem {
     Logger logger = LogManager.getLogger();
@@ -90,7 +97,8 @@ public interface IModularItem {
     String honeCountKey = "honing_count";
 
     static void updateIdentifier(ItemStack itemStack) {
-        updateIdentifier(itemStack.getOrCreateTag());
+        mutate(itemStack, IModularItem::updateIdentifier);
+        ModularItemComponentHelper.sync(itemStack);
     }
 
     static void updateIdentifier(CompoundTag nbt) {
@@ -108,15 +116,17 @@ public interface IModularItem {
      * @param moduleVariant
      */
     static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariantKey, String moduleVariant) {
-        CompoundTag tag = itemStack.getOrCreateTag();
-        tag.putString(slot, module);
-        tag.putString(moduleVariantKey, moduleVariant);
+        mutate(itemStack, tag -> {
+            tag.putString(slot, module);
+            tag.putString(moduleVariantKey, moduleVariant);
+        });
     }
 
     static void putModuleInSlot(ItemStack itemStack, String slot, String module, String moduleVariant) {
-        CompoundTag tag = itemStack.getOrCreateTag();
-        tag.putString(slot, module);
-        tag.putString(module + "_material", moduleVariant);
+        mutate(itemStack, tag -> {
+            tag.putString(slot, module);
+            tag.putString(module + "_material", moduleVariant);
+        });
     }
 
     static int getIntegrityGain(ItemStack itemStack) {
@@ -134,25 +144,26 @@ public interface IModularItem {
     }
 
     static boolean isHoneable(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTag())
+        return Optional.ofNullable(getTag(itemStack))
                 .map(tag -> tag.contains(honeAvailableKey))
                 .orElse(false);
     }
 
     static int getHoningSeed(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTag())
+        return Optional.ofNullable(getTag(itemStack))
                 .map(tag -> tag.getInt(honeCountKey))
                 .orElse(0);
     }
 
     static void removeHoneable(ItemStack itemStack) {
-        CompoundTag tag = itemStack.getTag();
-
-        if (tag != null) {
+        if (!hasTag(itemStack)) {
+            return;
+        }
+        mutate(itemStack, tag -> {
             tag.remove(honeAvailableKey);
             tag.remove(honeProgressKey);
             tag.putInt(honeCountKey, tag.getInt(honeCountKey) + 1);
-        }
+        });
     }
 
     static String getImprovementName(String key, int level, ItemStack itemStack) {
@@ -213,8 +224,8 @@ public interface IModularItem {
     }
 
     static ItemStack removeAllEnchantments(ItemStack itemStack) {
-        itemStack.removeTagKey("Enchantments");
-        itemStack.removeTagKey("StoredEnchantments");
+        removeTagKey(itemStack, "Enchantments");
+        removeTagKey(itemStack, "StoredEnchantments");
         Arrays.stream(((IModularItem) itemStack.getItem()).getMajorModules(itemStack))
                 .filter(Objects::nonNull)
                 .forEach(module -> module.removeEnchantments(itemStack));
@@ -232,8 +243,8 @@ public interface IModularItem {
 
     @Nullable
     default String getIdentifier(ItemStack itemStack) {
-        if (itemStack.hasTag()) {
-            return itemStack.getTag().getString(identifierKey);
+        if (hasTag(itemStack)) {
+            return getTag(itemStack).getString(identifierKey);
         }
 
         return null;
@@ -242,13 +253,13 @@ public interface IModularItem {
     default String getDataCacheKey(ItemStack itemStack) {
         return Optional.ofNullable(getIdentifier(itemStack))
                 .filter(id -> !id.isEmpty())
-                .orElseGet(() -> itemStack.hasTag() ? itemStack.getTag().toString() : "INVALID-" + getItem().toString());
+                .orElseGet(() -> hasTag(itemStack) ? getTag(itemStack).toString() : "INVALID-" + getItem().toString());
     }
 
     default String getModelCacheKey(ItemStack itemStack, LivingEntity entity) {
         return Optional.ofNullable(getIdentifier(itemStack))
                 .filter(id -> !id.isEmpty())
-                .orElseGet(() -> itemStack.hasTag() ? itemStack.getTag().toString() : "INVALID-" + getItem().toString());
+                .orElseGet(() -> hasTag(itemStack) ? getTag(itemStack).toString() : "INVALID-" + getItem().toString());
     }
 
     void clearCaches();
@@ -264,7 +275,7 @@ public interface IModularItem {
     }
 
     default Collection<ItemModule> getAllModules(ItemStack stack) {
-        CompoundTag stackTag = stack.getTag();
+        CompoundTag stackTag = getTag(stack);
 
         if (stackTag != null) {
             return Stream.concat(Arrays.stream(getMajorModuleKeys(stack)), Arrays.stream(getMinorModuleKeys(stack)))
@@ -280,7 +291,7 @@ public interface IModularItem {
     default ItemModuleMajor[] getMajorModules(ItemStack itemStack) {
         String[] majorModuleKeys = getMajorModuleKeys(itemStack);
         ItemModuleMajor[] modules = new ItemModuleMajor[majorModuleKeys.length];
-        CompoundTag tag = itemStack.getTag();
+        CompoundTag tag = getTag(itemStack);
 
         if (tag != null) {
             for (int i = 0; i < majorModuleKeys.length; i++) {
@@ -297,7 +308,7 @@ public interface IModularItem {
     default ItemModule[] getMinorModules(ItemStack itemStack) {
         String[] minorModuleKeys = getMinorModuleKeys(itemStack);
         ItemModule[] modules = new ItemModule[minorModuleKeys.length];
-        CompoundTag tag = itemStack.getTag();
+        CompoundTag tag = getTag(itemStack);
 
         if (tag != null) {
             for (int i = 0; i < minorModuleKeys.length; i++) {
@@ -335,7 +346,7 @@ public interface IModularItem {
     }
 
     default ItemModule getModuleFromSlot(ItemStack itemStack, String slot) {
-        return Optional.ofNullable(itemStack.getTag())
+        return Optional.ofNullable(getTag(itemStack))
                 .map(tag -> tag.getString(slot))
                 .map(ItemUpgradeRegistry.instance::getModule)
                 .orElse(null);
@@ -347,7 +358,7 @@ public interface IModularItem {
         }
 
         tickHoningProgression(entity, itemStack, multiplier);
-        
+
         Arrays.stream(getMajorModules(itemStack))
                 .filter(Objects::nonNull)
                 .forEach(module -> module.tickProgression(entity, itemStack, multiplier));
@@ -358,44 +369,42 @@ public interface IModularItem {
             return;
         }
 
-        // todo: store this in a separate data structure?
-        CompoundTag tag = itemStack.getOrCreateTag();
-        if (!isHoneable(itemStack)) {
-            int honingProgress;
-            if (tag.contains(honeProgressKey)) {
-                honingProgress = tag.getInt(honeProgressKey);
-            } else {
-                honingProgress = getHoningLimit(itemStack);
-            }
+        if (isHoneable(itemStack)) {
+            return;
+        }
 
+        // todo: store this in a separate data structure?
+        mutate(itemStack, tag -> {
+            int honingProgress = tag.contains(honeProgressKey) ? tag.getInt(honeProgressKey) : getHoningLimit(itemStack);
             honingProgress -= multiplier;
             tag.putInt(honeProgressKey, honingProgress);
 
-            if (honingProgress <= 0 && !isHoneable(itemStack)) {
+            if (honingProgress <= 0 && !tag.getBoolean(honeAvailableKey)) {
                 tag.putBoolean(honeAvailableKey, true);
 
                 if (entity instanceof ServerPlayer serverPlayer) {
                     TetraMod.packetHandler.sendTo(new HonePacket(itemStack), serverPlayer);
                 }
             }
-        }
-
+        });
     }
 
     default int getHoningProgress(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTag())
+        return Optional.ofNullable(getTag(itemStack))
                 .filter(tag -> tag.contains(honeProgressKey))
                 .map(tag -> tag.getInt(honeProgressKey))
                 .orElseGet(() -> getHoningLimit(itemStack));
     }
 
     default void setHoningProgress(ItemStack itemStack, int progress) {
-        itemStack.getOrCreateTag().putInt(honeProgressKey, progress);
-        if (progress <= 0) {
-            itemStack.getOrCreateTag().putBoolean(honeAvailableKey, true);
-        } else {
-            itemStack.getOrCreateTag().remove(honeAvailableKey);
-        }
+        mutate(itemStack, tag -> {
+            tag.putInt(honeProgressKey, progress);
+            if (progress <= 0) {
+                tag.putBoolean(honeAvailableKey, true);
+            } else {
+                tag.remove(honeAvailableKey);
+            }
+        });
     }
 
     default int getHoningLimit(ItemStack itemStack) {
@@ -412,7 +421,7 @@ public interface IModularItem {
     }
 
     default int getHonedCount(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTag())
+        return Optional.ofNullable(getTag(itemStack))
                 .map(tag -> tag.getInt(honeCountKey))
                 .orElse(0);
     }
@@ -429,7 +438,7 @@ public interface IModularItem {
      */
     default void applyUsageEffects(LivingEntity entity, ItemStack itemStack, double multiplier) {
         ApplyUsageEffectsEvent event = new ApplyUsageEffectsEvent(entity, itemStack, multiplier);
-        MinecraftForge.EVENT_BUS.post(event);
+        NeoForge.EVENT_BUS.post(event);
 
         DataEffectsHandler.applyOnUseEffects(itemStack, entity);
 
@@ -456,7 +465,7 @@ public interface IModularItem {
      */
     default <T extends LivingEntity> int damageItemImpl(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
         ModularItemDamageEvent event = new ModularItemDamageEvent(entity, stack, amount);
-        MinecraftForge.EVENT_BUS.post(event);
+        NeoForge.EVENT_BUS.post(event);
         amount = event.getAmount();
 
         amount = BloodboundEffect.reduceDamage(stack, entity, amount);
@@ -473,10 +482,15 @@ public interface IModularItem {
 
         if (!isBroken(damage, maxDamage)) {
             int reducedAmount = getReducedDamage(amount, itemStack, responsibleEntity);
-            itemStack.hurtAndBreak(reducedAmount, responsibleEntity, breaker -> breaker.broadcastBreakEvent(breaker.getUsedItemHand()));
+            if (responsibleEntity != null) {
+                InteractionHand usedHand = responsibleEntity.getUsedItemHand();
+                EquipmentSlot slot = usedHand == InteractionHand.OFF_HAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
+                itemStack.hurtAndBreak(reducedAmount, responsibleEntity, slot);
+            } else {
+                itemStack.setDamageValue(Math.min(itemStack.getDamageValue() + reducedAmount, itemStack.getMaxDamage()));
+            }
 
-            if (isBroken(damage + reducedAmount, maxDamage) && !responsibleEntity.level().isClientSide) {
-                responsibleEntity.broadcastBreakEvent(responsibleEntity.getUsedItemHand());
+            if (isBroken(damage + reducedAmount, maxDamage) && responsibleEntity != null && !responsibleEntity.level().isClientSide) {
                 responsibleEntity.playSound(SoundEvents.SHIELD_BREAK, 1, 1);
             }
         }
@@ -489,10 +503,11 @@ public interface IModularItem {
         if (amount > 0) {
             int level = getEffectLevel(itemStack, ItemEffect.unbreaking);
             int reduction = 0;
+            RandomSource random = responsibleEntity != null ? responsibleEntity.level().random : RandomSource.create();
 
             if (level > 0) {
                 for (int i = 0; i < amount; i++) {
-                    if (DigDurabilityEnchantment.shouldIgnoreDurabilityDrop(itemStack, level, responsibleEntity.level().random)) {
+                    if (shouldIgnoreDurabilityDrop(itemStack, level, random)) {
                         reduction++;
                     }
                 }
@@ -501,6 +516,17 @@ public interface IModularItem {
             return amount - reduction;
         }
         return amount;
+    }
+
+    /**
+     * Mirrors the old Unbreaking chance formula that Forge exposed via DigDurabilityEnchantment.
+     */
+    private boolean shouldIgnoreDurabilityDrop(ItemStack itemStack, int level, RandomSource random) {
+        if (itemStack.getItem() instanceof ArmorItem && random.nextFloat() < 0.6F) {
+            return false;
+        }
+
+        return random.nextInt(level + 1) > 0;
     }
 
     default boolean isBroken(ItemStack itemStack) {
@@ -528,11 +554,9 @@ public interface IModularItem {
                         tooltip.add(Component.literal("\u00BB ").withStyle(ChatFormatting.DARK_GRAY)
                                 .append(Component.literal(module.getName(itemStack)).withStyle(ChatFormatting.GRAY)));
 
-                        module.getEnchantments(itemStack).entrySet().stream()
-                                .map(entry -> entry.getKey().getFullname(entry.getValue()))
-                                .map(text -> Component.literal("  - " + text.getString()))
-                                .map(text -> text.withStyle(ChatFormatting.DARK_GRAY))
-                                .forEach(tooltip::add);
+                        module.getEnchantmentHolders(itemStack).forEach((enchantment, level) ->
+                                tooltip.add(Component.literal("  - " + TetraEnchantmentHelper.getEnchantmentName(enchantment, level))
+                                        .withStyle(ChatFormatting.DARK_GRAY)));
 
                         Arrays.stream(module.getImprovements(itemStack))
                                 .map(improvement -> "  - " + getImprovementTooltip(improvement.key, improvement.level, true))
@@ -560,7 +584,9 @@ public interface IModularItem {
                 }
             }
         } else {
-            ItemStack.appendEnchantmentNames(tooltip, itemStack.getEnchantmentTags());
+            itemStack.getTagEnchantments().entrySet().stream()
+                    .map(entry -> net.minecraft.world.item.enchantment.Enchantment.getFullname(entry.getKey(), entry.getIntValue()))
+                    .forEach(tooltip::add);
 
             tooltip.add(Tooltips.expand);
         }
@@ -658,19 +684,19 @@ public interface IModularItem {
         return getItem().getMaxDamage(itemStack);
     }
 
-    default Collection<ToolAction> getRepairRequiredTools(ItemStack itemStack, ItemStack materialStack) {
+    default Collection<ItemAbility> getRepairRequiredTools(ItemStack itemStack, ItemStack materialStack) {
         return getRepairModule(itemStack)
                 .map(module -> module.getRepairRequiredTools(itemStack, materialStack))
                 .orElseGet(Collections::emptySet);
     }
 
-    default Map<ToolAction, Integer> getRepairRequiredToolLevels(ItemStack itemStack, ItemStack materialStack) {
+    default Map<ItemAbility, Integer> getRepairRequiredToolLevels(ItemStack itemStack, ItemStack materialStack) {
         return getRepairModule(itemStack)
                 .map(module -> module.getRepairRequiredToolLevels(itemStack, materialStack))
                 .orElseGet(Collections::emptyMap);
     }
 
-    default int getRepairRequiredToolLevel(ItemStack itemStack, ItemStack materialStack, ToolAction toolAction) {
+    default int getRepairRequiredToolLevel(ItemStack itemStack, ItemStack materialStack, ItemAbility toolAction) {
         return getRepairModule(itemStack)
                 .filter(module -> module.getRepairRequiredTools(itemStack, materialStack).contains(toolAction))
                 .map(module -> module.getRepairRequiredToolLevel(itemStack, materialStack, toolAction))
@@ -691,14 +717,13 @@ public interface IModularItem {
      * @return
      */
     default int getRepairCount(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTag())
+        return Optional.ofNullable(getTag(itemStack))
                 .map(tag -> tag.getInt(repairCountKey))
                 .orElse(0);
     }
 
     default void incrementRepairCount(ItemStack itemStack) {
-        CompoundTag tag = itemStack.getOrCreateTag();
-        tag.putInt(repairCountKey, tag.getInt(repairCountKey) + 1);
+        mutate(itemStack, tag -> tag.putInt(repairCountKey, tag.getInt(repairCountKey) + 1));
     }
 
     default void repair(ItemStack itemStack) {
@@ -920,7 +945,7 @@ public interface IModularItem {
 
     default String getItemName(ItemStack itemStack) {
         // todo: since getItemStackDisplayName is called on the server we cannot use the I18n service
-        if (Environment.get().getDist().isDedicatedServer()) {
+        if (FMLEnvironment.dist.isDedicatedServer()) {
             return "";
         }
 
@@ -1056,14 +1081,13 @@ public interface IModularItem {
             itemStack.setDamageValue(itemStack.getMaxDamage());
         }
 
-        CompoundTag nbt = itemStack.getOrCreateTag();
         // this stops the tooltip renderer from showing enchantments
-        nbt.putInt("HideFlags", 1);
+        mutate(itemStack, nbt -> nbt.putInt("HideFlags", 1));
 
         updateIdentifier(itemStack);
     }
 
-    default boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment, boolean fromTable) {
+    default boolean acceptsEnchantment(ItemStack itemStack, Holder<Enchantment> enchantment, boolean fromTable) {
         return Arrays.stream(getMajorModules(itemStack))
                 .filter(Objects::nonNull)
                 .anyMatch(module -> module.acceptsEnchantment(itemStack, enchantment, fromTable));

@@ -1,6 +1,6 @@
 package se.mickelus.tetra.levelgen;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -10,7 +10,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.registries.RegistryObject;
+import java.util.function.Supplier;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlock;
 import se.mickelus.tetra.blocks.forged.hammer.HammerBaseBlockEntity;
 import se.mickelus.tetra.blocks.forged.hammer.HammerEffect;
@@ -22,8 +22,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class ForgedHammerProcessor extends StructureProcessor {
     public static final ForgedHammerProcessor INSTANCE = new ForgedHammerProcessor();
-    public static final Codec<ForgedHammerProcessor> codec = Codec.unit(() -> ForgedHammerProcessor.INSTANCE);
-    public static RegistryObject<StructureProcessorType<?>> type;
+    public static final MapCodec<ForgedHammerProcessor> codec = MapCodec.unit(ForgedHammerProcessor.INSTANCE);
+    public static Supplier<StructureProcessorType<?>> type;
 
     public ForgedHammerProcessor() {
     }
@@ -42,15 +42,15 @@ public class ForgedHammerProcessor extends StructureProcessor {
 
             int charge1 = random.nextInt(ThermalCellItem.maxCharge);
             if (cell1 != null) {
-                ThermalCellItem.recharge(cell1, charge1);
+                ThermalCellItem.drainCharge(cell1, ThermalCellItem.maxCharge - charge1);
             }
 
             int charge2 = ThermalCellItem.maxCharge - random.nextInt(Math.max(charge1, 1));
             if (cell2 != null) {
-                ThermalCellItem.recharge(cell2, charge2);
+                ThermalCellItem.drainCharge(cell2, ThermalCellItem.maxCharge - charge2);
             }
 
-            HammerBaseBlockEntity.writeCells(newCompound, cell1, cell2);
+            HammerBaseBlockEntity.writeCells(newCompound, world.registryAccess(), cell1, cell2);
 
             HammerEffect module = HammerEffect.efficient;
             if (random.nextFloat() < 0.1) {

@@ -3,8 +3,8 @@ package se.mickelus.tetra.effect.modifier;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.mickelus.tetra.data.ModifierEffectStore;
@@ -65,7 +65,7 @@ public class ModifierEffectHandler {
         }
     }
 
-    public static void onLivingDamage(ItemStack itemStack, LivingDamageEvent event) {
+    public static void onLivingDamage(ItemStack itemStack, LivingDamageEvent.Pre event) {
         List<ModifierEffect> presentEffects = ((IModularItem) itemStack.getItem()).getEffects(itemStack).stream()
                 .flatMap(effect -> ModifierEffectStore.hitDamageModifiers.get(effect).stream())
                 .toList();
@@ -73,7 +73,7 @@ public class ModifierEffectHandler {
         ItemEffectContext context = null;
         if (!presentEffects.isEmpty()) {
             context = new ItemEffectContext(event.getEntity(), itemStack, event.getEntity().level())
-                    .withNumbers(ImmutableMap.of("damage", event.getAmount()))
+                    .withNumbers(ImmutableMap.of("damage", event.getNewDamage()))
                     .withEntities(ImmutableMap.of("attacker", event.getSource().getEntity(), "target", event.getEntity()));
         }
 
@@ -97,7 +97,7 @@ public class ModifierEffectHandler {
         }
 
         if (context != null) {
-            event.setAmount(context.getNumbers().get("damage"));
+            event.setNewDamage(context.getNumbers().get("damage"));
         }
     }
 }

@@ -1,7 +1,7 @@
 package se.mickelus.tetra.items.modular;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
 import se.mickelus.tetra.module.schematic.RepairInstance;
 
 public class GatherRepairInstancesEvent extends Event {

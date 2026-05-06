@@ -5,8 +5,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.TetraMod;
 
@@ -25,9 +25,10 @@ public class MultiblockSchematicScrollHandler {
         Player player = Minecraft.getInstance().player;
         if (player != null && player.isCreative() && Screen.hasAltDown()
                 && player.getMainHandItem().getItem() instanceof StackedMultiblockSchematicItem) {
-            scrollDelta = Math.signum(scrollDelta) == Math.signum(event.getScrollDelta())
-                    ? scrollDelta + event.getScrollDelta()
-                    : event.getScrollDelta();
+            double delta = event.getScrollDeltaY();
+            scrollDelta = Math.signum(scrollDelta) == Math.signum(delta)
+                    ? scrollDelta + delta
+                    : delta;
             if (Math.abs(scrollDelta) > 1) {
                 TetraMod.packetHandler.sendToServer(new MultiblockSchematicScrollPacket(scrollDelta > 0));
                 scrollDelta = 0;

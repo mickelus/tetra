@@ -1,37 +1,30 @@
 package se.mickelus.tetra.advancements;
 
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.mutil.util.JsonOptional;
 
+import java.util.Optional;
 
-public class DestabilizeCriterion extends AbstractCriterionTriggerInstance {
-    public static final GenericTrigger<DestabilizeCriterion> trigger = new GenericTrigger<>("tetra:destabilize", DestabilizeCriterion::deserialize);
-    private final ItemPredicate item;
-
-    public DestabilizeCriterion(ContextAwarePredicate playerCondition, ItemPredicate item) {
-        super(trigger.getId(), playerCondition);
-        this.item = item;
-    }
+public class DestabilizeCriterion {
+    public static final GenericTrigger<Instance> trigger = new GenericTrigger<>(Instance.CODEC);
 
     public static void trigger(ServerPlayer player, ItemStack usedItem) {
         trigger.fulfillCriterion(player, criterion -> criterion.test(usedItem));
     }
 
-    private static DestabilizeCriterion deserialize(JsonObject json, ContextAwarePredicate entityPredicate, DeserializationContext conditionsParser) {
-        return new DestabilizeCriterion(entityPredicate, JsonOptional.field(json, "item").map(ItemPredicate::fromJson).orElse(null));
-    }
+    public record Instance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> item) implements SimpleCriterionTrigger.SimpleInstance {
+        public static final Codec<Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ContextAwarePredicate.CODEC.optionalFieldOf("player").forGetter(Instance::player),
+                ItemPredicate.CODEC.optionalFieldOf("item").forGetter(Instance::item)
+        ).apply(instance, Instance::new));
 
-    public boolean test(ItemStack usedItem) {
-        if (item != null && !item.matches(usedItem)) {
-            return false;
+        public boolean test(ItemStack usedItem) {
+            return item.isEmpty() || item.get().test(usedItem);
         }
-
-        return true;
     }
 }

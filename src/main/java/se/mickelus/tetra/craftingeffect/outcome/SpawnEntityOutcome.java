@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Map;
@@ -27,7 +27,7 @@ public class SpawnEntityOutcome implements CraftingEffectOutcome {
 
     @Override
     public boolean apply(ResourceLocation[] unlockedEffects, ItemStack upgradedStack, String slot, boolean isReplacing, Player player,
-            ItemStack[] preMaterials, Map<ToolAction, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState,
+            ItemStack[] preMaterials, Map<ItemAbility, Integer> tools, Level world, UpgradeSchematic schematic, BlockPos pos, BlockState blockState,
             boolean consumeResources, ItemStack[] postMaterials, float severity) {
         if (consumeResources && !world.isClientSide() && world.getRandom().nextFloat() < chance) {
             ServerLevel serverLevel = (ServerLevel) world;

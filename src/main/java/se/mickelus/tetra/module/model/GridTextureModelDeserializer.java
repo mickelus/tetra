@@ -20,7 +20,7 @@ public class GridTextureModelDeserializer implements JsonDeserializer<GridTextur
         JsonObject jsonObject = json.getAsJsonObject();
         return new GridTextureModelData(
                 jsonObject.has("type") ? ResourceLocationDeserializer.deserialize(jsonObject.get("type")) : GridTextureModelData.TYPE,
-                new ResourceLocation(GsonHelper.getAsString(jsonObject, "location")),
+                ResourceLocation.parse(GsonHelper.getAsString(jsonObject, "location")),
                 jsonObject.has("renderType") ? ResourceLocationDeserializer.deserialize(jsonObject.get("renderType")) : null,
                 jsonObject.has("transform") ? context.deserialize(jsonObject.getAsJsonObject("transform"), Transformation.class) : null,
                 jsonObject.has("emission") ? jsonObject.get("emission").getAsInt() : null,

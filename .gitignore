@@ -12,19 +12,28 @@ out
 *.iws
 *.iml
 .idea
+.vscode/
 
 # gradle
-build
-.gradle
+/build/
+/.gradle/
 classes
 
 # other
 eclipse
-run
-run-data
+/run/
+/run-data/
+/runs/
+/logs/
 logs/
+*.hprof
+hs_err_pid*
+replay_pid*
 
 src/generated/resources/.cache
 src/generated/resources/temp
 /worldgen_ref/
 /vanilla_worldgen/
+.DS_Store
+/reference/
+/mutil/

@@ -1,25 +1,25 @@
 package se.mickelus.tetra.gui.stats.getter;
 
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
-import se.mickelus.tetra.TetraToolActions;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
+import se.mickelus.tetra.TetraItemAbilities;
 import se.mickelus.tetra.effect.ItemEffect;
 
 public class StatGetterStriking extends StatGetterEffectLevel {
-    public StatGetterStriking(ToolAction toolAction) {
+    public StatGetterStriking(ItemAbility toolAction) {
         super(getEffect(toolAction), 1);
     }
 
-    static ItemEffect getEffect(ToolAction toolAction) {
-        if (toolAction == ToolActions.AXE_DIG) {
+    static ItemEffect getEffect(ItemAbility toolAction) {
+        if (toolAction == ItemAbilities.AXE_DIG) {
             return ItemEffect.strikingAxe;
-        } else if (toolAction == ToolActions.PICKAXE_DIG) {
+        } else if (toolAction == ItemAbilities.PICKAXE_DIG) {
             return ItemEffect.strikingPickaxe;
-        } else if (toolAction == TetraToolActions.cut) {
+        } else if (toolAction == TetraItemAbilities.cut) {
             return ItemEffect.strikingCut;
-        } else if (toolAction == ToolActions.SHOVEL_DIG) {
+        } else if (toolAction == ItemAbilities.SHOVEL_DIG) {
             return ItemEffect.strikingShovel;
-        } else if (toolAction == ToolActions.HOE_DIG) {
+        } else if (toolAction == ItemAbilities.HOE_DIG) {
             return ItemEffect.strikingHoe;
         }
         return ItemEffect.strikingPickaxe;

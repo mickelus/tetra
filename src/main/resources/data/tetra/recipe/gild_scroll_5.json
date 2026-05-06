@@ -1,0 +1,44 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "tetra:scroll",
+      "key": "hone/gild_4",
+      "intricate": true,
+      "material": 2,
+      "ribbon": "e8b32c"
+    },
+    {
+      "type": "tetra:scroll",
+      "key": "hone/gild_4",
+      "intricate": true,
+      "material": 2,
+      "ribbon": "e8b32c"
+    }
+  ],
+  "result": {
+    "id": "tetra:scroll_rolled",
+    "count": 1,
+    "components": {
+      "tetra:scroll_data": {
+        "key": "hone/gild_5",
+        "schematics": [
+          "tetra:hone/gild_1",
+          "tetra:hone/gild_2",
+          "tetra:hone/gild_3",
+          "tetra:hone/gild_4",
+          "tetra:hone/gild_5"
+        ],
+        "intricate": true,
+        "material": 2,
+        "ribbon": "f2b313",
+        "glyphs": [
+          12,
+          12,
+          12,
+          12
+        ]
+      }
+    }
+  }
+}

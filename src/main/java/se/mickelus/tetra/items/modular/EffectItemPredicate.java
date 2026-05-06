@@ -2,15 +2,15 @@ package se.mickelus.tetra.items.modular;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.data.predicate.TetraItemPredicate;
 import se.mickelus.tetra.module.schematic.requirement.IntegerPredicate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class EffectItemPredicate extends ItemPredicate {
+public class EffectItemPredicate implements TetraItemPredicate {
     ItemEffect effect;
     IntegerPredicate level;
 
@@ -29,7 +29,6 @@ public class EffectItemPredicate extends ItemPredicate {
         }
     }
 
-    @Override
     public boolean matches(ItemStack itemStack) {
         if (effect != null && !itemStack.isEmpty() && itemStack.getItem() instanceof IModularItem item) {
             if (level != null) {

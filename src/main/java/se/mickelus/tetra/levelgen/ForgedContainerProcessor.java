@@ -1,6 +1,6 @@
 package se.mickelus.tetra.levelgen;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -10,18 +10,18 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlock;
 import se.mickelus.tetra.blocks.forged.container.ForgedContainerBlockEntity;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class ForgedContainerProcessor extends StructureProcessor {
     public static final ForgedContainerProcessor INSTANCE = new ForgedContainerProcessor();
-    public static final Codec<ForgedContainerProcessor> codec = Codec.unit(() -> ForgedContainerProcessor.INSTANCE);
-    public static RegistryObject<StructureProcessorType<?>> type;
+    public static final MapCodec<ForgedContainerProcessor> codec = MapCodec.unit(ForgedContainerProcessor.INSTANCE);
+    public static Supplier<StructureProcessorType<?>> type;
 
     public ForgedContainerProcessor() {
     }

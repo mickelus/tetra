@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "tetra:earthpiercer_0_1"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "tetra:actions/forged_schematic/earthpiercer_0_1"
+}

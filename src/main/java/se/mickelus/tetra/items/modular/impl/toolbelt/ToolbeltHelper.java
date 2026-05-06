@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,12 +11,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.blocks.salvage.BlockInteraction;
 import se.mickelus.tetra.blocks.salvage.IInteractiveBlock;
-import se.mickelus.tetra.compat.curios.CuriosCompat;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
@@ -39,16 +38,16 @@ public class ToolbeltHelper {
 
         switch (slotType) {
             case quickslot:
-                inventory = new QuickslotInventory(toolbeltStack);
+                inventory = new QuickslotInventory(toolbeltStack, player.registryAccess());
                 break;
             case potion:
-                inventory = new PotionsInventory(toolbeltStack);
+                inventory = new PotionsInventory(toolbeltStack, player.registryAccess());
                 break;
             case quiver:
-                inventory = new QuiverInventory(toolbeltStack);
+                inventory = new QuiverInventory(toolbeltStack, player.registryAccess());
                 break;
             case storage:
-                inventory = new StorageInventory(toolbeltStack);
+                inventory = new StorageInventory(toolbeltStack, player.registryAccess());
                 break;
         }
 
@@ -61,7 +60,7 @@ public class ToolbeltHelper {
 
 
         if (!heldItemStack.isEmpty()) {
-            if (!storeItemInToolbelt(toolbeltStack, heldItemStack)) {
+            if (!storeItemInToolbelt(toolbeltStack, heldItemStack, player.registryAccess())) {
                 if (!player.getInventory().add(heldItemStack)) {
                     inventory.storeItemInInventory(player.getItemInHand(hand));
                     player.setItemInHand(hand, heldItemStack);
@@ -92,27 +91,51 @@ public class ToolbeltHelper {
             return true;
         }
 
-        if (storeItemInToolbelt(toolbeltStack, itemStack)) {
+        if (storeItemInToolbelt(toolbeltStack, itemStack, player.registryAccess())) {
             player.setItemInHand(sourceHand, ItemStack.EMPTY);
             return true;
         }
         return false;
     }
 
-    public static boolean storeItemInToolbelt(ItemStack toolbeltStack, ItemStack itemStack) {
-        if (new PotionsInventory(toolbeltStack).storeItemInInventory(itemStack)) {
+    public static boolean storeItemInToolbelt(ItemStack toolbeltStack, ItemStack itemStack, HolderLookup.Provider registryAccess) {
+        if (new PotionsInventory(toolbeltStack, registryAccess).storeItemInInventory(itemStack)) {
             return true;
         }
 
-        if (new QuiverInventory(toolbeltStack).storeItemInInventory(itemStack)) {
+        if (new QuiverInventory(toolbeltStack, registryAccess).storeItemInInventory(itemStack)) {
             return true;
         }
 
-        if (new QuickslotInventory(toolbeltStack).storeItemInInventory(itemStack)) {
+        if (new QuickslotInventory(toolbeltStack, registryAccess).storeItemInInventory(itemStack)) {
             return true;
         }
 
-        return new StorageInventory(toolbeltStack).storeItemInInventory(itemStack);
+        return new StorageInventory(toolbeltStack, registryAccess).storeItemInInventory(itemStack);
+    }
+
+    public static boolean loadQuickAccessAmmoFromQuiver(Player player, InteractionHand weaponHand, int count) {
+        InteractionHand ammoHand = weaponHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+        if (!player.getItemInHand(ammoHand).isEmpty()) {
+            return false;
+        }
+
+        ItemStack toolbeltStack = findToolbelt(player);
+        if (toolbeltStack.isEmpty()) {
+            return false;
+        }
+
+        QuiverInventory inventory = new QuiverInventory(toolbeltStack, player.registryAccess());
+        List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            if (effects.get(i).contains(ItemEffect.quickAccess) && !inventory.getItem(i).isEmpty()) {
+                player.setItemInHand(ammoHand, inventory.getItem(i).split(count));
+                inventory.setChanged();
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -122,14 +145,14 @@ public class ToolbeltHelper {
      * @return A toolbelt itemstack, or an empty itemstack if the player has no toolbelt
      */
     public static ItemStack findToolbelt(Player player) {
-        if (CuriosCompat.isLoaded) {
-            Optional<ImmutableTriple<String, Integer, ItemStack>> maybeToolbelt = CuriosApi.getCuriosHelper().findEquippedCurio(ModularToolbeltItem.instance.get(), player);
-            if (maybeToolbelt.isPresent()) {
-                return maybeToolbelt.get().right;
-            }
-            if (ConfigHandler.toolbeltCurioOnly.get()) {
-                return ItemStack.EMPTY;
-            }
+        Optional<ItemStack> equippedToolbelt = CuriosApi.getCuriosInventory(player)
+                .flatMap(handler -> handler.findFirstCurio(ModularToolbeltItem.instance.get()))
+                .map(slotResult -> slotResult.stack());
+        if (equippedToolbelt.isPresent()) {
+            return equippedToolbelt.get();
+        }
+        if (ConfigHandler.toolbeltCurioOnly.get()) {
+            return ItemStack.EMPTY;
         }
         Inventory inventoryPlayer = player.getInventory();
         for (int i = 0; i < inventoryPlayer.items.size(); ++i) {
@@ -145,8 +168,8 @@ public class ToolbeltHelper {
         return Optional.of(ToolbeltHelper.findToolbelt(player))
                 .filter(toolbeltStack -> !toolbeltStack.isEmpty())
                 .map(toolbeltStack -> {
-                    QuickslotInventory quickslots = new QuickslotInventory(toolbeltStack);
-                    StorageInventory storage = new StorageInventory(toolbeltStack);
+                    QuickslotInventory quickslots = new QuickslotInventory(toolbeltStack, player.registryAccess());
+                    StorageInventory storage = new StorageInventory(toolbeltStack, player.registryAccess());
                     List<ItemStack> result = new ArrayList<>(quickslots.getContainerSize() + storage.getContainerSize());
 
                     for (int i = 0; i < quickslots.getContainerSize(); i++) {
@@ -163,10 +186,10 @@ public class ToolbeltHelper {
     }
 
     public static void emptyOverflowSlots(ItemStack itemStack, Player player) {
-        new QuickslotInventory(itemStack).emptyOverflowSlots(player);
-        new PotionsInventory(itemStack).emptyOverflowSlots(player);
-        new StorageInventory(itemStack).emptyOverflowSlots(player);
-        new QuiverInventory(itemStack).emptyOverflowSlots(player);
+        new QuickslotInventory(itemStack, player.registryAccess()).emptyOverflowSlots(player);
+        new PotionsInventory(itemStack, player.registryAccess()).emptyOverflowSlots(player);
+        new StorageInventory(itemStack, player.registryAccess()).emptyOverflowSlots(player);
+        new QuiverInventory(itemStack, player.registryAccess()).emptyOverflowSlots(player);
     }
 
     /**
@@ -184,7 +207,7 @@ public class ToolbeltHelper {
             return -1;
         }
 
-        QuickslotInventory inventory = new QuickslotInventory(toolbeltStack);
+        QuickslotInventory inventory = new QuickslotInventory(toolbeltStack, player.registryAccess());
         List<Collection<ItemEffect>> effects = inventory.getSlotEffects();
 
         if (traceResult instanceof BlockHitResult) {

@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GridTextureModelData extends AbstractTextureModelData {
-    public static final ResourceLocation TYPE = new ResourceLocation("tetra", "grid_texture");
+    public static final ResourceLocation TYPE = ResourceLocation.fromNamespaceAndPath("tetra", "grid_texture");
 
     public GridTextureModelData() {
         super();
@@ -71,12 +71,12 @@ public class GridTextureModelData extends AbstractTextureModelData {
     }
 
     protected static ResourceLocation appendString(ResourceLocation resourceLocation, String string) {
-        return new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath() + string);
+        return ResourceLocation.fromNamespaceAndPath(resourceLocation.getNamespace(), resourceLocation.getPath() + string);
     }
 
     public GridTextureModelData withSlotSuffix(String suffix) {
         GridTextureModelData copy = copy();
-        copy.location = new ResourceLocation(location.getNamespace(), location.getPath() + suffix);
+        copy.location = ResourceLocation.fromNamespaceAndPath(location.getNamespace(), location.getPath() + suffix);
         return copy;
     }
 

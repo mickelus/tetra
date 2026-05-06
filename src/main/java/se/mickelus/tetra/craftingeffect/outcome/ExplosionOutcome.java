@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Map;
@@ -20,7 +20,7 @@ public class ExplosionOutcome implements CraftingEffectOutcome {
 
     @Override
     public boolean apply(final ResourceLocation[] unlockedEffects, final ItemStack upgradedStack, final String slot, final boolean isReplacing,
-            final Player player, final ItemStack[] preMaterials, final Map<ToolAction, Integer> tools, final Level world,
+            final Player player, final ItemStack[] preMaterials, final Map<ItemAbility, Integer> tools, final Level world,
             final UpgradeSchematic schematic, final BlockPos pos, final BlockState blockState, final boolean consumeResources,
             final ItemStack[] postMaterials, float severity) {
         if (consumeResources && !world.isClientSide()) {

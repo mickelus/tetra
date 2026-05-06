@@ -18,7 +18,7 @@ import java.util.List;
 public class GuiSources extends GuiElement {
     private List<Component> tooltip = Collections.singletonList(Component.translatable("tetra.sources.unknown_tooltip"));
     private GuiTexture icon;
-    private GuiStringSmall label;
+    private final GuiStringSmall label;
 
     public GuiSources(int x, int y, int width) {
         super(x, y, width, 5);

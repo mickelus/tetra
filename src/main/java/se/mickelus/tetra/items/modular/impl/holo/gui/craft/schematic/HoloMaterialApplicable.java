@@ -5,13 +5,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiTexture;
 import se.mickelus.tetra.ClientScheduler;
@@ -23,6 +23,7 @@ import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.module.schematic.SchematicRarity;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -73,7 +74,7 @@ public class HoloMaterialApplicable extends GuiElement {
                         } else if (mat.startsWith("!")) {
                             return I18n.get("tetra.material." + mat.substring(1));
                         }
-                        return Optional.ofNullable(ForgeRegistries.ITEMS.getValue(new ResourceLocation(mat)))
+                        return Optional.ofNullable(RegistryHelper.get(BuiltInRegistries.ITEM, ResourceLocation.parse(mat)))
                                 .map(Item::getDescription)
                                 .map(Component::getString)
                                 .orElse(mat);

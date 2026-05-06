@@ -6,8 +6,8 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import se.mickelus.mutil.gui.GuiAttachment;
 import se.mickelus.mutil.gui.GuiElement;
 import se.mickelus.mutil.gui.GuiText;
@@ -37,7 +37,7 @@ public class ScrollScreen extends Screen {
         height = 240;
 
         gui = new GuiElement(0, 0, width, height);
-        gui.addChild(new GuiTexture(0, 0, 160, 186, new ResourceLocation(TetraMod.MOD_ID, "textures/gui/pamphlet.png")).setAttachment(GuiAttachment.middleCenter));
+        gui.addChild(new GuiTexture(0, 0, 160, 186, ResourceLocation.fromNamespaceAndPath(TetraMod.MOD_ID, "textures/gui/pamphlet.png")).setAttachment(GuiAttachment.middleCenter));
 
         text = new GuiText(2, -75, 124, "");
         text.setAttachmentAnchor(GuiAttachment.middleCenter);
@@ -58,7 +58,7 @@ public class ScrollScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, final int mouseX, final int mouseY, final float partialTicks) {
-        renderBackground(graphics);
+        renderBackground(graphics, mouseX, mouseY, partialTicks);
         super.render(graphics, mouseX, mouseY, partialTicks);
 
         gui.updateFocusState((width - gui.getWidth()) / 2, (height - gui.getHeight()) / 2, mouseX, mouseY);
@@ -83,8 +83,8 @@ public class ScrollScreen extends Screen {
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double distance) {
-        return gui.onMouseScroll(mouseX, mouseY, distance);
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        return gui.onMouseScroll(mouseX, mouseY, scrollY);
     }
 
     @Override

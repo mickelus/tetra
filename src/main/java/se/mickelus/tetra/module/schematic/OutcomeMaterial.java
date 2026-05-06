@@ -2,10 +2,7 @@ package se.mickelus.tetra.module.schematic;
 
 import com.google.gson.*;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.advancements.critereon.EnchantmentPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.MinMaxBounds;
-import net.minecraft.advancements.critereon.NbtPredicate;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
@@ -15,10 +12,11 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import se.mickelus.tetra.data.deserializer.ItemPredicateDeserializer;
+import se.mickelus.tetra.data.predicate.TetraItemPredicate;
+import se.mickelus.tetra.util.RegistryHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -29,6 +27,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static se.mickelus.tetra.util.ItemStackTagHelper.setTag;
+
 @ParametersAreNonnullByDefault
 public class OutcomeMaterial {
     private static final JsonArray emptyArray = new JsonArray();
@@ -38,7 +38,7 @@ public class OutcomeMaterial {
     protected Collection<ItemStack> itemStacks = Collections.emptyList();
     protected TagKey<Item> tagLocation;
 
-    private ItemPredicate predicate;
+    private TetraItemPredicate predicate;
 
     public OutcomeMaterial offsetCount(float multiplier, int offset) {
         OutcomeMaterial result = new OutcomeMaterial();
@@ -62,9 +62,7 @@ public class OutcomeMaterial {
         } else if (itemStacks != null) {
             return itemStacks.stream().map(ItemStack::getHoverName).toArray(Component[]::new);
         } else if (tagLocation != null) {
-            return ForgeRegistries.ITEMS.tags()
-                    .getTag(tagLocation)
-                    .stream()
+            return RegistryHelper.streamTag(BuiltInRegistries.ITEM, tagLocation)
                     .map(item -> item.getName(item.getDefaultInstance()))
                     .toArray(Component[]::new);
         }
@@ -78,9 +76,7 @@ public class OutcomeMaterial {
         } else if (itemStacks != null && !itemStacks.isEmpty()) {
             return itemStacks.toArray(ItemStack[]::new);
         } else if (tagLocation != null) {
-            return ForgeRegistries.ITEMS.tags()
-                    .getTag(tagLocation)
-                    .stream()
+            return RegistryHelper.streamTag(BuiltInRegistries.ITEM, tagLocation)
                     .map(Item::getDefaultInstance)
                     .map(this::setCount)
                     .toArray(ItemStack[]::new);
@@ -90,7 +86,7 @@ public class OutcomeMaterial {
     }
 
     @Nullable
-    public ItemPredicate getPredicate() {
+    public TetraItemPredicate getPredicate() {
         return predicate;
     }
 
@@ -122,8 +118,8 @@ public class OutcomeMaterial {
                     try {
                         material.itemStacks = StreamSupport.stream(GsonHelper.getAsJsonArray(jsonObject, "items", emptyArray).spliterator(), false)
                                 .map(jsonElement -> GsonHelper.convertToString(jsonElement, "item"))
-                                .map(ResourceLocation::new)
-                                .map(ForgeRegistries.ITEMS::getValue)
+                                .map(ResourceLocation::parse)
+                                .map(itemId -> RegistryHelper.get(BuiltInRegistries.ITEM, itemId))
                                 .filter(Objects::nonNull)
                                 .map(item -> new ItemStack(item, material.count))
                                 .collect(Collectors.toList());
@@ -134,18 +130,18 @@ public class OutcomeMaterial {
                     if (!material.itemStacks.isEmpty() && jsonObject.has("nbt")) {
                         try {
                             CompoundTag compoundnbt = TagParser.parseTag(GsonHelper.convertToString(jsonObject.get("nbt"), "nbt"));
-                            material.itemStacks.forEach(itemStack -> itemStack.setTag(compoundnbt));
+                            material.itemStacks.forEach(itemStack -> setTag(itemStack, compoundnbt.copy()));
                         } catch (CommandSyntaxException exception) {
                             throw new JsonSyntaxException("Encountered invalid nbt tag when parsing material: " + exception.getMessage());
                         }
                     }
 
                 } else if (jsonObject.has("tag")) {
-                    material.tagLocation = ItemTags.create(new ResourceLocation(GsonHelper.getAsString(jsonObject, "tag")));
+                    material.tagLocation = ItemTags.create(ResourceLocation.parse(GsonHelper.getAsString(jsonObject, "tag")));
                 }
 
                 if (!jsonObject.has("type") && jsonObject.has("tag")) {
-                    material.predicate = deserializeTagPredicate(jsonObject);
+                    material.predicate = ItemPredicateDeserializer.deserialize(jsonObject);
                 } else {
                     JsonObject copy = jsonObject.deepCopy();
                     copy.remove("count");
@@ -153,19 +149,6 @@ public class OutcomeMaterial {
                 }
             }
             return material;
-        }
-
-        // todo: workaround as vanilla predicates always use the non-networked tag manager
-        private ItemPredicate deserializeTagPredicate(JsonObject jsonObject) {
-            ResourceLocation resourceLocation = new ResourceLocation(GsonHelper.getAsString(jsonObject, "tag"));
-            TagKey<Item> tagKey = ItemTags.create(resourceLocation);
-
-            MinMaxBounds.Ints durability = MinMaxBounds.Ints.fromJson(jsonObject.get("durability"));
-            EnchantmentPredicate[] enchantments = EnchantmentPredicate.fromJsonArray(jsonObject.get("enchantments"));
-            EnchantmentPredicate[] storedEnchantments = EnchantmentPredicate.fromJsonArray(jsonObject.get("stored_enchantments"));
-            NbtPredicate nbt = NbtPredicate.fromJson(jsonObject.get("nbt"));
-
-            return new ItemPredicate(tagKey, null, MinMaxBounds.Ints.ANY, durability, enchantments, storedEnchantments, null, nbt);
         }
     }
 }

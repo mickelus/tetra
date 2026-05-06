@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -18,13 +19,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import se.mickelus.mutil.util.CastOptional;
 import se.mickelus.mutil.util.RotationHelper;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.items.modular.ItemModularHandheld;
-import se.mickelus.tetra.util.ToolActionHelper;
+import se.mickelus.tetra.util.ItemAbilityHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
@@ -36,7 +36,7 @@ public class ExtractionEffect {
 
         if (effectLevel > 0) {
             Vec3 entityPosition = entity.getEyePosition(0);
-            double lookDistance = Optional.ofNullable(entity.getAttribute(ForgeMod.BLOCK_REACH.get()))
+            double lookDistance = Optional.ofNullable(entity.getAttribute(Attributes.BLOCK_INTERACTION_RANGE))
                     .map(AttributeInstance::getValue)
                     .orElse(5d);
 
@@ -49,7 +49,7 @@ public class ExtractionEffect {
                     : Direction.orderedByNearest(entity)[0];
 
             float referenceHardness = state.getDestroySpeed(world, pos);
-            ToolAction referenceTool = ToolActionHelper.getAppropriateTools(state).stream()
+            ItemAbility referenceTool = ItemAbilityHelper.getAppropriateTools(state).stream()
                     .filter(tool -> item.canPerformAction(itemStack, tool))
                     .findFirst()
                     .orElse(null);
@@ -69,7 +69,7 @@ public class ExtractionEffect {
     }
 
     private static void breakRecursive(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos,
-            float refHardness, ToolAction refTool, int remaining) {
+            float refHardness, ItemAbility refTool, int remaining) {
         if (remaining > 0) {
             ServerScheduler.schedule(2, () -> breakInner(world, player, item, itemStack, direction, pos, refHardness, refTool));
         }
@@ -87,7 +87,7 @@ public class ExtractionEffect {
     }
 
     private static void breakInner(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos,
-            float refHardness, ToolAction refTool) {
+            float refHardness, ItemAbility refTool) {
         Vec3i axis1 = RotationHelper.shiftAxis(direction.getNormal());
         Vec3i axis2 = RotationHelper.shiftAxis(axis1);
         breakBlock(world, player, item, itemStack, pos.offset(axis1), refHardness, refTool);
@@ -97,7 +97,7 @@ public class ExtractionEffect {
     }
 
     private static void breakOuter(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, Direction direction, BlockPos pos,
-            float refHardness, ToolAction refTool) {
+            float refHardness, ItemAbility refTool) {
         Vec3i axis1 = RotationHelper.shiftAxis(direction.getNormal());
         Vec3i axis2 = RotationHelper.shiftAxis(axis1);
         breakBlock(world, player, item, itemStack, pos.offset(axis1).offset(axis2), refHardness, refTool);
@@ -108,14 +108,14 @@ public class ExtractionEffect {
 
 
     private static boolean breakBlock(Level world, Player player, ItemModularHandheld item, ItemStack itemStack, BlockPos pos,
-            float refHardness, ToolAction refTool) {
+            float refHardness, ItemAbility refTool) {
         BlockState offsetState = world.getBlockState(pos);
 
         float blockHardness = offsetState.getDestroySpeed(world, pos);
-        if (ToolActionHelper.playerCanDestroyBlock(player, offsetState, pos, itemStack)
+        if (ItemAbilityHelper.playerCanDestroyBlock(player, offsetState, pos, itemStack)
                 && blockHardness != -1
                 && blockHardness <= refHardness
-                && ToolActionHelper.isEffectiveOn(refTool, offsetState)) {
+                && ItemAbilityHelper.isEffectiveOn(refTool, offsetState)) {
             if (EffectHelper.breakBlock(world, player, itemStack, pos, offsetState, true, false)) {
                 EffectHelper.sendEventToPlayer((ServerPlayer) player, 2001, pos, Block.getId(offsetState));
 

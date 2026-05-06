@@ -112,7 +112,7 @@
                     "integrity": -1,
                     "durability": 200,
                     "magicCapacity": 84,
-                    "tags": [ "forge:swords" ],
+                    "tags": [ "minecraft:swords" ],
                     "glyph": {
                         "textureX": 46,
                         "textureY": 16,
@@ -141,7 +141,7 @@
                         "breakable": 2
                     },
                     "durability": -20,
-                    "tags": [ "forge:swords" ],
+                    "tags": [ "minecraft:swords" ],
                     "extract": {
                         "primaryAttributes": {
                             "generic.attack_damage": 1

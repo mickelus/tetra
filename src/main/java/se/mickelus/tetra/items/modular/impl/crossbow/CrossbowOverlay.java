@@ -1,18 +1,18 @@
 package se.mickelus.tetra.items.modular.impl.crossbow;
 
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 import se.mickelus.tetra.items.modular.impl.bow.GuiRangedProgress;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class CrossbowOverlay implements IGuiOverlay {
+public class CrossbowOverlay implements LayeredDraw.Layer {
     private final Minecraft mc;
     private final GuiRangedProgress gui;
 
@@ -22,8 +22,8 @@ public class CrossbowOverlay implements IGuiOverlay {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (TickEvent.Phase.END == event.phase && mc.player != null) {
+    public void onClientTick(ClientTickEvent.Post event) {
+        if (mc.player != null) {
             ItemStack activeStack = mc.player.getUseItem();
 
             if (activeStack.getItem() instanceof ModularCrossbowItemImpl) {
@@ -36,7 +36,7 @@ public class CrossbowOverlay implements IGuiOverlay {
     }
 
     @Override
-    public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+    public void render(GuiGraphics graphics, DeltaTracker deltaTracker) {
         this.gui.draw(graphics);
     }
 }

@@ -1,20 +1,21 @@
 package se.mickelus.tetra.blocks.forged.hammer;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class HammerHeadBlockEntity extends BlockEntity {
     private static final String jamKey = "jam";
-    public static RegistryObject<BlockEntityType<HammerHeadBlockEntity>> type;
+    public static Supplier<BlockEntityType<HammerHeadBlockEntity>> type;
     private long activationTime = -1;
     private long unjamTime = -1;
     private boolean jammed;
@@ -50,7 +51,6 @@ public class HammerHeadBlockEntity extends BlockEntity {
         setChanged();
     }
 
-
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
@@ -58,19 +58,19 @@ public class HammerHeadBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.jammed = compound.contains(jamKey) && compound.getBoolean(jamKey);
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
 
         if (isJammed()) {
             compound.putBoolean(jamKey, true);

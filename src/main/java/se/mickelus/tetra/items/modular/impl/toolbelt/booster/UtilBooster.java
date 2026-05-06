@@ -1,6 +1,7 @@
 package se.mickelus.tetra.items.modular.impl.toolbelt.booster;
 
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
@@ -18,6 +19,7 @@ import se.mickelus.tetra.items.modular.impl.toolbelt.ToolbeltHelper;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.QuickslotInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.StorageInventory;
 import se.mickelus.tetra.items.modular.impl.toolbelt.inventory.ToolbeltInventory;
+import se.mickelus.tetra.util.ItemStackTagHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -124,33 +126,32 @@ public class UtilBooster {
                     cp.connection.send(new ServerboundPlayerInputPacket(cp.xxa, cp.zza, cp.input.jumping, cp.input.shiftKeyDown));
                 });
 
-                CompoundTag tag = itemStack.getOrCreateTag();
+                ItemStackTagHelper.mutate(itemStack, tag -> {
+                    if (UtilBooster.hasFuel(tag, false)) {
+                        UtilBooster.consumeFuel(tag, false);
 
-                if (UtilBooster.hasFuel(tag, false)) {
-                    UtilBooster.consumeFuel(tag, false);
+                        player.moveRelative(0.05f, new Vec3(player.xxa, player.yya, player.zza));
 
-                    player.moveRelative(0.05f, new Vec3(player.xxa, player.yya, player.zza));
+                        if (player.level().isClientSide) {
+                            Vec3 direction = getAbsoluteMotion(-player.xxa, -player.zza, player.getYRot());
+                            for (int i = 0; i < 8; i++) {
+                                player.getCommandSenderWorld().addParticle(ParticleTypes.SMOKE,
+                                        player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
+                                        Math.random() * (0.2 * direction.x + 0.07) - 0.05,
+                                        Math.random() * 0.1 - 0.05,
+                                        Math.random() * (0.2 * direction.z + 0.07) - 0.05);
+                            }
 
-                    if (player.level().isClientSide) {
-                        Vec3 direction = getAbsoluteMotion(-player.xxa, -player.zza, player.getYRot());
-                        for (int i = 0; i < 8; i++) {
-                            player.getCommandSenderWorld().addParticle(ParticleTypes.SMOKE,
-                                    player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
-                                    Math.random() * (0.2 * direction.x + 0.07) - 0.05,
-                                    Math.random() * 0.1 - 0.05,
-                                    Math.random() * (0.2 * direction.z + 0.07) - 0.05);
-                        }
-
-                        if (Math.random() > 0.3) {
-                            player.getCommandSenderWorld().addParticle(ParticleTypes.FLAME,
-                                    player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
-                                    Math.random() * (0.2 * direction.x + 0.07) - 0.05,
-                                    Math.random() * 0.1 - 0.05,
-                                    Math.random() * (0.2 * direction.z + 0.07) - 0.05);
+                            if (Math.random() > 0.3) {
+                                player.getCommandSenderWorld().addParticle(ParticleTypes.FLAME,
+                                        player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
+                                        Math.random() * (0.2 * direction.x + 0.07) - 0.05,
+                                        Math.random() * 0.1 - 0.05,
+                                        Math.random() * (0.2 * direction.z + 0.07) - 0.05);
+                            }
                         }
                     }
-
-                }
+                });
             }
         }
     }
@@ -200,7 +201,7 @@ public class UtilBooster {
         tag.putInt(cooldownKey, cooldownTicks);
     }
 
-    public static void rechargeFuel(CompoundTag tag, ItemStack itemStack) {
+    public static void rechargeFuel(CompoundTag tag, ItemStack itemStack, HolderLookup.Provider registryAccess) {
         int fuel = tag.getInt(fuelKey);
         int buffer = tag.getInt(bufferKey);
         int cooldown = tag.getInt(cooldownKey);
@@ -211,13 +212,13 @@ public class UtilBooster {
                 tag.putInt(fuelKey, fuel + fuelRecharge);
                 tag.putInt(bufferKey, buffer - 1);
             } else {
-                refuelBuffer(tag, itemStack);
+                refuelBuffer(tag, itemStack, registryAccess);
             }
         }
     }
 
-    private static void refuelBuffer(CompoundTag tag, ItemStack itemStack) {
-        ToolbeltInventory inventory = new QuickslotInventory(itemStack);
+    private static void refuelBuffer(CompoundTag tag, ItemStack itemStack, HolderLookup.Provider registryAccess) {
+        ToolbeltInventory inventory = new QuickslotInventory(itemStack, registryAccess);
         int index = inventory.getFirstIndexForItem(Items.GUNPOWDER);
         if (index != -1) {
             inventory.removeItem(index, 1);
@@ -225,7 +226,7 @@ public class UtilBooster {
             return;
         }
 
-        inventory = new StorageInventory(itemStack);
+        inventory = new StorageInventory(itemStack, registryAccess);
         index = inventory.getFirstIndexForItem(Items.GUNPOWDER);
         if (index != -1) {
             inventory.removeItem(index, 1);

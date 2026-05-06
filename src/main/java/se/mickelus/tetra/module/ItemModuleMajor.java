@@ -2,15 +2,14 @@ package se.mickelus.tetra.module;
 
 
 import com.google.common.collect.Multimap;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import se.mickelus.mutil.gui.SimpleColor;
@@ -27,7 +26,8 @@ import se.mickelus.tetra.properties.AttributeHelper;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static se.mickelus.tetra.util.ItemStackTagHelper.*;
 
 public abstract class ItemModuleMajor extends ItemModule {
 
@@ -51,8 +51,8 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     public static void removeImprovement(ItemStack itemStack, String slot, String improvement) {
-        if (itemStack.hasTag()) {
-            itemStack.getTag().remove(slot + ":" + improvement);
+        if (hasTag(itemStack)) {
+            mutate(itemStack, tag -> tag.remove(slot + ":" + improvement));
         }
     }
 
@@ -62,23 +62,23 @@ public abstract class ItemModuleMajor extends ItemModule {
             return;
         }
 
-        CompoundTag tag = itemStack.getOrCreateTag();
         int settleLevel = getImprovementLevel(itemStack, settleImprovement);
 
         if (settleLevel < settleMaxCount && (getImprovementLevel(itemStack, arrestedImprovement) == -1)) {
-            int settleProgress = getSettleProgress(itemStack);
+            int settleProgress = getSettleProgress(itemStack) - multiplier;
 
-            settleProgress -= multiplier;
-            tag.putInt(settleProgressKey, settleProgress);
-            if (settleProgress <= 0) {
-                addImprovement(itemStack, settleImprovement, settleLevel == -1 ? 1 : settleLevel + 1);
-                tag.remove(settleProgressKey);
+            mutate(itemStack, tag -> {
+                tag.putInt(settleProgressKey, settleProgress);
+                if (settleProgress <= 0) {
+                    addImprovement(itemStack, settleImprovement, settleLevel == -1 ? 1 : settleLevel + 1);
+                    tag.remove(settleProgressKey);
 
-                if (entity instanceof ServerPlayer) {
-                    TetraMod.packetHandler.sendTo(new SettlePacket(itemStack, getSlot()), (ServerPlayer) entity);
-                    IModularItem.updateIdentifier(tag);
+                    if (entity instanceof ServerPlayer) {
+                        TetraMod.packetHandler.sendTo(new SettlePacket(itemStack, getSlot()), (ServerPlayer) entity);
+                        IModularItem.updateIdentifier(tag);
+                    }
                 }
-            }
+            });
         }
     }
 
@@ -89,7 +89,7 @@ public abstract class ItemModuleMajor extends ItemModule {
      * @return
      */
     public int getSettleProgress(ItemStack itemStack) {
-        return Optional.ofNullable(itemStack.getTag())
+        return Optional.ofNullable(getTag(itemStack))
                 .filter(tag -> tag.contains(settleProgressKey))
                 .map(tag -> tag.getInt(settleProgressKey))
                 .orElseGet(() -> getSettleLimit(itemStack));
@@ -128,21 +128,21 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     protected void clearProgression(ItemStack itemStack) {
-        if (itemStack.hasTag()) {
-            itemStack.getTag().remove(String.format(settleProgressKey, getSlot()));
+        if (hasTag(itemStack)) {
+            mutate(itemStack, tag -> tag.remove(settleProgressKey));
         }
     }
 
     public int getImprovementLevel(ItemStack itemStack, String improvementKey) {
-        return Optional.ofNullable(itemStack.getTag())
+        return Optional.ofNullable(getTag(itemStack))
                 .filter(tag -> tag.contains(slotTagKey + ":" + improvementKey))
                 .map(tag -> tag.getInt(slotTagKey + ":" + improvementKey))
                 .orElse(-1);
     }
 
     public ImprovementData getImprovement(ItemStack itemStack, String improvementKey) {
-        if (itemStack.hasTag()) {
-            CompoundTag tag = itemStack.getTag();
+        if (hasTag(itemStack)) {
+            CompoundTag tag = getTag(itemStack);
             return Arrays.stream(improvements)
                     .filter(improvement -> improvementKey.equals(improvement.key))
                     .filter(improvement -> tag.contains(slotTagKey + ":" + improvement.key))
@@ -155,8 +155,8 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     public ImprovementData[] getImprovements(ItemStack itemStack) {
-        if (itemStack.hasTag()) {
-            CompoundTag tag = itemStack.getTag();
+        if (hasTag(itemStack)) {
+            CompoundTag tag = getTag(itemStack);
             return Arrays.stream(improvements)
                     .filter(improvement -> tag.contains(slotTagKey + ":" + improvement.key))
                     .filter(improvement -> improvement.level == tag.getInt(slotTagKey + ":" + improvement.key))
@@ -196,7 +196,7 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     public void addImprovement(ItemStack itemStack, String improvementKey, int level) {
         removeCollidingImprovements(itemStack, improvementKey, level);
-        itemStack.getOrCreateTag().putInt(slotTagKey + ":" + improvementKey, level);
+        mutate(itemStack, tag -> tag.putInt(slotTagKey + ":" + improvementKey, level));
     }
 
     public void removeCollidingImprovements(ItemStack itemStack, String improvementKey, int level) {
@@ -219,29 +219,20 @@ public abstract class ItemModuleMajor extends ItemModule {
         TetraEnchantmentHelper.removeEnchantments(itemStack, getSlot());
     }
 
-    public boolean acceptsEnchantment(ItemStack itemStack, Enchantment enchantment, boolean fromTable) {
+    public boolean acceptsEnchantment(ItemStack itemStack, Holder<Enchantment> enchantment, boolean fromTable) {
         return Optional.ofNullable(getAspects(itemStack))
                 .map(AspectData::getLevelMap)
                 .filter(aspects -> TetraEnchantmentHelper.isApplicableForAspects(enchantment, fromTable, aspects))
                 .isPresent();
     }
 
-    public EnchantmentCategory[] getApplicableEnchantmentCategories(ItemStack itemStack, boolean fromTable) {
-        int requiredLevel = fromTable ? 2 : 1;
-        return Optional.ofNullable(getAspects(itemStack))
-                .map(AspectData::getLevelMap)
-                .map(Map::entrySet)
-                .map(Set::stream)
-                .orElseGet(Stream::empty)
-                .filter(entry -> entry.getValue() >= requiredLevel)
-                .map(Map.Entry::getKey)
-                .map(TetraEnchantmentHelper::getEnchantmentCategories)
-                .flatMap(Arrays::stream)
-                .toArray(EnchantmentCategory[]::new);
-    }
-
     public Set<String> getEnchantmentKeys(ItemStack itemStack) {
-        CompoundTag mappings = itemStack.getTagElement("EnchantmentMapping");
+        if (itemStack.getTagEnchantments().isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        TetraEnchantmentHelper.ensureMappings(itemStack);
+        CompoundTag mappings = getTagElement(itemStack, "EnchantmentMapping");
         if (mappings != null) {
             return mappings.getAllKeys().stream()
                     .filter(key -> getSlot().equals(mappings.get(key).getAsString()))
@@ -251,14 +242,17 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     public Map<String, Integer> getEnchantmentsPrimitive(ItemStack itemStack) {
-        CompoundTag mappings = itemStack.getTagElement("EnchantmentMapping");
+        if (itemStack.getTagEnchantments().isEmpty()) {
+            return Collections.emptyMap();
+        }
 
-        if (itemStack.hasTag() && mappings != null) {
-            return itemStack.getTag().getList("Enchantments", Tag.TAG_COMPOUND).stream()
-                    .map(tag -> (CompoundTag) tag)
-                    .filter(tag -> getSlot().equals(mappings.getString(tag.getString("id"))))
-                    .map(TetraEnchantmentHelper::getEnchantmentPrimitive)
-                    .filter(Objects::nonNull)
+        TetraEnchantmentHelper.ensureMappings(itemStack);
+        CompoundTag mappings = getTagElement(itemStack, "EnchantmentMapping");
+
+        if (mappings != null) {
+            return itemStack.getTagEnchantments().entrySet().stream()
+                    .map(entry -> Pair.of(entry.getKey().unwrapKey().orElseThrow().location().toString(), entry.getIntValue()))
+                    .filter(entry -> getSlot().equals(mappings.getString(entry.getLeft())))
                     .collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
         }
 
@@ -266,15 +260,25 @@ public abstract class ItemModuleMajor extends ItemModule {
     }
 
     public Map<Enchantment, Integer> getEnchantments(ItemStack itemStack) {
-        CompoundTag mappings = itemStack.getTagElement("EnchantmentMapping");
+        return getEnchantmentHolders(itemStack).entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().value(), Map.Entry::getValue, Integer::max, LinkedHashMap::new));
+    }
 
-        if (itemStack.hasTag() && mappings != null) {
-            return itemStack.getTag().getList("Enchantments", Tag.TAG_COMPOUND).stream()
-                    .map(tag -> (CompoundTag) tag)
-                    .filter(tag -> getSlot().equals(mappings.getString(tag.getString("id"))))
-                    .map(TetraEnchantmentHelper::getEnchantment)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
+    public Map<Holder<Enchantment>, Integer> getEnchantmentHolders(ItemStack itemStack) {
+        if (itemStack.getTagEnchantments().isEmpty()) {
+            return Collections.emptyMap();
+        }
+
+        TetraEnchantmentHelper.ensureMappings(itemStack);
+        CompoundTag mappings = getTagElement(itemStack, "EnchantmentMapping");
+
+        if (mappings != null) {
+            return itemStack.getTagEnchantments().entrySet().stream()
+                    .filter(entry -> TetraEnchantmentHelper.getEnchantmentKey(entry.getKey())
+                            .map(Object::toString)
+                            .map(key -> getSlot().equals(mappings.getString(key)))
+                            .orElse(false))
+                    .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getIntValue(), Integer::max, LinkedHashMap::new));
         }
 
         return Collections.emptyMap();
@@ -284,6 +288,10 @@ public abstract class ItemModuleMajor extends ItemModule {
         return -getEnchantments(itemStack).entrySet().stream()
                 .mapToInt(entry -> TetraEnchantmentHelper.getEnchantmentCapacityCost(entry.getKey(), entry.getValue()))
                 .sum();
+    }
+
+    public int getAvailableMagicCapacityForMapping(ItemStack itemStack) {
+        return getMagicCapacityGain(itemStack) - (super.getMagicCapacityCost(itemStack) + getImprovementMagicCapacityCost(itemStack));
     }
 
     @Override
@@ -299,8 +307,8 @@ public abstract class ItemModuleMajor extends ItemModule {
 
     @Override
     public TweakData[] getTweaks(ItemStack itemStack) {
-        if (itemStack.hasTag()) {
-            String variant = itemStack.getTag().getString(this.variantTagKey);
+        if (hasTag(itemStack)) {
+            String variant = getTag(itemStack).getString(this.variantTagKey);
             String[] improvementKeys = Arrays.stream(getImprovements(itemStack))
                     .map(improvement -> improvement.key)
                     .toArray(String[]::new);
@@ -317,11 +325,10 @@ public abstract class ItemModuleMajor extends ItemModule {
     public ItemStack[] removeModule(ItemStack targetStack, boolean upgrade) {
         ItemStack[] salvage = super.removeModule(targetStack, upgrade);
 
-        if (!upgrade && targetStack.hasTag()) {
-            CompoundTag tag = targetStack.getTag();
-            Arrays.stream(improvements)
+        if (!upgrade && hasTag(targetStack)) {
+            mutate(targetStack, tag -> Arrays.stream(improvements)
                     .map(improvement -> slotTagKey + ":" + improvement.key)
-                    .forEach(tag::remove);
+                    .forEach(tag::remove));
 
             clearProgression(targetStack);
         }

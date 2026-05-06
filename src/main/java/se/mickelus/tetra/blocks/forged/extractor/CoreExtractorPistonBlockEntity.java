@@ -10,17 +10,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.RegistryObject;
 import se.mickelus.mutil.util.TileEntityOptional;
 import se.mickelus.tetra.TetraMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class CoreExtractorPistonBlockEntity extends BlockEntity {
     static final long activationDuration = 105;
     private static final int fillAmount = 40;
-    public static RegistryObject<BlockEntityType<CoreExtractorPistonBlockEntity>> type;
+    public static Supplier<BlockEntityType<CoreExtractorPistonBlockEntity>> type;
     private long endTime = Long.MAX_VALUE;
 
     public CoreExtractorPistonBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -48,7 +48,7 @@ public class CoreExtractorPistonBlockEntity extends BlockEntity {
 
     public float getProgress(float partialTicks) {
         if (isActive()) {
-            return Math.min(1, Math.max(0, (level.getGameTime() + activationDuration - endTime + partialTicks) / activationDuration));
+            return Math.clamp((level.getGameTime() + activationDuration - endTime + partialTicks) / activationDuration, 0, 1);
         }
         return 0;
     }

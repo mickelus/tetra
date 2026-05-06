@@ -1,105 +1,82 @@
 package se.mickelus.tetra.advancements;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ToolAction;
-import se.mickelus.mutil.util.JsonOptional;
+import net.neoforged.neoforge.common.ItemAbility;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
 
 @ParametersAreNonnullByDefault
-public class ImprovementCraftCriterion extends AbstractCriterionTriggerInstance {
-    public static final GenericTrigger<ImprovementCraftCriterion> trigger = new GenericTrigger<>("tetra:craft_improvement", ImprovementCraftCriterion::deserialize);
-    private final ItemPredicate before;
-    private final ItemPredicate after;
-    private final String schematic;
-    private final String slot;
-    private final String improvement;
-    private final int improvementLevel;
-    private final ToolAction toolAction;
-    private final MinMaxBounds.Ints toolLevel;
-
-    public ImprovementCraftCriterion(ContextAwarePredicate playerCondition, ItemPredicate before, ItemPredicate after, String schematic, String slot, String improvement, int improvementLevel, ToolAction toolAction, MinMaxBounds.Ints toolLevel) {
-        super(trigger.getId(), playerCondition);
-        this.before = before;
-        this.after = after;
-        this.schematic = schematic;
-        this.slot = slot;
-        this.improvement = improvement;
-        this.improvementLevel = improvementLevel;
-        this.toolAction = toolAction;
-        this.toolLevel = toolLevel;
-    }
+public class ImprovementCraftCriterion {
+    public static final GenericTrigger<Instance> trigger = new GenericTrigger<>(Instance.CODEC);
 
     public static void trigger(ServerPlayer player, ItemStack before, ItemStack after, String schematic, String slot, String improvement,
-            int improvementLevel, ToolAction toolAction, int toolLevel) {
+            int improvementLevel, ItemAbility toolAction, int toolLevel) {
         trigger.fulfillCriterion(player,
                 criterion -> criterion.test(before, after, schematic, slot, improvement, improvementLevel, toolAction, toolLevel));
     }
 
-    private static ImprovementCraftCriterion deserialize(JsonObject json, ContextAwarePredicate entityPredicate, DeserializationContext conditionsParser) {
-        return new ImprovementCraftCriterion(entityPredicate,
-                JsonOptional.field(json, "before")
-                        .map(ItemPredicate::fromJson)
-                        .orElse(null),
-                JsonOptional.field(json, "after")
-                        .map(ItemPredicate::fromJson)
-                        .orElse(null),
-                JsonOptional.field(json, "schematic")
-                        .map(JsonElement::getAsString)
-                        .orElse(null),
-                JsonOptional.field(json, "slot")
-                        .map(JsonElement::getAsString)
-                        .orElse(null),
-                JsonOptional.field(json, "improvement")
-                        .map(JsonElement::getAsString)
-                        .orElse(null),
-                JsonOptional.field(json, "improvementLevel")
-                        .map(JsonElement::getAsInt)
-                        .orElse(-1),
-                JsonOptional.field(json, "tool")
-                        .map(JsonElement::getAsString)
-                        .map(ToolAction::get)
-                        .orElse(null),
-                JsonOptional.field(json, "toolLevel")
-                        .map(MinMaxBounds.Ints::fromJson)
-                        .orElse(MinMaxBounds.Ints.ANY));
-    }
+    public record Instance(
+            Optional<ContextAwarePredicate> player,
+            Optional<ItemPredicate> before,
+            Optional<ItemPredicate> after,
+            Optional<String> schematic,
+            Optional<String> slot,
+            Optional<String> improvement,
+            Optional<Integer> improvementLevel,
+            Optional<ItemAbility> tool,
+            MinMaxBounds.Ints toolLevel
+    ) implements SimpleCriterionTrigger.SimpleInstance {
+        public static final Codec<Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ContextAwarePredicate.CODEC.optionalFieldOf("player").forGetter(Instance::player),
+                ItemPredicate.CODEC.optionalFieldOf("before").forGetter(Instance::before),
+                ItemPredicate.CODEC.optionalFieldOf("after").forGetter(Instance::after),
+                Codec.STRING.optionalFieldOf("schematic").forGetter(Instance::schematic),
+                Codec.STRING.optionalFieldOf("slot").forGetter(Instance::slot),
+                Codec.STRING.optionalFieldOf("improvement").forGetter(Instance::improvement),
+                Codec.INT.optionalFieldOf("improvementLevel").forGetter(Instance::improvementLevel),
+                ItemAbility.CODEC.optionalFieldOf("tool").forGetter(Instance::tool),
+                MinMaxBounds.Ints.CODEC.optionalFieldOf("toolLevel", MinMaxBounds.Ints.ANY).forGetter(Instance::toolLevel)
+        ).apply(instance, Instance::new));
 
-    public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String improvement, int improvementLevel,
-            ToolAction toolAction, int toolLevel) {
+        public boolean test(ItemStack before, ItemStack after, String schematic, String slot, String improvement, int improvementLevel,
+                ItemAbility toolAction, int toolLevel) {
+            if (this.before.isPresent() && !this.before.get().test(before)) {
+                return false;
+            }
 
-        if (this.before != null && !this.before.matches(before)) {
-            return false;
+            if (this.after.isPresent() && !this.after.get().test(after)) {
+                return false;
+            }
+
+            if (this.schematic.isPresent() && !this.schematic.get().equals(schematic)) {
+                return false;
+            }
+
+            if (this.slot.isPresent() && !this.slot.get().equals(slot)) {
+                return false;
+            }
+
+            if (this.improvement.isPresent() && !this.improvement.get().equals(improvement)) {
+                return false;
+            }
+
+            if (this.improvementLevel.isPresent() && this.improvementLevel.get() != improvementLevel) {
+                return false;
+            }
+
+            if (this.tool.isPresent() && !this.tool.get().equals(toolAction)) {
+                return false;
+            }
+
+            return this.toolLevel.matches(toolLevel);
         }
-
-        if (this.after != null && !this.after.matches(after)) {
-            return false;
-        }
-
-        if (this.schematic != null && !this.schematic.equals(schematic)) {
-            return false;
-        }
-
-        if (this.slot != null && !this.slot.equals(slot)) {
-            return false;
-        }
-
-        if (this.improvement != null && !this.improvement.equals(improvement)) {
-            return false;
-        }
-
-        if (this.improvementLevel != -1 && this.improvementLevel != improvementLevel) {
-            return false;
-        }
-
-        if (this.toolAction != null && !this.toolAction.equals(toolAction)) {
-            return false;
-        }
-
-        return this.toolLevel.matches(toolLevel);
     }
 }

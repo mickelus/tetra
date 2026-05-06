@@ -1,6 +1,7 @@
 package se.mickelus.tetra.mixin;
 
 import com.google.common.collect.Streams;
+import net.minecraft.core.Holder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,11 +19,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Set;
 import java.util.stream.Stream;
 
+// Cross-version compat: matches upstream 1.20's ItemStackMixin.
+// 1.21 changed enchant() to take Holder<Enchantment>; the rest of the injections are unchanged.
 @ParametersAreNonnullByDefault
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
-    @Inject(at = @At("RETURN"), method = "enchant(Lnet/minecraft/world/item/enchantment/Enchantment;I)V")
-    private void addEnchantment(Enchantment enchantment, int level, CallbackInfo callback) {
+    @Inject(at = @At("RETURN"),
+            method = "enchant(Lnet/minecraft/core/Holder;I)V")
+    private void addEnchantment(Holder<Enchantment> enchantment, int level, CallbackInfo callback) {
         if (getItem() instanceof IModularItem item) {
             ItemStack itemStack = getInstance();
             TetraEnchantmentHelper.mapEnchantments(itemStack);

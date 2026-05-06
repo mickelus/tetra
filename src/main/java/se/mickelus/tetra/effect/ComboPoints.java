@@ -5,7 +5,7 @@ import com.google.common.cache.CacheBuilder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import se.mickelus.tetra.items.modular.IModularItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;

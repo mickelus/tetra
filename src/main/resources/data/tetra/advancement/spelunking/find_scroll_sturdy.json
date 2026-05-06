@@ -1,0 +1,50 @@
+{
+    "display": {
+        "icon": {
+            "components": {
+                "tetra:scroll_data": {
+                    "key": "sword/sturdy_guard",
+                    "intricate": false,
+                    "material": 1,
+                    "ribbon": "bcb8b5",
+                    "glyphs": [
+                        3,
+                        2,
+                        2,
+                        1
+                    ],
+                    "schematics": [
+                        "tetra:sword/sturdy_guard"
+                    ]
+                }
+            },
+            "id": "tetra:scroll_rolled"
+        },
+        "title": {
+            "translate": "tetra.advancements.spelunking.find_scroll_sturdy.title"
+        },
+        "description": {
+            "translate": "tetra.advancements.spelunking.find_scroll_sturdy.description"
+        }
+    },
+    "parent": "tetra:spelunking/find_scroll",
+    "criteria": {
+        "find": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "tetra:scroll_rolled"
+                        ],
+                        "predicates": {
+                            "tetra:scroll_data": {
+                                "key": "sword/sturdy_guard"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

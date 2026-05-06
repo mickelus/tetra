@@ -10,23 +10,22 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.Nullable;
 import se.mickelus.mutil.gui.ToggleableSlot;
 import se.mickelus.tetra.TetraMod;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class ForgedContainerMenu extends AbstractContainerMenu {
-    public static RegistryObject<MenuType<ForgedContainerMenu>> type;
+    public static Supplier<MenuType<ForgedContainerMenu>> type;
 
     private final ForgedContainerBlockEntity tile;
 
@@ -38,7 +37,8 @@ public class ForgedContainerMenu extends AbstractContainerMenu {
         this.tile = tile;
 
         // material inventory
-        tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+        var handler = tile.getItemHandler(null);
+        if (handler != null) {
             compartmentSlots = new ToggleableSlot[ForgedContainerBlockEntity.compartmentCount][];
             for (int i = 0; i < compartmentSlots.length; i++) {
                 compartmentSlots[i] = new ToggleableSlot[ForgedContainerBlockEntity.compartmentSize];
@@ -52,7 +52,7 @@ public class ForgedContainerMenu extends AbstractContainerMenu {
                     }
                 }
             }
-        });
+        }
 
         IItemHandler playerInventoryHandler = new InvWrapper(playerInventory);
 
@@ -88,9 +88,8 @@ public class ForgedContainerMenu extends AbstractContainerMenu {
     }
 
     private int getSlots() {
-        return tile.getCapability(ForgeCapabilities.ITEM_HANDLER)
-                .map(IItemHandler::getSlots)
-                .orElse(0);
+        IItemHandler handler = tile.getItemHandler(null);
+        return handler != null ? handler.getSlots() : 0;
     }
 
     /**
@@ -101,7 +100,7 @@ public class ForgedContainerMenu extends AbstractContainerMenu {
         ItemStack resultStack = ItemStack.EMPTY;
 
         Slot slot = slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
 
             resultStack = slotStack.copy();

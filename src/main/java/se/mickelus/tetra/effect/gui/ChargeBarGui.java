@@ -93,7 +93,7 @@ public class ChargeBarGui extends GuiElement {
     }
 
     private float getProgress(Player player, ItemModularHandheld item, ItemStack itemStack, ChargedAbilityEffect ability) {
-        return ability != null ? (itemStack.getUseDuration() - player.getUseItemRemainingTicks()) * 1f / ability.getChargeTime(player, item, itemStack) : 0;
+        return ability != null ? (itemStack.getUseDuration(player) - player.getUseItemRemainingTicks()) * 1f / ability.getChargeTime(player, item, itemStack) : 0;
     }
 
     static class Bar extends GuiElement {

@@ -10,9 +10,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -31,7 +31,7 @@ public class ScannerDebugRenderer {
         if (player != null && player.isCreative()) {
             PoseStack matrixStack = event.getPoseStack();
             VertexConsumer vertexBuilder = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
-            Vec3 eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTick());
+            Vec3 eyePos = Minecraft.getInstance().player.getEyePosition(event.getPartialTick().getGameTimeDeltaPartialTick(false));
 
             RenderSystem.lineWidth(3);
             if (overlayGui.upHighlight != null) drawDebugBox(overlayGui.upHighlight, eyePos, matrixStack, vertexBuilder, 1, 0, 0, 0.5f);

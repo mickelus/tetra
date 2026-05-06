@@ -52,7 +52,8 @@ public class OverpowerEffect extends ChargedAbilityEffect {
         double exhaustDuration = item.getEffectEfficiency(itemStack, ItemEffect.overpower);
 
         if (!attacker.level().isClientSide && !isDefensive) {
-            int currentAmp = Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
+            var exhaustedEffect = EffectHelper.effectHolder(ExhaustedPotionEffect.instance);
+            int currentAmp = Optional.ofNullable(attacker.getEffect(exhaustedEffect))
                     .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
 
@@ -85,7 +86,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 if (echoLevel > 0) {
                     delayExhaustion(attacker, item, itemStack, (int) (exhaustDuration * 20), newAmp);
                 } else {
-                    attacker.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, (int) (exhaustDuration * 20),
+                    attacker.addEffect(new MobEffectInstance(exhaustedEffect, (int) (exhaustDuration * 20),
                             newAmp + currentAmp, false, true));
                 }
             }
@@ -135,7 +136,8 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
         AbilityUseResult result = item.hitEntity(itemStack, attacker, target, damageMultiplier, 0.1f, 0.1f);
         if (result != AbilityUseResult.fail) {
-            int currentAmplifier = Optional.ofNullable(target.getEffect(ExhaustedPotionEffect.instance))
+            var exhaustedEffect = EffectHelper.effectHolder(ExhaustedPotionEffect.instance);
+            int currentAmplifier = Optional.ofNullable(target.getEffect(exhaustedEffect))
                     .map(MobEffectInstance::getAmplifier)
                     .orElse(-1);
 
@@ -155,7 +157,7 @@ public class OverpowerEffect extends ChargedAbilityEffect {
                 double velocity = momentumLevel / 100d;
                 velocity += momentumEfficiency * (currentAmplifier + 1);
 
-                velocity += momentumEfficiency * Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
+                velocity += momentumEfficiency * Optional.ofNullable(attacker.getEffect(exhaustedEffect))
                         .map(MobEffectInstance::getAmplifier)
                         .map(amp -> amp + 1)
                         .orElse(0);
@@ -170,11 +172,11 @@ public class OverpowerEffect extends ChargedAbilityEffect {
 
             int exhilarationLevel = item.getEffectLevel(itemStack, ItemEffect.abilityExhilaration);
             if (exhilarationLevel > 0 && !target.isAlive()) {
-                ServerScheduler.schedule(0, () -> attacker.removeEffect(ExhaustedPotionEffect.instance));
+                ServerScheduler.schedule(0, () -> attacker.removeEffect(exhaustedEffect));
 
             }
 
-            target.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, (int) (efficiency * 20), amplifier, false, true));
+            target.addEffect(new MobEffectInstance(exhaustedEffect, (int) (efficiency * 20), amplifier, false, true));
 
             target.getCommandSenderWorld().playSound(attacker, target.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1, 0.8f);
         } else {
@@ -200,10 +202,11 @@ public class OverpowerEffect extends ChargedAbilityEffect {
         ServerScheduler.schedule(delay + 1, () -> {
             DelayData data = delayCache.getIfPresent(attacker.getId());
             if (attacker.isAlive() && attacker.level() != null && data != null && attacker.level().getGameTime() > data.timestamp) {
-                int currentAmp = Optional.ofNullable(attacker.getEffect(ExhaustedPotionEffect.instance))
+                var exhaustedEffect = EffectHelper.effectHolder(ExhaustedPotionEffect.instance);
+                int currentAmp = Optional.ofNullable(attacker.getEffect(exhaustedEffect))
                         .map(MobEffectInstance::getAmplifier)
                         .orElse(-1);
-                attacker.addEffect(new MobEffectInstance(ExhaustedPotionEffect.instance, duration, currentAmp + data.amplifier, false, true));
+                attacker.addEffect(new MobEffectInstance(exhaustedEffect, duration, currentAmp + data.amplifier, false, true));
 
                 delayCache.invalidate(attacker.getId());
             }

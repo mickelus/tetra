@@ -1,0 +1,13 @@
+{
+    "replace": false,
+    "entries": [
+        "tetra:bartering_additions",
+        "tetra:bastion_bridge_scrolls",
+        "tetra:bastion_hoglin_stable_scrolls",
+        "tetra:bastion_other_scrolls",
+        "tetra:bastion_treasure_scrolls",
+        "tetra:ender_dragon_sinew",
+        "tetra:nether_bridge_scrolls",
+        "tetra:simple_dungeon_scrolls"
+    ]
+}
