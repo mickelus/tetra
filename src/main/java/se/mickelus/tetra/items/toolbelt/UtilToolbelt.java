@@ -146,7 +146,7 @@ public class UtilToolbelt {
             IBaublesItemHandler handler = player.getCapability(BaublesCapabilities.CAPABILITY_BAUBLES, null);
 
             if (handler != null) {
-                handler.setPlayer(player);
+                BaublesCompatibility.setPlayerIfSupported(handler, player);
                 IInventory baubleInventory = new BaublesInventoryWrapper(handler, player);
 
                 for (int i = 0; i < baubleInventory.getSizeInventory(); i++) {
